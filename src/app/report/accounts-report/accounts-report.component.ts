@@ -1441,11 +1441,7 @@ reportName:string;
      
       var custAccNo1 = this.reportForm.get('custAccNo').value;
 
-      // if (custAccNo<=0 || custAccNo==undefined || custAccNo==null ) {
-      //   this.closeResetButton=true;
-      //   // this.dataDisplay = 'PleagstSparesSaiDebtorsse check Customer No.'
-      //   return; }comment by vinita
-
+     
       if (custAccNo1<=0 || custAccNo1==undefined || custAccNo1==null ) {
         custAccNo='';
           }

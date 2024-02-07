@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MasterService } from 'src/app/master/master.service';
 import { PumpService } from 'src/app/pump/pump.service';
 import { DatePipe } from '@angular/common';
+import { OrderManagementService } from 'src/app/order-management/order-management.service';
+
 
 @Component({
   selector: 'app-testing-dynamic',
@@ -14,7 +16,7 @@ export class TestingDynamicComponent  {
   pumpShiftSalesForm: FormGroup;
   shiftentryno:string;
   shiftentryid:number;
-  // shiftentrydate:Date;
+  shipEntrySt:string;
   shifttypeName:string;
   shifttype:number;
   shifttypCode:string;
@@ -32,7 +34,7 @@ export class TestingDynamicComponent  {
   createdby:number;
   pipe = new DatePipe('en-US');
   now = new Date();
-  shiftentrydate = this.pipe.transform(this.now, 'yyyy-MM-dd')
+  shiftentrydate :string;
   subInvCode:any=[];
   subInventoryId:number;
 
@@ -43,8 +45,9 @@ export class TestingDynamicComponent  {
   segmentList:any=[];
   PaymentModeList: any=[];
   accountNoSearch: any=[];
+  nozzleListData:any=[];
  
-
+  isDisabled3 = false;
   lineValidation=false;
   duplicateLineItem=false;
   displayButton = true;
@@ -56,21 +59,30 @@ export class TestingDynamicComponent  {
   displaylineSubDetadd1: Array<boolean> = [];
   displayRemovelineDet: Array<boolean> = [];
   displayRemovelineDet1: Array<boolean> = [];
-  displayRemoveSubLineDet: Array<boolean> = [];
+  // displayRemoveSubLineDet: Array<boolean> = [];
+  displayRemoveSubLineDet: any[][] = [];
   displayRemoveSubLineDet1: Array<boolean> = [];
   displayVoucherRemove: Array<boolean> = [];
   isVisibleShiftPretolSave:boolean=true;
   isVisibleShiftPretolUpdate:boolean=false;
+  isVisibleshipFinalConfirm:boolean=false;
   closeResetButton = true;
   dataDisplay: any;
   progress = 0;
+  display = 'none';
+  customerNameSearch:any=[];
+  public sub: any;
+  totalCalculation:number;
+  totalQty:number;
+  userList1: any[] = [];
+  lastkeydown1: number = 0;
 
-
-   constructor(private fb: FormBuilder,private service: MasterService, private router: Router,private PumpService1: PumpService) {
+   constructor(private fb: FormBuilder,private service: MasterService, private router: Router,private PumpService1: PumpService,private orderManagementService: OrderManagementService,private router1: ActivatedRoute) {
     this.pumpShiftSalesForm = fb.group({
       shiftentryno:[],
       shiftentryid:[],
       shiftentrydate:[],
+      shipEntrySt:[],
       shifttypeName:[],
       shifttype:[],
       subInventoryId:[],
@@ -81,6 +93,8 @@ export class TestingDynamicComponent  {
       totalcreditsale:[0],
       totalcashsale:[0],
       totalsale:[0],
+      totalCalculation:[0],
+      totalQty:[0],
       finalconfirm:[],
       finalconfirmdate:[],
       lastupdateby:[],
@@ -88,6 +102,7 @@ export class TestingDynamicComponent  {
       createdby:[],
       lastupdatedate:[],
       cashdifference:[0],
+      totalrate:[0],
       totalexpenses:[0],
       cashsubmitted:[0],
       locid:[],
@@ -99,9 +114,7 @@ export class TestingDynamicComponent  {
 
  ngOnInit() {
   $("#wrapper").toggleClass("toggled");
-  // alert(sessionStorage.getItem('emplId')+'----'+sessionStorage.getItem('locId'))
-  // this.pumpShiftSalesForm.patchValue({createdby:sessionStorage.getItem('emplId')})
-  // debugger;
+ 
   this.isVisibleShiftPretolUpdate=false;
   this.displaylineSubDetadd1[0]=true;
   this.displaylineDetUpdate1[0]=true;
@@ -114,7 +127,6 @@ export class TestingDynamicComponent  {
       patch.controls[0].patchValue({ createdby: sessionStorage.getItem('emplId'),
       creationdate:this.pipe.transform(this.now, 'yyyy-MM-dd hh:mm:ss'),lasstupdatedby:sessionStorage.getItem('emplId'),
       lastupdatedate:this.pipe.transform(this.now, 'yyyy-MM-dd hh:mm:ss'),  locid:sessionStorage.getItem('locId')});
-      // this.displaysegment[0]=true;
     this.service.ShiftList().subscribe(
       data => {
         this.shiftList = data;
@@ -130,16 +142,6 @@ export class TestingDynamicComponent  {
   }
 );
 
-// this.PumpService1.segmentListFn()
-// .subscribe(
-//   data => {
-//     this.segmentList = data;
-//     console.log(this.segmentList);
-//   });
-
-
-
-
 this.service.NozzleList()
 .subscribe(
   data => {
@@ -147,7 +149,7 @@ this.service.NozzleList()
     console.log(this.nozzleList);
   });
 
-  this.service.PaymentModeList()
+  this.service.PaymentModeListPP()
   .subscribe(
     data => {
       this.PaymentModeList = data;
@@ -160,6 +162,13 @@ this.service.NozzleList()
   creationdate:this.pipe.transform(this.now, 'yyyy-MM-dd hh:mm:ss'),lastupdateby:sessionStorage.getItem('emplId'),
   lastupdatedate:this.pipe.transform(this.now, 'yyyy-MM-dd hh:mm:ss'),  locid:sessionStorage.getItem('locId')});
 
+
+  this.sub = this.router1.params.subscribe(params => {
+    this.shiftentryno = params['shiftEntryNo'];
+    if (this.shiftentryno != undefined) {
+      this.search(this.shiftentryno);
+    }
+  });
 
  }
 
@@ -179,21 +188,21 @@ voucherDetailsGroup() {
     amount:[0],
     creationdate:[],
     createdby:[],
-    // shiftvoucherid:[],
-    // shiftentryid:[],
     lastupdateby:[],
     lastupdatedate:[],
    });
 }
 
+nozTotAmt =0;
+nozTotQty=0;
 
 search(shiftNo){
   this.closeResetButton = false;
   this.progress = 0;
+  this.pumpShiftSalesForm.patchValue({shipEntrySt:'Search'})
   this.dataDisplay = 'Data Searching is progress....Do not refresh the Page';
   this.voucherDetailsArray().clear();
   this.ppShiftNozzleDetailList().clear();
-  // this.employeeSkills(0).clear();
   var patch = this.pumpShiftSalesForm.get('ppShiftVoucherList') as FormArray;
   let control1 = this.pumpShiftSalesForm.get('ppShiftVoucherList') as FormArray;
   var nozListArr = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList') as FormArray;
@@ -260,29 +269,69 @@ search(shiftNo){
           lastupdatedate:data.obj.ppShiftNozzleDetailList[n].lastupdatedate,
           locid:data.obj.ppShiftNozzleDetailList[n].locid,
         });
-        // alert(data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList.length+'-----line Length')
+
+        this.nozTotAmt=this.nozTotAmt+data.obj.ppShiftNozzleDetailList[n].totalrate;
+        this.nozTotQty=this.nozTotQty+data.obj.ppShiftNozzleDetailList[n].difference;
+        this.displayRemoveSubLineDet[n]=[];
         for (let subln=0;subln<data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList.length;subln++){
-          this.displayRemoveSubLineDet[subln]=false;
-          this.PumpService1.segmentListFn1(data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].fuelType)
-.subscribe(
-  data => {
-    this.segmentList = data;
-    console.log(this.segmentList);
-  });
-          var letSelectSegmentList = this.segmentList.find((segmentList: any) => segmentList.itemId == data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].itemid);  
-          console.log(letSelectSegmentList);
-          
           var ppShiftNozzleAllList1: FormGroup = this.newSkill();
-        this.employeeSkills(n).push(ppShiftNozzleAllList1);
-        this.employeeSkills(n).controls[subln].patchValue({nozzleid:data.obj.ppShiftNozzleDetailList[n].nozzleid,
-          nozzle:data.obj.ppShiftNozzleDetailList[n].nozzlecode,segment:letSelectSegmentList.segment})
+          this.employeeSkills(n).push(ppShiftNozzleAllList1);
+          // debugger;
+          console.log(this.displayRemoveSubLineDet+'-----empIndex--'+n+'------empSkill---'+subln);
+          this.displayRemoveSubLineDet[n][subln]=false;
+          this.PumpService1.segmentListFn1(data.obj.ppShiftNozzleDetailList[n].fuelType)
+.subscribe(
+  res => {
+    console.log(res);   
+    this.segmentList = res;
+    console.log(this.segmentList);
+    var letSelectSegmentList = this.segmentList.find((segmentList: any) => segmentList.itemId == data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].itemid);  
+    console.log(letSelectSegmentList);
+  this.employeeSkills(n).controls[subln].patchValue({nozzleid:data.obj.ppShiftNozzleDetailList[n].nozzleid,
+    nozzle:data.obj.ppShiftNozzleDetailList[n].nozzlecode,segment:letSelectSegmentList.segment,
+    customercode:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].customercode, 
+    customerid:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].customerid,
+     payType:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].payType,
+     saletypeid:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].saletypeid,
+     shiftnozzlelinesid:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].shiftnozzlelinesid,
+     shiftnozzleid:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].shiftnozzleid,
+     shiftentryid:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].shiftentryid,
+     itemid:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].itemid,
+     qty:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].qty,
+     rate:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].rate,
+    vehicleno:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].vehicleno,
+    creditslipno:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].creditslipno,
+    locatorid:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].locatorid,
+    lineAmt:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].lineAmt,
+    invoicegen:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].invoicegen,
+    creationdate:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].creationdate,
+    createdby:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].createdby,
+    lasstupdatedby:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].lasstupdatedby,
+    lastupdatedate:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].lastupdatedate,
+    locid:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].locid,
+    locator:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].segmentName,
+    custName:data.obj.ppShiftNozzleDetailList[n].ppShiftNozleLinesList[subln].customerName})
+  });
+ 
       }
         }
         
-      
-        
-
           this.pumpShiftSalesForm.patchValue(data.obj); 
+          if (data.obj.finalconfirm=='YES'){
+            this.isVisibleShiftPretolSave=false;
+            this.isVisibleShiftPretolUpdate=false;
+            this.isVisibleshipFinalConfirm=false;
+            this.pumpShiftSalesForm.disable();
+            this.newEmployee().disable();
+            this.voucherDetailsArray().disable();
+          }
+          else{
+            this.isVisibleshipFinalConfirm=true;
+          }
+
+          var shipConDt = this.pipe.transform(data.obj.finalconfirmdate, 'dd-MM-yyyy');
+          this.pumpShiftSalesForm.patchValue({finalconfirmdate:shipConDt,totalCalculation:this.nozTotAmt,totalQty:this.nozTotQty})
+
     }
   })  
     
@@ -304,19 +353,20 @@ ppShiftNozzleDetailList(): FormArray {
 
 newEmployee(): FormGroup {
   return this.fb.group({
-    // firstName: '',
-    // lastName: '',
+    
     shiftentryid:[],
     shiftnozzleid:[],
     nozzle:[],
     nozzleid:[],
     nozzFuelType:[],
+    nozzrate:[],
     nozzIsland:[],
     openingreading:[],
     systemclosingreading:[],
     manualclosingreading:[],
     totalsalereading:[],
     difference:[],
+    totalrate:[0],
     remarks:[],
     creationdate:[],
     createdby:[],
@@ -329,7 +379,7 @@ newEmployee(): FormGroup {
 
 addEmployee() {
   this.ppShiftNozzleDetailList().push(this.newEmployee());
-  // alert(this.ppShiftNozzleDetailList().length)
+ 
   this.displaylineSubDetadd[this.ppShiftNozzleDetailList().length-1]=true;
   this.displaylineDetUpdate[this.ppShiftNozzleDetailList().length-1]=true;
   this.displayRemovelineDet[this.ppShiftNozzleDetailList().length-1]=true;
@@ -350,8 +400,7 @@ employeeSkills(empIndex: number): FormArray {
 
 newSkill(): FormGroup {
   return this.fb.group({
-    // skill: '',
-    // exp: ''
+   
     NozzlidId :[''],
     shiftnozzlelinesid:[],
     shiftnozzleid:[],
@@ -359,20 +408,23 @@ newSkill(): FormGroup {
     shiftentryid:[],
     nozzleid:[''],
     itemid:[],
+    locator:[],
+    locatorid:[],
     segment:[],
     nozzleDetLineNo:[],
     qty:[0],
     rate:[0],
+    redingAvailQty:[0],
     selectedLine:[],
     saletypeid:[],
     customerid:[],
+    custName:[],
     customercode:[],
     vehicleno:[],
     creditslipno:[],
     locid:[],
     lineAmt:[],
     payType:[],
-    // saletypeid:[],
     creationdate:[],
     createdby:[],
     lasstupdatedby:[],
@@ -381,32 +433,42 @@ newSkill(): FormGroup {
 }
 
 addEmployeeSkill(empIndex: number) {
+  // alert(empIndex+'-----mainIndexValue')
+  this.displayRemoveSubLineDet[empIndex]=[];
   this.employeeSkills(empIndex).push(this.newSkill());
   var hedaerDet = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList') as FormArray;
   var hedaerDet1=hedaerDet.getRawValue();
   var nozzFuelType = hedaerDet1[empIndex].nozzFuelType;
-  // alert(nozzFuelType)
+  var totAvlQty = (hedaerDet1[empIndex].manualclosingreading-hedaerDet1[empIndex].openingreading);
   var nozzleid = hedaerDet1[empIndex].nozzleid;
-  
   var segmentList1 = this.nozzleList.find((nozzleList: any) => nozzleList.nozzleId == nozzleid);
   console.log(segmentList1);
   var len=this.employeeSkills(empIndex).length;
+  // alert(len)
   this.employeeSkills(empIndex).controls[len-1].patchValue({createdby: sessionStorage.getItem('emplId'),
   creationdate:this.pipe.transform(this.now, 'yyyy-MM-dd hh:mm:ss'),lasstupdatedby:sessionStorage.getItem('emplId'),
  lastupdatedate:this.pipe.transform(this.now, 'yyyy-MM-dd hh:mm:ss'),  locid:sessionStorage.getItem('locId'),
   nozzleid:nozzleid,nozzle:segmentList1.nozzleCode,nozzleDetLineNo:1});
-  this.displayRemoveSubLineDet[len-1]=true;
+  // this.displayRemoveSubLineDet[len-1]=true;
+  this.displayRemoveSubLineDet[empIndex][len-1]=true;
   this.PumpService1.segmentListFn1(nozzFuelType)
 .subscribe(
   data => {
     this.segmentList = data;
     console.log(this.segmentList);
   });
+
+  
+    // alert(empIndex+'-----'+hedaerDet1.length);
+    //   if (hedaerDet1[len-1].segment == null || hedaerDet1[len-1].segment == undefined){
+    //     this.displayRemoveSubLineDet[len-1]=true;
+    //   }
   
 }
 
 removeEmployeeSkill(empIndex: number, skillIndex: number) {
   this.employeeSkills(empIndex).removeAt(skillIndex);
+  
 }
 
 onSubmit() {
@@ -416,17 +478,28 @@ onSubmit() {
 
 onSelectEmplName(event){
   var emlName=event.target.value;
-  // alert('----'+emlName+'----');
+  // alert(emlName)
   var emplList = emlName.substr(emlName.indexOf('-') + 1, emlName.length);
-  // alert(emplList)
-  var emplList1 = this.salesPersonList.find((salesPersonList:any)=>salesPersonList.fullName=emplList);
+  // emlName.indexOf
+  console.log('------'+emplList+'------');
+  var emplList1 = this.salesPersonList.find((salesPersonList:any)=>salesPersonList.fullName==emplList);
+  
   console.log(emplList1);
+  // alert(emplList1.emplId)
   this.pumpShiftSalesForm.patchValue({employeeid:emplList1.emplId})
   
 }
 
 
 addRowV(index) {
+  var voucherContr1 = this.pumpShiftSalesForm.get('ppShiftVoucherList').value;
+  var shiftvoucherno = voucherContr1[index].shiftvoucherno;
+  var description = voucherContr1[index].description;
+  var amount = voucherContr1[index].amount;
+  if (shiftvoucherno===null && description==null && amount==0){
+    alert('Please Enter Value And Then Add New Line.!');
+    return;
+  }
   if(this.duplicateLineItem ===false) {
   this.lineValidation=true;
   if (this.lineValidation) 
@@ -440,7 +513,6 @@ addRowV(index) {
     lastupdatedate:this.pipe.transform(this.now, 'yyyy-MM-dd hh:mm:ss'),  locid:sessionStorage.getItem('locId')});
     this.displayVoucherRemove[index+1]=true;
     if (index>1){
-    // alert(voucherControl[1].shiftentryid);
     patch.controls[index+1].patchValue({ 
       shiftentryid:voucherControl[1].shiftentryid
     })
@@ -461,18 +533,24 @@ pumpShiftSales(pumpShiftSalesForm:any) {  }
 
 
 onSelectedNozzle(i,event){
-  // alert(i)
-  
   var segment=event.target.value;
   var segmentList = segment.substr(segment.indexOf('-') + 1, segment.length);
   var shiftCode = this.pumpShiftSalesForm.get('shifttypCode').value;
-  // alert(shiftCode)
   var todate = this.now;
-  var startDt1 = new Date(this.now);
-    startDt1.setDate(startDt1.getDate() - 1);
-    // alert(startDt1)
+  this.shiftentrydate =  this.pumpShiftSalesForm.get('shiftentrydate').value;
+  this.shiftentrydate  = this.pipe.transform(this.shiftentrydate , 'dd-MMM-yyyy');
+  // alert(this.shiftentrydate )
+  var days=1;
+  ////new Date(this.now);
+  if (shiftCode==='I'){
+    var startDt1 = new Date(this.shiftentrydate);
+    startDt1.setDate(startDt1.getDate() -1);
     var tDate = this.pipe.transform(startDt1, 'dd-MMM-yyyy');
-    // alert(tDate+'----tDate')
+
+  }
+  else{
+    var tDate = this.pipe.transform(this.shiftentrydate, 'dd-MMM-yyyy');
+  }
   var segmentList1 = this.nozzleList.find((nozzleList: any) => nozzleList.nozzleCode == segmentList);
   console.log(segmentList1);
   var patch = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList') as FormArray;
@@ -485,7 +563,8 @@ onSelectedNozzle(i,event){
       this.IslandDetails = data;
       (patch.controls[i]).patchValue({
         nozzFuelType: data.description,
-        nozzIsland: data.islandCode
+        nozzIsland: data.islandCode,
+        nozzrate:data.rate
       })
     });
     this.service.nozzleBalaCheck(segmentList,shiftCode,tDate)
@@ -498,11 +577,17 @@ onSelectedNozzle(i,event){
           systemclosingreading: data.obj.clRead
         });
         if (data.message.includes('Previous Shift Not Final Confimred')){
-          // this.isVisibleShiftPretolSave=false;
           this.closeResetButton = false;
           this.progress = 0;
           this.dataDisplay = data.message;
+          this.isVisibleShiftPretolSave=false;
          return;
+        }
+        else if (data.message.includes('Already Shift Entry Done for this Nozzle')){
+          this.closeResetButton = false;
+          this.progress = 0;
+          this.dataDisplay = data.message;
+          this.isVisibleShiftPretolSave=false;
         }
         else{
           this.isVisibleShiftPretolSave=true;
@@ -511,15 +596,14 @@ onSelectedNozzle(i,event){
 }
 
 calculationFn(i){
-  // alert(i);
-  // debugger;
   var arrayControlNew = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList') as FormArray;
     var arrayControl = arrayControlNew.getRawValue();
     var openQtySys = arrayControl[i].openingreading;
     var closeQtyMan = arrayControl[i].manualclosingreading;
+    var rate = arrayControl[i].nozzrate;
+    var totalsalereading = arrayControl[i].totalsalereading;
+    // alert(totalsalereading)
     var SystemClosingReading = arrayControl[i].systemclosingreading;
-    // alert(pricingQty)
-    // alert('openQtySys---'+openQtySys+'   closeQtyMan---'+closeQtyMan+'     SystemClosingReading--'+SystemClosingReading)
     if (openQtySys === null || openQtySys === undefined || openQtySys === '') {
       return;
     }
@@ -529,35 +613,111 @@ calculationFn(i){
     }
 
 
-    var totaQty = closeQtyMan-openQtySys;
-    var diffQty= closeQtyMan-SystemClosingReading;
+    var totaQty = Math.round(((closeQtyMan-openQtySys) + Number.EPSILON) * 100) / 100;
+    var diffQty= Math.round(((closeQtyMan-SystemClosingReading) + Number.EPSILON) * 100) / 100;
+    var totaRate = Math.round(((closeQtyMan-openQtySys)*rate + Number.EPSILON) * 100) / 100;
     var patch = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList') as FormArray;
-    patch.controls[i].patchValue({ totalsalereading: totaQty,difference:diffQty });
+    patch.controls[i].patchValue({ totalsalereading: totaQty,difference:diffQty,totalrate:totaRate });
+    this.headerLineCalculation(i,totaRate)
   }
+
+
+  headerLineCalculation(i,totaRate){
+    var totRate =0;
+    var totQty=0;
+    var arrayControlNew = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList') as FormArray;
+    var arrayControl = arrayControlNew.getRawValue();
+    for (let l=0;l<arrayControl.length;l++){
+      totRate=totRate+arrayControl[l].totalrate;
+      totQty=totQty+arrayControl[l].totalsalereading;
+    }
+    
+    this.pumpShiftSalesForm.patchValue({totalCalculation:totRate,totalQty:totQty})
+  }
+
 
   onSelectSegment(i,k,event){
   
      var seg = event.target.value;
    
          var value = seg.substr(seg.indexOf(':') + 1, seg.length).trim();
-        //  alert(value)
          console.log(this.segmentList);
          var selectitemList = this.segmentList.find((segList)=>segList.segment===value);
          console.log(selectitemList);
       
             this.employeeSkills(i).controls[k].patchValue({itemid: selectitemList.itemId});
+       
+            this.PumpService1.locatorFn(sessionStorage.getItem('locId'),selectitemList.itemId,selectitemList.subInventoryId)
+            .subscribe(
+              data => {
+                console.log(data);
+              
+                this.employeeSkills(i).controls[k].patchValue({locator: data[0].segmentName,locatorid:data[0].locatorid});
+              });
+          var priceListName = 'Petrol Pump 12PU.2501';
+              this.PumpService1.priceListFn(priceListName,selectitemList.itemId)
+              .subscribe(
+                data => {
+                  console.log(data);
+               
+                  this.employeeSkills(i).controls[k].patchValue({rate: data[0].priceValue});
+                })
+                var patch = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList').value;
+               
+                var len = (this.employeeSkills(i).controls.length-1);
+                var totreadingQty =  Math.round(((patch[i].manualclosingreading-patch[i].openingreading) + Number.EPSILON) * 100) / 100;
+                if (patch[i].nozzFuelType===value){
+                  this.employeeSkills(i).controls[0].patchValue({redingAvailQty: totreadingQty});
+                }
+                if (patch[i].nozzFuelType===value){
+                  if (len >0){
+                    var arrline = this.ppShiftNozzleDetailList();
+                    var lineDetArr = arrline.value[i].ppShiftNozleLinesList;
+                    var lastLineReadQty =  Math.round(((lineDetArr[len-1].redingAvailQty)-Number(lineDetArr[len-1].qty) + Number.EPSILON) * 100) / 100;
+                    // Number(lineDetArr[len-1].redingAvailQty)-Number(lineDetArr[len-1].qty);
+                    this.employeeSkills(i).controls[k].patchValue({redingAvailQty:lastLineReadQty});
+                  }
+                }
+                var totQty =0;
+                if (this.pumpShiftSalesForm.get('shipEntrySt').value==='Search'){
+                  if (patch[i].nozzFuelType===value){
+                    var lineDetArr = arrline.value[i].ppShiftNozleLinesList;
+                    for (let k=0;k<lineDetArr.length;k++){
+                      totQty=totQty+lineDetArr[k].qty;
+                    }
+                    var lastLineReadQty =   Math.round(((patch[i].manualclosingreading-patch[i].openingreading)-Number(totQty) + Number.EPSILON) * 100) / 100;
+                    // (patch[i].manualclosingreading-patch[i].openingreading)-Number(totQty);
+                    this.employeeSkills(i).controls[k].patchValue({redingAvailQty:lastLineReadQty});
+                  }
+                }
+ }
+
+
+ readingQtyFn(i,k){
+  
+  var arrline = this.ppShiftNozzleDetailList();
+  var totReadValue =0;
+  for (let i=0;i<arrline.length;i++){
+    var lineDetArr = arrline.value[i].ppShiftNozleLinesList;
+    for (let l=0;l<lineDetArr.length;l++){
+      totReadValue =   Math.round(((Number(lineDetArr[l].redingAvailQty)-Number(lineDetArr[l].qty)) + Number.EPSILON) * 100) / 100;
+      //  Number(lineDetArr[l].redingAvailQty)-Number(lineDetArr[l].qty);     
+      this.employeeSkills(i).controls[k].patchValue({redingAvailQty:totReadValue});
+    }     
+  }
+
+  
  }
 
 
  lineCalculationFn(index,k){
-  // alert(index+'--------')
+
   var arr1= this.employeeSkills(index);
   console.log(arr1);
   var len =this.employeeSkills(index).length;
-  // alert(len)
+ 
   var qty=arr1.value[k].qty;
   var rate1=arr1.value[k].rate;
-  // alert('--qty---'+qty+'--rate--'+rate1)
   var totAmt = qty*rate1;
 var  totAmt1 = Math.round(((totAmt) + Number.EPSILON) * 100) / 100;
   this.employeeSkills(index).controls[k].patchValue({lineAmt: totAmt1});
@@ -567,35 +727,28 @@ var  totAmt1 = Math.round(((totAmt) + Number.EPSILON) * 100) / 100;
 
 
 addlineCalculation(index,k,event){
-  // alert(event);
   var arrline = this.ppShiftNozzleDetailList();
   var arrline1 = this.ppShiftNozzleDetailList().length;
   console.log(arrline);
-  // alert(arrline.length)
   var cashlineAmt = 0;
   var totalSaleAmt =0;
   var totalCreditAmt=0;
   var otherSaleAmt=0;
-  // var totalExpenceAmt=0;
-
   var len =this.employeeSkills(index).length;
   var totalExpenceAmt= this.pumpShiftSalesForm.get('totalexpenses').value;
   for (let i=0;i<arrline.length;i++){
-    // alert(arrline.value[i].ppShiftNozleLinesList.length)
     var lineDetArr = arrline.value[i].ppShiftNozleLinesList;
     for (let l=0;l<lineDetArr.length;l++){
     if (lineDetArr[l].payType === 'CASH' ) {
       if (lineDetArr[l].lineAmt == undefined || lineDetArr[l].lineAmt == null || lineDetArr[l].lineAmt == '') {
       } else {
         cashlineAmt = cashlineAmt + Number(lineDetArr[l].lineAmt);
-        // alert(cashlineAmt)
       }
   }
   if (lineDetArr[l].payType === 'CREDIT CARD' ) {
     if (lineDetArr[l].lineAmt == undefined || lineDetArr[l].lineAmt == null || lineDetArr[l].lineAmt == '') {
     } else {
       totalCreditAmt = totalCreditAmt + Number(lineDetArr[l].lineAmt);
-      // alert(totalCreditAmt)
     }
   }
 
@@ -607,7 +760,6 @@ lineDetArr[l].payType === 'RTGS/NEFT'||lineDetArr[l].payType === 'WALLET' ) {
   if (lineDetArr[l].lineAmt == undefined || lineDetArr[l].lineAmt == null || lineDetArr[l].lineAmt == '') {
   }else {
     otherSaleAmt = otherSaleAmt + Number(lineDetArr[l].lineAmt);
-    // alert(otherSaleAmt)
   }
 }
 }
@@ -615,13 +767,11 @@ lineDetArr[l].payType === 'RTGS/NEFT'||lineDetArr[l].payType === 'WALLET' ) {
 cashlineAmt = Math.round(((cashlineAmt) + Number.EPSILON) * 100) / 100;
 otherSaleAmt = Math.round(((otherSaleAmt) + Number.EPSILON) * 100) / 100;
 totalCreditAmt = Math.round(((totalCreditAmt) + Number.EPSILON) * 100) / 100;
-totalSaleAmt=(cashlineAmt+otherSaleAmt+totalCreditAmt);
-// var totalExpenAmt =  cashlineAmt-totalExpenceAmt;
+totalSaleAmt= Math.round(((cashlineAmt+otherSaleAmt+totalCreditAmt) + Number.EPSILON) * 100) / 100;
 var totalExpenAmt = Math.round(((cashlineAmt-totalExpenceAmt) + Number.EPSILON) * 100) / 100;
 this.pumpShiftSalesForm.patchValue({ 'totalcashsale': cashlineAmt,'totalsale':totalSaleAmt,'totalcreditsale':totalCreditAmt,
 'totalothersale': otherSaleAmt});
 var paymentType = arrline.value[index].ppShiftNozleLinesList[k].payType;
-// alert(paymentType)
 if (event !=null){
 var payType=event.target.value;
 var payType1= payType.substr(payType.indexOf(':') + 1, payType.length).trim();
@@ -629,6 +779,16 @@ console.log(this.PaymentModeList);
 var payTypeList = this.PaymentModeList.find((payTyList)=>payTyList.lookupValue===payType1);
 console.log(payTypeList);
 this.employeeSkills(index).controls[k].patchValue({saletypeid:payTypeList.lookupValueId});
+if (payType1==='CASH'){
+  this.employeeSkills(index).controls[k].patchValue({customercode:79820,custName:'CASH CUSTOMER',customerid:73620});
+  this.employeeSkills(index).controls[k].get('customercode').disable();
+  this.addEmployeeSkill(index)
+}
+if (payType1==='PUMP TESTING'){
+  this.employeeSkills(index).controls[k].patchValue({customercode:79869,custName:'PUMP TESTING',customerid:73680});
+  this.employeeSkills(index).controls[k].get('customercode').disable();
+  this.addEmployeeSkill(index);
+}
 }
 }
 
@@ -645,7 +805,6 @@ voucherLineAmt(i){
 }
 totalVoucherAmt = Math.round(((totalVoucherAmt) + Number.EPSILON) * 100) / 100;
 var totCashSaleAmt = this.pumpShiftSalesForm.get('totalcashsale').value;
-// totalSalesAmt = totCashSaleAmt-totalVoucherAmt;
 totalSalesAmt = Math.round(((totCashSaleAmt-totalVoucherAmt) + Number.EPSILON) * 100) / 100;
 this.pumpShiftSalesForm.patchValue({ 'totalexpenses': totalVoucherAmt});
 }
@@ -672,31 +831,7 @@ validation(){
     this.isVisibleShiftPretolSave=false;
     return;
   }
-  // var arrline=this.voucherDetailsArray();
-  // for (let vln=0;vln<arrline.length;vln++){
-  //   alert(arrline[vln].shiftvoucherno)
-  //   var shiftvoucherno = arrline[vln].shiftvoucherno;
-  //   var description = arrline[vln].description;
-  //   var amount = arrline[vln].amount;
-  //   if (shiftvoucherno==undefined || shiftvoucherno==null || shiftvoucherno==''){
-  //     alert('Please Select Shift Voucher Number.!'+' Line No.:'+ (vln + 1) );
-  //     this.dataDisplay = 'Please Select Shift Voucher Number.!'+' Line No.:'+ (vln + 1) ;
-  //     this.isVisibleShiftPretolSave=false;
-  //     return;
-  //   }
-  //   if (description==undefined || description==null || description==''){
-  //     alert('Please Enter Description.!'+' Line No.:'+ (vln + 1) );
-  //     this.dataDisplay = 'Please Enter Description.!'+' Line No.:'+ (vln + 1);
-  //     this.isVisibleShiftPretolSave=false;
-  //     return;
-  //   }
-  //   if (amount==undefined || amount==null || amount==''){
-  //     alert('Please Enter Amount.!'+' Line No.:'+ (vln + 1) );
-  //     this.dataDisplay = 'Please Enter Amount.!'+' Line No.:'+ (vln + 1) ;
-  //     this.isVisibleShiftPretolSave=false;
-  //     return;
-  //   }
-  // }
+  
 }
 
 saveSale1(){
@@ -724,7 +859,6 @@ saveSale1(){
 }
 
 CustAccountNoSearch(i,k,event){
-  // alert(i+'---------'+event.target.value)
   var accountNo=event.target.value;
   this.service.custAccountNoSearch(accountNo, sessionStorage.getItem('ouId'), sessionStorage.getItem('divisionId'))
   .subscribe(
@@ -732,8 +866,9 @@ CustAccountNoSearch(i,k,event){
       if (data.obj.length !=0){
       this.accountNoSearch = data.obj;
       var patch = this.pumpShiftSalesForm.get('ppShiftNozleLinesList') as FormArray;
-      // patch.controls[i].patchValue({ customerid: data.obj[0].customerId });
-      this.employeeSkills(i).controls[k].patchValue({customerid: data.obj[0].customerId })
+    
+      var ln= this.employeeSkills(i).length;
+      this.employeeSkills(i).controls[ln-1].patchValue({customerid: data.obj[0].customerId ,custName: data.obj[0].custName,customercode:data.obj[0].accountNo})
       this.addEmployeeSkill(i)
     }
     else{
@@ -746,13 +881,25 @@ CustAccountNoSearch(i,k,event){
 }
 
 updatePumpDet(){
+  this.closeResetButton = false;
+  this.progress = 0;
+  this.dataDisplay = 'Data Saving is progress....Do not refresh the Page';
+  this.isVisibleShiftPretolUpdate=false;
   let jsonData = this.pumpShiftSalesForm.getRawValue();
   this.PumpService1.updatePumDet(JSON.stringify(jsonData)).subscribe((res: any) => {
     if (res.code === 200) {
-      alert(res.message)
+      alert(res.message);
+      this.closeResetButton = true;
+      this.progress = 0;
+      this.dataDisplay = res.message;
+      this.isVisibleShiftPretolUpdate=false;
     }
     else{
       alert(res.message)
+      this.closeResetButton = false;
+      this.progress = 0;
+      this.dataDisplay = res.message;
+      this.isVisibleShiftPretolUpdate=true;
     }
   })
 
@@ -761,6 +908,9 @@ updatePumpDet(){
 
 
 shipFinalConfirm(){
+  this.closeResetButton = false;
+  this.progress = 0;
+  this.dataDisplay = 'Data Saving is progress....Do not refresh the Page';
   let jsonData = this.pumpShiftSalesForm.getRawValue();
   this.PumpService1.shipFinalConfirmFn(JSON.stringify(jsonData)).subscribe((res: any) => {
     if (res.code === 200) {
@@ -770,13 +920,77 @@ shipFinalConfirm(){
       this.pumpShiftSalesForm.disable();
       this.newEmployee().disable();
       this.voucherDetailsArray().disable();
+      this.search(res.obj.shiftentryno);
       // this.employeeSkills().disable();
     }
     else{
       alert(res.message)
+      this.closeResetButton = false;
+      this.progress = 0;
+      this.dataDisplay = res.message;
     }
   })
 }
 
+
+
+custNameSearch(index,k) {
+ 
+  var arrline = this.ppShiftNozzleDetailList();
+  var lineDetArr = arrline.value[index].ppShiftNozleLinesList;
+  var custName=lineDetArr[k].custName;
+ 
+  this.orderManagementService.custNameSearchFn1(custName, sessionStorage.getItem('divisionId'))
+    .subscribe(
+      data => {
+        if (data.code === 200) {
+          this.customerNameSearch = data.obj;
+        }
+        else {
+          if (data.code === 400) {
+            alert(data.message);
+            this.display = 'block';
+          }
+        }
+      }
+    );
+}
+
+selectAccountNo(index,k,accNo,custId,custName){
+  var ln = this.employeeSkills(index).length;
+  this.employeeSkills(index).controls[ln-1].patchValue({customercode:accNo,customerid:custId,custName:custName});
+  this.addEmployeeSkill(index)
+  
+}
+
+cashSubmiAmt(){
+  var totalcashsale = this.pumpShiftSalesForm.get('totalcashsale').value;
+  var cashsubmitted = this.pumpShiftSalesForm.get('cashsubmitted').value;
+  var cashDiff = Math.round(((totalcashsale-cashsubmitted) + Number.EPSILON) * 100) / 100;
+  this.pumpShiftSalesForm.patchValue({cashdifference:cashDiff})
+}
+
+
+getUserIdsFirstWay($event) {
+  let userId = (<HTMLInputElement>document.getElementById('userIdFirstWay')).value;
+  this.userList1 = [];
+
+  // if (userId.length > 2) {
+  //   if ($event.timeStamp - this.lastkeydown1 > 200) {
+  //     this.userList1 = this.searchFromArray(this.salesPersonList, userId);
+  //   }
+  // }
+}
+
+
+searchFromArray(arr, regex) {
+  let matches = [], i;
+  for (i = 0; i < arr.length; i++) {
+    if (arr[i].match(regex)) {
+      matches.push(arr[i]);
+    }
+  }
+  return matches;
+};
 
 }

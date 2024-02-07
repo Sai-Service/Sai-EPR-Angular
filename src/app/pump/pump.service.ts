@@ -27,6 +27,14 @@ export class PumpService {
     return this.http.get(this.ServerUrl + `/itemMst/ByItemCategory?itemCatType=PP.FUEL&divId=3`);
   }
 
+  locatorFn(locId,itemId,subinventoryId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/onhandqty/onhandPP?locId=${locId}&itemId=${itemId}&subInventoryId=${subinventoryId}`);
+  }
+
+  priceListFn(priceListName,itemId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/pricelist/ItmPrcList/?priceListName=Petrol Pump 12PU.2501 - MRP&itemId=${itemId}`);
+  }
+
   segmentListFn1(nozzFuelType): Observable<any> {
     return this.http.get(this.ServerUrl + `/itemMst/ByPPItem?segment=${nozzFuelType}`);
   }
@@ -60,6 +68,25 @@ export class PumpService {
     };
     const url = (this.ServerUrl + `/ShiftEntry/shiftFinalCnfrm`);
     return this.http.post(url, UpdatePetrolUpdateRecord, options);
+  }
+
+
+  shipEntryInvGenFn(startDate,endDate,locId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/ShiftEntry/custList?startDate=${startDate}&endDate=${endDate}&locId=${locId}`);
+  }
+
+  getEntryListFn(startDate,endDate,locId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/ShiftEntry/shiftList?fromDate=${startDate}&toDate=${endDate}&locId=${locId}`);
+  }
+
+
+
+  shipEntryInvGenSaerchFn(startDate,endDate,locId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/arInv/petrolInvList?startDate=${startDate}&endDate=${endDate}&locId=${locId}`);
+  }
+
+  shipEntryInvGenSaerchCustFn(startDate,endDate,locId,custId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/arInv/petrolInvoice?startDate=${startDate}&endDate=${endDate}&locId=${locId}&customerId=${custId}`);
   }
 
 
