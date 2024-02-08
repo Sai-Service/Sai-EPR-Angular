@@ -476,7 +476,7 @@ this.service.NozzleList()
         (patch.controls[index]).patchValue({ nozzIsland: this.IslandDetails.islandCode +"-"+this.IslandDetails.description});
       });
 
-<<<<<<< HEAD
+// <<<<<<< HEAD
       this.service.NozzleFuelTypePick(select.nozzleCode)
       .subscribe(
         data => {
@@ -484,7 +484,7 @@ this.service.NozzleList()
           console.log(this.NozFuelTpDetails);
           (patch.controls[index]).patchValue({ nozzFuelType: this.NozFuelTpDetails.pumpName});
         });
-=======
+// =======
       // this.service.NozzleFuelTypePick(select.nozzleCode)
       // .subscribe(
       //   data => {
@@ -493,7 +493,7 @@ this.service.NozzleList()
       //     // alert( this.NozFuelTpDetails.pumpName);
       //     (patch.controls[index]).patchValue({ nozzFuelType: this.NozFuelTpDetails.pumpName});
       //   });
->>>>>>> 91e10080b8bb3b1dd02f8a4d7b466f61048cfaa0
+// >>>>>>> 91e10080b8bb3b1dd02f8a4d7b466f61048cfaa0
 
         // this.nozzlelineDetailsArray().controls[index].get('qty').enable();
         // this.nozzlelineDetailsArray().controls[index].get('rate').enable();
