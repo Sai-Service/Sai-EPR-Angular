@@ -783,8 +783,8 @@ this.service.NozzleList()
         var totCash=0;
         if (this.totalCashSale==null||this.totalCashSale==undefined) {
           totCash =0} else { totCash=this.totalCashSale}
-
-        var mCashDiff =totCash-cashSubmit;
+        var totExp=this.pumpShiftSalesForm.get('totalexpenses').value;
+        var mCashDiff =totCash-(cashSubmit+totExp);
         this.pumpShiftSalesForm.patchValue({ CashDifference: mCashDiff});
       }
 
@@ -857,8 +857,8 @@ this.service.NozzleList()
        var mCashSumbit=0;                                     
       if(this.CashSubmitted==null || this.CashSubmitted==undefined) {
         mCashSumbit=0;  } else {mCashSumbit=this.CashSubmitted}
-        this.pumpShiftSalesForm.patchValue({ CashDifference: this.totalCashSale-mCashSumbit});
-
+        var totExp=this.pumpShiftSalesForm.get('totalexpenses').value;
+        this.pumpShiftSalesForm.patchValue({ CashDifference: this.totalCashSale-(mCashSumbit-totExp)});
 
   }     
   

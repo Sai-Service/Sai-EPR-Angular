@@ -2,7 +2,7 @@
     <table style="width: 100%;background-color: white;">
         <tr>
             <td class="PageHeader">
-                &nbsp;&nbsp;Pump&nbsp;Shift&nbsp;Sales&nbsp;Entry&nbsp;Form
+                &nbsp;&nbsp;PUMP&nbsp;SHIFT&nbsp;SALE&nbsp;ENTRY&nbsp;FORM
             </td>
             <table style="width: 100%; background-color: #a4d3e9;">
                 <tr>
@@ -289,8 +289,10 @@
                                                         formControlName="nozzle">
                                                 </td>
                                             </ng-template>
+
                                             <td><input disabled type="text" class="form-control"
                                                     formControlName="nozzFuelType"></td>
+
                                             <td><input disabled type="text" class="form-control"
                                                     formControlName="nozzIsland"></td>
                                                     <td><input disabled type="number" class="form-control"
@@ -394,10 +396,17 @@
                                                                 style="width: 100px;text-align: right;" type="text"
                                                                 formControlName="itemid" class="form-control">
                                                         </td>
+
+                                                        <!-- <td>
+                                                            <input disabled type="text" class="form-control"
+                                                            formControlName="segment">
+                                                        </td> -->
+
                                                         <td>
                                                             <input disabled style="width: 100px;text-align: right;"
                                                                 type="text" formControlName="locator"
                                                                 class="form-control">
+
                                                             <input disabled hidden
                                                                 style="width: 100px;text-align: right;" type="text"
                                                                 formControlName="locatorid" class="form-control">
@@ -422,8 +431,9 @@
                                                         </td>
 
                                                         <td>
-                                                            <input disabled style="width: 100px;text-align: right;"
+                                                            <input  style="width: 100px;text-align: right;"
                                                                 type="number" formControlName="lineAmt"
+                                                                (keydown.tab)='lineCalculationFnAmt(empIndex,skillIndex)'
                                                                 class="form-control">
                                                         </td>
                                                         <td>
@@ -613,7 +623,16 @@
                                                                     Remove
                                                                 </button>
                                                             </td>
-                                                        </ng-template><ng-template #elseRemoveSubLineDet></ng-template>
+                                                        </ng-template>
+                                                        <ng-template #elseRemoveSubLineDet>
+                                                            <td>
+                                                                <button
+                                                                    (click)="removeEmployeeSkill(empIndex,skillIndex)"
+                                                                    class="btn btn-info">
+                                                                    Remove
+                                                                </button>
+                                                            </td>
+                                                        </ng-template>
                                                     </tr>
                                                 </tbody>
                                                 <!-- </table> -->

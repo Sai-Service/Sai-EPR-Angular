@@ -104,7 +104,7 @@ export class TestingDynamicComponent  {
       cashdifference:[0],
       totalrate:[0],
       totalexpenses:[0],
-      cashsubmitted:[0],
+      cashsubmitted:[],
       locid:[],
       ppShiftNozzleDetailList: this.fb.array([]),
       ppShiftVoucherList: this.fb.array([this.voucherDetailsGroup()]),
@@ -448,7 +448,7 @@ addEmployeeSkill(empIndex: number) {
   this.employeeSkills(empIndex).controls[len-1].patchValue({createdby: sessionStorage.getItem('emplId'),
   creationdate:this.pipe.transform(this.now, 'yyyy-MM-dd hh:mm:ss'),lasstupdatedby:sessionStorage.getItem('emplId'),
  lastupdatedate:this.pipe.transform(this.now, 'yyyy-MM-dd hh:mm:ss'),  locid:sessionStorage.getItem('locId'),
-  nozzleid:nozzleid,nozzle:segmentList1.nozzleCode,nozzleDetLineNo:1});
+  nozzleid:nozzleid,nozzle:segmentList1.nozzleCode,nozzleDetLineNo:1,segment:nozzFuelType});
   // this.displayRemoveSubLineDet[len-1]=true;
   this.displayRemoveSubLineDet[empIndex][len-1]=true;
   this.PumpService1.segmentListFn1(nozzFuelType)
@@ -564,6 +564,7 @@ onSelectedNozzle(i,event){
       (patch.controls[i]).patchValue({
         nozzFuelType: data.description,
         nozzIsland: data.islandCode,
+        segment: data.description,
         nozzrate:data.rate
       })
     });
@@ -715,15 +716,43 @@ calculationFn(i){
   var arr1= this.employeeSkills(index);
   console.log(arr1);
   var len =this.employeeSkills(index).length;
- 
-  var qty=arr1.value[k].qty;
   var rate1=arr1.value[k].rate;
-  var totAmt = qty*rate1;
-var  totAmt1 = Math.round(((totAmt) + Number.EPSILON) * 100) / 100;
+
+  if (rate1<=0|| rate1 ===null)  { alert ("Please Check RATE column"); return;}
+ 
+      
+   var qty=arr1.value[k].qty;
+   var totAmt = qty*rate1;
+   var  totAmt1 = Math.round(((totAmt) + Number.EPSILON) * 100) / 100;
   this.employeeSkills(index).controls[k].patchValue({lineAmt: totAmt1});
   var payType = null;
   this.addlineCalculation(index,k,payType)
 }
+
+
+lineCalculationFnAmt(index,k){
+
+  var arr1= this.employeeSkills(index);
+  console.log(arr1);
+  var len =this.employeeSkills(index).length;
+ 
+  
+  var rate1=arr1.value[k].rate;
+
+  if (rate1<=0|| rate1 ===null)  { alert ("Please Check RATE column"); return;}
+
+  var totAmt = arr1.value[k].lineAmt;
+  var qty=totAmt/rate1;
+
+  var  qty1 = Math.round(((qty) + Number.EPSILON) * 100) / 100;
+  this.employeeSkills(index).controls[k].patchValue({qty: qty1});
+  var payType = null;
+  this.addlineCalculation(index,k,payType)
+  
+
+}
+
+
 
 
 addlineCalculation(index,k,event){
@@ -966,7 +995,8 @@ selectAccountNo(index,k,accNo,custId,custName){
 cashSubmiAmt(){
   var totalcashsale = this.pumpShiftSalesForm.get('totalcashsale').value;
   var cashsubmitted = this.pumpShiftSalesForm.get('cashsubmitted').value;
-  var cashDiff = Math.round(((totalcashsale-cashsubmitted) + Number.EPSILON) * 100) / 100;
+  var totExp=this.pumpShiftSalesForm.get('totalexpenses').value;
+  var cashDiff = Math.round(((totalcashsale-(cashsubmitted+totExp)) + Number.EPSILON) * 100) / 100;
   this.pumpShiftSalesForm.patchValue({cashdifference:cashDiff})
 }
 
