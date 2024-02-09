@@ -76,6 +76,8 @@ export class TestingDynamicComponent  {
   totalQty:number;
   userList1: any[] = [];
   lastkeydown1: number = 0;
+  Nzd_enableQtyAmtFld =false;
+  NZLlineValidation=false;
 
    constructor(private fb: FormBuilder,private service: MasterService, private router: Router,private PumpService1: PumpService,private orderManagementService: OrderManagementService,private router1: ActivatedRoute) {
     this.pumpShiftSalesForm = fb.group({
@@ -412,7 +414,7 @@ newSkill(): FormGroup {
     locatorid:[],
     segment:[],
     nozzleDetLineNo:[],
-    qty:[0],
+    qty:[],
     rate:[0],
     redingAvailQty:[0],
     selectedLine:[],
@@ -432,9 +434,89 @@ newSkill(): FormGroup {
   });
 }
 
+validateNozzleSublineData(empIndex,i){
+
+  // alert ("emp index ,skillindex :"+empIndex +","+ i);
+
+  // var NZLLineArr1 = this.pumpShiftSalesForm.get('nozzleLineDtlsList').value;
+  var NZLLineArr1 = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList').value
+  var arrline = this.ppShiftNozzleDetailList();
+  var lineDetArr = arrline.value[empIndex].ppShiftNozleLinesList;
+          // totQty=totQty+lineDetArr[k].qty;
+
+alert (lineDetArr[i].itemid+","+lineDetArr[i].rate+","+lineDetArr[i].payType+","+lineDetArr[i].customercode);
+
+  var lineValue1=lineDetArr[i].itemid;
+  var lineValue2=lineDetArr[i].rate;
+  var lineValue3=lineDetArr[i].qty;
+  var lineValue4=lineDetArr[i].lineAmt;
+  var lineValue5=lineDetArr[i].payType;
+  var lineValue6=lineDetArr[i].customerid;
+
+   var j=i+1;
+
+  if(lineValue1===undefined || lineValue1===null || lineValue1<1 ){
+    alert("Line-"+j+ " ITEM CODE :  Should not be null value " +lineValue1);
+    this.NZLlineValidation=false;
+    return;
+  }
+  if(lineValue2===undefined || lineValue2===null || lineValue2<=0 ){
+    alert("Line-"+j+ " RATE:  Invalid Input");
+    this.NZLlineValidation=false;
+    return;
+  }
+  if(lineValue3===undefined || lineValue3===null || lineValue3<=0 ){
+    alert("Line-"+j+ " QTY : Invalid Input");
+    this.NZLlineValidation=false;
+    return;
+  }
+
+  if(lineValue4===undefined || lineValue4===null || lineValue4<=0 ){
+    alert("Line-"+j+ " LINE AMT : Invalid Input");
+    this.NZLlineValidation=false;
+    return;
+  }
+
+  if(lineValue5===undefined || lineValue5===null || lineValue5==='' ){
+    alert("Line-"+j+ " PAY TYPE : Invalid Input");
+    this.NZLlineValidation=false;
+    return;
+  }
+
+  if(lineValue6===undefined || lineValue6===null || lineValue6<=0 ){
+    alert("Line-"+j+ " CUSTOMER CODE : Invalid Input");
+    this.NZLlineValidation=false;
+    return;
+  }
+
+  this.NZLlineValidation=true;
+  // if(this.duplicateLineItem===true) {this.NZLlineValidation=false;}else{this.NZLlineValidation=true;}
+
+
+}
+
 addEmployeeSkill(empIndex: number) {
-  // alert(empIndex+'-----mainIndexValue')
+
+  var hedaerDet = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList') as FormArray;
+  var hedaerDet1=hedaerDet.getRawValue();
+  var nozzleid = hedaerDet1[empIndex].nozzleid;
+  // alert("Nozzle Id main :" +nozzleid);
+  if(nozzleid <0 || nozzleid===null || nozzleid ===undefined)
+  {
+    alert("Nozzle Not Selected.Pls Select Nozzle code and Continue...");return;
+  }
+
+  this.ppShiftNozzleDetailList().controls[empIndex].get('nozzle').disable();
+
   this.displayRemoveSubLineDet[empIndex]=[];
+  var subln=this.employeeSkills(empIndex).length;
+  // alert (" Subarray lines :"+subln);
+
+  this.NZLlineValidation=true;
+  if(subln>0) { this.validateNozzleSublineData(empIndex,subln-1)  }
+
+  if (this.NZLlineValidation) {
+
   this.employeeSkills(empIndex).push(this.newSkill());
   var hedaerDet = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList') as FormArray;
   var hedaerDet1=hedaerDet.getRawValue();
@@ -448,21 +530,25 @@ addEmployeeSkill(empIndex: number) {
   this.employeeSkills(empIndex).controls[len-1].patchValue({createdby: sessionStorage.getItem('emplId'),
   creationdate:this.pipe.transform(this.now, 'yyyy-MM-dd hh:mm:ss'),lasstupdatedby:sessionStorage.getItem('emplId'),
  lastupdatedate:this.pipe.transform(this.now, 'yyyy-MM-dd hh:mm:ss'),  locid:sessionStorage.getItem('locId'),
-  nozzleid:nozzleid,nozzle:segmentList1.nozzleCode,nozzleDetLineNo:1,segment:nozzFuelType});
+  nozzleid:nozzleid,nozzle:segmentList1.nozzleCode,nozzleDetLineNo:1});
+  // ,segment:nozzFuelType
   // this.displayRemoveSubLineDet[len-1]=true;
   this.displayRemoveSubLineDet[empIndex][len-1]=true;
+  alert ("main Index ,sub Index :"+empIndex +","+(len-1));
   this.PumpService1.segmentListFn1(nozzFuelType)
+
 .subscribe(
   data => {
     this.segmentList = data;
     console.log(this.segmentList);
   });
-
-  
+ 
     // alert(empIndex+'-----'+hedaerDet1.length);
     //   if (hedaerDet1[len-1].segment == null || hedaerDet1[len-1].segment == undefined){
     //     this.displayRemoveSubLineDet[len-1]=true;
-    //   }
+    // }
+
+} else { alert ("Incomplete line... Not possible to add lines below..");}
   
 }
 
@@ -535,6 +621,29 @@ pumpShiftSales(pumpShiftSalesForm:any) {  }
 onSelectedNozzle(i,event){
   var segment=event.target.value;
   var segmentList = segment.substr(segment.indexOf('-') + 1, segment.length);
+
+  alert("segment,seglist,nozzleid:"+segment+","+segmentList);
+  // alert(segmentList1.nozzleId);
+
+  if(segment==='--Select--') {
+  var patch = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList') as FormArray;
+   patch.controls[i].patchValue({nozzleid:null});
+   patch.controls[i].patchValue({nozzFuelType: '',nozzIsland:'',segment:'',nozzrate:''});
+  return;
+    
+  }
+
+  // if(value==='--Select--') {
+  //   this.employeeSkills(i).controls[k].patchValue({rate: null});
+  //   this.employeeSkills(i).controls[0].patchValue({redingAvailQty: null});
+  //   this.employeeSkills(i).controls[k].patchValue({locator: null});
+  //   this.employeeSkills(i).controls[k].patchValue({qty: null});
+  //   this.employeeSkills(i).controls[k].patchValue({lineAmt: null});
+  //   this.employeeSkills(i).controls[k].get('qty').disable();
+  //   this.employeeSkills(i).controls[k].get('lineAmt').disable();
+  //   return;
+  //  }
+
   var shiftCode = this.pumpShiftSalesForm.get('shifttypCode').value;
   var todate = this.now;
   this.shiftentrydate =  this.pumpShiftSalesForm.get('shiftentrydate').value;
@@ -551,12 +660,18 @@ onSelectedNozzle(i,event){
   else{
     var tDate = this.pipe.transform(this.shiftentrydate, 'dd-MMM-yyyy');
   }
+
   var segmentList1 = this.nozzleList.find((nozzleList: any) => nozzleList.nozzleCode == segmentList);
   console.log(segmentList1);
+
+  
+
+
   var patch = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList') as FormArray;
   patch.controls[i].patchValue({nozzleid:segmentList1.nozzleId,createdby: sessionStorage.getItem('emplId'),
   creationdate:this.pipe.transform(this.now, 'yyyy-MM-dd hh:mm:ss'),lasstupdatedby:sessionStorage.getItem('emplId'),
   lastupdatedate:this.pipe.transform(this.now, 'yyyy-MM-dd hh:mm:ss'),  locid:sessionStorage.getItem('locId')});
+ 
   this.service.NozzleIslandPick(segmentList1.nozzleId)
   .subscribe(
     data => {
@@ -639,12 +754,39 @@ calculationFn(i){
 
   onSelectSegment(i,k,event){
   
-     var seg = event.target.value;
    
+     var seg = event.target.value;
+     this.Nzd_enableQtyAmtFld=false;
          var value = seg.substr(seg.indexOf(':') + 1, seg.length).trim();
+
+        //  alert ("i,k,seg,value :"+i+","+k+","+seg +","+value);
+
+         if(value==='--Select--') {
+          this.employeeSkills(i).controls[k].patchValue({rate: null});
+          this.employeeSkills(i).controls[0].patchValue({redingAvailQty: null});
+          this.employeeSkills(i).controls[k].patchValue({locator: null});
+          this.employeeSkills(i).controls[k].patchValue({qty: null});
+          this.employeeSkills(i).controls[k].patchValue({lineAmt: null});
+          this.employeeSkills(i).controls[k].get('qty').disable();
+          this.employeeSkills(i).controls[k].get('lineAmt').disable();
+          return;
+         }
+
          console.log(this.segmentList);
          var selectitemList = this.segmentList.find((segList)=>segList.segment===value);
          console.log(selectitemList);
+
+        //  alert ("ItemId :"+selectitemList.itemId);
+    
+
+         if(selectitemList.itemId>0) {
+          this.employeeSkills(i).controls[k].get('qty').enable();
+          this.employeeSkills(i).controls[k].get('lineAmt').enable();
+         } else {
+          this.employeeSkills(i).controls[k].get('qty').disable();
+          this.employeeSkills(i).controls[k].get('lineAmt').disable();
+
+         }
       
             this.employeeSkills(i).controls[k].patchValue({itemid: selectitemList.itemId});
        

@@ -43,8 +43,7 @@
     <div class="classic-tabs">
         <ul class="nav tabs-white nav-fill" role="tablist" style="padding: 0px;">
             <li class="nav-item">
-                <a class="nav-link waves-light active" data-toggle="tab" href="#hedaersDetails" role="tab">Headers
-                    Details</a>
+                <a class="nav-link waves-light active" data-toggle="tab" href="#hedaersDetails" role="tab">Headers Details</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link waves-light" data-toggle="tab" href="#lineDetails" role="tab">Lines Details</a>
@@ -216,8 +215,8 @@
             </div>
             <div class="tab-pane fade" id="lineDetails" role="tabpanel">
                 <fieldset class="RFS">
-                    <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">
-                        Nozzle Details</legend>
+                    <!-- <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">
+                        Nozzle Details</legend> -->
                         <table>
                             <tr>
                                 <td>
@@ -357,14 +356,14 @@
                                                 <th style="width: 100px;text-align: center;" scope="col">Qty </th>
                                                 <th style="width: 100px;text-align: center;" scope="col">Amount </th>
                                                 <th style="width: 100px;text-align: center;" scope="col">Type </th>
-                                                <th style="width: 100px;text-align: center;" scope="col"> Customer Code
+                                                <th style="width: 70px;text-align: center;" scope="col"> Customer Code
                                                 </th>
                                                 <th style="width: 100px;text-align: center;" scope="col"> Customer Name
                                                 </th>
                                                 <th style="width: 100px;text-align: center;" scope="col">Slip Number
                                                 </th>
                                                 <th style="width: 100px;text-align: center;" scope="col">Vehicle No</th>
-                                                <th style="width: 100px;text-align: center;" scope="col">Remove </th>
+                                                <th style="width: 100px;text-align: center;" scope="col">Del- </th>
 
                                             </tr>
                                         </thead>
@@ -382,6 +381,9 @@
                                                                 type="text" formControlName="nozzle"
                                                                 class="form-control">
                                                         </td>
+
+
+                                                        
                                                         <td>
                                                             <select formControlName="segment" class="form-control"
                                                                 (change)="onSelectSegment(empIndex,skillIndex,$event)"
@@ -392,9 +394,8 @@
                                                                     {{sc.segment}}
                                                                 </option>
                                                             </select>
-                                                            <input hidden disabled
-                                                                style="width: 100px;text-align: right;" type="text"
-                                                                formControlName="itemid" class="form-control">
+                                                            <input hidden disabled style="width: 100px;text-align: right;" type="text"
+                                                                                   formControlName="itemid" class="form-control">
                                                         </td>
 
                                                         <!-- <td>
@@ -423,19 +424,10 @@
                                                                 (keydown.tab)='lineCalculationFn(empIndex,skillIndex)'
                                                                 class="form-control">
                                                         </td>
-                                                        <td>
-                                                            <input style="width: 100px;text-align: right;" type="number"
-                                                                formControlName="qty"
-                                                                (keydown.tab)='lineCalculationFn(empIndex,skillIndex)'
-                                                                class="form-control">
-                                                        </td>
 
-                                                        <td>
-                                                            <input  style="width: 100px;text-align: right;"
-                                                                type="number" formControlName="lineAmt"
-                                                                (keydown.tab)='lineCalculationFnAmt(empIndex,skillIndex)'
-                                                                class="form-control">
-                                                        </td>
+                                                        <td> <input disabled style="width: 100px;text-align: right;background-color: yellow;" type="number" formControlName="qty" (keydown.tab)='lineCalculationFn(empIndex,skillIndex)'  class="form-control"></td>
+                                                        <td> <input disabled style="width: 100px;text-align: right;background-color: yellow;" type="number" formControlName="lineAmt" (keydown.tab)='lineCalculationFnAmt(empIndex,skillIndex)'  class="form-control"> </td>
+                                                       
                                                         <td>
                                                             <select formControlName="payType" class="form-control"
                                                                 style="background-color: yellow;"
@@ -450,12 +442,12 @@
                                                         </td>
                                                         <td>
                                                             <input
-                                                                style=" background-color: yellow; text-align: left;width: fit-content;"
+                                                                style=" width:70px; background-color: yellow; text-align: left;width: fit-content;"
                                                                 type="number" formControlName="customercode"
                                                                 (change)="CustAccountNoSearch(empIndex,skillIndex,$event)"
                                                                 class="form-control">
                                                             <input disabled hidden
-                                                                style="width: 100px;text-align: right;" type="number"
+                                                                style="width: 70px;text-align: right;" type="number"
                                                                 formControlName="customerid" class="form-control">
                                                         </td>
                                                         <!-- <td>
@@ -616,22 +608,20 @@
                                                         </td>
                                                         <div *ngIf="displayRemoveSubLineDet[empIndex][skillIndex]; then thenRemoveSubLineDet; else elseRemoveSubLineDet"> </div>
                                                         <ng-template #thenRemoveSubLineDet>
-                                                            <td>
+                                                            <!-- <td>
                                                                 <button
                                                                     (click)="removeEmployeeSkill(empIndex,skillIndex)"
                                                                     class="btn btn-info">
                                                                     Remove
                                                                 </button>
-                                                            </td>
+                                                            </td> -->
+
+                                                            <td><button  type="submit" class="btn btn-info" (click)="removeEmployeeSkill(empIndex,skillIndex)" style="width: min-content;"><i class="fa fa-trash"></i></button></td>
+
                                                         </ng-template>
                                                         <ng-template #elseRemoveSubLineDet>
-                                                            <td>
-                                                                <button
-                                                                    (click)="removeEmployeeSkill(empIndex,skillIndex)"
-                                                                    class="btn btn-info">
-                                                                    Remove
-                                                                </button>
-                                                            </td>
+                                                            <td><button  type="submit" class="btn btn-info" (click)="removeEmployeeSkill(empIndex,skillIndex)" style="width: min-content;"><i class="fa fa-trash"></i></button></td>
+
                                                         </ng-template>
                                                     </tr>
                                                 </tbody>
