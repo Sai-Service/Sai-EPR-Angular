@@ -46,7 +46,7 @@
                 <a class="nav-link waves-light active" data-toggle="tab" href="#hedaersDetails" role="tab">Headers Details</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link waves-light" data-toggle="tab" href="#lineDetails" role="tab">Lines Details</a>
+                <a class="nav-link waves-light" data-toggle="tab" href="#lineDetails" role="tab" (click)="ShiftHeaderCheck()">Lines Details</a>
             </li>
         </ul>
         <div class="tab-content rounded-bottom">
@@ -67,7 +67,7 @@
                             <td>
                                 <select formControlName="shifttypeName" class="form-control"
                                     style="background-color: yellow;" (change)="onSelectShiftTypeId($event)">
-                                    <option>--Select--</option>
+                                    <option >--Select--</option>
                                     <option *ngFor="let sc of  shiftList" [Value]="sc.code">
                                         {{sc.codeDesc}}
                                     </option>
@@ -220,7 +220,7 @@
                         <table>
                             <tr>
                                 <td>
-                                    <button type="button" class="btn btn-info" style="width: fit-content;"
+                                    <button [disabled]="AddNozzleButtonDisabled"  type="button" class="btn btn-info" style="width: fit-content;"
                                     (click)="addEmployee()">Add&nbsp;Nozzle</button>
                                 </td>
                                 <td style="width: 15%" class="LabelFontStyle">Total&nbsp;Nozzle&nbsp;Amount&nbsp; </td>
@@ -281,6 +281,22 @@
                                                     <input hidden type="number" formControlName="nozzleid"
                                                         class="form-control">
                                                 </td>
+
+                                                <!-- <td>
+                                                    <select formControlName="nozzle" class="form-control"
+                                                        (change)="onSelectedNozzle(empIndex,$event)"
+                                                        style="background-color: yellow;">
+                                                        <option value="--Select--">--Select--</option>
+                                                        <option *ngFor="let sc of  nozzleListshift">
+                                                            {{sc.nozzleId}}-{{sc.nozzleCode}}
+                                                        </option>
+                                                    </select>
+                                                    <input hidden type="number" formControlName="nozzleid"
+                                                        class="form-control">
+                                                </td> -->
+
+
+
                                             </ng-template>
                                             <ng-template #elsesegment>
                                                 <td>

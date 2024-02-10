@@ -7,11 +7,39 @@ import { DatePipe } from '@angular/common';
 import { OrderManagementService } from 'src/app/order-management/order-management.service';
 
 
+
+interface IPumpShiftSale{
+
+  shiftentryid:number;
+  shiftentryno :string;
+  shiftentrydate:Date;
+  shifttype:number;
+  employeeid:number;
+
+  shiftCode :string;
+  nozzleId :number;
+  islandCode :string;
+  openMRS:number;
+  closeMRS:number;
+  closeMRM:number;
+  diffValue:Number;
+
+  totalSale :number;
+  totalCashSale:number;
+  totalCreditSale:number;
+  totalotherSale:number;
+  totalexpenses:number;
+  CashSubmitted:number;
+  CashDifference:number;
+
+}
+
 @Component({
   selector: 'app-testing-dynamic',
   templateUrl: './testing-dynamic.component.html',
   styleUrls: ['./testing-dynamic.component.css']
 })
+
 export class TestingDynamicComponent  {
   pumpShiftSalesForm: FormGroup;
   shiftentryno:string;
@@ -41,6 +69,8 @@ export class TestingDynamicComponent  {
   shiftList :any=[];
   salesPersonList :any=[];
   nozzleList:any=[];
+  nozzleListshift:any=[];
+
   IslandDetails:any=[];
   segmentList:any=[];
   PaymentModeList: any=[];
@@ -78,6 +108,11 @@ export class TestingDynamicComponent  {
   lastkeydown1: number = 0;
   Nzd_enableQtyAmtFld =false;
   NZLlineValidation=false;
+  headerValidation=false;
+  NZRComplete=false;
+  AddNozzleButtonDisabled=true;
+  lineItemRepeated=false;
+
 
    constructor(private fb: FormBuilder,private service: MasterService, private router: Router,private PumpService1: PumpService,private orderManagementService: OrderManagementService,private router1: ActivatedRoute) {
     this.pumpShiftSalesForm = fb.group({
@@ -150,6 +185,8 @@ this.service.NozzleList()
     this.nozzleList = data;
     console.log(this.nozzleList);
   });
+
+  
 
   this.service.PaymentModeListPP()
   .subscribe(
@@ -434,17 +471,80 @@ newSkill(): FormGroup {
   });
 }
 
+checkHeaderValidations()  {
+  const formValue: IPumpShiftSale = this.pumpShiftSalesForm.value
+
+  if (formValue.shiftentrydate===undefined || formValue.shiftentrydate===null )
+  {
+     this.headerValidation=false;
+     alert ("Header Details : SHIFT DATE Should not be null....");
+      return;
+   }
+
+  if (formValue.shifttype===undefined || formValue.shifttype===null )
+  {
+     this.headerValidation=false;
+     alert ("Header Details : SHIFT TYPE Should not be null....");
+      return;
+   }
+
+   if (formValue.employeeid===undefined || formValue.employeeid===null )
+   {
+      this.headerValidation=false;
+      alert ("Header Details : SALES PERSON Should not be null....");
+       return;
+    }
+      this.headerValidation=true;
+}
+
+ShiftHeaderCheck(){
+  // alert ("header validation ---"+this.headerValidation);
+if(this.headerValidation==false) {
+  this.checkHeaderValidations();
+  if (this.headerValidation ==false) {
+   
+    this.AddNozzleButtonDisabled=true;
+    this.pumpShiftSalesForm.get('ppShiftNozzleDetailList').disable();
+   }
+   else { 
+          
+          this.pumpShiftSalesForm.get('shiftentrydate').disable();
+          this.pumpShiftSalesForm.get('shifttypeName').disable();
+          this.pumpShiftSalesForm.get('emplName').disable();
+          this.AddNozzleButtonDisabled=false;
+          this.pumpShiftSalesForm.get('ppShiftNozzleDetailList').enable();
+
+          // var shifttp = this.pumpShiftSalesForm.get('shifttypCode').value
+          // var dt0=this.pumpShiftSalesForm.get('shiftentrydate').value
+          // var dt1 = this.pipe.transform(dt0, 'dd-MMM-y');
+          // var dt2=dt1;
+          // var dt3= this.pipe.transform(this.now, 'y-MM-dd');
+          // alert ("shifttype,dt1,dt2 --> "+shifttp+","+dt1+","+dt2);
+
+          // this.service.NozzleListShift(shifttp,dt1,dt2)
+          // .subscribe(
+          // data => {
+          //   this.nozzleListshift = data;
+          //   console.log(this.nozzleListshift);
+          // });
+          
+  }
+} 
+
+          
+
+}
+
+
 validateNozzleSublineData(empIndex,i){
-
   // alert ("emp index ,skillindex :"+empIndex +","+ i);
-
   // var NZLLineArr1 = this.pumpShiftSalesForm.get('nozzleLineDtlsList').value;
   var NZLLineArr1 = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList').value
   var arrline = this.ppShiftNozzleDetailList();
   var lineDetArr = arrline.value[empIndex].ppShiftNozleLinesList;
           // totQty=totQty+lineDetArr[k].qty;
 
-alert (lineDetArr[i].itemid+","+lineDetArr[i].rate+","+lineDetArr[i].payType+","+lineDetArr[i].customercode);
+  alert (lineDetArr[i].itemid+","+lineDetArr[i].rate+","+lineDetArr[i].payType+","+lineDetArr[i].customercode);
 
   var lineValue1=lineDetArr[i].itemid;
   var lineValue2=lineDetArr[i].rate;
@@ -534,7 +634,7 @@ addEmployeeSkill(empIndex: number) {
   // ,segment:nozzFuelType
   // this.displayRemoveSubLineDet[len-1]=true;
   this.displayRemoveSubLineDet[empIndex][len-1]=true;
-  alert ("main Index ,sub Index :"+empIndex +","+(len-1));
+  // alert ("main Index ,sub Index :"+empIndex +","+(len-1));
   this.PumpService1.segmentListFn1(nozzFuelType)
 
 .subscribe(
@@ -617,6 +717,35 @@ RemoveRowV(index) {
 pumpShiftSales(pumpShiftSalesForm:any) {  }
 
 
+CheckForitemRepeat(mNzzId,index) {
+  alert ("Selected Nozzle Id :"+mNzzId+" ,Index :"+index);
+  
+
+   var arrayControlNew = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList') as FormArray;
+    var arrayControl = arrayControlNew.getRawValue();
+    alert ("this.ppShiftNozzleDetailList.length--"+arrayControl.length);
+  
+
+    for (let i=0;i<arrayControl.length;i++){
+{
+  var x=arrayControl[i].nozzleid;
+  alert ("x="+x);
+  if( i !=index && x===mNzzId) {
+    alert("Nozzle Already Added .Check Line :"+(i+1));
+    this.lineItemRepeated=true;
+
+    // var patch = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList') as FormArray;
+    // patch.controls[i].patchValue({nozzleid:null,nozzle:null});
+    // patch.controls[i].patchValue({nozzFuelType: '',nozzIsland:'',segment:'',nozzrate:''});
+    
+    this.ppShiftNozzleDetailList().controls[index].get('nozzle').reset();
+
+    break;
+  } 
+  }
+}
+}
+
 
 onSelectedNozzle(i,event){
   var segment=event.target.value;
@@ -626,12 +755,13 @@ onSelectedNozzle(i,event){
   // alert(segmentList1.nozzleId);
 
   if(segment==='--Select--') {
-  var patch = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList') as FormArray;
+   var patch = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList') as FormArray;
    patch.controls[i].patchValue({nozzleid:null});
    patch.controls[i].patchValue({nozzFuelType: '',nozzIsland:'',segment:'',nozzrate:''});
   return;
     
   }
+
 
   // if(value==='--Select--') {
   //   this.employeeSkills(i).controls[k].patchValue({rate: null});
@@ -664,7 +794,7 @@ onSelectedNozzle(i,event){
   var segmentList1 = this.nozzleList.find((nozzleList: any) => nozzleList.nozzleCode == segmentList);
   console.log(segmentList1);
 
-  
+  this.CheckForitemRepeat(segmentList1.nozzleId,i)
 
 
   var patch = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList') as FormArray;

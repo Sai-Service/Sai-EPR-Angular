@@ -4452,6 +4452,15 @@ TransactionTypemiscpPaint(): Observable<any> {
     return this.http.get(this.ServerUrl + '/NozzelMaster');
   }
 
+  NozzleListShift(shiftTp,dt1,dt2): Observable<any> {
+    alert("ts---"+shiftTp+","+dt1+","+dt2);
+    // return this.http.get(this.ServerUrl + '/NozzelMaster');
+    return this.http.get(this.ServerUrl + `/NozzelMaster/NozleLov?shiftType=${shiftTp}&shiftDate=${dt1}&shiftDate1=${dt2}`);
+  // http://localhost:8081/NozzelMaster/NozleLov?shiftType=I&shiftDate=01-Feb-2024&shiftDate1=02-Feb-2024
+
+  }
+
+
   FuelTypeList(fueltype,divId): Observable<any> {
     // alert ("Ftype:"+fueltype + " , div :"+divId);
     return this.http.get(this.ServerUrl + `/itemMst/ByItemCategory?itemCatType=${fueltype}&divId=${divId}`);

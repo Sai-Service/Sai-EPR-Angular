@@ -38,6 +38,7 @@ interface IPumpShiftSale{
   templateUrl: './pump-shift-sale.component.html',
   styleUrls: ['./pump-shift-sale.component.css']
 })
+
 export class PumpShiftSaleComponent implements OnInit {
   pumpShiftSalesForm: FormGroup;
   pipe = new DatePipe('en-US');
@@ -512,9 +513,7 @@ this.service.NozzleList()
 
 
   CheckLineValidations_NZH(i) {
-
     // alert('addrow index '+i);
-
     var NZHLineArr1 = this.pumpShiftSalesForm.get('nozzleDtlsList').value;
     var lineValue1=NZHLineArr1[i].NozzlidId;
     var lineValue2=NZHLineArr1[i].OpeningReading;
