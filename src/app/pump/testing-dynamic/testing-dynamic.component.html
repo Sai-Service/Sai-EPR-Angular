@@ -62,7 +62,7 @@
                                     formControlName="shiftentryid">
                             </td>
                             <td style="width: 15%" class="LabelFontStyle">Shift&nbsp;Date:</td>
-                            <td><input  type="date" class="form-control" formControlName="shiftentrydate" style="background-color: yellow;"></td>
+                            <td><input  type="date" class="form-control" formControlName="shiftentrydate"  [(ngModel)] ="shiftentrydate" (change)="validateShiftDate(shiftentrydate)" style="background-color: yellow;" max="{{minDate | date:'yyyy-MM-dd'}}"></td>
                             <td style="width: 15%" class="LabelFontStyle">Shift:</td>
                             <td>
                                 <select formControlName="shifttypeName" class="form-control"
@@ -342,7 +342,9 @@
                                             </ng-template><ng-template #elselineDetUpdate></ng-template>
                                             <div  *ngIf="displayRemovelineDet[empIndex]; then thenRemovelineDet; else elseRemovelineDet">  </div>
                                             <ng-template #thenRemovelineDet>
-                                                <td>  <button (click)="removeEmployee(empIndex)" class="btn btn-info"   style="width: fit-content;">Remove</button>  </td>
+                                                <!-- <td>  <button (click)="removeEmployee(empIndex)" class="btn btn-info"   style="width: fit-content;">Remove</button>  </td> -->
+                                                <td><button  type="submit" class="btn btn-info" (click)="removeEmployee(empIndex)" style="width: min-content;"><i class="fa fa-trash"></i></button></td>
+                                           
                                             </ng-template><ng-template #elseRemovelineDet></ng-template>
                                             <input hidden disabled style="width: 100px;text-align: right;" type="text"
                                                 formControlName="creationdate" class="form-control">
@@ -414,10 +416,15 @@
                                                                                    formControlName="itemid" class="form-control">
                                                         </td>
 
+
                                                         <!-- <td>
                                                             <input disabled type="text" class="form-control"
                                                             formControlName="segment">
+
+                                                            <input hidden disabled style="width: 100px;text-align: right;" type="text"
+                                                            formControlName="itemid" class="form-control">
                                                         </td> -->
+                                                        
 
                                                         <td>
                                                             <input disabled style="width: 100px;text-align: right;"
