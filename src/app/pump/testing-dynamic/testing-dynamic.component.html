@@ -177,7 +177,11 @@
                                         <td><button type="submit" class="btn btn-info" (click)="RemoveRowV(l)"
                                                 style="width: min-content;"><i class="fa fa-trash"></i></button>
                                         </td>
-                                    </ng-template> <ng-template #elseVoucherRemove></ng-template>
+                                    </ng-template> <ng-template #elseVoucherRemove>
+                                        <td><button type="submit" class="btn btn-info" (click)="RemoveRowV(l)"
+                                            style="width: min-content;"><i class="fa fa-trash"></i></button>
+                          
+                                    </ng-template>
                                     <input type="text" hidden class="form-control" formControlName="createdby">
                                     <input type="text" hidden class="form-control" formControlName="creationdate">
                                     <input type="text" hidden class="form-control" formControlName="lastupdateby">
@@ -269,7 +273,7 @@
                                             <div *ngIf="displaysegment[empIndex]; then thensegment; else elsesegment">
                                             </div>
                                             <ng-template #thensegment>
-                                                <td>
+                                                <!-- <td>
                                                     <select formControlName="nozzle" class="form-control"
                                                         (change)="onSelectedNozzle(empIndex,$event)"
                                                         style="background-color: yellow;">
@@ -280,20 +284,21 @@
                                                     </select>
                                                     <input hidden type="number" formControlName="nozzleid"
                                                         class="form-control">
-                                                </td>
+                                                </td> -->
 
-                                                <!-- <td>
+                                                <td>
                                                     <select formControlName="nozzle" class="form-control"
                                                         (change)="onSelectedNozzle(empIndex,$event)"
                                                         style="background-color: yellow;">
                                                         <option value="--Select--">--Select--</option>
                                                         <option *ngFor="let sc of  nozzleListshift">
-                                                            {{sc.nozzleId}}-{{sc.nozzleCode}}
+                                                            <!-- {{sc.nozzleId}}-{{sc.nozzleCode}} -->
+                                                            {{sc.nozzleCode}}
                                                         </option>
                                                     </select>
                                                     <input hidden type="number" formControlName="nozzleid"
                                                         class="form-control">
-                                                </td> -->
+                                                </td>
 
 
 
@@ -401,7 +406,7 @@
                                                         </td>
 
 
-                                                        
+<!--                                                         
                                                         <td>
                                                             <select formControlName="segment" class="form-control"
                                                                 (change)="onSelectSegment(empIndex,skillIndex,$event)"
@@ -414,16 +419,16 @@
                                                             </select>
                                                             <input hidden disabled style="width: 100px;text-align: right;" type="text"
                                                                                    formControlName="itemid" class="form-control">
-                                                        </td>
+                                                        </td> -->
 
 
-                                                        <!-- <td>
+                                                        <td>
                                                             <input disabled type="text" class="form-control"
                                                             formControlName="segment">
 
                                                             <input hidden disabled style="width: 100px;text-align: right;" type="text"
                                                             formControlName="itemid" class="form-control">
-                                                        </td> -->
+                                                        </td>
                                                         
 
                                                         <td>
@@ -448,8 +453,8 @@
                                                                 class="form-control">
                                                         </td>
 
-                                                        <td> <input disabled style="width: 100px;text-align: right;background-color: yellow;" type="number" formControlName="qty" (keydown.tab)='lineCalculationFn(empIndex,skillIndex)'  class="form-control"></td>
-                                                        <td> <input disabled style="width: 100px;text-align: right;background-color: yellow;" type="number" formControlName="lineAmt" (keydown.tab)='lineCalculationFnAmt(empIndex,skillIndex)'  class="form-control"> </td>
+                                                        <td> <input  style="width: 100px;text-align: right;background-color: yellow;" type="number" formControlName="qty" (keydown.tab)='lineCalculationFn(empIndex,skillIndex)'  class="form-control"></td>
+                                                        <td> <input  style="width: 100px;text-align: right;background-color: yellow;" type="number" formControlName="lineAmt" (keydown.tab)='lineCalculationFnAmt(empIndex,skillIndex)'  class="form-control"> </td>
                                                        
                                                         <td>
                                                             <select formControlName="payType" class="form-control"
