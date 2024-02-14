@@ -120,7 +120,7 @@
                         </tr>
                         <tr>
                             <td style="width: 15%" class="LabelFontStyle">Final&nbsp;Confirm:</td>
-                            <td><input disabled type="text" class="form-control" formControlName="finalconfirm"></td>
+                            <td><input disabled type="text"    class="form-control" formControlName="finalconfirm" [(ngModel)]="finalconfirm"></td>
                             <td style="width: 15%" class="LabelFontStyle">Final&nbsp;Confirm&nbsp;Date:</td>
                             <td><input disabled type="text" class="form-control" formControlName="finalconfirmdate">
                             </td>
@@ -252,7 +252,7 @@
                                             <th style="width:10rem" scope="col">Island Name</th>
                                             <th style="width:10rem" scope="col">Nozzle&nbsp;Rate</th>
                                             <th style="width:5rem" scope="col">Open Qty(Sys)</th>
-                                            <th style="width:5rem" scope="col">Close Qty(Sys)</th>
+                                            <!-- <th style="width:5rem" scope="col">Close Qty(Sys)</th> -->
                                             <th style="width:5rem" scope="col">Close Qty(Manual)</th>
                                             <th style="width:5rem" scope="col">Total Qty</th>
                                             <th style="width:5rem" scope="col">Diff Qty</th>
@@ -320,12 +320,12 @@
                                             <td><input disabled style="width: 100px;text-align: right;" type="number"
                                                     formControlName="openingreading" class="form-control"
                                                     (keydown.tab)='calculationFn(empIndex)'></td>
-                                            <td><input disabled style="width: 100px;text-align: right;" type="number"
+                                            <!-- <td><input disabled style="width: 100px;text-align: right;" type="number"
                                                     formControlName="systemclosingreading" class="form-control"
-                                                    (keydown.tab)='calculationFn(empIndex)'></td>
+                                                    (keydown.tab)='calculationFn(empIndex)'></td> -->
                                             <td><input style="width: 100px;text-align: right;" type="number"
                                                     formControlName="manualclosingreading" class="form-control"
-                                                    (keydown.tab)='calculationFn(empIndex)'></td>
+                                                    (keydown.tab)='calculationFn(empIndex)' (change)='calculationFn(empIndex)' ></td>
                                             <td><input disabled style="width: 100px;text-align: right;" type="number"
                                                     formControlName="totalsalereading" class="form-control"></td>
                                             <td><input disabled style="width: 100px;text-align: right;" type="number"
@@ -339,8 +339,9 @@
                                             </td>
                                             <div  *ngIf="displaylineSubDetadd[empIndex]; then thenlineSubDetadd; else elselineSubDetadd"> </div>
                                             <ng-template #thenlineSubDetadd>
-                                                <td> <button type="button" class="btn btn-info" (click)="addEmployeeSkill(empIndex)"> Add&nbsp;Details </button> </td>
-                                            </ng-template> <ng-template #elselineSubDetadd></ng-template>
+                                                <td> <button [disabled] ='NZHLineAddDetButtonDisabled' type="button" class="btn btn-info" (click)="addEmployeeSkill(empIndex)"> Add&nbsp;Details </button> </td>
+                                            </ng-template> 
+                                            <ng-template #elselineSubDetadd></ng-template>
                                             <div *ngIf="displaylineDetUpdate[empIndex]; then thenlineDetUpdate; else elselineDetUpdate">  </div>
                                             <ng-template #thenlineDetUpdate>
                                                 <td> <button type="button" class="btn btn-info"    style="width: fit-content;"  (click)="addEmployee()">Add&nbsp;Nozzle</button>  </td>
@@ -644,11 +645,11 @@
                                                                 </button>
                                                             </td> -->
 
-                                                            <td><button  type="submit" class="btn btn-info" (click)="removeEmployeeSkill(empIndex,skillIndex)" style="width: min-content;"><i class="fa fa-trash"></i></button></td>
+                                                            <td><button [disabled]="NZLineDelButtonDisabled" type="submit" class="btn btn-info" (click)="removeEmployeeSkill(empIndex,skillIndex)" style="width: min-content;"><i class="fa fa-trash"></i></button></td>
 
                                                         </ng-template>
                                                         <ng-template #elseRemoveSubLineDet>
-                                                            <td><button  type="submit" class="btn btn-info" (click)="removeEmployeeSkill(empIndex,skillIndex)" style="width: min-content;"><i class="fa fa-trash"></i></button></td>
+                                                            <td><button [disabled]="NZLineDelButtonDisabled" type="submit" class="btn btn-info" (click)="removeEmployeeSkill(empIndex,skillIndex)" style="width: min-content;"><i class="fa fa-trash"></i></button></td>
 
                                                         </ng-template>
                                                     </tr>

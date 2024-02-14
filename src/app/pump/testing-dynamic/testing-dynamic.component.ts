@@ -119,6 +119,8 @@ export class TestingDynamicComponent  {
   headerValidation=false;
   NZRComplete=false;
   AddNozzleButtonDisabled=true;
+  NZLineDelButtonDisabled=false;
+  NZHLineAddDetButtonDisabled=false;
   lineItemRepeated=false;
 
 
@@ -232,7 +234,7 @@ voucherDetailsGroup() {
     shiftvoucherno:[],
     locid:[],
     description:[],
-    amount:[0],
+    amount:[],
     creationdate:[],
     createdby:[],
     lastupdateby:[],
@@ -578,7 +580,14 @@ checkHeaderValidations()  {
 }
 
 ShiftHeaderCheck(){
-  // alert ("header validation ---"+this.headerValidation);
+
+  var fnlConfirm = this.pumpShiftSalesForm.get('finalconfirm').value;
+  // alert ("header validation ---"+this.headerValidation +" fnlConfirm : " +fnlConfirm);
+// if (fnlConfirm ===undefined || fnlConfirm===null || fnlConfirm==='') {}
+if(fnlConfirm != 'YES') {
+  this.NZLineDelButtonDisabled=false;
+  this.NZHLineAddDetButtonDisabled=false;
+
 if(this.headerValidation==false) {
   this.checkHeaderValidations();
   if (this.headerValidation ==false) {
@@ -593,26 +602,8 @@ if(this.headerValidation==false) {
           this.pumpShiftSalesForm.get('emplName').disable();
           this.AddNozzleButtonDisabled=false;
           this.pumpShiftSalesForm.get('ppShiftNozzleDetailList').enable();
-
-          // var shifttp = this.pumpShiftSalesForm.get('shifttypCode').value
-          // var dt0=this.pumpShiftSalesForm.get('shiftentrydate').value
-          // var dt1 = this.pipe.transform(dt0, 'dd-MMM-y');
-          // var dt2=dt1;
-          // var dt3= this.pipe.transform(this.now, 'y-MM-dd');
-          // alert ("shifttype,dt1,dt2 --> "+shifttp+","+dt1+","+dt2);
-
-          // this.service.NozzleListShift(shifttp,dt1,dt2)
-          // .subscribe(
-          // data => {
-          //   this.nozzleListshift = data;
-          //   console.log(this.nozzleListshift);
-          // });
-          
-  }
-} 
-
-          
-
+  }} 
+}  else { this.NZLineDelButtonDisabled=true;this.NZHLineAddDetButtonDisabled=true;}
 }
 
 
@@ -1166,7 +1157,7 @@ calculationFn(i){
 
             //  var hedaerDet = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList') as FormArray;
 
-             alert ("patch[i].manualclosingreading >>"+patch[i].manualclosingreading);
+            //  alert ("patch[i].manualclosingreading >>"+patch[i].manualclosingreading);
             //  alert ("patch[i].openingreading >>"+patch[i].openingreading);
 
              var len = (this.employeeSkills(i).controls.length-1);
@@ -1223,16 +1214,26 @@ calculationFn(i){
   console.log(arr1);
   var len =this.employeeSkills(index).length;
   var rate1=arr1.value[k].rate;
+  var balQty =arr1.value[k].redingAvailQty
 
   if (rate1<=0|| rate1 ===null)  { alert ("Please Check RATE column"); return;}
- 
+  // redingAvailQty
       
    var qty=arr1.value[k].qty;
+
+   if(qty>balQty) { 
+    alert ("Qty Entered is more than available Qty ...Please Enter valid Qty");
+    this.employeeSkills(index).controls[k].patchValue({qty: ''});
+    this.employeeSkills(index).controls[k].patchValue({lineAmt: ''});
+     return;
+    }
+
    var totAmt = qty*rate1;
    var  totAmt1 = Math.round(((totAmt) + Number.EPSILON) * 100) / 100;
-  this.employeeSkills(index).controls[k].patchValue({lineAmt: totAmt1});
-  var payType = null;
-  this.addlineCalculation(index,k,payType)
+    this.employeeSkills(index).controls[k].patchValue({lineAmt: totAmt1});
+    var payType = null;
+    this.addlineCalculation(index,k,payType)
+    
 }
 
 
@@ -1241,14 +1242,20 @@ lineCalculationFnAmt(index,k){
   var arr1= this.employeeSkills(index);
   console.log(arr1);
   var len =this.employeeSkills(index).length;
- 
-  
   var rate1=arr1.value[k].rate;
+  var balQty =arr1.value[k].redingAvailQty
 
   if (rate1<=0|| rate1 ===null)  { alert ("Please Check RATE column"); return;}
 
   var totAmt = arr1.value[k].lineAmt;
   var qty=totAmt/rate1;
+  if(qty>balQty) { 
+
+    alert ("Amount Entered is not matching with available Qty ...Please Enter valid Amount");
+    this.employeeSkills(index).controls[k].patchValue({qty: ''});
+    this.employeeSkills(index).controls[k].patchValue({lineAmt: ''});
+     return;
+    }
 
   var  qty1 = Math.round(((qty) + Number.EPSILON) * 100) / 100;
   this.employeeSkills(index).controls[k].patchValue({qty: qty1});
