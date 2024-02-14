@@ -371,6 +371,7 @@ search(shiftNo){
             this.pumpShiftSalesForm.disable();
             this.newEmployee().disable();
             this.voucherDetailsArray().disable();
+            
           }
           else{
             this.isVisibleshipFinalConfirm=true;
