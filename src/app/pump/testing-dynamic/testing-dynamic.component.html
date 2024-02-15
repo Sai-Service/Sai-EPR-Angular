@@ -2,7 +2,7 @@
     <table style="width: 100%;background-color: white;">
         <tr>
             <td class="PageHeader">
-                &nbsp;&nbsp;Pump&nbsp;Shift&nbsp;Sales&nbsp;Entry&nbsp;Form
+                &nbsp;&nbsp;PUMP&nbsp;SHIFT&nbsp;SALE&nbsp;ENTRY&nbsp;FORM
             </td>
             <table style="width: 100%; background-color: #a4d3e9;">
                 <tr>
@@ -43,11 +43,10 @@
     <div class="classic-tabs">
         <ul class="nav tabs-white nav-fill" role="tablist" style="padding: 0px;">
             <li class="nav-item">
-                <a class="nav-link waves-light active" data-toggle="tab" href="#hedaersDetails" role="tab">Headers
-                    Details</a>
+                <a class="nav-link waves-light active" data-toggle="tab" href="#hedaersDetails" role="tab">Headers Details</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link waves-light" data-toggle="tab" href="#lineDetails" role="tab">Lines Details</a>
+                <a class="nav-link waves-light" data-toggle="tab" href="#lineDetails" role="tab" (click)="ShiftHeaderCheck()">Lines Details</a>
             </li>
         </ul>
         <div class="tab-content rounded-bottom">
@@ -63,12 +62,12 @@
                                     formControlName="shiftentryid">
                             </td>
                             <td style="width: 15%" class="LabelFontStyle">Shift&nbsp;Date:</td>
-                            <td><input  type="date" class="form-control" formControlName="shiftentrydate" style="background-color: yellow;"></td>
+                            <td><input  type="date" class="form-control" formControlName="shiftentrydate"  [(ngModel)] ="shiftentrydate" (change)="validateShiftDate(shiftentrydate)" style="background-color: yellow;" max="{{minDate | date:'yyyy-MM-dd'}}"></td>
                             <td style="width: 15%" class="LabelFontStyle">Shift:</td>
                             <td>
                                 <select formControlName="shifttypeName" class="form-control"
                                     style="background-color: yellow;" (change)="onSelectShiftTypeId($event)">
-                                    <option>--Select--</option>
+                                    <option >--Select--</option>
                                     <option *ngFor="let sc of  shiftList" [Value]="sc.code">
                                         {{sc.codeDesc}}
                                     </option>
@@ -121,7 +120,7 @@
                         </tr>
                         <tr>
                             <td style="width: 15%" class="LabelFontStyle">Final&nbsp;Confirm:</td>
-                            <td><input disabled type="text" class="form-control" formControlName="finalconfirm"></td>
+                            <td><input disabled type="text"    class="form-control" formControlName="finalconfirm" [(ngModel)]="finalconfirm"></td>
                             <td style="width: 15%" class="LabelFontStyle">Final&nbsp;Confirm&nbsp;Date:</td>
                             <td><input disabled type="text" class="form-control" formControlName="finalconfirmdate">
                             </td>
@@ -168,17 +167,21 @@
                                             formControlName="amount" class="form-control"
                                             (keydown.tab)="voucherLineAmt(l)">
                                     </td>
-                                    <td><button type="submit" class="btn btn-info" (click)="addRowV(l)"
+                                    <td><button [disabled] ='vchAddDelButtondisabled' type="submit" class="btn btn-info" (click)="addRowV(l)"
                                             (keydown.shift.arrowdown)="addRowV(l)" style="width: min-content;"><i
                                                 class="fa fa-plus"></i></button></td>
                                     <div
                                         *ngIf="displayVoucherRemove[l]; then thenVoucherRemove; else elseVoucherRemove">
                                     </div>
                                     <ng-template #thenVoucherRemove>
-                                        <td><button type="submit" class="btn btn-info" (click)="RemoveRowV(l)"
+                                        <td><button [disabled] ='vchAddDelButtondisabled' type="submit" class="btn btn-info" (click)="RemoveRowV(l)"
                                                 style="width: min-content;"><i class="fa fa-trash"></i></button>
                                         </td>
-                                    </ng-template> <ng-template #elseVoucherRemove></ng-template>
+                                    </ng-template> <ng-template #elseVoucherRemove>
+                                        <td><button [disabled] ='vchAddDelButtondisabled' type="submit" class="btn btn-info" (click)="RemoveRowV(l)"
+                                            style="width: min-content;"><i class="fa fa-trash"></i></button>
+                          
+                                    </ng-template>
                                     <input type="text" hidden class="form-control" formControlName="createdby">
                                     <input type="text" hidden class="form-control" formControlName="creationdate">
                                     <input type="text" hidden class="form-control" formControlName="lastupdateby">
@@ -216,12 +219,12 @@
             </div>
             <div class="tab-pane fade" id="lineDetails" role="tabpanel">
                 <fieldset class="RFS">
-                    <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">
-                        Nozzle Details</legend>
+                    <!-- <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">
+                        Nozzle Details</legend> -->
                         <table>
                             <tr>
                                 <td>
-                                    <button type="button" class="btn btn-info" style="width: fit-content;"
+                                    <button [disabled]="AddNozzleButtonDisabled"  type="button" class="btn btn-info" style="width: fit-content;"
                                     (click)="addEmployee()">Add&nbsp;Nozzle</button>
                                 </td>
                                 <td style="width: 15%" class="LabelFontStyle">Total&nbsp;Nozzle&nbsp;Amount&nbsp; </td>
@@ -249,7 +252,7 @@
                                             <th style="width:10rem" scope="col">Island Name</th>
                                             <th style="width:10rem" scope="col">Nozzle&nbsp;Rate</th>
                                             <th style="width:5rem" scope="col">Open Qty(Sys)</th>
-                                            <th style="width:5rem" scope="col">Close Qty(Sys)</th>
+                                            <!-- <th style="width:5rem" scope="col">Close Qty(Sys)</th> -->
                                             <th style="width:5rem" scope="col">Close Qty(Manual)</th>
                                             <th style="width:5rem" scope="col">Total Qty</th>
                                             <th style="width:5rem" scope="col">Diff Qty</th>
@@ -270,7 +273,7 @@
                                             <div *ngIf="displaysegment[empIndex]; then thensegment; else elsesegment">
                                             </div>
                                             <ng-template #thensegment>
-                                                <td>
+                                                <!-- <td>
                                                     <select formControlName="nozzle" class="form-control"
                                                         (change)="onSelectedNozzle(empIndex,$event)"
                                                         style="background-color: yellow;">
@@ -281,7 +284,24 @@
                                                     </select>
                                                     <input hidden type="number" formControlName="nozzleid"
                                                         class="form-control">
+                                                </td> -->
+
+                                                <td>
+                                                    <select formControlName="nozzle" class="form-control"
+                                                        (change)="onSelectedNozzle(empIndex,$event)"
+                                                        style="background-color: yellow;">
+                                                        <option value="--Select--">--Select--</option>
+                                                        <option *ngFor="let sc of  nozzleListshift">
+                                                            <!-- {{sc.nozzleId}}-{{sc.nozzleCode}} -->
+                                                            {{sc.nozzleCode}}
+                                                        </option>
+                                                    </select>
+                                                    <input hidden type="number" formControlName="nozzleid"
+                                                        class="form-control">
                                                 </td>
+
+
+
                                             </ng-template>
                                             <ng-template #elsesegment>
                                                 <td>
@@ -289,8 +309,10 @@
                                                         formControlName="nozzle">
                                                 </td>
                                             </ng-template>
+
                                             <td><input disabled type="text" class="form-control"
                                                     formControlName="nozzFuelType"></td>
+
                                             <td><input disabled type="text" class="form-control"
                                                     formControlName="nozzIsland"></td>
                                                     <td><input disabled type="number" class="form-control"
@@ -298,12 +320,12 @@
                                             <td><input disabled style="width: 100px;text-align: right;" type="number"
                                                     formControlName="openingreading" class="form-control"
                                                     (keydown.tab)='calculationFn(empIndex)'></td>
-                                            <td><input disabled style="width: 100px;text-align: right;" type="number"
+                                            <!-- <td><input disabled style="width: 100px;text-align: right;" type="number"
                                                     formControlName="systemclosingreading" class="form-control"
-                                                    (keydown.tab)='calculationFn(empIndex)'></td>
+                                                    (keydown.tab)='calculationFn(empIndex)'></td> -->
                                             <td><input style="width: 100px;text-align: right;" type="number"
                                                     formControlName="manualclosingreading" class="form-control"
-                                                    (keydown.tab)='calculationFn(empIndex)'></td>
+                                                    (keydown.tab)='calculationFn(empIndex)' (change)='calculationFn(empIndex)' ></td>
                                             <td><input disabled style="width: 100px;text-align: right;" type="number"
                                                     formControlName="totalsalereading" class="form-control"></td>
                                             <td><input disabled style="width: 100px;text-align: right;" type="number"
@@ -317,15 +339,18 @@
                                             </td>
                                             <div  *ngIf="displaylineSubDetadd[empIndex]; then thenlineSubDetadd; else elselineSubDetadd"> </div>
                                             <ng-template #thenlineSubDetadd>
-                                                <td> <button type="button" class="btn btn-info" (click)="addEmployeeSkill(empIndex)"> Add&nbsp;Details </button> </td>
-                                            </ng-template> <ng-template #elselineSubDetadd></ng-template>
+                                                <td> <button [disabled] ='NZHLineAddDetButtonDisabled' type="button" class="btn btn-info" (click)="addEmployeeSkill(empIndex)"> Add&nbsp;Details </button> </td>
+                                            </ng-template> 
+                                            <ng-template #elselineSubDetadd></ng-template>
                                             <div *ngIf="displaylineDetUpdate[empIndex]; then thenlineDetUpdate; else elselineDetUpdate">  </div>
                                             <ng-template #thenlineDetUpdate>
                                                 <td> <button type="button" class="btn btn-info"    style="width: fit-content;"  (click)="addEmployee()">Add&nbsp;Nozzle</button>  </td>
                                             </ng-template><ng-template #elselineDetUpdate></ng-template>
                                             <div  *ngIf="displayRemovelineDet[empIndex]; then thenRemovelineDet; else elseRemovelineDet">  </div>
                                             <ng-template #thenRemovelineDet>
-                                                <td>  <button (click)="removeEmployee(empIndex)" class="btn btn-info"   style="width: fit-content;">Remove</button>  </td>
+                                                <!-- <td>  <button (click)="removeEmployee(empIndex)" class="btn btn-info"   style="width: fit-content;">Remove</button>  </td> -->
+                                                <td><button  type="submit" class="btn btn-info" (click)="removeEmployee(empIndex)" style="width: min-content;"><i class="fa fa-trash"></i></button></td>
+                                           
                                             </ng-template><ng-template #elseRemovelineDet></ng-template>
                                             <input hidden disabled style="width: 100px;text-align: right;" type="text"
                                                 formControlName="creationdate" class="form-control">
@@ -355,14 +380,14 @@
                                                 <th style="width: 100px;text-align: center;" scope="col">Qty </th>
                                                 <th style="width: 100px;text-align: center;" scope="col">Amount </th>
                                                 <th style="width: 100px;text-align: center;" scope="col">Type </th>
-                                                <th style="width: 100px;text-align: center;" scope="col"> Customer Code
+                                                <th style="width: 70px;text-align: center;" scope="col"> Customer Code
                                                 </th>
                                                 <th style="width: 100px;text-align: center;" scope="col"> Customer Name
                                                 </th>
                                                 <th style="width: 100px;text-align: center;" scope="col">Slip Number
                                                 </th>
                                                 <th style="width: 100px;text-align: center;" scope="col">Vehicle No</th>
-                                                <th style="width: 100px;text-align: center;" scope="col">Remove </th>
+                                                <th style="width: 100px;text-align: center;" scope="col">Del- </th>
 
                                             </tr>
                                         </thead>
@@ -380,6 +405,9 @@
                                                                 type="text" formControlName="nozzle"
                                                                 class="form-control">
                                                         </td>
+
+
+<!--                                                         
                                                         <td>
                                                             <select formControlName="segment" class="form-control"
                                                                 (change)="onSelectSegment(empIndex,skillIndex,$event)"
@@ -390,14 +418,25 @@
                                                                     {{sc.segment}}
                                                                 </option>
                                                             </select>
-                                                            <input hidden disabled
-                                                                style="width: 100px;text-align: right;" type="text"
-                                                                formControlName="itemid" class="form-control">
+                                                            <input hidden disabled style="width: 100px;text-align: right;" type="text"
+                                                                                   formControlName="itemid" class="form-control">
+                                                        </td> -->
+
+
+                                                        <td>
+                                                            <input disabled type="text" class="form-control"
+                                                            formControlName="segment">
+
+                                                            <input hidden disabled style="width: 100px;text-align: right;" type="text"
+                                                            formControlName="itemid" class="form-control">
                                                         </td>
+                                                        
+
                                                         <td>
                                                             <input disabled style="width: 100px;text-align: right;"
                                                                 type="text" formControlName="locator"
                                                                 class="form-control">
+
                                                             <input disabled hidden
                                                                 style="width: 100px;text-align: right;" type="text"
                                                                 formControlName="locatorid" class="form-control">
@@ -414,18 +453,10 @@
                                                                 (keydown.tab)='lineCalculationFn(empIndex,skillIndex)'
                                                                 class="form-control">
                                                         </td>
-                                                        <td>
-                                                            <input style="width: 100px;text-align: right;" type="number"
-                                                                formControlName="qty"
-                                                                (keydown.tab)='lineCalculationFn(empIndex,skillIndex)'
-                                                                class="form-control">
-                                                        </td>
 
-                                                        <td>
-                                                            <input disabled style="width: 100px;text-align: right;"
-                                                                type="number" formControlName="lineAmt"
-                                                                class="form-control">
-                                                        </td>
+                                                        <td> <input  style="width: 100px;text-align: right;background-color: yellow;" type="number" formControlName="qty" (keydown.tab)='lineCalculationFn(empIndex,skillIndex)'  class="form-control"></td>
+                                                        <td> <input  style="width: 100px;text-align: right;background-color: yellow;" type="number" formControlName="lineAmt" (keydown.tab)='lineCalculationFnAmt(empIndex,skillIndex)'  class="form-control"> </td>
+                                                       
                                                         <td>
                                                             <select formControlName="payType" class="form-control"
                                                                 style="background-color: yellow;"
@@ -440,12 +471,12 @@
                                                         </td>
                                                         <td>
                                                             <input
-                                                                style=" background-color: yellow; text-align: left;width: fit-content;"
+                                                                style=" width:70px; background-color: yellow; text-align: left;width: fit-content;"
                                                                 type="number" formControlName="customercode"
                                                                 (change)="CustAccountNoSearch(empIndex,skillIndex,$event)"
                                                                 class="form-control">
                                                             <input disabled hidden
-                                                                style="width: 100px;text-align: right;" type="number"
+                                                                style="width: 70px;text-align: right;" type="number"
                                                                 formControlName="customerid" class="form-control">
                                                         </td>
                                                         <!-- <td>
@@ -606,14 +637,21 @@
                                                         </td>
                                                         <div *ngIf="displayRemoveSubLineDet[empIndex][skillIndex]; then thenRemoveSubLineDet; else elseRemoveSubLineDet"> </div>
                                                         <ng-template #thenRemoveSubLineDet>
-                                                            <td>
+                                                            <!-- <td>
                                                                 <button
                                                                     (click)="removeEmployeeSkill(empIndex,skillIndex)"
                                                                     class="btn btn-info">
                                                                     Remove
                                                                 </button>
-                                                            </td>
-                                                        </ng-template><ng-template #elseRemoveSubLineDet></ng-template>
+                                                            </td> -->
+
+                                                            <td><button [disabled]="NZLineDelButtonDisabled" type="submit" class="btn btn-info" (click)="removeEmployeeSkill(empIndex,skillIndex)" style="width: min-content;"><i class="fa fa-trash"></i></button></td>
+
+                                                        </ng-template>
+                                                        <ng-template #elseRemoveSubLineDet>
+                                                            <td><button [disabled]="NZLineDelButtonDisabled" type="submit" class="btn btn-info" (click)="removeEmployeeSkill(empIndex,skillIndex)" style="width: min-content;"><i class="fa fa-trash"></i></button></td>
+
+                                                        </ng-template>
                                                     </tr>
                                                 </tbody>
                                                 <!-- </table> -->

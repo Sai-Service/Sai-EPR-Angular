@@ -3,7 +3,7 @@
   <table style="width: 100%;background-color: white;">
     <tr>
       <td class="PageHeader">
-        &nbsp;&nbsp;Pump&nbsp;Shift&nbsp;Sales&nbsp;Entry&nbsp;Form
+        &nbsp;&nbsp;Pump&nbsp;Shift&nbsp;Sales&nbsp;Entry&nbsp;Form-TestRk
       </td>
       <table style="width: 100%; background-color: #a4d3e9;">
         <tr>
@@ -23,17 +23,17 @@
   <div class="classic-tabs">
     <ul class="nav tabs-white nav-fill" role="tablist" style="padding: 0px;">
         <li class="nav-item">
-            <a class="nav-link waves-light active" data-toggle="tab" href="#hedaersDetails" role="tab">Headers Details</a>
+            <a class="nav-link waves-light active" data-toggle="tab" href="#hedaersDetails" role="tab">Shift Header</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link waves-light" data-toggle="tab" href="#nozzleDetails" role="tab">Nozzle Details</a>
+            <a class="nav-link waves-light" data-toggle="tab" href="#nozzleDetails" role="tab" (click)="ShiftHeaderCheck()" >Nozzle Reading</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link waves-light" data-toggle="tab" href="#nozzleLineDetails" role="tab">Nozzle Line Details</a>
+          <a class="nav-link waves-light" data-toggle="tab" href="#nozzleLineDetails" role="tab" >Nozzle Sale Details</a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link waves-light" data-toggle="tab" href="#voucherDetails" role="tab"  (click)="voucherFormLoad()" >Voucher Details</a>
+        <a class="nav-link waves-light" data-toggle="tab" href="#voucherDetails" role="tab"  (click)="ShiftHeaderCheck()" >Voucher Details</a>
     </li>
 
     </ul>
@@ -46,62 +46,79 @@
   <div class="tab-pane fade in show active" id="hedaersDetails" role="tabpanel">
 
   <fieldset class="RFS">
-      <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">Header Details</legend>
+      <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">SHIFT HEADER</legend>
 
   <table class="center">
     <tr>
         <td style="width: 15%" class="LabelFontStyle">Shift&nbsp;No: </td>
         <td><input disabled type="text" class="form-control" formControlName="ShiftEntryNo" [(ngModel)]="ShiftEntryNo"></td>
+      
+        <td style="width: 15%" class="LabelFontStyle">Total&nbsp;Sale:</td>
+        <td><input  disabled  type="number" class="form-control" formControlName="totalSale" [(ngModel)]="totalSale" ></td>
+     
         <td style="width: 15%" class="LabelFontStyle">Shift&nbsp;Date:</td>
         <td><input disabled type="text" class="form-control" formControlName="ShiftEntryDate"[(ngModel)]="ShiftEntryDate"></td>
-         <td style="width: 15%" class="LabelFontStyle">Shift:</td>
+   
+        </tr>
+    <tr>
+
+           
+        <td style="width: 15%" class="LabelFontStyle">Shift:</td>
          
          <td>
-          <select  formControlName="ShiftType" id="ShiftType" [(ngModel)]="ShiftType" class="form-control" style="background-color: yellow;">
+          <select  formControlName="ShiftType" id="ShiftType" [(ngModel)]="ShiftType" class="form-control" style="background-color: yellow;width: 200px;">
               <option *ngFor="let sc of  shiftList"  [(ngValue)]="sc.cmnId">
                   {{sc.code}}-{{sc.codeDesc}}
               </option>
           </select>
          </td>   
 
+         <td style="width: 15%" class="LabelFontStyle">Credit&nbsp;Sale:</td>
+         <td><input disabled type="number" class="form-control" formControlName="totalCreditSale"[(ngModel)]="totalCreditSale" ></td>
+          
+         <td style="width: 15%" class="LabelFontStyle">Total&nbsp;Exp:</td>
+         <td><input disabled type="number" class="form-control" formControlName="totalexpenses"  [(ngModel)]="totalexpenses"  ></td>
+    
+    </tr>
+
+    <tr>
       <td style="width: 15%" class="LabelFontStyle">Shift&nbsp;Employee:</td>
 
       <td>
-          <select  formControlName="employeeId" id="employeeId" [(ngModel)]="employeeId" class="form-control" style="background-color: yellow;">
+          <select  formControlName="employeeId" id="employeeId" [(ngModel)]="employeeId" class="form-control" style="background-color: yellow;width:200px">
               <option *ngFor="let sc of  salesPersonList"  [(ngValue)]="sc.emplId">
                   {{sc.ticketNo}}-{{sc.fullName}}
               </option>
           </select>
          </td>   
-         
-    </tr>
+    
+    <td style="width: 15%" class="LabelFontStyle">Other&nbsp;Sale:</td>
+    <td><input disabled type="number" class="form-control" formControlName="totalotherSale"  [(ngModel)]="totalotherSale" ></td>
 
-    <tr>
-      <td style="width: 15%" class="LabelFontStyle">Total&nbsp;Sale:</td>
-      <td><input  disabled  type="number" class="form-control" formControlName="totalSale" [(ngModel)]="totalSale" ></td>
-      <td style="width: 15%" class="LabelFontStyle">Cash&nbsp;Sale:</td>
-      <td><input disabled type="number" class="form-control" formControlName="totalCashSale"   [(ngModel)]="totalCashSale" ></td>
-      <td style="width: 15%" class="LabelFontStyle">Credit&nbsp;Sale:</td>
-      <td><input disabled type="number" class="form-control" formControlName="totalCreditSale"[(ngModel)]="totalCreditSale" ></td>
-      <td style="width: 15%" class="LabelFontStyle">Other&nbsp;Sale:</td>
-      <td><input disabled type="number" class="form-control" formControlName="totalotherSale"  [(ngModel)]="totalotherSale" ></td>
-    </tr>
-    <tr>
-      <td style="width: 15%" class="LabelFontStyle">Total&nbsp;Exp:</td>
-      <td><input disabled type="number" class="form-control" formControlName="totalexpenses"  [(ngModel)]="totalexpenses"  ></td>
-      <td style="width: 15%" class="LabelFontStyle">Cash&nbsp;Submitted:</td>
-      <td><input         type="number" class="form-control" formControlName="CashSubmitted"  [(ngModel)]="CashSubmitted"   style="background-color: yellow;"></td>
-      <td style="width: 15%" class="LabelFontStyle">Cash&nbsp;Diff:</td>
-      <td><input disabled type="number" class="form-control" formControlName="CashDifference"  [(ngModel)]="CashDifference"  ></td>
-      <td></td>
-
-      <td>
-          <button disabled type="button"  class="btn btn-primary" 
-          data-toggle="modal" data-target="#ShiftvoucherDetails"  (click)="voucherFormLoad()" style="width: fit-content;color: black;">
-          &nbsp;Voucher Details</button>
-      </td>
     
     </tr>
+    <tr>
+    
+      <td style="width: 15%" class="LabelFontStyle">Cash&nbsp;Submitted123:</td>
+      <td><input  type="number" class="form-control" formControlName="CashSubmitted"  [(ngModel)]="CashSubmitted" (change)="onKeyCash(CashSubmitted)"  style="background-color: yellow;"></td>
+      
+
+      <td style="width: 15%" class="LabelFontStyle">Cash&nbsp;Sale:</td>
+      <td><input disabled type="number" class="form-control" formControlName="totalCashSale"   [(ngModel)]="totalCashSale" ></td>
+
+    
+      <td style="width: 15%" class="LabelFontStyle">Cash&nbsp;Diff:</td>
+      <td><input disabled type="number" class="form-control" formControlName="CashDifference"  [(ngModel)]="CashDifference"  ></td>
+
+    
+      <!-- <td>
+          <button disabled type="button"  class="btn btn-primary" 
+          data-toggle="modal" data-target="#ShiftvoucherDetails"  (click)="ShiftHeaderCheck()" style="width: fit-content;color: black;">
+          &nbsp;Voucher Details</button>
+      </td> -->
+    
+    </tr>
+  
   </table>
   </fieldset>
 
@@ -113,12 +130,19 @@
 
 
 <div class="tab-pane fade" id="nozzleDetails" role="tabpanel">
-  <fieldset class="RFS">
-  <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">NOZZLE DETAILS</legend>
+  
 
+  <fieldset class="RFS">
+  <!-- <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">NOZZLE READING</legend> -->
+
+  <table class="center">
+    <tr>
+      <td><button [disabled]="saveNozLineButton" type="button" class="btn btn-primary" (click)="saveNozLine()" style="width:fit-content;">Save Nozzle Reading</button></td>
+    </tr>
+  </table>
   <div class="center">
      <div class="center" formArrayName="nozzleDtlsList">
-
+     
           <div class="grid_scroll">
 
               <table style="width: 100%; border: solid 1px Gray" class="auto-style4"
@@ -126,7 +150,7 @@
                         <thead>
                           <tr class="GridHeader">
                                 <th style="width:2rem" scope="col">Srl#</th>
-                                <th style="width:10rem" scope="col">NozzleId</th>
+                                <th style="width:10rem" scope="col">Nozzle Code</th>
                                 <th style="width:10rem" scope="col">Fuel Type</th>
                                 <th style="width:10rem" scope="col">Island Name</th>
                                 <th style="width:5rem" scope="col">Open Qty(Sys)</th>
@@ -147,26 +171,41 @@
                          
                           <td style="text-align: center;width: 2rem;">{{i+1}}</td>
                         
-                          <td>
-                            <select  formControlName="NozzlidId" id="NozzlidId"  class="form-control" (ngModelChange)="onSelectedNozzle(i)"  (change)="onSelectedNozzle(i)"   style="background-color: yellow;">
-                                <option *ngFor="let sc of  nozzleList"  [(ngValue)]="sc.nozzleId">
-                                  {{sc.nozzleId}}-{{sc.nozzleCode}}
-                                </option>
-                            </select>
-                         </td>
+                            
+                         <!-- <div *ngIf="headerValidation; then NZHYes; else NZHNo"> </div> 
+                         <ng-template #NZHYes> -->
+                              <td><select  formControlName="NozzlidId" id="NozzlidId"  class="form-control" (ngModelChange)="onSelectedNozzle_HL(i)"  (change)="onSelectedNozzle_HL(i)"   style="background-color: yellow;">
+                                    <option *ngFor="let sc of  nozzleList"  [(ngValue)]="sc.nozzleId">
+                                      {{sc.nozzleId}}-{{sc.nozzleCode}}
+                                    </option>
+                              </select></td>
 
-                         <td><input readonly type="string" class="form-control" formControlName="nozzFuelType" ></td>
-                         <td><input readonly type="string" class="form-control" formControlName="nozzIsland" ></td>
-                         <td><input   style="width: 100px;text-align: right;" type="number" formControlName="OpeningReading"  class="form-control" (change)="validateQtyOpen(i)"  placeholder="Opening qty "  ></td>
-                         <td><input   style="width: 100px;text-align: right;" type="number" formControlName="SystemClosingReading"  class="form-control" (change)="validateQtyClose(i)"  placeholder="Close qty sys "  ></td>
-                         <td><input   style="width: 100px;text-align: right;" type="number" formControlName="ManualClosingReading"  class="form-control" (change)="validateQtymClose(i)"  placeholder="close qty manual "  ></td>
-                         <td><input disabled  style="width: 100px;text-align: right;" type="number" formControlName="TotalSaleReading"  class="form-control"  placeholder="total sale qty "  ></td>
-                         <td><input disabled style="width: 100px;text-align: right;" type="number" formControlName="Difference"  class="form-control"   placeholder="diff "  ></td>
-                         <!-- <td><button type="button" class="btn btn-info" (click)="closeSale()">Details</button></td> -->
-                         <td><button type="submit" class="btn btn-info" (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i class="fa fa-plus"></i></button></td>
-                         <td><button type="submit" class="btn btn-info" (click)="RemoveRow(i)" style="width: min-content;"><i class="fa fa-trash"></i></button></td>
+                            <td><input readonly type="string" class="form-control" formControlName="nozzFuelType" ></td>
+                            <td><input readonly type="string" class="form-control" formControlName="nozzIsland" ></td>
+                            <td><input  style="width: 110px;text-align: right;background-color: yellow;" type="number" formControlName="OpeningReading"  class="form-control" (change)="onKeyNZH(i)"  placeholder="Opening qty "  ></td>
+                            <td><input  style="width: 110px;text-align: right;background-color: yellow;" type="number" formControlName="SystemClosingReading"  class="form-control" (change)="onKeyNZH(i)"  placeholder="Close qty sys "  ></td>
+                            <td><input  style="width: 110px;text-align: right;background-color: yellow;" type="number" formControlName="ManualClosingReading"  class="form-control" (change)="onKeyNZH(i)" placeholder="close qty manual " ></td>
+                        <!-- </ng-template> -->
+                        <!-- <ng-template #NZHNo>
+                            <td><select disabled  formControlName="NozzlidId" id="NozzlidId"  class="form-control" (ngModelChange)="onSelectedNozzle_HL(i)"  (change)="onSelectedNozzle_HL(i)"  >
+                                  <option *ngFor="let sc of  nozzleList"  [(ngValue)]="sc.nozzleId">
+                                    {{sc.nozzleId}}-{{sc.nozzleCode}}
+                                  </option>
+                            </select></td>
 
-                        </tr>
+                          <td><input readonly type="string" class="form-control" formControlName="nozzFuelType" ></td>
+                          <td><input readonly type="string" class="form-control" formControlName="nozzIsland" ></td>
+                          <td><input disabled style="width: 110px;text-align: right;" type="number" formControlName="OpeningReading"  class="form-control" (change)="onKeyNZH(i)"  placeholder="Opening qty "  ></td>
+                          <td><input disabled style="width: 110px;text-align: right;" type="number" formControlName="SystemClosingReading"  class="form-control" (change)="onKeyNZH(i)"  placeholder="Close qty sys "  ></td>
+                          <td><input disabled style="width: 110px;text-align: right;" type="number" formControlName="ManualClosingReading"  class="form-control" (change)="onKeyNZH(i)" placeholder="close qty manual "  ></td>
+                        </ng-template> -->
+
+                         <td><input readonly  style="width: 110px;text-align: right;" type="number" formControlName="TotalSaleReading"  class="form-control"  placeholder="total sale qty "  ></td>
+                         <td><input readonly style="width: 110px;text-align: right;" type="number" formControlName="Difference"  class="form-control"   placeholder="diff "  ></td>
+                        
+                         <td><button [disabled]="isDisableARButtonNZH" type="submit" class="btn btn-info" (click)="addRow(i)" (keydown.shift.arrowdown)="addRow(i)" style="width: min-content;"><i class="fa fa-plus"></i></button></td>
+                         <td><button [disabled]="isDisableARButtonNZH" type="submit" class="btn btn-info" (click)="RemoveRow(i)" style="width: min-content;"><i class="fa fa-trash"></i></button></td>
+                       </tr>
               </table>
           </div>
      </div>
@@ -177,7 +216,7 @@
 
 <div class="tab-pane fade" id="nozzleLineDetails" role="tabpanel">
   <fieldset class="RFS">
-  <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">NOZZLE LINE DETAILS</legend>
+  <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">NOZZLE SALE DETAILS</legend>
 
   <div class="center">
      <div class="center" formArrayName="nozzleLineDtlsList">
@@ -186,6 +225,7 @@
 
               <table style="width: 100%; border: solid 1px Gray" class="auto-style4"
                         cellspacing="0" cellpadding="4" rules="all" class="center">
+                       
                         <thead>
                           <tr class="GridHeader">
                             <th style="width: fit-content;"scope="col">Srl#</th>
@@ -204,44 +244,72 @@
                         </tr>
                         </thead>
 
-                      <tr *ngFor="let group of nozzlelineDetailsArray().controls; let J= index" [formGroupName]="J">
+                      <tr *ngFor="let group of nozzlelineDetailsArray().controls; let j= index" [formGroupName]="j">
 
                           <input hidden type="text" hidden formControlName="ShiftEntryId">
                           <input hidden  type="text" formControlName="locId" [(ngModel)]="locId" class="form-control" >
                          
-                          <td style="text-align: center;width: 2rem;">{{J+1}}</td>
-                        
+                          <td style="text-align: center;width: 2rem;">{{j+1}}</td>
+                   
+                      <!-- <div *ngIf="headerValidation; then NZLYes; else NZLNo"> </div> 
+                      <ng-template #NZLYes> -->
+                              <td>
+                                <select   formControlName="NozzlidId" id="NozzlidId"  class="form-control" (ngModelChange)="onSelectedNozzle_LD(j)"  (change)="onSelectedNozzle_LD(j)"   style="width: 100px;background-color: yellow;">
+                                  <option disabled>--Select--</option>
+                                  <option *ngFor="let sc of  nozzleList"  [(ngValue)]="sc.nozzleId">
+                                      {{sc.nozzleId}}-{{sc.nozzleCode}}
+                                    </option>
+                                </select>
+                            </td>
+                            <td><input readonly  type="string" class="form-control" formControlName="nozzIsland" ></td>
+                            <td><input readonly style="width: 100px;text-align: left;" type="string" class="form-control" formControlName="nozzFuelType" ></td>
+
+                            <td><input   style="width: 90px;text-align: right;background-color: yellow;" type="number" formControlName="qty"  class="form-control" (change)="onKeyNZL(j)"  placeholder="Qty"  ></td>
+                            <td><input   style="width: 90px;text-align: right;background-color: yellow;" type="number" formControlName="rate"  class="form-control" (change)="onKeyNZL(j)"  placeholder="UnitRate" ></td>
+                            <td><input   readonly  style="width: 100px;text-align: right;" type="number" formControlName="lineAmt"  class="form-control"  ></td>
+                            <td> <select  formControlName="payType" id="payType"  class="form-control"  style="background-color: yellow;"  (ngModelChange)="onSelectPayType(j)"  (change)="onSelectPayType(j)">
+                                  <option disabled>--Select-- </option>
+                                  <option  *ngFor="let sc of  PaymentModeList" [ngValue]="sc.lookupValue">
+                                      {{sc.lookupValue}}
+                                  </option>
+                              </select>
+                              </td>
+                            <td><input   style="width: 100px;text-align: right;" type="number" formControlName="customerId"  class="form-control"   placeholder=""  ></td>
+                            <td><input   style="width: 100px;text-align: right;" type="text" formControlName="slipNumber"  class="form-control"   placeholder=""  ></td>
+                            <td><input   style="width: 130px;text-align: right;" type="text" formControlName="vehicleNumber"  class="form-control"   placeholder=""  ></td>
+                    <!-- </ng-template> -->
+
+                    <!-- <ng-template #NZLNo>
                           <td>
-                            <select  formControlName="NozzlidId" id="NozzlidId"  class="form-control" (ngModelChange)="onSelectedNozzle(i)"  (change)="onSelectedNozzle(i)"   style="background-color: yellow;">
-                                <option *ngFor="let sc of  nozzleList"  [(ngValue)]="sc.nozzleId">
+                            <select disabled  formControlName="NozzlidId" id="NozzlidId"  class="form-control" (ngModelChange)="onSelectedNozzle_LD(j)"  (change)="onSelectedNozzle_LD(j)"   style="width: 100px;">
+                              <option disabled>--Select--</option>
+                              <option *ngFor="let sc of  nozzleList"  [(ngValue)]="sc.nozzleId">
                                   {{sc.nozzleId}}-{{sc.nozzleCode}}
                                 </option>
                             </select>
-                         </td>
-                         <td><input readonly type="string" class="form-control" formControlName="nozzIsland" ></td>
-                         <td><input readonly type="string" class="form-control" formControlName="nozzFuelType" ></td>
+                        </td>
+                        <td><input readonly  type="string" class="form-control" formControlName="nozzIsland" ></td>
+                        <td><input readonly style="width: 100px;text-align: left;" type="string" class="form-control" formControlName="nozzFuelType" ></td>
 
-                         <td><input   style="width: 100px;text-align: right;" type="number" formControlName="qty"  class="form-control" (change)="validateLineQty(j)"  placeholder="Qty"  ></td>
-                         <td><input   style="width: 100px;text-align: right;" type="number" formControlName="rate"  class="form-control" (change)="validateLineRate(j)"  placeholder="UnitRate"  ></td>
-                         <td><input   readonly  style="width: 100px;text-align: right;" type="number" formControlName="lineAmt"  class="form-control"  ></td>
-                         <td> <select  formControlName="payType" id="payType" [(ngModel)]="payType" class="form-control"  style="background-color: yellow;">
+                        <td><input disabled  style="width: 90px;text-align: right;" type="number" formControlName="qty"  class="form-control" (change)="onKeyNZL(j)"  placeholder="Qty"  ></td>
+                        <td><input disabled  style="width: 90px;text-align: right;" type="number" formControlName="rate"  class="form-control" (change)="onKeyNZL(j)"  placeholder="UnitRate" ></td>
+                        <td><input  disabled  style="width: 100px;text-align: right;" type="number" formControlName="lineAmt"  class="form-control"  ></td>
+                        <td> 
+                         <select disabled formControlName="payType" id="payType"  class="form-control"  >
                               <option disabled>--Select-- </option>
                               <option  *ngFor="let sc of  PaymentModeList" [ngValue]="sc.lookupValue">
                                   {{sc.lookupValue}}
                               </option>
                           </select>
                           </td>
-                        
-                        
-                         <td><input   style="width: 100px;text-align: right;" type="number" formControlName="customerId"  class="form-control"   placeholder=""  ></td>
-                         <td><input   style="width: 100px;text-align: right;" type="text" formControlName="slipNumber"  class="form-control"   placeholder=""  ></td>
-                         <td><input   style="width: 100px;text-align: right;" type="text" formControlName="vehicleNumber"  class="form-control"   placeholder=""  ></td>
+                        <td><input  disabled  style="width: 100px;text-align: right;" type="number" formControlName="customerId"  class="form-control"   placeholder=""  ></td>
+                        <td><input  disabled  style="width: 100px;text-align: right;" type="text" formControlName="slipNumber"  class="form-control"   placeholder=""  ></td>
+                        <td><input  disabled  style="width: 130px;text-align: right;" type="text" formControlName="vehicleNumber"  class="form-control"   placeholder=""  ></td>
+                    </ng-template> -->
 
-                         <!-- <td><button type="button" class="btn btn-info" (click)="closeSale()">Details</button></td> -->
-                         <td><button type="submit" class="btn btn-info" (click)="addRowNL(j)" (keydown.shift.arrowdown)="addRowNL(j)" style="width: min-content;"><i class="fa fa-plus"></i></button></td>
-                         <td><button type="submit" class="btn btn-info" (click)="RemoveRowNL(j)" style="width: min-content;"><i class="fa fa-trash"></i></button></td>
-
-                        </tr>
+                        <td><button [disabled]="isDisableARButtonNZL"  type="submit" class="btn btn-info" (click)="addRowNL(j)" (keydown.shift.arrowdown)="addRowNL(j)" style="width: min-content;"><i class="fa fa-plus"></i></button></td>
+                        <td><button [disabled]="isDisableARButtonNZL"  type="submit" class="btn btn-info" (click)="RemoveRowNL(j)" style="width: min-content;"><i class="fa fa-trash"></i></button></td>
+                   </tr>
               </table>
           </div>
      </div>
@@ -288,19 +356,24 @@
 
                       <tr>
                         <td style="text-align: center;width: 2rem;">{{k+1}}</td>
-                        <td><input  style="width: 150px;height: 25px;text-align: left;" type="text"    formControlName="ShiftVoucherNo" class="form-control"></td>
-                        <td><input  style="width: 500px;height: 25px;text-align: left;" type="text"    formControlName="Description" class="form-control"></td>
-                        <td><input  style="width: 150px;height: 25px;text-align: right;" type="number"    formControlName="Amount" class="form-control"></td>
+
+                        <!-- <div *ngIf="headerValidation; then vchYes; else vchNo"> </div>
+                        <ng-template #vchYes> -->
+                            <td><input  style="width: 150px;height: 25px;text-align: left;background-color: yellow;"   type="text"    formControlName="ShiftVoucherNo" class="form-control"></td>
+                            <td><input  style="width: 500px;height: 25px;text-align: left;background-color: yellow;"   type="text"    formControlName="Description" class="form-control"></td>
+                            <td><input  style="width: 150px;height: 25px;text-align: right;background-color: yellow;"  type="number"    formControlName="Amount" (change)="onKeyVCH(k)" class="form-control"></td>
+                        <!-- </ng-template> -->
+                        <!-- <ng-template #vchNo>
+                          <td><input disabled style="width: 150px;height: 25px;text-align: left;"   type="text"    formControlName="ShiftVoucherNo" class="form-control"></td>
+                          <td><input disabled style="width: 500px;height: 25px;text-align: left;"   type="text"    formControlName="Description" class="form-control"></td>
+                          <td><input disabled style="width: 150px;height: 25px;text-align: right;"  type="number"    formControlName="Amount"  class="form-control"></td>
+                        </ng-template> -->
+                              
+                        <td><button [disabled]="isDisableARButtonVCH" type="submit" class="btn btn-info" (click)="addRowV(k)" (keydown.shift.arrowdown)="addRowV(k)" style="width: min-content;"><i class="fa fa-plus"></i></button></td>
+                        <td><button [disabled]="isDisableARButtonVCH" type="submit" class="btn btn-info" (click)="RemoveRowV(k)" style="width: min-content;"><i class="fa fa-trash"></i></button></td>
+                
+
                         
-                        <div *ngIf="headerValidation; then vModalYes; else vModalNo"> </div>
-                        <ng-template #vModalYes>
-                        <td><button type="submit" class="btn btn-info" (click)="addRowV(k)" (keydown.shift.arrowdown)="addRowV(k)" style="width: min-content;"><i class="fa fa-plus"></i></button></td>
-                        <td><button type="submit" class="btn btn-info" (click)="RemoveRowV(k)" style="width: min-content;"><i class="fa fa-trash"></i></button></td>
-                        </ng-template>
-                        <ng-template #vModalNo>
-                          <td><button disabled type="submit" class="btn btn-info" (click)="addRowV(k)" (keydown.shift.arrowdown)="addRowV(k)" style="width: min-content;"><i class="fa fa-plus"></i></button></td>
-                          <td><button disabled type="submit" class="btn btn-info" (click)="RemoveRowV(k)" style="width: min-content;"><i class="fa fa-trash"></i></button></td>
-                        </ng-template>
                       </tr>
 
                       </ng-container>
@@ -336,7 +409,7 @@
           <button disabled type="submit" class="btn btn-info" (click)="saveSale1()" >Save</button>
       </ng-template>
 
-      <td><button  type="button" class="btn btn-info" (click)="saveSale1()" style="width: fit-content; text-align: center;">Nozzle Line Details</button></td>
+      <!-- <td><button  type="button" class="btn btn-info" (click)="ValidateArrayLine()" style="width: fit-content; text-align: center;">Validate</button></td> -->
       
       </tr>
     </table>
