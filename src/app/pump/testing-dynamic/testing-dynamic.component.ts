@@ -123,6 +123,7 @@ export class TestingDynamicComponent  {
   NZHLineAddDetButtonDisabled=false;
   lineItemRepeated=false;
   vchAddDelButtondisabled=false;
+  vchLineValidation=false;
 
 
    constructor(private fb: FormBuilder,private service: MasterService, private router: Router,private PumpService1: PumpService,private orderManagementService: OrderManagementService,private router1: ActivatedRoute) {
@@ -545,6 +546,39 @@ newSkill(): FormGroup {
 }
 
 
+CheckVoucherLineValidations(i) {
+
+  // this.checkHeaderValidations();
+  // if (this.headerValidation) {
+    // alert ("in CheckVoucherLineValidations")
+
+ var VchLineArr1 = this.pumpShiftSalesForm.get('ppShiftVoucherList').value;
+
+ var lineValue1=VchLineArr1[i].shiftvoucherno;
+ var lineValue2=VchLineArr1[i].description;
+ var lineValue3=VchLineArr1[i].amount;
+  var j=i+1;
+ if(lineValue1===undefined || lineValue1===null || lineValue1==='' ){
+   alert("Line-"+j+ " VOUCHER NO :  Should not be null value");
+   this.vchLineValidation=false;
+   return; }
+
+ if(lineValue2===undefined || lineValue2===null || lineValue2==='' ){
+   alert("Line-"+j+ " DESCRIPTION:  Should not be null value");
+   this.vchLineValidation=false;
+   return; }
+
+ if(lineValue3===undefined || lineValue3===null || lineValue3<=0){
+   alert("Line-"+j+ " AMOUNT :  Should  be grater than Zero");
+   this.vchLineValidation=false;
+   return;}
+   this.vchLineValidation=true;
+
+//  if(this.duplicateLineItem===true) {this.lineValidation=false;}else{this.lineValidation=true;}
+ } 
+
+//  else { alert ("Header Details not Entered .Please check");}
+
 
 validateShiftDate(shftDate) {
   var currDate = new Date();
@@ -810,6 +844,12 @@ onSelectEmplName(event){
 
 
 addRowV(index) {
+  // alert ("addrowV");
+
+  this.CheckVoucherLineValidations(index);
+  // alert ("vch Validation :"+this.vchLineValidation);
+  if(this.vchLineValidation) {
+
   var voucherContr1 = this.pumpShiftSalesForm.get('ppShiftVoucherList').value;
   var shiftvoucherno = voucherContr1[index].shiftvoucherno;
   var description = voucherContr1[index].description;
@@ -839,6 +879,7 @@ addRowV(index) {
 } 
   else {alert("Duplicate Line Item Found : Remove Duplicate line and Proceed..." + this.duplicateLineItem);
 }
+  }
 }
 
 RemoveRowV(index) {
@@ -1400,6 +1441,7 @@ validation(){
 saveSale1(){
   this.isVisibleShiftPretolSave=false;
   let jsonData = this.pumpShiftSalesForm.getRawValue();
+ 
   // this.closeResetButton = false;
     this.progress = 0;
     this.validation();
