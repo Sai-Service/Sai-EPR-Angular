@@ -167,18 +167,18 @@
                                             formControlName="amount" class="form-control"
                                             (keydown.tab)="voucherLineAmt(l)">
                                     </td>
-                                    <td><button type="submit" class="btn btn-info" (click)="addRowV(l)"
+                                    <td><button [disabled] ='vchAddDelButtondisabled' type="submit" class="btn btn-info" (click)="addRowV(l)"
                                             (keydown.shift.arrowdown)="addRowV(l)" style="width: min-content;"><i
                                                 class="fa fa-plus"></i></button></td>
                                     <div
                                         *ngIf="displayVoucherRemove[l]; then thenVoucherRemove; else elseVoucherRemove">
                                     </div>
                                     <ng-template #thenVoucherRemove>
-                                        <td><button type="submit" class="btn btn-info" (click)="RemoveRowV(l)"
+                                        <td><button [disabled] ='vchAddDelButtondisabled' type="submit" class="btn btn-info" (click)="RemoveRowV(l)"
                                                 style="width: min-content;"><i class="fa fa-trash"></i></button>
                                         </td>
                                     </ng-template> <ng-template #elseVoucherRemove>
-                                        <td><button type="submit" class="btn btn-info" (click)="RemoveRowV(l)"
+                                        <td><button [disabled] ='vchAddDelButtondisabled' type="submit" class="btn btn-info" (click)="RemoveRowV(l)"
                                             style="width: min-content;"><i class="fa fa-trash"></i></button>
                           
                                     </ng-template>

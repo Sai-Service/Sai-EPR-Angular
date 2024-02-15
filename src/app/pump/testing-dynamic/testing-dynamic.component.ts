@@ -122,6 +122,7 @@ export class TestingDynamicComponent  {
   NZLineDelButtonDisabled=false;
   NZHLineAddDetButtonDisabled=false;
   lineItemRepeated=false;
+  vchAddDelButtondisabled=false;
 
 
    constructor(private fb: FormBuilder,private service: MasterService, private router: Router,private PumpService1: PumpService,private orderManagementService: OrderManagementService,private router1: ActivatedRoute) {
@@ -373,10 +374,12 @@ search(shiftNo){
             this.pumpShiftSalesForm.disable();
             this.newEmployee().disable();
             this.voucherDetailsArray().disable();
+            this.vchAddDelButtondisabled=true;
             
           }
           else{
             this.isVisibleshipFinalConfirm=true;
+            this.vchAddDelButtondisabled=false;
           }
 
           var shipConDt = this.pipe.transform(data.obj.finalconfirmdate, 'dd-MM-yyyy');
@@ -587,6 +590,7 @@ ShiftHeaderCheck(){
 if(fnlConfirm != 'YES') {
   this.NZLineDelButtonDisabled=false;
   this.NZHLineAddDetButtonDisabled=false;
+  this.vchAddDelButtondisabled=false;
 
 if(this.headerValidation==false) {
   this.checkHeaderValidations();
@@ -603,7 +607,7 @@ if(this.headerValidation==false) {
           this.AddNozzleButtonDisabled=false;
           this.pumpShiftSalesForm.get('ppShiftNozzleDetailList').enable();
   }} 
-}  else { this.NZLineDelButtonDisabled=true;this.NZHLineAddDetButtonDisabled=true;}
+}  else { this.NZLineDelButtonDisabled=true;this.NZHLineAddDetButtonDisabled=true; this.vchAddDelButtondisabled=true;}
 }
 
 
