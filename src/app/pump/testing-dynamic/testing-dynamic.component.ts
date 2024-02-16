@@ -275,6 +275,12 @@ search(shiftNo){
     } 
     else{
       this.closeResetButton = true;
+      
+      // this.AddNozzleButtonDisabled=true;
+      // this.NZHLineAddDetButtonDisabled=true
+      // this.NZLineDelButtonDisabled=true;
+      // this.vchAddDelButtondisabled=true;
+
       this.progress = 0;
       this.dataDisplay = 'Data Searching Completed....Do not refresh the Page';
       var selectShiftTyep =  this.shiftList.find((shiftList: any) => shiftList.cmnId == data.obj.shifttype);  
@@ -661,7 +667,9 @@ if(this.headerValidation==false) {
           this.AddNozzleButtonDisabled=false;
           this.pumpShiftSalesForm.get('ppShiftNozzleDetailList').enable();
   }} 
-}  else { this.NZLineDelButtonDisabled=true;this.NZHLineAddDetButtonDisabled=true; this.vchAddDelButtondisabled=true;}
+}  else { this.NZLineDelButtonDisabled=true;
+          this.NZHLineAddDetButtonDisabled=true; 
+          this.vchAddDelButtondisabled=true;}
 }
 
 
