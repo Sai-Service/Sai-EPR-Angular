@@ -84,6 +84,7 @@
                                         {{sc.ticketNo}}-{{sc.fullName}}
                                     </option>
                                 </select> -->
+
                                 <input type="text" formControlName="emplName"  style="background-color: yellow;"
                                 (keyup)="getUserIdsFirstWay($event)" id="userIdFirstWay"
                                 list="dynmicUserIds" class="form-control" 
@@ -109,7 +110,7 @@
                         </tr>
                         <tr>
                             <td style="width: 15%" class="LabelFontStyle">Total&nbsp;Exp:</td>
-                            <td><input disabled type="number" class="form-control" formControlName="totalexpenses"></td>
+                            <td><input disabled type="number" class="form-control" formControlName="totalexpenses" (change)="cashSubmiAmt()"></td>
                             <td style="width: 15%" class="LabelFontStyle">Cash&nbsp;Submitted:</td>
                             <td><input type="number" class="form-control" formControlName="cashsubmitted"
                                     style="background-color: yellow;" (change)="cashSubmiAmt()"></td>
@@ -374,21 +375,16 @@
                                                 <th style="width: 100px;text-align: center;" scope="col">Nozzle </th>
                                                 <th style="width: 100px;text-align: center;" scope="col">Item </th>
                                                 <th style="width: 100px;text-align: center;" scope="col">Locator </th>
-
                                                 <th style="width: 100px;text-align: center;" scope="col">Rate </th>
                                                 <th style="width: 100px;text-align: center;" scope="col">Reading Available Qty</th>
                                                 <th style="width: 100px;text-align: center;" scope="col">Qty </th>
                                                 <th style="width: 100px;text-align: center;" scope="col">Amount </th>
                                                 <th style="width: 100px;text-align: center;" scope="col">Type </th>
-                                                <th style="width: 70px;text-align: center;" scope="col"> Customer Code
-                                                </th>
-                                                <th style="width: 100px;text-align: center;" scope="col"> Customer Name
-                                                </th>
-                                                <th style="width: 100px;text-align: center;" scope="col">Slip Number
-                                                </th>
+                                                <th style="width: 70px;text-align: center;" scope="col"> Customer Code</th>
+                                                <th style="width: 100px;text-align: center;" scope="col"> Customer Name</th>
+                                                <th style="width: 100px;text-align: center;" scope="col">Slip Number</th>
                                                 <th style="width: 100px;text-align: center;" scope="col">Vehicle No</th>
                                                 <th style="width: 100px;text-align: center;" scope="col">Del- </th>
-
                                             </tr>
                                         </thead>
                                         <ng-container
