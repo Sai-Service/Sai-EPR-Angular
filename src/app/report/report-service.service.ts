@@ -1095,5 +1095,13 @@ cashCardSumFn(fromDate,toDate,locId){
   });
 }
 
+cashCardDetFn(fromDate,toDate,locId){
+  const REQUEST_URI = this.ServerUrl +`/PetrolPumpReport/PP_CashCardDetail?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  }); 
+}
+
 }
 
