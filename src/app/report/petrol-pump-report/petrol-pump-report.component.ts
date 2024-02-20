@@ -135,6 +135,11 @@ export class PetrolPumpReportComponent implements OnInit {
       this.isVisibleCashCollectionExcessShort=true;
       this.isVisiblegstsaiDebtors=false;
     }
+    if (reportName==='saleRegisterCustomerWise'){
+      this.reportName='Sales Register - Customer Wise';
+      this.isVisibleCashCollectionExcessShort=true;
+      this.isVisiblegstsaiDebtors=false;
+    }
   }
 
   fromToDateValidation(fDate,tDate){
@@ -165,7 +170,7 @@ export class PetrolPumpReportComponent implements OnInit {
 
 
   reportParameter(reportName) {
-    alert(reportName)
+    // alert(reportName)
     // alert ("....Report Not ready....wip");
     // return;
     // this.isDisabled1 = true;
@@ -211,6 +216,18 @@ else if (reportName === 'Cash Card Detail Report'){
     this.dataDisplay = ''
   })
 }
+else if (reportName === 'Sales Register - Customer Wise'){
+  this.fromToDateValidation(fromDate,toDate); if(this.rptValidation==false){return;}
+  const fileName = 'Sales Register - Customer Wise-' +  fromDate + '.xls';
+  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  this.reportService.saleRegisterCustomerWiseFn(fromDate, toDate, sessionStorage.getItem('locId'))
+  .subscribe(data => {
+    saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+    this.closeResetButton = true;
+    this.dataDisplay = ''
+  })
+}
+
     else if (reportName ==='Debtor Report'){
      
       var custAccNo=' ';
