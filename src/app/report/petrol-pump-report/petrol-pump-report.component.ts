@@ -6,7 +6,6 @@ import { DatePipe, Location, CommonModule } from '@angular/common';
 import { MasterService } from 'src/app/master/master.service';
 import { saveAs } from 'file-saver';
 
-
 const MIME_TYPES = {
   pdf: 'application/pdf',
   xls: 'application/vnd.ms-excel',
@@ -131,6 +130,16 @@ export class PetrolPumpReportComponent implements OnInit {
       this.isVisibleCashCollectionExcessShort=true;
       this.isVisiblegstsaiDebtors=false;
     }
+    if (reportName==='cashCardDet'){
+      this.reportName='Cash Card Detail Report';
+      this.isVisibleCashCollectionExcessShort=true;
+      this.isVisiblegstsaiDebtors=false;
+    }
+    if (reportName==='saleRegisterCustomerWise'){
+      this.reportName='Sales Register - Customer Wise';
+      this.isVisibleCashCollectionExcessShort=true;
+      this.isVisiblegstsaiDebtors=false;
+    }
   }
 
   fromToDateValidation(fDate,tDate){
@@ -161,7 +170,7 @@ export class PetrolPumpReportComponent implements OnInit {
 
 
   reportParameter(reportName) {
-    alert(reportName)
+    // alert(reportName)
     // alert ("....Report Not ready....wip");
     // return;
     // this.isDisabled1 = true;
@@ -172,7 +181,6 @@ export class PetrolPumpReportComponent implements OnInit {
     var fromDate = this.pipe.transform(purStDt, 'dd-MMM-yyyy');
     var toDate1 = this.petrolPumpReportForm.get('toDate').value;
     var toDate = this.pipe.transform(toDate1, 'dd-MMM-yyyy');
-    debugger;
     if (reportName === 'Cash Collection-Excess Short Report') {
       this.fromToDateValidation(fromDate,toDate); if(this.rptValidation==false){return;}
       const fileName = 'Cash Collection-Excess Short-' +  fromDate + '.xls';
@@ -190,6 +198,29 @@ else if (reportName === 'Cash Card Summary Report'){
   const fileName = 'Cash Card Summary Report-' +  fromDate + '.xls';
   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
   this.reportService.cashCardSumFn(fromDate, toDate, sessionStorage.getItem('locId'))
+  .subscribe(data => {
+    saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+    this.closeResetButton = true;
+    this.dataDisplay = ''
+  })
+}
+
+else if (reportName === 'Cash Card Detail Report'){
+  this.fromToDateValidation(fromDate,toDate); if(this.rptValidation==false){return;}
+  const fileName = 'Cash Card Detail Report-' +  fromDate + '.xls';
+  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  this.reportService.cashCardDetFn(fromDate, toDate, sessionStorage.getItem('locId'))
+  .subscribe(data => {
+    saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+    this.closeResetButton = true;
+    this.dataDisplay = ''
+  })
+}
+else if (reportName === 'Sales Register - Customer Wise'){
+  this.fromToDateValidation(fromDate,toDate); if(this.rptValidation==false){return;}
+  const fileName = 'Sales Register - Customer Wise-' +  fromDate + '.xls';
+  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  this.reportService.saleRegisterCustomerWiseFn(fromDate, toDate, sessionStorage.getItem('locId'))
   .subscribe(data => {
     saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
     this.closeResetButton = true;
