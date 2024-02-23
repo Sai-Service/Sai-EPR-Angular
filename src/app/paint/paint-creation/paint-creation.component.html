@@ -100,21 +100,27 @@
             *ngIf="getGroupControl('subInventory').touched && getGroupControl('subInventory').invalid">Valid Transaction Type
            </span>
         </td>
-        <td style="width: 15%" class="LabelFontStyle">
-            Issue Type:
-          </td>
-          <td>
-            <select class="form-control" formControlName="reason" [(ngModel)]="reason" (ngModelChange)="onSelectReason($event)">
-              <option></option>
-              <option *ngFor="let reason of reasonlist" >{{reason.reasonName}}-{{reason.costCode}}-{{reason.description}}</option>
+
+        <td style="width: 15%" class="LabelFontStyle">Issue Type:</td>
+        <td><input disabled class="form-control"  formControlName="reason" [(ngModel)]="reason" ></td>
+        <!-- <input hidden class="form-control"  formControlName="reason" [(ngModel)]="reason" > -->
+ 
+
+          <!-- <td>
+            <select class="form-control" formControlName="reason" [(ngModel)]="reason" (ngModelChange)="onSelectReason1($event)">
+              <option disabled>--Select--</option>
+              <option *ngFor="let rsn of reasonlist" [ngValue]="rsn.reasonName">
+                {{rsn.reasonName}}-{{rsn.costCode}}-{{rsn.description}}
+                
+              </option>
               </select>
               <span
               *ngIf="getGroupControl('reason').touched && getGroupControl('reason').invalid">Valid Transaction Type
              </span>
-          </td>
-          <td style="width: 15%" class="LabelFontStyle">
-              Account Code:
-             </td>
+          </td> -->
+
+         
+          <td style="width: 15%" class="LabelFontStyle">Account Code: </td>
   
   
                <input hidden type="number" formControlName="codeCombinationId">

@@ -153,8 +153,11 @@ export class PaintCreationComponent implements OnInit {
   segmentNameList: any;
   codeCombinationId: number;
   compileType: number;
-  reason: string;
+  // reason1: string="PN001-32-Paint Mixing Issue";
+  reason: string="PN001";
   reasonlist: any;
+  // public reasonlist :any[];
+
   compileStatus: string = "OPEN"
   entryStatusCode: number;
   LocatorSegment: string;
@@ -464,18 +467,38 @@ export class PaintCreationComponent implements OnInit {
       }
     );
 
+
+    // this.service.PaintReasonList().subscribe(
+    //   data => {
+    //     this.reasonlist = data;
+
+        // let selreasonlist: any = [];
+        // for (let i = 0; i < this.reasonlist.length; i++) {
+        //   if (this.reasonlist[i].reasonName.includes('IC')) {
+        //     selreasonlist.push(this.reasonlist[i]);
+        //   }
+        // }
+        // this.reasonlist = selreasonlist;
+    //     console.log(this.reasonlist);
+
+    //   }
+    // )
+
     this.service.PaintReasonList().subscribe(
       data => {
         this.reasonlist = data;
-        let selreasonlist: any = [];
-        for (let i = 0; i < this.reasonlist.length; i++) {
-          if (this.reasonlist[i].reasonName.includes('IC')) {
-            selreasonlist.push(this.reasonlist[i]);
-          }
+        console.log(this.reasonlist);
+
+        let select1 = this.reasonlist.find(d => d.reasonName === 'PN001');
+        if (select1 != undefined) { 
+          this.onSelectReason1(select1.reasonName,select1.costCode)
         }
-        this.reasonlist = selreasonlist;
       }
     )
+
+   
+    // this.onSelectReason1("PN001");
+
     this.service.TypeList().subscribe(
       data => {
         this.TypeList = data;
@@ -488,11 +511,7 @@ export class PaintCreationComponent implements OnInit {
         console.log(this.issueByList);
       });
 
-     
-
-
-
-    this.addnewcycleLinesList(-1);
+      this.addnewcycleLinesList(-1);
 
     var patch = this.paintCreationForm.get('trxLinesList') as FormArray
 
@@ -503,7 +522,10 @@ export class PaintCreationComponent implements OnInit {
 
     );
     this.displayRemoveRow[0] = false;
+
   }
+
+
   paintCreation(paintCreationForm: any) { }
 
   getInvItemId($event) {
@@ -516,6 +538,7 @@ export class PaintCreationComponent implements OnInit {
       }
     }
   }
+
   searchFromArray1(arr, regex) {
     let matches = [], i;
     for (i = 0; i < arr.length; i++) {
@@ -540,10 +563,7 @@ export class PaintCreationComponent implements OnInit {
     //   itemCode = itemCode2[0]; 
     //   event=itemCode
     // }
-
-    
     // alert ("event :"+event +", item code :"+itemCode+","+i)
-
 
     let select1 = this.ItemIdList.find(d => d.SEGMENT === event);
     if (select1 != undefined) {
@@ -1115,6 +1135,7 @@ export class PaintCreationComponent implements OnInit {
     const formValue: IPaintMixing = this.paintCreationForm.getRawValue();
     // const formValue: IPaintIssue = this.paintIssueForm.value;
     var msg1;
+
     
     if (formValue.reason === undefined || formValue.reason === null  || formValue.reason.trim()=='') {
       this.headerValidation1 = false;
@@ -1152,6 +1173,8 @@ export class PaintCreationComponent implements OnInit {
 
       if (this.headerValidation1  && this.lineValidation1 ){
       var  resp=confirm("Do You Want to Save this Transaction ???");
+
+      // alert ("Rsep :"+resp);
       if(resp==false) { return;}
       }
 
@@ -1233,13 +1256,45 @@ export class PaintCreationComponent implements OnInit {
         console.log(data);
       }
     );
-
     // this.service.ItemIdListDept(this.deptId, Number(sessionStorage.getItem('locId')), this.subInvCode.subInventoryId).subscribe(
     //   data => {
     //     this.ItemIdList = data;
     //   });
 
   }
+
+  onSelectReason1(event,event1) {
+
+    // var reasonArr = event
+    // alert(reasonArr)
+    // var evnt='PN001'
+
+    // let select1 = this.reasonlist.find(d => d.reasonName === event);
+    // if (select1 != undefined) { 
+      // alert (select1.reasonName +","+select1.costCode+","+select1.description)
+
+              
+    this.service.reasonaccCode(this.locId, event, event1).subscribe(
+
+      data => {
+        this.acccodedesc = data;
+        // this.paintCreationForm.patchValue({reason:this.acccodedesc.segmentName});
+        this.segmentName = this.acccodedesc.segmentName;
+      }
+    );
+    var selreason = this.reasonlist.find(d => d.reasonName === event)
+    this.service.WorkShopIcIssue(this.locId, selreason.attribute2).subscribe(
+      data => {
+        this.workshopIssue = data;
+        console.log(data);
+      }
+    );
+    
+    //  }
+  }
+
+
+
   keytab(event, maxLength, nxtEle) {
     console.log(event);
     // let sib=event.srcElement.nextElementSibling;
@@ -1264,8 +1319,6 @@ export class PaintCreationComponent implements OnInit {
         this.input6.nativeElement.focus();
       }
     }
-
-
   }
 
 
