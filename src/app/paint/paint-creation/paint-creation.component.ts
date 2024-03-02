@@ -57,10 +57,12 @@ interface IPaintMixing {
   View1: string;
   trans: string;
   CostDetail: number;
-  attribute1: number;
+  attribute1: string;
   attribute2: Date;
 
   colorCode :string;
+  colorDescription : string;
+
   totIssuedQty:number;
   totIssuedValue:number;
 
@@ -142,6 +144,8 @@ export class PaintCreationComponent implements OnInit {
   displayButton: boolean = true;
   displayaddButton: boolean = true;
   addRow: boolean = true;
+
+
   public InterBrancList: Array<string> = [];
   public BranchList: Array<string> = [];
   public CostCenterList: Array<string> = [];
@@ -190,7 +194,7 @@ export class PaintCreationComponent implements OnInit {
   content: number;
   title: string;
   sub: string;
-  attribute1: number;
+  attribute1: string;
   attribute2: Date;
   headerValidation1 = false;
   lineValidation1=false;
@@ -209,6 +213,9 @@ export class PaintCreationComponent implements OnInit {
   name:string;
 
   colorCode :string;
+  colorDescription : string;
+
+  mainColorItemId:number;
   totIssuedQty:number;
   totIssuedValue:number;
 
@@ -273,6 +280,7 @@ export class PaintCreationComponent implements OnInit {
       attribute2: [],
       name:[],
       colorCode:[],
+      colorDescription :[],
       totIssuedQty:[],
       totIssuedValue:[],
 
@@ -1042,7 +1050,11 @@ export class PaintCreationComponent implements OnInit {
   }
   search(compNo) {
     // alert('In Search' + compNo);
+    this.displayButton = false;
+
     if (compNo != undefined) {
+      // this.paintCreationForm.disable();
+
       this.currentOp = 'SEARCH';
       var compno = this.paintCreationForm.get('compNo').value;
       var appflag = this.paintCreationForm.get('trans').value;
@@ -1081,6 +1093,20 @@ export class PaintCreationComponent implements OnInit {
             this.paintCreationForm.patchValue(data.obj);
             this.totalItemValue=Math.round((data.obj.totalItemValue+Number.EPSILON)*100)/100;
 
+            var clrd =data.obj.colorCode
+            this.paintCreationForm.patchValue({colorDescription :data.obj.colorCode});
+
+            let select1 = this.paintColorList.find(d => d.SEGMENT === clrd);
+
+
+            if (select1 != undefined) {
+              var mainColor =select1.SEGMENT +"-"+select1.DESCRIPTION
+              // alert ("mainColor :"+mainColor);
+              this.paintCreationForm.patchValue({colorDescription :mainColor});
+              this.colorDescription =mainColor;
+
+            } 
+   
 
             this.currentOp = 'INSERT';
             // this.paintCreationForm.get('cycleLinesList').patchValue(data.obj.cycleLinesList);
@@ -1153,7 +1179,25 @@ export class PaintCreationComponent implements OnInit {
     this.headerValidation1 = true;
   }
 
+  transeData(val) {
+  
+    delete val.loginArray;
+    delete val.loginName;
+    delete val.locName;
+    delete val.ouName;
+   
+     return val;
+  }
+
   saveMisc() {
+    this.displayButton = false;
+    // const formValue: IPaintMixing = this.transeData(this.paintCreationForm.value);
+    const formValue: IPaintMixing = this.paintCreationForm.getRawValue();
+
+    formValue.description=this.description.toUpperCase();
+    formValue.attribute1=this.attribute1.toUpperCase();
+
+    alert (formValue.description +","+formValue.attribute1);
 
     this.checkHeaderValidation();
     if (this.headerValidation1==false ) { alert("Header Validation Failed... Please Check");  return;   }
@@ -1178,22 +1222,20 @@ export class PaintCreationComponent implements OnInit {
       if(resp==false) { return;}
       }
 
-    this.displayButton = true;
     this.displayaddButton = true;
     if (this.paintCreationForm.valid) {
       // this.displayButton=true;
       // this.displayaddButton=true;
-      const formValue: IPaintMixing = this.paintCreationForm.getRawValue();
       formValue.attribute2 = this.paintCreationForm.get('compileDate').value;
       formValue.compileType = this.paintCreationForm.get('compileId').value;
       // alert(this.paintCreationForm.get('attribute1').value+'In save')
-      var itemCode = this.paintCreationForm.get('attribute1').value;
+      // var itemCode = this.paintCreationForm.get('attribute1').value;
       // alert(itemCode+'after')
       // debugger;
-      if (itemCode != null || itemCode != undefined) {
-        var itemCode1=itemCode.split('--');
-        formValue.attribute1 = itemCode1[0];
-      }
+      // if (itemCode != null || itemCode != undefined) {
+      //   var itemCode1=itemCode.split('--');
+      //   formValue.attribute1 = itemCode1[0];
+      // }
     
       this.service.paintMixingSaveSubmit(formValue).subscribe
         ((res: any) => {
@@ -1211,6 +1253,7 @@ export class PaintCreationComponent implements OnInit {
           else {
             if (res.code === 400) {
               alert(res.message+"\n"+res.obj);
+              this.displayButton=true;
               // this.paintCreationForm.reset();
             }
           }
@@ -1224,17 +1267,46 @@ export class PaintCreationComponent implements OnInit {
     }
   }
 
-  onSelectColor(event) {
+
+  // onSelectColor(event) {
+  //   if(event !=undefined || event !=null || event.trim() !='') {
+  //   // alert ("Color Selected  : "+event);
+  //   this.ItemIdList=null;
+  //   this.service.ItemIdListDeptPaint(this.deptId, Number(sessionStorage.getItem('locId')), this.subInvCode.subInventoryId,event).subscribe(
+  //     data => {
+  //       this.ItemIdList = data;
+  //       // console.log(this.invItemId);
+  //     });
+
+  //   }
+  // }
+
+  onSelectColor11(event) {
     if(event !=undefined || event !=null || event.trim() !='') {
-    // alert ("Color Selected  : "+event);
+
+    var  mainClrCode = event.substr(0, 13);
+    this.paintCreationForm.patchValue({colorCode :mainClrCode,});
+
+    // let select1 = this.paintColorList.find(d => d.SEGMENT === mainClrCode);
+
+    // this.paintCreationForm.patchValue({colorCode :mainClrCode,mainColorItemId:select1.itemId});
+   
+    // alert (mainClrCode +","+this.colorCode);
+
+    // if (select1 != undefined) { this.paintCreationForm.patchValue({colorCode :mainClrCode,mainColorItemId:select1.itemId});
+          
+    // } else { this.paintCreationForm.patchValue({colorCode :'' ,  mainColorItemId:''}); }  
+
     this.ItemIdList=null;
-    this.service.ItemIdListDeptPaint(this.deptId, Number(sessionStorage.getItem('locId')), this.subInvCode.subInventoryId,event).subscribe(
+    this.service.ItemIdListDeptPaint(this.deptId, Number(sessionStorage.getItem('locId')), this.subInvCode.subInventoryId,mainClrCode).subscribe(
       data => {
         this.ItemIdList = data;
         // console.log(this.invItemId);
       });
 
-    }
+    
+   
+  }
   }
 
   onSelectReason(event) {
@@ -1380,8 +1452,20 @@ export class PaintCreationComponent implements OnInit {
   }
 
 
+  getUserIdsFirstWayColor($event) {
+    let userId = (<HTMLInputElement>document.getElementById('userIdFirstWay')).value;
+    this.userList1 = [];
+ 
+    if (userId.length > 2) {
+      if ($event.timeStamp - this.lastkeydown1 > 200) {
+        this.userList1 = this.searchFromArray(this.paintColorList, userId);
+      }
+    }
+  }
 
-  userList1: any[] = [];
+
+
+ userList1: any[] = [];
  lastkeydown2: number = 0;
 
  getUserIdsFirstWay($event) {

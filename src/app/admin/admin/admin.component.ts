@@ -260,8 +260,10 @@ export class AdminComponent implements OnInit {
     // && ((sessionStorage.getItem('roleId'))==='NaN'|| (sessionStorage.getItem('roleId'))===undefined || (sessionStorage.getItem('roleId'))===null|| (sessionStorage.getItem('roleId'))==='')
    
     // if (Number(sessionStorage.getItem('divisionId')) === 1 && Number(sessionStorage.getItem('roleId'))===1 && sessionStorage.getItem('deptName')==='DP' && sessionStorage.getItem('ticketNo') ==='P5678')
+    // if (Number(sessionStorage.getItem('divisionId')) === 1 && Number(sessionStorage.getItem('roleId'))===1  && sessionStorage.getItem('ticketNo') ==='P5678')
+   
+    
     if (Number(sessionStorage.getItem('divisionId')) === 1 && Number(sessionStorage.getItem('roleId'))===1  && sessionStorage.getItem('ticketNo') ==='P5678')
-
     {
       this.isVisible11=false;
       this.isVisible12=false;

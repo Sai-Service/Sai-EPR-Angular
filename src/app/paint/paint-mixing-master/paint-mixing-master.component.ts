@@ -88,6 +88,10 @@ export class PaintMixingMasterComponent implements OnInit {
   displayInactive = true;
 
   Status1: any;
+  userList2: any[] = [];
+  lastkeydown1: number = 0;
+  userList1: any[] = [];
+ lastkeydown2: number = 0;
 
 
   get f() {return this.paintMixingMasterForm.controls;}
@@ -193,6 +197,7 @@ export class PaintMixingMasterComponent implements OnInit {
 
 
   newMast(){
+    this.saveButton=false;
 
     this.CheckDataValidations();
 
@@ -203,9 +208,11 @@ export class PaintMixingMasterComponent implements OnInit {
     this.service.RelatedItemMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFULLY..'+res.message);
-     
+
       } else {
         if (res.code === 400) {
+          this.saveButton=true;
+
           alert('Error While Inserting Record.');
           alert(res.message);
         }
@@ -218,16 +225,20 @@ export class PaintMixingMasterComponent implements OnInit {
   }
 
   Validateitem(itemCode){
+    // alert ("Maincolr item :"+itemCode);
     this.service.getItemCodePach(itemCode).subscribe(data =>{
       this.abc2 = data;
       console.log(this.abc2)
 
-      if(this.abc2===null){return;}
+    // alert ("Maincolr item abc2 :"+this.abc2 +","+this.abc2.length);
+
+      // if(this.abc2.trim===null){alert("Colour Code doesnt exist...Please check")  ;this.saveButton=false;return;}
 
       this.description=this.abc2.description;
       this.uom=this.abc2.uom;
       this.itemId=this.abc2.itemId;
       this.itemCategory=this.abc2.categoryName;
+      this.saveButton=true;
 
       // ---------------------List ------------------------------ 
       this.service.getRelatedItem(data.itemId).subscribe(data =>{
@@ -239,22 +250,58 @@ export class PaintMixingMasterComponent implements OnInit {
       // this.EmployeeMasterNewForm.patchValue(this.abc);
     })
   }
+
   Validateitem1(relItemCode){
+    // alert ("relItemCode item :"+relItemCode);
+
     this.service.getItemCodePach(relItemCode).subscribe(data =>{
       this.abc = data;
       console.log(this.abc)
 
-      if(this.abc===null){return;}
+      // if(this.abc.length===undefined){alert("Base Colour Code doesnt exist...Please check")  ;this.saveButton=false;return;}
 
       this.relDescription=this.abc.description;
       this.relatedItemId =this.abc.itemId;
+      this.saveButton=true;
     })
   }
 
-  serchByItem(itmCode){
-    // alert ("Item code :" +itmCode);
-    if(itmCode ===null || itmCode===undefined || itmCode.trim()==='') {alert ("Enter Valid Item Code ...");return;}
-   
+
+
+  getUserIdsFirstWayColor($event) {
+    let userId = (<HTMLInputElement>document.getElementById('userIdFirstWay')).value;
+    this.userList1 = [];
+ 
+    if (userId.length > 2) {
+      if ($event.timeStamp - this.lastkeydown1 > 200) {
+        this.userList1 = this.searchFromArray(this.paintColorList, userId);
+      }
+    }
+  }
+
+
+
+ 
+
+ 
+
+searchFromArray(arr, regex) {
+  let matches = [], i;
+  for (i = 0; i < arr.length; i++) {
+    if (arr[i].match(regex)) {
+      matches.push(arr[i]);
+    }
+  }
+  return matches;
+};
+
+
+  serchByItem(clrCode){
+    // alert ("clrCode  :" +clrCode);
+
+    if(clrCode ===null || clrCode===undefined || clrCode.trim()==='') {alert ("Enter Valid Item Code ...");return;}
+    var  itmCode = clrCode.substr(0, 13);
+
       this.spinIcon=false;
       this.dataDisplay='Loading...Please Wait...'
 
@@ -349,10 +396,12 @@ onOptionsSelected(event: any) {
     
     const formValue: IPaintMixingMaster = this.paintMixingMasterForm.value;
 
+    
+
     if (formValue.itemId===undefined || formValue.itemId===null  || formValue.itemId <=0)
     {
       this.checkValidation=false; 
-      alert ("ITEM CODE : Please check Item Code");
+      alert ("MAIN COLOUR CODE : Please check Item Code");
       return;
     } 
 
@@ -362,6 +411,13 @@ onOptionsSelected(event: any) {
       alert ("BASE COLOUR CODE : Please check Related Item Code");
       return;
     } 
+
+    if(formValue.itemId===formValue.relatedItemId) {
+      this.checkValidation=false; 
+      alert ("[MAIN COLOUR CODE] and [BASE COLOUR CODE]  are saame: Please check.");
+      return;
+
+    }
 
       this.checkValidation=true;
 

@@ -157,54 +157,88 @@
         </td>
       </tr>
       <tr>
-          <td style="width: 15%" class="LabelFontStyle">
-              Description:
-            </td>
-            <td>
-              <input type="text" class="form-control" formControlName="description"[(ngModel)]="description">
-            </td>
+          <td style="width: 15%" class="LabelFontStyle">Vehicle No:</td>
+          <td><input type="text" class="form-control" formControlName="description"[(ngModel)]="description"  style="text-transform:uppercase" > </td>
   
-        <td style="width: 15%" class="LabelFontStyle">
-          Made By:
-         </td>
-         <td>
-           <input disabled type="text" class="form-control" formControlName="approvedBy" [(ngModel)]="approvedBy">
-        </td>
-        <td style="width: 15%" class="LabelFontStyle">
-          Repair Order:
-         </td>
-          <td>
+            <!-- style="text-transform: uppercase" -->
+        <td style="width: 15%" class="LabelFontStyle">Repair Order:  </td>
+        <td><input  type="text"  class="form-control" formControlName="attribute1" [(ngModel)]="attribute1" style="text-transform:uppercase"  ></td>
+        
+        <td style="width: 15%" class="LabelFontStyle">  Description:</td>
+        <td><input disabled type="text" class="form-control" formControlName="approvedBy" [(ngModel)]="approvedBy" s></td>
+    
+        <!-- <td>
           <input disabled type="text" formControlName="attribute1" (keyup)="getUserIdsFirstWay($event)" id="userIdFirstWay" list="dynmicUserIds" class="form-control" (change)="calculatewarranty($event)">
           <datalist id="dynmicUserIds">
             <option *ngFor="let repairNo of workshopIssue">{{repairNo.jobCardNum}}--{{repairNo.regNo}}</option>
           </datalist>
-          </td>
+          </td> -->
+
+
           <td>
           <input hidden type="text" formControlName="locId" [(ngModel)]="locId">
           <input hidden formControlName="name"  [(ngModel)]="name">
           </td>
       </tr>
       <tr>
-        <td style="width: 15%" class="LabelFontStyle">Color :</td>
+        <!-- <td style="width: 15%" class="LabelFontStyle">Color :</td> -->
         <!-- <td><input  type="text" class="form-control" formControlName="colorCode" [(ngModel)]="colorCode" style="background-color: yellow"></td> -->
 
-         <td>
+         <!-- <td>
            <select class="form-control" formControlName="colorCode" [(ngModel)]="colorCode" (ngModelChange)="onSelectColor($event)" style="background-color: yellow">
               <option disabled>--Select--</option>
               <option *ngFor="let clr of paintColorList" [ngValue]="clr.SEGMENT"  >
-                {{clr.SEGMENT}}-{{clr.DESCRIPTION}}
+                  {{clr.SEGMENT}}-{{clr.DESCRIPTION}}
+
               </option>
             </select>
-        </td>
+        </td> -->
 
-        <!-- <td style="width: 15%" class="LabelFontStyle">Total Qty :</td> -->
-        <td><input readonly  hidden type="number" class="form-control" formControlName="totIssuedQty" [(ngModel)]="totIssuedQty" ></td>
+        <td style="width: 15%" class="LabelFontStyle">Color :</td>
+
+        <!-- <td colspan="2"> -->
+
+          <!-- <td style="width: 15%" class="LabelFontStyle">Color :</td>
        
+          <td>
+            <select class="form-control" formControlName="colorCode" [(ngModel)]="colorCode" (ngModelChange)="onSelectColor($event)" style="background-color: yellow">
+               <option disabled>--Select--</option>
+               <option *ngFor="let clr of paintColorList" [ngValue]="clr.SEGMENT"  >
+                 {{clr.DESCRIPTION}}-{{clr.SEGMENT}}
+               </option>
+             </select>
+         </td> -->
+
+
+          <!-- <td> -->
+          <!-- <div *ngIf="displayButton; then  CLR1 ; else CLR2"></div>
+            <ng-template #CLR1> -->
+                <td colspan="2">
+                <input type="text" formControlName="colorDescription" [(ngModel)]="colorDescription" style="width:100%;background-color: yellow"
+                    (keyup)="getUserIdsFirstWayColor($event)" id="userIdFirstWay"
+                    list="dynmicUserIds" class="form-control" placeholder="Main Color List"
+                    (ngModelChange)="onSelectColor11($event)" />
+                <datalist id="dynmicUserIds">
+                    <option *ngFor="let item of paintColorList" [ngValue]="item.SEGMENT">
+                      {{item.SEGMENT}}-{{item.DESCRIPTION}}
+                    </option>
+                </datalist>
+              </td>
+          <!-- </ng-template>
+          <ng-template #CLR2>
+           <td colspan="2"> <input  type="text" class="form-control" formControlName="colorDescription" [(ngModel)]="colorDescription" ></td>
+          </ng-template> -->
+
+
+
+        <input readonly  hidden type="text" class="form-control" formControlName="colorCode" [(ngModel)]="colorCode" >
+            <!-- <td style="width: 15%" class="LabelFontStyle">Total Qty :</td> -->
+        <input readonly  hidden type="number" class="form-control" formControlName="totIssuedQty" [(ngModel)]="totIssuedQty" >
         <!-- <td style="width: 15%" class="LabelFontStyle">Total Value :</td> -->
-        <td><input readonly  hidden type="number" class="form-control" formControlName="totIssuedValue" [(ngModel)]="totIssuedValue" ></td>
+        <input readonly  hidden type="number" class="form-control" formControlName="totIssuedValue" [(ngModel)]="totIssuedValue" >
 
-
-        <td style="width: 15%" class="LabelFontStyle">Receipt Ref No: </td>
+        <td></td>
+       <td style="width: 15%" class="LabelFontStyle">Receipt Ref No: </td>
          <td>
            <input disabled type="text" class="form-control" formControlName="referenceNo" [(ngModel)]="referenceNo">
         </td>
@@ -360,7 +394,10 @@
         </td>
       </ng-template>
         <ng-template #elseBlock2>
-          <button disabled type="submit" class="btn btn-primary" (click)="saveMisc()" >Save</button>
+          <td>
+            <button disabled type="submit" class="btn btn-primary" (click)="saveMisc()" >Save</button>
+
+          </td>
       </ng-template>
   
       </tr>
