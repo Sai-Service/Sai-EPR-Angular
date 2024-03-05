@@ -263,7 +263,9 @@ export class AdminComponent implements OnInit {
     // if (Number(sessionStorage.getItem('divisionId')) === 1 && Number(sessionStorage.getItem('roleId'))===1  && sessionStorage.getItem('ticketNo') ==='P5678')
    
     
-    if (Number(sessionStorage.getItem('divisionId')) === 1 && Number(sessionStorage.getItem('roleId'))===1  && sessionStorage.getItem('ticketNo') ==='P5678')
+    if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem('deptName')==='DP') 
+    // && Number(sessionStorage.getItem('roleId'))===1 ) 
+    // && sessionStorage.getItem('ticketNo') ==='GM01733')
     {
       this.isVisible11=false;
       this.isVisible12=false;
@@ -296,7 +298,7 @@ export class AdminComponent implements OnInit {
       this.isVisibleAccountsRepor=false;
       this.isVisibleAccessories=false;
       this.isVisibilePaintSystem=true
-      this.isVisibilePetrolPumpSystem=true;
+      this.isVisibilePetrolPumpSystem=false;
       // this.isVisibleShellReport=false;
     }
     // && sessionStorage.getItem('ticketNo') ==='P5678'
