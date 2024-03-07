@@ -213,6 +213,7 @@
           <!-- <td> -->
           <!-- <div *ngIf="displayButton; then  CLR1 ; else CLR2"></div>
             <ng-template #CLR1> -->
+              <!-- (ngModelChange)="onSelectColor11($event)" -->
                 <td colspan="2">
                 <input type="text" formControlName="colorDescription" [(ngModel)]="colorDescription" style="width:100%;background-color: yellow"
                     (keyup)="getUserIdsFirstWayColor($event)" id="userIdFirstWay"
