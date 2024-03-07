@@ -880,6 +880,7 @@ onSelectEmplName(event){
   // alert(emlName)
   var emplList = emlName.substr(emlName.indexOf('-') + 1, emlName.length);
   // emlName.indexOf
+  // alert(emplList)
   console.log('------'+emplList+'------');
   var emplList1 = this.salesPersonList.find((salesPersonList:any)=>salesPersonList.fullName==emplList);
   

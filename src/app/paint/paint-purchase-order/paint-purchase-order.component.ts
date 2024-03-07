@@ -1790,6 +1790,7 @@ export class PaintPurchaseOrderComponent implements OnInit {
    // this.displayNewButtonSave=true;
    //let value = $event.target.value.split("-")[1].trim();
    // alert('**supp***' + supp);
+   
    if (supp != null) {
      var value = supp.substr(supp.indexOf('@') + 1, supp.length);
      // alert(value)

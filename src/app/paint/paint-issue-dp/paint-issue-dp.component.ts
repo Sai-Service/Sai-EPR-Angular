@@ -157,7 +157,7 @@ export class PaintIssueDpComponent implements OnInit {
   codeCombinationId: number;
   compileType: number;
   // reason: string="ICPN02-32-Paint Issue to BodyShop";
-  reason: string;
+  reason: string="PN002";
   reasonlist: any;
   compileStatus: string = "OPEN"
   entryStatusCode: number;
@@ -465,18 +465,34 @@ export class PaintIssueDpComponent implements OnInit {
       }
     );
 
+
     this.service.PaintReasonList().subscribe(
       data => {
         this.reasonlist = data;
-        let selreasonlist: any = [];
-        for (let i = 0; i < this.reasonlist.length; i++) {
-          if (this.reasonlist[i].reasonName.includes('IC')) {
-            selreasonlist.push(this.reasonlist[i]);
-          }
+        console.log(this.reasonlist);
+
+        let select1 = this.reasonlist.find(d => d.reasonName === 'PN002');
+        if (select1 != undefined) { 
+          this.onSelectReason2(select1.reasonName,select1.costCode)
         }
-        this.reasonlist = selreasonlist;
       }
     )
+
+    // this.service.PaintReasonList().subscribe(
+    //   data => {
+    //     this.reasonlist = data;
+    //     console.log(this.reasonlist);
+
+
+    //     let selreasonlist: any = [];
+    //     for (let i = 0; i < this.reasonlist.length; i++) {
+    //       if (this.reasonlist[i].reasonName.includes('IC')) {
+    //         selreasonlist.push(this.reasonlist[i]);
+    //       }
+    //     }
+    //     this.reasonlist = selreasonlist;
+    //   }
+    // )
 
     // this.onSelectReason("ICPN02-32-Paint Issue to BodyShop")
 
@@ -1268,6 +1284,41 @@ export class PaintIssueDpComponent implements OnInit {
       });
 
   }
+
+  onSelectReason2(event,event2) {
+    var reasonArr = event.split('-');
+    var reasonArr = event
+    // alert(reasonArr)
+
+    // let select1 = this.reasonlist.find(d => d.reasonName === event);
+    // if (select1 != undefined) { 
+
+      this.service.reasonaccCode(this.locId, event, event2).subscribe(
+
+      data => {
+        this.acccodedesc = data;
+        // this.paintIssueForm.patchValue({reason:this.acccodedesc.segmentName});
+        this.segmentName = this.acccodedesc.segmentName;
+
+      }
+    );
+    var selreason = this.reasonlist.find(d => d.reasonName === event)
+    this.service.WorkShopIcIssue(this.locId, selreason.attribute2).subscribe(
+      data => {
+        this.workshopIssue = data;
+        console.log(data);
+      }
+    );
+    
+    this.service.ItemIdListDept(this.deptId, Number(sessionStorage.getItem('locId')), this.subInvCode.subInventoryId).subscribe(
+      data => {
+        this.ItemIdList = data;
+        // console.log(this.invItemId);
+      });
+    // }
+  }
+
+
 
 
   keytab(event, maxLength, nxtEle) {

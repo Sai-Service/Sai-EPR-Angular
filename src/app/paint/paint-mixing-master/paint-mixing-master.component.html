@@ -109,20 +109,33 @@
                                     value={{itemCode1}} placeholder="Enter Main Colour Code">
                             </td> -->
 
-                            <td>
+                            <!-- <td>
                                 <select class="form-control" formControlName="itemCode1" [(ngModel)]="itemCode1"  style="width:300px ;">
-                                    <!-- (ngModelChange)="onSelectColor($event)" -->
                                    <option disabled>--Select--</option>
                                    <option *ngFor="let clr of paintColorList" [ngValue]="clr.SEGMENT"  >
                                      {{clr.SEGMENT}}-{{clr.DESCRIPTION}}
                                    </option>
                                  </select>
-                             </td>
+                             </td> -->
+
+                             <td>
+                                <input type="text" formControlName="itemCode1" [(ngModel)]="itemCode1" style="width:350px;"
+                                    (keyup)="getUserIdsFirstWayColor($event)" id="userIdFirstWay"
+                                    list="dynmicUserIds" class="form-control" placeholder="Main Color List" />
+                                <datalist id="dynmicUserIds">
+                                    <option *ngFor="let item of paintColorList" [ngValue]="item.SEGMENT">
+                                      {{item.SEGMENT}}-{{item.DESCRIPTION}}
+                                    </option>
+                                </datalist>
+                              </td>
+
         
                             <td style="background-color: #FFE4B5;">
                                 <button type="button" class="btn-primary" (click)="serchByItem(itemCode1)"><i class="fa fa-search"
                                         aria-hidden="true"></i></button>
                             </td>
+
+
 
                             <td>{{this.itemCode1Desc}}</td>
 

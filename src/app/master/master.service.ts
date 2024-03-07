@@ -1546,6 +1546,7 @@ export class MasterService {
   }
 
   ItemIdListDept(deptId, locId, subId): Observable<any> {
+    // alert (deptId +","+locId+","+subId)
     return this.http.get(this.ServerUrl + `/itemMst/itemDepartent1?deptId=${deptId}&locationId=${locId}&subInventoryId=${subId}`)
   }
 

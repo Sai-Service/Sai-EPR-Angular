@@ -423,6 +423,7 @@ export class PaintItemMasterComponent implements OnInit {
           }
           this.paintItemMasterForm.get('costCenter').disable();
           this.paintItemMasterForm.get('poChargeAccount').disable();
+
           // alert(data.taxCategoryNameList);
           this.onHsnCodeSelectedSearch(data.hsnSacCode);
           if (data.stockable === 'Y') {
@@ -593,7 +594,7 @@ export class PaintItemMasterComponent implements OnInit {
       }
     }
 
-   alert ("Testing....");
+  //  alert ("Testing....");
     this.paintItemMasterForm.get('hsnGstPer').reset();
     this.paintItemMasterForm.get('hsnSacCode').reset();
     this.taxCategoryListS = null;
