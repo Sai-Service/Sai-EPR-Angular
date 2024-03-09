@@ -203,16 +203,15 @@ export class PaintMixingMasterComponent implements OnInit {
 
   newMast(){
     this.saveButton=false;
-
     this.CheckDataValidations();
+    const formValue: IPaintMixingMaster = this.trData(this.paintMixingMasterForm.getRawValue()); 
 
     if (this.checkValidation===true) {
-      const formValue = this.trData(this.paintMixingMasterForm.value);  
-    // const formValue: IRelItemMaster =this.trData(this.relatedItemMasterForm.value);
-
+      // const formValue = this.trData(this.paintMixingMasterForm.value).getRawValue();  
     this.service.RelatedItemMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFULLY..'+res.message);
+        this.paintMixingMasterForm.disable();
 
       } else {
         if (res.code === 400) {
@@ -416,30 +415,37 @@ onOptionsSelected(event: any) {
 
   CheckDataValidations(){
     
-    const formValue: IPaintMixingMaster = this.paintMixingMasterForm.value;
-
-    
+    const formValue: IPaintMixingMaster = this.trData(this.paintMixingMasterForm.value)
+  
+    // alert ("formValue.baseCategory:"+formValue.baseCategory);
 
     if (formValue.itemId===undefined || formValue.itemId===null  || formValue.itemId <=0)
     {
       this.checkValidation=false; 
-      alert ("MAIN COLOUR CODE : Please check Item Code");
+      alert ("MAIN COLOUR CODE : Please check Item Code");this.saveButton=true;
       return;
     } 
 
+    
     if (formValue.relatedItemId===undefined || formValue.relatedItemId===null  || formValue.relatedItemId <=0)
     {
       this.checkValidation=false; 
-      alert ("BASE COLOUR CODE : Please check Related Item Code");
+      alert ("BASE COLOUR CODE : Please check Related Item Code");this.saveButton=true;
       return;
     } 
 
     if(formValue.itemId===formValue.relatedItemId) {
       this.checkValidation=false; 
-      alert ("[MAIN COLOUR CODE] and [BASE COLOUR CODE]  are same: Please check.");
+      alert ("[MAIN COLOUR CODE] and [BASE COLOUR CODE]  are same: Please check.");this.saveButton=true;
       return;
 
     }
+    if(formValue.baseCategory==='PN.MAIN') {
+      this.checkValidation=false; 
+      alert ("Wrong  [BASE COLOUR CODE]  Selected ... Please check");this.saveButton=true;
+      return;
+    }
+
 
       this.checkValidation=true;
 
