@@ -522,9 +522,9 @@
               <td>{{com.description}}</td>
               <td>{{com.reason}}</td>
               <!-- <td>{{com.uom}}</td> -->
-              <td style="text-align: right;">{{com.qty}}</td>
-              <td style="text-align: right;">{{com.amount}}</td>
-              <td style="text-align:  center;">{{com.IcDate}}</td>
+              <td style="text-align: right;">{{com.qty | number:'1.2-2'}}</td>
+              <td style="text-align: right;">{{com.amount | number:'1.2-2'}}</td>
+              <td style="text-align:  center;">{{com.IcDate |date:'dd-MM-y'}}</td>
             </tr>
     </table>
     </div>

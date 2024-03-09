@@ -1740,6 +1740,11 @@ export class MasterService {
     return this.http.get(this.ServerUrl + `/stockadj/jobcard/${jobno}`)
   }
 
+  getsearchByJCpaint(jobno): Observable<any> {
+    return this.http.get(this.ServerUrl + `/stockadj/jobPaint/${jobno}`)
+    // http://localhost:8081/stockadj/jobPaint/JC-1
+  }
+
   subInvCode(deptId): Observable<any> {
     return this.http.get(this.ServerUrl + `/subInvMst/wipissue/${deptId}`);
   }
