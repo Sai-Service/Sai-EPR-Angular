@@ -23,7 +23,7 @@ interface IPanel {
   startDate:string;
   endDate:string,
   status:string;
-  attribute1:string;
+  attribute1:number;
 }
 
 @Component({
@@ -45,7 +45,7 @@ export class PaintPanelMasterComponent implements OnInit {
   cmnDesc: string;
   // startDate:Date;
   startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
-  attribute1:string;
+  attribute1:number;
   endDate:string;
   status:string="Active";
   code:string;
@@ -188,6 +188,9 @@ export class PaintPanelMasterComponent implements OnInit {
     
     if (this.checkValidation===true) {
        alert("Data Validation Sucessfull....") 
+
+       var  resp=confirm("Do You Want to Save this Transaction ???");
+       if(resp==false) { return;}
 
     const formValue: IPanel = this.paintPanelMasterForm.value;
     this.service.commonMasterSubmit(formValue).subscribe((res: any) => {
@@ -335,6 +338,15 @@ CheckDataValidations(){
     alert ("CODE DESCRIPTION : Should not be null....");
     return;
   } 
+
+  if (formValue.attribute1===undefined || formValue.attribute1===null || formValue.attribute1<=0 )
+  {
+    this.checkValidation=false; 
+    alert ("PANEL # : Enter Valid Panel Qty");
+    return;
+  } 
+
+  
 
   if (formValue.status===undefined || formValue.status===null || formValue.status.trim()==='' )
   {

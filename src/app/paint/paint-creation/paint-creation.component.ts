@@ -1538,11 +1538,16 @@ for (let i = 0; i < trxLnArr.length; i++) {
   totQty=totQty+trxLnArr[i].physicalQty;
   totValue=totValue+(trxLnArr[i].itemUnitCost * trxLnArr[i].physicalQty)
 }
+ totQty=Math.round((totQty+Number.EPSILON)*100)/100;
+ totValue=Math.round((totValue+Number.EPSILON)*100)/100;
+
+
 
 this.paintCreationForm.patchValue({totIssuedQty :totQty});
 this.paintCreationForm.patchValue({totIssuedValue :totValue})
 this.paintCreationForm.patchValue({totalCompileItems :totQty});
 this.paintCreationForm.patchValue({totalItemValue :totValue})
 }
+
 
 }
