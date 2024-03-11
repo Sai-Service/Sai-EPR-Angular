@@ -1441,7 +1441,7 @@ searchByJobNo(){
    alert ("Enter a Valid Job Card No."); return;}
    this.JobNo=this.JobNo.toUpperCase();
 
-  this.service.getsearchByIC(this.JobNo).subscribe(
+  this.service.getsearchByJCpaint(this.JobNo).subscribe(
     data=>{
       // if (data.code==200){
          this.jobData=data;

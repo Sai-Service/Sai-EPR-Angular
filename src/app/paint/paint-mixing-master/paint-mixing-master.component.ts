@@ -13,6 +13,7 @@ interface IPaintMixingMaster {
   description : string;
   uom : string;
   itemCategory:string;
+  baseCategory:string;
   relItemCode : number;
   relDescription : string;
   relUom : any;
@@ -69,6 +70,8 @@ export class PaintMixingMasterComponent implements OnInit {
   description : string;
   uom : string;
   itemCategory:string;
+  baseCategory:string;
+
   relItemCode : number;
   relDescription : string;
   relUom : any;
@@ -121,6 +124,8 @@ export class PaintMixingMasterComponent implements OnInit {
       itemId : [],
       relatedItemId : [],
       itemCategory:[],
+      baseCategory:[],
+
       itemCode1:[],
       itemCode1Desc :[],
 
@@ -198,16 +203,15 @@ export class PaintMixingMasterComponent implements OnInit {
 
   newMast(){
     this.saveButton=false;
-
     this.CheckDataValidations();
+    const formValue: IPaintMixingMaster = this.trData(this.paintMixingMasterForm.getRawValue()); 
 
     if (this.checkValidation===true) {
-      const formValue = this.trData(this.paintMixingMasterForm.value);  
-    // const formValue: IRelItemMaster =this.trData(this.relatedItemMasterForm.value);
-
+      // const formValue = this.trData(this.paintMixingMasterForm.value).getRawValue();  
     this.service.RelatedItemMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFULLY..'+res.message);
+        this.paintMixingMasterForm.disable();
 
       } else {
         if (res.code === 400) {
@@ -233,6 +237,16 @@ export class PaintMixingMasterComponent implements OnInit {
     // alert ("Maincolr item abc2 :"+this.abc2 +","+this.abc2.length);
 
       // if(this.abc2.trim===null){alert("Colour Code doesnt exist...Please check")  ;this.saveButton=false;return;}
+      // alert ("this.abc2.itemId :"+this.abc2.itemId)
+      if(this.abc2.itemId===undefined) {
+        this.description=''
+        this.uom=''
+        this.itemId=0
+        this.itemCategory=''
+        this.saveButton=false;
+        alert ("Invalid ItemCode . Plese Select Valid item from the List...."); return;
+      }
+      else {
 
       this.description=this.abc2.description;
       this.uom=this.abc2.uom;
@@ -245,10 +259,11 @@ export class PaintMixingMasterComponent implements OnInit {
         this.abc = data;
         console.log(this.abc)  });
       // ---------------------------------------------------------
-
+      }
 
       // this.EmployeeMasterNewForm.patchValue(this.abc);
     })
+  
   }
 
   Validateitem1(relItemCode){
@@ -259,7 +274,7 @@ export class PaintMixingMasterComponent implements OnInit {
       console.log(this.abc)
 
       // if(this.abc.length===undefined){alert("Base Colour Code doesnt exist...Please check")  ;this.saveButton=false;return;}
-
+      this.baseCategory=this.abc.categoryName;
       this.relDescription=this.abc.description;
       this.relatedItemId =this.abc.itemId;
       this.saveButton=true;
@@ -337,10 +352,16 @@ Select(relItemId: number) {
   let select = this.abc.find(d => d.relatedItemId === relItemId);
   if (select) {
     this.paintMixingMasterForm.patchValue(select);
+
+    this.service.getItemCodePach(select.relItemCode).subscribe(data =>{
+      // this.abc = data;
+      // console.log(this.abc)
+      this.baseCategory=data.categoryName;
    
     this.cancelButton = true;
     this.saveButton=false;
     this.displayButton = false;
+  })
 
   }
 }
@@ -394,30 +415,37 @@ onOptionsSelected(event: any) {
 
   CheckDataValidations(){
     
-    const formValue: IPaintMixingMaster = this.paintMixingMasterForm.value;
-
-    
+    const formValue: IPaintMixingMaster = this.trData(this.paintMixingMasterForm.value)
+  
+    // alert ("formValue.baseCategory:"+formValue.baseCategory);
 
     if (formValue.itemId===undefined || formValue.itemId===null  || formValue.itemId <=0)
     {
       this.checkValidation=false; 
-      alert ("MAIN COLOUR CODE : Please check Item Code");
+      alert ("MAIN COLOUR CODE : Please check Item Code");this.saveButton=true;
       return;
     } 
 
+    
     if (formValue.relatedItemId===undefined || formValue.relatedItemId===null  || formValue.relatedItemId <=0)
     {
       this.checkValidation=false; 
-      alert ("BASE COLOUR CODE : Please check Related Item Code");
+      alert ("BASE COLOUR CODE : Please check Related Item Code");this.saveButton=true;
       return;
     } 
 
     if(formValue.itemId===formValue.relatedItemId) {
       this.checkValidation=false; 
-      alert ("[MAIN COLOUR CODE] and [BASE COLOUR CODE]  are saame: Please check.");
+      alert ("[MAIN COLOUR CODE] and [BASE COLOUR CODE]  are same: Please check.");this.saveButton=true;
       return;
 
     }
+    if(formValue.baseCategory==='PN.MAIN') {
+      this.checkValidation=false; 
+      alert ("Wrong  [BASE COLOUR CODE]  Selected ... Please check");this.saveButton=true;
+      return;
+    }
+
 
       this.checkValidation=true;
 

@@ -20,29 +20,45 @@
                 <input hidden type="number" formControlName="relatedItemId" [(ngModel)]="relatedItemId" >
                
                 <td style="width: 15%" class="LabelFontStyle">Main&nbsp;Colour&nbsp;Code:</td>
-                <td><input type="text" class="form-control" formControlName="itemCode" [(ngModel)]="itemCode" (change)="Validateitem(itemCode)"   ></td>
+                <!-- <td><input type="text" class="form-control" formControlName="itemCode" [(ngModel)]="itemCode" (change)="Validateitem(itemCode)"   ></td> -->
     
+                <td>
+                    <input type="text" formControlName="itemCode" [(ngModel)]="itemCode" (change)="Validateitem(itemCode)"
+                        (keyup)="getUserIdsFirstWayColor($event)" id="userIdFirstWay"
+                        list="dynmicUserIds" class="form-control" placeholder="Main Color List" />
+                    <datalist id="dynmicUserIds">
+                        <option *ngFor="let item of paintColorList" [ngValue]="item.SEGMENT">
+                          {{item.SEGMENT}}
+                        </option>
+                    </datalist>
+                  </td>
+               
+               
+               
                 <td style="width: 15%" class="LabelFontStyle">&nbsp;Description:</td>
                 <td><input  type="text" class="form-control" formControlName="description" [(ngModel)]="description" disabled style="width:350px ;"></td>
-               </tr>
-               <tr>
-                <td style="width: 15%" class="LabelFontStyle">UOM:</td>
-                <td><input type="text" class="form-control" formControlName="uom" [(ngModel)]="uom" disabled></td>
-          
+              
                 <td style="width: 15%" class="LabelFontStyle">Category:</td>
-                <td><input type="text" class="form-control" formControlName="itemCategory" [(ngModel)]="itemCategory" disabled style="width:350px ;"></td>
+                <td><input type="text" class="form-control" formControlName="itemCategory" [(ngModel)]="itemCategory" disabled ></td>
            
-               
-               </tr>
+              </tr>
+
+            
             <tr>
                
                 <td style="width: 15%" class="LabelFontStyle">Base&nbsp;Colour&nbsp;Code:</td>
                 <td><input type="text" class="form-control" formControlName="relItemCode" [(ngModel)]="relItemCode" (change)="Validateitem1(relItemCode)"></td>
-                <td style="width: 15%" class="LabelFontStyle">Description</td>
+                <td style="width: 15%" class="LabelFontStyle">Description:</td>
                 <td><input type="text" class="form-control" formControlName="relDescription" [(ngModel)]="relDescription" disabled style="width:350px ;"></td>
+                <td style="width: 15%" class="LabelFontStyle">Category:</td>
+                <td><input type="text" class="form-control" formControlName="baseCategory" [(ngModel)]="baseCategory" disabled ></td>
+                      
             </tr>
 
             <tr>
+                 <!-- <td style="width: 15%" class="LabelFontStyle">UOM:</td>
+                <td><input type="text" class="form-control" formControlName="uom" [(ngModel)]="uom" disabled></td>
+           -->
     
                 <td style="width: 15%" class="LabelFontStyle">Status&nbsp;&nbsp;:</td>
 
