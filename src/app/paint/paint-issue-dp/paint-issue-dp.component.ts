@@ -1166,13 +1166,12 @@ export class PaintIssueDpComponent implements OnInit {
     
     
     if (formValue.attribute9 === undefined || formValue.attribute9 === null || formValue.attribute9<=0 || formValue.attribute9>22) {
-      this.headerValidation1 = false;
       msg1 = "PANEL QTY: Should not be null Or Zero.\nMaximum panels allowed is 22 Nos";
       alert(msg1);
-      return;
-    }
-
-   
+      var  resp=confirm("Do You Want to Continue without selecting Panel ???");
+      if(resp==false) { return;}
+     }
+    
     this.headerValidation1 = true;
   }
 
