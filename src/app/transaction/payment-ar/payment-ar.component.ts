@@ -2130,6 +2130,7 @@ if(this.deptId==2){
               this.invLineArray().push(invLnGrp);
 
             }
+            
             this.paymentArForm.get('invLine').patchValue(this.lstinvoices);
 
             /////////////////////////////////////////////////////////
