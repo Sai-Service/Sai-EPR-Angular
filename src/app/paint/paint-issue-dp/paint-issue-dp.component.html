@@ -159,8 +159,8 @@
         </td>
       </tr>
       <tr>
-          <td style="width: 15%" class="LabelFontStyle">Panel Qty:</td>
-          <td><input readonly type="number" class="form-control" formControlName="attribute9"[(ngModel)]="attribute9"></td>
+          <td style="width: 15%" class="LabelFontStyle">Panel Qty(New):</td>
+          <td><input readonly type="number" class="form-control" formControlName="attribute10"[(ngModel)]="attribute10"></td>
   
         <td style="width: 15%" class="LabelFontStyle">
           Made By:
@@ -196,32 +196,32 @@
     <input  hidden disabled type="number" class="form-control" formControlName="panelQty" [(ngModel)]="panelQty">
       
 
-      <td style="width: 15%" class="LabelFontStyle">Panel Type:</td>
+      <td style="width: 15%" class="LabelFontStyle">Panel Qty (Old):</td>
+      <td><input readonly type="number" class="form-control" formControlName="attribute9"[(ngModel)]="attribute9"></td>
+
      
-      <td>
+      <!-- <td>
         <select  formControlName="attribute3"  id ="attribute3"  [(ngModel)]="attribute3"  class="form-control" style="background-color: yellow;" > 
-          <!-- (ngModelChange)='OnApplyTypeSelected($event)'  > -->
-            <!-- <option>--Select--</option> -->
-            <option value="New">New</option>
+           <option value="New">New</option>
             <option value="Old">Old</option>
         </select>
-        </td>
+        </td> -->
 
       <td style="width: 15%" class="LabelFontStyle">Vehicle No:</td>
       <td><input  type="text" class="form-control" formControlName="attribute4"[(ngModel)]="attribute4" style="background-color: yellow;text-transform: uppercase;"></td>
 
       <td></td>
 
-      <td >
+      <!-- <td >
         <button type="button"  class="btn btn-primary" 
         data-toggle="modal" data-target="#paintPanelList"  (click)="LoadPanelList()" style="width:fit-content;color: black;">
         &nbsp;Select Panel Details</button>
-       </td>
+       </td> -->
 
        <td >
         <button type="button"  class="btn btn-primary"  [disabled]='panelButtonDisabled' 
         data-toggle="modal" data-target="#panelModal"  (click)="LoadPanelListNew()" style="width:fit-content;color: black;">
-        &nbsp;PANELS </button>
+        &nbsp;Select Panel Details</button>
        </td>
 
 
@@ -629,9 +629,9 @@
             <tr>
 
                 <td style="width: 15%" class="LabelFontStyle">Panels#(New) :</td>
-                 <td> <input disabled type="number" class="form-control" formControlName="panelQty" [(ngModel)]="panelQty"></td>
+                 <td> <input disabled type="number" class="form-control" formControlName="attribute10" [(ngModel)]="attribute10"></td>
                  <td style="width: 15%" class="LabelFontStyle">Panels#(Old) :</td>
-                 <td> <input disabled type="number" class="form-control" formControlName="panelQty1" [(ngModel)]="panelQty1"></td>
+                 <td> <input disabled type="number" class="form-control" formControlName="attribute9" [(ngModel)]="attribute9"></td>
                 </tr>
 
             </table>
@@ -642,8 +642,8 @@
                  <tbody>
                       <tr class="GridHeader">
                         
-                        <th style="width:5rem" scope="col">Select</th>
                         <th style="width:3rem" scope="col">Srl#</th>
+                        <th style="width:5rem" scope="col">Select</th>
                         <th style="width:12rem" scope="col">Panel Code</th>
                         <th style="width:12rem" scope="col">Description</th>
                         <th style="width:12rem" scope="col">Panel#</th>
@@ -659,10 +659,8 @@
                                   <td><input disabled type ='text' style="width: 100px;height: 25px;"   formControlName="code"  class="form-control" > </td>
                                   <td><input disabled type ='text' style="width: 300px;height: 25px;"  formControlName="codeDesc"  class="form-control" > </td>
                                   <td><input disabled type ='text'style="width: 100px;height: 25px;text-align: center;" formControlName="attribute1"  class="form-control" > </td>
-                                  <!-- <td><input style="width: 150px;height: 25px;text-align: right;background-color: yellow;"  type ='text' formControlName="paneltype"  class="form-control" > </td> -->
                                   <td>
                                     <select  formControlName="paneltype"  id ="paneltype"    class="form-control"  (ngModelChange)='onSelectPaneltype($event,k)'  style="width: 100px; height: 25px;background-color: yellow;"  >
-                                        <!-- <option>--Select--</option> -->
                                         <option value="NEW">NEW</option>
                                         <option value="OLD">OLD</option>
                                     </select>

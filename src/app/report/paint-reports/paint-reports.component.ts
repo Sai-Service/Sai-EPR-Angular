@@ -70,6 +70,7 @@ export class PaintReportsComponent implements OnInit {
   isVisiblegstsaiDebtors: boolean = false;
   isVisibleStockLedger: boolean = false;
   isVisiblestockTransfer: boolean = false;
+  isVisiblestockTransferRecd: boolean = false;
   isVisibleSparesBackOrderQty: boolean = false;
   isVisiblesparesMiscIssueReceipt: boolean = false;
   isVisiblesparesPaintPanelReport: boolean = false;
@@ -219,6 +220,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblegstsaiDebtors = false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
+      this.isVisiblestockTransferRecd=false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
@@ -243,6 +245,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblegstsaiDebtors = false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
+      this.isVisiblestockTransferRecd=false;
       this.isVisiblespClosingStockAsOndate=false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
@@ -263,6 +266,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleStockLedger = true;
       this.isVisiblestockTransfer = false;
+      this.isVisiblestockTransferRecd=false;
       this.isVisiblespClosingStockAsOndate=false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
@@ -284,6 +288,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblegstsaiDebtors = false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
+      this.isVisiblestockTransferRecd=false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = true;
@@ -306,6 +311,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
+      this.isVisiblestockTransferRecd=false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
@@ -327,6 +333,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
+      this.isVisiblestockTransferRecd=false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
@@ -348,6 +355,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblegstsaiDebtors = false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
+      this.isVisiblestockTransferRecd=false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
@@ -368,6 +376,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblegstsaiDebtors = false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
+      this.isVisiblestockTransferRecd=false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = true;
       this.isVisiblesparesInventoryAging = false;
@@ -388,6 +397,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblegstsaiDebtors = false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
+      this.isVisiblestockTransferRecd=false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
@@ -397,6 +407,90 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleEwayBill=false;
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=true;
+
+    }
+
+    else if (reportName === 'gststockTransfer') {
+      this.reportName = 'Stock Transfer Made Detail Report';
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = true;
+      this.isVisiblestockTransferRecd=false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleEwayBill=false;
+      this.isVisiblepanelStockTaking=false;
+      this.isVisiblesparesPaintPanelReport=false;
+
+    }
+
+    else if (reportName === 'gststockTransferSummary') {
+      this.reportName = 'Stock Transfer Made Summary Report';
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = true;
+      this.isVisiblestockTransferRecd=false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleEwayBill=false;
+      this.isVisiblepanelStockTaking=false;
+      this.isVisiblesparesPaintPanelReport=false;
+
+    }
+
+    else if (reportName === 'gststockTransferReceivedDetails') {
+      this.reportName = 'Stock Transfer Received Detail Report';
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisiblestockTransferRecd=true;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleEwayBill=false;
+      this.isVisiblepanelStockTaking=false;
+      this.isVisiblesparesPaintPanelReport=false;
+
+    }
+
+    else if (reportName === 'gststockTransferReceivedSummary') {
+      this.reportName = 'Stock Transfer Received Summary Report';
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisiblestockTransferRecd=true;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleEwayBill=false;
+      this.isVisiblepanelStockTaking=false;
+      this.isVisiblesparesPaintPanelReport=false;
 
     }
 
@@ -669,10 +763,10 @@ export class PaintReportsComponent implements OnInit {
 
     else if (reportName === 'Paint Panel Report') {
 
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
       alert ("Work In Progress ...");
       this.closeResetButton = true;
       return;
-      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
       const fileName = 'Paint Panel Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
@@ -695,6 +789,123 @@ export class PaintReportsComponent implements OnInit {
           })
       }
     }
+
+    else if (reportName === 'Stock Transfer Made Detail Report') {
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+      alert ("Work In Progress ...");
+      this.closeResetButton = true;
+      return;
+
+      const fileName = 'Stock Transfer Made Detail Report-' +  fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.stockMadeDetailsReport(fromDate, toDate, locId, tolocId, subInventory,sessionStorage.getItem('deptId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.stockMadeDetailsReport(fromDate, toDate, sessionStorage.getItem('locId'), tolocId, subInventory,sessionStorage.getItem('deptId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
+
+    else if (reportName === 'Stock Transfer Made Summary Report') {
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
+      alert ("Work In Progress ...");
+      this.closeResetButton = true;
+      return;
+
+      const fileName = 'Stock Transfer Made Summary Report-' +  fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.spstktrfMdSummaryReport(fromDate, toDate, locId, tolocId, subInventory)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.spstktrfMdSummaryReport(fromDate, toDate, sessionStorage.getItem('locId'), tolocId, subInventory)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
+
+    else if (reportName === 'Stock Transfer Received Detail Report') {
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
+      alert ("Work In Progress ...");
+      this.closeResetButton = true;
+      return;
+
+      const fileName = 'Stock Transfer Received Detail Report-' +  fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate, locId, tolocId, subInventory,sessionStorage.getItem('deptId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate, sessionStorage.getItem('locId'), tolocId, subInventory,sessionStorage.getItem('deptId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
+    else if (reportName === 'Spares Stock Transfer Received Summary Report') {
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
+      alert ("Work In Progress ...");
+      this.closeResetButton = true;
+      return;
+
+      const fileName = 'Spares Stock Transfer Received Summary Report-' +  fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate, locId, tolocId, subInventory)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate, sessionStorage.getItem('locId'), tolocId, subInventory)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
+    
+
+
    
    
 
