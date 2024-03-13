@@ -1673,6 +1673,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
     }
+
     else if (reportName === 'Stock Transfer Made Detail Report') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
@@ -1697,6 +1698,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
     }
+
     else if (reportName === 'Stock Transfer Made Summary Report') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
@@ -1721,6 +1723,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
     }
+
     else if (reportName === 'Stock Transfer Received Detail Report') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
@@ -1769,6 +1772,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
     }
+    
     else if (reportName === 'Spares Customer Off Take Statement') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 

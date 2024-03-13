@@ -61,9 +61,12 @@ interface IPaintIssue {
   attribute2: Date;
   attribute3:string;
   attribute4:string;
+  attribute10:number;
   attribute9:number;
   panelCode:string;
   panelQty:number;
+  panelQty1:number;
+
 }
 
 export class IcTrans {
@@ -84,11 +87,14 @@ export class PaintIssueDpComponent implements OnInit {
   public subInvCode: any;
   public panelList :any[];
 
-  attribute9:number;  // panel qty
+  attribute10:number;  // new panel qty
+  attribute9:number;  // old panel qty
   attribute3:string;  // Panel Type Lov : Old Panel;New Panel
   attribute4:string;  // Vehicle Registration No
   panelCode:string;
   panelQty:number=0;
+  panelQty1:number=0;
+
   panelFlag:string;
   compNo: string;
   onHandQty: number;
@@ -195,6 +201,8 @@ export class PaintIssueDpComponent implements OnInit {
   attribute2: Date;
   headerValidation1 = false;
   lineValidation1=false;
+  panelButtonDisabled =false;
+  saveDone=false;
 
   jobData:any=[];
 
@@ -270,20 +278,45 @@ export class PaintIssueDpComponent implements OnInit {
       name:[],
       panelCode:[],
       panelQty:[],
+      panelQty1:[],
+
       panelFlag:[],
 
       attribute3:[],
       attribute4:[],
+      attribute10:[],
       attribute9:[],
 
 
       cycleLinesList: this.fb.array([]),
+      // panelLinesList: this.fb.array([]),
+      panelLineList: this.fb.array([this.panelLineDetails()]),
 
     })
   }
+
+  panelLineArray(): FormArray {
+    return <FormArray>this.paintIssueForm.get('panelLineList')
+  }
+
+  panelLineDetails() {
+    return this.fb.group({
+      panelFlag: [false],
+      code: [],
+      codeDesc: [],
+      attribute1: [],
+      paneltype: ['NEW'],
+     })
+  }
+
+
+
   cycleLinesList(): FormArray {
     return this.paintIssueForm.get("cycleLinesList") as FormArray
   }
+
+ 
+
   newcycleLinesList(): FormGroup {
     return this.fb.group({
       compileId: [''],
@@ -1084,6 +1117,7 @@ export class PaintIssueDpComponent implements OnInit {
             this.currentOp = 'INSERT';
             // this.paintIssueForm.get('cycleLinesList').patchValue(data.obj.cycleLinesList);
             this.paintIssueForm.disable();
+            this.panelLineArray().disable();
             // this.dispRow=false;
             this.displayaddButton = false;
             this.displayButton = false;
@@ -1150,12 +1184,12 @@ export class PaintIssueDpComponent implements OnInit {
       return;
     }
 
-    if (formValue.attribute3 === undefined || formValue.attribute3 === null || formValue.attribute3.trim()=='') {
-      this.headerValidation1 = false;
-      msg1 = "PANEL TYPE: Should not be null....";
-      alert(msg1);
-      return;
-    }
+    // if (formValue.attribute3 === undefined || formValue.attribute3 === null || formValue.attribute3.trim()=='') {
+    //   this.headerValidation1 = false;
+    //   msg1 = "PANEL TYPE: Should not be null....";
+    //   alert(msg1);
+    //   return;
+    // }
     if (formValue.attribute4 === undefined || formValue.attribute4 === null || formValue.attribute4.trim()=='') {
       this.headerValidation1 = false;
       msg1 = "VEHICLE REGISTRATION NO.: Should not be null....";
@@ -1165,18 +1199,18 @@ export class PaintIssueDpComponent implements OnInit {
 
     
     
-    if (formValue.attribute9 === undefined || formValue.attribute9 === null || formValue.attribute9<=0 || formValue.attribute9>22) {
-      this.headerValidation1 = false;
+    if (formValue.panelQty === undefined || formValue.panelQty === null || formValue.panelQty<=0 || formValue.panelQty>22) {
       msg1 = "PANEL QTY: Should not be null Or Zero.\nMaximum panels allowed is 22 Nos";
       alert(msg1);
-      return;
-    }
-
-   
+      var  resp=confirm("Do You Want to Continue without selecting Panel ???");
+      if(resp==false) { return;}
+     }
+    
     this.headerValidation1 = true;
   }
 
   saveMisc() {
+    // const formValue: IPaintIssue = this.paintIssueForm.getRawValue();
    
     
     this.checkHeaderValidation();
@@ -1200,9 +1234,13 @@ export class PaintIssueDpComponent implements OnInit {
       if(resp==false) { return;}
       }
 
+    this.validatePanelArray(); //will enable later.rkpr 12/3/24
 
     this.displayButton = true;
     this.displayaddButton = true;
+
+   
+
     if (this.paintIssueForm.valid) {
       // this.displayButton=true;
       // this.displayaddButton=true;
@@ -1218,6 +1256,11 @@ export class PaintIssueDpComponent implements OnInit {
         formValue.attribute1 = itemCode1[0];
       }
     
+      formValue.attribute4=this.attribute4.toUpperCase();
+      formValue.attribute1=this.attribute1.toUpperCase();
+  
+      alert (formValue.attribute1 +","+formValue.attribute4);
+      
       this.service.miscSubmit(formValue).subscribe
         ((res: any) => {
           if (res.code === 200) {
@@ -1237,6 +1280,7 @@ export class PaintIssueDpComponent implements OnInit {
             this.paintIssueForm.disable();
             this.displayButton = false;
             this.displayaddButton = false;
+            this.saveDone=true;
           }
           else {
             if (res.code === 400) {
@@ -1486,7 +1530,8 @@ onSelectPanel(e,index){
       this.panelQty=this.panelQty-Number(this.panelList[index].attribute1);
   }
    if(this.panelQty >22) { alert ("Maximum Panels should not exceed 22. Please check")}
-   this.attribute9=this.panelQty;
+  //  this.attribute9=this.panelQty;
+
   // var totPanelCount=0;
   // for (let i = 0; i < this.panelList.length; i++) {
   //   if(this.panelList[index].panelFlag==true) {
@@ -1497,8 +1542,72 @@ onSelectPanel(e,index){
   // this.paintIssueForm.patchValue({panelQty :totPanelCount});
 }
 
+onSelectPaneltype(evnt,index) {
+ this.CalculatePanelCount();
+}
+
+onSelectPanelNew(e,index){
+  this.CalculatePanelCount(); 
+}
+
+CalculatePanelCount(){
+  var patch = this.paintIssueForm.get('panelLineList') as FormArray;
+  var panelLineArr = this.paintIssueForm.get('panelLineList').value;
+   var pqty1=0
+   var pqty2=0
+
+    for (let i = 0; i < this.panelList.length; i++) {
+
+      if (panelLineArr[i].panelFlag === true && panelLineArr[i].paneltype==='NEW' ) {
+        pqty1=pqty1+Number(panelLineArr[i].attribute1);
+      }
+
+      if (panelLineArr[i].panelFlag === true && panelLineArr[i].paneltype==='OLD' ) {
+        pqty2=pqty2+Number(panelLineArr[i].attribute1);
+      }
+    }
+       var totpQty=pqty1+pqty2;
+       this.panelQty =totpQty;  
+     
+       this.attribute10=pqty1;
+       this.attribute9=pqty2;
+
+
+       if(totpQty >22) {alert("No of Panels selected is more than 22.Please check..");}
+
+  }
+
+  validatePanelArray(){
+    var patch = this.paintIssueForm.get('panelLineList') as FormArray;
+    var panelLineArr = this.paintIssueForm.get('panelLineList').value;
+
+    var len1 = panelLineArr.length;
+    for (let i = len1 - 1; i >= 0; i--) {
+
+      if (this.panelLineArray().controls[i].get('panelFlag').value != true) {
+        this.panelLineArray().removeAt(i);
+      } 
+
+    }
+  }
+
 
 LoadPanelList(){}
+
+LoadPanelListNew(){
+  // alert ("this.saveDone :"+this.saveDone);
+  if(this.saveDone){ return;}
+
+  var len = this.panelLineArray().length;
+  for (let i = 0; i < this.panelList.length - len; i++) {
+    var invLnGrp: FormGroup = this.panelLineDetails();
+    this.panelLineArray().push(invLnGrp);
+  }
+  
+  this.paintIssueForm.get('panelLineList').patchValue(this.panelList);
+
+}
+
 
 CalculateLineTotal() {
   var trxLnArr = this.paintIssueForm.get('cycleLinesList').value;
