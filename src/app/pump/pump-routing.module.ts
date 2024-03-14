@@ -10,6 +10,7 @@ import { ShiftInvoiceGenComponent } from './shift-invoice-gen/shift-invoice-gen.
 import { ShiftEntryListComponent } from './shift-entry-list/shift-entry-list.component';
 import { PumpDipMasterComponent } from './pump-dip-master/pump-dip-master.component';
 import { PumpDipMasterNewComponent } from './pump-dip-master-new/pump-dip-master-new.component';
+import { PumpCounterSaleComponent } from './pump-counter-sale/pump-counter-sale.component';
 
 const routes: Routes = [
   {path:'PumpTankMaster', component: PumpTankMasterComponent},
@@ -23,6 +24,9 @@ const routes: Routes = [
   {path:'ShiftEntryList',component:ShiftEntryListComponent},
   {path:'PumpDipMaster',component:PumpDipMasterComponent},
   {path:'PumpDipMasterNew',component:PumpDipMasterNewComponent},
+  {path:'PumpCounterSale',component:PumpCounterSaleComponent},
+
+
   {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
 ];
 
