@@ -615,6 +615,7 @@ export class MiscellaneousTransactionComponent implements OnInit {
           //(<any>this.newRow.controls.segment).nativeElement.focus();
         });
     }
+    
     var patch = this.miscellaneousForm.get('trxLinesList') as FormArray;
     if (patch != null) {
       patch.controls[0].patchValue({

@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MasterService } from 'src/app/master/master.service';
 
 
+
 interface IPaintIssue {
   invItemId: number;
   compNo: string;
@@ -304,6 +305,7 @@ export class PaintIssueDpComponent implements OnInit {
       panelFlag: [false],
       code: [],
       codeDesc: [],
+      codedesc: [],
       attribute1: [],
       paneltype: ['NEW'],
      })
@@ -1209,6 +1211,7 @@ export class PaintIssueDpComponent implements OnInit {
     this.headerValidation1 = true;
   }
 
+
   saveMisc() {
     // const formValue: IPaintIssue = this.paintIssueForm.getRawValue();
    
@@ -1596,6 +1599,9 @@ LoadPanelList(){}
 
 LoadPanelListNew(){
   // alert ("this.saveDone :"+this.saveDone);
+
+ 
+
   if(this.saveDone){ return;}
 
   var len = this.panelLineArray().length;
@@ -1605,6 +1611,15 @@ LoadPanelListNew(){
   }
   
   this.paintIssueForm.get('panelLineList').patchValue(this.panelList);
+
+  var patch = this.paintIssueForm.get('panelLineList') as FormArray;
+  var panelLineArr = this.paintIssueForm.get('panelLineList').value;
+
+  for (let i = 0; i < this.panelList.length ; i++) {
+    var paneldesc =panelLineArr[i].codeDesc;
+    // alert (panelLineArr[i].codeDesc)
+  patch.controls[i].patchValue({ codedesc: paneldesc });
+  }
 
 }
 

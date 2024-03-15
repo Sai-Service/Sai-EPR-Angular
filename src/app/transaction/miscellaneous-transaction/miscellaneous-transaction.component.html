@@ -263,6 +263,7 @@
                     <datalist id="dynmicUserIds1">
                       <option *ngFor="let item of ItemIdList" [value]="item.SEGMENT">{{item.SEGMENT}}</option>
                     </datalist></div>
+                    
                     <div *ngIf ="compileType==13">
                            <input type="text" list="dynmicUserIds1" (keyup)="filterRecord( $event,trxLineIndex)"
                             formControlName="segment" id="invItemIdFirstWay" class="form-control"
@@ -271,7 +272,7 @@
                           <datalist id="dynmicUserIds1">
                             <option *ngFor="let item of ItemIdList" [value]="item.segment">{{item.segment}}</option>
                           </datalist>
-                          </div>
+                  </div>
                           <span
                             *ngIf="getGroupControllinewise(trxLineIndex,'segment').touched && getGroupControllinewise(trxLineIndex,'segment').invalid"
                             class="error">Valid Item

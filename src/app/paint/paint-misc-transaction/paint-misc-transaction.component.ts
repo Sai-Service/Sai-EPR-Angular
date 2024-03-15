@@ -1,6 +1,21 @@
+
 import { DatePipe ,Location} from '@angular/common';
-import {   Component,  OnInit,  ViewChild,  ViewEncapsulation,  HostListener,  ElementRef,  ViewChildren,} from '@angular/core';
-import {  FormArray,  FormBuilder,  FormControl, FormGroup,  Validators,} from '@angular/forms';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+  HostListener,
+  ElementRef,
+  ViewChildren,
+} from '@angular/core';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MasterService } from 'src/app/master/master.service';
 
@@ -59,8 +74,6 @@ interface Imiscellaneous {
   attribute1:string;
   attribute2:Date;
 }
-
-
 export class miscTrans {
   segment: string;
   Locator: string;
@@ -73,14 +86,12 @@ export class ItemLocator {
 }
 
 @Component({
-  selector: 'app-paint-stk-adj',
-  templateUrl: './paint-stk-adj.component.html',
-  styleUrls: ['./paint-stk-adj.component.css']
+  selector: 'app-paint-misc-transaction',
+  templateUrl: './paint-misc-transaction.component.html',
+  styleUrls: ['./paint-misc-transaction.component.css']
 })
-
-
-export class PaintStkAdjComponent implements OnInit {
-  miscellaneousForm: FormGroup;
+export class PaintMiscTransactionComponent implements OnInit {
+  paintMiscellaneousForm: FormGroup;
   public ItemIdList: any[];
   public onHandItemList: any[];
   public subInvCode: any;
@@ -197,6 +208,7 @@ export class PaintStkAdjComponent implements OnInit {
   currentOp: string;
   dispRow: boolean = true;
   displayCost:boolean=true;
+  headerValidation1:boolean=false;
 
   jeSource: string;
   name: string;
@@ -241,7 +253,7 @@ export class PaintStkAdjComponent implements OnInit {
     private service: MasterService,
     private location1: Location
   ) {
-    this.miscellaneousForm = fb.group({
+    this.paintMiscellaneousForm = fb.group({
       compNo: [''],
       compileName: [''],
       compileId: [''],
@@ -298,7 +310,7 @@ export class PaintStkAdjComponent implements OnInit {
     });
   }
   cycleLinesList(): FormArray {
-    return this.miscellaneousForm.get('cycleLinesList') as FormArray;
+    return this.paintMiscellaneousForm.get('cycleLinesList') as FormArray;
   }
   newcycleLinesList(): FormGroup {
     return this.fb.group({
@@ -335,7 +347,7 @@ export class PaintStkAdjComponent implements OnInit {
   addnewcycleLinesList(i: number) {
     // alert(i);
     if (i > -1) {
-      var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList').value;
+      var trxLnArr1 = this.paintMiscellaneousForm.get('cycleLinesList').value;
       var itemqty = trxLnArr1[i].physicalQty;
       var item1 = trxLnArr1[i].segment;
       var loca = trxLnArr1[i].LocatorSegment;
@@ -347,24 +359,23 @@ export class PaintStkAdjComponent implements OnInit {
         loca === '' ||
         itemqty === ''
       ) {
-        alert('Please enter Blank Data');
+        alert('Please enter Valid Data');
         return;
       }
     }
     //alert('hi');
-    // alert(this.miscellaneousForm.get('compileType').value+'value');
+    // alert(this.paintMiscellaneousForm.get('compileType').value+'value');
     // this.cycleLinesList().push(this.newcycleLinesList());
-    if (i > -1 && this.miscellaneousForm.get('compileType').value === 4) {
-      // if(i>-1)
-      //alert('hi');
-
-      if (!this.itemMap.has(item1)) {
+    
+    if (i > -1 && this.paintMiscellaneousForm.get('compileType').value === 4) {
+          if (!this.itemMap.has(item1)) {
         this.reservePos(i);
       } else {
         this.deleteReserveLinewise(i);
         this.reservePos(i);
       }
     }
+
     var len1 = this.cycleLinesList().length;
     // alert(len1+'Length'+i);
     if (len1 == i + 1) {
@@ -372,7 +383,7 @@ export class PaintStkAdjComponent implements OnInit {
       this.cycleLinesList().push(this.newRow);
 
       // (<any>this.stockTranferForm.get('segment')).nativeElement.focus();
-      var patch = this.miscellaneousForm.get('cycleLinesList') as FormArray;
+      var patch = this.paintMiscellaneousForm.get('cycleLinesList') as FormArray;
       var len = this.cycleLinesList().length;
       patch.controls[len - 1].patchValue({
         lineNumber: len,
@@ -381,10 +392,10 @@ export class PaintStkAdjComponent implements OnInit {
       if (document.contains(btnrm)) {
         (document.getElementById('btnrm' + i) as HTMLInputElement).disabled =
           false;
-        this.miscellaneousForm.get('compileType').disable();
-        this.miscellaneousForm.get('reason').disable();
-        this.miscellaneousForm.get('approvedBy').disable();
-        // this.miscellaneousForm.get('cycleLinesList').get('LocatorSegment').disable();
+        this.paintMiscellaneousForm.get('compileType').disable();
+        this.paintMiscellaneousForm.get('reason').disable();
+        this.paintMiscellaneousForm.get('approvedBy').disable();
+        // this.paintMiscellaneousForm.get('cycleLinesList').get('LocatorSegment').disable();
 
         // this.Item[i+1].nativeElement.focus();
         // (document.getElementById('btnrm'+i+1) as HTMLInputElement).disabled = true;`
@@ -409,7 +420,7 @@ export class PaintStkAdjComponent implements OnInit {
       alert('You can not delete the line');
       return;
     }
-    var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList').value;
+    var trxLnArr1 = this.paintMiscellaneousForm.get('cycleLinesList').value;
     var itemid = trxLnArr1[trxLineIndex].segment;
     this.cycleLinesList().removeAt(trxLineIndex);
     // alert(itemid+'Delete');
@@ -418,8 +429,8 @@ export class PaintStkAdjComponent implements OnInit {
       this.itemMap.delete(itemid);
     }
     // this.cycleLinesList().removeAt(trxLineIndex);
-    var formVal = this.miscellaneousForm.get('cycleLinesList').value;
-    var patch = this.miscellaneousForm.get('cycleLinesList') as FormArray;
+    var formVal = this.paintMiscellaneousForm.get('cycleLinesList').value;
+    var patch = this.paintMiscellaneousForm.get('cycleLinesList') as FormArray;
     var len = this.cycleLinesList().length;
     for (let x=0; x<formVal.length; x++){
       patch.controls[x].patchValue({
@@ -489,31 +500,32 @@ export class PaintStkAdjComponent implements OnInit {
       this.locIdList = data;
       console.log(this.locIdList);
     });
-
     this.service.TransactionTypemisc().subscribe((data) => {
       this.transType = data;
       if (this.dispheader === true) {
-             for (let i = 0; i < this.transType.length; i++) {
+        // this.paintMiscellaneousForm.reset();
+        //  alert('In 1st If'+this.transType.length);
+        for (let i = 0; i < this.transType.length; i++) {
+          //  alert('In For');
           if (this.transType[i].transactionTypeId === 13) {
+            //  alert('In If');
             this.transType.splice(i, 1);
           }
         }
       }
     });
-  
     this.service.ReasonList().subscribe((data) => {
       this.reasonlist = data;
       let selreasonlist: any = [];
-
       for (let i = 0; i < this.reasonlist.length; i++) {
         if (this.reasonlist[i].reasonName.includes('SAPN')) {
           selreasonlist.push(this.reasonlist[i]);
         }
       }
       this.reasonlist = selreasonlist;
-        });
-
-
+      //  let currReason = this.reasonlist.filter((reasonName:string) => (reasonName.includes('IC')));
+      // this.selCustomer = currCustomer[0];
+    });
     this.service.TypeList().subscribe((data) => {
       this.TypeList = data;
     });
@@ -540,7 +552,7 @@ export class PaintStkAdjComponent implements OnInit {
    });
     //   this.addnewcycleLinesList(-1);
 
-    //   var patch = this.miscellaneousForm.get('trxLinesList') as  FormArray
+    //   var patch = this.paintMiscellaneousForm.get('trxLinesList') as  FormArray
 
     //   (patch.controls[0]).patchValue(
     //  {
@@ -562,7 +574,7 @@ export class PaintStkAdjComponent implements OnInit {
 
     //  alert('sub'+this.sub);
   }
-  miscellaneous(miscellaneousForm: any) {}
+  paintMiscellaneous(paintMiscellaneousForm: any) {}
 
   onTabkeyPress(event, flag: boolean, component: string) {
     var k;
@@ -584,41 +596,30 @@ export class PaintStkAdjComponent implements OnInit {
   onOptionTypeSelect(event) {
     this.addnewcycleLinesList(-1);
     this.compileType = event;
-    // if (event === 13) {
+    if (event === 13) {
       this.service
         // .searchByItemSegmentDiv(this.divisionId, '36DH1601')
         this.service.ItemIdListDept(this.deptId, Number(sessionStorage.getItem('locId')), this.subInvCode.subInventoryId)
+
         .subscribe((data) => {
           this.ItemIdList = data;
           
         });
-    // }
+    }
+    if (event === 4) {
+      this.service
+        // .searchByItemSegmentDiv(this.divisionId, '36DH1601')
+        this.service.ItemIdListDept(this.deptId, Number(sessionStorage.getItem('locId')), this.subInvCode.subInventoryId)
 
-     // this.service.ItemIdListDept(this.deptId, Number(sessionStorage.getItem('locId')), this.subInvCode.subInventoryId)
-    //  .subscribe(
-    //   data => {
-    //   this.transType = data;
-    //   if (this.dispheader === true) {
-    //          for (let i = 0; i < this.transType.length; i++) {
-    //       if (this.transType[i].transactionTypeId === 13) {
-    //         this.transType.splice(i, 1);
-    //       }
-    //     }
-    //   }
-    // });
-
-
-    // if (event === 4) {
-    //   this.service
-    //     .searchByItemSegmentDiv(this.divisionId, '36DH1601')
-    //     .subscribe((data) => {
-    //       this.ItemIdList = data;
-    //       console.log(this.newRow.controls.segment);
+        .subscribe((data) => {
+          this.ItemIdList = data;
+          console.log(this.newRow.controls.segment);
         
-    //     });
-    // }
-
-    var patch = this.miscellaneousForm.get('trxLinesList') as FormArray;
+          //(<any>this.newRow.controls.segment).nativeElement.focus();
+        });
+    }
+    
+    var patch = this.paintMiscellaneousForm.get('trxLinesList') as FormArray;
     if (patch != null) {
       patch.controls[0].patchValue({
         lineNumber: 1,
@@ -659,59 +660,69 @@ export class PaintStkAdjComponent implements OnInit {
   }
 
   filterRecord(event, i) {
-    var trxType = this.miscellaneousForm.get('compileType').value;
-    var itemCode = event.target.value;
-    alert("trxType -"+trxType +" itemCode.length: "+itemCode.length)
+    var trxType = this.paintMiscellaneousForm.get('compileType').value;
 
+    var itemCode = event.target.value;
     if (event.keyCode == 13) {
       // enter keycode
+
       if (itemCode.length == 8) {
+        // alert("13-lenngth-8-compileType -"+trxType +" itemCode.length: "+itemCode.length)
+
         if (this.ItemIdList.length <= 1) {
-          // if (trxType === 4) {
+          if (trxType === 4) {
             // alert('inside if--');
             this.service
               .ItemIdListDeptByCode(
-                this.deptId,Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId,itemCode)
+                this.deptId,
+                Number(sessionStorage.getItem('locId')),
+                this.subInvCode.subInventoryId,
+                itemCode
+              )
               .subscribe((data) => {
                 this.ItemIdList = data;
                 this.onOptiongetItem(itemCode, i);
               });
-          // } else {
-          //   this.service
-          //     .searchByItemSegmentDiv(this.divisionId, itemCode.toUpperCase())
-          //     .subscribe((data) => {
-          //       this.ItemIdList = data;
-          //       // this.Select(data[0].itemId);
-          //       this.onOptiongetItem(itemCode, i);
-          //     });
-          // }
+          } else {
+            this.service
+              .searchByItemSegmentDiv(this.divisionId, itemCode.toUpperCase())
+              .subscribe((data) => {
+                this.ItemIdList = data;
+                // this.Select(data[0].itemId);
+                this.onOptiongetItem(itemCode, i);
+              });
+          }
         }else{
           this.onOptiongetItem(itemCode, i);
         }
 
         return;
       } else if (itemCode.length >= 4) {
+        // alert("length 4-compileType -"+trxType +" itemCode.length: "+itemCode.length)
+
         // alert(trxType);
-        // if (trxType === 4) {
-          // alert('inside if >=4');
+        if (trxType === 4) {
+          // alert('inside if');
           this.service
             .ItemIdListDeptByCode(
               this.deptId,
               Number(sessionStorage.getItem('locId')),
-              this.subInvCode.subInventoryId,itemCode
+              this.subInvCode.subInventoryId,
+              itemCode
             )
             .subscribe((data) => {
               this.ItemIdList = data;
+              this.onOptiongetItem(itemCode, i);
             });
-        // } else {
-
-          // this.service
-          //   .searchByItemSegmentDiv(this.divisionId, itemCode.toUpperCase())
-          //   .subscribe((data) => {
-          //     this.ItemIdList = data;
-          //   });
-            this.onOptiongetItem(itemCode, i);
-        // }
+        } else {
+          this.service
+            .searchByItemSegmentDiv(this.divisionId, itemCode.toUpperCase())
+            .subscribe((data) => {
+              this.ItemIdList = data;
+              // this.Select(data[0].itemId);
+               this.onOptiongetItem(itemCode, i);
+            });
+        }
       } else {
         alert('Please Enter 4 characters of item number!!');
         return;
@@ -751,31 +762,27 @@ export class PaintStkAdjComponent implements OnInit {
  
 
   onOptiongetItem(event: any, i) {
-    alert ("onOptiongetItem >> "+event +","+i);
-
     if (this.currentOp === 'SEARCH') {
       return;
     }
-
     // alert('onOptiongetItem' + event);
-    var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList') as FormArray;
-    var trxLnArr = this.miscellaneousForm.get('cycleLinesList').value;
+    var trxLnArr1 = this.paintMiscellaneousForm.get('cycleLinesList') as FormArray;
+    var trxLnArr = this.paintMiscellaneousForm.get('cycleLinesList').value;
     // trxLnArr1.controls[i].get('LocatorSegment').disable();
-    var trxType = this.miscellaneousForm.get('compileType').value;
+    var trxType = this.paintMiscellaneousForm.get('compileType').value;
     let select1 = null;
-
-    if (trxType === 13) {
+    if (trxType === 4) {
       select1 = this.ItemIdList.find((d) => d.SEGMENT === event);
     } else {
       select1 = this.ItemIdList.find((d) => d.segment === event);
     }
     if (select1 != null) {
-      // var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList') as FormArray;
-      // var trxLnArr = this.miscellaneousForm.get('cycleLinesList').value;
+      // var trxLnArr1 = this.paintMiscellaneousForm.get('cycleLinesList') as FormArray;
+      // var trxLnArr = this.paintMiscellaneousForm.get('cycleLinesList').value;
       trxLnArr1.controls[i].patchValue({ invItemId: select1.itemId });
-      var compId = this.miscellaneousForm.get('compileId').value;
-      var compileType1 = this.miscellaneousForm.get('compileType').value;
-      var subcode = this.miscellaneousForm.get('subInventory').value;
+      var compId = this.paintMiscellaneousForm.get('compileId').value;
+      var compileType1 = this.paintMiscellaneousForm.get('compileType').value;
+      var subcode = this.paintMiscellaneousForm.get('subInventory').value;
       // let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
       //  alert(select2.subInventoryId+'Subcode');
       // alert(compId);
@@ -812,7 +819,7 @@ export class PaintStkAdjComponent implements OnInit {
             alert(this.CostDetail.segment);
             // this.displayCost=false;
           }
-          if (this.CostDetail.rate > 0.0 && this.miscellaneousForm.get('compileType').value === 13) {
+          if (this.CostDetail.rate > 0.0 && this.paintMiscellaneousForm.get('compileType').value === 13) {
             // alert('IN IF'+this.CostDetail.rate)
             this.displayCost=true;
           }
@@ -896,8 +903,8 @@ export class PaintStkAdjComponent implements OnInit {
   }
   AvailQty(event: any, i) {
     // alert(event.target.value);
-    var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList') as FormArray;
-    var trxLnArr = this.miscellaneousForm.get('cycleLinesList').value;
+    var trxLnArr1 = this.paintMiscellaneousForm.get('cycleLinesList') as FormArray;
+    var trxLnArr = this.paintMiscellaneousForm.get('cycleLinesList').value;
     var itemid = trxLnArr[i].invItemId;
     var locId = trxLnArr[i].LocatorSegment;
     trxLnArr1.controls[i].patchValue({ locatorId: locId });
@@ -939,7 +946,7 @@ export class PaintStkAdjComponent implements OnInit {
         }
       });
     console.log(this.onhand);
-    //  var trxLnarronha = this.miscellaneousForm.get('cycleLinesList').value;
+    //  var trxLnarronha = this.paintMiscellaneousForm.get('cycleLinesList').value;
   }
   resetMiscTrans() {
     this.deleteReserve();
@@ -947,12 +954,12 @@ export class PaintStkAdjComponent implements OnInit {
   }
 
   onLocatorSelection(event: any, i) {
-    var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList') as FormArray;
-    var trxLnArr = this.miscellaneousForm.get('cycleLinesList').value;
+    var trxLnArr1 = this.paintMiscellaneousForm.get('cycleLinesList') as FormArray;
+    var trxLnArr = this.paintMiscellaneousForm.get('cycleLinesList').value;
     var itemid = trxLnArr[i].invItemId;
     var locId = trxLnArr[i].locatorId;
     var onhandid = trxLnArr[i].id;
-    var subcode = this.miscellaneousForm.get('subInventory').value;
+    var subcode = this.paintMiscellaneousForm.get('subInventory').value;
     // let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
     let selloc = this.getfrmSubLoc.find((d) => d.segmentName === event);
     // alert(selloc.locatorId+'Id')
@@ -998,11 +1005,11 @@ export class PaintStkAdjComponent implements OnInit {
       this.cycleLinesList().controls[i].get('LocatorSegment').value;
 
     if (LocSegment === null) {
-      this.miscellaneousForm.get('Floor').reset();
-      this.miscellaneousForm.get('Rack').reset();
-      this.miscellaneousForm.get('RackNo').reset();
-      this.miscellaneousForm.get('Row').reset();
-      this.miscellaneousForm.get('RowNo').reset();
+      this.paintMiscellaneousForm.get('Floor').reset();
+      this.paintMiscellaneousForm.get('Rack').reset();
+      this.paintMiscellaneousForm.get('RackNo').reset();
+      this.paintMiscellaneousForm.get('Row').reset();
+      this.paintMiscellaneousForm.get('RowNo').reset();
     }
     if (LocSegment != null) {
       var temp = LocSegment.split('.');
@@ -1025,18 +1032,18 @@ export class PaintStkAdjComponent implements OnInit {
 
   okLocator(i) {
     // alert(i);
-    var LocSegment = this.miscellaneousForm.get('cycleLinesList').value;
-    var patch = this.miscellaneousForm.get('cycleLinesList') as FormArray;
+    var LocSegment = this.paintMiscellaneousForm.get('cycleLinesList').value;
+    var patch = this.paintMiscellaneousForm.get('cycleLinesList') as FormArray;
     LocSegment[i].LocatorSegment =
-      this.miscellaneousForm.get('Floor').value +
+      this.paintMiscellaneousForm.get('Floor').value +
       '.' +
-      this.miscellaneousForm.get('Rack').value +
+      this.paintMiscellaneousForm.get('Rack').value +
       '.' +
-      this.miscellaneousForm.get('RackNo').value +
+      this.paintMiscellaneousForm.get('RackNo').value +
       '.' +
-      this.miscellaneousForm.get('Row').value +
+      this.paintMiscellaneousForm.get('Row').value +
       '.' +
-      this.miscellaneousForm.get('RowNo').value;
+      this.paintMiscellaneousForm.get('RowNo').value;
 
     var LocatorSegment1 = LocSegment[i].LocatorSegment;
     // alert(this.LocatorSegment1);
@@ -1064,32 +1071,32 @@ export class PaintStkAdjComponent implements OnInit {
             this.locatorId = this.LocatorList.obj.locatorId;
           }
         } else if (this.LocatorList.code === 400) {
-          var arraycontrol = this.miscellaneousForm.get('cycleLinesList').value;
+          var arraycontrol = this.paintMiscellaneousForm.get('cycleLinesList').value;
           patch.controls[i].patchValue({ LocatorSegment: '' });
         }
       });
-    this.miscellaneousForm.get('Floor').reset();
-    this.miscellaneousForm.get('Rack').reset();
-    this.miscellaneousForm.get('RackNo').reset();
-    this.miscellaneousForm.get('Row').reset();
-    this.miscellaneousForm.get('RowNo').reset();
+    this.paintMiscellaneousForm.get('Floor').reset();
+    this.paintMiscellaneousForm.get('Rack').reset();
+    this.paintMiscellaneousForm.get('RackNo').reset();
+    this.paintMiscellaneousForm.get('Row').reset();
+    this.paintMiscellaneousForm.get('RowNo').reset();
     alert('locator search complete');
   }
 
   openCodeCombination() {
-    let SegmentName1 = this.miscellaneousForm.get('SegmentName').value;
+    let SegmentName1 = this.paintMiscellaneousForm.get('SegmentName').value;
     if (SegmentName1 === null) {
-      this.miscellaneousForm.get('segment11').reset();
-      this.miscellaneousForm.get('segment2').reset();
-      this.miscellaneousForm.get('segment3').reset();
-      this.miscellaneousForm.get('segment4').reset();
-      this.miscellaneousForm.get('segment5').reset();
+      this.paintMiscellaneousForm.get('segment11').reset();
+      this.paintMiscellaneousForm.get('segment2').reset();
+      this.paintMiscellaneousForm.get('segment3').reset();
+      this.paintMiscellaneousForm.get('segment4').reset();
+      this.paintMiscellaneousForm.get('segment5').reset();
 
-      this.miscellaneousForm.get('lookupValueDesc1').reset();
-      this.miscellaneousForm.get('lookupValueDesc2').reset();
-      this.miscellaneousForm.get('lookupValueDesc3').reset();
-      this.miscellaneousForm.get('lookupValueDesc4').reset();
-      this.miscellaneousForm.get('lookupValueDesc5').reset();
+      this.paintMiscellaneousForm.get('lookupValueDesc1').reset();
+      this.paintMiscellaneousForm.get('lookupValueDesc2').reset();
+      this.paintMiscellaneousForm.get('lookupValueDesc3').reset();
+      this.paintMiscellaneousForm.get('lookupValueDesc4').reset();
+      this.paintMiscellaneousForm.get('lookupValueDesc5').reset();
     }
     if (SegmentName1 != null) {
       var temp = SegmentName1.split('.');
@@ -1104,22 +1111,22 @@ export class PaintStkAdjComponent implements OnInit {
   }
   fnCancatination() {
     this.segmentName =
-      this.miscellaneousForm.get('segment11').value +
+      this.paintMiscellaneousForm.get('segment11').value +
       '.' +
-      this.miscellaneousForm.get('segment2').value +
+      this.paintMiscellaneousForm.get('segment2').value +
       '.' +
-      this.miscellaneousForm.get('segment3').value +
+      this.paintMiscellaneousForm.get('segment3').value +
       '.' +
-      this.miscellaneousForm.get('segment4').value +
+      this.paintMiscellaneousForm.get('segment4').value +
       '.' +
-      this.miscellaneousForm.get('segment5').value;
+      this.paintMiscellaneousForm.get('segment5').value;
 
     // alert(this.segmentName);
 
     this.service.segmentNameList(this.segmentName).subscribe((data) => {
       this.segmentNameList = data;
       if (this.segmentNameList.code === 200) {
-        this.miscellaneousForm.patchValue({
+        this.paintMiscellaneousForm.patchValue({
           codeCombinationId: this.segmentNameList.obj.codeCombinationId,
         });
         if (this.segmentNameList.length == 0) {
@@ -1131,33 +1138,33 @@ export class PaintStkAdjComponent implements OnInit {
           );
         }
       } else if (this.segmentNameList.code === 400) {
-        this.miscellaneousForm.patchValue({ segmentName: '' });
+        this.paintMiscellaneousForm.patchValue({ segmentName: '' });
         // alert(this.segmentNameList.message);
       }
     });
-    this.miscellaneousForm.get('segment11').reset();
-    this.miscellaneousForm.get('segment2').reset();
-    this.miscellaneousForm.get('segment3').reset();
-    this.miscellaneousForm.get('segment4').reset();
-    this.miscellaneousForm.get('segment5').reset();
+    this.paintMiscellaneousForm.get('segment11').reset();
+    this.paintMiscellaneousForm.get('segment2').reset();
+    this.paintMiscellaneousForm.get('segment3').reset();
+    this.paintMiscellaneousForm.get('segment4').reset();
+    this.paintMiscellaneousForm.get('segment5').reset();
 
-    this.miscellaneousForm.get('lookupValueDesc1').reset();
-    this.miscellaneousForm.get('lookupValueDesc2').reset();
-    this.miscellaneousForm.get('lookupValueDesc3').reset();
-    this.miscellaneousForm.get('lookupValueDesc4').reset();
-    this.miscellaneousForm.get('lookupValueDesc5').reset();
+    this.paintMiscellaneousForm.get('lookupValueDesc1').reset();
+    this.paintMiscellaneousForm.get('lookupValueDesc2').reset();
+    this.paintMiscellaneousForm.get('lookupValueDesc3').reset();
+    this.paintMiscellaneousForm.get('lookupValueDesc4').reset();
+    this.paintMiscellaneousForm.get('lookupValueDesc5').reset();
   }
 
   reservePos(i) {
     //alert("Hello");
-    var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList').value;
-    const formValue: Imiscellaneous = this.miscellaneousForm.value;
+    var trxLnArr1 = this.paintMiscellaneousForm.get('cycleLinesList').value;
+    const formValue: Imiscellaneous = this.paintMiscellaneousForm.value;
     let variants = <FormArray>this.cycleLinesList();
-    var transtypeid = this.miscellaneousForm.get('compileType').value;
+    var transtypeid = this.paintMiscellaneousForm.get('compileType').value;
     var seltranstyp = this.transType.find(
       (d) => d.transactionTypeId === transtypeid
     );
-    var locId1 = this.miscellaneousForm.get('locId').value;
+    var locId1 = this.paintMiscellaneousForm.get('locId').value;
 
     let variantFormGroup = <FormGroup>variants.controls[i];
     variantFormGroup.removeControl('reservedQty');
@@ -1195,7 +1202,7 @@ export class PaintStkAdjComponent implements OnInit {
       } else {
         if (res.code === 400) {
           alert('Code already present in data base');
-          this.miscellaneousForm.reset();
+          this.paintMiscellaneousForm.reset();
         }
       }
     });
@@ -1204,8 +1211,8 @@ export class PaintStkAdjComponent implements OnInit {
   validate(i: number, qty1) {
     //alert("Validate");
 
-    var trxLnArr = this.miscellaneousForm.get('cycleLinesList').value;
-    var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList') as FormArray;
+    var trxLnArr = this.paintMiscellaneousForm.get('cycleLinesList').value;
+    var trxLnArr1 = this.paintMiscellaneousForm.get('cycleLinesList') as FormArray;
     let avalqty = trxLnArr[i].avlqty;
     let qty = trxLnArr[i].physicalQty;
     let uomCode = trxLnArr[i].uom;
@@ -1213,7 +1220,7 @@ export class PaintStkAdjComponent implements OnInit {
     //alert(trxLnArr[i].physicalQty +' qty');
     if (
       qty > avalqty &&
-      this.miscellaneousForm.get('compileType').value !== 13
+      this.paintMiscellaneousForm.get('compileType').value !== 13
     ) {
       alert('You can not enter more than available quantity');
       trxLnArr1.controls[i].patchValue({ physicalQty: '' });
@@ -1243,7 +1250,7 @@ export class PaintStkAdjComponent implements OnInit {
 
   searchByCompileID(itemId) {
     // alert(itemId+'ID')
-    var compileId = this.miscellaneousForm.get('compileId').value;
+    var compileId = this.paintMiscellaneousForm.get('compileId').value;
     // alert(compileId+'CompileID');
     // let select1=this.ItemIdList.find(d=>d.itemid===itemId);
     // var itemId= select1.itemId
@@ -1257,8 +1264,8 @@ export class PaintStkAdjComponent implements OnInit {
         var xx = data.obj;
         console.log(data.obj);
         console.log(xx);
-        let patch = this.miscellaneousForm.get('cycleLinesList') as FormArray;
-        var control = this.miscellaneousForm.get('cycleLinesList').value;
+        let patch = this.paintMiscellaneousForm.get('cycleLinesList') as FormArray;
+        var control = this.paintMiscellaneousForm.get('cycleLinesList').value;
         var len = this.cycleLinesList().length;
         // alert(control[0].segment );
         if (len === 1) {
@@ -1285,15 +1292,15 @@ export class PaintStkAdjComponent implements OnInit {
         //   control.controls[i].patchValue(data.obj);
         // }
         //  alert(data.obj.compileLineId)
-        // this.miscellaneousForm.get('cycleLinesList').patchValue(data.obj);
+        // this.paintMiscellaneousForm.get('cycleLinesList').patchValue(data.obj);
         //  for(let i=0; i< data.obj.length; i++){
         //   //   alert(data.obj.cycleLinesList[i].subInventory+'subInventory');
-        // this.miscellaneousForm.patchValue({'srlNo':i+1})
+        // this.paintMiscellaneousForm.patchValue({'srlNo':i+1})
         // control.controls[i].patchValue({srlNo:i+1  })
 
-        // this.miscellaneousForm.patchValue({'segment':data.obj.segment});
-        // this.miscellaneousForm.patchValue({'subInventory':data.obj[i].subInventory});
-        // this.miscellaneousForm.patchValue({'compileLineId':data.obj[i].compileLineId})
+        // this.paintMiscellaneousForm.patchValue({'segment':data.obj.segment});
+        // this.paintMiscellaneousForm.patchValue({'subInventory':data.obj[i].subInventory});
+        // this.paintMiscellaneousForm.patchValue({'compileLineId':data.obj[i].compileLineId})
         // }
       }
     });
@@ -1302,8 +1309,8 @@ export class PaintStkAdjComponent implements OnInit {
     // alert(compno);
     if (compno != undefined) {
       this.currentOp = 'SEARCH';
-      // var compno = this.miscellaneousForm.get('compNo').value;
-      var appflag = this.miscellaneousForm.get('trans').value;
+      // var compno = this.paintMiscellaneousForm.get('compNo').value;
+      var appflag = this.paintMiscellaneousForm.get('trans').value;
       // alert(compno);
 
       this.service.getSearchViewBycompNo(compno).subscribe((data) => {
@@ -1312,7 +1319,7 @@ export class PaintStkAdjComponent implements OnInit {
         }
         if (data.code === 200) {
           //       // this.lstcomment=data.obj;
-          let control = this.miscellaneousForm.get(
+          let control = this.paintMiscellaneousForm.get(
             'cycleLinesList'
           ) as FormArray;
           var len = this.cycleLinesList().length;
@@ -1342,27 +1349,73 @@ export class PaintStkAdjComponent implements OnInit {
             });
           }
 
-          this.miscellaneousForm.patchValue(data.obj);
+          this.paintMiscellaneousForm.patchValue(data.obj);
           this.currentOp = 'INSERT';
-          // this.miscellaneousForm.get('cycleLinesList').patchValue(data.obj.cycleLinesList);
-          this.miscellaneousForm.disable();
+          // this.paintMiscellaneousForm.get('cycleLinesList').patchValue(data.obj.cycleLinesList);
+          this.paintMiscellaneousForm.disable();
           // this.dispRow=false;
           this.displayaddButton = false;
           this.displayButton = false;
           this.displayOp=false;
-          // this.miscellaneousForm.get('cycleLinesList').disable();
+          // this.paintMiscellaneousForm.get('cycleLinesList').disable();
         }
       });
     }
   }
 
+  checkHeaderValidation() {
+
+    const formValue: Imiscellaneous = this.paintMiscellaneousForm.getRawValue();
+    // const formValue: IPaintIssue = this.paintIssueForm.value;
+    var msg1;
+    
+    // alert(formValue.compileType) ;
+    
+
+    if (formValue.compileType === undefined || formValue.compileType === null  || formValue.compileType<0) {
+      this.headerValidation1 = false;
+      msg1 = "TRANSACTION TYPE: Should not be null....";
+      alert(msg1);
+      return;
+    }
+
+    if (formValue.reason === undefined || formValue.reason === null  || formValue.reason.trim()=='' || formValue.reason=='--Select--') {
+      this.headerValidation1 = false;
+      msg1 = "REASON: Should not be null....";
+      alert(msg1);
+      return;
+    }
+
+    // if (formValue.attribute3 === undefined || formValue.attribute3 === null || formValue.attribute3.trim()=='') {
+    //   this.headerValidation1 = false;
+    //   msg1 = "PANEL TYPE: Should not be null....";
+    //   alert(msg1);
+    //   return;
+    // }
+    if (formValue.segmentName === undefined || formValue.segmentName === null || formValue.segmentName.trim()=='') {
+      this.headerValidation1 = false;
+      msg1 = "ACCOUNT CODE.: Should not be null....";
+      alert(msg1);
+      return;
+    }
+   
+    
+    
+    
+    this.headerValidation1 = true;
+  }
+
   saveMisc() {
+
+    this.checkHeaderValidation();
+    if (this.headerValidation1==false ) { alert("Header Validation Failed... Please Check");  return;   }
+    //  return;
     this.displayButton = false;
     this.displayaddButton = true;
-    if (this.miscellaneousForm.valid) {
+    if (this.paintMiscellaneousForm.valid) {
       // this.displayButton=true;
       // this.displayaddButton=true;
-      const formValue: Imiscellaneous = this.miscellaneousForm.getRawValue();
+      const formValue: Imiscellaneous = this.paintMiscellaneousForm.getRawValue();
       this.service.miscSubmit(formValue).subscribe((res: any) => {
         if (res.code === 200) {
           this.compileName = res.obj.compileName;
@@ -1371,7 +1424,7 @@ export class PaintStkAdjComponent implements OnInit {
           this.compileStatus = res.obj.compileStatus;
           // this.lstcomment=data.obj;
           alert(res.message);
-          this.miscellaneousForm.disable();
+          this.paintMiscellaneousForm.disable();
           this.displayButton = false;
           this.displayaddButton = false;
           this.displayOp=false;
@@ -1379,19 +1432,20 @@ export class PaintStkAdjComponent implements OnInit {
           if (res.code === 400) {
             alert(res.message);
             this.displayButton=true;
-            // this.miscellaneousForm.reset();
+            // this.paintMiscellaneousForm.reset();
           }
         }
       });
     } else {
-      // alert('else');
+      alert('Incomplete Header/Line details....');
+      this.displayButton=true;
       this.HeaderValidation();
     }
   }
 
   onSelectReason(event) {
     // alert(event);
-    // var reasname=this.miscellaneousForm.get('reason').value;
+    // var reasname=this.paintMiscellaneousForm.get('reason').value;
     // this.service.reasonaccCode(this.locId,reasname).subscribe(
       if(event!=undefined){
     var reasonArr = event.split('-');
@@ -1400,15 +1454,15 @@ export class PaintStkAdjComponent implements OnInit {
       .reasonaccCode(this.locId, reasonArr[0], reasonArr[1])
       .subscribe((data) => {
         this.acccodedesc = data;
-        // this.miscellaneousForm.patchValue({reason:this.acccodedesc.segmentName});
+        // this.paintMiscellaneousForm.patchValue({reason:this.acccodedesc.segmentName});
         this.segmentName = this.acccodedesc.segmentName;
       });
   }}
 
   HeaderValidation() {
     var isValid: boolean = false;
-    Object.keys(this.miscellaneousForm.controls).forEach((key) => {
-      const control = this.miscellaneousForm.controls[key] as
+    Object.keys(this.paintMiscellaneousForm.controls).forEach((key) => {
+      const control = this.paintMiscellaneousForm.controls[key] as
         | FormControl
         | FormArray
         | FormGroup;
@@ -1417,7 +1471,7 @@ export class PaintStkAdjComponent implements OnInit {
         control.markAsTouched();
       } else if (control instanceof FormArray) {
         (<FormArray>(
-          this.miscellaneousForm.get('cycleLinesList')
+          this.paintMiscellaneousForm.get('cycleLinesList')
         )).controls.forEach((group: FormGroup) => {
           (<any>Object)
             .values(group.controls)
@@ -1431,17 +1485,17 @@ export class PaintStkAdjComponent implements OnInit {
   }
 
   getGroupControl(fieldName) {
-    return this.miscellaneousForm.get(fieldName);
+    return this.paintMiscellaneousForm.get(fieldName);
   }
 
   getGroupControllinewise(index, fieldName) {
     // alert('nam'+fieldName);
-    return (<FormArray>this.miscellaneousForm.get('cycleLinesList'))
+    return (<FormArray>this.paintMiscellaneousForm.get('cycleLinesList'))
       .at(index)
       .get(fieldName);
   }
   deleteReserve() {
-    var transtypeid = this.miscellaneousForm.get('compileType').value;
+    var transtypeid = this.paintMiscellaneousForm.get('compileType').value;
     var seltranstyp = this.transType.find(
       (d) => d.transactionTypeId === transtypeid
     );
@@ -1458,11 +1512,11 @@ export class PaintStkAdjComponent implements OnInit {
       });
   }
   deleteReserveLinewise(i) {
-    var transtypeid = this.miscellaneousForm.get('compileType').value;
+    var transtypeid = this.paintMiscellaneousForm.get('compileType').value;
     var seltranstyp = this.transType.find(
       (d) => d.transactionTypeId === transtypeid
     );
-    var trxLnArr1 = this.miscellaneousForm.get('cycleLinesList').value;
+    var trxLnArr1 = this.paintMiscellaneousForm.get('cycleLinesList').value;
     var itemid = trxLnArr1[i].itemId;
     this.service
       .reserveDeleteLine(
@@ -1488,7 +1542,7 @@ export class PaintStkAdjComponent implements OnInit {
   }
 
   viewMiscnote() {
-    var shipNumber = this.miscellaneousForm.get('compileName').value;
+    var shipNumber = this.paintMiscellaneousForm.get('compileName').value;
     const fileName = 'download.pdf';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.service.viewMiscnote(shipNumber)
@@ -1525,10 +1579,6 @@ export class PaintStkAdjComponent implements OnInit {
       }
     });
   }
-
-
-
-  
 
 }
 
