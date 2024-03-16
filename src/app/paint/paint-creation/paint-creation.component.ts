@@ -333,14 +333,18 @@ export class PaintCreationComponent implements OnInit {
 
       // alert ("testing..."+this.cycleLinesList().length)
 
-      if (!this.itemMap.has(item1)) {
-        this.reservePos(i);
-      }
-      else {
-        this.deleteReserveLinewise(i);
-        this.reservePos(i);
-      }
-    }
+      // =======================RESERVE================================
+
+            // if (!this.itemMap.has(item1)) {
+            //   this.reservePos(i);
+            // }
+            // else {
+            //   this.deleteReserveLinewise(i);
+            //   this.reservePos(i);
+            // }
+    // =======================================================
+  }
+
    
     var len1 = this.cycleLinesList().length;
     if (len1 == i + 1) {

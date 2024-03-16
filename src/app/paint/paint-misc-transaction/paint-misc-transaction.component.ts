@@ -366,15 +366,19 @@ export class PaintMiscTransactionComponent implements OnInit {
     //alert('hi');
     // alert(this.paintMiscellaneousForm.get('compileType').value+'value');
     // this.cycleLinesList().push(this.newcycleLinesList());
-    
-    if (i > -1 && this.paintMiscellaneousForm.get('compileType').value === 4) {
-          if (!this.itemMap.has(item1)) {
-        this.reservePos(i);
-      } else {
-        this.deleteReserveLinewise(i);
-        this.reservePos(i);
-      }
-    }
+    // =======================================================
+
+          // if (i > -1 && this.paintMiscellaneousForm.get('compileType').value === 4) {
+          //       if (!this.itemMap.has(item1)) {
+          //     this.reservePos(i);
+          //   } else {
+          //     this.deleteReserveLinewise(i);
+          //     this.reservePos(i);
+          //   }
+          // }
+
+   // =======================================================
+
 
     var len1 = this.cycleLinesList().length;
     // alert(len1+'Length'+i);

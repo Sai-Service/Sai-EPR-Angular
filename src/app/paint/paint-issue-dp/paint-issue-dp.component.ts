@@ -359,15 +359,19 @@ export class PaintIssueDpComponent implements OnInit {
         return;
       }
 
+// ====================RESERVE===================================
+      // if (!this.itemMap.has(item1)) {
+      //   this.reservePos(i);
+      // }
+      // else {
+      //   this.deleteReserveLinewise(i);
+      //   this.reservePos(i);
+      // }
+// =======================================================
 
-      if (!this.itemMap.has(item1)) {
-        this.reservePos(i);
-      }
-      else {
-        this.deleteReserveLinewise(i);
-        this.reservePos(i);
-      }
     }
+
+
     var len1 = this.cycleLinesList().length;
     if (len1 == i + 1) {
 
@@ -1095,26 +1099,41 @@ export class PaintIssueDpComponent implements OnInit {
               alert ("This is Paint Mixing issue Transaction.\nPlease use Colour Mixing Form to get the details.");
               return;
             }
+
             let control = this.paintIssueForm.get('cycleLinesList') as FormArray;
+           
             var len = this.cycleLinesList().length;
             for (let i = 0; i < data.obj.cycleLinesList.length - len; i++) {
               var trxlist: FormGroup = this.newcycleLinesList();
               this.cycleLinesList().push(trxlist);
-
             }
-            // for(let j=0; j<data.obj.cycleLinesList.length-len; j++){
-            //  control.controls[j].patchValue(data.obj.cycleLinesList);
-            // }
-
+          
             for (let i = 0; i < this.cycleLinesList().length; i++) {
-
               control.controls[i].patchValue({
                 lineNumber: i + 1
               })
             }
 
+
+
+            // this.paintIssueForm.get('panelLineList').patchValue(this.panelList);
+
+            // var patch = this.paintIssueForm.get('panelLineList') as FormArray;
+            // var panelLineArr = this.paintIssueForm.get('panelLineList').value;
+            this.panelLineArray().clear();
+
+           let panelcontrol = this.paintIssueForm.get('panelLineList') as FormArray;
+            var len1 = this.panelLineArray().length;
+            for (let i = 0; i < data.obj.panelLineList.length - len1; i++) {
+              var invLnGrp: FormGroup = this.panelLineDetails();
+              this.panelLineArray().push(invLnGrp);
+            }
+          
+            this.paintIssueForm.get('panelLineList').patchValue(data.obj.panelLineList);
+                    
             this.paintIssueForm.patchValue(data.obj);
             this.totalItemValue=Math.round((data.obj.totalItemValue+Number.EPSILON)*100)/100;
+
 
             this.currentOp = 'INSERT';
             // this.paintIssueForm.get('cycleLinesList').patchValue(data.obj.cycleLinesList);
@@ -1598,11 +1617,13 @@ CalculatePanelCount(){
 LoadPanelList(){}
 
 LoadPanelListNew(){
-  // alert ("this.saveDone :"+this.saveDone);
+  alert ("this.displayButton :"+this.displayButton);
 
  
 
   if(this.saveDone){ return;}
+
+  if(this.displayButton==true) {
 
   var len = this.panelLineArray().length;
   for (let i = 0; i < this.panelList.length - len; i++) {
@@ -1617,9 +1638,12 @@ LoadPanelListNew(){
 
   for (let i = 0; i < this.panelList.length ; i++) {
     var paneldesc =panelLineArr[i].codeDesc;
+    var panelCnt =Number(panelLineArr[i].attribute1)
     // alert (panelLineArr[i].codeDesc)
   patch.controls[i].patchValue({ codedesc: paneldesc });
+  patch.controls[i].patchValue({ attribute1:panelCnt });
   }
+}
 
 }
 

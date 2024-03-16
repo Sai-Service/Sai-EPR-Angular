@@ -792,9 +792,9 @@ export class PaintReportsComponent implements OnInit {
 
     else if (reportName === 'Stock Transfer Made Detail Report') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
-      alert ("Work In Progress ...");
-      this.closeResetButton = true;
-      return;
+      // alert ("Work In Progress ...");
+      // this.closeResetButton = true;
+      // return;
 
       const fileName = 'Stock Transfer Made Detail Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
@@ -821,9 +821,9 @@ export class PaintReportsComponent implements OnInit {
     else if (reportName === 'Stock Transfer Made Summary Report') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
-      alert ("Work In Progress ...");
-      this.closeResetButton = true;
-      return;
+      // alert ("Work In Progress ...");
+      // this.closeResetButton = true;
+      // return;
 
       const fileName = 'Stock Transfer Made Summary Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
@@ -850,9 +850,9 @@ export class PaintReportsComponent implements OnInit {
     else if (reportName === 'Stock Transfer Received Detail Report') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
-      alert ("Work In Progress ...");
-      this.closeResetButton = true;
-      return;
+      // alert ("Work In Progress ...");
+      // this.closeResetButton = true;
+      // return;
 
       const fileName = 'Stock Transfer Received Detail Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
@@ -878,9 +878,9 @@ export class PaintReportsComponent implements OnInit {
     else if (reportName === 'Spares Stock Transfer Received Summary Report') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
-      alert ("Work In Progress ...");
-      this.closeResetButton = true;
-      return;
+      // alert ("Work In Progress ...");
+      // this.closeResetButton = true;
+      // return;
 
       const fileName = 'Spares Stock Transfer Received Summary Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
