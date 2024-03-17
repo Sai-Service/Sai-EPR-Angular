@@ -3,7 +3,7 @@
     <table style="width: 100%;background-color: white;">
       <tr>
         <td class="PageHeader">
-          &nbsp;&nbsp;BodyShop&nbsp;Issue&nbsp;(Paint)
+          &nbsp;&nbsp;BodyShop&nbsp;Issue&nbsp;Form
         </td>
         <table style="width: 100%; background-color: #a4d3e9;">
           <tr>
@@ -168,7 +168,7 @@
          <td>
            <input disabled type="text" class="form-control" formControlName="approvedBy" [(ngModel)]="approvedBy">
         </td>
-        <td style="width: 15%" class="LabelFontStyle">Repair Order:</td>
+        <td style="width: 15%" class="LabelFontStyle">Job Card No:</td>
       
         <td><input  type="text" class="form-control" formControlName="attribute1" [(ngModel)]="attribute1" style="background-color: yellow; text-transform: uppercase;"></td>
 
@@ -303,7 +303,7 @@
                <input hidden formControlName="compileId" [(ngModel)]="compileId">
                <input hidden formControlName="compileLineId"> 
 
-                <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100px;" (ngModelChange)="onOptiongetItem($event,trxLineIndex)" />
+                <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100px;text-transform: uppercase;" (ngModelChange)="onOptiongetItem($event,trxLineIndex)" />
                 <datalist id="dynmicUserIds1">
                   <option *ngFor="let item of ItemIdList" [ngValue]="item.invItemId">{{item.SEGMENT}}
                     </option>

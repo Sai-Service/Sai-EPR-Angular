@@ -328,9 +328,19 @@ export class PaintCreationComponent implements OnInit {
       var item1 = trxLnArr1[i].segment;
       // alert(item1 +","+itemqty +",index:"+i);
 
-      if (item1.trim()   === '' || item1==undefined ) {alert('Incomplete Line Details...ItemCode');return;}
-      if (itemqty<=0 || itemqty==undefined) {alert('Incomplete Line Details...ItemQty');return;}
+      // if (item1.trim()   === '' || item1==undefined ) {alert('Incomplete Line Details...ItemCode');return;}
+      // if (itemqty<=0 || itemqty==undefined) {alert('Incomplete Line Details...ItemQty');return;}
 
+
+      if (item1 === '' || item1===undefined)  {
+        alert('Please enter Valid [Item Code]');
+        return;
+      }
+
+       if (itemqty === null || itemqty===undefined || itemqty <=0)  {
+        alert('Please enter Valid [Transaction Quantity]');
+        return;
+      }
       // alert ("testing..."+this.cycleLinesList().length)
 
       // =======================RESERVE================================
@@ -576,6 +586,7 @@ export class PaintCreationComponent implements OnInit {
     //   event=itemCode
     // }
     // alert ("event :"+event +", item code :"+itemCode+","+i)
+    event =event.toUpperCase();
 
     let select1 = this.ItemIdList.find(d => d.SEGMENT === event);
     if (select1 != undefined) {
@@ -1072,8 +1083,8 @@ export class PaintCreationComponent implements OnInit {
           if (data.code === 200) {
             //       // this.lstcomment=data.obj;
 
-            if(data.obj.reason==='ICPN02-21-Paint Issue to BodyShop'){ 
-              alert ("This is WS issue Transaction.\nPlease use WS Issue Form to get the details.");
+            if(data.obj.reason==='PN002'){ 
+              alert ("This is Paint Mixing Issue Transaction.\nPlease use BodyShop Issue Form to get the details.");
               return;
             }
             let control = this.paintCreationForm.get('cycleLinesList') as FormArray;
@@ -1166,6 +1177,7 @@ export class PaintCreationComponent implements OnInit {
     // const formValue: IPaintIssue = this.paintIssueForm.value;
     var msg1;
 
+  
     
     if (formValue.reason === undefined || formValue.reason === null  || formValue.reason.trim()=='') {
       this.headerValidation1 = false;
@@ -1173,6 +1185,23 @@ export class PaintCreationComponent implements OnInit {
       alert(msg1);
       return;
     }
+
+    if (formValue.description === undefined || formValue.description === null || formValue.description.trim()=='') {
+      this.headerValidation1 = false;
+      msg1 = "VEHICLE REGISTRATION NO.: Should not be null....";
+      alert(msg1);
+      return;
+    }
+
+    if (formValue.attribute1 === undefined || formValue.attribute1 === null  || formValue.attribute1.trim()=='') {
+      this.headerValidation1 = false;
+      msg1 = "JOB CARD NO: Should not be null....";
+      alert(msg1);
+      return;
+    }
+
+   
+   
 
     if (formValue.colorCode === undefined || formValue.colorCode === null  || formValue.colorCode.trim()=='') {
       this.headerValidation1 = false;
@@ -1194,14 +1223,8 @@ export class PaintCreationComponent implements OnInit {
   }
 
   saveMisc() {
-    this.displayButton = false;
     // const formValue: IPaintMixing = this.transeData(this.paintCreationForm.value);
-    const formValue: IPaintMixing = this.paintCreationForm.getRawValue();
-
-    formValue.description=this.description.toUpperCase();
-    formValue.attribute1=this.attribute1.toUpperCase();
-
-    alert (formValue.description +","+formValue.attribute1);
+    
 
     this.checkHeaderValidation();
     if (this.headerValidation1==false ) { alert("Header Validation Failed... Please Check");  return;   }
@@ -1227,9 +1250,19 @@ export class PaintCreationComponent implements OnInit {
       }
 
     this.displayaddButton = true;
+    this.displayButton = true;
+
+
+
     if (this.paintCreationForm.valid) {
       // this.displayButton=true;
       // this.displayaddButton=true;
+      const formValue: IPaintMixing = this.paintCreationForm.getRawValue();
+
+    formValue.description=this.description.toUpperCase();
+    formValue.attribute1=this.attribute1.toUpperCase();
+
+    alert (formValue.description +","+formValue.attribute1);
       formValue.attribute2 = this.paintCreationForm.get('compileDate').value;
       formValue.compileType = this.paintCreationForm.get('compileId').value;
       // alert(this.paintCreationForm.get('attribute1').value+'In save')

@@ -2,7 +2,7 @@
     <form [formGroup]="paintCreationForm" (ngSubmit)="paintCreation(paintCreationForm.value)">
     <table style="width: 100%;background-color: white;">
       <tr>
-        <td class="PageHeader">&nbsp;Paint&nbsp;Mixing&nbsp;Issue
+        <td class="PageHeader">&nbsp;Paint&nbsp;Mixing&nbsp;Issue&nbsp;Form
         </td>
         <table style="width: 100%; background-color: #a4d3e9;">
           <tr>
@@ -71,12 +71,9 @@
                 *ngIf="getGroupControl('compileDate').touched && getGroupControl('compileDate').invalid">Valid Transaction Type
                </span>
             </td>
-      <td style="width: 15%" class="LabelFontStyle">
-        Transaction Type:
-      </td>
+      <td style="width: 15%" class="LabelFontStyle">Transaction Type:</td>
       <input hidden formControlName="compileId" [(ngModel)]="compileId">
-      <td>
-        <input disabled class="form-control" formControlName="compileType" #myinput>
+      <td><input disabled class="form-control" formControlName="compileType" #myinput>
           <!-- <option>--Select--</option> -->
           <!-- <option *ngFor="let tt of transType" [ngValue]="tt.transactionTypeId" > {{tt.transactionTypeName}}</option>
         </select> -->
@@ -85,6 +82,7 @@
        </span>
       </td>
      </ng-template>
+     
       </tr>
       <tr>
         <td style="width: 15%" class="LabelFontStyle">
@@ -158,11 +156,11 @@
       </tr>
       <tr>
           <td style="width: 15%" class="LabelFontStyle">Vehicle No:</td>
-          <td><input type="text" class="form-control" formControlName="description"[(ngModel)]="description"  style="text-transform:uppercase" > </td>
+          <td><input type="text" class="form-control" formControlName="description"[(ngModel)]="description"  style="background-color: yellow;text-transform:uppercase" > </td>
   
             <!-- style="text-transform: uppercase" -->
-        <td style="width: 15%" class="LabelFontStyle">Repair Order:  </td>
-        <td><input  type="text"  class="form-control" formControlName="attribute1" [(ngModel)]="attribute1" style="text-transform:uppercase"  ></td>
+        <td style="width: 15%" class="LabelFontStyle">Job Card No:  </td>
+        <td><input  type="text"  class="form-control" formControlName="attribute1" [(ngModel)]="attribute1" style="background-color: yellow;text-transform:uppercase"  ></td>
         
         <td style="width: 15%" class="LabelFontStyle">  Description:</td>
         <td><input disabled type="text" class="form-control" formControlName="approvedBy" [(ngModel)]="approvedBy" s></td>
@@ -214,7 +212,7 @@
           <!-- <div *ngIf="displayButton; then  CLR1 ; else CLR2"></div>
             <ng-template #CLR1> -->
               <!-- (ngModelChange)="onSelectColor11($event)" -->
-                <td colspan="2">
+                <td colspan="3">
                 <input type="text" formControlName="colorDescription" [(ngModel)]="colorDescription" style="width:100%;background-color: yellow"
                     (keyup)="getUserIdsFirstWayColor($event)" id="userIdFirstWay"
                     list="dynmicUserIds" class="form-control" placeholder="Main Color List"
@@ -238,7 +236,7 @@
         <!-- <td style="width: 15%" class="LabelFontStyle">Total Value :</td> -->
         <input readonly  hidden type="number" class="form-control" formControlName="totIssuedValue" [(ngModel)]="totIssuedValue" >
 
-        <td></td>
+        <!-- <td></td> -->
        <td style="width: 15%" class="LabelFontStyle">Receipt Ref No: </td>
          <td>
            <input disabled type="text" class="form-control" formControlName="referenceNo" [(ngModel)]="referenceNo">
@@ -286,7 +284,7 @@
                </td>
                <input hidden formControlName="compileId" [(ngModel)]="compileId">
                <input hidden formControlName="compileLineId"> 
-                         <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100px;" (ngModelChange)="onOptiongetItem($event,trxLineIndex)" />
+                         <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100px;text-transform: uppercase;" (ngModelChange)="onOptiongetItem($event,trxLineIndex)" />
                 <datalist id="dynmicUserIds1">
                   <option *ngFor="let item of ItemIdList" [ngValue]="item.invItemId">
                     {{item.SEGMENT}}

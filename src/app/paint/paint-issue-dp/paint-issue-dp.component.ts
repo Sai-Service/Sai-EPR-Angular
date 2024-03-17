@@ -354,10 +354,16 @@ export class PaintIssueDpComponent implements OnInit {
       var itemqty = trxLnArr1[i].physicalQty;
       var item1 = trxLnArr1[i].segment;
       // alert(item1);
-      if (item1 === '') {
-        alert('Please enter Blank Data');
+      if (item1 === '' || item1===undefined)  {
+        alert('Please enter Valid [Item Code]');
         return;
       }
+
+       if (itemqty === null || itemqty===undefined || itemqty <=0)  {
+        alert('Please enter Valid [Transaction Quantity]');
+        return;
+      }
+
 
 // ====================RESERVE===================================
       // if (!this.itemMap.has(item1)) {
@@ -595,6 +601,8 @@ export class PaintIssueDpComponent implements OnInit {
     if (this.currentOp === 'SEARCH') {
       return;
     }
+    // alert ("event :"+event)
+    event =event.toUpperCase();
 
     let select1 = this.ItemIdList.find(d => d.SEGMENT === event);
     if (select1 != undefined) {
@@ -1095,8 +1103,8 @@ export class PaintIssueDpComponent implements OnInit {
           if (data.code === 200) {
             //       // this.lstcomment=data.obj;
 
-            if(data.obj.reason==='ICPN01-21-Paint Mixing Color'){ 
-              alert ("This is Paint Mixing issue Transaction.\nPlease use Colour Mixing Form to get the details.");
+            if(data.obj.reason==='PN001'){ 
+              alert ("This is Paint Mixing Issue Transaction.\nPlease use Paint Mixing Issue Form to get the details.");
               return;
             }
 
@@ -1128,8 +1136,11 @@ export class PaintIssueDpComponent implements OnInit {
               var invLnGrp: FormGroup = this.panelLineDetails();
               this.panelLineArray().push(invLnGrp);
             }
-          
-            this.paintIssueForm.get('panelLineList').patchValue(data.obj.panelLineList);
+             this.paintIssueForm.get('panelLineList').patchValue(data.obj.panelLineList);
+
+             for (let i = 0; i < this.panelLineArray().length; i++) {
+              panelcontrol.controls[i].patchValue({panelFlag: true});
+            }
                     
             this.paintIssueForm.patchValue(data.obj);
             this.totalItemValue=Math.round((data.obj.totalItemValue+Number.EPSILON)*100)/100;
@@ -1200,7 +1211,7 @@ export class PaintIssueDpComponent implements OnInit {
 
     if (formValue.attribute1 === undefined || formValue.attribute1 === null  || formValue.attribute1.trim()=='') {
       this.headerValidation1 = false;
-      msg1 = "REPAIR ORDER NUMBER: Should not be null....";
+      msg1 = "JOB CARD NO: Should not be null....";
       alert(msg1);
       return;
     }

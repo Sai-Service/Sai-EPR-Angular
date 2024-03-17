@@ -294,7 +294,7 @@ export class PaintPoListComponent implements OnInit {
   update() {
     // var upData: UpdateData = new UpdateData();
     
-  alert("Hello")
+  // alert("Hello")
     for (let i = 0; i < this.poDetails.length; i++) {
       if (this.poDetails[i].selectLineFlag === 'Y') {
        

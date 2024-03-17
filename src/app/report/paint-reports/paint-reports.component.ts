@@ -348,7 +348,7 @@ export class PaintReportsComponent implements OnInit {
 
 
     else if (reportName === 'internalConsumptionReport') {
-      this.reportName = 'Consumption Report';
+      this.reportName = 'Paint Consumption Report';
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
       this.isVisiblespClosingStockAsOndate=false;
@@ -369,7 +369,7 @@ export class PaintReportsComponent implements OnInit {
 
     }
     else if (reportName === 'gstsparesMiscIssueReceipt') {
-      this.reportName = 'Paint Misc Issue Receipt Report';
+      this.reportName = 'Paint Stock Adjustment Report';
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
       this.isVisiblespClosingStockAsOndate=false;
@@ -411,7 +411,7 @@ export class PaintReportsComponent implements OnInit {
     }
 
     else if (reportName === 'gststockTransfer') {
-      this.reportName = 'Stock Transfer Made Detail Report';
+      this.reportName = 'Paint Stock Transfer Made Detail Report';
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
       this.isVisiblespClosingStockAsOndate=false;
@@ -432,7 +432,7 @@ export class PaintReportsComponent implements OnInit {
     }
 
     else if (reportName === 'gststockTransferSummary') {
-      this.reportName = 'Stock Transfer Made Summary Report';
+      this.reportName = 'Paint Stock Transfer Made Summary Report';
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
       this.isVisiblespClosingStockAsOndate=false;
@@ -453,7 +453,7 @@ export class PaintReportsComponent implements OnInit {
     }
 
     else if (reportName === 'gststockTransferReceivedDetails') {
-      this.reportName = 'Stock Transfer Received Detail Report';
+      this.reportName = 'Paint Stock Transfer Received Detail Report';
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
       this.isVisiblespClosingStockAsOndate=false;
@@ -474,7 +474,7 @@ export class PaintReportsComponent implements OnInit {
     }
 
     else if (reportName === 'gststockTransferReceivedSummary') {
-      this.reportName = 'Stock Transfer Received Summary Report';
+      this.reportName = 'Paint Stock Transfer Received Summary Report';
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
       this.isVisiblespClosingStockAsOndate=false;
@@ -711,7 +711,7 @@ export class PaintReportsComponent implements OnInit {
     }
     
 
-    else if (reportName==='Consumption Report'){
+    else if (reportName==='Paint Consumption Report'){
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
       const fileName = 'Consumption Report-' +  fromDate + '.xls';
@@ -736,7 +736,7 @@ export class PaintReportsComponent implements OnInit {
       } 
     }
 
-    else if (reportName === 'Paint Misc Issue Receipt Report') {
+    else if (reportName === 'Paint Stock Adjustment Report') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
       const fileName = 'Paint Misc Issue Receipt Report-' +  fromDate + '.xls';
@@ -790,7 +790,7 @@ export class PaintReportsComponent implements OnInit {
       }
     }
 
-    else if (reportName === 'Stock Transfer Made Detail Report') {
+    else if (reportName === 'Paint Stock Transfer Made Detail Report') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
       // alert ("Work In Progress ...");
       // this.closeResetButton = true;
@@ -818,7 +818,7 @@ export class PaintReportsComponent implements OnInit {
       }
     }
 
-    else if (reportName === 'Stock Transfer Made Summary Report') {
+    else if (reportName === 'Paint Stock Transfer Made Summary Report') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
       // alert ("Work In Progress ...");
@@ -847,7 +847,7 @@ export class PaintReportsComponent implements OnInit {
       }
     }
 
-    else if (reportName === 'Stock Transfer Received Detail Report') {
+    else if (reportName === 'Paint Stock Transfer Received Detail Report') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
       // alert ("Work In Progress ...");
@@ -875,7 +875,7 @@ export class PaintReportsComponent implements OnInit {
           })
       }
     }
-    else if (reportName === 'Spares Stock Transfer Received Summary Report') {
+    else if (reportName === 'Paint Spares Stock Transfer Received Summary Report') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
       // alert ("Work In Progress ...");

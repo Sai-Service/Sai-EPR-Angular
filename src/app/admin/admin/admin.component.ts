@@ -267,10 +267,12 @@ export class AdminComponent implements OnInit {
     // && Number(sessionStorage.getItem('roleId'))===1 ) 
     // && sessionStorage.getItem('ticketNo') ==='GM01733')
     {
+      this.isVisibleMaster=false;
       this.isVisible11=false;
       this.isVisible12=false;
       this.isVisible13=false
       this.isVisibleWsVehicleMaster=false;
+      this.isVisibleCustMaster=false;
       this.isVisible14=false;
       this.isVisible15=false;
       this.isVisible16=false;
