@@ -1628,9 +1628,7 @@ CalculatePanelCount(){
 LoadPanelList(){}
 
 LoadPanelListNew(){
-  alert ("this.displayButton :"+this.displayButton);
-
- 
+  // alert ("this.displayButton :"+this.displayButton);
 
   if(this.saveDone){ return;}
 

@@ -468,6 +468,19 @@ export class MasterService {
   }
 
 
+  getDipScaleSearchByTankId(tankId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/DipMaster/tankId/${tankId}`);
+    // http://localhost:8081/DipMaster/tankId/1
+  }
+
+
+  // getDipScaleSearchByTankIdPage(pageNo): Observable<any> {
+  //   return this.http.get(this.ServerUrl + `/opUnit?page=${pageNo}&size=5`);
+
+  // }
+
+
+
   UpdateCompanyMasterById(ComMasterRecord, compId) {
     const options = {
       headers: this.headers
