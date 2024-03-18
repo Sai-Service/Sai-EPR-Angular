@@ -157,6 +157,10 @@
           (click)="reportDetails('invReceiptWriteOffReport')">30. Invoice Receipt Write off Report
         </a>
       </li>
+      <li>
+        <a class="dropdown-item" data-toggle="collapse" href="#isVisiblegstsaiDebtors" role="tab"
+            (click)="reportDetails('gstSaiDebtors')">31. Sai Debtors</a>
+    </li>
           </ul>
         </li>
 
@@ -496,20 +500,13 @@
 
 
 
-  <table class="center" [style.display]="isVisiblegstsaiDebtors ? 'block' : 'none'" class="collapse"
-  id="panelgstsaiDebtors">
-
- <!-- <table class="center" [style.display]="isVisiblegstsaiDebtors ? 'block' : 'none'" class="collapse"
- style="margin-left: 20%;" id="panelgstsaiDebtors"> -->
-
+  <table class="center" [style.display]="isVisiblegstsaiDebtors ? 'block' : 'none'" class="collapse"id="panelgstsaiDebtors">
  <table class="center">
      <tr>
        <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;" >{{reportName}}</td>
      </tr>
  </table>
  <br>
- <!-- <tr>
-     <td> -->
          <table class="center">
              <tr>
                  <td style="width: 15%" class="LabelFontStyle">
@@ -544,36 +541,17 @@
                      <input  type="number" class="form-control"  formControlName="custAccNo" [(ngModel)]="custAccNo">
                  </td>
               
-                 <!-- <td colspan="4">
-                   <table [style.display]="isVisibleDepartmentList ? 'block' : 'none'">
-                     <td style="width: 15%" class="LabelFontStyle">
-                         &nbsp;Department&nbsp;:&nbsp;
-                     </td>
-                     <td>
-                         <input type="text" disabled class="form-control" formControlName="department">
-                         <input hidden type="number" class="form-control" formControlName="deptId">
-                     </td>
-                   </table>
-               </td> -->
-               <!-- <td style="width: 15%" class="LabelFontStyle">&nbsp;Department&nbsp;:&nbsp;</td>
-               <td>
-                 <input type="text" disabled class="form-control" formControlName="department">
-                 <input hidden type="number" class="form-control" formControlName="deptId">
-              </td> -->
-
-              <td style="width: 15%" class="LabelFontStyle">
-                &nbsp;Department&nbsp;:&nbsp;
-                </td>
-                <td>
-                  <select formControlName="department" id="department" class="form-control"
-                    (ngModelChange)='onOptionsDepartmentList($event)'>
+                 <td style="width: 15%" class="LabelFontStyle">&nbsp;&nbsp;&nbsp;Department&nbsp;:&nbsp;</td>
+               
+                 <td>
+                  <select formControlName="department" id="department" class="form-control" (ngModelChange)='onOptionsDepartmentList($event)'>
                     <option></option>
                     <option *ngFor="let sc of  DepartmentList" [value]="sc.code">
                       {{sc.code}}
                     </option>
                   </select>
+                  <input hidden type="number" formControlName="deptId" id="deptId" class="form-control" >
                 <td>
-                  <td> <input type="number" formControlName="deptId" id="deptId" class="form-control" ></td>
              </tr>
 
              <tr>

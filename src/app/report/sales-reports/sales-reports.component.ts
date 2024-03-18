@@ -119,6 +119,7 @@ export class SalesReportsComponent implements OnInit {
       fromDate: [''],
       toDate: [''],
       locId: [''],
+      locCode:[],
       OUCode: [''],
       custAccNo: [''],
       deptId: [],
@@ -130,10 +131,11 @@ export class SalesReportsComponent implements OnInit {
       spInvAging3: [],
       vhslRegisterFromDt: [''],
       vhslRegisterToDt: [''],
-      locCode: [''],
+      deptCode: [''],
       salesINDFromDt: [''],
       salesINDToDt: [''],
       ouName: [''],
+      deptId1:[''],
       salesbkregToDt: [''],
       salesbkregFromDt: [''],
       salesAltnotInvToDt: [''],
@@ -207,6 +209,8 @@ export class SalesReportsComponent implements OnInit {
       .subscribe(
         data => {
           this.DepartmentList = data;
+          console.log(data);
+          
         }
       );
 
@@ -1298,6 +1302,7 @@ export class SalesReportsComponent implements OnInit {
         custAccNo = '';
       }
       // alert(deptId);
+      // debugger;
       const fileName = 'Sai Debtors-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -1307,8 +1312,10 @@ export class SalesReportsComponent implements OnInit {
           this.isDisabled1 = false;
           this.closeResetButton = true;
           return;
+
         }
-        this.reportService.SPDebtorReport(toDate, sessionStorage.getItem('ouId'), locId, custAccNo, deptId, this.age1, this.age2, this.age3, this.age4)
+        var deptId1 = this.salesReportForm.get('deptId1').value;
+        this.reportService.SPDebtorReport(toDate, sessionStorage.getItem('ouId'), locId, custAccNo, deptId1, this.age1, this.age2, this.age3, this.age4)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2087,11 +2094,14 @@ export class SalesReportsComponent implements OnInit {
 
   department(department) {
     if (department === 'Sales') {
+      // alert(sessionStorage.getItem('deptId'))
+      if (Number(sessionStorage.getItem('deptId')) != 4){
       let department = this.DepartmentList.filter((customer) => ((customer.codeDesc.includes('Sales') == true)));
       console.log(department);
       this.DepartmentList = department;
       this.department = department.code;
     }
+  }
   }
 
   onOptionsToLocation(event) {

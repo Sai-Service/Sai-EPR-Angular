@@ -492,24 +492,18 @@
                     <td>
                         <input type="number" class="form-control" formControlName="custAccNo" [(ngModel)]="custAccNo">
                     </td>
-
-                    <!-- <td colspan="4">
-                         <table [style.display]="isVisibleDepartmentList ? 'block' : 'none'">
-                           <td style="width: 15%" class="LabelFontStyle">
-                               &nbsp;Department&nbsp;:&nbsp;
-                           </td>
-                           <td>
-                               <input type="text" disabled class="form-control" formControlName="department">
-                               <input hidden type="number" class="form-control" formControlName="deptId">
-                           </td>
-                         </table>
-                     </td> -->
-                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Department&nbsp;:&nbsp;</td>
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Department&nbsp;List&nbsp;:&nbsp;</td>
                     <td>
-                        <input type="text" disabled class="form-control" formControlName="department">
-                        <input hidden type="number" class="form-control" formControlName="deptId">
+                      <select formControlName="deptCode" id="deptCode" class="form-control"
+                        (ngModelChange)='onOptionsDepartmentList($event)'>
+                        <option></option>
+                        <option *ngFor="let sc of  DepartmentList" [value]="sc.code">
+                          {{sc.code}}
+                        </option>
+                      </select>
+                      <input hidden disabled type="number" class="form-control" formControlName="deptId1">
+                      <input hidden disabled type="number" class="form-control" formControlName="deptName1">
                     </td>
-
                 </tr>
 
                 <tr>
