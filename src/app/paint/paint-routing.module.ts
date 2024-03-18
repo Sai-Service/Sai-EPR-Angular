@@ -9,7 +9,7 @@ import { PaintPoReceiptComponent }     from './paint-po-receipt/paint-po-receipt
 import { PaintPanelMasterComponent }   from './paint-panel-master/paint-panel-master.component';
 import { PaintItemMasterComponent } from './paint-item-master/paint-item-master.component';
 import { PaintPoListComponent } from './paint-po-list/paint-po-list.component';
-import { PaintStkAdjComponent } from './paint-stk-adj/paint-stk-adj.component';
+import { PaintMiscTransactionComponent } from './paint-misc-transaction/paint-misc-transaction.component';
 
 
 const routes: Routes = [
@@ -27,7 +27,7 @@ const routes: Routes = [
   {path:'PaintPoList', component: PaintPoListComponent},
   {path:'PaintPurchaseOrder/:poNo/:locId',component:PaintPurchaseOrderComponent},
   {path:'PaintPurchaseOrder/:poNo',component:PaintPurchaseOrderComponent},
-  {path:'PaintStkAdj',component:PaintStkAdjComponent},
+  {path:'PaintMiscTransaction',component:PaintMiscTransactionComponent},
 
 
   {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}

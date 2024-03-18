@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MasterService } from 'src/app/master/master.service';
 
 
+
 interface IPaintIssue {
   invItemId: number;
   compNo: string;
@@ -304,6 +305,7 @@ export class PaintIssueDpComponent implements OnInit {
       panelFlag: [false],
       code: [],
       codeDesc: [],
+      codedesc: [],
       attribute1: [],
       paneltype: ['NEW'],
      })
@@ -352,20 +354,30 @@ export class PaintIssueDpComponent implements OnInit {
       var itemqty = trxLnArr1[i].physicalQty;
       var item1 = trxLnArr1[i].segment;
       // alert(item1);
-      if (item1 === '') {
-        alert('Please enter Blank Data');
+      if (item1 === '' || item1===undefined)  {
+        alert('Please enter Valid [Item Code]');
+        return;
+      }
+
+       if (itemqty === null || itemqty===undefined || itemqty <=0)  {
+        alert('Please enter Valid [Transaction Quantity]');
         return;
       }
 
 
-      if (!this.itemMap.has(item1)) {
-        this.reservePos(i);
-      }
-      else {
-        this.deleteReserveLinewise(i);
-        this.reservePos(i);
-      }
+// ====================RESERVE===================================
+      // if (!this.itemMap.has(item1)) {
+      //   this.reservePos(i);
+      // }
+      // else {
+      //   this.deleteReserveLinewise(i);
+      //   this.reservePos(i);
+      // }
+// =======================================================
+
     }
+
+
     var len1 = this.cycleLinesList().length;
     if (len1 == i + 1) {
 
@@ -589,6 +601,8 @@ export class PaintIssueDpComponent implements OnInit {
     if (this.currentOp === 'SEARCH') {
       return;
     }
+    // alert ("event :"+event)
+    event =event.toUpperCase();
 
     let select1 = this.ItemIdList.find(d => d.SEGMENT === event);
     if (select1 != undefined) {
@@ -1089,30 +1103,48 @@ export class PaintIssueDpComponent implements OnInit {
           if (data.code === 200) {
             //       // this.lstcomment=data.obj;
 
-            if(data.obj.reason==='ICPN01-21-Paint Mixing Color'){ 
-              alert ("This is Paint Mixing issue Transaction.\nPlease use Colour Mixing Form to get the details.");
+            if(data.obj.reason==='PN001'){ 
+              alert ("This is Paint Mixing Issue Transaction.\nPlease use Paint Mixing Issue Form to get the details.");
               return;
             }
+
             let control = this.paintIssueForm.get('cycleLinesList') as FormArray;
+           
             var len = this.cycleLinesList().length;
             for (let i = 0; i < data.obj.cycleLinesList.length - len; i++) {
               var trxlist: FormGroup = this.newcycleLinesList();
               this.cycleLinesList().push(trxlist);
-
             }
-            // for(let j=0; j<data.obj.cycleLinesList.length-len; j++){
-            //  control.controls[j].patchValue(data.obj.cycleLinesList);
-            // }
-
+          
             for (let i = 0; i < this.cycleLinesList().length; i++) {
-
               control.controls[i].patchValue({
                 lineNumber: i + 1
               })
             }
 
+
+
+            // this.paintIssueForm.get('panelLineList').patchValue(this.panelList);
+
+            // var patch = this.paintIssueForm.get('panelLineList') as FormArray;
+            // var panelLineArr = this.paintIssueForm.get('panelLineList').value;
+            this.panelLineArray().clear();
+
+           let panelcontrol = this.paintIssueForm.get('panelLineList') as FormArray;
+            var len1 = this.panelLineArray().length;
+            for (let i = 0; i < data.obj.panelLineList.length - len1; i++) {
+              var invLnGrp: FormGroup = this.panelLineDetails();
+              this.panelLineArray().push(invLnGrp);
+            }
+             this.paintIssueForm.get('panelLineList').patchValue(data.obj.panelLineList);
+
+             for (let i = 0; i < this.panelLineArray().length; i++) {
+              panelcontrol.controls[i].patchValue({panelFlag: true});
+            }
+                    
             this.paintIssueForm.patchValue(data.obj);
             this.totalItemValue=Math.round((data.obj.totalItemValue+Number.EPSILON)*100)/100;
+
 
             this.currentOp = 'INSERT';
             // this.paintIssueForm.get('cycleLinesList').patchValue(data.obj.cycleLinesList);
@@ -1179,7 +1211,7 @@ export class PaintIssueDpComponent implements OnInit {
 
     if (formValue.attribute1 === undefined || formValue.attribute1 === null  || formValue.attribute1.trim()=='') {
       this.headerValidation1 = false;
-      msg1 = "REPAIR ORDER NUMBER: Should not be null....";
+      msg1 = "JOB CARD NO: Should not be null....";
       alert(msg1);
       return;
     }
@@ -1208,6 +1240,7 @@ export class PaintIssueDpComponent implements OnInit {
     
     this.headerValidation1 = true;
   }
+
 
   saveMisc() {
     // const formValue: IPaintIssue = this.paintIssueForm.getRawValue();
@@ -1595,8 +1628,13 @@ CalculatePanelCount(){
 LoadPanelList(){}
 
 LoadPanelListNew(){
-  // alert ("this.saveDone :"+this.saveDone);
+  alert ("this.displayButton :"+this.displayButton);
+
+ 
+
   if(this.saveDone){ return;}
+
+  if(this.displayButton==true) {
 
   var len = this.panelLineArray().length;
   for (let i = 0; i < this.panelList.length - len; i++) {
@@ -1605,6 +1643,18 @@ LoadPanelListNew(){
   }
   
   this.paintIssueForm.get('panelLineList').patchValue(this.panelList);
+
+  var patch = this.paintIssueForm.get('panelLineList') as FormArray;
+  var panelLineArr = this.paintIssueForm.get('panelLineList').value;
+
+  for (let i = 0; i < this.panelList.length ; i++) {
+    var paneldesc =panelLineArr[i].codeDesc;
+    var panelCnt =Number(panelLineArr[i].attribute1)
+    // alert (panelLineArr[i].codeDesc)
+  patch.controls[i].patchValue({ codedesc: paneldesc });
+  patch.controls[i].patchValue({ attribute1:panelCnt });
+  }
+}
 
 }
 

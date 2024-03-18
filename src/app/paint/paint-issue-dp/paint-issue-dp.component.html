@@ -3,7 +3,7 @@
     <table style="width: 100%;background-color: white;">
       <tr>
         <td class="PageHeader">
-          &nbsp;&nbsp;BodyShop&nbsp;Issue&nbsp;(Paint)
+          &nbsp;&nbsp;BodyShop&nbsp;Issue&nbsp;Form
         </td>
         <table style="width: 100%; background-color: #a4d3e9;">
           <tr>
@@ -168,7 +168,7 @@
          <td>
            <input disabled type="text" class="form-control" formControlName="approvedBy" [(ngModel)]="approvedBy">
         </td>
-        <td style="width: 15%" class="LabelFontStyle">Repair Order:</td>
+        <td style="width: 15%" class="LabelFontStyle">Job Card No:</td>
       
         <td><input  type="text" class="form-control" formControlName="attribute1" [(ngModel)]="attribute1" style="background-color: yellow; text-transform: uppercase;"></td>
 
@@ -220,7 +220,8 @@
 
        <td >
         <button type="button"  class="btn btn-primary"  [disabled]='panelButtonDisabled' 
-        data-toggle="modal" data-target="#panelModal"  (click)="LoadPanelListNew()" style="width:fit-content;color: black;">
+        data-toggle="modal" data-target="#panelModal"          (click)="LoadPanelListNew()"
+        style="width:fit-content;color: black;">
         &nbsp;PANEL DETAILS</button>
        </td>
 
@@ -302,7 +303,7 @@
                <input hidden formControlName="compileId" [(ngModel)]="compileId">
                <input hidden formControlName="compileLineId"> 
 
-                <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100px;" (ngModelChange)="onOptiongetItem($event,trxLineIndex)" />
+                <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100px;text-transform: uppercase;" (ngModelChange)="onOptiongetItem($event,trxLineIndex)" />
                 <datalist id="dynmicUserIds1">
                   <option *ngFor="let item of ItemIdList" [ngValue]="item.invItemId">{{item.SEGMENT}}
                     </option>
@@ -646,6 +647,7 @@
                         <th style="width:5rem" scope="col">Select</th>
                         <th style="width:12rem" scope="col">Panel Code</th>
                         <th style="width:12rem" scope="col">Description</th>
+                        <!-- <th style="width:12rem" scope="col">codedesc</th> -->
                         <th style="width:12rem" scope="col">Panel#</th>
                         <th style="width:12rem" scope="col">Panel Type</th>
                       </tr>
@@ -657,8 +659,10 @@
                                   <td style="text-align: right;">{{k+1}}</td>
                                   <td><input   type="checkbox"  style="text-align: center;width: 3rem;"  formControlName="panelFlag" (change)="onSelectPanelNew($event,k)"></td>
                                   <td><input disabled type ='text' style="width: 100px;height: 25px;"   formControlName="code"  class="form-control" > </td>
-                                  <td><input disabled type ='text' style="width: 300px;height: 25px;"  formControlName="codeDesc"  class="form-control" > </td>
-                                  <td><input disabled type ='text'style="width: 100px;height: 25px;text-align: center;" formControlName="attribute1"  class="form-control" > </td>
+                                  <input disabled hidden type ='text' style="width: 300px;height: 25px;"  formControlName="codeDesc"  class="form-control" > 
+                                  <td><input disabled type ='text' style="width: 300px;height: 25px;"  formControlName="codedesc"  class="form-control" ></td>
+
+                                  <td><input disabled type ='number'style="width: 100px;height: 25px;text-align: center;" formControlName="attribute1"  class="form-control" > </td>
                                   <td>
                                     <select  formControlName="paneltype"  id ="paneltype"    class="form-control"  (ngModelChange)='onSelectPaneltype($event,k)'  style="width: 100px; height: 25px;background-color: yellow;"  >
                                         <option value="NEW">NEW</option>
@@ -669,9 +673,6 @@
                                 </tr>
                       </ng-container>
                     </ng-container>
-
-
-
                 </table>
               </div>
             </div>
