@@ -28,16 +28,18 @@
                     
                             <td style="width: 15%;" class="LabelFontStyle">Tank&nbsp;&nbsp;</td>
                             <td>
-                                <select  formControlName="tank1" id="tank1" [(ngModel)]="tank1" class="form-control" style="background-color: yellow;">
+                                <select  formControlName="tank1" id="tank1" [(ngModel)]="tank1" class="form-control" style="background-color: yellow;" (ngModelChange)="onSelectTank($event)">
                                     <option *ngFor="let sc of  tankList"  [value]="sc.tankId">
                                        {{sc.tankId}}-{{sc.tankName}}
                                     </option>
                                 </select>
                             </td>
 
-                            <td style="width: 15%" class="LabelFontStyle">Volume&nbsp;:&nbsp;</td>
-                            <td> <input disabled  formControlName="dipVolume" [(ngModel)]='dipVolume' class="form-control" style="text-align:center" > </td>
+                            <td style="width: 15%" class="LabelFontStyle">DIP&nbsp;Reading:&nbsp;</td>
+                            <td> <input   formControlName="dipVolume" [(ngModel)]="dipVolume" (change) ="searchVolQty(dipVolume)" (keyup)="onKey($event)" class="form-control" style="text-align:center" > </td>
 
+                            <!-- (change)="validateAmt(paymentAmt)" (keyup)="onKey($event)" -->
+                            
                             <td style="width: 15%" class="LabelFontStyle">Quantity&nbsp;:&nbsp;</td>
                             <td> <input disabled  formControlName="dipQty" [(ngModel)]='dipQty' class="form-control" style="text-align:center" > </td>
 
@@ -48,22 +50,21 @@
                   
                     </table>
     
-                    <!-- <br> -->
+                    <br>
     
                     <table class="center">
                         <tr >
                                
                            <td><button type="button" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
                             <td><button type="button" class="btn btn-info" (click)="closeMast()" >Close</button></td>
-                            <td ><button type="button" class="btn btn-info" id="register" (click)="searchCmnMst(0)">Search</button></td> 
+                            <!-- <td ><button type="button" class="btn btn-info" id="register" (click)="searchCmnMst(0)">Search</button></td>  -->
 
                         </tr>
                     </table>
-                    <br>
+                    <!-- <br> -->
                    
-                    <br>
-    
-    
+                    <!-- <br> -->
+      
     
             </div>
         </div>
@@ -109,9 +110,7 @@
         <!-- </div> -->
     </div>
     </div>
-         
-    
-  
+
     
     <div class="modal fade" id="myModal">
         <div class="modal-dialog modal-dialog-centered">

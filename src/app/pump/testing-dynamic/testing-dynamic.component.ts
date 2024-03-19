@@ -16,6 +16,7 @@ interface IPumpShiftSale{
   shiftentrydate:Date;
   shifttype:number;
   employeeid:number;
+  emplName :string;
 
   shiftCode :string;
   nozzleId :number;

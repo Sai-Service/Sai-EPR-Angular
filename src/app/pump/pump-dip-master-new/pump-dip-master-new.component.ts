@@ -255,10 +255,16 @@ export class PumpDipMasterNewComponent  {
   }
 
 
+  onSelectTank(tnkId){
+  // alert ("tnkId :"+tnkId); 
+  this.searchCmnMst(tnkId)
 
-  searchCmnMst(pageNo){
+  }
+
+  searchCmnMst(tnkId){
 
     var tnkId=this.pumpDipMasterForm.get('tank1').value;
+    var dipVol=this.pumpDipMasterForm.get('dipVolume').value;
 
     //  alert ("Tank Id :" +tnkId)
     this.service.getDipScaleSearchByTankId(tnkId)
@@ -271,6 +277,30 @@ export class PumpDipMasterNewComponent  {
     );
   }
 
+  onKey(event: any) {
+    this.searchVolQty(event);
+  }
+
+  searchVolQty(dipVolume){
+    var tnkId=this.pumpDipMasterForm.get('tank1').value;
+    var dipVol=this.pumpDipMasterForm.get('dipVolume').value;
+    this.dipQty=null;
+    //  alert ("Tank Id :" +tnkId)
+
+     if(tnkId===undefined || tnkId===null ) { alert ("Please Select [Tank Name] from Tank list..");return}
+
+    this.service.getDipScaleSearchByTankIdAndVol(tnkId,dipVol)
+    .subscribe(
+      data => {
+        // alert ("data.obj :"+data.obj)
+        if(data.obj===null) {alert(dipVol+ "...dosent exists in Master....." +data.message)}
+        else {
+        this.dipQty=data.obj.qty;}
+        }
+    );
+    
+
+  }
 
 
 
