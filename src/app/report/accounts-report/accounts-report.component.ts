@@ -348,10 +348,12 @@ reportName:string;
     this.panelTodateAndOU=false;
   }
   else if (reportName === 'gstSparesSaiDebtors') {
+    // alert(reportName)
     this.reportName = 'Sai Debtors'
     this.isVisibleGSTSaleRegister=false;  
     this.isVisibleGSTPurchaseRegister=false;
     this.isVisibleSaleIND=true;
+    this.isVisiblegstsaiDebtors=false;
     this.isVisibleSparesdebtors=false;
     this.isVisiblespInvAgging=false;
     this.isVisiblepanelgltrialBalance=false;
@@ -365,8 +367,30 @@ reportName:string;
       this.isVisibleDepartmentList = true;
       this.isVisiblelocationLOV=true;
     }
-
     this.isVisiblegstsaiDebtors=false;
+    this.isVisiblepanelfromtolocation=false;
+    this.panelTodateAndOU=false;
+  }
+  else if (reportName==='gstSaiDebtors'){
+    alert(reportName)
+    this.reportName = 'Sai Debtors'
+    this.isVisibleGSTSaleRegister=false;  
+    this.isVisibleGSTPurchaseRegister=false;
+    this.isVisibleSaleIND=false;
+    this.isVisiblegstsaiDebtors=true;
+    this.isVisibleSparesdebtors=false;
+    this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
+    this.ispanelTolocationOu=false;
+    this.isVisibleVendorLedgerReport=false;
+    this.isVisiblecustomerLedger=false;
+    if (Number(sessionStorage.getItem('deptId')) === 4) {
+      this.isVisibleDepartmentList = true;
+      this.isVisiblelocationLOV=true;
+    }
     this.isVisiblepanelfromtolocation=false;
     this.panelTodateAndOU=false;
   }
