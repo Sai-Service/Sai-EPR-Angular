@@ -5,7 +5,10 @@
         <table style="width: 100%;background-color: white;">
             <tr>
                 <td colspan="4" class="PageHeader" style="width: 100%;" >
-                    &nbsp;&nbsp;DIP&nbsp;SCALE&nbsp;ENTRY
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    DIP&nbsp;Scale&nbsp;Entry&nbsp;Form
                 </td>
                 <table style="width: 100%; background-color: #a4d3e9;">
                     <tr>
@@ -35,9 +38,8 @@
                     <tr>
                         <td style="width: 15%" class="LabelFontStyle">Dip&nbsp;Entry&nbsp;No: </td>
 
-                        <td><input disabled type="text" class="form-control" formControlName="dipentrynumber">
-                            <input hidden disabled type="text" class="form-control"
-                                formControlName="dipentrynumber">
+                        <td><input disabled type="text" class="form-control" formControlName="dipentrynumber" [(ngModel)] ="dipentrynumber" >
+                            <!-- <input hidden disabled type="text" class="form-control"  formControlName="dipentrynumber"> -->
                         <input disabled hidden type="number" class="form-control" formControlName="dipentryid">
 
                         <td style="width: 15%" class="LabelFontStyle">Dip&nbsp;Entry&nbsp;Date:</td>
@@ -113,7 +115,7 @@
                                 </option>
                             </select>
 
-                            <input disabled  hidden type="text" class="form-control" formControlName="tankName">
+                            <input disabled  hidden type="text" class="form-control" formControlName="tankname">
 
                         </td>
                                 
@@ -176,6 +178,37 @@
             </div>
         </div>
     </div>
+
+
+
+   
+           <fieldset class="RFS">
+            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">SEARCH</legend>
+            <table class="center" style="width: 100%;background-color: #FFE4B5;">
+                <tr>
+                <td >
+                    <table class="center">
+                        <tr>
+                            <td  style="background-color: #FFE4B5;">&nbsp;Entry&nbsp;Date&nbsp;:&nbsp;</td>
+                            
+                            <td style="background-color: #FFE4B5;">
+                                <input type="date" class="form-control" formControlName="searchByDate" [(ngModel)]='searchByDate'
+                                    value={{searchByDate}} style="text-transform:uppercase;" max="{{minDate | date:'yyyy-MM-dd'}}">
+                            </td>
+        
+                            <td style="background-color: #FFE4B5;">
+                                <button type="button" class="btn-primary" (click)="SearchByEntryDate(searchByDate)"><i class="fa fa-search"
+                                        aria-hidden="true"></i></button>
+                            </td>
+        
+                        </tr>
+                    </table>
+                </td>
+                </tr>
+            </table>
+            </fieldset>
+    
+
     </form>
     
     

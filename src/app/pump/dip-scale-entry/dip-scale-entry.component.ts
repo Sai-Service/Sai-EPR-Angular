@@ -20,7 +20,7 @@ interface IDipEntry {
   emplid:number;
   shiftid:number;
   tankid:number;
-  tankName:string;
+  tankname:string;
   opendip  :number;
   openstock:number;
   closedip:number;
@@ -49,6 +49,8 @@ export class DipScaleEntryComponent implements OnInit {
 
   startDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   dipentrydate = this.pipe.transform(Date.now(), 'y-MM-dd');
+
+  searchByDate = this.pipe.transform(Date.now(), 'y-MM-dd');
 
   endDate:string;
   status:string="Active";
@@ -94,7 +96,7 @@ export class DipScaleEntryComponent implements OnInit {
   emplid:number;
   shiftid:number;
   tankid:number;
-  tankName:string;
+  tankname:string;
   opendip  :number;
   openstock:number;
   closedip:number;
@@ -136,7 +138,7 @@ export class DipScaleEntryComponent implements OnInit {
       emplid:[],
       shiftid:[],
       tankid:[],
-      tankName:[''],
+      tankname:[''],
       opendip  :[],
       openstock:[],
       closedip:[],
@@ -275,6 +277,32 @@ export class DipScaleEntryComponent implements OnInit {
 
   }
 
+  clearSearch() {
+    
+    this.pumpDipEntryForm.get('searchByDate').reset();
+    this.lstcomments = null;
+  }
+
+  SearchByEntryDate(entdate: any) {
+
+    if (entdate === undefined || entdate === null) { return; }
+
+    this.status = null;
+    var mDate = this.pipe.transform(entdate, 'dd-MMM-y');
+
+    alert ("Work inProgress ..."+mDate);
+    // this.service.SearchRcptByDate(mDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
+    //   .subscribe(
+    //     data => {
+    //       this.lstcomments = data.obj;
+    //       console.log(this.lstcomments);
+    //       if (data.code === 400) {
+    //         alert("No Receipts Found for this date...")
+    //         this.lstcomments = null;
+    //       }
+    //     });
+  }
+
 
   onKey(event: any,tp ) {
     this.searchVolQty(event,tp);
@@ -360,7 +388,7 @@ onSelectTank(tnkId){
   var select3 = this.tankList.find((tankList:any)=>tankList.tankId==tnkId);
   console.log(select3);
   // alert ("select3.tankName   "+select3.tankName)
-  this.pumpDipEntryForm.patchValue({tankName:select3.tankName})
+  this.pumpDipEntryForm.patchValue({tankname:select3.tankName})
    
 }
 
@@ -372,6 +400,9 @@ saveDipEntry() {
       if (this.checkValidation===true) {
          alert("Data Validation Sucessfull....") 
     
+         var  resp=confirm("Do You Want to Save this Transaction ???");
+         if(resp==false) { return;}
+           
   
       const formValue: IDipEntry = this.transeData(this.pumpDipEntryForm.value);
       this.service.dipEntrySubmit(formValue).subscribe((res: any) => {
@@ -479,7 +510,7 @@ saveDipEntry() {
 
         });
 
-        // this.pumpDipEntryForm.disable();
+        this.pumpDipEntryForm.disable();
 
 
      }
@@ -585,13 +616,25 @@ CheckDataValidations(){
     return;
   } 
 
-  if (formValue.closedip < formValue.opendip )
+   if (formValue.closedip < formValue.opendip )
   {
     this.checkValidation=false; 
     alert ("READING  : Enter Valid Reading");
     return;
   } 
+  if (formValue.openstock===undefined || formValue.openstock===null || formValue.openstock<0 )
+  {
+    this.checkValidation=false; 
+    alert ("OPEN STOCK  : Please Check....");
+    return;
+  } 
 
+  if (formValue.closestock===undefined || formValue.closestock===null || formValue.closestock<0 )
+  {
+    this.checkValidation=false; 
+    alert ("CLOSING STOCK  : Please Check...");
+    return;
+  } 
   
     this.checkValidation=true;
 
