@@ -14,11 +14,12 @@ import { ShiftInvoiceGenComponent } from './shift-invoice-gen/shift-invoice-gen.
 import { ShiftEntryListComponent } from './shift-entry-list/shift-entry-list.component';
 import { PumpDipMasterNewComponent } from './pump-dip-master-new/pump-dip-master-new.component';
 import { PumpCounterSaleComponent } from './pump-counter-sale/pump-counter-sale.component';
+import { DipScaleEntryComponent } from './dip-scale-entry/dip-scale-entry.component';
 // import { PumpPurchaseOrderComponent } from './pump-purchase-order/pump-purchase-order.component';
 
 
 @NgModule({
-  declarations: [PumpTankMasterComponent, PumpIslandMasterComponent, PumpNozzleMasterComponent,  PumpShiftSaleComponent, PumpShiftPumpNewComponent, TestingDynamicComponent, ShiftInvoiceGenComponent, ShiftEntryListComponent, PumpDipMasterNewComponent, PumpCounterSaleComponent,],
+  declarations: [PumpTankMasterComponent, PumpIslandMasterComponent, PumpNozzleMasterComponent,  PumpShiftSaleComponent, PumpShiftPumpNewComponent, TestingDynamicComponent, ShiftInvoiceGenComponent, ShiftEntryListComponent, PumpDipMasterNewComponent, PumpCounterSaleComponent, DipScaleEntryComponent,],
   imports: [
     CommonModule,
     PumpRoutingModule,

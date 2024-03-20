@@ -8,9 +8,10 @@ import { PumpShiftPumpNewComponent } from './pump-shift-pump-new/pump-shift-pump
 import { TestingDynamicComponent } from './testing-dynamic/testing-dynamic.component';
 import { ShiftInvoiceGenComponent } from './shift-invoice-gen/shift-invoice-gen.component';
 import { ShiftEntryListComponent } from './shift-entry-list/shift-entry-list.component';
-import { PumpDipMasterComponent } from './pump-dip-master/pump-dip-master.component';
+// import { PumpDipMasterComponent } from './pump-dip-master/pump-dip-master.component';
 import { PumpDipMasterNewComponent } from './pump-dip-master-new/pump-dip-master-new.component';
 import { PumpCounterSaleComponent } from './pump-counter-sale/pump-counter-sale.component';
+import { DipScaleEntryComponent } from './dip-scale-entry/dip-scale-entry.component';
 
 const routes: Routes = [
   {path:'PumpTankMaster', component: PumpTankMasterComponent},
@@ -22,10 +23,10 @@ const routes: Routes = [
   {path:'testing/:shiftEntryNo',component:TestingDynamicComponent},
   {path:'invoiceGene',component:ShiftInvoiceGenComponent},
   {path:'ShiftEntryList',component:ShiftEntryListComponent},
-  {path:'PumpDipMaster',component:PumpDipMasterComponent},
+  // {path:'PumpDipMaster',component:PumpDipMasterComponent},
   {path:'PumpDipMasterNew',component:PumpDipMasterNewComponent},
   {path:'PumpCounterSale',component:PumpCounterSaleComponent},
-
+  {path:'DipScaleEntry',component:DipScaleEntryComponent},
 
   {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
 ];

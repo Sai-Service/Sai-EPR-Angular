@@ -468,6 +468,24 @@ export class MasterService {
   }
 
 
+  getDipScaleSearchByTankId(tankId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/DipMaster/tankId/${tankId}`);
+    // http://localhost:8081/DipMaster/tankId/1
+  }
+
+  getDipScaleSearchByTankIdAndVol(tankId,dipVol): Observable<any> {
+    return this.http.get(this.ServerUrl + `/DipMaster/tankVol?tankId=${tankId}&vol=${dipVol}`)
+    // http://localhost:8081/DipMaster/tankVol?tankId=1&vol=169.0    
+  }
+
+
+  // getDipScaleSearchByTankIdPage(pageNo): Observable<any> {
+  //   return this.http.get(this.ServerUrl + `/opUnit?page=${pageNo}&size=5`);
+
+  // }
+
+
+
   UpdateCompanyMasterById(ComMasterRecord, compId) {
     const options = {
       headers: this.headers
@@ -4529,6 +4547,15 @@ TransactionTypemiscpPaint(): Observable<any> {
   }
 
 
+  getDipEntryDetails(dipEmtryNum): Observable<any> {
+    return this.http.get(this.ServerUrl + `/DipEntry/DipNumber/${dipEmtryNum}`);
+
+    // http://localhost:8081/DipEntry/DipNumber/12PP.2501-2325001  
+  }
+
+
+
+
   public tankMasterSubmit(tankMasterRecord) {
     const options = {
       headers: this.headers
@@ -4552,6 +4579,16 @@ TransactionTypemiscpPaint(): Observable<any> {
     const url = this.ServerUrl + '/NozzelMaster';
     return this.http.post(url, nozzleMasterRecord, options);
   }
+
+  public dipEntrySubmit(dipEntryRecord) {
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + '/DipEntry';
+    return this.http.post(url, dipEntryRecord, options);
+  }
+
+
 
 
 

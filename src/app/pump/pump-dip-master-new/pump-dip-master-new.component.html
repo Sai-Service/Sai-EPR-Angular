@@ -1,16 +1,169 @@
-<form [formGroup]="pumpIslandMasterForm" (ngSubmit)="pumpIslandMaster(pumpIslandMasterForm.value)" id="form_1" >
-    <table style="width: 100%;background-color: white;">
-        <tr>
-            <td colspan="4" class="PageHeader" style="width: 100%;" >
-                &nbsp;&nbsp;Dip&nbsp;Master&nbsp;
-            </td>
+<form [formGroup]="pumpDipMasterForm" (ngSubmit)="pumpDipMaster(pumpDipMasterForm.value)">
+    <div class="center">
+        <table style="width: 100%;background-color: white;">
+            <tr>
+                <td colspan="4" class="PageHeader" style="width: 100%;" >
+                    &nbsp;&nbsp;DIP&nbsp;Master
+                </td>
+            </tr>
+        </table>
+        <div class="center" style="width: 100%;">
+            <div class="form-bg">
+                   <table class="center">
+                 
+                    <input hidden    type="number"  formControlName="emplId" class="form-control" [(ngModel)]="emplId">
+                    <input hidden    type="number"  formControlName="cmnId" class="form-control" [(ngModel)]="cmnId">
+    
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">Division&nbsp;:&nbsp;</td>
+                        <td>
+                            <select disabled formControlName="divisionId" id="divisionId" [(ngModel)]="divisionId" class="form-control">
+                               
+                                <option *ngFor="let sc of  DivisionIDList"  [value]="sc.divisionId">
+                                    {{sc.divisionName}}
+                                </option>
+                            </select>
+                        </td>
+
+                    
+                            <td style="width: 15%;" class="LabelFontStyle">Tank&nbsp;&nbsp;</td>
+                            <td>
+                                <select  formControlName="tank1" id="tank1" [(ngModel)]="tank1" class="form-control" style="background-color: yellow;" (ngModelChange)="onSelectTank($event)">
+                                    <option *ngFor="let sc of  tankList"  [value]="sc.tankId">
+                                       {{sc.tankId}}-{{sc.tankName}}
+                                    </option>
+                                </select>
+                            </td>
+
+                            <td style="width: 15%" class="LabelFontStyle">DIP&nbsp;Reading:&nbsp;</td>
+                            <td> <input   formControlName="dipVolume" [(ngModel)]="dipVolume" (change) ="searchVolQty(dipVolume)" (keyup)="onKey($event)" class="form-control" style="text-align:center" > </td>
+
+                            <!-- (change)="validateAmt(paymentAmt)" (keyup)="onKey($event)" -->
+                            
+                            <td style="width: 15%" class="LabelFontStyle">Quantity&nbsp;:&nbsp;</td>
+                            <td> <input disabled  formControlName="dipQty" [(ngModel)]='dipQty' class="form-control" style="text-align:center" > </td>
+
+                       
+                    </tr>
+                        
+                  
+                  
+                    </table>
+    
+                    <br>
+    
+                    <table class="center">
+                        <tr >
+                               
+                           <td><button type="button" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
+                            <td><button type="button" class="btn btn-info" (click)="closeMast()" >Close</button></td>
+                            <!-- <td ><button type="button" class="btn btn-info" id="register" (click)="searchCmnMst(0)">Search</button></td>  -->
+
+                        </tr>
+                    </table>
+                    <!-- <br> -->
+                   
+                    <!-- <br> -->
+      
+    
+            </div>
+        </div>
+    </div>
+    </form>
+    
+    
+    <div class="container1">
+
+        <!-- <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-end">
+              <li class="page-item"><a class="page-link" href="#ouTable" (click)="searchMast(0)">Previous</a></li>
+              <li class="page-item"><a class="page-link"  href="#ouTable" (click)="searchMast(1)">1</a></li>
+              <li class="page-item"><a class="page-link"  href="#ouTable" (click)="searchMast(2)">2</a></li>
+              <li class="page-item"><a class="page-link"  href="#ouTable" (click)="searchMast(3)">3</a></li>
+              <li class="page-item"><a class="page-link" href="#ouTable" (click)="searchMast(4)">4</a></li>
+              <li class="page-item"><a class="page-link" href="#ouTable" (click)="searchMast(5)">Next</a></li>
+            </ul>
+          </nav> -->
+
+        <div class="grid_scroll">
+        <!-- <div id="ouTable"> -->
+
+        <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+       <tbody>
+            <tr class="GridHeader">
+                <th style="width:5rem" scope="col">Srl&nbsp;No&nbsp;</th>
+                <th style="width:5rem" scope="col">Dip&nbsp;Code&nbsp;</th>
+                <th style="width:10rem;text-align: center;" scope="col">Volume</th>
+                <th style="width:10rem;text-align: center;" scope="col"> Quantity</th>
+                <th style="width:6rem;text-align: center;" scope="col">Select</th>
         </tr>
-    </table>
-    <table class="center">
-        <!-- <td style="width: 15%" class="LabelFontStyle">Shift&nbsp;No: </td>
-                            <td><input disabled type="text" class="form-control" formControlName="shiftentryno">
-                                <input hidden disabled type="number" class="form-control"
-                                    formControlName="shiftentryid">
-                            </td> -->
-    </table>
-</form>
+       </tbody>
+       <tr *ngFor="let com of lstcomments let i=index" class="ItemStyle" style="text-decoration:none;font-size: small;">
+        
+        <td style="text-align: center;">{{i+1}}</td>
+        <td style="text-align: center;">{{com.dipId}}</td>
+        <td style="text-align:center">{{com.vol}}</td>
+        <td style="text-align:center">{{com.qty}}</td>
+        <td style="text-align:center"><button class="btn btn-secondary" (click)="Select(com.dipId)">Select</button></td>   
+       </tr>
+        </table>
+        <!-- </div> -->
+    </div>
+    </div>
+
+    
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+        <label style="text-align: center;font-size: small;font-family: Verdana, Geneva, Tahoma, sans-serif;
+        color: black;">
+        Additional Information
+        </label>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+        <table>
+        <tr>
+        <td>
+        <label>
+        Service&nbsp;Vehicle&nbsp;Code&nbsp;:&nbsp;
+        </label>
+        </td>
+        <td>
+        <input type="text" class="form-control">
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <label>
+        Service&nbsp;Sub&nbsp;Code&nbsp;:&nbsp;
+        </label>
+        </td>
+        <td>
+        <input type="text" class="form-control">
+        </td>
+        </tr>
+        <tr>
+        <td>
+        <label>
+        Credit&nbsp;Note&nbsp;Item&nbsp;:&nbsp;
+        </label>
+        </td>
+        <td>
+        <input type="text" class="form-control">
+        </td>
+        </tr>
+        </table>
+        </div>
+        
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" >Ok</button>
+        </div>
+        
+        </div>
+        </div>
+        </div>     
+    
+       
