@@ -116,8 +116,7 @@
 
                         <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelfromtolocationdepartment"
-                                role="tab" (click)="reportDetails('saleSOALinewiseReport')">Sales SOA LineWise
-                                Report</a>
+                                role="tab" (click)="reportDetails('saleSOALinewiseReport')">Sales SOA LineWise Report</a>
                         </li>
                         <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelVehicleSaleRegister" role="tab"
@@ -644,18 +643,7 @@
             [style.display]="isVisiblefromtolocationdepartment ? 'block' : 'none'" class="collapse"
             id="panelfromtolocationdepartment">
 
-            <!-- <tr>
-                <td>
-                    <table class="center">
-                        <tr>
-                            <td colspan="4" class="LabelFontStyle" style="width: 100%;">
-                                {{reportName}}
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr> -->
-
+           
             <table class="center">
                 <tr>
                     <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;">{{reportName}}</td>
@@ -663,8 +651,6 @@
             </table>
             <br>
 
-            <!-- <tr>
-                <td> -->
             <table class="center">
 
                 <tr>
@@ -728,7 +714,7 @@
                                               {{sc.code}}
                                             </option>
                                           </select> -->
-                                    <input type="text" disabled class="form-control" formControlName="locCode">
+                                    <input  type="text" disabled class="form-control" formControlName="department">
                                     <input type="number" hidden disabled class="form-control" formControlName="deptId">
                                 </td>
                             </tr>
