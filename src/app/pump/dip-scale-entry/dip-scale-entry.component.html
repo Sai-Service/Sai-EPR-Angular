@@ -39,7 +39,7 @@
                         <td style="width: 15%" class="LabelFontStyle">Dip&nbsp;Entry&nbsp;No: </td>
 
                         <td><input disabled type="text" class="form-control" formControlName="dipentrynumber" [(ngModel)] ="dipentrynumber" >
-                            <!-- <input hidden disabled type="text" class="form-control"  formControlName="dipentrynumber"> -->
+                        <!-- <input hidden disabled type="text" class="form-control"  formControlName="dipentrynumber"> -->
                         <input disabled hidden type="number" class="form-control" formControlName="dipentryid">
 
                         <td style="width: 15%" class="LabelFontStyle">Dip&nbsp;Entry&nbsp;Date:</td>
@@ -192,9 +192,7 @@
                             <td  style="background-color: #FFE4B5;">&nbsp;Entry&nbsp;Date&nbsp;:&nbsp;</td>
                             
                             <td style="background-color: #FFE4B5;">
-                                <input type="date" class="form-control" formControlName="searchByDate" [(ngModel)]='searchByDate'
-                                    value={{searchByDate}} style="text-transform:uppercase;" max="{{minDate | date:'yyyy-MM-dd'}}">
-                            </td>
+                              <td> <input   type="date"  formControlName="searchByDate"  id="searchByDate" [(ngModel)]="searchByDate" class="form-control"  max="{{minDate | date:'yyyy-MM-dd'}}" > </td>
         
                             <td style="background-color: #FFE4B5;">
                                 <button type="button" class="btn-primary" (click)="SearchByEntryDate(searchByDate)"><i class="fa fa-search"
@@ -218,10 +216,10 @@
        <tbody>
             <tr class="GridHeader">
                 <th style="width:5rem" scope="col">Srl&nbsp;No&nbsp;</th>
-                <th style="width:10rem;text-align: center;" scope="col">Dip Entry No</th>
+                <th style="width:10rem;text-align: center;" scope="col">Shift No</th>
+                <th style="width:20rem;text-align: center;" scope="col">Dip Entry No</th>
                 <th style="width:10rem;text-align: center;" scope="col">Dip Entry Date</th>
                 <th style="width:20rem;text-align: left;" scope="col">  Tank Name</th>
-                <th style="width:10rem;text-align: center;" scope="col">Shift No</th>
                 <th style="width:10rem;text-align: center;" scope="col">Open Reading</th>
                 <th style="width:10rem;text-align: center;" scope="col">Open Stock</th>
                 <th style="width:10rem;text-align: center;" scope="col">Close Reading</th>
@@ -229,18 +227,18 @@
             <th style="width:6rem" scope="col">Select</th>
         </tr>
        </tbody>
-       <tr *ngFor="let com of lstcomments let i=index" class="ItemStyle" style="text-decoration:none;font-size: small;">
+       <tr *ngFor="let com of lstcomments1 let i=index" class="ItemStyle" style="text-decoration:none;font-size: small;">
         
         <td style="text-align: center;">{{i+1}}</td>
+        <td style="text-align:center">{{com.shiftid}}</td>
         <td style="text-align:center">{{com.dipentryid}}-{{com.dipentrynumber}}</td>
         <td style="text-align:center">{{com.dipentrydate | date:'dd-MM-y'}}</td>
         <td style="text-align:center">{{com.tankname}}</td>
-        <td style="text-align:center">{{com.shiftid}}</td>
         <td style="text-align:center">{{com.opendip}}</td>
         <td style="text-align:center">{{com.openstock }}</td>
         <td style="text-align:center">{{com.closedip}}</td>
         <td style="text-align:center">{{com.closestock}}</td>
-        <td><button class="btn btn-secondary" (click)="Select(com.dipentryid)">Select</button></td>   
+        <td><button class="btn btn-secondary" (click)="searchMst(com.dipentrynumber)">Select</button></td>   
        </tr>
         </table>
     </div>

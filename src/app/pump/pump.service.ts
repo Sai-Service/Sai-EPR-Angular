@@ -89,5 +89,9 @@ export class PumpService {
     return this.http.get(this.ServerUrl + `/arInv/petrolInvoice?startDate=${startDate}&endDate=${endDate}&locId=${locId}&customerId=${custId}`);
   }
 
-
+  SearchByEntryDate(entDate) {
+    // old >> return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptDate='${rcptDate}'&orgId=${ouId}&locId=${locId}`)
+    return this.http.get(this.ServerUrl + `/DipEntry/date?dipentrydate=${entDate}`);
+    // http://localhost:8081/DipEntry/date?dipentrydate=01-03-2024
+    }
 }

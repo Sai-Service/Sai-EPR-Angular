@@ -7,6 +7,8 @@ import { Validators, FormArray } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { MasterService } from 'src/app/master/master.service';
+import { PumpService } from 'src/app/pump/pump.service';
+
 import { DatePipe } from '@angular/common';
 
 
@@ -56,6 +58,8 @@ export class DipScaleEntryComponent implements OnInit {
   status:string="Active";
 
   lstcomments: any[];
+  lstcomments1: any=[];
+
   public applicationList: Array<string> = [];
   public DivisionIDList: Array<string> = [];
   public statusList : Array<string> = [];
@@ -121,7 +125,7 @@ export class DipScaleEntryComponent implements OnInit {
   checkValidation=false;
   saveButton=true;
   updButton=true;
-  constructor(private fb: FormBuilder, private router: Router, private service: MasterService) {
+  constructor(private fb: FormBuilder, private router: Router, private service: MasterService,private pumpService:PumpService) {
     this.pumpDipEntryForm = fb.group({
       // itemRows: this.fb.array([this.inItemRows()]),
 
@@ -129,7 +133,7 @@ export class DipScaleEntryComponent implements OnInit {
       // cmnTypeId:[],
       // cmnType: ['', [Validators.required]],
       // cmnDesc: ['', [Validators.required]],
-
+      searchByDate:[],
       dipentryid :[],
       dipentrydate  :[],
       dipentrynumber:[],
@@ -283,24 +287,18 @@ export class DipScaleEntryComponent implements OnInit {
     this.lstcomments = null;
   }
 
-  SearchByEntryDate(entdate: any) {
+  SearchByEntryDate(entdate1) {
 
-    if (entdate === undefined || entdate === null) { return; }
+    if (entdate1 === undefined || entdate1 === null) { return; } 
+    var mDate = this.pipe.transform(entdate1, 'dd-MM-y');
 
-    this.status = null;
-    var mDate = this.pipe.transform(entdate, 'dd-MMM-y');
-
-    alert ("Work inProgress ..."+mDate);
-    // this.service.SearchRcptByDate(mDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
-    //   .subscribe(
-    //     data => {
-    //       this.lstcomments = data.obj;
-    //       console.log(this.lstcomments);
-    //       if (data.code === 400) {
-    //         alert("No Receipts Found for this date...")
-    //         this.lstcomments = null;
-    //       }
-    //     });
+    this.pumpService.SearchByEntryDate(mDate)
+      .subscribe(
+        data => {
+          this.lstcomments1 = data;
+          console.log(this.lstcomments1);
+        
+        });
   }
 
 
@@ -527,23 +525,20 @@ saveDipEntry() {
      }
   
   
-  Select(nozzleId: number) {
-  
-      this.pumpDipEntryForm.reset();
+  Select(dipEntryId: number) {
+        this.pumpDipEntryForm.reset();
       this.divisionId =3;
   
-      let select = this.lstcomments.find(d => d.nozzleId === nozzleId);
+      let select = this.lstcomments1.find(d => d.dipentryid === dipEntryId);
       if (select) {
         this.pumpDipEntryForm.patchValue(select);
-        this.nozzleId = select.nozzleId;
-        // alert ("tankid :" + select.tankId)
-        this.pumpDipEntryForm.patchValue({tankId:select.tankId});
-
+        this.dipentryid = select.dipentryid;
         this.displayButton = false;
       
      }
      
     }
+
 
  
 
