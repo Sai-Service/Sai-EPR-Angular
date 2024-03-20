@@ -21,6 +21,7 @@ interface IPaintIssue {
   uom: string;
   description: string;
   locId: number;
+  locCode:string;
   deptId: number;
   divisionId: number;
   lookupValueDesc1: string;
@@ -125,6 +126,7 @@ export class PaintIssueDpComponent implements OnInit {
   avlqty: number;
   description: string;
   locId: number;
+  locCode:string;
   deptId: number;
   divisionId: number;
   getItemDetail: any;
@@ -241,6 +243,7 @@ export class PaintIssueDpComponent implements OnInit {
       compileName: [''],
       compileId: [''],
       locId: [''],
+      locCode:[''],
       subInventory: ['', Validators.required],
       segmentName: ['', Validators.required],
       segment11: [''],
@@ -446,6 +449,8 @@ export class PaintIssueDpComponent implements OnInit {
   ngOnInit(): void {
 
     this.locId = Number(sessionStorage.getItem('locId'));
+    this.locCode = sessionStorage.getItem('locCode');
+
     this.deptId = Number(sessionStorage.getItem('dept'));
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
     // document.getElementById("processButton").setAttribute("disabled","disabled");
@@ -1089,19 +1094,22 @@ export class PaintIssueDpComponent implements OnInit {
     )
   }
   search(compNo) {
-    // alert('In Search' + compNo);
     if (compNo != undefined) {
       this.currentOp = 'SEARCH';
       var compno = this.paintIssueForm.get('compNo').value;
       var appflag = this.paintIssueForm.get('trans').value;
+      compno =compno.trim();
+      var compnoLocCode =compno.substr(0,9)
+      if (compnoLocCode != this.locCode){
+       alert ("Please Enter Valid Issue No.... ");return;
+      }
+
       this.service.getSearchViewByIc(compno).subscribe
         (data => {
           if (data.code === 400) {
-            // alert("Can not View data");
             alert(data.message+"\n"+data.obj);
           }
           if (data.code === 200) {
-            //       // this.lstcomment=data.obj;
 
             if(data.obj.reason==='PN001'){ 
               alert ("This is Paint Mixing Issue Transaction.\nPlease use Paint Mixing Issue Form to get the details.");
@@ -1124,10 +1132,6 @@ export class PaintIssueDpComponent implements OnInit {
 
 
 
-            // this.paintIssueForm.get('panelLineList').patchValue(this.panelList);
-
-            // var patch = this.paintIssueForm.get('panelLineList') as FormArray;
-            // var panelLineArr = this.paintIssueForm.get('panelLineList').value;
             this.panelLineArray().clear();
 
            let panelcontrol = this.paintIssueForm.get('panelLineList') as FormArray;
@@ -1147,13 +1151,10 @@ export class PaintIssueDpComponent implements OnInit {
 
 
             this.currentOp = 'INSERT';
-            // this.paintIssueForm.get('cycleLinesList').patchValue(data.obj.cycleLinesList);
             this.paintIssueForm.disable();
             this.panelLineArray().disable();
-            // this.dispRow=false;
             this.displayaddButton = false;
             this.displayButton = false;
-            // this.paintIssueForm.get('cycleLinesList').disable();
           }
         })
     }

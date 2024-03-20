@@ -20,6 +20,7 @@ interface IPaintMixing {
   uom: string;
   description: string;
   locId: number;
+  locCode:string;
   deptId: number;
   divisionId: number;
   lookupValueDesc1: string;
@@ -117,6 +118,7 @@ export class PaintCreationComponent implements OnInit {
   avlqty: number;
   description: string;
   locId: number;
+  locCode:string;
   deptId: number;
   divisionId: number;
   getItemDetail: any;
@@ -243,6 +245,7 @@ export class PaintCreationComponent implements OnInit {
       compileName: [''],
       compileId: [''],
       locId: [''],
+      locCode:[''],
       subInventory: ['', Validators.required],
       segmentName: ['', Validators.required],
       segment11: [''],
@@ -423,6 +426,7 @@ export class PaintCreationComponent implements OnInit {
 
 
     this.locId = Number(sessionStorage.getItem('locId'));
+    this.locCode = sessionStorage.getItem('locCode');
     this.deptId = Number(sessionStorage.getItem('dept'));
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
     // document.getElementById("processButton").setAttribute("disabled","disabled");
@@ -1073,6 +1077,14 @@ export class PaintCreationComponent implements OnInit {
       this.currentOp = 'SEARCH';
       var compno = this.paintCreationForm.get('compNo').value;
       var appflag = this.paintCreationForm.get('trans').value;
+
+      compno =compno.trim();
+      var compnoLocCode =compno.substr(0,9)
+      // alert ("this.locCode:"+this.locCode +" issue no loc code "+compnoLocCode)
+      if (compnoLocCode != this.locCode){
+       alert ("Please Enter Valid Issue No.... ");return;
+      }
+
       this.service.getSearchViewByIc(compno).subscribe
         (data => {
           if (data.code === 400) {
@@ -1084,7 +1096,7 @@ export class PaintCreationComponent implements OnInit {
             //       // this.lstcomment=data.obj;
 
             if(data.obj.reason==='PN002'){ 
-              alert ("This is Paint Mixing Issue Transaction.\nPlease use BodyShop Issue Form to get the details.");
+              alert ("This is Paint BodyShop Issue Transaction.\nPlease use BodyShop Issue Form to get the details.");
               return;
             }
             let control = this.paintCreationForm.get('cycleLinesList') as FormArray;
