@@ -120,6 +120,7 @@ export class SalesReportsComponent implements OnInit {
       toDate: [''],
       locId: [''],
       locCode:[],
+      deptName1:[],
       OUCode: [''],
       custAccNo: [''],
       deptId: [],
@@ -474,6 +475,8 @@ export class SalesReportsComponent implements OnInit {
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.isVisibleDepartmentList = true;
       }
+      this.salesReportForm.patchValue({ department: 'Sales' });
+      this.salesReportForm.patchValue({ deptId: 1 });
       this.isVisiblefromtoloccustaccno = false;
       this.isVisibleSalesInventoryAging = false;
       this.isVisiblepanelfromtolocation = false;
@@ -814,6 +817,8 @@ export class SalesReportsComponent implements OnInit {
       this.inVisiblepanelSaleSaiDebtors = false;
     }
     else if (reportName === 'reInsuarnceRegister') {
+      this.salesReportForm.patchValue({ department: 'Sales' });
+      this.salesReportForm.patchValue({ deptId: 1 });
       this.reportName = 'ReInsurance Register';
       this.isVisiblefromtolocationdepartment = true;
       this.isVisibleVehicleSaleRegister = false;
@@ -838,6 +843,8 @@ export class SalesReportsComponent implements OnInit {
     }
     else if (reportName === 'gstPurRegister') {
       this.reportName = 'Purchase Register Details';
+      this.salesReportForm.patchValue({ department: 'Sales' });
+      this.salesReportForm.patchValue({ deptId: 1 });
       this.isVisiblefromtolocationdepartment = true;
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
@@ -1026,6 +1033,8 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleSaleIND = false;
       this.ispanelTolocationOu = false;
       this.isSaleClosingStock = false;
+      this.salesReportForm.patchValue({ department: 'Sales' });
+      this.salesReportForm.patchValue({ deptId: 1 });
       this.isVisiblefromtolocationdepartment = true;
       this.isVisiblestockTransfer = false;
       this.isVisiblefromtoloccustaccno = false;
