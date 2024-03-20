@@ -67,7 +67,7 @@ export class SalesReportsComponent implements OnInit {
   isSaleClosingStock: boolean = false;
   OUCode: string;
   custAccNo: string;
-  deptId: number = 1;
+  deptId: number;
   isVisiblefromtolocationdepartment: boolean = false;
   isVisiblecustomerLedger: boolean = false;
   isVisiblespPurRegDownLoad: boolean = false;
@@ -169,9 +169,10 @@ export class SalesReportsComponent implements OnInit {
   ngOnInit(): void {
     this.salesReportForm.patchValue({ OUCode: sessionStorage.getItem('ouId') + '-' + sessionStorage.getItem('ouName') })
     this.salesReportForm.patchValue({ locCode: sessionStorage.getItem('locId') + '-' + sessionStorage.getItem('locName') })
+    if (Number(sessionStorage.getItem('deptId'))!=4){
     this.salesReportForm.patchValue({ department: 'Sales' });
     this.salesReportForm.patchValue({ deptId: 1 });
-
+  }
     // Prevent closing from click inside dropdown
     $(document).on('click', '.dropdown-menu', function (e) {
       e.stopPropagation();
@@ -1138,6 +1139,9 @@ export class SalesReportsComponent implements OnInit {
     if (locId === null) {
       alert('Please Select location Code.!');
       return;
+    }
+    if (deptId ===undefined){
+      deptId =''
     }
     if (reportName === 'Vehicle Sales Register') {
       const fileName = 'Vehicle Sales Register-' +  fromDate + '-TO-' + toDate + '.xls';
