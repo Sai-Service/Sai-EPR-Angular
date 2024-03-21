@@ -1140,13 +1140,20 @@ export class PaintIssueDpComponent implements OnInit {
             }
              this.paintIssueForm.get('panelLineList').patchValue(data.obj.panelLineList);
 
+            var att9=0;
+            var att10=0;
+            var panelLineArr = this.paintIssueForm.get('panelLineList').value;
+
              for (let i = 0; i < this.panelLineArray().length; i++) {
               panelcontrol.controls[i].patchValue({panelFlag: true});
+              if(panelLineArr[i].paneltype==='OLD'){att9=att9+panelLineArr[i].attribute1}
+              if(panelLineArr[i].paneltype==='NEW'){att10=att10+panelLineArr[i].attribute1}
             }
                     
             this.paintIssueForm.patchValue(data.obj);
             this.totalItemValue=Math.round((data.obj.totalItemValue+Number.EPSILON)*100)/100;
 
+            this.paintIssueForm.patchValue({attribute9:att9 , attribute10:att10 });
 
             this.currentOp = 'INSERT';
             this.paintIssueForm.disable();
