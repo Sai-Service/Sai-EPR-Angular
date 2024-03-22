@@ -4477,7 +4477,7 @@ TransactionTypemiscpPaint(): Observable<any> {
   }
 
   NozzleListShift(shiftTp,dt1,dt2): Observable<any> {
-    alert("SHIFT TYPE = "+shiftTp+" ,DATE1= "+dt1+" ,DATE2= "+dt2);
+    // alert("SHIFT TYPE = "+shiftTp+" ,DATE1= "+dt1+" ,DATE2= "+dt2);
     // return this.http.get(this.ServerUrl + '/NozzelMaster');
     return this.http.get(this.ServerUrl + `/NozzelMaster/NozleLov?shiftType=${shiftTp}&shiftDate=${dt1}&shiftDate1=${dt2}`);
   // http://localhost:8081/NozzelMaster/NozleLov?shiftType=I&shiftDate=01-Feb-2024&shiftDate1=02-Feb-2024
