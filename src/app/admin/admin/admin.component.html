@@ -478,20 +478,24 @@
        
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Master</a>
                 <ul class="dropdown-menu">
-                  <li class="nav-item dropdown">
+                  <!-- <li class="nav-item dropdown">
                     <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                       aria-haspopup="true"  [routerLink]="['/admin/master/customerMaster']" aria-expanded="false">
                       Customer Master
                     </a>
-                  </li> 
-                <li><a class="dropdown-item" [routerLink]="['/admin/master/SupplierMaster']">Supplier Entry</a></li>
-                <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpTankMaster']">Pump Tank Master</a></li>
+                  </li>  -->
+
+                 <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpTankMaster']"    >Pump Tank Master</a></li>
                 <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpIslandMaster']">Pump Island Master</a></li>
                 <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpNozzleMaster']">Pump Nozzle Master</a></li>
                 <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpDipMasterNew']">Pump Dip Master</a></li>
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/pricelistMaster']">Price List Master</a></li>
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/itemMasterNew']">Item Master</a> </li> 
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/EmployeesMaster']">Employee Master </a> </li>
+               
+                <li> <a class="dropdown-item" [routerLink]="['/admin/pump/PumpPricelistMaster']">Price List Master</a></li>
+                <li> <a class="dropdown-item" [routerLink]="['/admin/pump/PumpItemMaster']">Item Master</a> </li> 
+                <li> <a class="dropdown-item" [routerLink]="['/admin/pump/PumpEmployeeMaster']">Employee Master </a> </li>
+                <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpCustomerMaster']">Customer Master</a></li>
+                <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpSupplierMaster']">Supplier Master</a></li>
+             
 
 
 
@@ -505,15 +509,26 @@
             <li><a class="dropdown-item" [routerLink]="['/admin/pump/invoiceGene']">Shift Sale Invoice Creation</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/pump/testing']">Shift Sale Entry</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/pump/DipScaleEntry']">DIP Entry Form</a></li>
-
-            
-            <!-- <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/CounterSaleOrder']">Counter Sale Order</a></li>  -->
             <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpCounterSale']">Counter Sale</a></li>
- 
+            <!-- <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpPurchaseOrder']">Purchase Order</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpPoReceipt']">PO Receipt</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpPoList']">PO List</a></li> -->
+
+
             <!-- <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/CounterSaleReturn']">Counter Sale Return</a></li>  -->
             <!-- <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpShiftSale']">Shift Sale Entry..Test</a></li> -->
 
           </ul>
+        </li>
+
+        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Accounts Module</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpPurchaseOrder']">Purchase Order</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpPoReceipt']">PO Receipt</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpPoList']">PO List</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/BulkUploadWithCsv']">Bulk Upload PO</a></li>
+
+       </ul>
         </li>
 
        <li><a class="dropdown-submenu" style="padding-left: 28px ;" [routerLink]="['/admin/Report/petrolPumpReport']">Reports</a></li>

@@ -15,11 +15,39 @@ import { ShiftEntryListComponent } from './shift-entry-list/shift-entry-list.com
 import { PumpDipMasterNewComponent } from './pump-dip-master-new/pump-dip-master-new.component';
 import { PumpCounterSaleComponent } from './pump-counter-sale/pump-counter-sale.component';
 import { DipScaleEntryComponent } from './dip-scale-entry/dip-scale-entry.component';
-// import { PumpPurchaseOrderComponent } from './pump-purchase-order/pump-purchase-order.component';
+import { PumpPurchaseOrderComponent } from './pump-purchase-order/pump-purchase-order.component';
+import { PumpPoReceiptComponent } from './pump-po-receipt/pump-po-receipt.component';
+import { PumpItemMasterComponent } from './pump-item-master/pump-item-master.component';
+import { PumpEmployeeMasterComponent } from './pump-employee-master/pump-employee-master.component';
+import { PumpPricelistMasterComponent } from './pump-pricelist-master/pump-pricelist-master.component';
+import { PumpPoListComponent } from './pump-po-list/pump-po-list.component';
+import { PumpCustomerMasterComponent } from './pump-customer-master/pump-customer-master.component';
+import { PumpSupplierMasterComponent } from './pump-supplier-master/pump-supplier-master.component';
+// import { PumpBulkPoUploadComponent } from './pump-bulk-po-upload/pump-bulk-po-upload.component';
 
 
 @NgModule({
-  declarations: [PumpTankMasterComponent, PumpIslandMasterComponent, PumpNozzleMasterComponent,  PumpShiftSaleComponent, PumpShiftPumpNewComponent, TestingDynamicComponent, ShiftInvoiceGenComponent, ShiftEntryListComponent, PumpDipMasterNewComponent, PumpCounterSaleComponent, DipScaleEntryComponent,],
+  declarations: [PumpTankMasterComponent, 
+    PumpIslandMasterComponent, 
+    PumpNozzleMasterComponent,  
+    PumpShiftSaleComponent, 
+    PumpShiftPumpNewComponent, 
+    TestingDynamicComponent, 
+    ShiftInvoiceGenComponent, 
+    ShiftEntryListComponent, 
+    PumpDipMasterNewComponent, 
+    PumpCounterSaleComponent, 
+    DipScaleEntryComponent, 
+    PumpPurchaseOrderComponent, 
+    PumpPoReceiptComponent, 
+    PumpItemMasterComponent, 
+    PumpEmployeeMasterComponent, 
+    PumpPricelistMasterComponent, 
+    PumpPoListComponent, 
+    PumpCustomerMasterComponent, 
+    PumpSupplierMasterComponent,
+    ],
+
   imports: [
     CommonModule,
     PumpRoutingModule,
