@@ -1643,6 +1643,13 @@ export class MasterService {
     }
 
 
+
+    searchByItemSegmentPP( itemSeg): Observable<any> {
+      return this.http.get(this.ServerUrl + `/itemMst/ByPPnonInv?segment=${itemSeg}`)
+
+  
+    // http://localhost:8081/itemMst/ByPPnonInv?segment=PP
+  }
  
 
   searchByItemSegmentDiv(divId, itemSeg): Observable<any> {

@@ -476,32 +476,7 @@
       <a class="nav-link dropdown-toggle " id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="false">Petrol Pump Management </a>
       <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
        
-        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Master</a>
-                <ul class="dropdown-menu">
-                  <!-- <li class="nav-item dropdown">
-                    <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                      aria-haspopup="true"  [routerLink]="['/admin/master/customerMaster']" aria-expanded="false">
-                      Customer Master
-                    </a>
-                  </li>  -->
-
-                 <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpTankMaster']"    >Pump Tank Master</a></li>
-                <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpIslandMaster']">Pump Island Master</a></li>
-                <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpNozzleMaster']">Pump Nozzle Master</a></li>
-                <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpDipMasterNew']">Pump Dip Master</a></li>
-               
-                <li> <a class="dropdown-item" [routerLink]="['/admin/pump/PumpPricelistMaster']">Price List Master</a></li>
-                <li> <a class="dropdown-item" [routerLink]="['/admin/pump/PumpItemMaster']">Item Master</a> </li> 
-                <li> <a class="dropdown-item" [routerLink]="['/admin/pump/PumpEmployeeMaster']">Employee Master </a> </li>
-                <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpCustomerMaster']">Customer Master</a></li>
-                <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpSupplierMaster']">Supplier Master</a></li>
-             
-
-
-
-                <!-- <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpDipMaster']">Pump Dip Master</a></li> -->
-              </ul>
-        </li>
+       
 
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Transactions</a>
           <ul class="dropdown-menu">
@@ -521,7 +496,7 @@
           </ul>
         </li>
 
-        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Accounts Module</a>
+        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Purchase Module</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpPurchaseOrder']">Purchase Order</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpPoReceipt']">PO Receipt</a></li>
@@ -529,8 +504,37 @@
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/BulkUploadWithCsv']">Bulk Upload PO</a></li>
 
        </ul>
-        </li>
+       </li>
 
+       <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Accounts Module</a>
+        <ul class="dropdown-menu">
+          <!-- <li><a class="dropdown-item" [routerLink]="['/admin/transaction/ARInvoice']">AR Invoice</a></li> -->
+          <li><a class="dropdown-item" [routerLink]="['/admin/pump/ARInvoice']">AR Invoice</a></li>
+         <li><a class="dropdown-item" [routerLink]="['/admin/transaction/PaymentAr']">AR Payment</a></li>
+     
+     </ul>
+     </li>
+
+        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Master</a>
+          <ul class="dropdown-menu">
+            <!-- <li class="nav-item dropdown">
+              <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true"  [routerLink]="['/admin/master/customerMaster']" aria-expanded="false">
+                Customer Master
+              </a>
+            </li>  -->
+
+          <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpTankMaster']"    >Pump Tank Master</a></li>
+          <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpIslandMaster']">Pump Island Master</a></li>
+          <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpNozzleMaster']">Pump Nozzle Master</a></li>
+          <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpDipMasterNew']">Pump Dip Master</a></li>
+          <li> <a class="dropdown-item" [routerLink]="['/admin/pump/PumpPricelistMaster']">Price List Master</a></li>
+          <li> <a class="dropdown-item" [routerLink]="['/admin/pump/PumpItemMaster']">Item Master</a> </li> 
+          <li> <a class="dropdown-item" [routerLink]="['/admin/pump/PumpEmployeeMaster']">Employee Master </a> </li>
+          <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpCustomerMaster']">Customer Master</a></li>
+          <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpSupplierMaster']">Supplier Master</a></li>
+      </ul>
+      </li>
        <li><a class="dropdown-submenu" style="padding-left: 28px ;" [routerLink]="['/admin/Report/petrolPumpReport']">Reports</a></li>
       
       </ul>
