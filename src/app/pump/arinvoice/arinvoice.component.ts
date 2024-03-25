@@ -758,12 +758,22 @@ export class ARInvoiceComponent implements OnInit {
       );
     // }
   }
+
   viewARLinedata() {
-    this.service.searchByItemSegmentAR('TCS')
+
+    // this.service.searchByItemSegmentAR('TCS')
+    //   .subscribe((data) => {
+    //     this.invItemList = data.obj;
+
+    //   });
+
+      this.service.searchByItemSegmentPP('PP-RECOVERY')
       .subscribe((data) => {
-        this.invItemList = data.obj;
+        this.invItemList = data;
 
       });
+
+      
     if (this.hsnSacCodeList == '') {
       this.service.hsnSacCodeData('HSN').subscribe(
         data => {
@@ -782,6 +792,7 @@ export class ARInvoiceComponent implements OnInit {
       //   );
     }
   }
+
   onOptionTaxPerSel(event, k) {
     // alert(event);
     var per = event.target.value;
@@ -1124,8 +1135,9 @@ export class ARInvoiceComponent implements OnInit {
   clearFormArray() {
     window.location.reload();
   }
+
   onOptioninvItemIdSelected(itemId, index) {
-    // alert(itemId)
+    // alert("itemId,INDEX:"+itemId+","+index);
     console.log(this.invItemList);
     let selectedValue = this.invItemList.find(v => v.segment == itemId);
     // let selhsnsac = this.hsnSacCodeList.find(v => v.hsnsaccode == selectedValue.hsnSacCode);
