@@ -133,7 +133,7 @@ export class ReportServiceService {
   // PANEL REPORT
   //http://localhost:8081/PaintReports/PanelEntryRep?fromDate=01-MAR-2023&toDate=19-MAR-2024&locId=1602
 
-  paintPanelReport1(frmdt,todt,locId){
+  paintPanelReportSummary(frmdt,todt,locId){
     const REQUEST_URI = this.ServerUrl +`/PaintReports/PanelEntryRep?fromDate=${frmdt}&toDate=${todt}&locId=${locId}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
