@@ -762,16 +762,17 @@ export class PaintReportsComponent implements OnInit {
     }
 
     else if (reportName === 'Paint Panel Report') {
+      //PANEL REPORT
 
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
-      alert ("Work In Progress ...");
-      this.closeResetButton = true;
-      return;
+      // alert ("Work In Progress ...");
+      // this.closeResetButton = true;
+      
 
       const fileName = 'Paint Panel Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.spSparesMiscIssueReceiptReport(fromDate, toDate, locId)
+        this.reportService.paintPanelReport1(fromDate, toDate, locId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -780,7 +781,7 @@ export class PaintReportsComponent implements OnInit {
           })
       }
       if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.spSparesMiscIssueReceiptReport(fromDate, toDate, sessionStorage.getItem('locId'))
+        this.reportService.paintPanelReport1(fromDate, toDate, sessionStorage.getItem('locId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;

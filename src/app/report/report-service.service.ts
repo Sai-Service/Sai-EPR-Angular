@@ -130,6 +130,18 @@ export class ReportServiceService {
   }
 
 
+  // PANEL REPORT
+  //http://localhost:8081/PaintReports/PanelEntryRep?fromDate=01-MAR-2023&toDate=19-MAR-2024&locId=1602
+
+  paintPanelReport1(frmdt,todt,locId){
+    const REQUEST_URI = this.ServerUrl +`/PaintReports/PanelEntryRep?fromDate=${frmdt}&toDate=${todt}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+
   spSparesMiscIssueReceiptReport(invcDt1,invcDt4,locId){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/SprMiscRep?fromDate=${invcDt1}&toDate=${invcDt4}&locId=${locId}`;
     return this.http.get(REQUEST_URI, {
