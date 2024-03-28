@@ -685,15 +685,25 @@ export class PaintCreationComponent implements OnInit {
             this.displayLocator[i] = false;
             trxLnArr1.controls[i].patchValue({ LocatorSegment: getfrmSubLoc[0].segmentName });
             trxLnArr1.controls[i].patchValue({ locatorId: getfrmSubLoc[0].locatorId })
-            trxLnArr1.controls[i].patchValue({ onHandQty: getfrmSubLoc[0].onHandQty });
+            var onHQty=Math.round((getfrmSubLoc[0].onHandQty+Number.EPSILON)*100)/100;
+            trxLnArr1.controls[i].patchValue({ onHandQty: onHQty });
+            // alert(getfrmSubLoc[0].onHandQty+","+onHQty)
+            // trxLnArr1.controls[i].patchValue({ onHandQty: getfrmSubLoc[0].onHandQty });
             trxLnArr1.controls[i].patchValue({ id: getfrmSubLoc[0].id });
             let reserve = trxLnArr[i].resveQty;
             // alert(onHand1+'OnHand');
             //alert(reserve+'reserve');
             let avlqty1 = 0;
             avlqty1 = getfrmSubLoc[0].onHandQty - reserve;
-            trxLnArr1.controls[i].patchValue({ avlqty: avlqty1 });
+
+            // var avlqty11=Math.round((avlqty1+Number.EPSILON)*100)/100;
+
+            var avlqty11=(Math.round(avlqty1 * 100) / 100).toFixed(2);
+            
+            trxLnArr1.controls[i].patchValue({ avlqty: avlqty11 });
             trxLnArr1.controls[i].patchValue({ resveQty: reserve });
+
+            // alert ("Value ="+Number(avlqty11)*12);
 
           }
           else {
@@ -712,6 +722,7 @@ export class PaintCreationComponent implements OnInit {
      else {alert ("Wrong Item Selected....Pls select proper Item from the list.");}
 
   }
+
   AvailQty(event: any, i) {
 
     // alert(event.target.value);
