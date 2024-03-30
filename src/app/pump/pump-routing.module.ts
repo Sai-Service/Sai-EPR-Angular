@@ -22,6 +22,7 @@ import { PumpCustomerMasterComponent } from './pump-customer-master/pump-custome
 import { PumpSupplierMasterComponent } from './pump-supplier-master/pump-supplier-master.component';
 // import { PumpBulkPoUploadComponent } from './pump-bulk-po-upload/pump-bulk-po-upload.component';
 import { ARInvoiceComponent } from './arinvoice/arinvoice.component';
+import { PumpMiscTransactionComponent } from './pump-misc-transaction/pump-misc-transaction.component';
 
 
 const routes: Routes = [
@@ -47,8 +48,8 @@ const routes: Routes = [
   {path:'PumpCustomerMaster',component:PumpCustomerMasterComponent},
   {path:'PumpSupplierMaster',component:PumpSupplierMasterComponent},
   {path:'ARInvoice',component:ARInvoiceComponent},
-
-  // {path:'PumpBulkPoUpload',component:PumpBulkPoUploadComponent},
+  {path:'PumpMiscTransaction',component:PumpMiscTransactionComponent},
+ // {path:'PumpBulkPoUpload',component:PumpBulkPoUploadComponent},
   {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
 ];
 

@@ -25,6 +25,7 @@ import { PumpCustomerMasterComponent } from './pump-customer-master/pump-custome
 import { PumpSupplierMasterComponent } from './pump-supplier-master/pump-supplier-master.component';
 // import { PumpArInvoiceComponent } from './pump-ar-invoice/pump-ar-invoice.component';
 import { ARInvoiceComponent } from './arinvoice/arinvoice.component';
+import { PumpMiscTransactionComponent } from './pump-misc-transaction/pump-misc-transaction.component';
 
 // import { PumpBulkPoUploadComponent } from './pump-bulk-po-upload/pump-bulk-po-upload.component';
 
@@ -49,7 +50,7 @@ import { ARInvoiceComponent } from './arinvoice/arinvoice.component';
     PumpPoListComponent, 
     PumpCustomerMasterComponent, 
     PumpSupplierMasterComponent, 
-    ARInvoiceComponent,
+    ARInvoiceComponent, PumpMiscTransactionComponent,
     ],
 
   imports: [

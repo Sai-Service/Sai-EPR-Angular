@@ -33,6 +33,9 @@ export class PetrolPumpReportComponent implements OnInit {
   rptValidation=true;
   isVisiblelocationInput: boolean = true;
   isVisiblelocationLOV: boolean = false;
+  isVisiblesparesMiscIssueReceipt: boolean = false;
+  isDisabled1 = false;
+
   public BillShipToList: Array<string> = [];
   age1: number=20;
   age2: number=30;
@@ -119,28 +122,75 @@ export class PetrolPumpReportComponent implements OnInit {
       this.reportName='Cash Collection-Excess Short Report';
       this.isVisibleCashCollectionExcessShort=true;
       this.isVisiblegstsaiDebtors=false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+
     }
     if (reportName==='gstsaiDebtors'){
       this.reportName='Debtor Report';
       this.isVisiblegstsaiDebtors=true;
       this.isVisibleCashCollectionExcessShort=false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+
     }
     if (reportName==='cashCardSum'){
       this.reportName='Cash Card Summary Report';
       this.isVisibleCashCollectionExcessShort=true;
       this.isVisiblegstsaiDebtors=false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+
     }
     if (reportName==='cashCardDet'){
       this.reportName='Cash Card Detail Report';
       this.isVisibleCashCollectionExcessShort=true;
       this.isVisiblegstsaiDebtors=false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+
     }
     if (reportName==='saleRegisterCustomerWise'){
       this.reportName='Sales Register - Customer Wise';
       this.isVisibleCashCollectionExcessShort=true;
       this.isVisiblegstsaiDebtors=false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+
     }
+    if (reportName==='salesTotCollReport'){
+      // salesTotCollReport - Sales Total Collection Report(Daywise)
+      this.reportName='Sales Total Collection Report(Daywise)';
+      this.isVisibleCashCollectionExcessShort=true;
+      this.isVisiblegstsaiDebtors=false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+
+    }
+    if (reportName==='shiftEntryReport'){
+      // shiftEntryReport - Shift Entry Report
+      this.reportName='Shift Entry Report';
+      this.isVisibleCashCollectionExcessShort=true;
+      this.isVisiblegstsaiDebtors=false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+
+    }
+
+    if (reportName==='saleRegisterPP'){
+      // saleRegisterPP  -Sales Register - Petrol Pump
+      this.reportName='Sales Register - Petrol Pump';
+      this.isVisibleCashCollectionExcessShort=true;
+      this.isVisiblegstsaiDebtors=false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+
+    }
+
+    if (reportName==='gstsparesMiscIssueReceipt'){
+      this.reportName='Pump Stock Adjustment Report';
+      this.isVisibleCashCollectionExcessShort=false;
+      this.isVisiblegstsaiDebtors=false;
+      this.isVisiblesparesMiscIssueReceipt = true;
+
+    }
+
   }
+
+
+
 
   fromToDateValidation(fDate,tDate){
     this.rptValidation=true;
@@ -228,6 +278,45 @@ else if (reportName === 'Sales Register - Customer Wise'){
   })
 }
 
+else if (reportName === 'Sales Total Collection Report(Daywise)'){
+  // salesTotCollReport - Sales Total Collection Report(Daywise)
+  this.fromToDateValidation(fromDate,toDate); if(this.rptValidation==false){return;}
+  const fileName = 'Sales Total Collection Report(Daywise)-' +  fromDate + '.xls';
+  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  this.reportService.saleTotalCollectionReport_PP(fromDate, toDate, sessionStorage.getItem('locId'))
+  .subscribe(data => {
+    saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+    this.closeResetButton = true;
+    this.dataDisplay = ''
+  })
+}
+
+else if (reportName === 'Shift Entry Report'){
+  // salesTotCollReport - Sales Total Collection Report(Daywise)
+  this.fromToDateValidation(fromDate,toDate); if(this.rptValidation==false){return;}
+  const fileName = 'Shift Entry Report' +  fromDate + '.xls';
+  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  this.reportService.shiftEntryReport_PP(fromDate, toDate, sessionStorage.getItem('locId'))
+  .subscribe(data => {
+    saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+    this.closeResetButton = true;
+    this.dataDisplay = ''
+  })
+}
+
+else if (reportName === 'Sales Register - Petrol Pump'){
+  // salesTotCollReport - Sales Total Collection Report(Daywise)
+  this.fromToDateValidation(fromDate,toDate); if(this.rptValidation==false){return;}
+  const fileName = 'Sales Register - Petrol Pump' +  fromDate + '.xls';
+  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  this.reportService.saleRegisterReport_PP(fromDate, toDate, sessionStorage.getItem('locId'))
+  .subscribe(data => {
+    saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+    this.closeResetButton = true;
+    this.dataDisplay = ''
+  })
+}
+
     else if (reportName ==='Debtor Report'){
      
       var custAccNo=' ';
@@ -265,6 +354,31 @@ else if (reportName === 'Sales Register - Customer Wise'){
             this.dataDisplay = ''
           });
      }
+
+     else if (reportName === 'Pump Stock Adjustment Report') {
+      this.fromToDateValidation(fromDate,toDate); if(this.rptValidation==false){return;}
+
+      const fileName = 'Pump Stock Adjustment Report-' +  fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.spSparesMiscIssueReceiptReport(fromDate, toDate, locId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.spSparesMiscIssueReceiptReport(fromDate, toDate, sessionStorage.getItem('locId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
   }
 
 
