@@ -20,6 +20,7 @@ interface IPaintMixing {
   uom: string;
   description: string;
   locId: number;
+  locCode:string;
   deptId: number;
   divisionId: number;
   lookupValueDesc1: string;
@@ -117,6 +118,7 @@ export class PaintCreationComponent implements OnInit {
   avlqty: number;
   description: string;
   locId: number;
+  locCode:string;
   deptId: number;
   divisionId: number;
   getItemDetail: any;
@@ -243,6 +245,7 @@ export class PaintCreationComponent implements OnInit {
       compileName: [''],
       compileId: [''],
       locId: [''],
+      locCode:[''],
       subInventory: ['', Validators.required],
       segmentName: ['', Validators.required],
       segment11: [''],
@@ -423,6 +426,7 @@ export class PaintCreationComponent implements OnInit {
 
 
     this.locId = Number(sessionStorage.getItem('locId'));
+    this.locCode = sessionStorage.getItem('locCode');
     this.deptId = Number(sessionStorage.getItem('dept'));
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
     // document.getElementById("processButton").setAttribute("disabled","disabled");
@@ -681,15 +685,25 @@ export class PaintCreationComponent implements OnInit {
             this.displayLocator[i] = false;
             trxLnArr1.controls[i].patchValue({ LocatorSegment: getfrmSubLoc[0].segmentName });
             trxLnArr1.controls[i].patchValue({ locatorId: getfrmSubLoc[0].locatorId })
-            trxLnArr1.controls[i].patchValue({ onHandQty: getfrmSubLoc[0].onHandQty });
+            var onHQty=Math.round((getfrmSubLoc[0].onHandQty+Number.EPSILON)*100)/100;
+            trxLnArr1.controls[i].patchValue({ onHandQty: onHQty });
+            // alert(getfrmSubLoc[0].onHandQty+","+onHQty)
+            // trxLnArr1.controls[i].patchValue({ onHandQty: getfrmSubLoc[0].onHandQty });
             trxLnArr1.controls[i].patchValue({ id: getfrmSubLoc[0].id });
             let reserve = trxLnArr[i].resveQty;
             // alert(onHand1+'OnHand');
             //alert(reserve+'reserve');
             let avlqty1 = 0;
             avlqty1 = getfrmSubLoc[0].onHandQty - reserve;
-            trxLnArr1.controls[i].patchValue({ avlqty: avlqty1 });
+
+            // var avlqty11=Math.round((avlqty1+Number.EPSILON)*100)/100;
+
+            var avlqty11=(Math.round(avlqty1 * 100) / 100).toFixed(2);
+            
+            trxLnArr1.controls[i].patchValue({ avlqty: avlqty11 });
             trxLnArr1.controls[i].patchValue({ resveQty: reserve });
+
+            // alert ("Value ="+Number(avlqty11)*12);
 
           }
           else {
@@ -708,6 +722,7 @@ export class PaintCreationComponent implements OnInit {
      else {alert ("Wrong Item Selected....Pls select proper Item from the list.");}
 
   }
+
   AvailQty(event: any, i) {
 
     // alert(event.target.value);
@@ -1073,6 +1088,14 @@ export class PaintCreationComponent implements OnInit {
       this.currentOp = 'SEARCH';
       var compno = this.paintCreationForm.get('compNo').value;
       var appflag = this.paintCreationForm.get('trans').value;
+
+      compno =compno.trim();
+      var compnoLocCode =compno.substr(0,9)
+      // alert ("this.locCode:"+this.locCode +" issue no loc code "+compnoLocCode)
+      if (compnoLocCode != this.locCode){
+       alert ("Please Enter Valid Issue No.... ");return;
+      }
+
       this.service.getSearchViewByIc(compno).subscribe
         (data => {
           if (data.code === 400) {
@@ -1084,7 +1107,7 @@ export class PaintCreationComponent implements OnInit {
             //       // this.lstcomment=data.obj;
 
             if(data.obj.reason==='PN002'){ 
-              alert ("This is Paint Mixing Issue Transaction.\nPlease use BodyShop Issue Form to get the details.");
+              alert ("This is Paint BodyShop Issue Transaction.\nPlease use BodyShop Issue Form to get the details.");
               return;
             }
             let control = this.paintCreationForm.get('cycleLinesList') as FormArray;

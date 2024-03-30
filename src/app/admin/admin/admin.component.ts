@@ -266,6 +266,7 @@ export class AdminComponent implements OnInit {
     if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem('deptName')==='DP') 
     // && Number(sessionStorage.getItem('roleId'))===1 ) 
     // && sessionStorage.getItem('ticketNo') ==='GM01733')
+    // Paint Login -----
     {
       this.isVisibleMaster=false;
       this.isVisible11=false;
@@ -311,13 +312,13 @@ export class AdminComponent implements OnInit {
       this.isVisible12=false;
       this.isVisibleMaster=false;
       this.isVisibleReturnToVendor=false;
-  this.isVisibleShortLanded=false;
+      this.isVisibleShortLanded=false;
       this.isVisibilePetrolPumpSystem=true;
       this.isVisible13=false
       this.isVisibleWsVehicleMaster=false;
-      this.isVisible14=true;
+      this.isVisible14=false;
       this.isVisible15=false;
-      this.isVisible16=true;
+      this.isVisible16=false;
       this.isVisible17=false;
       this.isVisible18=false;
       this.isVisible19=false;

@@ -130,6 +130,18 @@ export class ReportServiceService {
   }
 
 
+  // PANEL REPORT
+  //http://localhost:8081/PaintReports/PanelEntryRep?fromDate=01-MAR-2023&toDate=19-MAR-2024&locId=1602
+
+  paintPanelReportSummary(frmdt,todt,locId){
+    const REQUEST_URI = this.ServerUrl +`/PaintReports/PanelEntryRep?fromDate=${frmdt}&toDate=${todt}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+
   spSparesMiscIssueReceiptReport(invcDt1,invcDt4,locId){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/SprMiscRep?fromDate=${invcDt1}&toDate=${invcDt4}&locId=${locId}`;
     return this.http.get(REQUEST_URI, {
@@ -1080,6 +1092,8 @@ fndRquestDownload(requestId){
 }
 
 CashCollectionExcessShortFn(fromDate,ToDate,locId){
+  // http://localhost:8081/PetrolPumpReport/CashCollectionRep?fromDate=01-DEC-2023&toDate=31-DEC-2023&locId=2501
+
   const REQUEST_URI = this.ServerUrl +`/PetrolPumpReport/CashCollectionRep?fromDate=${fromDate}&toDate=${ToDate}&locId=${locId}`;
   return this.http.get(REQUEST_URI, {
     responseType: 'arraybuffer',
@@ -1088,6 +1102,8 @@ CashCollectionExcessShortFn(fromDate,ToDate,locId){
 }
 
 cashCardSumFn(fromDate,toDate,locId){
+  // http://localhost:8081/PetrolPumpReport/PP_CashCardSummary?fromDate=01-DEC-2023&toDate=31-DEC-2023&locId=2501
+
   const REQUEST_URI = this.ServerUrl +`/PetrolPumpReport/PP_CashCardSummary?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
   return this.http.get(REQUEST_URI, {
     responseType: 'arraybuffer',
@@ -1096,6 +1112,8 @@ cashCardSumFn(fromDate,toDate,locId){
 }
 
 cashCardDetFn(fromDate,toDate,locId){
+  // http://localhost:8081/PetrolPumpReport/PP_CashCardDetail?fromDate=01-DEC-2023&toDate=31-DEC-2023&locId=2501
+
   const REQUEST_URI = this.ServerUrl +`/PetrolPumpReport/PP_CashCardDetail?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
   return this.http.get(REQUEST_URI, {
     responseType: 'arraybuffer',
@@ -1104,12 +1122,44 @@ cashCardDetFn(fromDate,toDate,locId){
 }
 
 saleRegisterCustomerWiseFn(fromDate,toDate,locId){
+  // http://localhost:8081/PetrolPumpReport/PP_CustSaleReg?fromDate=01-FEB-2024&toDate=20-FEB-2024&locId=2501
+
   const REQUEST_URI = this.ServerUrl +`/PetrolPumpReport/PP_CustSaleReg?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
   return this.http.get(REQUEST_URI, {
     responseType: 'arraybuffer',
     headers: this.headers,
   }); 
 }
+
+saleTotalCollectionReport_PP(fromDate,toDate,locId){
+  // http://localhost:8081/PetrolPumpReport/DaywiseCollectionRep?fromDate=01-MAR-2023&toDate=19-MAR-2024&locId=2501
+
+  const REQUEST_URI = this.ServerUrl +`/PetrolPumpReport/DaywiseCollectionRep?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  }); 
+}
+
+shiftEntryReport_PP(fromDate,toDate,locId){
+  // http://localhost:8081/PetrolPumpReport/PP_ShiftEntryRep?fromDate=01-DEC-2023&toDate=31-DEC-2023&locId=2501
+
+  const REQUEST_URI = this.ServerUrl +`/PetrolPumpReport/PP_ShiftEntryRep?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  }); 
+}
+
+saleRegisterReport_PP(fromDate,toDate,locId){
+  // http://localhost:8081/PetrolPumpReport/PP_SaleRegister?fromDate=01-DEC-2023&toDate=31-DEC-2023&locId=2501
+  const REQUEST_URI = this.ServerUrl +`/PetrolPumpReport/PP_SaleRegister?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  }); 
+}
+
 
 }
 

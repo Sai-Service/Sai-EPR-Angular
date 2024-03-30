@@ -586,6 +586,8 @@ export class PumpCounterSaleComponent implements OnInit {
       adhocExchBonus: [''],
       adhocFinanceOffer: [''],
       adhocISL: [''],
+      txPer:[''],
+
     })
   }
 
@@ -1898,6 +1900,7 @@ export class PumpCounterSaleComponent implements OnInit {
       var arrayControl = arrayControlNew.getRawValue();
       var pricingQty = arrayControl[index].pricingQty;
       var Avalqty = arrayControl[index].Avalqty;
+      
       // alert(pricingQty)
       if (pricingQty === null || pricingQty === undefined || pricingQty === '') {
         return;
@@ -1920,6 +1923,14 @@ export class PumpCounterSaleComponent implements OnInit {
       console.log(index);
       var patch = this.pumpCounterSaleOrderForm.get('oeOrderLinesAllList') as FormArray;
       console.log(arrayControl);
+      var taxp=arrayControl[index].txPer;
+      var  newSelPrice =(arrayControl[index].unitSellingPrice /(100+taxp))*100
+
+      var newSelPrice = Math.round(((newSelPrice) + Number.EPSILON) * 100) / 100;
+
+      patch.controls[index].patchValue({ unitSellingPrice: newSelPrice});
+
+
       var itemId = arrayControl[index].itemId;
       var taxcatName = arrayControl[index].taxCategoryName;
       // alert(taxcatName)
@@ -1937,11 +1948,18 @@ export class PumpCounterSaleComponent implements OnInit {
         patch.controls[index].patchValue({ taxCategoryName: taxcatName });
       }
 
+
+
       patch.controls[index].patchValue({ disAmt: 0 });
+
       var baseAmt = arrayControl[index].unitSellingPrice * pricingQty;
+      var baseAmt = newSelPrice* pricingQty;
+
+      
 
       var disAmt1 = arrayControl[index].disAmt;
       var disPer = arrayControl[index].disPer;
+     
       if (disPer > 0) {
         disAmt1 = (disPer / 100) * baseAmt;
         (patch.controls[index]).patchValue({
@@ -2101,6 +2119,7 @@ export class PumpCounterSaleComponent implements OnInit {
                           orderedItem: data.obj[i].description,
                           hsnSacCode: data.obj[i].hsnSacCode,
                           uom: data.obj[i].uom,
+                          txPer: data.obj[i].taxPercentage,
                           // unitSellingPrice: data.obj[0].priceValue,by vinita
                         });
                         this.orderManagementService.getTaxCategoriesForSales(custtaxCategoryName, data.obj[i].taxPercentage)
@@ -2201,9 +2220,11 @@ export class PumpCounterSaleComponent implements OnInit {
                           orderedItem: data.obj[i].description,
                           hsnSacCode: data.obj[i].hsnSacCode,
                           uom: data.obj[i].uom,
+                          txPer: data.obj[i].taxPercentage,
                           // unitSellingPrice: data.obj[0].priceValue,by vinita
                         });
-                        // alert(custtaxCategoryName+'----'+ data.obj[i].taxPercentage)
+
+                        // alert(custtaxCategoryName+'---- % '+ data.obj[i].taxPercentage)
                         this.orderManagementService.getTaxCategoriesForSales(custtaxCategoryName, data.obj[i].taxPercentage)
                           .subscribe(
                             data1 => {

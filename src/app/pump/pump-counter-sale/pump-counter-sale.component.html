@@ -175,9 +175,7 @@
                     </td>
                 </ng-template>
                 <!-- </td> -->
-                <td style="width: 15%" class="LabelFontStyle">
-                    Name:&nbsp;
-                </td>
+                <td style="width: 15%" class="LabelFontStyle">Name:&nbsp;</td>
                 <td>
                     <table>
                         <tr>
@@ -245,6 +243,7 @@
                                 </div>
 
                             </td>
+                            
                         </tr>
                     </table>
                 </td>
@@ -991,6 +990,7 @@
                                         <th scope="col">Base Amount</th>
                                         <th scope="col">Disc %</th>
                                         <th scope="col">Disc Amount</th>
+                                        <th scope="col">Gst%</th>
                                         <th scope="col">Tax Category</th>
                                         <th scope="col">Tax Amount</th>
                                         <th scope="col">Total Amount</th>
@@ -1085,7 +1085,7 @@
                                                         <!--   (keydown.enter)="enterKeyLock($event)" oninput="this.value = Math.abs(this.value)"  (change)="onKey(i,'prc')" -->
                                                         <input type="number" formControlName="pricingQty"
                                                             name="pricingQty{{i}}" class="form-control"
-                                                            (keydown.tab)="onKey(i,'prc',$event)" 
+                                                            (keydown.tab)="onKey(i,'prc',$event)" (keyup)="onKey(i,'prc',$event)"
                                                             style="height: 20px;width:50px;" min="0">
                                                             
                                                         <input hidden type="text" formControlName="uom"
@@ -1123,9 +1123,10 @@
 
                                                     <td>
                                                         <input  type="number" formControlName="unitSellingPrice"
-                                                            class="form-control" min="0" step="0.01"
+                                                            class="form-control" min="0" step="0.01" placeholder="MRP"
                                                             style="height: 20px; width:80px;"
-                                                            (keydown.tab)="onKey(i,'usprc',$event)">
+                                                            (keydown.tab)="onKey(i,'usprc',$event)" >
+                                                            <!-- (keyup)="onKey(i,'usprc',$event)" -->
                                                     </td>
 
                                                     <!-- (keydown.tab)="onKey(i,'prc',$event)"  -->
@@ -1146,6 +1147,11 @@
                                                             class="form-control" min="0.00" (keydown.tab)="onKey(i,'usprc')"
                                                             style="height: 20px;width: 80px;">
                                                     </td>
+
+                                                         
+                                                    <td><input disabled type="number" formControlName="txPer"
+                                                    class="form-control" style="height: 20px;width: 30px;"></td>
+                                                    
                                                     <td>
                                                         <select formControlName="taxCategoryName" id="taxCategoryName"
                                                             (change)="onKey(i)" class="form-control"

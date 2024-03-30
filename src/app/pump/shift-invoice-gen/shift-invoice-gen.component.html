@@ -24,68 +24,64 @@
             </tr>
         </table>
     </fieldset>
-    <fieldset class="RFS">
-        <table class="center">
+
+    <fieldset class="RFS"> 
+        <table>
             <tr>
-                <td style="width: 15%" class="LabelFontStyle">From&nbsp;Date&nbsp;:</td>
-                <td>
-                    <input   type="date" class="form-control" formControlName="startDate">
-                </td>
-                <td style="width: 15%" class="LabelFontStyle">To&nbsp;Date&nbsp;:</td>
-                <td>
-                    <input   type="date" class="form-control" formControlName="endDate">
-                </td>
-                <td>
-                    <button type="button" class="btn btn-info" (click)="invGenetion()" style="width: fit-content;">
-                       Invoice&nbsp;Generation
-                    </button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-info" (click)="close()">Close</button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-info" (click)="refresh()">Reset</button>
-                </td>
+                <td style="font-weight:bold;"><input type="radio" id="searchInv"   name="optType"  [(ngModel)]="searchInv"   value="searchInv"  checked   (change)="radioEvent($event)">&nbsp;Search&nbsp;Invoice</td>
+                <td style="font-weight:bold;"><input type="radio" id="genInv"      name="optType"  [(ngModel)]="genInv"      value="genInv"     (change)="radioEvent($event)"  >&nbsp;Generate&nbsp;Invoice</td>
+                <td></td><td></td> <td></td>
+                <td><button type="button" class="btn btn-info" (click)="refresh()">Reset</button></td>
+                <td><button type="button" class="btn btn-info" (click)="close()">Close</button></td>
+         
             </tr>
-            </table>
-            </fieldset>
+        </table>
+    </fieldset>
+
+   
             <fieldset class="RFS">
+               
                 <table class="center">
-                    <tr>
-                        <td style="width: 15%" class="LabelFontStyle">From&nbsp;Date&nbsp;:</td>
-                <td>
-                    <input   type="date" class="form-control" formControlName="startDate">
-                </td>
+                <tr>
+                <td style="width: 15%" class="LabelFontStyle">From&nbsp;Date&nbsp;:</td>
+                <td><input  type="date" class="form-control" formControlName="startDate"  [(ngModel)] ="startDate"  style="background-color: yellow;" max="{{minDate | date:'yyyy-MM-dd'}}"></td>
                 <td style="width: 15%" class="LabelFontStyle">To&nbsp;Date&nbsp;:</td>
+                <td><input  type="date" class="form-control" formControlName="endDate"  [(ngModel)] ="endDate"  style="background-color: yellow;" max="{{minDate | date:'yyyy-MM-dd'}}"></td>
+               
+                <td style="width: 15%" class="LabelFontStyle">Customer :&nbsp;</td>
+
                 <td>
-                    <input   type="date" class="form-control" formControlName="endDate">
+                    <input type="text" formControlName="custName" [(ngModel)]='custName' value={{custName}}
+                        class="form-control" style="width: 220px;" data-bs-toggle="modal"
+                        data-bs-target="#customerNameSearchModel">
                 </td>
+
                 <td>
-                    <button type="button" class="btn btn-info" style="width: fit-content;" (click)="search()">
-                      Search
-                    </button>
-                </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 15%" class="LabelFontStyle">From&nbsp;Date&nbsp;:</td>
-                <td>
-                    <input   type="date" class="form-control" formControlName="startDate">
-                </td>
-                <td style="width: 15%" class="LabelFontStyle">To&nbsp;Date&nbsp;:</td>
-                <td>
-                    <input   type="date" class="form-control" formControlName="endDate">
-                </td>
-                <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;Id&nbsp;:</td>
-                <td>
-                    <input   type="text" class="form-control" formControlName="customerId">
-                </td>
-                <td>
-                    <button type="button" class="btn btn-info" style="width: fit-content;" (click)="search()">
-                      Search
-                    </button>
-                </td>
-                    </tr>
+                <button type="button" [disabled]="isDisabled3" class="btn btn-primary"
+                (click)="custNameSearch(custName)" data-toggle="modal"
+                data-target="#customerNameSearchModel" style="width: 2rem;color: white;">
+                <i class="fa fa-search"></i> </button>
+               </td>
+                <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;No&nbsp;:</td>
+                <td><input disabled  type="text" class="form-control" formControlName="custAccountNo" [(ngModel)] ="custAccountNo"></td>
+
+                <input disabled hidden type="text" class="form-control" formControlName="customerId" [(ngModel)] ="customerId">
+               
+                <div *ngIf="genInvoice; then block1; else block2"></div>
+                <ng-template #block1>  
+                <td><button type="button" class="btn btn-info" (click)="invGenetion()" style="width: fit-content;">Generate&nbsp;Invocie</button></td>
+                </ng-template>
+                <ng-template #block2>  
+                <td><button type="button" class="btn btn-info" style="width: fit-content;" (click)="search()">Search&nbsp;Invocie</button></td>
+                </ng-template>
+                </tr>
+
+
+
                 </table>
+            </fieldset>
+
+             <fieldset>
                 <table  class="GridFont" cellspacing="0" cellpadding="4"   style="border-color:#959595;border-collapse:collapse;width: 100%; ">
                     <thead>
                         <tr class="GridHeader">
@@ -97,12 +93,72 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let com of dataSearchList" class="ItemStyle" style="text-decoration:none;">
-                            <td style="border: 1px solid black;padding-left: 5px;">{{com.TRXNUMBER}}</td>
-                            <td style="border: 1px solid black;padding-left: 5px;">{{com.trxdate | date:'dd-MM-yyyy  hh:mm:ss'}}</td>
+                            <td style="border: 1px solid black;padding-left: 5px;text-align: center;">{{com.TRXNUMBER}}</td>
+                            <!-- <td style="border: 1px solid black;padding-left: 5px;">{{com.trxdate | date:'dd-MM-yyyy  hh:mm:ss'}}</td> -->
+                            <td style="border: 1px solid black;padding-left: 5px;text-align: center;">{{com.trxdate | date:'dd-MM-y'}}</td>
                             <td style="border: 1px solid black;padding-left: 5px;">{{com.CUSTNAME}}</td>
-                            <td style="border: 1px solid black;padding-right: 5px;text-align: right;">{{com.BASEAMOUNT}}</td>
+                            <td style="border: 1px solid black;padding-right: 5px;text-align: right;">{{com.BASEAMOUNT | number:'1.2-2'}}</td>
                         </tr>
                     </tbody>
                 </table>
             </fieldset>
+
+
+          
+           
+            <div class="modal fade" id="customerNameSearchModel" tabindex="-1" role="dialog"
+                aria-labelledby="customerNameSearchModel" aria-hidden="true">
+                <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="customerNameSearchModel">
+                                Additional&nbsp;Details</h5>
+                            <button type="button" class="close" data-dismiss="modal"
+                                aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <table>
+                                <tr>
+                                    <table class="GridFont" id="excel-table" cellspacing="0"
+                                        cellpadding="4">
+                                        <tbody>
+                                            <tr class="GridHeader">
+                                                <th scope="col">Customer No</th>
+                                                <th scope="col">Customer Name</th>
+                                                <th scope="col">Address</th>
+                                                <th scope="col">GST No</th>
+                                                <th scope="col">Pan No</th>
+                                                <th scope="col">Mobile</th>
+                                                <th scope="col">Select</th>
+                                            </tr>
+                                            <tr *ngFor="let com of customerNameSearch"
+                                                class="ItemStyle" style="text-decoration:none;">
+                                                <td style="width: 195px;">{{com.accountNo}}</td>
+                                                <td style="width: 195px;">{{com.custName}}</td>
+                                                <td style="width: 195px;">{{com.billToAddress}}</td>
+                                                <td style="width: 195px;">{{com.gstNo}}</td>
+                                                <td style="width: 195px;">{{com.panNo}}</td>
+                                                <td style="width: 195px;">{{com.mobile1}}</td>
+                                                <td><button class="btn-primary"
+                                                        style="width: fit-content;"
+                                                        (click)="accountNoSearch(com.accountNo)"
+                                                        data-dismiss="modal">Select</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-info"
+                                data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        
+
 </form>

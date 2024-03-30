@@ -21,6 +21,7 @@ interface IPaintIssue {
   uom: string;
   description: string;
   locId: number;
+  locCode:string;
   deptId: number;
   divisionId: number;
   lookupValueDesc1: string;
@@ -125,6 +126,7 @@ export class PaintIssueDpComponent implements OnInit {
   avlqty: number;
   description: string;
   locId: number;
+  locCode:string;
   deptId: number;
   divisionId: number;
   getItemDetail: any;
@@ -241,6 +243,7 @@ export class PaintIssueDpComponent implements OnInit {
       compileName: [''],
       compileId: [''],
       locId: [''],
+      locCode:[''],
       subInventory: ['', Validators.required],
       segmentName: ['', Validators.required],
       segment11: [''],
@@ -446,6 +449,8 @@ export class PaintIssueDpComponent implements OnInit {
   ngOnInit(): void {
 
     this.locId = Number(sessionStorage.getItem('locId'));
+    this.locCode = sessionStorage.getItem('locCode');
+
     this.deptId = Number(sessionStorage.getItem('dept'));
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
     // document.getElementById("processButton").setAttribute("disabled","disabled");
@@ -704,7 +709,10 @@ export class PaintIssueDpComponent implements OnInit {
             //alert(reserve+'reserve');
             let avlqty1 = 0;
             avlqty1 = getfrmSubLoc[0].onHandQty - reserve;
-            trxLnArr1.controls[i].patchValue({ avlqty: avlqty1 });
+
+            var avlqty11=(Math.round(avlqty1 * 100) / 100).toFixed(2);
+
+            trxLnArr1.controls[i].patchValue({ avlqty: avlqty11 });
             trxLnArr1.controls[i].patchValue({ resveQty: reserve });
 
           }
@@ -1089,19 +1097,22 @@ export class PaintIssueDpComponent implements OnInit {
     )
   }
   search(compNo) {
-    // alert('In Search' + compNo);
     if (compNo != undefined) {
       this.currentOp = 'SEARCH';
       var compno = this.paintIssueForm.get('compNo').value;
       var appflag = this.paintIssueForm.get('trans').value;
+      compno =compno.trim();
+      var compnoLocCode =compno.substr(0,9)
+      if (compnoLocCode != this.locCode){
+       alert ("Please Enter Valid Issue No.... ");return;
+      }
+
       this.service.getSearchViewByIc(compno).subscribe
         (data => {
           if (data.code === 400) {
-            // alert("Can not View data");
             alert(data.message+"\n"+data.obj);
           }
           if (data.code === 200) {
-            //       // this.lstcomment=data.obj;
 
             if(data.obj.reason==='PN001'){ 
               alert ("This is Paint Mixing Issue Transaction.\nPlease use Paint Mixing Issue Form to get the details.");
@@ -1123,7 +1134,6 @@ export class PaintIssueDpComponent implements OnInit {
             }
 
             this.panelLineArray().clear();
-
            let panelcontrol = this.paintIssueForm.get('panelLineList') as FormArray;
             var len1 = this.panelLineArray().length;
             alert(data.obj.panelLineList.length)
@@ -1133,22 +1143,26 @@ export class PaintIssueDpComponent implements OnInit {
             }
              this.paintIssueForm.get('panelLineList').patchValue(data.obj.panelLineList);
 
+            var att9=0;
+            var att10=0;
+            var panelLineArr = this.paintIssueForm.get('panelLineList').value;
+
              for (let i = 0; i < this.panelLineArray().length; i++) {
               panelcontrol.controls[i].patchValue({panelFlag: true});
+              if(panelLineArr[i].paneltype==='OLD'){att9=att9+panelLineArr[i].attribute1}
+              if(panelLineArr[i].paneltype==='NEW'){att10=att10+panelLineArr[i].attribute1}
             }
                     
             this.paintIssueForm.patchValue(data.obj);
             this.totalItemValue=Math.round((data.obj.totalItemValue+Number.EPSILON)*100)/100;
 
+            this.paintIssueForm.patchValue({attribute9:att9 , attribute10:att10 });
 
             this.currentOp = 'INSERT';
-            // this.paintIssueForm.get('cycleLinesList').patchValue(data.obj.cycleLinesList);
             this.paintIssueForm.disable();
             this.panelLineArray().disable();
-            // this.dispRow=false;
             this.displayaddButton = false;
             this.displayButton = false;
-            // this.paintIssueForm.get('cycleLinesList').disable();
           }
         })
     }
@@ -1227,10 +1241,11 @@ export class PaintIssueDpComponent implements OnInit {
     
     
     if (formValue.panelQty === undefined || formValue.panelQty === null || formValue.panelQty<=0 || formValue.panelQty>22) {
+      this.headerValidation1 = false;
       msg1 = "PANEL QTY: Should not be null Or Zero.\nMaximum panels allowed is 22 Nos";
       alert(msg1);
-      var  resp=confirm("Do You Want to Continue without selecting Panel ???");
-      if(resp==false) { return;}
+      // var  resp=confirm("Do You Want to Continue without selecting Panel ???");
+      // if(resp==false) { return;}
      }
     
     this.headerValidation1 = true;

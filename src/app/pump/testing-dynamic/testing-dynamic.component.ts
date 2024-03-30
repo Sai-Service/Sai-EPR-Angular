@@ -34,6 +34,14 @@ interface IPumpShiftSale{
   CashSubmitted:number;
   CashDifference:number;
 
+  iciciTotSale:number;
+  paytmTotSale:number;
+  driveTracTotSale:number;
+
+  attribute1: string;
+  attribute2: string;
+  attribute3: string;
+
 }
 
 @Component({
@@ -62,6 +70,15 @@ export class TestingDynamicComponent  {
   lastupdateby:number;
   creationdate:Date;
   createdby:number;
+
+  iciciTotSale:number;
+  paytmTotSale:number;
+  driveTracTotSale:number;
+
+  attribute1: string;
+  attribute2: string;
+  attribute3: string;
+
   public minDate = new Date();
   pipe = new DatePipe('en-US');
   now = new Date();
@@ -156,6 +173,15 @@ export class TestingDynamicComponent  {
       totalexpenses:[0],
       cashsubmitted:[],
       locid:[],
+
+      iciciTotSale:[],
+      paytmTotSale:[],
+      driveTracTotSale:[],
+      attribute1: [],
+      attribute2: [],
+      attribute3: [],
+
+
       ppShiftNozzleDetailList: this.fb.array([]),
       ppShiftVoucherList: this.fb.array([this.voucherDetailsGroup()]),
     })
@@ -943,7 +969,7 @@ pumpShiftSales(pumpShiftSalesForm:any) {  }
 
 
 CheckForitemRepeat(mNzzId,index) {
-  alert ("Selected Nozzle Id :"+mNzzId+" ,Index :"+index);
+  // alert ("Selected Nozzle Id :"+mNzzId+" ,Index :"+index);
   
 
    var arrayControlNew = this.pumpShiftSalesForm.get('ppShiftNozzleDetailList') as FormArray;
@@ -1318,6 +1344,9 @@ calculationFn(i){
 
   
  }
+ 
+ 
+ 
 
 
  lineCalculationFn(index,k){
@@ -1388,6 +1417,10 @@ addlineCalculation(index,k,event){
   var totalSaleAmt =0;
   var totalCreditAmt=0;
   var otherSaleAmt=0;
+  var icicSales=0;
+  var paytmSales=0;
+  var driveTracSales=0;
+
   var len =this.employeeSkills(index).length;
   var totalExpenceAmt= this.pumpShiftSalesForm.get('totalexpenses').value;
   for (let i=0;i<arrline.length;i++){
@@ -1400,12 +1433,36 @@ addlineCalculation(index,k,event){
         cashlineAmt = cashlineAmt + Number(lineDetArr[l].lineAmt);
       }
      }
-    if (lineDetArr[l].payType === 'CREDIT CARD' ) {
+
+    if (lineDetArr[l].payType === 'CREDIT' ) {
       if (lineDetArr[l].lineAmt == undefined || lineDetArr[l].lineAmt == null || lineDetArr[l].lineAmt == '') {
       } else {
         totalCreditAmt = totalCreditAmt + Number(lineDetArr[l].lineAmt);
       }
     }
+
+    if (lineDetArr[l].payType === 'ICICI' ) {
+      if (lineDetArr[l].lineAmt == undefined || lineDetArr[l].lineAmt == null || lineDetArr[l].lineAmt == '') {
+      } else {
+        icicSales = icicSales + Number(lineDetArr[l].lineAmt);
+      }
+    }
+
+    if (lineDetArr[l].payType === 'PAYTM' ) {
+      if (lineDetArr[l].lineAmt == undefined || lineDetArr[l].lineAmt == null || lineDetArr[l].lineAmt == '') {
+      } else {
+        paytmSales = paytmSales + Number(lineDetArr[l].lineAmt);
+      }
+    }
+
+    if (lineDetArr[l].payType === 'DRIVE TRACK' ) {
+      if (lineDetArr[l].lineAmt == undefined || lineDetArr[l].lineAmt == null || lineDetArr[l].lineAmt == '') {
+      } else {
+        driveTracSales = driveTracSales + Number(lineDetArr[l].lineAmt);
+      }
+    }
+
+
 
 
 if (lineDetArr[l].payType === 'CHEQUE' || lineDetArr[l].payType === 'CHEQUE' ||
@@ -1419,13 +1476,22 @@ lineDetArr[l].payType === 'RTGS/NEFT'||lineDetArr[l].payType === 'WALLET' ) {
 }
 }
 }
+
 cashlineAmt = Math.round(((cashlineAmt) + Number.EPSILON) * 100) / 100;
 otherSaleAmt = Math.round(((otherSaleAmt) + Number.EPSILON) * 100) / 100;
 totalCreditAmt = Math.round(((totalCreditAmt) + Number.EPSILON) * 100) / 100;
 totalSaleAmt= Math.round(((cashlineAmt+otherSaleAmt+totalCreditAmt) + Number.EPSILON) * 100) / 100;
 var totalExpenAmt = Math.round(((cashlineAmt-totalExpenceAmt) + Number.EPSILON) * 100) / 100;
+
+icicSales = Math.round(((icicSales) + Number.EPSILON) * 100) / 100;
+paytmSales = Math.round(((paytmSales) + Number.EPSILON) * 100) / 100;
+driveTracSales = Math.round(((driveTracSales) + Number.EPSILON) * 100) / 100;
+
+
 this.pumpShiftSalesForm.patchValue({ 'totalcashsale': cashlineAmt,'totalsale':totalSaleAmt,'totalcreditsale':totalCreditAmt,
 'totalothersale': otherSaleAmt});
+this.pumpShiftSalesForm.patchValue({ 'attribute1': icicSales.toString(),'attribute2':paytmSales.toString(),'attribute3':driveTracSales.toString()});
+
 var paymentType = arrline.value[index].ppShiftNozleLinesList[k].payType;
 if (event !=null){
 var payType=event.target.value;
@@ -1440,11 +1506,33 @@ if (payType1==='CASH'){
   this.employeeSkills(index).controls[k].get('customercode').disable();
   this.addEmployeeSkill(index)
 }
+
 if (payType1==='PUMP TESTING'){
   this.employeeSkills(index).controls[k].patchValue({customercode:79869,custName:'PUMP TESTING',customerid:73680});
   this.employeeSkills(index).controls[k].get('customercode').disable();
   this.addEmployeeSkill(index);
 }
+if (payType1==='ICICI'){
+  this.employeeSkills(index).controls[k].patchValue({customercode:79870,custName:'CARD PAYMENT - ICICI',customerid:73700});
+  this.employeeSkills(index).controls[k].get('customercode').disable();
+  this.addEmployeeSkill(index)
+}
+
+if (payType1==='PAYTM'){
+  this.employeeSkills(index).controls[k].patchValue({customercode:79874,custName:'UPI - PAYTM',customerid:73704});
+  this.employeeSkills(index).controls[k].get('customercode').disable();
+  this.addEmployeeSkill(index)
+}
+
+if (payType1==='DRIVE TRACK'){
+  this.employeeSkills(index).controls[k].patchValue({customercode:79872,custName:'DRIVE TRACK',customerid:73702});
+  this.employeeSkills(index).controls[k].get('customercode').disable();
+  this.addEmployeeSkill(index)
+}
+
+
+
+
 }
 }
 
@@ -1506,10 +1594,10 @@ validation(){
   
 }
 
-
 saveSale1(){
   this.isVisibleShiftPretolSave=false;
   let jsonData = this.pumpShiftSalesForm.getRawValue();
+  
  
   // this.closeResetButton = false;
     this.progress = 0;
@@ -1517,6 +1605,10 @@ saveSale1(){
     if (this.headerValidation===false) { alert("Header Validation Failed...Save Error ");return;}
       
     this.dataDisplay = 'Data Saving is progress....Do not refresh the Page';
+
+    var  resp=confirm("Do You Want to Save this Transaction ???");
+    if(resp==false) { return;}
+   
 
     this.PumpService1.savePetrolPump(JSON.stringify(jsonData)).subscribe((res: any) => {
     if (res.code === 200) {
@@ -1533,8 +1625,8 @@ saveSale1(){
       this.isVisibleShiftPretolSave=true;
     }
   })
-
 }
+
 
 CustAccountNoSearch(i,k,event){
   var accountNo=event.target.value;
@@ -1553,10 +1645,8 @@ CustAccountNoSearch(i,k,event){
       alert('Data Not Found.!')
     }
    
-    }
-  )
+    });}
 
-}
 
 updatePumpDet(){
   this.closeResetButton = false;
@@ -1580,8 +1670,6 @@ updatePumpDet(){
       this.isVisibleShiftPretolUpdate=true;
     }
   })
-
-
 } 
 
 
