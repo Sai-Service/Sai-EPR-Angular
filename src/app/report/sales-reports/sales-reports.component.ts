@@ -1993,32 +1993,19 @@ export class SalesReportsComponent implements OnInit {
     }
 
     else if (reportName === 'Sale Debtor Report As Of') {
-      // alert('Sale Debtor Report As Of')
-      // var tDate =this.salesReportForm.get('toDate').value;
       this.isDisabled1 = false;
-      // alert('Hello');
       this.toDateValidation(tDate); if (this.rptValidation == false) { return; }
       var custAccNo = this.salesReportForm.get('custAccNo').value;
-
-      // if (custAccNo<=0 || custAccNo==undefined || custAccNo==null ) {
-      //   this.closeResetButton=true;
-      //   // this.dataDisplay = 'Please check Customer No.'
-      //   return; }comment by vinita
-
       if (custAccNo <= 0 || custAccNo == undefined || custAccNo == null) {
         custAccNo = '';
       }
-
-
       var d1 = this.salesReportForm.get('toDate').value;
       var tDate1 = this.pipe.transform(d1, 'dd-MMM-y');
       var locId = this.salesReportForm.get('locId').value;
-
       var spDbAg1 = this.salesReportForm.get('age1').value;
       var spDbAg2 = this.salesReportForm.get('age2').value;
       var spDbAg3 = this.salesReportForm.get('age3').value;
       var spDbAg4 = this.salesReportForm.get('age4').value;
-
       if (spDbAg1 < 0 || spDbAg1 == null || spDbAg1 == undefined) { this.rptValidation = false; }
       if (spDbAg2 < 0 || spDbAg2 == null || spDbAg2 == undefined) { this.rptValidation = false; }
       if (spDbAg3 < 0 || spDbAg3 == null || spDbAg3 == undefined) { this.rptValidation = false; }

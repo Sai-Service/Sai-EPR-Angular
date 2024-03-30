@@ -973,6 +973,29 @@ reportName:string;
     this.isVisiblepanelfromtolocation=false;
     this.panelTodateAndOU=false;
   }
+  else if (reportName==='gstsalesDebtReAsOf'){
+    // alert(reportName)
+    this.reportName = 'Sale Debtor Report As Of'
+    this.isVisibleGSTSaleRegister=false;  
+    this.isVisibleGSTPurchaseRegister=false;
+    this.isVisibleSaleIND=false;
+    this.isVisiblegstsaiDebtors=true;
+    this.isVisibleSparesdebtors=false;
+    this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
+    this.ispanelTolocationOu=false;
+    this.isVisibleVendorLedgerReport=false;
+    this.isVisiblecustomerLedger=false;
+    if (Number(sessionStorage.getItem('deptId')) === 4) {
+      this.isVisibleDepartmentList = true;
+      this.isVisiblelocationLOV=true;
+    }
+    this.isVisiblepanelfromtolocation=false;
+    this.panelTodateAndOU=false;
+  }
   }
 
 
@@ -1032,7 +1055,7 @@ reportName:string;
     else if (reportName === 'Sai Debtors') {
       // alert('Hello');
       // var custAccNo = this.reportForm.get('custAccNo').value;
-      var custAccNo=' ';
+      // var custAccNo=' ';
       var deptId = this.reportForm.get('deptId').value;
       if (custAccNo === undefined || custAccNo === null) {
         custAccNo = '';
@@ -1571,6 +1594,72 @@ reportName:string;
             this.isDisabled1=false;
           })     
        }
+       else if (reportName === 'Sale Debtor Report As Of') {
+        this.isDisabled1 = false;
+        this.toDateValidation(tDate); if (this.rptValidation == false) { return; }
+        var custAccNo = this.reportForm.get('custAccNo').value;
+        if (custAccNo <= 0 || custAccNo == undefined || custAccNo == null) {
+          custAccNo = '';
+        }
+        var d1 = this.reportForm.get('toDate').value;
+        var tDate1 = this.pipe.transform(d1, 'dd-MMM-y');
+        var locId = this.reportForm.get('locId').value;
+        var spDbAg1 = this.reportForm.get('age1').value;
+        var spDbAg2 = this.reportForm.get('age2').value;
+        var spDbAg3 = this.reportForm.get('age3').value;
+        var spDbAg4 = this.reportForm.get('age4').value;
+        if (spDbAg1 < 0 || spDbAg1 == null || spDbAg1 == undefined) { this.rptValidation = false; }
+        if (spDbAg2 < 0 || spDbAg2 == null || spDbAg2 == undefined) { this.rptValidation = false; }
+        if (spDbAg3 < 0 || spDbAg3 == null || spDbAg3 == undefined) { this.rptValidation = false; }
+        if (spDbAg4 < 0 || spDbAg4 == null || spDbAg4 == undefined) { this.rptValidation = false; }
+  
+        if (spDbAg1 > spDbAg2) { this.rptValidation = false; }
+        else if (spDbAg1 > spDbAg3) { this.rptValidation = false; }
+        else if (spDbAg1 > spDbAg4) { this.rptValidation = false; }
+        else if (spDbAg2 > spDbAg3) { this.rptValidation = false; }
+        else if (spDbAg2 > spDbAg4) { this.rptValidation = false; }
+        else if (spDbAg3 > spDbAg4) { this.rptValidation = false; }
+  
+  
+        if (this.rptValidation == false) { this.closeResetButton = true; this.dataDisplay = 'Please check Aging Values.'; return; }
+        this.isDisabled1 = true;
+        const fileName = 'Sales-Debtors-' +  fromDate + '.xls';
+        const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  
+        if (Number(sessionStorage.getItem('deptId')) === 4) {
+          this.reportService.gstsaiDebtorsAsOf1(tDate1, sessionStorage.getItem('ouId'), locId, custAccNo, deptId, spDbAg1, spDbAg2, spDbAg3, spDbAg4)
+            .subscribe(data => {
+              saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+              this.isDisabled1 = false;
+              this.closeResetButton = true;
+              this.dataDisplay = ''
+            });
+        }
+        else if (Number(sessionStorage.getItem('deptId')) != 4) {
+          this.reportService.gstsaiDebtorsAsOf1(tDate1, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), custAccNo, deptId, spDbAg1, spDbAg2, spDbAg3, spDbAg4)
+            .subscribe(data => {
+              saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+              this.isDisabled1 = false;
+              this.closeResetButton = true;
+              this.dataDisplay = ''
+            });
+        }
+      }
+  }
+
+
+
+  toDateValidation(tDate) {
+    this.rptValidation = true;
+
+    if (tDate == null || tDate == undefined || tDate.trim() == '') { this.rptValidation = false; }
+
+    if (this.rptValidation == false) {
+      alert("Please Check Date..");
+      this.closeResetButton = true;
+      this.dataDisplay = '';
+      this.isDisabled1 = false;
+    }
   }
 
 

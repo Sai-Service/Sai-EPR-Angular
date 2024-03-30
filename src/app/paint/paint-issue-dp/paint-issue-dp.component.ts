@@ -1122,16 +1122,11 @@ export class PaintIssueDpComponent implements OnInit {
               })
             }
 
-
-
-            // this.paintIssueForm.get('panelLineList').patchValue(this.panelList);
-
-            // var patch = this.paintIssueForm.get('panelLineList') as FormArray;
-            // var panelLineArr = this.paintIssueForm.get('panelLineList').value;
             this.panelLineArray().clear();
 
            let panelcontrol = this.paintIssueForm.get('panelLineList') as FormArray;
             var len1 = this.panelLineArray().length;
+            alert(data.obj.panelLineList.length)
             for (let i = 0; i < data.obj.panelLineList.length - len1; i++) {
               var invLnGrp: FormGroup = this.panelLineDetails();
               this.panelLineArray().push(invLnGrp);
