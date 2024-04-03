@@ -1235,13 +1235,14 @@ export class PaintMiscTransactionComponent implements OnInit {
       trxLnArr1.controls[i].patchValue({ physicalQty: '' });
       qty1.focus();
     }
-    if (uomCode === 'NO') {
-      // alert(Number.isInteger(qty)+'Status');
-      if (!Number.isInteger(qty)) {
-        alert('Please enter correct No');
-        trxLnArr1.controls[i].patchValue({ physicalQty: '' });
-      }
-    }
+
+    // if (uomCode === 'NO') {
+    //   // alert(Number.isInteger(qty)+'Status');
+    //   if (!Number.isInteger(qty)) {
+    //     alert('Please enter correct No');
+    //     trxLnArr1.controls[i].patchValue({ physicalQty: '' });
+    //   }
+    // }
 
     this.addnewcycleLinesList(i);
     this.setFocus('segment' +(i+1)  )

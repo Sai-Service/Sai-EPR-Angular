@@ -187,9 +187,19 @@
             </tr>
             <tr>
                 <td style="width: 12%" class="LabelFontStyle">UOM&nbsp;:&nbsp;</td>
-                <td>
+                <!-- <td>
                     <input type="text" disabled class="form-control" formControlName="uom" value={{uom}}>
+                </td> -->
+
+                <td>
+                    <select  formControlName="uom" id="uom" class="form-control" [(ngModel)]="uom" >
+                        <option value="--Select--">--Select--</option>
+                        <option *ngFor="let sc of uomList" [ngValue]="sc.code">
+                            {{sc.code}}
+                        </option>
+                    </select>
                 </td>
+
                 <td style="width: 12%" class="LabelFontStyle">Status&nbsp;:&nbsp;</td>
                 <td>
                     <select  formControlName="status" id="status" class="form-control"
