@@ -870,7 +870,11 @@ export class PaintMiscTransactionComponent implements OnInit {
               //alert(reserve+'reserve');
               let avlqty1 = 0;
               avlqty1 = getfrmSubLoc[0].onHandQty - reserve;
-              trxLnArr1.controls[i].patchValue({ avlqty: avlqty1 });
+              
+              var avlqty11=(Math.round(avlqty1 * 100) / 100).toFixed(2);
+
+
+              trxLnArr1.controls[i].patchValue({ avlqty: avlqty11 });
               trxLnArr1.controls[i].patchValue({ resveQty: reserve });
             } else {
               this.getfrmSubLoc = data;
@@ -905,6 +909,8 @@ export class PaintMiscTransactionComponent implements OnInit {
       alert('item not found');
     }
   }
+
+
   AvailQty(event: any, i) {
     // alert(event.target.value);
     var trxLnArr1 = this.paintMiscellaneousForm.get('cycleLinesList') as FormArray;
