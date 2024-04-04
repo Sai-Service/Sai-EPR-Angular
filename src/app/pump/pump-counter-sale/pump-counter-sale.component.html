@@ -1039,6 +1039,26 @@
                                                             </option>
                                                         </select>
                                                     </td>
+                                                    <!-- <td>
+                                                        <input type="text"
+                                                            style="height: 20px;width: 100px;text-transform: uppercase;"
+                                                            class="form-control" formControlName="itemSeg"
+                                                            [(ngModel)]='itemSeg' name="itemSeg{{i}}"
+                                                            (keydown.tab)="searchByItemSegmentDiv1(itemSeg,i)" />
+                                                    </td>
+                                                    <td>1
+                                                        <input type="text" formControlName="segment"
+                                                            id="invItemIdFirstWay" list="dynmicUserIds1"
+                                                            class="form-control" style="height: 20px;width:120px;"
+                                                            (ngModelChange)='onOptionsSelectedDescription($event,i)'>
+                                                        <datalist id="dynmicUserIds1">
+                                                            <option *ngFor="let item of  itemMap2.get(i)"
+                                                                [value]="item.segment">
+                                                                {{item.segment}}
+                                                            </option>
+                                                        </datalist>
+                                                        <input hidden type="number" formControlName="itemId">
+                                                    </td> -->
                                                     <td>
                                                         <input type="text"
                                                             style="height: 20px;width: 100px;text-transform: uppercase;"
