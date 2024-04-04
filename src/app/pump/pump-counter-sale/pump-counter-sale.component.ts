@@ -1463,7 +1463,7 @@ export class PumpCounterSaleComponent implements OnInit {
     }
    var otherRefNo = this.pumpCounterSaleOrderForm.get('othRefNo').value;
   //  alert(otherRefNo)
-  //  debugger;
+   debugger;
    this.pumpCounterSaleOrderForm.patchValue({othRefNo:otherRefNo});
    this.othRefNo=otherRefNo;
     let controlinv = this.pumpCounterSaleOrderForm.get('oeOrderLinesAllList') as FormArray;
@@ -2861,9 +2861,15 @@ export class PumpCounterSaleComponent implements OnInit {
 
 
   addRow1(i) {
-    var trxLnArr1 = this.pumpCounterSaleOrderForm.get('oeOrderLinesAllList').value;
 
+    
+    var indx=i;
+    var trxLnArr1 = this.pumpCounterSaleOrderForm.get('oeOrderLinesAllList').value;
     var trxLnArr2 = this.pumpCounterSaleOrderForm.get('oeOrderLinesAllList') as FormArray;
+    var len2= trxLnArr1.length-1;
+
+    if(len2===indx) {
+
     var formVal = trxLnArr2.getRawValue();
     if (this.op == 'Search') {
       i = trxLnArr1.length;
@@ -2903,6 +2909,7 @@ export class PumpCounterSaleComponent implements OnInit {
         return;
       }
     }
+
     var disPer = this.pumpCounterSaleOrderForm.get('disPer').value;
     this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
     var len = this.orderlineDetailsArray().length;
@@ -2932,6 +2939,7 @@ export class PumpCounterSaleComponent implements OnInit {
     this.itemSeg = '';
     var ln = len - 1;
     this.setFocus('itemSeg' + ln);
+  }
   }
 
 

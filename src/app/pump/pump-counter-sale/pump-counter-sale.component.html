@@ -1317,7 +1317,7 @@
                                                     </td>
                                                     <td>
                                                         <select formControlName="flowStatusCode" id="flowStatusCode1"
-                                                            class="form-control"
+                                                            class="form-control" 
                                                             style="width: fit-content;height: 25px;font-size: 10px;"
                                                             (ngModelChange)="updateLineOnCancel(i,flowStatusCode)"
                                                             #flowStatusCode1>
@@ -1333,13 +1333,13 @@
                                                     <!-- type="button" -->
                                                     <ng-template #thenaddRow>
                                                         <button type="button" class="btn btn-primary" [style.display]="isVisible15 ? 'block' : 'none'"
-                                                            (keydown.tab)="addRow1(i)" style="width: min-content;"><i
+                                                            (keydown.tab)="addRow1(i)"  (click)="addRow1(i)"  style="width: min-content;"><i
                                                                 class="fa fa-plus"></i></button>
                                                     </ng-template>
                                                     <ng-template #elseaddRow>
-                                                        <button disabled type="button" class="btn btn-primary"
-                                                            (click)="addRow(i)" style="width: min-content;"><i
-                                                                class="fa fa-plus"></i></button>
+                                                         <button disabled  type="button" class="btn btn-primary"
+                                                                (click)="addRow(i)" style="width: min-content;"><i
+                                                                    class="fa fa-plus"></i></button>
                                                     </ng-template>
                                                 </td>
                                                 <td>
