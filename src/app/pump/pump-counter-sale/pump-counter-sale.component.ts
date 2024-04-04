@@ -1380,7 +1380,7 @@ export class PumpCounterSaleComponent implements OnInit {
     }
    var otherRefNo = this.pumpCounterSaleOrderForm.get('othRefNo').value;
   //  alert(otherRefNo)
-   debugger;
+  //  debugger;
    this.pumpCounterSaleOrderForm.patchValue({othRefNo:otherRefNo});
    this.othRefNo=otherRefNo;
     let controlinv = this.pumpCounterSaleOrderForm.get('oeOrderLinesAllList') as FormArray;
