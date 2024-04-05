@@ -105,6 +105,11 @@ export class PaintMiscTransactionComponent implements OnInit {
   segmentName: string;
   adjustmentQty: number;
   physicalQty: number;
+
+  closeResetButton = true;
+  dataDisplay: any;
+  progress = 0;
+
   // locData =[ {
   //   "locatorId": 999,
   //   "segmentName": "D.U.01.D.01",
@@ -1423,6 +1428,14 @@ export class PaintMiscTransactionComponent implements OnInit {
     //  return;
     this.displayButton = false;
     this.displayaddButton = true;
+
+    var  resp=confirm("Do You Want to Save this Transaction ???");
+     if(resp==false) { this.displayaddButton = true;this.displayButton = true;  return;} 
+
+     this.closeResetButton = false;
+     this.progress = 0;
+     this.dataDisplay = 'Save In Progress....Do Not Refresh the Page';
+
     if (this.paintMiscellaneousForm.valid) {
       // this.displayButton=true;
       // this.displayaddButton=true;
@@ -1439,11 +1452,16 @@ export class PaintMiscTransactionComponent implements OnInit {
           this.displayButton = false;
           this.displayaddButton = false;
           this.displayOp=false;
+          this.dataDisplay = ''
+          this.closeResetButton = true;
+
         } else {
           if (res.code === 400) {
             alert(res.message);
             this.displayButton=true;
             // this.paintMiscellaneousForm.reset();
+            this.dataDisplay = ''
+            this.closeResetButton = true;
           }
         }
       });
