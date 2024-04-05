@@ -1039,26 +1039,6 @@
                                                             </option>
                                                         </select>
                                                     </td>
-                                                    <!-- <td>
-                                                        <input type="text"
-                                                            style="height: 20px;width: 100px;text-transform: uppercase;"
-                                                            class="form-control" formControlName="itemSeg"
-                                                            [(ngModel)]='itemSeg' name="itemSeg{{i}}"
-                                                            (keydown.tab)="searchByItemSegmentDiv1(itemSeg,i)" />
-                                                    </td>
-                                                    <td>1
-                                                        <input type="text" formControlName="segment"
-                                                            id="invItemIdFirstWay" list="dynmicUserIds1"
-                                                            class="form-control" style="height: 20px;width:120px;"
-                                                            (ngModelChange)='onOptionsSelectedDescription($event,i)'>
-                                                        <datalist id="dynmicUserIds1">
-                                                            <option *ngFor="let item of  itemMap2.get(i)"
-                                                                [value]="item.segment">
-                                                                {{item.segment}}
-                                                            </option>
-                                                        </datalist>
-                                                        <input hidden type="number" formControlName="itemId">
-                                                    </td> -->
                                                     <td>
                                                         <input type="text"
                                                             style="height: 20px;width: 100px;text-transform: uppercase;"
@@ -1067,7 +1047,7 @@
                                                             (keydown.tab)="searchByItemSegmentDiv(itemSeg,i)" />
                                                     </td>
                                                     <td>
-                                                        <input type="text" formControlName="segment"
+                                                        <!-- <input type="text" formControlName="segment"
                                                             id="invItemIdFirstWay" list="dynmicUserIds1"
                                                             class="form-control" style="height: 20px;width:120px;"
                                                             (ngModelChange)='onOptionsSelectedDescription($event,i)'>
@@ -1076,7 +1056,15 @@
                                                                 [value]="item.segment">
                                                                 {{item.segment}}
                                                             </option>
-                                                        </datalist>
+                                                        </datalist> -->
+                                                        <select class="form-control"
+                                                        style="height: 20px; width: 160px; "
+                                                        formControlName="segment"
+                                                        (ngModelChange)="onOptionsSelectedDescription($event,i)">
+                                                        <option *ngFor="let item of  itemMap2.get(i)" [value]="item.segment">
+                                                            {{item.segment}}
+                                                        </option>
+                                                    </select>
                                                         <input hidden type="number" formControlName="itemId">
                                                     </td>
                                                     <input hidden type="number" formControlName="onHandQty">
@@ -1317,7 +1305,7 @@
                                                     </td>
                                                     <td>
                                                         <select formControlName="flowStatusCode" id="flowStatusCode1"
-                                                            class="form-control" 
+                                                            class="form-control"
                                                             style="width: fit-content;height: 25px;font-size: 10px;"
                                                             (ngModelChange)="updateLineOnCancel(i,flowStatusCode)"
                                                             #flowStatusCode1>
@@ -1333,13 +1321,13 @@
                                                     <!-- type="button" -->
                                                     <ng-template #thenaddRow>
                                                         <button type="button" class="btn btn-primary" [style.display]="isVisible15 ? 'block' : 'none'"
-                                                            (keydown.tab)="addRow1(i)"  (click)="addRow1(i)"  style="width: min-content;"><i
+                                                            (keydown.tab)="addRow1(i)" style="width: min-content;"><i
                                                                 class="fa fa-plus"></i></button>
                                                     </ng-template>
                                                     <ng-template #elseaddRow>
-                                                         <button disabled  type="button" class="btn btn-primary"
-                                                                (click)="addRow(i)" style="width: min-content;"><i
-                                                                    class="fa fa-plus"></i></button>
+                                                        <button disabled type="button" class="btn btn-primary"
+                                                            (click)="addRow(i)" style="width: min-content;"><i
+                                                                class="fa fa-plus"></i></button>
                                                     </ng-template>
                                                 </td>
                                                 <td>

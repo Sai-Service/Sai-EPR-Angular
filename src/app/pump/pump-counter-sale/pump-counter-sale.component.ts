@@ -1366,89 +1366,6 @@ export class PumpCounterSaleComponent implements OnInit {
 
 
 
-  // public itemMap2 = new Map<number, any[]>();
-
-  // public itemMap3 = new Map<string, StockTransferRow>();
-
-  // searchByItemSegmentDiv1(itemDesc: string, lnNo: number) {
-  //   alert(itemDesc)
-  //   var itemDesc = itemDesc.toUpperCase();
-  //   if (itemDesc === '' || itemDesc === undefined || itemDesc === null) {
-  //     alert('Please Enter Proper Item Code.!')
-  //     this.setFocus('itemSeg' + lnNo);
-  //     return;
-  //   }
-  //  var otherRefNo = this.pumpCounterSaleOrderForm.get('othRefNo').value;
-  // //  alert(otherRefNo)
-  // //  debugger;
-  //  this.pumpCounterSaleOrderForm.patchValue({othRefNo:otherRefNo});
-  //  this.othRefNo=otherRefNo;
-  //   let controlinv = this.pumpCounterSaleOrderForm.get('oeOrderLinesAllList') as FormArray;
-  //   var itemType = (controlinv.controls[lnNo]).get('invType').value;
-  //   (controlinv.controls[lnNo]).patchValue({ 'segment': '' });
-  //   var disPer = (controlinv.controls[lnNo]).get('disPer').value;
-  //   // alert(disPer)
-  //   if (Number(sessionStorage.getItem('deptId'))!=12){
-  //     controlinv.controls[lnNo].get('disPer').disable();
-  //     controlinv.controls[lnNo].get('disAmt').disable();
-  //   }
-  //   else if (Number(sessionStorage.getItem('deptId'))===12){
-  //     controlinv.controls[lnNo].get('disPer').enable();
-  //     controlinv.controls[lnNo].get('disAmt').enable();
-      
-  //   }
-  //   let controlinvArray = this.pumpCounterSaleOrderForm.get('oeOrderLinesAllList').value;
-  //   console.log(controlinvArray);
-  //   for (let j = 0; j < controlinvArray.length; j++) {
-  //     if (itemDesc === controlinvArray[j].segment) {
-  //       alert('Item Already Present.!' + ' ' + 'Line Number' + ' ' + (j + 1) + '.!')
-  //     }
-  //   }
-  //   debugger;
-  //   if (this.itemMap.has(itemDesc)) {
-  //     var itemsList = this.itemMap.get(itemDesc);
-  //     this.itemMap2.set(lnNo, this.itemMap.get(itemDesc));
-  //   } else {
-  //   }
-  //   console.log(this.itemMap2);
-  //   // alert(this.isDisabledDisPer)
-  //   this.invItemList1 = this.itemMap.get(itemDesc);
-  //   this.orderManagementService.searchByItemSegmentDiv(this.divisionId, itemDesc)
-  //     .subscribe(
-  //       data => {
-  //         this.orderedItem = data.description;
-  //         console.log(data.description);
-
-  //         this.itemMap.set(itemDesc, data);
-  //         this.itemMap2.set(lnNo, this.itemMap.get(itemDesc));
-  //         alert(data.length+'---Len')
-  //         if (data.length == 1) {
-  //           (controlinv.controls[lnNo]).patchValue({ 'segment': data[0].segment });
-
-  //         }
-  //         if (data.length === 0) {
-  //           (controlinv.controls[lnNo]).patchValue({ 'segment': '' });
-  //           (controlinv.controls[lnNo]).patchValue({ 'frmLocatorId': '' });
-  //           (controlinv.controls[lnNo]).patchValue({ 'Avalqty': '' });
-  //           (controlinv.controls[lnNo]).patchValue({ 'pricingQty': '' });
-  //           (controlinv.controls[lnNo]).patchValue({ 'orderedItem': '' });
-  //           (controlinv.controls[lnNo]).patchValue({ 'unitSellingPrice': '' });
-  //           (controlinv.controls[lnNo]).patchValue({ 'baseAmt': '' });
-  //           (controlinv.controls[lnNo]).patchValue({ 'taxCategoryName': '' });
-  //           (controlinv.controls[lnNo]).patchValue({ 'taxAmt': '' });
-  //           (controlinv.controls[lnNo]).patchValue({ 'totAmt': '' });
-  //           (controlinv.controls[lnNo]).patchValue({ 'hsnSacCode': '' });
-  //           (controlinv.controls[lnNo]).patchValue({ 'disAmt': '' });
-  //           alert('Please Enter Proper Item Code.!')
-  //           this.setFocus('itemSeg' + lnNo);
-  //           return;
-  //         }
-  //       }
-  //     );
-
-  // }
-
-
   public itemMap2 = new Map<number, any[]>();
 
   public itemMap3 = new Map<string, StockTransferRow>();
@@ -1463,7 +1380,7 @@ export class PumpCounterSaleComponent implements OnInit {
     }
    var otherRefNo = this.pumpCounterSaleOrderForm.get('othRefNo').value;
   //  alert(otherRefNo)
-   debugger;
+  //  debugger;
    this.pumpCounterSaleOrderForm.patchValue({othRefNo:otherRefNo});
    this.othRefNo=otherRefNo;
     let controlinv = this.pumpCounterSaleOrderForm.get('oeOrderLinesAllList') as FormArray;
@@ -1527,6 +1444,7 @@ export class PumpCounterSaleComponent implements OnInit {
       );
 
   }
+
 
   onOptionsSelectedCategory(itemType: string, lnNo: number) {
 
@@ -2861,15 +2779,9 @@ export class PumpCounterSaleComponent implements OnInit {
 
 
   addRow1(i) {
-
-    
-    var indx=i;
     var trxLnArr1 = this.pumpCounterSaleOrderForm.get('oeOrderLinesAllList').value;
+
     var trxLnArr2 = this.pumpCounterSaleOrderForm.get('oeOrderLinesAllList') as FormArray;
-    var len2= trxLnArr1.length-1;
-
-    if(len2===indx) {
-
     var formVal = trxLnArr2.getRawValue();
     if (this.op == 'Search') {
       i = trxLnArr1.length;
@@ -2909,7 +2821,6 @@ export class PumpCounterSaleComponent implements OnInit {
         return;
       }
     }
-
     var disPer = this.pumpCounterSaleOrderForm.get('disPer').value;
     this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
     var len = this.orderlineDetailsArray().length;
@@ -2939,7 +2850,6 @@ export class PumpCounterSaleComponent implements OnInit {
     this.itemSeg = '';
     var ln = len - 1;
     this.setFocus('itemSeg' + ln);
-  }
   }
 
 
