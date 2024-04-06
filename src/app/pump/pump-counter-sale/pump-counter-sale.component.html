@@ -1318,10 +1318,10 @@
                                                 </ng-template>
                                                 <td>
                                                     <div *ngIf="displayaddRow; then thenaddRow; else elseaddRow"></div>
-                                                    <!-- type="button" -->
+                                                    <!-- type="button"  (keydown.tab)="addRow1(i)" -->
                                                     <ng-template #thenaddRow>
                                                         <button type="button" class="btn btn-primary" [style.display]="isVisible15 ? 'block' : 'none'"
-                                                            (keydown.tab)="addRow1(i)" style="width: min-content;"><i
+                                                            (click)="addRow1(i)" style="width: min-content;"><i
                                                                 class="fa fa-plus"></i></button>
                                                     </ng-template>
                                                     <ng-template #elseaddRow>
