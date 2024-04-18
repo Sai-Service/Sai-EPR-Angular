@@ -187,11 +187,13 @@ export class SparesReportsComponent implements OnInit {
       this.sparesReportForm.patchValue({ subInventory: 'SP' })
       this.dispLocation=true;
     }
+
     else {
       this.isVisiblelocationLOV = false;
       this.isVisiblelocationInput = true;
       this.dispLocation=false;
     }
+    
 
     this.service.subInvCode2(sessionStorage.getItem('deptId'), sessionStorage.getItem('divisionId')).subscribe(
       data => {

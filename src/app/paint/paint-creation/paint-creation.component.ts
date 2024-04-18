@@ -698,9 +698,9 @@ export class PaintCreationComponent implements OnInit {
 
             // var avlqty11=Math.round((avlqty1+Number.EPSILON)*100)/100;
 
-            var avlqty11=(Math.round(avlqty1 * 100) / 100).toFixed(2);
+            // var avlqty11=(Math.round(avlqty1 * 100) / 100).toFixed(2);
             
-            trxLnArr1.controls[i].patchValue({ avlqty: avlqty11 });
+            trxLnArr1.controls[i].patchValue({ avlqty: avlqty1 });
             trxLnArr1.controls[i].patchValue({ resveQty: reserve });
 
             // alert ("Value ="+Number(avlqty11)*12);

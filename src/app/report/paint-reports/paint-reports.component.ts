@@ -180,6 +180,21 @@ export class PaintReportsComponent implements OnInit {
       }
     );
 
+    // ticketNo  // "GM01733"
+
+    // if (Number(sessionStorage.getItem('ticketNo')) === 4) {
+    //   this.isVisiblelocationLOV = true;
+    //   this.isVisiblelocationInput = false;
+    //   this.dispLocation=true;
+    // }
+
+    // else {
+    //   this.isVisiblelocationLOV = false;
+    //   this.isVisiblelocationInput = true;
+    //   this.dispLocation=false;
+    // }
+    
+
     this.service.subInvCode2(sessionStorage.getItem('deptId'), sessionStorage.getItem('divisionId')).subscribe(
       data => {
         this.subInvCode = data;
