@@ -1136,7 +1136,7 @@ export class PaintIssueDpComponent implements OnInit {
             this.panelLineArray().clear();
            let panelcontrol = this.paintIssueForm.get('panelLineList') as FormArray;
             var len1 = this.panelLineArray().length;
-            // alert( data.obj.panelLineList.length)
+            alert(data.obj.panelLineList.length)
             for (let i = 0; i < data.obj.panelLineList.length - len1; i++) {
               var invLnGrp: FormGroup = this.panelLineDetails();
               this.panelLineArray().push(invLnGrp);
