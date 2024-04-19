@@ -182,12 +182,11 @@ export class PaintReportsComponent implements OnInit {
 
     // ticketNo  // "GM01733"
 
-    // if (Number(sessionStorage.getItem('ticketNo')) === 4) {
+    // if (sessionStorage.getItem('ticketNo') === 'GM01733') {
     //   this.isVisiblelocationLOV = true;
     //   this.isVisiblelocationInput = false;
     //   this.dispLocation=true;
     // }
-
     // else {
     //   this.isVisiblelocationLOV = false;
     //   this.isVisiblelocationInput = true;
