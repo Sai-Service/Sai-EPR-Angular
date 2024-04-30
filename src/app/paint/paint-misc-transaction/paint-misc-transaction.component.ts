@@ -875,10 +875,7 @@ export class PaintMiscTransactionComponent implements OnInit {
               //alert(reserve+'reserve');
               let avlqty1 = 0;
               avlqty1 = getfrmSubLoc[0].onHandQty - reserve;
-              
               // var avlqty11=(Math.round(avlqty1 * 100) / 100).toFixed(2);
-
-
               trxLnArr1.controls[i].patchValue({ avlqty: avlqty1 });
               trxLnArr1.controls[i].patchValue({ resveQty: reserve });
             } else {
