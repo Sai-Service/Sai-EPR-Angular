@@ -305,7 +305,7 @@
                <input hidden formControlName="compileId" [(ngModel)]="compileId">
                <input hidden formControlName="compileLineId"> 
 
-                <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100px;text-transform: uppercase;" (ngModelChange)="onOptiongetItem($event,trxLineIndex)" />
+                <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 150px;text-transform: uppercase;" (ngModelChange)="onOptiongetItem($event,trxLineIndex)" />
                 <datalist id="dynmicUserIds1">
                   <option *ngFor="let item of ItemIdList" [ngValue]="item.invItemId">{{item.SEGMENT}}
                     </option>
@@ -320,7 +320,7 @@
               <!-- <td> -->
                 <input hidden type='number' formControlName="locId" [(ngModel)]="locId">
               <!-- </td> -->
-              <td><input disabled type="text" class="form-control" style="height: 20px;" formControlName="description"></td>
+              <td><input disabled type="text" class="form-control" style="height: 20px;width:250px" formControlName="description"></td>
               <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="uom" ></td>
               <td><input disabled type="number" class="form-control" style="height: 20px;width: 70px;" formControlName="itemUnitCost" ></td>
               <td><input disabled class="form-control" style="height: 20px; width: 110px;" formControlName="subInventory" [(ngModel)]="subInventory" >
@@ -364,7 +364,9 @@
                 </ng-template>
                <!-- </td> -->
                <input hidden type="number" formControlName="onHandQty">
-              <td><input disabled type="number" class="form-control" style="height: 20px;width: 100%;" formControlName="avlqty" ></td>
+              <!-- <td><input disabled type="number" class="form-control" style="height: 20px;width: 100%;" formControlName="avlqty" ></td> -->
+              <td><input disabled type="number" class="form-control" style="height: 20px;width: 100px;" formControlName="avlqty" ></td>
+
               <input hidden  type="number"  formControlName="resveQty">
               <td><input type="number" min="0"  class="form-control" style="height: 20px;width: 100%;" formControlName="physicalQty"(change)="validate(trxLineIndex,qty)" #qty>
                 <span

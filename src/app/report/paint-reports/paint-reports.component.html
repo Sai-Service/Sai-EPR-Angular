@@ -117,6 +117,10 @@
            
                     <table class="center">
                         <tr>
+                            <td style="width: 15%" class="LabelFontStyle"> &nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;</td>
+                            <td><input disabled type="text" class="form-control" formControlName="OUCode"></td>
+                        </tr>
+                        <tr>
                             <td style="width: 15%" class="LabelFontStyle"> &nbsp;From&nbsp;Date&nbsp;:&nbsp; </td>
                             <td><input type="date" class="form-control" formControlName="fromDate" [(ngModel)]="fromDate" max="{{minDate | date:'yyyy-MM-dd'}}"></td>
                             <td style="width: 15%" class="LabelFontStyle">&nbsp;To&nbsp;Date&nbsp;:&nbsp;</td>
@@ -132,7 +136,7 @@
                                     (ngModelChange)='onOptionsLocation($event)'>
                                     <option></option>
                                     <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
-                                        {{sc.locCode}}
+                                        {{sc.locCode}} -{{sc.locName}}
                                     </option>
                                 </select>
                                 <input  disabled hidden type="number" class="form-control" formControlName="locId">
@@ -192,6 +196,11 @@ id="panelStockLedger">
 <br>
 
         <table class="center">
+
+            <tr>
+                <td style="width: 15%" class="LabelFontStyle"> &nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;</td>
+                <td><input disabled type="text" class="form-control" formControlName="OUCode"></td>
+            </tr>
             <tr>
                 <td style="width: 15%" class="LabelFontStyle">
                     &nbsp;From&nbsp;Date&nbsp;:&nbsp;
@@ -296,6 +305,10 @@ style="margin-left: 10%;" id="panelsparesInventoryAging">
 
         <table class="center">
             <tr>
+                <td style="width: 15%" class="LabelFontStyle"> &nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;</td>
+                <td><input disabled type="text" class="form-control" formControlName="OUCode"></td>
+            </tr>
+            <tr>
                 <td style="width: 15%" class="LabelFontStyle">
                     &nbsp;Aging&nbsp;1&nbsp;:&nbsp;
                 </td>
@@ -388,6 +401,10 @@ style="margin-left: 10%;" id="panelsparesInventoryAging">
             
                   
                             <table class="center">
+                                    <tr>
+                                        <td style="width: 15%" class="LabelFontStyle"> &nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;</td>
+                                        <td><input disabled type="text" class="form-control" formControlName="OUCode"></td>
+                                    </tr>
                                 <tr>
                                     <td style="width: 15%" class="LabelFontStyle">
                                         &nbsp;Location&nbsp;Code&nbsp;:&nbsp;
@@ -457,6 +474,10 @@ style="margin-left: 10%;" id="panelsparesInventoryAging">
             <br>
 
         <table class="center">
+            <tr>
+                <td style="width: 15%" class="LabelFontStyle"> &nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;</td>
+                <td><input disabled type="text" class="form-control" formControlName="OUCode"></td>
+            </tr>
             <tr>
                 <td style="width: 15%" class="LabelFontStyle">
                     &nbsp;As&nbsp;On&nbsp;Date:&nbsp;
@@ -531,6 +552,10 @@ style="margin-left: 10%;" id="panelsparesInventoryAging">
 
         <table class="center">
             <tr>
+                <td style="width: 15%" class="LabelFontStyle"> &nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;</td>
+                <td><input disabled type="text" class="form-control" formControlName="OUCode"></td>
+            </tr>
+            <tr>
                 <td style="width: 15%" class="LabelFontStyle">&nbsp;From&nbsp;Date&nbsp;:&nbsp; </td>
                 <td><input type="date" class="form-control" formControlName="fromDate"  [(ngModel)]="fromDate"  max="{{minDate | date:'yyyy-MM-dd'}}"></td>
                 
@@ -603,6 +628,10 @@ style="margin-left: 20%;" id="panelsparesMiscIssueReceipt">
 <br>
 
         <table class="center">
+            <tr>
+                <td style="width: 15%" class="LabelFontStyle"> &nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;</td>
+                <td><input disabled type="text" class="form-control" formControlName="OUCode"></td>
+            </tr>
             <tr>
                 <td style="width: 15%" class="LabelFontStyle">
                     &nbsp;From&nbsp;Date&nbsp;:&nbsp;
@@ -682,6 +711,10 @@ style="margin-left: 20%;" id="paintPanelReport">
 
         <table class="center">
             <tr>
+                <td style="width: 15%" class="LabelFontStyle"> &nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;</td>
+                <td><input disabled type="text" class="form-control" formControlName="OUCode"></td>
+            </tr>
+            <tr>
                 <td style="width: 15%" class="LabelFontStyle">
                     &nbsp;From&nbsp;Date&nbsp;:&nbsp;
                 </td>
@@ -749,12 +782,19 @@ style="margin-left: 20%;" id="paintPanelReport">
           
           
           <table class="center">
+         
               <tr>
                 <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;" >{{reportName}}</td>
               </tr>
           </table>
           <br>
                   <table class="center">
+
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle"> &nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;</td>
+                        <td><input disabled type="text" class="form-control" formControlName="OUCode"></td>
+                    </tr>
+
                       <tr>
                           <td style="width: 15%" class="LabelFontStyle">
                               &nbsp;From&nbsp;Date&nbsp;:&nbsp;
@@ -853,12 +893,19 @@ style="margin-left: 20%;" id="paintPanelReport">
           
           
           <table class="center">
+            
               <tr>
                 <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;" >{{reportName}}</td>
               </tr>
           </table>
           <br>
                   <table class="center">
+
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle"> &nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;</td>
+                        <td><input disabled type="text" class="form-control" formControlName="OUCode"></td>
+                    </tr>
+
                       <tr>
                           <td style="width: 15%" class="LabelFontStyle">&nbsp;From&nbsp;Date&nbsp;:&nbsp;</td>
                           <td><input type="date" class="form-control" formControlName="fromDate" [(ngModel)]="fromDate" max="{{minDate | date:'yyyy-MM-dd'}}"></td>
