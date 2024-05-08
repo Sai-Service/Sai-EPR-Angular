@@ -2126,11 +2126,20 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                           console.log(data);
                           if (data.length === 0) {
                             // alert('1')
+                            // alert(select.itemId+'-------hi')
                             alert(('Item Not Found In Stock !.\n' + 'Item Description :- ' + select.description + ".!\n") + "And MRP :- " + mrp);
+                            controlinv.controls[k].get('frmLocatorId').disable();
+                            this.service.getAlterNetItem(select.itemId)
+                            .subscribe(
+                              data => {
+                                console.log(data.obj);
+                                alert(data.obj)
+                              }
+                            );
                             var lotList = [{ locatorId: 0, segmentName: 'Not Found' }]
                             controlinv.controls[k].patchValue({ frmLocatorId: lotList });
                             controlinv.controls[k].patchValue({ onHandQty: 0 });
-                            controlinv.controls[k].get('frmLocatorId').disable()
+                            
                             return;
                           } else {
                             this.getfrmSubLoc = data;
@@ -2238,9 +2247,18 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                       this.service.getfrmSubLocPrice(this.locId, select.itemId, this.subInventoryId).subscribe(
                         data => {
                           console.log(data);
+                        
                           if (data.length === 0) {
-                            // alert('1')
+                           
                             alert(('Item Not Found In Stock !.\n' + 'Item Description :- ' + select.description + ".!\n") + "And MRP :- " + mrp);
+                           
+                            this.service.getAlterNetItem(select.itemId)
+                            .subscribe(
+                              data => {
+                                console.log(data.obj);
+                                alert(data.obj)
+                              }
+                            );
                             var lotList = [{ locatorId: 0, segmentName: 'Not Found' }]
                             controlinv.controls[k].patchValue({ frmLocatorId: lotList });
                             controlinv.controls[k].patchValue({ onHandQty: 0 });

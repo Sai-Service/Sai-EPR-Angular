@@ -58,7 +58,7 @@ export class SubinventoryTransferComponent implements OnInit {
 
   public subInvCode: any = [];
   public ItemIdList: any = [];
-  public issueByList: Array<string> = [];
+  public issueByList: any=[];
   getItemDetail: any;
   getfrmSubLoc: any;
   public LocatorList: any;
@@ -304,10 +304,15 @@ export class SubinventoryTransferComponent implements OnInit {
 
   onOptionSubInv(event:any){
     var seltoSubInv = this.tosubInvCode.find(d =>d.subInventoryCode ===event);
-    this.service
-    .issueByList(this.locId, seltoSubInv.deptId, this.divisionId)
-    .subscribe((data) => {
-      this.issueByList = data;
+    // this.service
+    // .issueByList(this.locId, seltoSubInv.deptId, this.divisionId)
+    // .subscribe((data) => {
+    //   this.issueByList = data;
+    //   console.log(this.issueByList);
+    // });
+    var designation='Sales Manager';
+    this.service.issueByListNew(seltoSubInv.deptId,this.locId,designation).subscribe((data) => {
+      this.issueByList = data.obj;
       console.log(this.issueByList);
     });
     if(this.subInventoryCode=='VH')
