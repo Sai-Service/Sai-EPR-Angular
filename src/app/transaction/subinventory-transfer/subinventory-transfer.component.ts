@@ -310,8 +310,8 @@ export class SubinventoryTransferComponent implements OnInit {
     //   this.issueByList = data;
     //   console.log(this.issueByList);
     // });
-    var designation='Sales Manager';
-    this.service.issueByListNew(seltoSubInv.deptId,this.locId,designation).subscribe((data) => {
+    // var designation='Sales Manager';
+    this.service.issueByListNew(seltoSubInv.deptId,this.locId).subscribe((data) => {
       this.issueByList = data.obj;
       console.log(this.issueByList);
     });

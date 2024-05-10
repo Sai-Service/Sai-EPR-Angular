@@ -110,7 +110,7 @@
           <td>
             <select type="text" class="form-control" formControlName="issueTo" (ngModelChange)="onIssueSelect($event)">
               <option>--Select--</option>
-              <option *ngFor="let ib of issueByList">{{ib.fullName}}</option>
+              <option *ngFor="let ib of issueByList">{{ib.FULLNAME}}</option>
               </select>
               <span  *ngIf="!stockTranferForm.get('issueTo').valid && stockTranferForm.get('issueTo').touched" class="cross-validation-error-message alert">Please
                   select Issue Name </span>

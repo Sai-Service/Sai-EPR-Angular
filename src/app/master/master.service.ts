@@ -1791,8 +1791,8 @@ export class MasterService {
   issueByList(locId, deptId, divisionId): Observable<any> {
     return this.http.get(this.ServerUrl + `/empMst/EmpLocDept?locId=${locId}&divisionId=${divisionId}&deptId=${deptId}`)
   }
-  issueByListNew(deptId,locId,designation): Observable<any> {
-    return this.http.get(this.ServerUrl + `/empMst/mangerEmplList?deptId=${deptId}&locId=${locId}&designation=${designation}`)
+  issueByListNew(deptId,locId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/empMst/mangerEmplList?deptId=${deptId}&locId=${locId}`)
   }
 
   getAlterNetItem(itemId): Observable<any> {

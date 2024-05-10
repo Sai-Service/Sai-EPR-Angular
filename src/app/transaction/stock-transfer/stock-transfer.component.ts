@@ -808,11 +808,22 @@ deleteReserveLinewise(i, itemid, transferId) {
   // alert(event)
   var selData=this.tosubInvCode.find(d=>d.subInventoryCode===toSub)
   
-  this.service.issueByList(loc, selData.deptId, this.divisionId).subscribe
-  (data => {
-    this.issueByList = data;
-    console.log(this.issueByList);
-  });
+  // this.service.issueByList(loc, selData.deptId, this.divisionId).subscribe
+  // (data => {
+  //   this.issueByList = data;
+  //   console.log(this.issueByList);
+  // });
+//   if (sessionStorage.getItem('deptId')===1){
+//   var designation='Sales Manager';
+// }
+// else{
+//   var designation=''
+// }
+  this.service.issueByListNew(selData.deptId,this.locId).subscribe
+   (data => {
+    this.issueByList = data.obj;
+     console.log(this.issueByList);
+   });
   }
 searchAll()
 {
