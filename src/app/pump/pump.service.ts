@@ -77,6 +77,17 @@ export class PumpService {
   }
 
 
+  shipEntryInvGenFnPost(startDate,endDate,locId,custId){
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + `/ShiftEntry/custList?startDate=${startDate}&endDate=${endDate}&locId=${locId}&customerId=${custId}`
+    return this.http.post(url, options);
+  
+  }
+
+
+
   getEntryListFn(startDate,endDate,locId): Observable<any> {
     return this.http.get(this.ServerUrl + `/ShiftEntry/shiftList?fromDate=${startDate}&toDate=${endDate}&locId=${locId}`);
   }

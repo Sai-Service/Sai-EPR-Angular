@@ -86,24 +86,49 @@ export class ShiftInvoiceGenComponent  {
     this.closeResetButton = false;
     this.dataDisplay = 'Invoice Generation in progress....Please Do not refresh the Page';
 
-    this.PumpService1.shipEntryInvGenFn(startDate,endDate,sessionStorage.getItem('locId'),custId)
-    .subscribe(
-      data => {
-       console.log(data);
-       if (data.length==0){
-        alert('Data Not Available for Invoicing.!')
-        this.dataDisplay = ''
-        this.closeResetButton = true;
-       }
-       else{
-        alert('Invoice Generated Successfully.!')
-        this.dataDisplay = ''
-        this.closeResetButton = true;
-        // this.searchCust();
+   
+    //  this.PumpService1.shipEntryInvGenFn(startDate,endDate,sessionStorage.getItem('locId'),custId)
+    // .subscribe(
+    //   data => {
+    //    console.log(data);
+    //    if (data.length==0){
+    //     alert('Data Not Available for Invoicing.!')
+    //     this.dataDisplay = ''
+    //     this.closeResetButton = true;
+    //    }
+    //    else{
+    //     alert('Invoice Generated Successfully.!')
+    //     this.dataDisplay = ''
+    //     this.closeResetButton = true;
+    //    }
+    //   });
 
-       }
+      
+   
+    this.PumpService1.shipEntryInvGenFnPost(startDate,endDate,sessionStorage.getItem('locId'),custId).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert(res.message);
+        // alert('Invoice Generated Successfully.!')
+        this.dataDisplay = ''
+        this.closeResetButton = true;
+        
+      } else {
+        if (res.code === 400) {
+           alert(res.message +  res.obj);
+          //  alert('Data Not Available for Invoicing.!')
+          this.dataDisplay = ''
+          this.closeResetButton = true;
+        }
       }
-    );
+    });
+
+   
+   
+   
+   
+
+
+
   }
 
   custNameSearch(custName) {
