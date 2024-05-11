@@ -1791,6 +1791,13 @@ export class MasterService {
   issueByList(locId, deptId, divisionId): Observable<any> {
     return this.http.get(this.ServerUrl + `/empMst/EmpLocDept?locId=${locId}&divisionId=${divisionId}&deptId=${deptId}`)
   }
+  issueByListNew(deptId,locId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/empMst/mangerEmplList?deptId=${deptId}&locId=${locId}`)
+  }
+
+  getAlterNetItem(itemId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/relateditems/relItems/${itemId}`)
+  }
 
   paintColorCodeList(divisionId): Observable<any> {
     return this.http.get(this.ServerUrl + `/itemMst/onlyPn/${divisionId}`)
