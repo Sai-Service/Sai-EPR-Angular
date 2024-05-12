@@ -819,7 +819,8 @@ deleteReserveLinewise(i, itemid, transferId) {
 // else{
 //   var designation=''
 // }
-  this.service.issueByListNew(selData.deptId,this.locId).subscribe
+// alert(loc)
+  this.service.issueByListNew(selData.deptId,loc).subscribe
    (data => {
     this.issueByList = data.obj;
      console.log(this.issueByList);
