@@ -483,8 +483,8 @@ export class ReportServiceService {
     });
   }
 
-  spIssueDetailsReport(invcDt1,invcDt4,locId){
-    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprIssueDtls?fromDate=${invcDt1}&toDate=${invcDt4}&locId=${locId}`;
+  spIssueDetailsReport(invcDt1,invcDt4,locId,custAcctNo){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprIssueDtls?fromDate=${invcDt1}&toDate=${invcDt4}&locId=${locId}&custAcctNo=${custAcctNo}`;
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -500,6 +500,15 @@ export class ReportServiceService {
       headers: this.headers,
     });
   }
+
+  sparesAgingReportAsOfDateFn(toDate,locId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/InvAgingAsOfRep?toDate=${toDate}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
 
   performaRegister(invcDt1,invcDt4,locId){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/ProformaIssueDtls?fromDate=${invcDt1}&toDate=${invcDt4}&locId=${locId}`;

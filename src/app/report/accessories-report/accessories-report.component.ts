@@ -2639,7 +2639,11 @@ reportParameter(reportName) {
     }
   }
   else if (reportName === 'Accessories Issue Details Report') {
-   
+    var custAcctNo = this.sparesReportForm.get('custAccNo').value;
+    var ticketNo = this.sparesReportForm.get('userName1').value
+    if (custAcctNo === undefined || custAcctNo === null) {
+      custAcctNo = '';
+    }
     this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
     var dt1=new Date(fDate)
     var dt2= new Date(tDate)
@@ -2654,7 +2658,7 @@ reportParameter(reportName) {
     const fileName = 'Accessories Issue Details Report-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     if (Number(sessionStorage.getItem('deptId')) === 4) {
-      this.reportService.spIssueDetailsReport(fromDate, toDate, locId)
+      this.reportService.spIssueDetailsReport(fromDate, toDate, locId,custAcctNo)
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.isDisabled1 = false;
@@ -2663,7 +2667,7 @@ reportParameter(reportName) {
         })
     }
     else if (Number(sessionStorage.getItem('deptId')) != 4) {
-      this.reportService.spIssueDetailsReport(fromDate, toDate, sessionStorage.getItem('locId'))
+      this.reportService.spIssueDetailsReport(fromDate, toDate, sessionStorage.getItem('locId'),custAcctNo)
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.isDisabled1 = false;
