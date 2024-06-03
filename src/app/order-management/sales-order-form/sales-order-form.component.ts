@@ -1025,12 +1025,6 @@ export class SalesOrderFormComponent implements OnInit {
 
   onOptionsSelectedCategory(orderType: string, lnNo: number) {
     this.invType = orderType;
-
-
-
-
-    // this.flowStatusCode='BOOKED';
-    // alert(this.flowStatusCode);
     if (this.itemMap.has(orderType)) {
       var itemsList = this.itemMap.get(orderType);
       this.itemMap2.set(lnNo, this.itemMap.get(orderType));

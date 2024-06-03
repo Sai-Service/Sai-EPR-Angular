@@ -199,6 +199,7 @@ export class AdminComponent implements OnInit {
   admin(adminForm1: any) {}
 
   ngOnInit(): void {
+    // alert('in admin page')
     $('#menu-toggle').click(function (e) {
       e.preventDefault();
       $('#wrapper').toggleClass('toggled');

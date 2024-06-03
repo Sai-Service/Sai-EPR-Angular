@@ -1159,8 +1159,9 @@
 
                         </ng-template>
                         <td>
+                            <!-- [style.display]="isVisibleApply ? 'block' : 'none'"  -->
                             <button  type="button"  class="btn btn-primary"
-                            data-toggle="modal" data-target="#exampleModal2"  (click)="SearchInvoices()"  [style.display]="isVisibleApply ? 'block' : 'none'" style="width: 8rem;">
+                            data-toggle="modal" data-target="#exampleModal2"  (click)="SearchInvoices()"  style="width: 8rem;">
                             &nbsp;Apply</button>
                         </td>
                         <td> <button disabled type="button" class="btn btn-primary" style="width: 8rem;" [style.display]="isVisibleUpdate ? 'block' : 'none'">Update</button></td>

@@ -1189,14 +1189,13 @@
                                     <td>
                                         <div *ngIf="displaySaveButton; then thenBlockSave; else elseBlockSave"></div>
                         <ng-template #thenBlockSave>
-                                        <!-- [disabled]="!poReceiptForm.valid" -->
-                                        <!-- <button type="submit" class="btn btn-primary"   (click)="poSave()">Save</button> -->
+                                      
                                         <button type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal" 
                                         data-target="#confirmAlert" (click)="getMessage('Save')" >Save</button>
            
                                     </ng-template>
                                         <ng-template #elseBlockSave>
-                                            <!-- <button disabled type="submit" class="btn btn-primary"   (click)="poSave()">Save</button> -->
+                                          
                                             <button disabled type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal" 
                                             data-target="#confirmAlert" (click)="getMessage('Save')" >Save</button>
             

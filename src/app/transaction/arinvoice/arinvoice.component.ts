@@ -2779,16 +2779,16 @@ export class ARInvoiceComponent implements OnInit {
       return;
     }
 
-
+    alert(sDate +'----'+tDate)
     var sDate = new Date(this.GLPeriodCheck.startDate);
     var tDate = new Date(this.GLPeriodCheck.endDate);
-    if (tglDate === undefined || tglDate === null || tglDate < sDate || tglDate > tDate) {
-      // this.checkValidation = false;
-      alert("GL DATE: Should not be null / Should be within GL period.\nGL Period : " + this.GLPeriodCheck.startDate + " - " + this.GLPeriodCheck.endDate);
-      // this.glDate = this.pipe.transform(this.now, 'y-MM-dd');
-      this.applLineValidation = false;
-      return;
-    }
+    // if (tglDate === undefined || tglDate === null || tglDate < sDate || tglDate > tDate) {
+    //   // this.checkValidation = false;
+    //   alert("GL DATE: Should not be null / Should be within GL period.\nGL Period : " + this.GLPeriodCheck.startDate + " - " + this.GLPeriodCheck.endDate);
+    //   // this.glDate = this.pipe.transform(this.now, 'y-MM-dd');
+    //   this.applLineValidation = false;
+    //   return;
+    // }
 
 
     // if (chkFlag === false || chkFlag === null || chkFlag === undefined) {
