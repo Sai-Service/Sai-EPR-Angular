@@ -10,6 +10,7 @@ import { PaintPanelMasterComponent }   from './paint-panel-master/paint-panel-ma
 import { PaintItemMasterComponent } from './paint-item-master/paint-item-master.component';
 import { PaintPoListComponent } from './paint-po-list/paint-po-list.component';
 import { PaintMiscTransactionComponent } from './paint-misc-transaction/paint-misc-transaction.component';
+import { PaintStockTransferComponent } from './paint-stock-transfer/paint-stock-transfer.component';
 
 
 const routes: Routes = [
@@ -28,6 +29,7 @@ const routes: Routes = [
   {path:'PaintPurchaseOrder/:poNo/:locId',component:PaintPurchaseOrderComponent},
   {path:'PaintPurchaseOrder/:poNo',component:PaintPurchaseOrderComponent},
   {path:'PaintMiscTransaction',component:PaintMiscTransactionComponent},
+  {path:'PaintStockTransfer',component:PaintStockTransferComponent},
 
 
   {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
