@@ -2622,6 +2622,9 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         this.isDisabled = false;
         return;
       }
+      // debugger;
+      // alert(orderLines[j].segment.length)
+      if (orderLines[j].segment.includes('MTSS')===false){
       if (orderLines[j].segment.length > 8 && (this.deptId===5 || this.deptId ===6) && this.divisionId===2) {
         alert('Line No' + ' ' + orderLines[j].segment + ' ' + 'Select Item Is Wrong... Please confirm');
         this.closeResetButton = true;
@@ -2629,7 +2632,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         this.isDisabled = false;
         return;
       }
-      // this.discountTaxValidation(j);
+    }
     }
 
     for (let i = 0; i < orderLines.length; i++) {
