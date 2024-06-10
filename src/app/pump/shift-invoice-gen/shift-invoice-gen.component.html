@@ -85,14 +85,20 @@
                 <table  class="GridFont" cellspacing="0" cellpadding="4"   style="border-color:#959595;border-collapse:collapse;width: 100%; ">
                     <thead>
                         <tr class="GridHeader">
-                            <th scope="col" style="border: 1px solid black;">Trx Number</th>
-                            <th scope="col" style="border: 1px solid black;">Trx Date</th>
+                            <th scope="col" style="border: 1px solid black;">From Date</th>
+                            <th scope="col" style="border: 1px solid black;">To Date</th>
+                            <th scope="col" style="border: 1px solid black;">Invoice Number</th>
+                            <th scope="col" style="border: 1px solid black;">Invoice Date</th>
                             <th scope="col" style="border: 1px solid black;">Cust Name</th>
                             <th scope="col" style="border: 1px solid black;">Base Amount</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let com of dataSearchList" class="ItemStyle" style="text-decoration:none;">
+                            <td style="border: 1px solid black;padding-left: 5px;text-align: center;">{{com.fromDate | date:'dd-MM-y'}}</td>
+                            <td style="border: 1px solid black;padding-left: 5px;text-align: center;">{{com.to_date | date:'dd-MM-y'}}</td>
+
+
                             <td style="border: 1px solid black;padding-left: 5px;text-align: center;">{{com.TRXNUMBER}}</td>
                             <!-- <td style="border: 1px solid black;padding-left: 5px;">{{com.trxdate | date:'dd-MM-yyyy  hh:mm:ss'}}</td> -->
                             <td style="border: 1px solid black;padding-left: 5px;text-align: center;">{{com.trxdate | date:'dd-MM-y'}}</td>
