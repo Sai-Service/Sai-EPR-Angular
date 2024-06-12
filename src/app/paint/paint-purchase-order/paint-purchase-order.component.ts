@@ -2352,13 +2352,13 @@ export class PaintPurchaseOrderComponent implements OnInit {
   
 
 
-   if (uomCode === 'NO') {
-     if (!(Number.isInteger(invoiceQty))) {
-       alert('Please enter correct No');
-       trxLnArr1.controls[index].patchValue({ invoiceQty: '' });
-       return;
-     }
-   }
+  //  if (uomCode === 'NO') {
+  //    if (!(Number.isInteger(invoiceQty))) {
+  //      alert('Please enter correct No');
+  //      trxLnArr1.controls[index].patchValue({ invoiceQty: '' });
+  //      return;
+  //    }
+  //  }
 
    var arrayControl = this.paintPoForm.get('poLines').value;
    var patch = this.paintPoForm.get('poLines') as FormArray;
