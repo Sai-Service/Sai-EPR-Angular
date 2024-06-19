@@ -14,10 +14,11 @@ import { PaintItemMasterComponent } from './paint-item-master/paint-item-master.
 import { PaintPoListComponent } from './paint-po-list/paint-po-list.component';
 import { PaintMiscTransactionComponent } from './paint-misc-transaction/paint-misc-transaction.component';
 import { PaintStockTransferComponent } from './paint-stock-transfer/paint-stock-transfer.component';
+import { PaintCreationNewComponent } from './paint-creation-new/paint-creation-new.component';
 
 
 @NgModule({
-  declarations: [PaintIssueDpComponent, PaintCreationComponent, PaintMixingMasterComponent, PaintPurchaseOrderComponent, PaintPoReceiptComponent, PaintPanelMasterComponent, PaintItemMasterComponent, PaintPoListComponent,  PaintMiscTransactionComponent, PaintStockTransferComponent],
+  declarations: [PaintIssueDpComponent, PaintCreationComponent, PaintMixingMasterComponent, PaintPurchaseOrderComponent, PaintPoReceiptComponent, PaintPanelMasterComponent, PaintItemMasterComponent, PaintPoListComponent,  PaintMiscTransactionComponent, PaintStockTransferComponent, PaintCreationNewComponent],
   imports: [
     CommonModule,
     PaintRoutingModule,

@@ -307,7 +307,9 @@
 
                 <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 150px;text-transform: uppercase;" (ngModelChange)="onOptiongetItem($event,trxLineIndex)" />
                 <datalist id="dynmicUserIds1">
-                  <option *ngFor="let item of ItemIdList" [ngValue]="item.invItemId">{{item.SEGMENT}}
+                  <option *ngFor="let item of ItemIdList" [ngValue]="item.invItemId">
+                    <!-- {{item.SEGMENT}} -->
+                    {{item.SEGMENT}}:{{item.DESCRIPTION}}
                     </option>
                    </datalist>
                    <span
@@ -416,7 +418,9 @@
         <ng-template #elseBlock2>
           <button disabled type="submit" class="btn btn-primary" (click)="saveMisc()" >Save</button>
       </ng-template>
-  
+     
+      <td><button type="submit" class="btn btn-primary" style="width:fit-content" (click)="goToMixingIssueForm()" >Mixing Issue Form</button></td>  
+
       </tr>
     </table>
     <div class="modal fade" id="myModal1" role="dialog" [style.display]="showModal" tabindex="-1" aria-hidden="true" >

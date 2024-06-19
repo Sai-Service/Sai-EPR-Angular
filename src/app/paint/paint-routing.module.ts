@@ -11,6 +11,7 @@ import { PaintItemMasterComponent } from './paint-item-master/paint-item-master.
 import { PaintPoListComponent } from './paint-po-list/paint-po-list.component';
 import { PaintMiscTransactionComponent } from './paint-misc-transaction/paint-misc-transaction.component';
 import { PaintStockTransferComponent } from './paint-stock-transfer/paint-stock-transfer.component';
+import { PaintCreationNewComponent } from './paint-creation-new/paint-creation-new.component';
 
 
 const routes: Routes = [
@@ -30,6 +31,9 @@ const routes: Routes = [
   {path:'PaintPurchaseOrder/:poNo',component:PaintPurchaseOrderComponent},
   {path:'PaintMiscTransaction',component:PaintMiscTransactionComponent},
   {path:'PaintStockTransfer',component:PaintStockTransferComponent},
+  {path:'PaintCreationNew',component:PaintCreationNewComponent},
+
+
 
 
   {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
