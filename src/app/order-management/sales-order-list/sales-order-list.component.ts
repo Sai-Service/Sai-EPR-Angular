@@ -134,7 +134,7 @@ export class SalesOrderListComponent implements OnInit {
     var dt2= new Date(this.endDt)
     if(dt1>dt2) {alert ("Please Enter Proper Start Date and End Date...");return;}
     var mDays = this.diffDays(dt1,dt2);
-    alert(dt1+'-----'+dt2)
+    // alert(dt1+'-----'+dt2)
     if (mDays >15) { alert ("Date Range Cannot Exceed 15 Days...");return;}
     // ------------------------------------------------------------------------------------
     var stDt = this.orderListForm.get('startDt').value;

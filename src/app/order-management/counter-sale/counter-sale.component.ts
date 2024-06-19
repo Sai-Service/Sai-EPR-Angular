@@ -2624,15 +2624,15 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       }
       // debugger;
       // alert(orderLines[j].segment.length)
-      if (orderLines[j].segment.includes('MTSS')===false || orderLines[j].segment.includes('MCAS')===false || orderLines[j].segment.includes('MTUS')===false){
-      if (orderLines[j].segment.length > 8 && (this.deptId===5 || this.deptId ===6) && this.divisionId===2) {
+      // if (orderLines[j].segment.includes('MTSS')===false || orderLines[j].segment.includes('MCAS')===false || orderLines[j].segment.includes('MTUS')===false){
+      if ((orderLines[j].segment.length > 9) && (this.deptId===5 || this.deptId ===6) && this.divisionId===2) {
         alert('Line No' + ' ' + orderLines[j].segment + ' ' + 'Select Item Is Wrong... Please confirm');
         this.closeResetButton = true;
         this.dataDisplay = ''
         this.isDisabled = false;
         return;
       }
-    }
+    // }
     }
 
     for (let i = 0; i < orderLines.length; i++) {
