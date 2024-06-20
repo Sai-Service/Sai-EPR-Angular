@@ -1,8 +1,8 @@
 <div class="center">
-    <form [formGroup]="paintCreationForm" (ngSubmit)="paintCreation(paintCreationForm.value)">
+    <form [formGroup]="paintCreationNewForm" (ngSubmit)="paintCreationNew(paintCreationNewForm.value)">
     <table style="width: 100%;background-color: white;">
       <tr>
-        <td class="PageHeader">&nbsp;Paint&nbsp;Mixing&nbsp;Issue&nbsp;Form
+        <td class="PageHeader">&nbsp;PAINT&nbsp;CREATION-&nbsp;TEST&nbsp;FORM
         </td>
         <table style="width: 100%; background-color: #a4d3e9;">
           <tr>
@@ -214,8 +214,8 @@
           <!-- <div *ngIf="displayButton; then  CLR1 ; else CLR2"></div>
             <ng-template #CLR1> -->
               <!-- (ngModelChange)="onSelectColor11($event)" -->
-                <td colspan="3">
-                <input type="text" formControlName="colorDescription" [(ngModel)]="colorDescription" style="width:100%;background-color: yellow"
+                <td colspan="1">
+                <input type="text" formControlName="colorDescription" [(ngModel)]="colorDescription" style="width:300px;background-color: yellow"
                     (keyup)="getUserIdsFirstWayColor($event)" id="userIdFirstWay"
                     list="dynmicUserIds" class="form-control" placeholder="Main Color List"
                     (ngModelChange)="onSelectColor11($event)" />
@@ -230,7 +230,9 @@
            <td colspan="2"> <input  type="text" class="form-control" formControlName="colorDescription" [(ngModel)]="colorDescription" ></td>
           </ng-template> -->
 
-
+          <td style="width: 15%" class="LabelFontStyle">Color Qty(gms):</td>
+          <td><input type="number" class="form-control" formControlName="colorQty" [(ngModel)]="colorQty" (change)="validateClrQty(colorQty)" style="background-color: yellow;text-transform:uppercase" > </td>
+  
 
         <input readonly  hidden type="text" class="form-control" formControlName="colorCode" [(ngModel)]="colorCode" >
             <!-- <td style="width: 15%" class="LabelFontStyle">Total Qty :</td> -->
@@ -268,7 +270,7 @@
               <tr class="GridHeader">
                       <th scope="col">Srl No.</th>
                       <th scope="col">Item Code</th>
-                      <th scope="col">Item Description</th>
+                      <th scope="col">Item Name</th>
                       <th scope="col">UOM</th>
                       <th scope="col">Average Rate</th>
                       <th scope="col">Subinventory</th>
@@ -286,12 +288,12 @@
                </td>
                <input hidden formControlName="compileId" [(ngModel)]="compileId">
                <input hidden formControlName="compileLineId"> 
-                         <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 150px;text-transform: uppercase;" (ngModelChange)="onOptiongetItem($event,trxLineIndex)" />
+                 <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 200px;text-transform: uppercase;" (ngModelChange)="onOptiongetItem($event,trxLineIndex)" />
                 <datalist id="dynmicUserIds1">
                   <option *ngFor="let item of ItemIdList" [ngValue]="item.invItemId">
                     <!-- {{item.SEGMENT}} -->
                     {{item.SEGMENT}}:{{item.DESCRIPTION}}
-                  </option>
+                    </option>
                    </datalist>
                    <span
                    *ngIf="getGroupControllinewise(trxLineIndex,'segment').touched && getGroupControllinewise(trxLineIndex,'segment').invalid" class="error">Valid Item
@@ -301,7 +303,7 @@
                             <input hidden type="number" formControlName="invItemId">
              
                 <input hidden type='number' formControlName="locId" [(ngModel)]="locId">
-              <td><input disabled type="text" class="form-control" style="height: 20px;width:250px" formControlName="description"></td>
+              <td><input disabled type="text" class="form-control" style="height: 20px;width:200px" formControlName="description"></td>
               <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="uom" ></td>
               <td><input disabled type="number" class="form-control" style="height: 20px;width: 70px;" formControlName="itemUnitCost" ></td>
               <td><input disabled class="form-control" style="height: 20px; width: 110px;" formControlName="subInventory" [(ngModel)]="subInventory" >
@@ -399,10 +401,8 @@
             <button disabled type="submit" class="btn btn-primary" (click)="saveMisc()" >Save</button>
 
           </td>
-
-
       </ng-template>
-      <td><button type="submit" class="btn btn-primary" style="width:fit-content" (click)="goToDpIssueForm()" >DP Issue Form</button></td>  
+  
       </tr>
     </table>
     <div class="modal fade" id="myModal1" role="dialog" [style.display]="showModal" tabindex="-1" aria-hidden="true" >
@@ -425,7 +425,7 @@
                           <div *ngIf="f.segment11.errors.required">Required Two Digit Code</div>
                           <div *ngIf="f.segment11.errors?.maxLength">Required Two Digit Code</div>
                           <div *ngIf="f.segment11.errors?.pattern">Required Two Digit Code</div> -->
-                      <span *ngIf="!paintCreationForm.get('Floor').valid && paintCreationForm.get('Floor').touched">Required Two Digit Code</span>
+                      <span *ngIf="!paintCreationNewForm.get('Floor').valid && paintCreationNewForm.get('Floor').touched">Required Two Digit Code</span>
                   <!-- </div> -->
                   </td>
               </tr>

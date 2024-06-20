@@ -602,11 +602,16 @@ export class PaintIssueDpComponent implements OnInit {
     this.router.navigate(['admin']);
   }
 
-  onOptiongetItem(event: any, i) {
+  onOptiongetItem(event1: any, i) {
     if (this.currentOp === 'SEARCH') {
       return;
     }
     // alert ("event :"+event)
+
+    if (event1 != null) {
+      // var event = event1.substr(event1.indexOf(':') + 1, event1.length);
+      var event = event1.substr(0,event1.indexOf(':'));
+    }
     event =event.toUpperCase();
 
     let select1 = this.ItemIdList.find(d => d.SEGMENT === event);
@@ -628,6 +633,8 @@ export class PaintIssueDpComponent implements OnInit {
             // trxLnArr1.controls[i].patchValue({entryStatusCode:2});
             trxLnArr1.controls[i].patchValue({ subInventory: subcode })
             trxLnArr1.controls[i].patchValue({ locId: Number(sessionStorage.getItem('locId')) })
+            trxLnArr1.controls[i].patchValue({ segment: select1.SEGMENT });
+
           }
         });
         var reasonArr1 =this.paintIssueForm.get('reason').value;
@@ -1251,6 +1258,9 @@ export class PaintIssueDpComponent implements OnInit {
     this.headerValidation1 = true;
   }
 
+  goToMixingIssueForm() {
+    this.router.navigate(['/admin/paint/PaintCreation']);
+ }
 
   saveMisc() {
     // const formValue: IPaintIssue = this.paintIssueForm.getRawValue();

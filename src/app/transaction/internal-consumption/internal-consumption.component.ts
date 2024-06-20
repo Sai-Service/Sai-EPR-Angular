@@ -1018,6 +1018,11 @@ export class InternalConsumptionComponent implements OnInit {
   saveMisc() {
     this.displayButton = true;
     this.displayaddButton = true;
+
+    var  resp=confirm("Do You Want to Save this Transaction ???");
+      if(resp==false) { return;}
+      
+
     if (this.InternalConsumptionForm.valid) {
       // this.displayButton=true;
       // this.displayaddButton=true;
