@@ -1718,9 +1718,9 @@ export class JobCardComponent implements OnInit {
             }
     
           if (this.lstcomments.lineCnt > 0) {
-            if (data.obj.classCodeType==='INSURER'){
+            // if (data.obj.classCodeType==='INSURER'){
             this.dispReadyInvoice = true;
-          }
+          // }
             this.dispButtonStatus = false; 
           }
          
@@ -1738,9 +1738,9 @@ export class JobCardComponent implements OnInit {
               // this.jobcardForm.get('jobCardMatLines').enable();
 
               if(data.obj.jobCardLabLines.length >0) {
-                if (data.obj.classCodeType==='INSURER'){
+                // if (data.obj.classCodeType==='INSURER'){
                 this.dispReadyInvoice = true; 
-                }
+                // }
                 // this.preInvButton=true;
               } 
                 else{
@@ -2234,9 +2234,9 @@ export class JobCardComponent implements OnInit {
        
         var jobNo = this.jobcardForm.get('jobCardNum').value;
         this.Search(jobNo);
-        if (res.obj.classCodeType==='INSURER'){
+        // if (res.obj.classCodeType==='INSURER'){
         this.dispReadyInvoice = true;
-        }
+        // }
       } else {
         if (res.code === 400) {this.saveLabButton=true;
           alert(res.message);
@@ -2271,9 +2271,9 @@ export class JobCardComponent implements OnInit {
         console.log(res.obj.jobCardLinesList.length);
         var jobNo = this.jobcardForm.get('jobCardNum').value;
         this.Search(jobNo);
-        if (res.obj.classCodeType==='INSURER'){
+        // if (res.obj.classCodeType==='INSURER'){
         this.dispReadyInvoice = true;
-        }
+        // }
         this.importMatButton=true;
         // for(let i=0 ; i<res.obj.jobCardLinesList.length; i++){
         //      var invLnGrp: FormGroup = this.distLineDetails();
@@ -2864,7 +2864,7 @@ export class JobCardComponent implements OnInit {
         // if (res.code === 400) {
           this.genBillButton=true;
           this.saveBillButton=true;
-          this.preInvButton=true;
+          this.preInvButton=false; /// comited by Jyotik
           this.reopenButton=true;
           alert(res.code+" - "+res.message);
         // }
