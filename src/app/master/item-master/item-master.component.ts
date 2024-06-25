@@ -813,6 +813,7 @@ export class ItemMasterComponent implements OnInit {
 
   onOptionsSelectedItemType(category: any) {
     var category= category.target.value;
+    alert(category)
     // alert("onOptionsSelectedItemType");
     if (category == 'SS_VEHICLE') {
       this.disItemCode = false;
@@ -820,6 +821,8 @@ export class ItemMasterComponent implements OnInit {
       this.disItemCode = true;
     }
     let select = this.SSitemTypeList.find(d => d.itemType === category);
+    console.log(select);
+    
     // alert(select.assetItem);
     if (select.stockable == 'Y') { this.stockableShow = false; this.stockable = 'Y' }
     if (select.stockable == 'N') { this.stockableShow = true; this.stockable = 'N' }

@@ -1623,7 +1623,7 @@ export class JobCardComponent implements OnInit {
   // JOBCARD SEARCH BY  JCNO
 
   Search(jobCardNo) {
-
+    alert('jobCardNo------'+jobCardNo)
     //  ---------------------------For Account Login ------------------
       if (Number(sessionStorage.getItem('dept')) ===4)  {
             this.jobcardForm.disable();
@@ -1679,19 +1679,10 @@ export class JobCardComponent implements OnInit {
           if(data.obj.addonInvoiceNumber>0) { this.printAddonInvButton=true;} else {this.printAddonInvButton=false;}
           if(data.obj.invoiceNumber>0)      { this.printInvoiceButton=true;} else { this.printInvoiceButton=false;}
           if(data.obj.insInvoiceNumber>0)      { this.printInsInvoiceButton=true;} else { this.printInsInvoiceButton=false;}
-
-
-          
-          
-        
-
-
-
           if(this.lstcomments.jcType=='Service') {
             this.dispSplitRatio=false; 
             this.showServiceCustomer=true;
             this.showBodyshopCustomer=false;
-
           }
            else {
              this.dispSplitRatio=true;
@@ -1725,16 +1716,11 @@ export class JobCardComponent implements OnInit {
             this.lineDetailsArray.push(payInvGrp);
          
             }
-
-              // alert ("this.lstcomments.jobCardLabLines[i].splitArr.length :"+this.lstcomments.jobCardLabLines[0].splitArr.length);
-            //   for (let j = 0; j < this.lstcomments.jobCardLabLines[i].splitArr.length ; j++) {
-            //     var payInvGrp1: FormGroup = this.splitDetailsGroup();
-            //     this.splitDetailsArray().push(payInvGrp1);
-            // }
-          
     
           if (this.lstcomments.lineCnt > 0) {
+            if (data.obj.classCodeType==='INSURER'){
             this.dispReadyInvoice = true;
+          }
             this.dispButtonStatus = false; 
           }
          
@@ -1750,9 +1736,18 @@ export class JobCardComponent implements OnInit {
             if (this.lstcomments.jobStatus === 'Opened' ){
               // this.jobcardForm.get('jobCardLabLines').enable();
               // this.jobcardForm.get('jobCardMatLines').enable();
+
               if(data.obj.jobCardLabLines.length >0) {
-                this.dispReadyInvoice = true; this.preInvButton=true;} else{
-                this.dispReadyInvoice = false; this.preInvButton=false;}
+                if (data.obj.classCodeType==='INSURER'){
+                this.dispReadyInvoice = true; 
+                }
+                // this.preInvButton=true;
+              } 
+                else{
+                this.dispReadyInvoice = false; 
+                // this.preInvButton=false;
+              }
+              // alert(obj.custType)
                 this.dispButtonStatus=false;
                 this.updateButton=true;
                 this.importMatButton=true;
@@ -1820,7 +1815,8 @@ export class JobCardComponent implements OnInit {
             this.reopenButton=true;
             this.saveLabButton=false;
             this.saveMatButton=false;
-            this.preInvButton=true;
+            this.preInvButton=false;
+            // ******* Pre Inv True here *********//
             this.cancelButton=false;
             this.openStatus=false;
             this.updateButton=false;
@@ -2235,33 +2231,12 @@ export class JobCardComponent implements OnInit {
     this.serviceService.lineWISESubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
-        // this.lineDetailsArray.clear();
-        
-
-        // alert('LINE WISE RECORD INSERTED SUCCESSFUILY');
        
-        // alert(this.lineDetailsArray.length+ " length")
-        //Following comment by vinita///
-        // var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
-        // console.log(res.obj.jobCardLinesList);
-        // if(res.obj.jobCardLinesList.itemType='Labor')
-        // {
-        // for(let i=0 ; i<res.obj.jobCardLinesList.length; i++){
-        //   var invLnGrp: FormGroup = this.lineDetailsGroup();
-        //             this.lineDetailsArray.push(invLnGrp);
-        //             // let select = this.splitRatioList.find(d => d.splitCateId === res.obj.jobCardLinesList[i].splitCateId);
-        //             // this.onOptionsplitRatioSelect1(i,res.obj.jobCardLinesList[i].splitCateId)
-        // //  patch.controls[i].patchValue({splitRatio:select.billingNature});
-        //  let selectbilTy = this.billableTyIdList.find(d => d.billableTyId === res.obj.jobCardLinesList[i].billableTyId);
-        //     patch.controls[i].patchValue({ billableTyId: selectbilTy.billableTyName });
-        // }
-        // this.jobcardForm.get('jobCardLabLines').patchValue(res.obj.jobCardLinesList);
-        // }
         var jobNo = this.jobcardForm.get('jobCardNum').value;
         this.Search(jobNo);
+        if (res.obj.classCodeType==='INSURER'){
         this.dispReadyInvoice = true;
-        // patch.patchValue(res.obj.jobCardLinesList);
-        // obj.jobCardLinesList
+        }
       } else {
         if (res.code === 400) {this.saveLabButton=true;
           alert(res.message);
@@ -2296,7 +2271,9 @@ export class JobCardComponent implements OnInit {
         console.log(res.obj.jobCardLinesList.length);
         var jobNo = this.jobcardForm.get('jobCardNum').value;
         this.Search(jobNo);
+        if (res.obj.classCodeType==='INSURER'){
         this.dispReadyInvoice = true;
+        }
         this.importMatButton=true;
         // for(let i=0 ; i<res.obj.jobCardLinesList.length; i++){
         //      var invLnGrp: FormGroup = this.distLineDetails();
@@ -3018,7 +2995,9 @@ export class JobCardComponent implements OnInit {
         // this.jobcardForm.patchValue({jobCardNum:res.obj.jobCardNum})
       } else {
         if (res.code === 400) {
-          this.dispReadyInvoice=true; this.saveBillButton=false;this.reopenButton=false;
+          this.dispReadyInvoice=false;
+           this.saveBillButton=false;
+           this.reopenButton=false;
           alert(res.message);
         }
       }

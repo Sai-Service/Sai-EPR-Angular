@@ -677,33 +677,21 @@ export class CustomerMasterComponent implements OnInit {
     this.customerMasterForm.patchValue({ 'panNo': GstNo1 });
   }
   gstVerification2(event: any) {
-    // var gstno = this.customerMasterForm.get('gstNo').value
     var gstno=event.target.value;
-    // alert(gstno+'gst');
     if (gstno === '') {
       this.customerMasterForm.patchValue({ 'sGstNo': 'GSTUNREGISTERED' });
       return;
     }
     else {
-      // debugger;
-      // "27AAACI7573H1ZP"
       var regex: string = '\\d{2}[A-Z]{5}\\d{4}[A-Z]{1}[A-Z\\d]{1}[Z]{1}[A-Z\\d]{1}';
-      // var regex:string="^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9]{1}[A-Z]{1}[A-Z0-9]{1}$";
       var p = new PatternValidator();
       var patt = new RegExp(regex);
-      
       let validgst = patt.test(gstno);
-      // alert(validgst);
       if (validgst === false) {
         alert('Please enter valid GST Number');
         this.customerMasterForm.patchValue({ 'sGstNo': '' });
         return false;
       }
-      // else {
-      //   alert('Please enter valid PAN Number');
-      //   return false;
-      // }
-      // return validgst;
     }
    
     var res = gstno.substr(0, 2);

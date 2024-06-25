@@ -514,6 +514,7 @@ export class ItemMasterNewComponent implements OnInit {
     }
     let select = this.SSitemTypeList.find(d => d.itemType === category);
     // alert(select.assetItem);
+    console.log(select);
     if (select.stockable == 'Y') { this.stockableShow = false; this.stockable = 'Y' }
     if (select.stockable == 'N') { this.stockableShow = true; this.stockable = 'N' }
     if (select.costing == 'Y') { this.costingShow = false; this.displayCosting = false; this.costing = 'Y' }
