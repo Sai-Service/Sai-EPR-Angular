@@ -611,12 +611,13 @@ CheckDataValidations(){
     return;
   } 
 
-   if (formValue.closedip < formValue.opendip )
-  {
-    this.checkValidation=false; 
-    alert ("READING  : Enter Valid Reading");
-    return;
-  } 
+  //  if (formValue.closedip < formValue.opendip )
+  // {
+  //   this.checkValidation=false; 
+  //   alert ("READING  : Enter Valid Reading");
+  //   return;
+  // } 
+
   if (formValue.openstock===undefined || formValue.openstock===null || formValue.openstock<0 )
   {
     this.checkValidation=false; 
