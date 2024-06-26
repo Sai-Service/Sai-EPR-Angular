@@ -129,6 +129,14 @@ priceListFN(locId,segment) : Observable<any> {
 priceListDivisionFN(segment,serModel,locId,ouId) : Observable<any> {
   return this.http.get(this.ServerUrl +`/jobCard/labPrice?labCode=${segment}&srvModel=${serModel}&locId=${locId}&ouId=${ouId}`);
 } 
+jobCardCount(jobNum) : Observable<any> {
+  return this.http.get(this.ServerUrl +`/jobCard//dpPreInvPrintStatus/${jobNum}`);
+} 
+
+jobCardCountDp(jobNum): Observable<any> {
+  return this.http.get(this.ServerUrl +`/jobCard//CustPreInvPrintStatus/${jobNum}`);
+} 
+
 MatImptWipFn(jobCardNum,locId) : Observable<any> {
   return this.http.get(this.ServerUrl +`/jobCard/partLines?jobNum=${jobCardNum}&locId=${locId}`);
 } 
