@@ -107,4 +107,12 @@ export class PumpService {
     return this.http.get(this.ServerUrl + `/DipEntry/date?dipentrydate=${entDate}`);
     // http://localhost:8081/DipEntry/date?dipentrydate=01-03-2024
     }
+
+
+  printPumpInvoice(invNumber) {
+          // http://localhost:8081/PetrolPumpReport/PetrolInvPrint?trxNumber=24250012325059
+        return this.http.get(this.ServerUrl + `/PetrolPumpReport/PetrolInvPrint?trxNumber=${invNumber}`, { responseType: 'arraybuffer', headers: this.headers, });
+  
+    }
+  
 }
