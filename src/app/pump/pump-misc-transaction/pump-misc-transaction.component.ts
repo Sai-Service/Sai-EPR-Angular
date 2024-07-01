@@ -800,32 +800,24 @@ export class PumpMiscTransactionComponent implements OnInit {
         this.getItemDetail = data;
         // alert("this.getItemDetail.description" + this.getItemDetail.description);
         if (this.getItemDetail.description != undefined) {
-          trxLnArr1.controls[i].patchValue({
-            description: this.getItemDetail.description,
-          });
+          trxLnArr1.controls[i].patchValue({description: this.getItemDetail.description,});
           trxLnArr1.controls[i].patchValue({ uom: this.getItemDetail.uom });
           // trxLnArr1.controls[i].patchValue({entryStatusCode:2});
           trxLnArr1.controls[i].patchValue({ subInventory: subcode });
-          trxLnArr1.controls[i].patchValue({
-            locId: Number(sessionStorage.getItem('locId')),
-          });
+          trxLnArr1.controls[i].patchValue({locId: Number(sessionStorage.getItem('locId')),});
           this.cycleLinesList().controls[i].get('LocatorSegment').enable();
           this.cycleLinesList().controls[i].get('physicalQty').enable();
           this.setFocus('physicalQty'+(i));
         }
       });
+
       this.service
         .getCostDetail(Number(sessionStorage.getItem('locId')), select1.itemId)
         .subscribe((data) => {
           this.CostDetail = data; 
-          trxLnArr1.controls[i].patchValue({
-            itemUnitCost: this.CostDetail.rate,
-            
-          });
+          trxLnArr1.controls[i].patchValue({itemUnitCost: this.CostDetail.rate, });
           if (this.CostDetail.rate === 0.0) {
-            // alert('In elseIF');
             alert(this.CostDetail.segment);
-            // this.displayCost=false;
           }
           if (this.CostDetail.rate > 0.0 && this.pumpMiscellaneousForm.get('compileType').value === 13) {
             // alert('IN IF'+this.CostDetail.rate)
@@ -843,10 +835,7 @@ export class PumpMiscTransactionComponent implements OnInit {
         });
       this.service
         .getfrmSubLoc(
-          Number(sessionStorage.getItem('locId')),
-          select1.itemId,
-          this.subInvCode.subInventoryId
-        )
+          Number(sessionStorage.getItem('locId')),select1.itemId,this.subInvCode.subInventoryId)
         .subscribe((data) => {
           //  this.getfrmSubLoc = data;
           var getfrmSubLoc = data;
@@ -859,15 +848,9 @@ export class PumpMiscTransactionComponent implements OnInit {
               this.displayLocator[i] = false;
             } else if (getfrmSubLoc.length == 1) {
               this.displayLocator[i] = false;
-              trxLnArr1.controls[i].patchValue({
-                LocatorSegment: getfrmSubLoc[0].segmentName,
-              });
-              trxLnArr1.controls[i].patchValue({
-                locatorId: getfrmSubLoc[0].locatorId,
-              });
-              trxLnArr1.controls[i].patchValue({
-                onHandQty: getfrmSubLoc[0].onHandQty,
-              });
+              trxLnArr1.controls[i].patchValue({LocatorSegment: getfrmSubLoc[0].segmentName,});
+              trxLnArr1.controls[i].patchValue({locatorId: getfrmSubLoc[0].locatorId,});
+              trxLnArr1.controls[i].patchValue({onHandQty: getfrmSubLoc[0].onHandQty,});
               trxLnArr1.controls[i].patchValue({ id: getfrmSubLoc[0].id });
               let reserve = trxLnArr[i].resveQty;
               // alert(onHand1+'OnHand');
@@ -879,27 +862,27 @@ export class PumpMiscTransactionComponent implements OnInit {
             } else {
               this.getfrmSubLoc = data;
               console.log(this.getfrmSubLoc);
-              // trxLnArr1.controls[i].patchValue({LocatorSegment:getfrmSubLoc[0].segmentName});
-              // trxLnArr1.controls[i].patchValue({onHandQty:getfrmSubLoc[0].onHandQty});
+              // alert(getfrmSubLoc[0].locatorId+' getfrmSubLoc[0].locatorId')
+              let reserve = trxLnArr[i].resveQty;
+              let avlqty1 = 0;
+              avlqty1 = getfrmSubLoc[0].onHandQty - reserve;
+              trxLnArr1.controls[i].patchValue({ avlqty: avlqty1 });
+              trxLnArr1.controls[i].patchValue({ resveQty: reserve });
+
+              trxLnArr1.controls[i].patchValue({LocatorSegment:getfrmSubLoc[0].segmentName});
+              trxLnArr1.controls[i].patchValue({onHandQty:getfrmSubLoc[0].onHandQty});
               trxLnArr1.controls[i].patchValue({ id: getfrmSubLoc[0].id });
+              trxLnArr1.controls[i].patchValue({locatorId: getfrmSubLoc[0].locatorId,});
               this.displayLocator[i] = true;
             }
           } else {
             this.service
-              .getItemLoc(
-                this.locId,
-                this.subInvCode.subInventoryId,
-                select1.itemId
-              )
+              .getItemLoc(this.locId,this.subInvCode.subInventoryId,select1.itemId)
               .subscribe((data) => {
                 getfrmSubLoc = data;
                 this.displayLocator[i] = false;
-                trxLnArr1.controls[i].patchValue({
-                  LocatorSegment: getfrmSubLoc[0].segmentName,
-                });
-                trxLnArr1.controls[i].patchValue({
-                  locatorId: getfrmSubLoc[0].locatorId,
-                });
+                trxLnArr1.controls[i].patchValue({LocatorSegment: getfrmSubLoc[0].segmentName,});
+                trxLnArr1.controls[i].patchValue({locatorId: getfrmSubLoc[0].locatorId,});
               });
           }
           this.setFocus('physicalQty'+(i+1));
@@ -909,6 +892,8 @@ export class PumpMiscTransactionComponent implements OnInit {
       alert('item not found');
     }
   }
+
+
 
   AvailQty(event: any, i) {
     // alert(event.target.value);
@@ -1145,7 +1130,7 @@ export class PumpMiscTransactionComponent implements OnInit {
     var trxLnArr = this.pumpMiscellaneousForm.get('cycleLinesList').value;
     var LocatorSegment1 = trxLnArr[i].LocatorSegment;
 
-    alert ("index, locator : "+i + " , "+LocatorSegment1)
+    // alert ("index, locator : "+i + " , "+LocatorSegment1)
 
     this.service
     .LocatorNameList(LocatorSegment1,Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId)
@@ -1158,11 +1143,14 @@ export class PumpMiscTransactionComponent implements OnInit {
         alert('Invalid Locator - '+ LocatorSegment1);
         var arraycontrol = this.pumpMiscellaneousForm.get('cycleLinesList').value;
         patch.controls[i].patchValue({ LocatorSegment: '' });
+        patch.controls[i].patchValue({ avlqty: '' });
+
+
       }
     });
 
   }
-  
+
 
   okLocator1(i) {
     // alert(i);
@@ -1197,6 +1185,8 @@ export class PumpMiscTransactionComponent implements OnInit {
           alert('Invalid Locator - '+ LocatorSegment1);
           var arraycontrol = this.pumpMiscellaneousForm.get('cycleLinesList').value;
           patch.controls[i].patchValue({ LocatorSegment: '' });
+          patch.controls[i].patchValue({ avlqty: '' });
+
         }
       });
 
@@ -1538,6 +1528,10 @@ export class PumpMiscTransactionComponent implements OnInit {
     //  return;
     this.displayButton = false;
     this.displayaddButton = true;
+
+    var  resp=confirm("Do You Want to Save this Transaction ???");
+    if(resp==false) { return;}
+    
     if (this.pumpMiscellaneousForm.valid) {
       // this.displayButton=true;
       // this.displayaddButton=true;
