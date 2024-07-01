@@ -104,6 +104,7 @@ export class PumpMiscTransactionComponent implements OnInit {
   segmentName: string;
   adjustmentQty: number;
   physicalQty: number;
+  xLocatorId :number;
   // locData =[ {
   //   "locatorId": 999,
   //   "segmentName": "D.U.01.D.01",
@@ -176,7 +177,9 @@ export class PumpMiscTransactionComponent implements OnInit {
   subInventoryCode: string;
   getItemDetail1: any;
   LocatorSegment1: string;
+
   LocatorList: any;
+
   compileName: string;
   approvedBy: string;
   click: boolean = false;
@@ -199,6 +202,7 @@ export class PumpMiscTransactionComponent implements OnInit {
   attribute2:Date;
 
   type1: string;
+  customLocator =false;
   dispheader: boolean = false;
   displable: boolean = false;
   pipe = new DatePipe('en-US');
@@ -304,6 +308,7 @@ export class PumpMiscTransactionComponent implements OnInit {
       description1: [],
       docSeqValue: [],
       name1:[],
+      xLocatorId:[],
       
       cycleLinesList: this.fb.array([]),
     });
@@ -904,6 +909,7 @@ export class PumpMiscTransactionComponent implements OnInit {
       alert('item not found');
     }
   }
+
   AvailQty(event: any, i) {
     // alert(event.target.value);
     var trxLnArr1 = this.pumpMiscellaneousForm.get('cycleLinesList') as FormArray;
@@ -911,7 +917,9 @@ export class PumpMiscTransactionComponent implements OnInit {
     var itemid = trxLnArr[i].invItemId;
     var locId = trxLnArr[i].LocatorSegment;
     trxLnArr1.controls[i].patchValue({ locatorId: locId });
-    //alert(locId+'locatorID');
+
+    // alert("AvailQty locid :"+locId);
+
     var onhandid = trxLnArr[i].id;
     var subcode = trxLnArr[i].subInventory;
     //alert(subcode);
@@ -919,6 +927,47 @@ export class PumpMiscTransactionComponent implements OnInit {
     //alert(select2.subInventoryId+'Id')
     //alert(event);
     // var onHand1:number;
+    this.service
+      .getonhandqty(
+        Number(sessionStorage.getItem('locId')),
+        this.subInvCode.subInventoryId,locId,itemid
+      )
+      .subscribe((data) => {
+        this.onhand = data;
+        console.log(this.onhand);
+        trxLnArr1.controls[i].patchValue({ onHandQty: data.obj });
+        // onHand1=data.obj.onHandQty;
+
+        let reserve = trxLnArr[i].resveQty;
+        // alert(onHand1+'OnHand');
+        // alert(reserve+'reserve');
+        let avlqty1 = 0;
+        // alert(data.obj+'qty');
+        avlqty1 = data.obj - reserve;
+        trxLnArr1.controls[i].patchValue({ avlqty: avlqty1 });
+        trxLnArr1.controls[i].patchValue({ resveQty: reserve });
+        if (avlqty1 < 0) {
+          alert(
+            'Transfer is not allowed,Item has Reserve quantity - ' + reserve
+          );
+          this.cycleLinesList().clear();
+          this.addnewcycleLinesList(i);
+        }
+      });
+    console.log(this.onhand);
+    //  var trxLnarronha = this.pumpMiscellaneousForm.get('cycleLinesList').value;
+  }
+
+  AvailQty13(mLctrId: any, i) {
+    var trxLnArr1 = this.pumpMiscellaneousForm.get('cycleLinesList') as FormArray;
+    var trxLnArr = this.pumpMiscellaneousForm.get('cycleLinesList').value;
+    var itemid = trxLnArr[i].invItemId;
+    // var locId = trxLnArr[i].LocatorSegment;
+    var locId = mLctrId;
+    trxLnArr1.controls[i].patchValue({ locatorId: locId });
+    var onhandid = trxLnArr[i].id;
+    var subcode = trxLnArr[i].subInventory;
+   
     this.service
       .getonhandqty(
         Number(sessionStorage.getItem('locId')),
@@ -951,6 +1000,9 @@ export class PumpMiscTransactionComponent implements OnInit {
     console.log(this.onhand);
     //  var trxLnarronha = this.pumpMiscellaneousForm.get('cycleLinesList').value;
   }
+
+
+
   resetMiscTrans() {
     this.deleteReserve();
     window.location.reload();
@@ -1034,39 +1086,95 @@ export class PumpMiscTransactionComponent implements OnInit {
   // }
 
   okLocator(i) {
+    var mLocatorId;
     // alert(i);
     var LocSegment = this.pumpMiscellaneousForm.get('cycleLinesList').value;
     var patch = this.pumpMiscellaneousForm.get('cycleLinesList') as FormArray;
     LocSegment[i].LocatorSegment =
-      this.pumpMiscellaneousForm.get('Floor').value +
-      '.' +
-      this.pumpMiscellaneousForm.get('Rack').value +
-      '.' +
-      this.pumpMiscellaneousForm.get('RackNo').value +
-      '.' +
-      this.pumpMiscellaneousForm.get('Row').value +
-      '.' +
+      this.pumpMiscellaneousForm.get('Floor').value +'.' +
+      this.pumpMiscellaneousForm.get('Rack').value + '.' +
+      this.pumpMiscellaneousForm.get('RackNo').value +'.' +
+      this.pumpMiscellaneousForm.get('Row').value +'.' +
       this.pumpMiscellaneousForm.get('RowNo').value;
 
     var LocatorSegment1 = LocSegment[i].LocatorSegment;
-    // alert(this.LocatorSegment1);
-    patch.controls[i].patchValue({
-      LocatorSegment: LocSegment[i].LocatorSegment,
-    });
+    // alert("this.LocatorSegment1: "+ LocatorSegment1);
+
+    patch.controls[i].patchValue({LocatorSegment: LocSegment[i].LocatorSegment,});
 
     this.service
-      .LocatorNameList(
-        LocatorSegment1,
-        Number(sessionStorage.getItem('locId')),
-        this.subInvCode.subInventoryId
-      )
+      .LocatorNameList(LocatorSegment1,Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId)
+
       .subscribe((data) => {
         this.LocatorList = data;
+        console.log(this.LocatorList);
+        mLocatorId=data.obj.locatorId;
+
+        // alert ("this.LocatorList.code : "+this.LocatorList.code);
+        // alert ("this.LocatorList.obj.locatorId : "+ this.LocatorList.obj.locatorId);
+        // alert ("data.code : "+data.code);
+        // alert ("data.message : "+data.message);
+        // alert ("data.obj.locatorId : "+data.obj.locatorId);
 
         if (this.LocatorList.code === 200) {
-          patch.controls[i].patchValue({
-            locatorId: this.LocatorList.obj.locatorId,
-          });
+          patch.controls[i].patchValue({locatorId: this.LocatorList.obj.locatorId,});
+          // alert ("XXXthis.LocatorList.obj.locatorId : "+ this.LocatorList.obj.locatorId);
+
+          if (this.LocatorList.Length == 0) {
+            alert('Invalid Code Combination');
+          } else {
+            this.locatorId = this.LocatorList.locatorId;
+          }
+        } else if (this.LocatorList.code === 400) {
+          var arraycontrol = this.pumpMiscellaneousForm.get('cycleLinesList').value;
+          patch.controls[i].patchValue({ LocatorSegment: '' });
+        }
+
+        // alert('this.mLocatorId : '+ mLocatorId );
+        // alert('this.locatorId : '+ this.locatorId);
+
+        // var transtypeid = this.pumpMiscellaneousForm.get('compileType').value;
+        // if(transtypeid==13){
+        //   this.AvailQty13(mLocatorId,i)
+        // }
+
+      });
+
+          this.pumpMiscellaneousForm.get('Floor').reset();
+          this.pumpMiscellaneousForm.get('Rack').reset();
+          this.pumpMiscellaneousForm.get('RackNo').reset();
+          this.pumpMiscellaneousForm.get('Row').reset();
+          this.pumpMiscellaneousForm.get('RowNo').reset();
+          alert('locator search complete');
+  }
+
+
+
+  okLocator1(i) {
+    alert(i);
+    var xLocatorId=0;
+    var LocSegment = this.pumpMiscellaneousForm.get('cycleLinesList').value;
+    var patch = this.pumpMiscellaneousForm.get('cycleLinesList') as FormArray;
+    LocSegment[i].LocatorSegment =
+      this.pumpMiscellaneousForm.get('Floor').value +'.' +
+      this.pumpMiscellaneousForm.get('Rack').value + '.' +
+      this.pumpMiscellaneousForm.get('RackNo').value +'.' +
+      this.pumpMiscellaneousForm.get('Row').value +'.' +
+      this.pumpMiscellaneousForm.get('RowNo').value;
+
+    var LocatorSegment1 = LocSegment[i].LocatorSegment;
+    // alert("this.LocatorSegment1: "+ LocatorSegment1);
+
+    patch.controls[i].patchValue({LocatorSegment: LocSegment[i].LocatorSegment,});
+
+    this.service
+      .LocatorNameList(LocatorSegment1,Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId)
+      .subscribe((data) => {
+        this.LocatorList = data;
+        if (this.LocatorList.code === 200) {
+          xLocatorId=data.obj.locatorId;
+
+          patch.controls[i].patchValue({locatorId: this.LocatorList.obj.locatorId,});
 
           if (this.LocatorList.lengh == 0) {
             alert('Invalid Code Combination');
@@ -1078,12 +1186,16 @@ export class PumpMiscTransactionComponent implements OnInit {
           patch.controls[i].patchValue({ LocatorSegment: '' });
         }
       });
-    this.pumpMiscellaneousForm.get('Floor').reset();
-    this.pumpMiscellaneousForm.get('Rack').reset();
-    this.pumpMiscellaneousForm.get('RackNo').reset();
-    this.pumpMiscellaneousForm.get('Row').reset();
-    this.pumpMiscellaneousForm.get('RowNo').reset();
-    alert('locator search complete');
+
+          this.pumpMiscellaneousForm.get('Floor').reset();
+          this.pumpMiscellaneousForm.get('Rack').reset();
+          this.pumpMiscellaneousForm.get('RackNo').reset();
+          this.pumpMiscellaneousForm.get('Row').reset();
+          this.pumpMiscellaneousForm.get('RowNo').reset();
+          alert('locator search complete');
+
+    // alert('xLocatorId : '+ xLocatorId );
+   
   }
 
   openCodeCombination() {
@@ -1582,6 +1694,8 @@ export class PumpMiscTransactionComponent implements OnInit {
       }
     });
   }
+
+  
 
 }
 

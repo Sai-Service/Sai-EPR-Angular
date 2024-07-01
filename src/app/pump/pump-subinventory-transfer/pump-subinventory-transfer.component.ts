@@ -61,6 +61,8 @@ export class PumpSubinventoryTransferComponent implements OnInit {
   public subInvCode: any = [];
   public ItemIdList: any = [];
   public issueByList: any=[];
+  salesPersonList :any=[];
+
   getItemDetail: any;
   getfrmSubLoc: any;
   public LocatorList: any;
@@ -305,14 +307,21 @@ export class PumpSubinventoryTransferComponent implements OnInit {
 
 
   onOptionSubInv(event:any){
+
+    this.salesPersonList=null;
+    this.service.PPEmplIdList(sessionStorage.getItem('locId'),sessionStorage.getItem('divisionId'))
+    .subscribe(
+      data => {
+        this.salesPersonList = data;
+        console.log(this.salesPersonList);
+      }
+    );
+    
+  }
+
+  onOptionSubInvOld(event:any){
     var seltoSubInv = this.tosubInvCode.find(d =>d.subInventoryCode ===event);
-    // this.service
-    // .issueByList(this.locId, seltoSubInv.deptId, this.divisionId)
-    // .subscribe((data) => {
-    //   this.issueByList = data;
-    //   console.log(this.issueByList);
-    // });
-    // var designation='Sales Manager';
+   
     this.service.issueByListNew(seltoSubInv.deptId,this.locId).subscribe((data) => {
       this.issueByList = data.obj;
       console.log(this.issueByList);
@@ -323,12 +332,16 @@ export class PumpSubinventoryTransferComponent implements OnInit {
       this.service.getPhysicalLoc(this.locId).subscribe(
           data => {
             this.phyLocation = data;
-        //     console.log(this.ItemIdList);
-        //     // console.log(this.invItemId);
-          });
+       });
       
     }
   }
+
+
+
+
+
+
   pumpSubinventoryTransfer(pumpSubinventoryTransferForm: any) {}
 
   keytab(event, maxLength, nxtEle) {

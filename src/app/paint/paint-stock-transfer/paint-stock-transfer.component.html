@@ -10,7 +10,7 @@
   
         <table style="width: 100%; background-color: #a4d3e9;">
           <tr>
-              <td style="width: 15%" class="LabelFontStyle">Stock&nbsp;Transfer&nbsp;Number&nbsp;:</td>
+              <td style="width: 15%" class="LabelFontStyle">Stock&nbsp;Trf&nbsp;No&nbsp;:</td>
               <td>
                   <input type="text"  class="form-control" formControlName="ShipmentNo" id="ShipmentNo" [(ngModel)]="ShipmentNo">
               </td>
@@ -29,7 +29,7 @@
        <table class="center">
           <tr>
             <td style="width: 15%" class="LabelFontStyle">
-              Stock&nbsp;Transfer&nbsp;Number&nbsp;:&nbsp;
+              Stock&nbsp;Trf&nbsp;No&nbsp;:&nbsp;
             </td>
             <td>
               <input disabled type="text" class="form-control" formControlName="shipmentNumber" [(ngModel)]="shipmentNumber">
@@ -71,7 +71,7 @@
                   <td>
                       <input disabled type="text" class="form-control"  formControlName="subInventoryCode" [(ngModel)]="subInventoryCode">
                   <span  *ngIf="!paintStockTranferForm.get('subInventoryCode').valid && paintStockTranferForm.get('subInventoryCode').touched">Please
-                      select Organization Name </span>
+                      Select Organization Name </span>
                 </td>
                 <td style="width: 15%" class="LabelFontStyle1">To SubInventory</td>
                 <td><select class="form-control"  formControlName="transferSubInv"  [(ngModel)]="transferSubInv" (change)="onSubInveSelect($event)" >
@@ -110,7 +110,9 @@
             <td>
               <select type="text" class="form-control" formControlName="issueTo" (ngModelChange)="onIssueSelect($event)">
                 <option>--Select--</option>
-                <option *ngFor="let ib of issueByList"> {{ib.ticketNo}}-{{ib.fname}}</option>
+                <!-- <option *ngFor="let ib of issueByList"> {{ib.ticketNo}}-{{ib.fname}}</option> -->
+                <option *ngFor="let ib of issueByList"> {{ib.fullName}}</option>
+
                 </select>
                 <span  *ngIf="!paintStockTranferForm.get('issueTo').valid && paintStockTranferForm.get('issueTo').touched" class="cross-validation-error-message alert">Please
                     select Issue Name </span>

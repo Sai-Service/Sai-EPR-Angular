@@ -57,12 +57,24 @@
                 <input disabled  type="text" class="form-control"formControlName="issueBy" [(ngModel)]='issueBy'>
               </td>
               <td style="width: 15%" class="LabelFontStyle">Issue&nbsp;To:</td>
-                  <td>
+                  
+              
+                  <!-- <td>
                     <select type="text" class="form-control" formControlName="issueTo">
                       <option>--Select--</option>
                       <option *ngFor="let ib of issueByList">{{ib.FULLNAME}}</option>
                       </select>
+                  </td> -->
+                  <td>
+                  <select formControlName="issueTo" class="form-control"
+                                    style="background-color: yellow;" >
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of  salesPersonList">
+                                        {{sc.fullName}}-({{sc.ticketNo}})
+                                    </option>
+                  </select>
                   </td>
+
               <input hidden formControlName=locId [(ngModel)]='locId'>
               <td style="width: 15%" class="LabelFontStyle">Remark:</td>
                <td colspan="3" >
@@ -125,7 +137,7 @@
                                       </span>
                              </td>
                              <td>
-                                 <input disabled type="text" class="form-control" style="height: 20px;"formControlName="description">
+                                 <input disabled type="text" class="form-control" style="height: 20px;width: 200px;" formControlName="description">
                              </td>
                              <td>
                                  <input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="uom" >
@@ -152,7 +164,7 @@
                               </td>
                              </ng-template>
                              <td>
-                                  <input disabled type="number" class="form-control" style="height: 20px;width: 70px;"formControlName="onHandQty">
+                                  <input disabled type="number" class="form-control" style="height: 20px;width: 100px;"formControlName="onHandQty">
                              </td>
                              <div *ngIf="displayLocator; then thenBlock; else elseBlock">
                             </div>
@@ -179,6 +191,7 @@
                                   *ngIf="getGroupControllinewise(trfLineIndex,'transferLocatorId').touched && getGroupControllinewise(trfLineIndex,'transferLocatorId').invalid" class="error">Valid Item
                                  </span>
                              </td>
+                             
                             </ng-template>
                              <td>
                                   <input type="number" class="form-control" style="height: 20px;width: 70px;" formControlName="primaryQty" (change)="validate(trfLineIndex,qty)" #qty>
