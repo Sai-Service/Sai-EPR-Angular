@@ -1086,7 +1086,7 @@ export class PumpMiscTransactionComponent implements OnInit {
   // }
 
   okLocator(i) {
-    var mLocatorId;
+   
     // alert(i);
     var LocSegment = this.pumpMiscellaneousForm.get('cycleLinesList').value;
     var patch = this.pumpMiscellaneousForm.get('cycleLinesList') as FormArray;
@@ -1098,7 +1098,6 @@ export class PumpMiscTransactionComponent implements OnInit {
       this.pumpMiscellaneousForm.get('RowNo').value;
 
     var LocatorSegment1 = LocSegment[i].LocatorSegment;
-    // alert("this.LocatorSegment1: "+ LocatorSegment1);
 
     patch.controls[i].patchValue({LocatorSegment: LocSegment[i].LocatorSegment,});
 
@@ -1108,23 +1107,15 @@ export class PumpMiscTransactionComponent implements OnInit {
       .subscribe((data) => {
         this.LocatorList = data;
         console.log(this.LocatorList);
-        mLocatorId=data.obj.locatorId;
 
-        // alert ("this.LocatorList.code : "+this.LocatorList.code);
-        // alert ("this.LocatorList.obj.locatorId : "+ this.LocatorList.obj.locatorId);
-        // alert ("data.code : "+data.code);
-        // alert ("data.message : "+data.message);
-        // alert ("data.obj.locatorId : "+data.obj.locatorId);
-
-        if (this.LocatorList.code === 200) {
+          if (this.LocatorList.code === 200) {
           patch.controls[i].patchValue({locatorId: this.LocatorList.obj.locatorId,});
-          // alert ("XXXthis.LocatorList.obj.locatorId : "+ this.LocatorList.obj.locatorId);
-
-          if (this.LocatorList.Length == 0) {
-            alert('Invalid Code Combination');
-          } else {
-            this.locatorId = this.LocatorList.locatorId;
-          }
+         
+                if (this.LocatorList.Length == 0) {
+                  alert('Invalid Code Combination');
+                } else {
+                  this.locatorId = this.LocatorList.locatorId;
+                }
         } else if (this.LocatorList.code === 400) {
           var arraycontrol = this.pumpMiscellaneousForm.get('cycleLinesList').value;
           patch.controls[i].patchValue({ LocatorSegment: '' });
@@ -1148,11 +1139,33 @@ export class PumpMiscTransactionComponent implements OnInit {
           alert('locator search complete');
   }
 
+  validateLocator(i){
+   
+    var patch = this.pumpMiscellaneousForm.get('cycleLinesList') as FormArray;
+    var trxLnArr = this.pumpMiscellaneousForm.get('cycleLinesList').value;
+    var LocatorSegment1 = trxLnArr[i].LocatorSegment;
 
+    alert ("index, locator : "+i + " , "+LocatorSegment1)
+
+    this.service
+    .LocatorNameList(LocatorSegment1,Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId)
+    .subscribe((data) => {
+      this.LocatorList = data;
+      if (this.LocatorList.code === 200) {
+        patch.controls[i].patchValue({locatorId: this.LocatorList.obj.locatorId,});
+             
+      } else if (this.LocatorList.code === 400) {
+        alert('Invalid Locator - '+ LocatorSegment1);
+        var arraycontrol = this.pumpMiscellaneousForm.get('cycleLinesList').value;
+        patch.controls[i].patchValue({ LocatorSegment: '' });
+      }
+    });
+
+  }
+  
 
   okLocator1(i) {
-    alert(i);
-    var xLocatorId=0;
+    // alert(i);
     var LocSegment = this.pumpMiscellaneousForm.get('cycleLinesList').value;
     var patch = this.pumpMiscellaneousForm.get('cycleLinesList') as FormArray;
     LocSegment[i].LocatorSegment =
@@ -1162,26 +1175,26 @@ export class PumpMiscTransactionComponent implements OnInit {
       this.pumpMiscellaneousForm.get('Row').value +'.' +
       this.pumpMiscellaneousForm.get('RowNo').value;
 
-    var LocatorSegment1 = LocSegment[i].LocatorSegment;
-    // alert("this.LocatorSegment1: "+ LocatorSegment1);
+    var LocatorSegment1 = LocSegment[i].LocatorSegment.toUpperCase();
+    // var LocatorSegment1=LocatorSegment0.toUpperCase();
 
-    patch.controls[i].patchValue({LocatorSegment: LocSegment[i].LocatorSegment,});
+    patch.controls[i].patchValue({LocatorSegment: LocSegment[i].LocatorSegment.toUpperCase()});
 
     this.service
       .LocatorNameList(LocatorSegment1,Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId)
       .subscribe((data) => {
         this.LocatorList = data;
         if (this.LocatorList.code === 200) {
-          xLocatorId=data.obj.locatorId;
-
           patch.controls[i].patchValue({locatorId: this.LocatorList.obj.locatorId,});
 
-          if (this.LocatorList.lengh == 0) {
-            alert('Invalid Code Combination');
-          } else {
-            this.locatorId = this.LocatorList.obj.locatorId;
-          }
+                  if (this.LocatorList.obj.length == 0) {
+                    alert('Invalid Code Combination');
+                  } else {
+                    this.locatorId = this.LocatorList.obj.locatorId;
+                  }
+
         } else if (this.LocatorList.code === 400) {
+          alert('Invalid Locator - '+ LocatorSegment1);
           var arraycontrol = this.pumpMiscellaneousForm.get('cycleLinesList').value;
           patch.controls[i].patchValue({ LocatorSegment: '' });
         }
@@ -1193,9 +1206,7 @@ export class PumpMiscTransactionComponent implements OnInit {
           this.pumpMiscellaneousForm.get('Row').reset();
           this.pumpMiscellaneousForm.get('RowNo').reset();
           alert('locator search complete');
-
-    // alert('xLocatorId : '+ xLocatorId );
-   
+  
   }
 
   openCodeCombination() {

@@ -281,7 +281,7 @@
                       <div *ngIf ="compileType==13">
                              <input type="text" list="dynmicUserIds1" (keyup)="filterRecord( $event,trxLineIndex)"
                               formControlName="segment" id="invItemIdFirstWay" class="form-control"
-                              style="height: 20px;width:120px;"  name="segment{{trxLineIndex}}" placeholder="Enter ItemCode" />
+                              style="height: 20px;width:120px;"  name="segment{{trxLineIndex}}"    placeholder="Enter ItemCode" />
                             <!-- <datalist id="dynmicUserIds1">
                               <option *ngFor="let item of ItemIdList" [value]="item.SEGMENT">{{item.SEGMENT}}</option>
                             </datalist> -->
@@ -340,7 +340,8 @@
                               <td>
                                 <input data-toggle="modal" data-target="#myModal1" formControlName="LocatorSegment"
                                   value={{LocatorSegment}} (click)="OpenLocator(trxLineIndex)" class="form-control"
-                                  style="height: 20px;width: 110px;">
+                                  style="height: 20px;width: 110px;"  (change)="validateLocator(trxLineIndex)">
+
                                 <span
                                   *ngIf="getGroupControllinewise(trxLineIndex,'LocatorSegment').touched && getGroupControllinewise(trxLineIndex,'LocatorSegment').invalid"
                                   class="error">Valid Item
