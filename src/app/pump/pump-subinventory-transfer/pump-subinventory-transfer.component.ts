@@ -190,7 +190,7 @@ export class PumpSubinventoryTransferComponent implements OnInit {
   }
 
   addnewtrfLinesList(i) {
-    if (i > 0) {
+    if (i > -1) {
       var trxLnArr1 = this.pumpSubinventoryTransferForm.get('trfLinesList').value;
       var itemqty = trxLnArr1[i].primaryQty;
       var item1 = trxLnArr1[i].segment;
@@ -219,12 +219,17 @@ export class PumpSubinventoryTransferComponent implements OnInit {
         }
       }
     }
+
+    var len1 = this.trfLinesList().length;
+    if (len1 == i + 1) {
+
     this.trfLinesList().push(this.newtrfLinesList());
     var len = this.trfLinesList().length;
     var patch = this.pumpSubinventoryTransferForm.get('trfLinesList') as FormArray;
     patch.controls[len - 1].patchValue({
       lineNumber: len,
     });
+    }
 
     // this.trfLinesList().controls[len - 1].get('physicalQty').disable();
     // this.trfLinesList().controls[len - 1].get('LocatorSegment').disable();
@@ -297,9 +302,7 @@ export class PumpSubinventoryTransferComponent implements OnInit {
     //   });
     this.addnewtrfLinesList(0);
     var patch = this.pumpSubinventoryTransferForm.get('trfLinesList') as FormArray;
-    patch.controls[0].patchValue({
-      lineNumber: 1,
-    });
+    patch.controls[0].patchValue({ lineNumber: 1, });
     // alert(this.subInventoryCode);
     
     // this.SubNo="12PU";
@@ -307,6 +310,8 @@ export class PumpSubinventoryTransferComponent implements OnInit {
 
 
   onOptionSubInv(event:any){
+
+    this.addnewtrfLinesList(-1);
 
     this.salesPersonList=null;
     this.service.PPEmplIdList(sessionStorage.getItem('locId'),sessionStorage.getItem('divisionId'))
@@ -718,9 +723,14 @@ export class PumpSubinventoryTransferComponent implements OnInit {
   }
 
   newSubtrf() {
+
+    var  resp=confirm("Do You Want to Save this Transaction ???");
+    if(resp==false) { return;}
+    
     if (this.pumpSubinventoryTransferForm.valid) {
       const formValue: IsubinventoryTransfer =
         this.pumpSubinventoryTransferForm.value;
+
       let variants = <FormArray>this.trfLinesList();
       var tranda = this.pumpSubinventoryTransferForm.get('transDate').value;
       var frmcode = this.pumpSubinventoryTransferForm.get('subInventoryCode').value;
@@ -733,43 +743,17 @@ export class PumpSubinventoryTransferComponent implements OnInit {
 
       for (let i = 0; i < this.trfLinesList().length; i++) {
         let VariantFormGroup = <FormGroup>variants.controls[i];
-        VariantFormGroup.addControl(
-          'transDate',
-          new FormControl(tranda, Validators.required)
-        );
-        VariantFormGroup.addControl(
-          'subInventoryCode',
-          new FormControl(frmcode, Validators.required)
-        );
-        VariantFormGroup.addControl(
-          'transferSubInv',
-          new FormControl(tocode, Validators.required)
-        );
-        VariantFormGroup.addControl(
-          'issueBy',
-          new FormControl(issby, Validators.required)
-        );
-        VariantFormGroup.addControl(
-          'remarks',
-          new FormControl(rmks, Validators.required)
-        );
-        VariantFormGroup.addControl(
-          'orgId',
-          new FormControl(locId1, Validators.required)
-        );
-        VariantFormGroup.addControl(
-          'transferOrgId',
-          new FormControl(locId1, Validators.required)
-        );
-        VariantFormGroup.addControl(
-          'issueTo',
-          new FormControl(issto, Validators.required)
-        );
-        VariantFormGroup.addControl(
-          'attribute3',
-          new FormControl(phyLoc, Validators.required)
-        );
+        VariantFormGroup.addControl('transDate',        new FormControl(tranda, Validators.required) );
+        VariantFormGroup.addControl('subInventoryCode', new FormControl(frmcode, Validators.required));
+        VariantFormGroup.addControl('transferSubInv',   new FormControl(tocode, Validators.required)  );
+        VariantFormGroup.addControl('issueBy',          new FormControl(issby, Validators.required)  );
+        VariantFormGroup.addControl('remarks',          new FormControl(rmks, Validators.required)  );
+        VariantFormGroup.addControl('orgId',            new FormControl(locId1, Validators.required)  );
+        VariantFormGroup.addControl('transferOrgId',    new FormControl(locId1, Validators.required)  );
+        VariantFormGroup.addControl('issueTo',          new FormControl(issto, Validators.required)  );
+        VariantFormGroup.addControl('attribute3',       new FormControl(phyLoc, Validators.required)  );
       }
+       
 
       this.service
         .subInvTransferSubmit(variants.value)
