@@ -3,9 +3,7 @@
     <table style="width: 100%;background-color: white;">
         <tr>
             <!-- class="PageHeader" -->
-            <td class="PageHeader">
-                &nbsp;Paint&nbsp;Stock&nbsp;Transfer&nbsp;
-            </td>
+            <td class="PageHeader">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Paint&nbsp;Stock&nbsp;Transfer&nbsp;</td>
   
   
         <table style="width: 100%; background-color: #a4d3e9;">
@@ -15,8 +13,11 @@
                   <input type="text"  class="form-control" formControlName="ShipmentNo" id="ShipmentNo" [(ngModel)]="ShipmentNo">
               </td>
               <td colspan="8" style="text-align: left; width: 100%;">
-                  <button type="submit" class="btn btn-primary" (click)='search(ShipmentNo)'><i class="fa fa-search"></i></button>
-              </td>
+                  <button style="width: 2rem;"  type="submit" class="btn btn-primary" (click)='search(ShipmentNo)'><i class="fa fa-search"></i></button>
+                  <!-- <td><button type="button" class="btn btn-primary fa fa-plus"  id="btnadd{{trxLineIndex}}" style="width: 2rem;" (click)="addnewtrxLinesList(trxLineIndex)"></button></td> -->
+
+              
+                </td>
           </tr>
       </table>
       </tr>
@@ -190,13 +191,15 @@
                   <ng-template #thenBlock1>
                   <tr>  <td><input disabled type="number" class="form-control"  style="height: 20px;width: 50px;border-color:white;"formControlName="lineNumber" >
                    </td>
-                   <input disabled hidden type="text" class="form-control"
-                                                              formControlName="uuidRef" value={{uuidRef}}>
+                   <input disabled hidden type="text" class="form-control"    formControlName="uuidRef" value={{uuidRef}}>
                   <!-- <td><select  class="form-control" style="height: 20px;width:120px;" formControlName="itemId" (ngModelChange)='onOptionItemDetails($event,trxLineIndex)'> -->
-                      <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 100%;" (change)='onOptionItemDetails($event,trxLineIndex)' />
+                      <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 200px;" (change)='onOptionItemDetails($event,trxLineIndex)' />
                         <datalist id="dynmicUserIds1">
-                          <option *ngFor="let item of ItemIdList" [value]="item.SEGMENT">{{item.SEGMENT}}--{{item.vin}}</option>
-                           </datalist>
+                          <!-- <option *ngFor="let item of ItemIdList" [value]="item.SEGMENT">{{item.SEGMENT}}--{{item.vin}}</option> -->
+
+                          <option *ngFor="let item of ItemIdList" [value]="item.SEGMENT">{{item.SEGMENT}}--{{item.DESCRIPTION}}</option>
+                          
+                        </datalist>
                     <!-- <option></option>
                     <option *ngFor="let invId of ItemIdList" [ngValue]="invId.itemId">{{invId.SEGMENT}}</option>
                     </select> -->
@@ -211,11 +214,11 @@
                   </ng-template>
                   <ng-template #elseBlockline>
                   </ng-template>
-                  <td><input disabled type="text" class="form-control" style="height: 20px;width: 100%;"formControlName="description"></td>
-                  <td><input disabled type="text" class="form-control" style="height: 20px;width: 100%;" formControlName="uom" ></td>
+                  <td><input disabled type="text" class="form-control" style="height: 20px;width: 400px;"formControlName="description"></td>
+                  <td><input disabled type="text" class="form-control" style="height: 20px;width: 100px;" formControlName="uom" ></td>
   
-                  <td><input disabled type="number" class="form-control" style="height: 20px;width: 100%;" formControlName="transCost"  value="{{ transCost | number:'1.2-2' }}" ></td>
-                  <td><select class=" form-control" style="height: 20px; width: 100%;" formControlName="frmLocator" (ngModelChange)="AvailQty($event,trxLineIndex)">
+                  <td><input disabled type="number" class="form-control" style="height: 20px;width: 100px;" formControlName="transCost"  value="{{ transCost | number:'1.2-2' }}" ></td>
+                  <td><select class=" form-control" style="height: 20px; width: 150px;" formControlName="frmLocator" (ngModelChange)="AvailQty($event,trxLineIndex)">
                     <!-- (ngModelChange)="AvailQty($event,trxLineIndex)" -->
                   <!-- <option>--Select--</option> -->
                   <option *ngFor="let locId of  locData[trxLineIndex]" [ngValue]="locId.locatorId">{{locId.segmentName}}--{{locId.onHandQty}}</option>
@@ -227,8 +230,8 @@
                   <input hidden type="number" formControlName="locatorId">
                   <input hidden  type="text" formControlName="resveQty">
                   </td>
-                  <td><input disabled type="number" class="form-control" style="height: 20px;width: 70px;" formControlName="avlqty"></td>
-                  <td><input type="number" class="form-control" style="height: 20px;width: 50px;" formControlName="primaryQty" (change)="validate(trxLineIndex,qty)" value="{{ primaryQty | number:'1.2-2' }}" #qty>
+                  <td><input disabled type="number" class="form-control" style="height: 20px;width: 100px;" formControlName="avlqty"></td>
+                  <td><input type="number" class="form-control" style="height: 20px;width: 100px;" formControlName="primaryQty" (change)="validate(trxLineIndex,qty)" value="{{ primaryQty | number:'1.2-2' }}" #qty>
                     <span
                     *ngIf="getGroupControllinewise(trxLineIndex,'primaryQty').touched && getGroupControllinewise(trxLineIndex,'primaryQty').invalid" class="error">Valid Item
                    </span>
@@ -261,14 +264,14 @@
                  </td>
                  <td [style.display]="isVisibleVinNumber ? 'block' : 'none'"><input disabled type="text" class="form-control" style="height: 20px;" formControlName="vin"></td>
                  <td [style.display]="isVisibleEngNumber ? 'block' : 'none'"><input disabled type="text" class="form-control" style="height: 20px;width: 100%;"formControlName="engineNo"></td>
-                 <td><input disabled type="text" class="form-control" style="height: 20px;" formControlName="description"></td>
-                 <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="uom" ></td>
-                 <td><input disabled type="number" class="form-control" style="height: 20px;width: 70px; text-align: right;" formControlName="transCost" value="{{ transCost | number:'1.2-2' }}"></td>
+                 <td><input disabled type="text" class="form-control" style="height: 20px;width: 400px;" formControlName="description"></td>
+                 <td><input disabled type="text" class="form-control" style="height: 20px;width: 100px;" formControlName="uom" ></td>
+                 <td><input disabled type="number" class="form-control" style="height: 20px;width: 100px; text-align: right;" formControlName="transCost" value="{{ transCost | number:'1.2-2' }}"></td>
                  <td><input disabled type="text" class=" form-control" style="height: 20px; width: 110px;" formControlName="locator">
                      <input hidden type="number" formControlName="locatorId">
                  </td>
-                 <td><input disabled type="text" class="form-control" style="height: 20px;width: 50px;text-align: right;" formControlName="avlqty"></td>
-                 <td><input disabled type="text" class="form-control" style="height: 20px;width: 50px;text-align: right;" formControlName="primaryQty" ></td>
+                 <td><input disabled type="text" class="form-control" style="height: 20px;width: 100px;text-align: right;" formControlName="avlqty"></td>
+                 <td><input disabled type="text" class="form-control" style="height: 20px;width: 100px;text-align: right;" formControlName="primaryQty" ></td>
                  <td><button disabled type="button" class="btn btn-primary fa fa-plus"  style="width: 2rem;" (click)="addnewtrxLinesList(trxLineIndex)"></button></td>
                  <td><button disabled type="button" class="btn btn-primary fa fa-trash"style="width: 2rem;" (click)="removenewtrxLinesList(trxLineIndex)"></button></td>
                </tr>
