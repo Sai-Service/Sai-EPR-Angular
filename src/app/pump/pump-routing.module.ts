@@ -23,6 +23,7 @@ import { PumpSupplierMasterComponent } from './pump-supplier-master/pump-supplie
 // import { PumpBulkPoUploadComponent } from './pump-bulk-po-upload/pump-bulk-po-upload.component';
 import { ARInvoiceComponent } from './arinvoice/arinvoice.component';
 import { PumpMiscTransactionComponent } from './pump-misc-transaction/pump-misc-transaction.component';
+import { PumpSubinventoryTransferComponent } from './pump-subinventory-transfer/pump-subinventory-transfer.component';
 
 
 const routes: Routes = [
@@ -49,9 +50,12 @@ const routes: Routes = [
   {path:'PumpSupplierMaster',component:PumpSupplierMasterComponent},
   {path:'ARInvoice',component:ARInvoiceComponent},
   {path:'PumpMiscTransaction',component:PumpMiscTransactionComponent},
+  {path:'PumpSubinventoryTransfer',component:PumpSubinventoryTransferComponent},
+
  // {path:'PumpBulkPoUpload',component:PumpBulkPoUploadComponent},
   {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
 ];
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

@@ -26,6 +26,7 @@ import { PumpSupplierMasterComponent } from './pump-supplier-master/pump-supplie
 // import { PumpArInvoiceComponent } from './pump-ar-invoice/pump-ar-invoice.component';
 import { ARInvoiceComponent } from './arinvoice/arinvoice.component';
 import { PumpMiscTransactionComponent } from './pump-misc-transaction/pump-misc-transaction.component';
+import { PumpSubinventoryTransferComponent } from './pump-subinventory-transfer/pump-subinventory-transfer.component';
 
 // import { PumpBulkPoUploadComponent } from './pump-bulk-po-upload/pump-bulk-po-upload.component';
 
@@ -50,7 +51,7 @@ import { PumpMiscTransactionComponent } from './pump-misc-transaction/pump-misc-
     PumpPoListComponent, 
     PumpCustomerMasterComponent, 
     PumpSupplierMasterComponent, 
-    ARInvoiceComponent, PumpMiscTransactionComponent,
+    ARInvoiceComponent, PumpMiscTransactionComponent, PumpSubinventoryTransferComponent,
     ],
 
   imports: [

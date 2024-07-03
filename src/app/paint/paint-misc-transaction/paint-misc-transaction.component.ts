@@ -1042,6 +1042,80 @@ export class PaintMiscTransactionComponent implements OnInit {
   //     $('#input1').focus();
   // }
 
+  validateLocator(i){
+   
+    var patch = this.paintMiscellaneousForm.get('cycleLinesList') as FormArray;
+    var trxLnArr = this.paintMiscellaneousForm.get('cycleLinesList').value;
+    var LocatorSegment1 = trxLnArr[i].LocatorSegment;
+
+    // alert ("index, locator : "+i + " , "+LocatorSegment1)
+
+    this.service
+    .LocatorNameList(LocatorSegment1,Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId)
+    .subscribe((data) => {
+      this.LocatorList = data;
+      if (this.LocatorList.code === 200) {
+        patch.controls[i].patchValue({locatorId: this.LocatorList.obj.locatorId,});
+             
+      } else if (this.LocatorList.code === 400) {
+        alert('Invalid Locator - '+ LocatorSegment1);
+        var arraycontrol = this.paintMiscellaneousForm.get('cycleLinesList').value;
+        patch.controls[i].patchValue({ LocatorSegment: '' });
+        patch.controls[i].patchValue({ avlqty: '' });
+
+
+      }
+    });
+
+  }
+
+  okLocator1(i) {
+    // alert(i);
+    var LocSegment = this.paintMiscellaneousForm.get('cycleLinesList').value;
+    var patch = this.paintMiscellaneousForm.get('cycleLinesList') as FormArray;
+    LocSegment[i].LocatorSegment =
+      this.paintMiscellaneousForm.get('Floor').value +'.' +
+      this.paintMiscellaneousForm.get('Rack').value + '.' +
+      this.paintMiscellaneousForm.get('RackNo').value +'.' +
+      this.paintMiscellaneousForm.get('Row').value +'.' +
+      this.paintMiscellaneousForm.get('RowNo').value;
+
+    var LocatorSegment1 = LocSegment[i].LocatorSegment.toUpperCase();
+    // var LocatorSegment1=LocatorSegment0.toUpperCase();
+
+    patch.controls[i].patchValue({LocatorSegment: LocSegment[i].LocatorSegment.toUpperCase()});
+
+    this.service
+      .LocatorNameList(LocatorSegment1,Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId)
+      .subscribe((data) => {
+        this.LocatorList = data;
+        if (this.LocatorList.code === 200) {
+          patch.controls[i].patchValue({locatorId: this.LocatorList.obj.locatorId,});
+
+                  if (this.LocatorList.obj.length == 0) {
+                    alert('Invalid Code Combination');
+                  } else {
+                    this.locatorId = this.LocatorList.obj.locatorId;
+                  }
+
+        } else if (this.LocatorList.code === 400) {
+          alert('Invalid Locator - '+ LocatorSegment1);
+          var arraycontrol = this.paintMiscellaneousForm.get('cycleLinesList').value;
+          patch.controls[i].patchValue({ LocatorSegment: '' });
+          patch.controls[i].patchValue({ avlqty: '' });
+
+        }
+      });
+
+          this.paintMiscellaneousForm.get('Floor').reset();
+          this.paintMiscellaneousForm.get('Rack').reset();
+          this.paintMiscellaneousForm.get('RackNo').reset();
+          this.paintMiscellaneousForm.get('Row').reset();
+          this.paintMiscellaneousForm.get('RowNo').reset();
+          alert('locator search complete');
+  
+  }
+
   okLocator(i) {
     // alert(i);
     var LocSegment = this.paintMiscellaneousForm.get('cycleLinesList').value;

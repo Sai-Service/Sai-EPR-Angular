@@ -40,7 +40,7 @@
             </td>
             <input hidden formControlName="compileId" [(ngModel)]="compileId">
             <td>
-              <select class="form-control" formControlName="compileType" [(ngModel)]="compileType" #myinput>
+              <select class="form-control" formControlName="compileType" [(ngModel)]="compileType"   #myinput>
                 <option>--Select--</option>
                 <option *ngFor="let tt of transType" [ngValue]="tt.transactionTypeId">{{tt.transactionTypeId}}-{{tt.transactionTypeName}}</option>
               </select>
@@ -99,10 +99,10 @@
             Reason:
           </td>
           <td>
-            <select class="form-control" formControlName="reason" [(ngModel)]="reason"
-              (ngModelChange)="onSelectReason($event)">
+            <select class="form-control" formControlName="reason" [(ngModel)]="reason" (ngModelChange)="onSelectReason($event)">
               <option >--Select--</option>
-              <option *ngFor="let reason of reasonlist">{{reason.reasonName}}-{{reason.costCode}}-{{reason.description}}
+              <option *ngFor="let reason of reasonlist">
+                {{reason.reasonName}}-{{reason.costCode}}-{{reason.description}}
               </option>
             </select>
             <span *ngIf="getGroupControl('reason').touched && getGroupControl('reason').invalid">Valid Transaction Type
@@ -215,25 +215,37 @@
                     class="GridFont">
                     <thead>
                       <tr class="GridHeader">
-                        <th scope="col">Srl No.</th>
-                        <!-- <th scope="col">Item Search</th> -->
-                        <th scope="col">Item Code</th>
-                        <th scope="col">Item Description</th>
-                        <th scope="col">UOM</th>
-                        <th scope="col" rowspan="2">Available Quantity</th>
-                        <th scope="col">Transaction Quantity</th>
-                        <th scope="col">Average Rate</th>
-                        <th scope="col">Subinventory</th>
-                        <th scope="col">Locator</th>
-  
-                        <!-- <div *ngIf="dispRow; then thenBlockRow; else elsedispRow"></div> -->
-                        <!-- <ng-template #thenBlockRow> -->
+                        <!-- <div *ngIf ="compileType==13 then blk1; else blk2"></div> -->
+                        <!-- <ng-template #blk1> -->
+                          <!-- <th scope="col">Srl No.</th>
+                          <th scope="col">Item Code</th>
+                          <th scope="col">Item Description</th>
+                          <th scope="col">UOM</th>
+                          <th scope="col">Stk Locator</th>
+                          <th scope="col">Rec Locator</th>
+                          <th scope="col" rowspan="2">Available Qty</th>
+                          <th scope="col">Transaction Qty</th>
+                          <th scope="col">Average Rate</th>
+                          <th scope="col">Subinventory</th>
+                          <th scope="col">Add</th>
+                          <th scope="col">Delete</th>
+                        </ng-template>
+                        <ng-template #blk2> -->
+                          <th scope="col">Srl No.</th>
+                          <th scope="col">Item Code</th>
+                          <th scope="col">Item Description</th>
+                          <th scope="col">UOM</th>
+                          <th scope="col">Stk Locator</th>
+                          <th scope="col" rowspan="2">Available Qty</th>
+                          <th scope="col">Transaction Qty</th>
+                          <th scope="col">Average Rate</th>
+                          <th scope="col">Subinventory</th>
+                          <th scope="col">Add</th>
+                          <th scope="col">Delete</th>
                         <!-- </ng-template> -->
-                        <!-- <ng-template #elsedispRow> -->
-                        <th scope="col">Add</th>
-                        <th scope="col">Delete</th>
-                        <!-- </ng-template> -->
-                      </tr>
+                        </tr>
+
+
                     </thead>
                     <tbody>
                       <!-- <tr>
@@ -269,7 +281,7 @@
                       <div *ngIf ="compileType==13">
                              <input type="text" list="dynmicUserIds1" (keyup)="filterRecord( $event,trxLineIndex)"
                               formControlName="segment" id="invItemIdFirstWay" class="form-control"
-                              style="height: 20px;width:120px;"  name="segment{{trxLineIndex}}" placeholder="Enter ItemCode" />
+                              style="height: 20px;width:120px;"  name="segment{{trxLineIndex}}"    placeholder="Enter ItemCode" />
                             <!-- <datalist id="dynmicUserIds1">
                               <option *ngFor="let item of ItemIdList" [value]="item.SEGMENT">{{item.SEGMENT}}</option>
                             </datalist> -->
@@ -286,6 +298,61 @@
                             formControlName="description" #desc></td>
                         <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;"
                             formControlName="uom"></td>
+
+                            <!-- ----------------------------------- -->
+
+                            <div *ngIf ="compileType==4">
+                            <div *ngIf="displayLocator[trxLineIndex]; then thenBlock; else elseBlock"></div>
+                            <ng-template #thenBlock>
+                              <td>
+                                <select class="form-control" style="height: 20px; width: 110px;"
+                                  formControlName="LocatorSegment" (ngModelChange)='AvailQty($event,trxLineIndex)' #event>
+                                  <option>--Select--</option>
+                                  <option *ngFor="let locId of  getfrmSubLoc" [ngValue]="locId.locatorId"
+                                    [Value]="locId.segmentName">{{locId.segmentName}}--{{locId.onHandQty}}</option>
+    
+                                  <input hidden formControlName="locatorId">
+                                  <input hidden formControlName="id">
+                                </select>
+                                <span
+                                  *ngIf="getGroupControllinewise(trxLineIndex,'LocatorSegment').touched && getGroupControllinewise(trxLineIndex,'LocatorSegment').invalid"
+                                  class="error">Valid Item
+                                </span>
+                              </td>
+                            </ng-template>
+
+                            <ng-template #elseBlock>
+                              <td>
+                                <input data-toggle="modal" data-target="#myModal1" formControlName="LocatorSegment"
+                                  value={{LocatorSegment}} (click)="OpenLocator(trxLineIndex)" class="form-control"
+                                  style="height: 20px;width: 110px;">
+                                <span
+                                  *ngIf="getGroupControllinewise(trxLineIndex,'LocatorSegment').touched && getGroupControllinewise(trxLineIndex,'LocatorSegment').invalid"
+                                  class="error">Valid Item
+                                </span>
+                              </td>
+                            </ng-template>
+                            </div>
+
+                            <!-- -----------------Added by rkpr---------- -->
+
+                            <div *ngIf ="compileType==13">
+                              <td>
+                                <input data-toggle="modal" data-target="#myModal1" formControlName="LocatorSegment"
+                                  value={{LocatorSegment}} (click)="OpenLocator(trxLineIndex)" class="form-control"
+                                  style="height: 20px;width: 110px;"  (change)="validateLocator(trxLineIndex)">
+
+                                <span
+                                  *ngIf="getGroupControllinewise(trxLineIndex,'LocatorSegment').touched && getGroupControllinewise(trxLineIndex,'LocatorSegment').invalid"
+                                  class="error">Valid Item
+                                </span>
+                              </td>
+
+                            </div>
+                            <!-- ------------above section-----Added by rkpr---------- -->
+
+
+                            <!-- ------------------------------------------- -->
   
                           <input hidden type='number' formControlName="locId" [(ngModel)]="locId">
                           <input hidden type="number" formControlName="onHandQty">
@@ -325,8 +392,7 @@
   
   
   
-                          <div *ngIf="displayLocator[trxLineIndex]; then thenBlock; else elseBlock">
-                          </div>
+                          <!-- <div *ngIf="displayLocator[trxLineIndex]; then thenBlock; else elseBlock"></div>
                           <ng-template #thenBlock>
                             <td>
                               <select class="form-control" style="height: 20px; width: 110px;"
@@ -334,7 +400,6 @@
                                 <option>--Select--</option>
                                 <option *ngFor="let locId of  getfrmSubLoc" [ngValue]="locId.locatorId"
                                   [Value]="locId.segmentName">{{locId.segmentName}}--{{locId.onHandQty}}</option>
-                                <!-- [ngValue]="locId.locatorId" -->
   
                                 <input hidden formControlName="locatorId">
                                 <input hidden formControlName="id">
@@ -350,14 +415,12 @@
                               <input data-toggle="modal" data-target="#myModal1" formControlName="LocatorSegment"
                                 value={{LocatorSegment}} (click)="OpenLocator(trxLineIndex)" class="form-control"
                                 style="height: 20px;width: 110px;">
-                              <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Small Modal</button> -->
                               <span
                                 *ngIf="getGroupControllinewise(trxLineIndex,'LocatorSegment').touched && getGroupControllinewise(trxLineIndex,'LocatorSegment').invalid"
                                 class="error">Valid Item
                               </span>
                             </td>
-                          </ng-template>
-                          <!-- </td> -->
+                          </ng-template> -->
   
   
                           <div *ngIf="displayaddButton; then thenBlockopen; else elseBlockfreeze"> </div>
@@ -488,7 +551,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"
-                (click)="okLocator(content)" #input6>Ok</button>
+                (click)="okLocator1(content)" #input6>Ok</button>
             </div>
           </div>
         </div>

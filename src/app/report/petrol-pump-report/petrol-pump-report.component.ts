@@ -17,6 +17,7 @@ const MIME_TYPES = {
   templateUrl: './petrol-pump-report.component.html',
   styleUrls: ['./petrol-pump-report.component.css']
 })
+
 export class PetrolPumpReportComponent implements OnInit {
   petrolPumpReportForm: FormGroup;
   pipe = new DatePipe('en-US');
@@ -24,6 +25,11 @@ export class PetrolPumpReportComponent implements OnInit {
   public minDate = new Date();
   fromDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   toDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+  OUCode: string;
+  locCode: string;
+  subInvCode: any;
+  subInventory: string;
+
   public DepartmentList: any = [];
   closeResetButton = true;
   dataDisplay: any;
@@ -35,6 +41,13 @@ export class PetrolPumpReportComponent implements OnInit {
   isVisiblelocationLOV: boolean = false;
   isVisiblesparesMiscIssueReceipt: boolean = false;
   isDisabled1 = false;
+  isVisibleonlyLocationCode = false;
+  isVisibleGSTPurchaseRegister = false;
+  isVisiblefromtosubinventory= false;
+  isVisiblespPurRegDownLoad= false;
+  isVisibleDepartmentList: boolean = false;
+
+
 
   public BillShipToList: Array<string> = [];
   age1: number=20;
@@ -57,6 +70,9 @@ export class PetrolPumpReportComponent implements OnInit {
   deptId:[],
   locCode:[],
   locId:[],
+
+  OUCode: [''],
+  subInventory: [''],
     })
    }
 
@@ -98,6 +114,16 @@ export class PetrolPumpReportComponent implements OnInit {
       }
     );
 
+    this.service.subInvCode2(sessionStorage.getItem('deptId'), sessionStorage.getItem('divisionId')).subscribe(
+      data => {
+        this.subInvCode = data;
+        console.log(this.subInvCode);
+        if (this.subInvCode.subInventoryCode != null) {
+          this.subInventory = this.subInvCode.subInventoryCode;
+          this.petrolPumpReportForm.patchValue({ subInventory: this.subInvCode.subInventoryCode })
+        }
+      });
+
   }
 
 
@@ -116,6 +142,19 @@ export class PetrolPumpReportComponent implements OnInit {
 
   reportName: string;
 
+  spPurRegDownLoad() {
+    
+    const fileName = 'Purchase-Register-' +  '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.reportService.spPurRegDownLoadReport(sessionStorage.getItem('ouId'))
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.dataDisplay = ''
+        this.closeResetButton = true;
+        this.isDisabled1 = false;
+      })
+  }
+
   reportDetails(reportName) {
 
     if (reportName === 'CashCollectionExcessShort') {
@@ -123,6 +162,10 @@ export class PetrolPumpReportComponent implements OnInit {
       this.isVisibleCashCollectionExcessShort=true;
       this.isVisiblegstsaiDebtors=false;
       this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisiblefromtosubinventory= false;
+      this.isVisiblespPurRegDownLoad=false;
 
     }
     if (reportName==='gstsaiDebtors'){
@@ -130,6 +173,10 @@ export class PetrolPumpReportComponent implements OnInit {
       this.isVisiblegstsaiDebtors=true;
       this.isVisibleCashCollectionExcessShort=false;
       this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisiblefromtosubinventory= false;
+      this.isVisiblespPurRegDownLoad=false;
 
     }
     if (reportName==='cashCardSum'){
@@ -137,6 +184,10 @@ export class PetrolPumpReportComponent implements OnInit {
       this.isVisibleCashCollectionExcessShort=true;
       this.isVisiblegstsaiDebtors=false;
       this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisiblefromtosubinventory= false;
+      this.isVisiblespPurRegDownLoad=false;
 
     }
     if (reportName==='cashCardDet'){
@@ -144,6 +195,10 @@ export class PetrolPumpReportComponent implements OnInit {
       this.isVisibleCashCollectionExcessShort=true;
       this.isVisiblegstsaiDebtors=false;
       this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisiblefromtosubinventory= false;
+      this.isVisiblespPurRegDownLoad=false;
 
     }
     if (reportName==='saleRegisterCustomerWise'){
@@ -151,6 +206,10 @@ export class PetrolPumpReportComponent implements OnInit {
       this.isVisibleCashCollectionExcessShort=true;
       this.isVisiblegstsaiDebtors=false;
       this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisiblefromtosubinventory= false;
+      this.isVisiblespPurRegDownLoad=false;
 
     }
     if (reportName==='salesTotCollReport'){
@@ -159,6 +218,10 @@ export class PetrolPumpReportComponent implements OnInit {
       this.isVisibleCashCollectionExcessShort=true;
       this.isVisiblegstsaiDebtors=false;
       this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisiblefromtosubinventory= false;
+      this.isVisiblespPurRegDownLoad=false;
 
     }
     if (reportName==='shiftEntryReport'){
@@ -167,6 +230,10 @@ export class PetrolPumpReportComponent implements OnInit {
       this.isVisibleCashCollectionExcessShort=true;
       this.isVisiblegstsaiDebtors=false;
       this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisiblefromtosubinventory= false;
+      this.isVisiblespPurRegDownLoad=false;
 
     }
 
@@ -176,6 +243,10 @@ export class PetrolPumpReportComponent implements OnInit {
       this.isVisibleCashCollectionExcessShort=true;
       this.isVisiblegstsaiDebtors=false;
       this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisiblefromtosubinventory= false;
+      this.isVisiblespPurRegDownLoad=false;
 
     }
 
@@ -184,12 +255,80 @@ export class PetrolPumpReportComponent implements OnInit {
       this.isVisibleCashCollectionExcessShort=false;
       this.isVisiblegstsaiDebtors=false;
       this.isVisiblesparesMiscIssueReceipt = true;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisiblefromtosubinventory= false;
+      this.isVisiblespPurRegDownLoad=false;
 
     }
 
+    if (reportName==='gstClosingReport'){
+      this.reportName='Pump Closing Stock Report';
+      this.isVisibleCashCollectionExcessShort=false;
+      this.isVisiblegstsaiDebtors=false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisibleonlyLocationCode = true;
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisiblefromtosubinventory= false;
+      this.isVisiblespPurRegDownLoad=false;
+     
   }
 
+  if (reportName === 'gstPurRegister') {
+    this.reportName = 'Pump Purchase Register Details';
+    if (this.reportName === 'Pump Purchase Register Details') {
+      this.isVisiblespPurRegDownLoad = true;
+    }
+    if (Number(sessionStorage.getItem('deptId')) === 4) {
+      this.isVisibleDepartmentList = true;
+    }
+    this.isVisibleCashCollectionExcessShort=false;
+    this.isVisiblegstsaiDebtors=false;
+    this.isVisiblesparesMiscIssueReceipt = false;
+    this.isVisibleonlyLocationCode = false;
+    this.isVisibleGSTPurchaseRegister = true;
+    this.isVisiblefromtosubinventory= false;
+    // this.isVisiblespPurRegDownLoad=false;
+   
+}
 
+if (reportName === 'gstpurRegSumm') {
+  this.reportName = 'Pump Purchase Register - Summary';
+  if (Number(sessionStorage.getItem('deptId')) === 4) {
+    this.isVisibleDepartmentList = true;
+  }
+  this.isVisibleCashCollectionExcessShort=false;
+  this.isVisiblegstsaiDebtors=false;
+  this.isVisiblesparesMiscIssueReceipt = false;
+  this.isVisibleonlyLocationCode = false;
+  this.isVisibleGSTPurchaseRegister = true;
+  this.isVisiblefromtosubinventory= false;
+  // this.isVisiblespPurRegDownLoad=false;
+ 
+}
+
+if (reportName === 'sparesSubinvTransReceived') {
+  this.reportName = 'Sub Inventory Transfer Received Report';
+  this.isVisibleCashCollectionExcessShort=false;
+  this.isVisiblegstsaiDebtors=false;
+  this.isVisiblesparesMiscIssueReceipt = false;
+  this.isVisibleonlyLocationCode = false;
+  this.isVisibleGSTPurchaseRegister = false;
+  this.isVisiblefromtosubinventory= true;
+  this.isVisiblespPurRegDownLoad=false;
+}
+
+if (reportName === 'sparesSubinvTransMade') {
+      this.reportName = 'Sub Inventory Transfer Made Report';
+      this.isVisibleCashCollectionExcessShort=false;
+      this.isVisiblegstsaiDebtors=false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisiblefromtosubinventory= true;
+      this.isVisiblespPurRegDownLoad=false;
+  }
+}
 
 
   fromToDateValidation(fDate,tDate){
@@ -204,7 +343,8 @@ export class PetrolPumpReportComponent implements OnInit {
     this.dataDisplay='';
     // this.isDisabled1=false; 
   }
-  }
+}
+  
 
   toDateValidation(tDate){
     this.rptValidation=true;
@@ -231,6 +371,10 @@ export class PetrolPumpReportComponent implements OnInit {
     var fromDate = this.pipe.transform(purStDt, 'dd-MMM-yyyy');
     var toDate1 = this.petrolPumpReportForm.get('toDate').value;
     var toDate = this.pipe.transform(toDate1, 'dd-MMM-yyyy');
+    var subInventory = this.petrolPumpReportForm.get('subInventory').value;
+    var fDate =this.petrolPumpReportForm.get('fromDate').value;
+    var tDate =this.petrolPumpReportForm.get('toDate').value;
+
     if (reportName === 'Cash Collection-Excess Short Report') {
       this.fromToDateValidation(fromDate,toDate); if(this.rptValidation==false){return;}
       const fileName = 'Cash Collection-Excess Short-' +  fromDate + '.xls';
@@ -379,6 +523,146 @@ else if (reportName === 'Sales Register - Petrol Pump'){
           })
       }
     }
+    else if (reportName === 'Pump Closing Stock Report') {
+      const fileName = 'PUMP-Closing-Stock-' + sessionStorage.getItem('locName').trim() + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.spclosstrockReport(locId,subInventory)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.spclosstrockReport(sessionStorage.getItem('locId'),subInventory)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
+
+   else if (reportName === 'Pump Purchase Register Details') {
+
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        const fileName = 'Pump Purchase Register Details-' +  fromDate + '-TO-' + toDate + '.xls';
+        const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+        this.reportService.sppurRegidetailReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.dataDisplay = ''
+            this.closeResetButton = true;
+            this.isDisabled1 = false;
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        const fileName = 'Pump Purchase Register Details-' +  fromDate + '-TO-' + toDate + '.xls';
+        const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+        this.reportService.sppurRegidetailReportSpares(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.dataDisplay = ''
+            this.closeResetButton = true;
+            this.isDisabled1 = false;
+          })
+      }
+    }
+    else if (reportName === 'Pump Purchase Register - Summary') {
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
+      const fileName = 'Pump Purchase Register - Summary-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.sppurRegiSummReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if ((Number(sessionStorage.getItem('deptId'))) != 4) {
+        this.reportService.sppurRegiSummReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
+
+    else if (reportName==='Sub Inventory Transfer Received Report'){
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+          alert("Sub Inventory Transfer Received Report...WIP....");return;
+
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+      // alert ("this.rptValidation:"+this.rptValidation)
+      // alert (" sessionStorage.getItem('deptId')"+ sessionStorage.getItem('deptId'))
+
+      const fileName = 'Sub Inventory Transfer Received Report-' +  fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      
+      if ((Number(sessionStorage.getItem('deptId'))===4)){
+        this.reportService.spInvTransRecFuc(fromDate,toDate, locId, subInventory)
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.isDisabled1 = false;
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+        })
+      }
+      else if ((Number(sessionStorage.getItem('deptId')))!=4){
+        this.reportService.spInvTransRecFuc(fromDate,toDate, sessionStorage.getItem('locId'), subInventory)
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.isDisabled1 = false;
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+        })
+      }
+    }
+
+    else if (reportName==='Sub Inventory Transfer Made Report'){
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+          alert("Sub Inventory Transfer Made Report...WIP....");return;
+          
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
+      const fileName = 'Sub Inventory Transfer Made Report-' +  fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if ((Number(sessionStorage.getItem('deptId'))===4)){
+        this.reportService.spInvTransMadeFuc(fromDate,toDate, locId, subInventory)
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.isDisabled1 = false;
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+        })
+      }
+      else if ((Number(sessionStorage.getItem('deptId')))!=4){
+        this.reportService.spInvTransMadeFuc(fromDate,toDate, sessionStorage.getItem('locId'), subInventory)
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.isDisabled1 = false;
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+        })
+      } 
+    }
+
+    
+
+
+    // ------------------------------------------------------------
   }
 
 

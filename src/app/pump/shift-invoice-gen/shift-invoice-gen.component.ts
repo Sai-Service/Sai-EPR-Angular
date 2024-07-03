@@ -223,6 +223,35 @@ export class ShiftInvoiceGenComponent  {
     );
   }
 
+  // PrintInv(trxNum) {
+  //   alert ("invoice Number : "+trxNum)
+  // }
+
+  PrintInv(trxNum) {
+
+      //  alert ("invoice Number : "+trxNum)
+
+       this.closeResetButton = false;
+       this.progress = 0;
+       this.dataDisplay = 'Invoice Printing in Progress....Pls do not refresh the Page';
+
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+     this.PumpService1.printPumpInvoice(trxNum)
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+
+      });
+      
+    }
+
+
   refresh() {
     window.location.reload();
   }

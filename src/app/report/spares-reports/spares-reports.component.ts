@@ -2235,6 +2235,8 @@ export class SparesReportsComponent implements OnInit {
         })
       } 
     }
+
+    
     else if (reportName==='Internal Consumption Report'){
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 

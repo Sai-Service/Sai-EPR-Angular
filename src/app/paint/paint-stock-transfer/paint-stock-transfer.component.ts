@@ -1041,57 +1041,57 @@ viewStockgatePass() {
   )
   }
 
-  message: string = "Please Fix the Errors !";
-  msgType:string ="Close";
-  getMessage(msgType: string) {
-    this.msgType = msgType;
-    if (msgType.includes("Save")) {
-      this.submitted = true;
-      (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
-      if (this.paintStockTranferForm.invalid) {
-        
-        //this.submitted = false;
-        (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '');
+  message:string="PleaseFixtheErrors!";
+msgType:string="Close";
+getMessage(msgType:string){
+this.msgType=msgType;
+if(msgType.includes("Save")){
+this.submitted=true;
+(document.getElementById('saveBtn')as HTMLInputElement).setAttribute('data-target','#confirmAlert');
+if(this.paintStockTranferForm.invalid){
+
+//this.submitted=false;
+(document.getElementById('saveBtn')as HTMLInputElement).setAttribute('data-target','');
         alert('Please enter all Mandatory fields');
-        return;
-      }
-      this.message = "Do you want to SAVE the changes(Yes/No)?"
-      
-    }
+return;
+}
+this.message="Do you want to SAVE the changes(Yes/No)?"
 
-    if (msgType.includes("Reset")) {
-      this.message = "Do you want to Reset the changes(Yes/No)?"
-    }
+}
 
-    if (msgType.includes("Update")) {
-        this.message = "Do you want to Update the changes(Yes/No)?"
-      }
-    
-    if (msgType.includes("Close")) {
-      this.message = "Do you want to Close the Form(Yes/No)?"
-    }
-    return;
-  }
+    if (msgType.includes("Reset")) {
+      this.message = "Do you want to Reset the changes(Yes/No)?"
+    }
 
- executeAction() {
-    if(this.msgType.includes("Save")) {
-      this.newStkTransfer();
-    }
+    if (msgType.includes("Update")) {
+        this.message = "Do you want to Update the changes(Yes/No)?"
+      }
+    
+    if (msgType.includes("Close")) {
+      this.message = "Do you want to Close the Form(Yes/No)?"
+    }
+    return;
+  }
 
-    if (this.msgType.includes("Reset")) {
-      this.resetMoveOrder();
-    }
+ executeAction() {
+    if(this.msgType.includes("Save")) {
+      this.newStkTransfer();
+    }
 
-    if (this.msgType.includes("Update")) {
-        this.EwayUpdate();
-      }
-    
-    if (this.msgType.includes("Close")) {
-      this.router.navigate(['admin']);
-    }
+    if (this.msgType.includes("Reset")) {
+      this.resetMoveOrder();
+    }
 
-    return;
-  }
+    if (this.msgType.includes("Update")) {
+        this.EwayUpdate();
+      }
+    
+    if (this.msgType.includes("Close")) {
+      this.router.navigate(['admin']);
+    }
+
+    return;
+  }
 @HostListener('window:unload', ['$event'])
   keyEvent1(event: KeyboardEvent) {
     this.deleteReserve();

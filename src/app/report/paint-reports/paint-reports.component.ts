@@ -604,6 +604,7 @@ export class PaintReportsComponent implements OnInit {
           })
       }
     }
+    
     else if (reportName === 'Paint Stock Ledger') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
        if (Number(sessionStorage.getItem('deptId')) === 4) {
