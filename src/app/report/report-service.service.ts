@@ -1169,6 +1169,13 @@ saleRegisterReport_PP(fromDate,toDate,locId){
   }); 
 }
 
+spDeadStockNoConsuptionDaywiseFn(ouId,locId,noOfday,subId){
+  const REQUEST_URI = this.ServerUrl +`/SparesReports/SprDeadStkDayWise?ouId=${ouId}&locId=${locId}&noOfDays=${noOfday}&subInvCode=${subId}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  }); 
+}
 
 }
 

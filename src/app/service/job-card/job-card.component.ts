@@ -1623,7 +1623,7 @@ export class JobCardComponent implements OnInit {
   // JOBCARD SEARCH BY  JCNO
 
   Search(jobCardNo) {
-    alert('jobCardNo------'+jobCardNo)
+    // alert('jobCardNo------'+jobCardNo)
     //  ---------------------------For Account Login ------------------
       if (Number(sessionStorage.getItem('dept')) ===4)  {
             this.jobcardForm.disable();
@@ -1741,7 +1741,10 @@ export class JobCardComponent implements OnInit {
                 // if (data.obj.classCodeType==='INSURER'){
                 this.dispReadyInvoice = true; 
                 // }
-                // this.preInvButton=true;
+                // alert(data.obj.jcType)
+                if (data.obj.jcType==='BS'){
+                this.preInvButton=true;
+                }
               } 
                 else{
                 this.dispReadyInvoice = false; 
@@ -3588,23 +3591,63 @@ printPreInvoice(){
     });
 }
 
-printPreInvoiceDp(custTp){
+printPreInvoiceDp1(custTp){
 
   var jcNum=this.jobcardForm.get('jobCardNum').value
   var jctype=this.jobcardForm.get('jcType').value
 
-  const fileName = 'download.pdf';
-  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-  this.serviceService.printWsPreInvdocumentDp(jcNum,jctype,custTp)
-    .subscribe(data => {
-      var blob = new Blob([data], { type: 'application/pdf' });
-      var url = URL.createObjectURL(blob);
-      var printWindow = window.open(url, '', 'width=800,height=500');
-      printWindow.open
-      
-    });
+
+  this.serviceService.jobCardCount(jcNum)
+  .subscribe(
+    data1 => { 
+      console.log(data1.obj);
+      if (data1.code===200){
+        const fileName = 'download.pdf';
+        const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+        this.serviceService.printWsPreInvdocumentDp(jcNum,jctype,custTp)
+          .subscribe(data => {
+            var blob = new Blob([data], { type: 'application/pdf' });
+            var url = URL.createObjectURL(blob);
+            var printWindow = window.open(url, '', 'width=800,height=500');
+            printWindow.open
+            
+          });
+      }
+      else{
+        alert(data1.message)
+      }
+    }
+  );
 }
 
+
+printPreInvoiceDp(custTp){
+  var jcNum=this.jobcardForm.get('jobCardNum').value
+  var jctype=this.jobcardForm.get('jcType').value
+
+
+  this.serviceService.jobCardCountDp(jcNum)
+  .subscribe(
+    data1 => { 
+      console.log(data1.obj);
+      if (data1.code===200){
+        const fileName = 'download.pdf';
+        const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+        this.serviceService.printWsPreInvdocumentDp(jcNum,jctype,custTp)
+          .subscribe(data => {
+            var blob = new Blob([data], { type: 'application/pdf' });
+            var url = URL.createObjectURL(blob);
+            var printWindow = window.open(url, '', 'width=800,height=500');
+            printWindow.open
+            
+          });
+      }
+      else{
+        alert(data1.message)
+      }
+    }
+  );
+}
 
 
 
