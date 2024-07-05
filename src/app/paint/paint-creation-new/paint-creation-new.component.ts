@@ -731,8 +731,8 @@ export class PaintCreationNewComponent implements OnInit {
             // ------------- Tint volume required   as per MAIN COLOR QTY
             // ----  "400-SIK-WTB "  -  0.183 for 1 gm; main color qty  =500 gms
 
-            // var  tintQty =0.183* clrdQty;
-            // trxLnArr1.controls[i].patchValue({ physicalQty: tintQty });
+            var  tintQty =0.183* clrdQty;
+            trxLnArr1.controls[i].patchValue({ physicalQty: tintQty });
 
 
 
