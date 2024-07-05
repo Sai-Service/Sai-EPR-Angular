@@ -728,6 +728,15 @@ export class PaintCreationNewComponent implements OnInit {
             trxLnArr1.controls[i].patchValue({ avlqty: avlqty1 });
             trxLnArr1.controls[i].patchValue({ resveQty: reserve });
 
+            // ------------- Tint volume required   as per MAIN COLOR QTY
+            // ----  "400-SIK-WTB "  -  0.183 for 1 gm; main color qty  =500 gms
+
+            // var  tintQty =0.183* clrdQty;
+            // trxLnArr1.controls[i].patchValue({ physicalQty: tintQty });
+
+
+
+
             // alert ("Value ="+Number(avlqty11)*12);
 
           }
@@ -1637,13 +1646,14 @@ this.paintCreationNewForm.patchValue({totalItemValue :totValue})
 
 validateClrQty(clrQty: any) {
     
-
   if (clrQty === null || clrQty === undefined || clrQty <= 0) {
     alert("COLOR QTY :  Should be above Zero.");
     this.colorQty = null;
     return;
   }
 
+  this.paintCreationNewForm.get('colorQty').disable();
+  this.paintCreationNewForm.get('colorDescription').disable();
  
 
 }

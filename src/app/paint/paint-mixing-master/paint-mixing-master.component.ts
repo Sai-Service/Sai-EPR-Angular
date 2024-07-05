@@ -25,6 +25,8 @@ interface IPaintMixingMaster {
   endDate:string,
   status:string;
 
+  unitgms :number;
+
 }
 
 @Component({
@@ -81,6 +83,9 @@ export class PaintMixingMasterComponent implements OnInit {
   abc : any;
   abc2: any;
 
+  unitgms :number;
+
+
   saveButton=true;
   cancelButton=false;
   checkValidation=false;
@@ -132,6 +137,7 @@ export class PaintMixingMasterComponent implements OnInit {
       startDate:[],
       endDate:[],
       status:[],
+      unitgms :[],
     })
    }
 
@@ -202,6 +208,10 @@ export class PaintMixingMasterComponent implements OnInit {
 
 
   newMast(){
+
+    var  resp=confirm("Do You Want to Save this Transaction ???");
+    if(resp==false) { return;}
+
     this.saveButton=false;
     this.CheckDataValidations();
     const formValue: IPaintMixingMaster = this.trData(this.paintMixingMasterForm.getRawValue()); 
@@ -384,6 +394,10 @@ onOptionsSelected(event: any) {
 
   deleteRelation() {
     // const formValue = this.trData(this.relatedItemMasterForm.value);  
+
+    var  resp=confirm("Do You Want to Cancel this Transaction ???");
+    if(resp==false) { return;}
+
     var relId =this.paintMixingMasterForm.get("relationId").value;
     var mainItemId =this.paintMixingMasterForm.get("itemId").value;
     this.service.DeleteItemRelation(relId).subscribe((res: any) => {
