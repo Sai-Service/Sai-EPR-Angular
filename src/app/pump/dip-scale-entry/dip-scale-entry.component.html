@@ -41,16 +41,31 @@
                         <td><input disabled type="text" class="form-control" formControlName="dipentrynumber" [(ngModel)] ="dipentrynumber" >
                         <!-- <input hidden disabled type="text" class="form-control"  formControlName="dipentrynumber"> -->
                         <input disabled hidden type="number" class="form-control" formControlName="dipentryid">
-
-                        <td style="width: 15%" class="LabelFontStyle">Dip&nbsp;Entry&nbsp;Date:</td>
-                        <td><input  type="date" class="form-control" formControlName="dipentrydate"  [(ngModel)] ="dipentrydate" (change)="validateShiftDate(dipentrydate)" style="background-color: yellow;" max="{{minDate | date:'yyyy-MM-dd'}}"></td>
-                        
+           
                      
                     </tr>
                   
     
     
                     <tr>
+                        
+                        <td style="width: 15%" class="LabelFontStyle">Dip&nbsp;Entry&nbsp;Date:</td>
+                        <td><input  type="date" class="form-control" formControlName="dipentrydate"  [(ngModel)] ="dipentrydate" (change)="validateShiftDate(dipentrydate)" style="background-color: yellow;" max="{{minDate | date:'yyyy-MM-dd'}}"></td>
+             
+
+                        <td style="width: 15%;" class="LabelFontStyle">Tank&nbsp;Code&nbsp;:&nbsp;</td>
+
+                        <td>
+                            <select  formControlName="tankid" id="tankid" [(ngModel)]="tankid" (ngModelChange)="onSelectTank($event)"   class="form-control" style="background-color: yellow;">
+                                <!-- <option>--Select--</option> -->
+                                <option *ngFor="let sc of  tankList"  [value]="sc.tankId">
+                                    {{sc.tankName}}
+                                </option>
+                            </select>
+
+                            <input disabled  hidden type="text" class="form-control" formControlName="tankname">
+
+                        </td>
                         <!-- <div *ngIf="displayButton; then saveYes1; else saveYes2"></div>
                         <ng-template #saveYes1>   -->
 
@@ -67,54 +82,8 @@
                             <input disabled hidden type="number" class="form-control" formControlName="shiftid">
                           </td> -->
 
-                            <td style="width: 15%" class="LabelFontStyle">Shift&nbsp;Employee:</td>
-                            <td>
-                                <!-- <select formControlName="emplName" class="form-control"
-                                    style="background-color: yellow;" (change)="onSelectEmplName($event)">
-                                    <option>--Select--</option>
-                                    <option *ngFor="let sc of  salesPersonList">
-                                        {{sc.ticketNo}}-{{sc.fullName}}
-                                    </option>
-                                </select> -->
-
-                            <input type="text" formControlName="shiftEmplName" [(ngModel)]="shiftEmplName"   style="background-color: yellow;"
-                                (keyup)="getUserIdsFirstWay($event)" id="userIdFirstWay"
-                                list="dynmicUserIds" class="form-control" 
-                                (change)="onSelectEmplName($event)" />
-                            <datalist id="dynmicUserIds">
-                                <option *ngFor="let sc of  salesPersonList">
-                                    {{sc.ticketNo}}-{{sc.fullName}}
-                            </datalist>
-                                <input disabled hidden type="number" class="form-control" formControlName="emplid">
-                            </td>
-
-                        <!-- </ng-template>
-                        <ng-template #saveYes2>  
-                            <td style="width: 15%" class="LabelFontStyle">Shift:</td>
-                            <td><input disabled type="text" class="form-control" formControlName="shiftTypeName" [(ngModel)]="shiftTypeName" ></td>
-
-                            <td style="width: 15%" class="LabelFontStyle">Shift&nbsp;Employee:</td>
-                            <td><input disabled type="text" class="form-control" formControlName="shiftEmplName" [(ngModel)]="shiftEmplName" ></td>
-
-
-                        </ng-template> -->
-
-
-                                                       
-
-                        <td style="width: 15%;" class="LabelFontStyle">Tank&nbsp;Code&nbsp;:&nbsp;</td>
-
-                        <td>
-                            <select  formControlName="tankid" id="tankid" [(ngModel)]="tankid" (ngModelChange)="onSelectTank($event)"   class="form-control" style="background-color: yellow;">
-                                <!-- <option>--Select--</option> -->
-                                <option *ngFor="let sc of  tankList"  [value]="sc.tankId">
-                                    {{sc.tankName}}
-                                </option>
-                            </select>
-
-                            <input disabled  hidden type="text" class="form-control" formControlName="tankname">
-
-                        </td>
+                           
+                       
                                 
                     </tr>
                     <tr>
@@ -134,6 +103,35 @@
                         <td style="width: 15%" class="LabelFontStyle">Close&nbsp;Qty:</td>
                         <td><input disabled type="number" class="form-control" formControlName="closestock" [(ngModel)]="closestock" style="text-align:center"></td>
 
+
+                    </tr>
+                    <tr>
+
+                        <td style="width: 15%" class="LabelFontStyle">Shift&nbsp;Employee:</td>
+                        <td colspan="2">
+                            <!-- <select formControlName="emplName" class="form-control"
+                                style="background-color: yellow;" (change)="onSelectEmplName($event)">
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of  salesPersonList">
+                                    {{sc.ticketNo}}-{{sc.fullName}}
+                                </option>
+                            </select> -->
+
+                        <input type="text" formControlName="shiftEmplName" [(ngModel)]="shiftEmplName"   style="background-color: yellow;width:100%"
+                            (keyup)="getUserIdsFirstWay($event)" id="userIdFirstWay"
+                            list="dynmicUserIds" class="form-control" 
+                            (change)="onSelectEmplName($event)" />
+                        <datalist id="dynmicUserIds">
+                            <option *ngFor="let sc of  salesPersonList">
+                                <!-- {{sc.ticketNo}}-{{sc.fullName}}  -->
+                                {{sc.fullName}}-{{sc.ticketNo}}
+
+
+                        </datalist>
+                            <input  hidden type="number" class="form-control" formControlName="emplid">
+                        </td>
+
+                                                             
 
                     </tr>
 
