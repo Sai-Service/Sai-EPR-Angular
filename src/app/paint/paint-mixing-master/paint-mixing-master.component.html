@@ -22,6 +22,9 @@
                 <td style="width: 15%" class="LabelFontStyle">Main&nbsp;Colour&nbsp;Code:</td>
                 <!-- <td><input type="text" class="form-control" formControlName="itemCode" [(ngModel)]="itemCode" (change)="Validateitem(itemCode)"   ></td> -->
     
+                <div *ngIf="displayButton; then blkm1; else blkm2"></div>
+
+                <ng-template #blkm1>  
                 <td>
                     <input type="text" formControlName="itemCode" [(ngModel)]="itemCode" (change)="Validateitem(itemCode)"
                         (keyup)="getUserIdsFirstWayColor($event)" id="userIdFirstWay"
@@ -29,16 +32,22 @@
                     <datalist id="dynmicUserIds">
                         <option *ngFor="let item of paintColorList" [ngValue]="item.SEGMENT">
                           {{item.SEGMENT}}
+                          <!-- {{item.SEGMENT}}-{{item.DESCRIPTION}} -->
+
                         </option>
                     </datalist>
                   </td>
+                </ng-template>
+
+                <ng-template #blkm2>  
+                    <td><input disabled type="text" class="form-control" formControlName="itemCode" [(ngModel)]="itemCode" ></td>
+                </ng-template>
                
                
-               
-                <td style="width: 15%" class="LabelFontStyle">&nbsp;Description:</td>
+                <td style="width: 15%" class="LabelFontStyle">&nbsp;Color Description:</td>
                 <td><input  type="text" class="form-control" formControlName="description" [(ngModel)]="description" disabled style="width:350px ;"></td>
               
-                <td style="width: 15%" class="LabelFontStyle">Category:</td>
+                <td style="width: 15%" class="LabelFontStyle">M.Category:</td>
                 <td><input type="text" class="form-control" formControlName="itemCategory" [(ngModel)]="itemCategory" disabled ></td>
            
               </tr>
@@ -47,10 +56,18 @@
             <tr>
                
                 <td style="width: 15%" class="LabelFontStyle">Base&nbsp;Colour&nbsp;Code:</td>
+              
+                <div *ngIf="displayButton; then blkb1; else blkb2"></div>
+                <ng-template #blkb1>  
                 <td><input type="text" class="form-control" formControlName="relItemCode" [(ngModel)]="relItemCode" (change)="Validateitem1(relItemCode)"></td>
-                <td style="width: 15%" class="LabelFontStyle">Description:</td>
+                </ng-template>
+                <ng-template #blkb2>  
+                    <td><input disabled type="text" class="form-control" formControlName="relItemCode" [(ngModel)]="relItemCode" ></td>
+                </ng-template>
+               
+                <td style="width: 15%" class="LabelFontStyle">Base Description:</td>
                 <td><input type="text" class="form-control" formControlName="relDescription" [(ngModel)]="relDescription" disabled style="width:350px ;"></td>
-                <td style="width: 15%" class="LabelFontStyle">Category:</td>
+                <td style="width: 15%" class="LabelFontStyle">B.Category:</td>
                 <td><input type="text" class="form-control" formControlName="baseCategory" [(ngModel)]="baseCategory" disabled ></td>
                       
             </tr>
@@ -86,11 +103,12 @@
                     <td style="width: 18%" class="LabelFontStyle">Inactive&nbsp;Date:&nbsp;</td>
                     <td><input disabled  type="date"   id="endDate"  formControlName="endDate"  [ngModel]="endDate" class="form-control"  max="{{minDate | date:'yyyy-MM-dd'}}" style="height: 25px;"></td>
                 </ng-template>
+
+                <td style="width: 15%" class="LabelFontStyle">Unit/Gram:</td>
+                <td><input type="text" class="form-control" formControlName="unitgms" [(ngModel)]="unitgms" style="height: 25px;"></td>
             </tr>
         </table>
         </fieldset>
-        
-        
         
         <br>
         <table class="center">
@@ -120,25 +138,13 @@
                         <tr>
                             <td  style="background-color: #FFE4B5;">&nbsp;Main&nbsp;Colour&nbsp;Code:&nbsp;</td>
                             
-                            <!-- <td style="background-color: #FFE4B5;">
-                                <input type="text" class="form-control" formControlName="itemCode1" [(ngModel)]='itemCode1'  
-                                    value={{itemCode1}} placeholder="Enter Main Colour Code">
-                            </td> -->
-
-                            <!-- <td>
-                                <select class="form-control" formControlName="itemCode1" [(ngModel)]="itemCode1"  style="width:300px ;">
-                                   <option disabled>--Select--</option>
-                                   <option *ngFor="let clr of paintColorList" [ngValue]="clr.SEGMENT"  >
-                                     {{clr.SEGMENT}}-{{clr.DESCRIPTION}}
-                                   </option>
-                                 </select>
-                             </td> -->
+                        
 
                              <td>
                                 <input type="text" formControlName="itemCode1" [(ngModel)]="itemCode1" style="width:350px;"
                                     (keyup)="getUserIdsFirstWayColor($event)" id="userIdFirstWay"
-                                    list="dynmicUserIds" class="form-control" placeholder="Main Color List" />
-                                <datalist id="dynmicUserIds">
+                                    list="dynmicUserIds1" class="form-control" placeholder="Main Color List" />
+                                <datalist id="dynmicUserIds1">
                                     <option *ngFor="let item of paintColorList" [ngValue]="item.SEGMENT">
                                       {{item.SEGMENT}}-{{item.DESCRIPTION}}
                                     </option>
@@ -194,6 +200,8 @@
             <th scope="col" style="width: 3rem;">Base Colour</th> 
             <th scope="col" style="width: 8rem; ">Base Colour Name</th>   
             <th scope="col" style="width: 5rem;">UOM</th>
+            <th scope="col" style="width: 5rem;">UnitPerGram</th>
+
             <th scope="col" style="width: 4rem;">Select</th>                
         </tr>
         </tbody>
@@ -204,6 +212,8 @@
             <td style="text-align: center;">{{com.relItemCode}}</td>
             <td style="width: 4rem; text-align: left;">{{com.relDescription}}</td>   
             <td style="text-align: center;">{{com.uom}}</td> 
+            <td style="text-align: center;">{{com.relUom}}</td> 
+        
                 
             <td style="text-align: center;"><button class="btn btn-info Saibtn-secondary" (click)="Select(com.relatedItemId)">Select</button></td>
         </tr>

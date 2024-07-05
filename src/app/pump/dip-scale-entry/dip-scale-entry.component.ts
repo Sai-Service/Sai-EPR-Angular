@@ -372,8 +372,11 @@ validateShiftDate(shftDate) {
 
 onSelectEmplName(event){
   var emlName=event.target.value;
+  // alert ("emlName : "+emlName)
   var emplList = emlName.substr(emlName.indexOf('-') + 1, emlName.length);
-  var emplList1 = this.salesPersonList.find((salesPersonList:any)=>salesPersonList.fullName==emplList);
+//  alert ("emplList : "+emplList)
+  var emplList1 = this.salesPersonList.find((salesPersonList:any)=>salesPersonList.ticketNo==emplList);
+  // var emplList1 = this.salesPersonList.find((salesPersonList:any)=>salesPersonList.fullName==emplList);
     console.log(emplList1);
   this.pumpDipEntryForm.patchValue({emplid:emplList1.emplId})
   
@@ -562,6 +565,7 @@ closeMast() {
 CheckDataValidations(){
 
   const formValue: IDipEntry = this.pumpDipEntryForm.value;
+  // alert ("formValue.emplid : "+formValue.emplid)
 
   // formValue.nozzleCode =this.nozzleCode.toUpperCase();
   // formValue.nozzleDesc=this.nozzleDesc.toUpperCase();
@@ -576,14 +580,16 @@ CheckDataValidations(){
     return;
   } 
 
-  if (formValue.shiftid===undefined || formValue.shiftid===null || formValue.shiftid<=0 )
-  {
-    this.checkValidation=false; 
-    alert (" SHIFT NAME : Should not be null....");
-    return;
-  } 
+  // if (formValue.shiftid===undefined || formValue.shiftid===null || formValue.shiftid<=0 )
+  // {
+  //   this.checkValidation=false; 
+  //   alert (" SHIFT NAME : Should not be null....");
+  //   return;
+  // } 
 
-  if (formValue.emplid===undefined || formValue.emplid===null || formValue.emplid<=0 )
+  // if (formValue.shiftEmplName===undefined || formValue.shiftEmplName===null || formValue.shiftEmplName.trim()==='' )
+    if (formValue.emplid===undefined || formValue.emplid===null || formValue.emplid<0 )
+
   {
     this.checkValidation=false; 
     alert ("SHIFT EMPLOYEE : Should not be null....");
