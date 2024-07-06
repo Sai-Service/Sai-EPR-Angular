@@ -741,6 +741,9 @@ export class PumpSubinventoryTransferComponent implements OnInit {
       var locId1 = this.pumpSubinventoryTransferForm.get('locId').value;
       var phyLoc=this.pumpSubinventoryTransferForm.get('attribute3').value;
 
+      // alert ("issto : "+issto  )
+      
+
       for (let i = 0; i < this.trfLinesList().length; i++) {
         let VariantFormGroup = <FormGroup>variants.controls[i];
         VariantFormGroup.addControl('transDate',        new FormControl(tranda, Validators.required) );

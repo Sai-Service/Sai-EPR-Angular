@@ -14,6 +14,8 @@ import { DatePipe } from '@angular/common';
 
 interface IDipEntry {
   divisionId: number;
+  emplId:number;
+
   
   dipentryid :number;
   dipentrydate  :Date
@@ -565,7 +567,9 @@ closeMast() {
 CheckDataValidations(){
 
   const formValue: IDipEntry = this.pumpDipEntryForm.value;
-  // alert ("formValue.emplid : "+formValue.emplid)
+
+  // alert ("formValue.emplid(DIP FORM),emplId (LOGIN) : "+formValue.emplid +","+formValue.emplId)
+
 
   // formValue.nozzleCode =this.nozzleCode.toUpperCase();
   // formValue.nozzleDesc=this.nozzleDesc.toUpperCase();

@@ -69,7 +69,7 @@
                   <select formControlName="issueTo" class="form-control"
                                     style="background-color: yellow;" >
                                     <option>--Select--</option>
-                                    <option *ngFor="let sc of  salesPersonList">
+                                    <option *ngFor="let sc of  salesPersonList"  [ngValue]="sc.fullName" >
                                         {{sc.fullName}}-({{sc.ticketNo}})
                                     </option>
                   </select>
