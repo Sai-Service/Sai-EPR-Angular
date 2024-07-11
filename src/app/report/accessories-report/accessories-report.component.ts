@@ -3038,7 +3038,7 @@ reportParameter(reportName) {
   }
   else if (reportName === 'Accessories Stock Transfer Received Summary Report') {
     this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
-
+    // if ()
     const fileName = 'Accessories Stock Transfer Received Summary Report-' +  fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     if (Number(sessionStorage.getItem('deptId')) === 4) {

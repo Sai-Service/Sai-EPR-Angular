@@ -893,7 +893,10 @@ export class PaintReportsComponent implements OnInit {
     }
     else if (reportName === 'Paint Spares Stock Transfer Received Summary Report') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
-
+      if (tolocId === undefined || tolocId === null ){
+        alert('Please Select To Location.!');
+        return;
+      }
       // alert ("Work In Progress ...");
       // this.closeResetButton = true;
       // return;
