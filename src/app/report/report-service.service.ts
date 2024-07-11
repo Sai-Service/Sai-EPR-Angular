@@ -84,7 +84,7 @@ export class ReportServiceService {
       headers: this.headers,
     });
 
-    // http://saihorizon.com:8051/ErpReplica/SparesReports/SprStkTrfRecdSummary?fromDate=01-Sep-2022&toDate=01-Dec-2022&shipToLoc=2201&shipFromLoc=&subInvCode=SP
+    
   }
 
 

@@ -74,6 +74,7 @@ export class SparesReportsComponent implements OnInit {
   isVisibleSparesBackOrderQty: boolean = false;
   isVisiblesparesMiscIssueReceipt: boolean = false;
   isVisiblesparesInventoryAging: boolean = false;
+  isVisibleStockTransferReceivedSummary:boolean=false;
   isVisibleSparesDebtorsExecutiveWise: boolean = false;
   isVisibleDepartmentList: boolean = false;
   isVisiblefromtosubinventory:boolean=false;
@@ -133,6 +134,7 @@ export class SparesReportsComponent implements OnInit {
     this.sparesReportForm.patchValue({ locCode: sessionStorage.getItem('locId') + '-' + sessionStorage.getItem('locName') })
     this.sparesReportForm.patchValue({ department: 'Spares' });
     this.sparesReportForm.patchValue({ deptId: 5 })
+    this.sparesReportForm.patchValue({ tolocCode: sessionStorage.getItem('locName'),tolocId: sessionStorage.getItem('locId')})
     // Prevent closing from click inside dropdown
     $(document).on('click', '.dropdown-menu', function (e) {
       e.stopPropagation();
@@ -254,6 +256,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelStockTaking=false;
       this.panelspDebtAgByExicutiveSummary=false;
       this.isVisibletoDateLoc=false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
     }
     else if (reportName === 'gstpurRegSumm') {
@@ -267,6 +270,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleStockLedger = false;
       this.displayCustAccountNo=false;
       this.isVisiblestockTransfer = false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisiblestockTransferRecd=false;
       this.isVisiblespClosingStockAsOndate=false;
       this.isVisibleSparesBackOrderQty = false;
@@ -291,6 +295,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblestockTransfer = false;
       this.isVisiblestockTransferRecd=false;
       this.displayCustAccountNo=true;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
@@ -315,6 +320,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblestockTransfer = false;
       this.isVisiblestockTransferRecd=false;
       this.isVisibleSparesBackOrderQty = false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
@@ -332,6 +338,7 @@ export class SparesReportsComponent implements OnInit {
         this.isVisibleDepartmentList = true;
       }
       this.isVisibleonlyLocationCode = false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisibleGSTPurchaseRegister = true;
       this.isVisiblegstsaiDebtors = false;
        this.isVisiblespClosingStockAsOndate=false;
@@ -359,6 +366,7 @@ export class SparesReportsComponent implements OnInit {
        this.isVisiblespClosingStockAsOndate=false;
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleStockLedger = false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisiblestockTransfer = false;
       this.isVisiblestockTransferRecd=false;
       this.isVisibleSparesBackOrderQty = false;
@@ -383,6 +391,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = true;
       this.isVisibleGSTPurchaseRegister = false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblestockTransferRecd=false;
@@ -410,6 +419,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisiblestockTransferRecd=false;
       this.displayCustAccountNo=false;
       this.isVisiblespClosingStockAsOndate=false;
@@ -429,6 +439,7 @@ export class SparesReportsComponent implements OnInit {
       this.reportName = 'Stock Ledger';
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.displayCustAccountNo=false;
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleStockLedger = true;
@@ -457,6 +468,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = true;
       this.isVisiblestockTransferRecd=false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
@@ -485,6 +497,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = true;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisiblestockTransferRecd=false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
@@ -515,7 +528,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=true;
+      this.isVisiblestockTransferRecd=false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
@@ -525,7 +538,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblecustomerLedger=false;
       this.isVisibleEwayBill=false;
       this.isVisiblepanelStockTaking=false;
-
+      this.isVisibleStockTransferReceivedSummary=true;
       // this.dispLocation=false;
       if (this.dispLocation==false){
       this.service.TolocationIdList(sessionStorage.getItem('locId')).subscribe
@@ -545,7 +558,8 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleStockLedger = false;
       this.displayCustAccountNo=false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=true;
+      this.isVisiblestockTransferRecd=false;
+      this.isVisibleStockTransferReceivedSummary=true;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
@@ -572,6 +586,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleGSTPurchaseRegister = true;
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
       this.displayCustAccountNo=false;
@@ -600,6 +615,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblestockTransferRecd=false;
       this.isVisibleSparesBackOrderQty = true;
       this.displayCustAccountNo=false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisiblespClosingStockAsOndate=false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
@@ -622,6 +638,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblestockTransfer = false;
       this.displayCustAccountNo=false;
       this.isVisiblestockTransferRecd=false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = true;
       this.isVisiblesparesInventoryAging = false;
@@ -645,6 +662,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblestockTransferRecd=false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = true;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
       this.isVisiblefromtosubinventory=false;
@@ -661,6 +679,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisibleStockLedger = false;
       this.isVisiblespClosingStockAsOndate=false;
       this.isVisiblestockTransfer = false;
@@ -688,6 +707,7 @@ export class SparesReportsComponent implements OnInit {
       this.displayCustAccountNo=false;
       this.isVisiblestockTransfer = false;
       this.isVisiblestockTransferRecd=false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
@@ -710,6 +730,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblestockTransfer = false;
       this.displayCustAccountNo=false;
       this.isVisiblestockTransferRecd=false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = true;
       this.isVisiblesparesInventoryAging = false;
@@ -732,6 +753,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblestockTransferRecd=false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = true;
       this.isVisiblesparesInventoryAging = false;
@@ -753,6 +775,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleStockLedger = false;
       this.displayCustAccountNo=false;
       this.isVisiblestockTransfer = false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisiblestockTransferRecd=false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
@@ -773,6 +796,7 @@ export class SparesReportsComponent implements OnInit {
       }
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.displayCustAccountNo=false;
       this.isVisiblegstsaiDebtors = false;
       this.isVisibleStockLedger = false;
@@ -797,6 +821,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleonlyLocationCode = false;
       this.isVisiblespClosingStockAsOndate=false;
       this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblestockTransferRecd=false;
@@ -822,6 +847,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
       this.displayCustAccountNo=false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisiblestockTransferRecd=false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
@@ -846,6 +872,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblestockTransferRecd=false;
       this.isVisibleSparesBackOrderQty = false;
       this.displayCustAccountNo=false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
@@ -867,6 +894,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblestockTransfer = false;
       this.isVisiblestockTransferRecd=false;
       this.displayCustAccountNo=false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
@@ -889,6 +917,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
       this.displayCustAccountNo=false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisibleStockLedger = false;
        this.isVisiblespClosingStockAsOndate=false;
       this.isVisiblestockTransfer = false;
@@ -912,6 +941,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblegstsaiDebtors = false;
       this.isVisibleStockLedger = false;
        this.isVisiblespClosingStockAsOndate=false;
+       this.isVisibleStockTransferReceivedSummary=false;
       this.isVisiblestockTransfer = false;
       this.isVisiblestockTransferRecd=false;
       this.displayCustAccountNo=false;
@@ -936,6 +966,7 @@ export class SparesReportsComponent implements OnInit {
        this.isVisiblespClosingStockAsOndate=false;
       this.isVisiblestockTransfer = false;
       this.isVisiblestockTransferRecd=false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.displayCustAccountNo=false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
@@ -959,6 +990,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleGSTPurchaseRegister = true;
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.displayCustAccountNo=false;
       this.isVisibleStockLedger = false;
       this.isVisiblespClosingStockAsOndate=false;
@@ -985,6 +1017,7 @@ export class SparesReportsComponent implements OnInit {
       this.reportName = 'Spares Zero Stock Report';
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.displayCustAccountNo=false;
       this.isVisiblespClosingStockAsOndate=false;
       this.isVisiblegstsaiDebtors = false;
@@ -1008,6 +1041,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleGSTPurchaseRegister = true;
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisibleStockLedger = false;
       this.isVisiblespClosingStockAsOndate=false;
       this.isVisiblestockTransfer = false;
@@ -1034,6 +1068,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisibleStockLedger = false;
       this.displayCustAccountNo=false;
       this.isVisiblespClosingStockAsOndate=false;
@@ -1056,6 +1091,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisibleStockLedger = false;
       this.displayCustAccountNo=false;
       this.isVisiblespClosingStockAsOndate=false;
@@ -1080,6 +1116,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblegstsaiDebtors = false;
       this.isVisibleStockLedger = false;
       this.isVisiblespClosingStockAsOndate=false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisiblestockTransfer = false;
       this.displayCustAccountNo=false;
       this.isVisiblestockTransferRecd=false;
@@ -1101,6 +1138,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
       this.isVisibleStockLedger = false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.displayCustAccountNo=false;
       this.isVisiblespClosingStockAsOndate=false;
       this.isVisiblestockTransfer = false;
@@ -1124,6 +1162,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblegstsaiDebtors = false;
       this.isVisibleStockLedger = false;
       this.displayCustAccountNo=false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisiblespClosingStockAsOndate=false;
       this.isVisiblestockTransfer = false;
       this.isVisiblestockTransferRecd=false;
@@ -1148,6 +1187,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleStockLedger = false;
       this.isVisiblespClosingStockAsOndate=false;
       this.isVisiblestockTransfer = false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisiblestockTransferRecd=false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
@@ -1167,6 +1207,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleonlyLocationCode = false;
       this.displayCustAccountNo=false;
       this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisibleStockLedger = false;
       this.isVisiblespClosingStockAsOndate=false;
       this.isVisiblestockTransfer = false;
@@ -1188,6 +1229,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleGSTPurchaseRegister = true;
       this.displayCustAccountNo=false;
       this.isVisibleonlyLocationCode = false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisiblegstsaiDebtors = false;
       this.isVisibleStockLedger = false;
       this.isVisiblespClosingStockAsOndate=false;
@@ -1213,6 +1255,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleonlyLocationCode = false;
       this.isVisibleStockLedger = false;
       this.isVisiblespClosingStockAsOndate=false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisiblestockTransfer = false;
       this.isVisiblestockTransferRecd=false;
       this.isVisibleSparesBackOrderQty = false;
@@ -1235,6 +1278,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleStockLedger = false;
       this.displayCustAccountNo=false;
       this.isVisiblespClosingStockAsOndate=false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisiblestockTransfer = false;
       this.isVisiblestockTransferRecd=false;
       this.isVisibleSparesBackOrderQty = false;
@@ -1257,6 +1301,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleStockLedger = false;
       this.displayCustAccountNo=false;
       this.isVisiblespClosingStockAsOndate=false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisiblestockTransfer = false;
       this.isVisiblestockTransferRecd=false;
       this.isVisibleSparesBackOrderQty = false;
@@ -1279,6 +1324,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleStockLedger = false;
       this.displayCustAccountNo=false;
       this.isVisiblespClosingStockAsOndate=false;
+      this.isVisibleStockTransferReceivedSummary=false;
       this.isVisiblestockTransfer = false;
       this.isVisiblestockTransferRecd=false;
       this.isVisibleSparesBackOrderQty = false;
@@ -1885,7 +1931,15 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Spares Stock Transfer Received Summary Report') {
+      // alert('----'+tolocId+'----')
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+      if (tolocId==''||tolocId === undefined || tolocId === null ){
+        alert('Please Select To Location Code.!');
+        this.closeResetButton = true;
+        this.isDisabled1 = false;
+        this.dataDisplay = 'Please Select To Location Code.!'
+        return;
+      }
 
       const fileName = 'Spares Stock Transfer Received Summary Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
