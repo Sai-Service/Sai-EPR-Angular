@@ -846,6 +846,7 @@ addEmployeeSkill(empIndex: number) {
 
 
   // alert ("Sublinelength,tot sale qty,balread qty :"+subln+" ,"+nozzTotSaleQty+","+nozzBalReadQty);
+  // alert ("this.NZLlineValidation  >> "+ this.NZLlineValidation)
 
   if (this.NZLlineValidation && nozzTotSaleQty>0 && nozzBalReadQty>0){    
   
