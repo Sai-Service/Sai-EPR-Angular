@@ -1120,7 +1120,8 @@ export class PaintCreationComponent implements OnInit {
 
           }
           if (data.code === 200) {
-            //       // this.lstcomment=data.obj;
+         
+            if(data.obj===null){ alert(data.message);return;};
 
             if(data.obj.reason==='PN002'){ 
               alert ("This is Paint BodyShop Issue Transaction.\nPlease use BodyShop Issue Form to get the details.");

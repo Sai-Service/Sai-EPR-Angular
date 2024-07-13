@@ -1128,10 +1128,13 @@ export class PaintIssueDpComponent implements OnInit {
           }
           if (data.code === 200) {
 
+            if(data.obj===null){ alert(data.message);return;};
+
             if(data.obj.reason==='PN001'){ 
               alert ("This is Paint Mixing Issue Transaction.\nPlease use Paint Mixing Issue Form to get the details.");
               return;
             }
+
 
             let control = this.paintIssueForm.get('cycleLinesList') as FormArray;
            
