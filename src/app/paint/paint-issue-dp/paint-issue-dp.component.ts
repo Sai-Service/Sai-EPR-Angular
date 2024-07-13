@@ -1109,7 +1109,14 @@ export class PaintIssueDpComponent implements OnInit {
       var compno = this.paintIssueForm.get('compNo').value;
       var appflag = this.paintIssueForm.get('trans').value;
       compno =compno.trim();
-      var compnoLocCode =compno.substr(0,9)
+
+      var opunit =sessionStorage.getItem('ouName')
+      if (opunit =='MA CO - SSSL' || opunit =='MA MU - SSSL') 
+       {var compnoLocCode =compno.substr(0,9)}
+      else 
+      { var compnoLocCode =compno.substr(0,8)}
+
+
       if (compnoLocCode != this.locCode){
        alert ("Please Enter Valid Issue No.... ");return;
       }

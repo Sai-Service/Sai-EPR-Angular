@@ -1097,8 +1097,17 @@ export class PaintCreationComponent implements OnInit {
       var appflag = this.paintCreationForm.get('trans').value;
 
       compno =compno.trim();
-      var compnoLocCode =compno.substr(0,9)
+
+      var opunit =sessionStorage.getItem('ouName')
+
+
+       if (opunit =='MA CO - SSSL' || opunit =='MA MU - SSSL') 
+        {var compnoLocCode =compno.substr(0,9)}
+       else 
+       { var compnoLocCode =compno.substr(0,8)}
+     
       // alert ("this.locCode:"+this.locCode +" issue no loc code "+compnoLocCode)
+
       if (compnoLocCode != this.locCode){
        alert ("Please Enter Valid Issue No.... ");return;
       }
