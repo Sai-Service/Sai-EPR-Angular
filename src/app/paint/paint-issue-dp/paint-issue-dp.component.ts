@@ -206,6 +206,8 @@ export class PaintIssueDpComponent implements OnInit {
   lineValidation1=false;
   panelButtonDisabled =false;
   saveDone=false;
+  lineItemRepeated = false;
+
 
   jobData:any=[];
 
@@ -623,6 +625,11 @@ export class PaintIssueDpComponent implements OnInit {
       var compileType1 = this.paintIssueForm.get('compileType').value;
       var subcode = this.paintIssueForm.get('subInventory').value;
       this.displayheader = false;
+
+      this.duplicateLineCheck(i, select1.itemId,select1.SEGMENT);
+      if( this.lineItemRepeated) { return;}
+
+
       this.service.getItemDetail(select1.itemId).subscribe
         (data => {
           this.getItemDetail = data;
@@ -1109,6 +1116,16 @@ export class PaintIssueDpComponent implements OnInit {
       var compno = this.paintIssueForm.get('compNo').value;
       var appflag = this.paintIssueForm.get('trans').value;
       compno =compno.trim();
+
+      // var oploc ;
+      // oploc= sessionStorage.getItem('locCode');
+      // oploc=oploc.substr(0,4)
+
+      // if (oploc =='16CO' || oploc =='11MU') 
+      //   {var compnoLocCode =compno.substr(0,9)}
+      //   else 
+      //   { var compnoLocCode =compno.substr(0,8)}
+       
 
       var opunit =sessionStorage.getItem('ouName')
       if (opunit =='MA CO - SSSL' || opunit =='MA MU - SSSL') 
@@ -1684,6 +1701,24 @@ LoadPanelListNew(){
   }
 }
 
+}
+
+duplicateLineCheck(index, mItem, itemSeg) {
+  this.lineItemRepeated = false;
+  var trxLnArr1 = this.paintIssueForm.get('cycleLinesList') as FormArray
+  var trxLnArr = this.paintIssueForm.get('cycleLinesList').value;
+  var len1=trxLnArr.length;
+
+   for (let i = 0; i < trxLnArr.length; i++) {
+    var x = trxLnArr[i].invItemId;
+    if (i != index && (x === mItem)) {
+      alert(itemSeg + " - Item Already Entered.Please Check Line :" + (i + 1));
+      trxLnArr1.controls[index].patchValue({ segment: '' });
+
+      this.lineItemRepeated = true;
+      break;
+    }
+  }
 }
 
 

@@ -597,10 +597,25 @@ export class PaintCreationComponent implements OnInit {
 
     event =event.toUpperCase();
 
+
+
+             // ===========================================================================
+          //   let xyz = this.ItemIdList.find(d => d.SEGMENT === event);
+          //   if (xyz != undefined) {
+          //     alert ("ITEMID ,SEGMENT,DESCREPTION : "+xyz.itemId+" , "+ xyz.SEGMENT+" , "+xyz.DESCRIPTION);
+          //   }
+          // // ===========================================================================
+
+
+
     let select1 = this.ItemIdList.find(d => d.SEGMENT === event);
+
     if (select1 != undefined) {
+
+      // alert ("select1.itemId ,event : "+select1.itemId +","+event)
       var trxLnArr1 = this.paintCreationForm.get('cycleLinesList') as FormArray;
       var trxLnArr = this.paintCreationForm.get('cycleLinesList').value;
+
       trxLnArr1.controls[i].patchValue({ invItemId: select1.itemId })
       var compId = this.paintCreationForm.get('compileId').value;
       var compileType1 = this.paintCreationForm.get('compileType').value;
@@ -710,6 +725,8 @@ export class PaintCreationComponent implements OnInit {
             trxLnArr1.controls[i].patchValue({ avlqty: avlqty1 });
             trxLnArr1.controls[i].patchValue({ resveQty: reserve });
 
+
+
             // alert ("Value ="+Number(avlqty11)*12);
 
           }
@@ -725,6 +742,9 @@ export class PaintCreationComponent implements OnInit {
           }
 
         });
+
+   
+
     }
     //  else {alert ("Wrong Item Selected....Pls select proper Item from the list.");}
 
@@ -1098,15 +1118,23 @@ export class PaintCreationComponent implements OnInit {
 
       compno =compno.trim();
 
+      // var oploc ;
+      // oploc= sessionStorage.getItem('locCode');
+      // oploc=oploc.substr(0,4)
+
+      // if (oploc =='16CO' || oploc =='11MU') 
+      //   {var compnoLocCode =compno.substr(0,9)}
+      //   else 
+      //   { var compnoLocCode =compno.substr(0,8)}
+       
+     
       var opunit =sessionStorage.getItem('ouName')
-
-
        if (opunit =='MA CO - SSSL' || opunit =='MA MU - SSSL') 
         {var compnoLocCode =compno.substr(0,9)}
        else 
        { var compnoLocCode =compno.substr(0,8)}
-     
-      // alert ("this.locCode:"+this.locCode +" issue no loc code "+compnoLocCode)
+
+       // alert ("this.locCode:"+this.locCode +" issue no loc code "+compnoLocCode)
 
       if (compnoLocCode != this.locCode){
        alert ("Please Enter Valid Issue No.... ");return;

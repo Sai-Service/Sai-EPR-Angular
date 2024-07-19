@@ -105,7 +105,7 @@
                 </ng-template>
 
                 <td style="width: 15%" class="LabelFontStyle">Unit/Gram:</td>
-                <td><input type="text" class="form-control" formControlName="unitgms" [(ngModel)]="unitgms" style="height: 25px;"></td>
+                <td><input type="text" class="form-control" formControlName="attribute5" [(ngModel)]="attribute5" style="height: 25px;"></td>
             </tr>
         </table>
         </fieldset>
@@ -195,25 +195,19 @@
     <tbody>
         <tr class="GridHeader">
             <th scope="col" style="width: 3rem;">Sr. No.</th>
-             <!-- <th scope="col" style="width: 3rem;">Main Colour</th> -->
-            <!-- <th scope="col" style="width: 5rem;">Description</th>  -->
             <th scope="col" style="width: 3rem;">Base Colour</th> 
             <th scope="col" style="width: 8rem; ">Base Colour Name</th>   
             <th scope="col" style="width: 5rem;">UOM</th>
             <th scope="col" style="width: 5rem;">UnitPerGram</th>
-
             <th scope="col" style="width: 4rem;">Select</th>                
         </tr>
         </tbody>
         <tr *ngFor="let com of abc let k = index" class="ItemStyle" style="text-decoration:none;font-size:small;">
             <td style="width: 4rem; text-align: center;">{{k+1}}</td>
-            <!-- <td style="text-align:center;">{{com.itemCode }}</td>  -->
-            <!-- <td style="width: 4rem; text-align: center;">{{com.description}}</td> -->
             <td style="text-align: center;">{{com.relItemCode}}</td>
             <td style="width: 4rem; text-align: left;">{{com.relDescription}}</td>   
             <td style="text-align: center;">{{com.uom}}</td> 
-            <td style="text-align: center;">{{com.relUom}}</td> 
-        
+            <td style="text-align: center;">{{com.attribute5}}</td> 
                 
             <td style="text-align: center;"><button class="btn btn-info Saibtn-secondary" (click)="Select(com.relatedItemId)">Select</button></td>
         </tr>

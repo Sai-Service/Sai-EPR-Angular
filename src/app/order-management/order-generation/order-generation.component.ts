@@ -911,6 +911,8 @@ export class OrderGenerationComponent implements OnInit {
     }
   }
 
+  
+
   CheckLineValidations(i) {
     var patch = this.orderGenerationForm.get('orderList') as FormArray;
     var ordLineArr1 = this.orderGenerationForm.get('orderList').value;
