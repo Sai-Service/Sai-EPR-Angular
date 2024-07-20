@@ -1339,7 +1339,7 @@ export class PaintIssueDpComponent implements OnInit {
       formValue.attribute4=this.attribute4.toUpperCase();
       formValue.attribute1=this.attribute1.toUpperCase();
   
-      alert (formValue.attribute1 +","+formValue.attribute4);
+      // alert (formValue.attribute1 +","+formValue.attribute4);
       
       this.service.miscSubmit(formValue).subscribe
         ((res: any) => {
