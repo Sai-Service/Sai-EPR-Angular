@@ -1450,6 +1450,7 @@ export class SalesOrderFormComponent implements OnInit {
     var lesseeAccNo = this.SalesOrderBookingForm.get('lesseeAccNo').value;
     var lesseeCustName = this.SalesOrderBookingForm.get('lesseeCustName').value;
     var rtoLocation = this.SalesOrderBookingForm.get('attribute17').value;
+    var brokerType = this.SalesOrderBookingForm.get('brokerType').value;
     if (Number(sessionStorage.getItem('ouId')) == 22 || Number(sessionStorage.getItem('divisionId')) == 2) {
       if (rtoLocation == undefined || rtoLocation == '' || rtoLocation == null) {
         alert('Plesae Select RTO Location List.!');
@@ -1466,10 +1467,19 @@ export class SalesOrderFormComponent implements OnInit {
       alert('Please Select Insuarnce Type.!');
       return;
     }
+    if (this.SalesOrderBookingForm.get('brokerType').value === undefined || this.SalesOrderBookingForm.get('brokerType').value === null || this.SalesOrderBookingForm.get('brokerType').value === '') {
+      alert('Please Select Broker Type.!');
+      return;
+    }
+    if (this.SalesOrderBookingForm.get('subDealerId').value === undefined || this.SalesOrderBookingForm.get('subDealerId').value === null || this.SalesOrderBookingForm.get('subDealerId').value === '') {
+      alert('Please Select Sub Broker Type.!');
+      return;
+    }
+    
     // alert(accountNo+'---transactionTypeName'+transactionTypeName+'---salesRepName--'+salesRepName+'--model--'+model) ;
     if (accountNo === undefined || accountNo === null || accountNo === '' || transactionTypeName === undefined || transactionTypeName === null || transactionTypeName === '' || salesRepName === undefined || salesRepName === null || salesRepName === ''
       || model === undefined || model === null || model === '' || variant === undefined || variant === null || variant === '' ||
-      color === undefined || color === null || color === '') {
+      color === undefined || color === null || color === '' || brokerType === undefined || brokerType=== '') {
       alert('Fill-Up all compulsory Field..!');
       this.closeResetButton = true;
       this.progress = 0;

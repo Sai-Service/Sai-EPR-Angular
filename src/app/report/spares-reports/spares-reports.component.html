@@ -130,7 +130,7 @@
                                 (click)="reportDetails('gststockTransfer')">Stock Transfer Made Detail Report</a>
                         </li>
                         <li>
-                            <a class="dropdown-item" data-toggle="collapse" href="#panelstockTransfer" role="tab"
+                            <a class="dropdown-item" data-toggle="collapse" href="#isVisibleStocMadeSummary" role="tab"
                                 (click)="reportDetails('gststockTransferSummary')">Stock Transfer Made Summary Report</a>
                         </li>
 
@@ -1150,7 +1150,7 @@ style="margin-left: 10%;" id="panelstockTransferRecd">
                        <td>
                         <select formControlName="locCode" id="locCode" class="form-control"
                             (ngModelChange)='onOptionsLocation($event)'>
-                            <option>--Select--</option>
+                            <option value="">--Select--</option>
                             <option *ngFor="let sc of  BillShipFromList" [value]="sc.locId">
                                 {{sc.locCode}}-{{sc.locName}}
                             </option>
@@ -1164,14 +1164,6 @@ style="margin-left: 10%;" id="panelstockTransferRecd">
                     </td>
                     <td>
                         
-                                    <!-- <select formControlName="tolocCode" id="tolocCode" class="form-control"
-                                        (ngModelChange)='onOptionsToLocation($event)'>
-                                        <option>--Select--</option>
-                                        <option *ngFor="let sc of  BillShipToList" [value]="sc.toLocationId ">
-                                            {{sc.toLocation}}
-                                        </option>
-                                    </select> -->
-                     
                         <input type="text" disabled class="form-control" formControlName="tolocCode">
                         <input  disabled hidden type="number" class="form-control" formControlName="tolocId">
                     </td>
@@ -1206,6 +1198,80 @@ style="margin-left: 10%;" id="panelstockTransferRecd">
                               </table>
         </table>
 
+
+
+
+        <table class="center" [style.display]="isVisibleStocMadeSummary ? 'block' : 'none'" class="collapse"
+        style="margin-left: 10%;" id="panelstockTransferRecd">
+        
+        
+        <table class="center">
+            <tr>
+              <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;" >{{reportName}}</td>
+            </tr>
+        </table>
+        <br>
+                <table class="center">
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;From&nbsp;Date&nbsp;:&nbsp;</td>
+                        <td><input type="date" class="form-control" formControlName="fromDate" [(ngModel)]="fromDate" max="{{minDate | date:'yyyy-MM-dd'}}"></td>
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;To&nbsp;Date&nbsp;:&nbsp; </td>
+                        <td><input type="date" class="form-control" formControlName="toDate"  [(ngModel)]="toDate"   max="{{minDate | date:'yyyy-MM-dd'}}"></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Ship&nbsp;To&nbsp;Location&nbsp;:&nbsp;</td>
+                        
+                           <td>
+                            <input type="text" disabled class="form-control" formControlName="locCode">
+                            <input  disabled hidden type="number" class="form-control" formControlName="locCode">     
+                        </td>
+                        <!-- </td> -->
+                        <td style="width: 15%" class="LabelFontStyle">
+                            &nbsp;Ship&nbsp;From&nbsp;Location&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                           
+                            <select formControlName="tolocName" id="tolocName" class="form-control"
+                            (ngModelChange)='onOptionsLocation($event)'>
+                            <option value="">--Select--</option>
+                            <option *ngFor="let sc of  BillShipFromList" [value]="sc.locId">
+                                {{sc.locCode}}-{{sc.locName}}
+                            </option>
+                        </select> 
+                        <input  disabled hidden type="number" class="form-control" formControlName="tolocationId">
+                            <!-- <input type="text" disabled class="form-control" formControlName="tolocCode">
+                            <input  disabled hidden type="number" class="form-control" formControlName="tolocId"> -->
+                        </td>
+                    </tr>
+                </table>
+                                    <table class="center">
+                                        <tr>
+                                            <td>
+                                                <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                                <ng-template #hList2> 
+                                                    <div class="d-flex justify-content-center">
+                                                        <div class="spinner-border text-primary" role="status" >
+                                                            <span class="sr-only" id="loading"></span>
+                                                    
+                                                        </div>
+                                                        </div>
+                                                </ng-template>
+                                                <ng-template #hList1> </ng-template>
+                                            </td>
+                                            <td class="LabelFontStyle" style="color: blue;">&nbsp;{{this.dataDisplay}}&nbsp; </td>
+                                        </tr>
+                                    </table>
+        
+                                  <table class="center" style="width: 100%;margin-left: 50%;">
+                                      <tr>
+                                        <td>
+                                            <button class="btn-primary" [disabled]="isDisabled1" (click)="reportParameter(reportName)">View
+                                              Report</button>
+                                          </td>
+                                         
+                                      </tr>
+                                  </table>
+            </table>
 
 
 
