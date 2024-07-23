@@ -25,7 +25,7 @@ interface IPaintMixingMaster {
   endDate:string,
   status:string;
 
-  unitgms :number;
+  attribute5 :number;
 
 }
 
@@ -83,8 +83,7 @@ export class PaintMixingMasterComponent implements OnInit {
   abc : any;
   abc2: any;
 
-  unitgms :number;
-
+  attribute5 :number=0;
 
   saveButton=true;
   cancelButton=false;
@@ -137,7 +136,7 @@ export class PaintMixingMasterComponent implements OnInit {
       startDate:[],
       endDate:[],
       status:[],
-      unitgms :[],
+      attribute5 :[],
     })
    }
 

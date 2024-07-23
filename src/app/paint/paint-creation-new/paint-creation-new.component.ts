@@ -146,6 +146,7 @@ export class PaintCreationNewComponent implements OnInit {
   displayButton: boolean = true;
   displayaddButton: boolean = true;
   addRow: boolean = true;
+  lineItemRepeated = false;
 
 
   public InterBrancList: Array<string> = [];
@@ -612,6 +613,9 @@ export class PaintCreationNewComponent implements OnInit {
 
     let select1 = this.ItemIdList.find(d => d.SEGMENT === event);
     if (select1 != undefined) {
+
+      // if (this.lineItemRepeated === false) {}
+
       var trxLnArr1 = this.paintCreationNewForm.get('cycleLinesList') as FormArray;
       var trxLnArr = this.paintCreationNewForm.get('cycleLinesList').value;
 
@@ -622,6 +626,11 @@ export class PaintCreationNewComponent implements OnInit {
       var compileType1 = this.paintCreationNewForm.get('compileType').value;
       var subcode = this.paintCreationNewForm.get('subInventory').value;
       this.displayheader = false;
+
+      this.duplicateLineCheck(i, select1.itemId,select1.SEGMENT);
+
+      if( this.lineItemRepeated) { return;}
+
       this.service.getItemDetail(select1.itemId).subscribe
         (data => {
           this.getItemDetail = data;
@@ -635,6 +644,14 @@ export class PaintCreationNewComponent implements OnInit {
             trxLnArr1.controls[i].patchValue({ subInventory: subcode })
             trxLnArr1.controls[i].patchValue({ locId: Number(sessionStorage.getItem('locId')) })
             trxLnArr1.controls[i].patchValue({ segment: select1.SEGMENT });
+            
+            // var  untgm=select1.attribute5
+            // var  tintQty =untgm* clrdQty;
+            // var tintQty1=(Math.round(tintQty * 100) / 100).toFixed(3);
+            // var tintqty2=Number(tintQty1)
+            // trxLnArr1.controls[i].patchValue({ physicalQty: tintqty2 });
+           
+
 
           }
         });
@@ -712,34 +729,36 @@ export class PaintCreationNewComponent implements OnInit {
             trxLnArr1.controls[i].patchValue({ locatorId: getfrmSubLoc[0].locatorId })
             var onHQty=Math.round((getfrmSubLoc[0].onHandQty+Number.EPSILON)*100)/100;
             trxLnArr1.controls[i].patchValue({ onHandQty: onHQty });
-            // alert(getfrmSubLoc[0].onHandQty+","+onHQty)
+
+            // alert("getfrmSubLoc[0].onHandQty,onHQty >> " +getfrmSubLoc[0].onHandQty+","+onHQty)
+
             // trxLnArr1.controls[i].patchValue({ onHandQty: getfrmSubLoc[0].onHandQty });
             trxLnArr1.controls[i].patchValue({ id: getfrmSubLoc[0].id });
             let reserve = trxLnArr[i].resveQty;
             // alert(onHand1+'OnHand');
             //alert(reserve+'reserve');
-            let avlqty1 = 0;
-            avlqty1 = getfrmSubLoc[0].onHandQty - reserve;
+
+            // let avlqty1 = 0;
+            var avlqty1 = getfrmSubLoc[0].onHandQty - reserve;
 
             // var avlqty11=Math.round((avlqty1+Number.EPSILON)*100)/100;
-
             // var avlqty11=(Math.round(avlqty1 * 100) / 100).toFixed(2);
+
+           trxLnArr1.controls[i].patchValue({ avlqty: avlqty1 });
+           trxLnArr1.controls[i].patchValue({ resveQty: reserve });
+
+          //  var tintLineQty = trxLnArr[i].physicalQty;
+
+           var  untgm=select1.attribute5
+           var  tintQty =untgm* clrdQty;
+           var tintQty1=(Math.round(tintQty * 100) / 100).toFixed(3);
+           var tintqty2=Number(tintQty1)
+           trxLnArr1.controls[i].patchValue({ physicalQty: tintqty2 });
+            this.validate(i,tintqty2);
+            this.CalculateLineTotal();
+           
             
-            trxLnArr1.controls[i].patchValue({ avlqty: avlqty1 });
-            trxLnArr1.controls[i].patchValue({ resveQty: reserve });
-
-            // ------------- Tint volume required   as per MAIN COLOR QTY
-            // ----  "400-SIK-WTB "  -  0.183 for 1 gm; main color qty  =500 gms
-
-            var  tintQty =0.183* clrdQty;
-            trxLnArr1.controls[i].patchValue({ physicalQty: tintQty });
-
-
-
-
-            // alert ("Value ="+Number(avlqty11)*12);
-
-          }
+         }
           else {
             // debugger;
             this.getfrmSubLoc = data;
@@ -764,16 +783,22 @@ export class PaintCreationNewComponent implements OnInit {
     var trxLnArr1 = this.paintCreationNewForm.get('cycleLinesList') as FormArray;
     var trxLnArr = this.paintCreationNewForm.get('cycleLinesList').value;
     var itemid = trxLnArr[i].invItemId;
+
     var locId = trxLnArr[i].LocatorSegment;
-    trxLnArr1.controls[i].patchValue({ locatorId: locId });
-    //alert(locId+'locatorID');
+    var pntlocatorId = trxLnArr[i].locatorId;
+    // alert ("pntlocatorId :"+ pntlocatorId);
+// 
+    // trxLnArr1.controls[i].patchValue({ locatorId: locId });
+    // alert(locId+'locatorID');
     var onhandid = trxLnArr[i].id;
     var subcode = trxLnArr[i].subInventory;
-    this.service.getonhandqty(Number(sessionStorage.getItem('locId')), this.subInvCode.subInventoryId, locId, itemid).subscribe
+    this.service.getonhandqty(Number(sessionStorage.getItem('locId')), this.subInvCode.subInventoryId, pntlocatorId, itemid).subscribe
       (data => {
         this.onhand = data;
         console.log(this.onhand);
-        trxLnArr1.controls[i].patchValue({ onHandQty: data.obj });
+        // alert ("testng....avlqty...data.obj... "+data.obj)
+        var ohqty1=Number(data.obj)
+        trxLnArr1.controls[i].patchValue({ onHandQty: ohqty1});
         // onHand1=data.obj.onHandQty;
 
 
@@ -782,7 +807,9 @@ export class PaintCreationNewComponent implements OnInit {
         // alert(reserve+'reserve');
         let avlqty1 = 0;
         // alert(data.obj+'qty');
-        avlqty1 = data.obj - reserve;
+        var ohqty1=Math.round((ohqty1+Number.EPSILON)*100)/100
+        avlqty1 = ohqty1- reserve;
+
         trxLnArr1.controls[i].patchValue({ avlqty: avlqty1 });
         trxLnArr1.controls[i].patchValue({ resveQty: reserve });
         if (avlqty1 < 0) {
@@ -1040,6 +1067,7 @@ export class PaintCreationNewComponent implements OnInit {
     let avalqty = trxLnArr[i].avlqty;
     let qty = trxLnArr[i].physicalQty;
     let uomCode = trxLnArr[i].uom;
+    let itmSeg= trxLnArr[i].segment;
    
    
     this.CalculateLineTotal();
@@ -1047,7 +1075,7 @@ export class PaintCreationNewComponent implements OnInit {
     //alert(avalqty+'avalqty');
     //alert(trxLnArr[i].physicalQty +' qty');
     if (qty > avalqty && this.paintCreationNewForm.get('compileType').value !== 13) {
-      alert("You can not enter more than available quantity");
+      alert("You can not enter more than available quantity\n Item Code : "+ itmSeg +"\n Required Qty :"+qty +"\n Available Qty : "+avalqty);
       trxLnArr1.controls[i].patchValue({ physicalQty: '' });
       qty1.focus();
     }
@@ -1066,6 +1094,9 @@ export class PaintCreationNewComponent implements OnInit {
     //   }
     // }
   }
+
+
+  
 
   searchByCompileID(itemId) {
     // alert(itemId+'ID')
@@ -1125,8 +1156,16 @@ export class PaintCreationNewComponent implements OnInit {
       var appflag = this.paintCreationNewForm.get('trans').value;
 
       compno =compno.trim();
-      var compnoLocCode =compno.substr(0,9)
-      // alert ("this.locCode:"+this.locCode +" issue no loc code "+compnoLocCode)
+
+      // var compnoLocCode =compno.substr(0,9)
+
+      var opunit =sessionStorage.getItem('ouName')
+      if (opunit =='MA CO - SSSL' || opunit =='MA MU - SSSL') 
+       {var compnoLocCode =compno.substr(0,9)}
+      else 
+      { var compnoLocCode =compno.substr(0,8)}
+
+
       if (compnoLocCode != this.locCode){
        alert ("Please Enter Valid Issue No.... ");return;
       }
@@ -1166,6 +1205,8 @@ export class PaintCreationNewComponent implements OnInit {
             this.paintCreationNewForm.patchValue(data.obj);
             this.totalItemValue=Math.round((data.obj.totalItemValue+Number.EPSILON)*100)/100;
 
+            this.colorQty=Math.round((data.obj.totalCompileItems+Number.EPSILON)*100)/100;
+            
             var clrd =data.obj.colorCode
             this.paintCreationNewForm.patchValue({colorDescription :data.obj.colorCode});
 
@@ -1267,6 +1308,15 @@ export class PaintCreationNewComponent implements OnInit {
       alert(msg1);
       return;
     }
+
+    if (formValue.colorQty === undefined || formValue.colorQty === null  || formValue.colorQty<=0) {
+      this.headerValidation1 = false;
+      msg1 = "COLOUR QTY: Should be grater thsn Zero";
+      alert(msg1);
+      return;
+    }
+
+        
     this.headerValidation1 = true;
   }
 
@@ -1299,13 +1349,26 @@ export class PaintCreationNewComponent implements OnInit {
       if(this.lineValidation1===false ) {alert("Line Validation Failed... Please Check.");return; }
 
 
+      var clrQty=this.colorQty;
+      var totLineQty=this.totalCompileItems
+  
+      // alert ("Colr qty, Line Qty total : "+clrQty +","+totLineQty)
+
+      if (clrQty != totLineQty) {
+        var  respTot=confirm(" [Color Qty(gms)] not matching with [Line Total(Qty)] .\n Do You Want to Continue???"); 
+        if (respTot==false) {return}
+      }
+
+
 
       if (this.headerValidation1  && this.lineValidation1 ){
       var  resp=confirm("Do You Want to Save this Transaction ???");
-
-      // alert ("Rsep :"+resp);
       if(resp==false) { return;}
       }
+
+         
+
+      // alert ("Rsep :"+resp);
 
     this.displayaddButton = true;
     this.displayButton = true;
@@ -1623,16 +1686,34 @@ this.service.getVehRegDetail(regNum).subscribe(
 }
 
 
-CalculateLineTotal() {
-  var trxLnArr = this.paintCreationNewForm.get('cycleLinesList').value;
+duplicateLineCheck(index, mItem, itemSeg) {
+  this.lineItemRepeated = false;
   var trxLnArr1 = this.paintCreationNewForm.get('cycleLinesList') as FormArray
-var totQty=0;
-var totValue=0;
-for (let i = 0; i < trxLnArr.length; i++) {
+  var trxLnArr = this.paintCreationNewForm.get('cycleLinesList').value;
+  var len1=trxLnArr.length;
 
-  totQty=totQty+trxLnArr[i].physicalQty;
-  totValue=totValue+(trxLnArr[i].itemUnitCost * trxLnArr[i].physicalQty)
+   for (let i = 0; i < trxLnArr.length; i++) {
+    var x = trxLnArr[i].invItemId;
+    if (i != index && (x === mItem)) {
+      alert(itemSeg + " - Item Already Entered.Please Check Line :" + (i + 1));
+      trxLnArr1.controls[index].patchValue({ segment: '' });
+
+      this.lineItemRepeated = true;
+      break;
+    }
+  }
 }
+
+CalculateLineTotal() {
+        var trxLnArr = this.paintCreationNewForm.get('cycleLinesList').value;
+        var trxLnArr1 = this.paintCreationNewForm.get('cycleLinesList') as FormArray
+      var totQty=0;
+      var totValue=0;
+      for (let i = 0; i < trxLnArr.length; i++) {
+
+        totQty=totQty+trxLnArr[i].physicalQty;
+        totValue=totValue+(trxLnArr[i].itemUnitCost * trxLnArr[i].physicalQty)
+      }
  totQty=Math.round((totQty+Number.EPSILON)*100)/100;
  totValue=Math.round((totValue+Number.EPSILON)*100)/100;
 

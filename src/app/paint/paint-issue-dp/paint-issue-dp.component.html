@@ -146,7 +146,7 @@
   
         </td>
         <td style="width: 15%" class="LabelFontStyle">
-          Total Item:
+          LineTotal(Qty):
         </td>
         <td>
           <input disabled type="number" class="form-control" formControlName="totalCompileItems" [(ngModel)]="totalCompileItems">
@@ -416,7 +416,9 @@
         </td>
       </ng-template>
         <ng-template #elseBlock2>
-          <button disabled type="submit" class="btn btn-primary" (click)="saveMisc()" >Save</button>
+          <td>
+            <button disabled type="submit" class="btn btn-primary" (click)="saveMisc()" >Save</button>
+          </td>
       </ng-template>
      
       <!-- <td><button disabled type="submit" class="btn btn-primary" style="width:fit-content" (click)="goToMixingIssueForm()" >Mixing Issue Form</button></td>   -->

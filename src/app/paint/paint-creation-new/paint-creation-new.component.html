@@ -2,7 +2,7 @@
     <form [formGroup]="paintCreationNewForm" (ngSubmit)="paintCreationNew(paintCreationNewForm.value)">
     <table style="width: 100%;background-color: white;">
       <tr>
-        <td class="PageHeader">&nbsp;PAINT&nbsp;CREATION-&nbsp;TEST&nbsp;FORM
+        <td class="PageHeader">&nbsp;PAINT&nbsp;MIXING&nbsp;ISSUE&nbsp;FORM
         </td>
         <table style="width: 100%; background-color: #a4d3e9;">
           <tr>
@@ -142,7 +142,7 @@
   
         </td>
         <td style="width: 15%" class="LabelFontStyle">
-          Total Item:
+          Line Total(Qty):
         </td>
         <td>
           <input disabled type="number" class="form-control" formControlName="totalCompileItems" [(ngModel)]="totalCompileItems">
@@ -274,9 +274,10 @@
                       <th scope="col">UOM</th>
                       <th scope="col">Average Rate</th>
                       <th scope="col">Subinventory</th>
+                      <!-- <th scope="col">LocatorId</th> -->
                       <th scope="col">Locator</th>
-                      <th scope="col" rowspan="2">Available Quantity</th>
-                      <th scope="col">Transaction Quantity</th>
+                      <th scope="col" rowspan="2">Avl Qty</th>
+                      <th scope="col">Issue Qty</th>
                       <th scope="col">Add</th>
                       <th scope="col">Delete</th>
               </tr>
@@ -302,15 +303,18 @@
                             <input hidden type="number" formControlName="itemId">
                             <input hidden type="number" formControlName="invItemId">
              
-                <input hidden type='number' formControlName="locId" [(ngModel)]="locId">
+              <input hidden type='number' formControlName="locId" [(ngModel)]="locId">
               <td><input disabled type="text" class="form-control" style="height: 20px;width:200px" formControlName="description"></td>
               <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="uom" ></td>
               <td><input disabled type="number" class="form-control" style="height: 20px;width: 70px;" formControlName="itemUnitCost" ></td>
-              <td><input disabled class="form-control" style="height: 20px; width: 110px;" formControlName="subInventory" [(ngModel)]="subInventory" >
+              <td><input disabled class="form-control" style="height: 20px; width: 110px;" formControlName="subInventory" [(ngModel)]="subInventory" ></td>
+              <input hidden type="number" class="form-control" formControlName="locatorId" [(ngModel)]="locatorId" >
+
+               
                 <!-- <option>--Select--</option>
                 <option *ngFor="let subinv of subInvCode">{{subinv.subInventoryCode}}</option>
                 </select> -->
-              </td>
+              
                <!-- <td> -->
                 <!-- <select class=" form-control" style="height: 20px; width: 110px;" formControlName="locatorId"  > -->
               <!-- <option>--Select--</option> -->
@@ -328,6 +332,7 @@
   
                 <input hidden formControlName="locatorId">
                 <input hidden formControlName="id">
+                
               </select>
               <span
               *ngIf="getGroupControllinewise(trxLineIndex,'LocatorSegment').touched && getGroupControllinewise(trxLineIndex,'LocatorSegment').invalid" class="error">Valid Item
@@ -346,6 +351,7 @@
                 </td>
                 </ng-template>
                <!-- </td> -->
+
                <input hidden type="number" formControlName="onHandQty">
               <td><input disabled type="number" class="form-control" style="height: 20px;width: 100px;" formControlName="avlqty" ></td>
               <input hidden  type="number"  formControlName="resveQty">
@@ -393,13 +399,12 @@
         </div>
         <ng-template #thenBlock2>
         <td>
-          <button disabled type="button" class="btn btn-primary" (click)="saveMisc()" >Save</button>
+          <button  type="button" class="btn btn-primary" (click)="saveMisc()" >Save</button>
         </td>
       </ng-template>
         <ng-template #elseBlock2>
           <td>
             <button disabled type="submit" class="btn btn-primary" (click)="saveMisc()" >Save</button>
-
           </td>
       </ng-template>
   
