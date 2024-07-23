@@ -99,6 +99,8 @@ export class SparesReportsComponent implements OnInit {
       fromDate: [''],
       toDate: [],
       OUCode: [''],
+      locCode1:[],
+      locId1:[],
       tolocationId:[],
       tolocName:[],
       noOfDays:[],
@@ -1396,7 +1398,7 @@ export class SparesReportsComponent implements OnInit {
 
   onOptionsLocation(event) {
     // alert("From Location : "+ event);
-    this.sparesReportForm.patchValue({ locId: event,tolocationId: event})
+    this.sparesReportForm.patchValue({ locId: event,tolocationId: event, locId1:event})
     // this.sparesReportForm.patchValue({ fromLocId: event })
 
     if(event>0){
@@ -1932,11 +1934,15 @@ export class SparesReportsComponent implements OnInit {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
       // debugger;
       // alert(tolocId)
-      var toLocId = this.sparesReportForm.get('tolocationId').value;
+      var shipFromLoc = this.sparesReportForm.get('tolocationId').value;
+      var shipToLoc = sessionStorage.getItem('locId')
+      if (shipFromLoc===null){
+        shipFromLoc=''
+      }
       const fileName = 'Stock Transfer Made Summary Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.spstktrfMdSummaryReport(fromDate, toDate, locId, toLocId, subInventory)
+        this.reportService.spstktrfMdSummaryReport(fromDate, toDate,  locId,shipFromLoc, subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1945,7 +1951,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.spstktrfMdSummaryReport(fromDate, toDate, sessionStorage.getItem('locId'), toLocId, subInventory)
+        this.reportService.spstktrfMdSummaryReport(fromDate, toDate,shipFromLoc, shipToLoc, subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1981,19 +1987,17 @@ export class SparesReportsComponent implements OnInit {
     }
     else if (reportName === 'Spares Stock Transfer Received Summary Report') {
       // alert('----'+tolocId+'----')
-      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
-      if (tolocId==''||tolocId === undefined || tolocId === null ){
-        alert('Please Select To Location Code.!');
-        this.closeResetButton = true;
-        this.isDisabled1 = false;
-        this.dataDisplay = 'Please Select To Location Code.!'
-        return;
+      var toLocId1 = this.sparesReportForm.get('locId1').value;
+    //  alert(toLocId1)
+       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+      if (toLocId1 === null){
+        toLocId1=''
       }
 
       const fileName = 'Spares Stock Transfer Received Summary Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate, locId, tolocId, subInventory)
+        this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate, locId, toLocId1, subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2002,7 +2006,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate, sessionStorage.getItem('locId'), tolocId, subInventory)
+        this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate,  toLocId1, sessionStorage.getItem('locId'),subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
