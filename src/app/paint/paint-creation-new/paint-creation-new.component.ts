@@ -67,6 +67,7 @@ interface IPaintMixing {
 
   totIssuedQty:number;
   totIssuedValue:number;
+  issDate1:Date;
 
 }
 
@@ -147,7 +148,7 @@ export class PaintCreationNewComponent implements OnInit {
   displayaddButton: boolean = true;
   addRow: boolean = true;
   lineItemRepeated = false;
-
+  issDate1:Date;
 
   public InterBrancList: Array<string> = [];
   public BranchList: Array<string> = [];
@@ -290,6 +291,8 @@ export class PaintCreationNewComponent implements OnInit {
       totIssuedQty:[],
       totIssuedValue:[],
       colorQty:[],
+
+      issDate1: [],
 
       cycleLinesList: this.fb.array([]),
 
@@ -1648,26 +1651,20 @@ searchFromArray(arr, regex) {
 };
 
 
-searchByJobNo(){
-   alert(this.JobNo);
-  //  var jobno=(this.paintCreationNewForm.get('JobNo').value);
-  if(this.JobNo==null || this.JobNo==undefined || this.JobNo.trim()=='') {
-   alert ("Enter a Valid Job Card No."); return;}
-   this.JobNo=this.JobNo.toUpperCase();
+// searchByJobNo(){
+//    alert(this.JobNo);
+//   if(this.JobNo==null || this.JobNo==undefined || this.JobNo.trim()=='') {
+//    alert ("Enter a Valid Job Card No."); return;}
+//    this.JobNo=this.JobNo.toUpperCase();
 
-  this.service.getsearchByIC(this.JobNo).subscribe(
-    data=>{
-      // if (data.code==200){
-         this.jobData=data;
-         console.log(this.jobData);
-         
-        // } 
-        // else if (data.code==400){
-        //   alert(data.message)
-        // }  
-    }
-  )
-}
+//   this.service.getsearchByIC(this.JobNo).subscribe(
+//     data=>{
+//          this.jobData=data;
+//          console.log(this.jobData);
+      
+//     }
+//   )
+// }
 
 calculatewarranty(event){
   alert(event.target.value+'warr');
@@ -1739,7 +1736,30 @@ validateClrQty(clrQty: any) {
 
 }
 
+searchByDate(){ alert ("Wip..........");}
+// searchByJobNo(){ alert ("Wip..........");}
 
+searchByJobNo(){
+  alert(this.JobNo + "....WIP");return;
+  
+ //  var jobno=(this.paintCreationNewForm.get('JobNo').value);
+ if(this.JobNo==null || this.JobNo==undefined || this.JobNo.trim()=='') {
+  alert ("Enter a Valid Job Card No."); return;}
+  this.JobNo=this.JobNo.toUpperCase();
+
+ this.service.getsearchByIC(this.JobNo).subscribe(
+   data=>{
+     // if (data.code==200){
+        this.jobData=data;
+        console.log(this.jobData);
+        
+       // } 
+       // else if (data.code==400){
+       //   alert(data.message)
+       // }  
+   }
+ )
+}
 
 }
 

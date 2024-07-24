@@ -68,6 +68,8 @@ interface IPaintIssue {
   panelCode:string;
   panelQty:number;
   panelQty1:number;
+  issDate1:Date;
+
 
 }
 
@@ -154,6 +156,8 @@ export class PaintIssueDpComponent implements OnInit {
   displayButton: boolean = true;
   displayaddButton: boolean = true;
   addRow: boolean = true;
+  issDate1:Date;
+
   public InterBrancList: Array<string> = [];
   public BranchList: Array<string> = [];
   public CostCenterList: Array<string> = [];
@@ -292,6 +296,7 @@ export class PaintIssueDpComponent implements OnInit {
       attribute4:[],
       attribute10:[],
       attribute9:[],
+      issDate1: [],
 
 
       cycleLinesList: this.fb.array([]),
@@ -1557,8 +1562,11 @@ searchFromArray(arr, regex) {
   return matches;
 };
 
+searchByDate(){ alert ("Wip..........");}
 
 searchByJobNo(){
+  alert(this.JobNo + "....WIP");return;
+
    alert(this.JobNo);
   //  var jobno=(this.paintIssueForm.get('JobNo').value);
   if(this.JobNo==null || this.JobNo==undefined || this.JobNo.trim()=='') {
