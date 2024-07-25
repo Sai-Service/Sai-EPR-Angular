@@ -18,6 +18,8 @@ interface IPaintMixingMaster {
   relDescription : string;
   relUom : any;
   relationId : number;
+  relationID : number;
+
   itemId : number;
   relatedItemId : number;
 
@@ -77,7 +79,10 @@ export class PaintMixingMasterComponent implements OnInit {
   relItemCode : number;
   relDescription : string;
   relUom : any;
+
   relationId : number;
+  relationID : number;
+
   itemId : number;
   relatedItemId : number;
   abc : any;
@@ -87,6 +92,7 @@ export class PaintMixingMasterComponent implements OnInit {
 
   saveButton=true;
   cancelButton=false;
+  updateButtonDisable=true;
   checkValidation=false;
 
   dataDisplay :string;
@@ -125,6 +131,7 @@ export class PaintMixingMasterComponent implements OnInit {
       relDescription : [],
       relUom : [],
       relationId : [],
+      relationID : [],
       itemId : [],
       relatedItemId : [],
       itemCategory:[],
@@ -193,7 +200,7 @@ export class PaintMixingMasterComponent implements OnInit {
       delete val.emplId;
       
       delete val.itemCategory;
-      delete val.itemCode ;
+      // delete val.itemCode ;
       delete val.description ;
       delete val.uom ;
       delete val.itemCategory;
@@ -205,22 +212,65 @@ export class PaintMixingMasterComponent implements OnInit {
     return val;
   }
 
+  updateMast() {
+
+    this.CheckDataValidations();
+    this.saveButton=false;
+    this.updateButtonDisable=false;
+
+    if (this.checkValidation===true) {
+    var  resp=confirm("Do You Want to Update this Transaction ???");
+    if(resp==false) { return;}
+    const formValue: IPaintMixingMaster = this.trData(this.paintMixingMasterForm.getRawValue()); 
+    var mainItemId =this.paintMixingMasterForm.get("itemId").value;
+
+    this.service.UpdatePaintMixMaster(formValue).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert('RECORD UPDATED SUCCESSFULLY');
+        // this.paintMixingMasterForm.disable();
+        this.updateButtonDisable=true;
+        this.cancelButton=false;
+
+        this.service.getRelatedItem(mainItemId).subscribe(data =>{
+          this.abc = data;
+          console.log(this.abc)
+        })
+      } else {
+        if (res.code === 400) {
+          // this.saveButton=true;
+          alert('ERROR OCCOURED IN PROCEESS');
+          
+          // this.paintMixingMasterForm.reset();
+        }
+      }
+    });
+  }
+  };
+
 
   newMast(){
 
-    var  resp=confirm("Do You Want to Save this Transaction ???");
-    if(resp==false) { return;}
-
-    this.saveButton=false;
     this.CheckDataValidations();
+    this.saveButton=false;
+    this.updateButtonDisable=true;
     const formValue: IPaintMixingMaster = this.trData(this.paintMixingMasterForm.getRawValue()); 
 
     if (this.checkValidation===true) {
+
+      var  resp=confirm("Do You Want to Save this Transaction ???");
+      if(resp==false) { return;}
       // const formValue = this.trData(this.paintMixingMasterForm.value).getRawValue();  
+      var mainItemId =this.paintMixingMasterForm.get("itemId").value;
+
     this.service.RelatedItemMasterSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert('RECORD INSERTED SUCCESSFULLY..'+res.message);
         this.paintMixingMasterForm.disable();
+
+        this.service.getRelatedItem(mainItemId).subscribe(data =>{
+          this.abc = data;
+          console.log(this.abc)
+        })
 
       } else {
         if (res.code === 400) {
@@ -235,6 +285,34 @@ export class PaintMixingMasterComponent implements OnInit {
       
     });
   } else { alert ("Data Validation Failed. Please check and try again...");}
+  }
+
+  deleteRelation() {
+    // const formValue = this.trData(this.relatedItemMasterForm.value);  
+
+    var  resp=confirm("Do You Want to Delete this Record ???");
+    if(resp==false) { return;}
+
+    this.updateButtonDisable=true;
+
+    var relId =this.paintMixingMasterForm.get("relationId").value;
+    var mainItemId =this.paintMixingMasterForm.get("itemId").value;
+    this.service.DeleteItemRelation(relId).subscribe((res: any) => {
+     if (res.code === 200) {
+      this.cancelButton=false;
+
+      this.service.getRelatedItem(mainItemId).subscribe(data =>{
+        this.abc = data;
+        console.log(this.abc)
+      })
+
+      alert(res.message);
+     } else {
+       if (res.code === 400) {
+         alert(res.message);
+       }
+     }
+   });
   }
 
   Validateitem(itemCode){
@@ -361,15 +439,21 @@ Select(relItemId: number) {
   let select = this.abc.find(d => d.relatedItemId === relItemId);
   if (select) {
     this.paintMixingMasterForm.patchValue(select);
+    this.relationID=select.relationId;
 
     this.service.getItemCodePach(select.relItemCode).subscribe(data =>{
       // this.abc = data;
       // console.log(this.abc)
       this.baseCategory=data.categoryName;
+
+      // alert("relationId ,relationID :" +this.relationId +","+this.relationID);
+
    
     this.cancelButton = true;
     this.saveButton=false;
     this.displayButton = false;
+    this.updateButtonDisable=false;
+
   })
 
   }
@@ -392,31 +476,7 @@ onOptionsSelected(event: any) {
 
  
 
-  deleteRelation() {
-    // const formValue = this.trData(this.relatedItemMasterForm.value);  
-
-    var  resp=confirm("Do You Want to Cancel this Transaction ???");
-    if(resp==false) { return;}
-
-    var relId =this.paintMixingMasterForm.get("relationId").value;
-    var mainItemId =this.paintMixingMasterForm.get("itemId").value;
-    this.service.DeleteItemRelation(relId).subscribe((res: any) => {
-     if (res.code === 200) {
-      this.cancelButton=false;
-
-      this.service.getRelatedItem(mainItemId).subscribe(data =>{
-        this.abc = data;
-        console.log(this.abc)
-      })
-
-      alert(res.message);
-     } else {
-       if (res.code === 400) {
-         alert(res.message);
-       }
-     }
-   });
-  }
+  
 
   resetMast() {
     window.location.reload();
@@ -460,10 +520,19 @@ onOptionsSelected(event: any) {
       return;
     }
 
+    if (formValue.attribute5===undefined || formValue.attribute5===null  || formValue.attribute5 <0)
+      {
+        this.checkValidation=false; 
+        alert ("UNIT/GRAM : Please enter valid data");this.saveButton=true;
+        return;
+      } 
+
 
       this.checkValidation=true;
 
   }
+
+  
 
 
 }

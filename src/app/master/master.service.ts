@@ -405,6 +405,7 @@ export class MasterService {
   // statusList(): Observable<any> {
   //   return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
   // }  OUIdList StateList
+
   UpdateDivMasterById(DivMasterRecord, divisionId) {
     const options = {
       headers: this.headers
@@ -4602,7 +4603,14 @@ TransactionTypemiscpPaint(): Observable<any> {
     return this.http.post(url, dipEntryRecord, options);
   }
 
-
+ UpdatePaintMixMaster(PaintMixMasterRecord) {
+    const options = {
+      headers: this.headers
+    };
+    // http://localhost:8081/relateditems/relatedItemUpd
+    const url = (this.ServerUrl + `/relateditems/relatedItemUpd`);
+    return this.http.put(url, PaintMixMasterRecord, options);
+  }
 
 
 
