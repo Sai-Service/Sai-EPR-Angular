@@ -524,23 +524,24 @@
             <th scope="col">Issue Date.</th>
             <th scope="col">Vehicle No.</th>
             <th scope="col">Jobcard No.</th>
+            <th scope="col">Color Code</th>
             <th scope="col">Total Amt</th>
             <th scope="col">Total Qty</th>
             <th scope="col">Issue Type</th>
-
+            <th scope="col" style="width: 4rem;">Select</th>                
           </tr>
             </tbody>
             <tr *ngFor="let com of jobData let i=index" style="background-color:#E3EAEB;">
               <td style="text-align: center;width: 3rem;">{{i+1}}</td>
               <td>{{com.IcNo}}</td>
-              <td>{{com.regNo}}</td>
-              <td>{{com.itemCode}}</td>
-              <td>{{com.description}}</td>
-              <td>{{com.reason}}</td>
-              <!-- <td>{{com.uom}}</td> -->
-              <td style="text-align: right;">{{com.qty | number:'1.2-2'}}</td>
-              <td style="text-align: right;">{{com.amount | number:'1.2-2'}}</td>
               <td style="text-align:  center;">{{com.IcDate |date:'dd-MM-y'}}</td>
+              <td>{{com.regNo}}</td>
+              <td>{{com.jobCardNum}}</td>
+              <td>{{com.itemCode}}</td>
+              <td style="text-align: right;">{{com.amount | number:'1.2-2'}}</td>
+              <td style="text-align: right;">{{com.qty | number:'1.2-2'}}</td>
+              <td style="text-align:  center;"> {{com.reason}}</td>
+              <td style="text-align: center;"><button class="btn btn-info Saibtn-secondary" (click)="Search2(com.IcNo)">Select</button></td>
             </tr>
     </table>
     </div>

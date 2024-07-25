@@ -1766,6 +1766,16 @@ export class MasterService {
     return this.http.get(this.ServerUrl + `/stockadj/jobcard/${jobno}`)
   }
 
+  getPaintSearchbyJc(jcNo,locId,issType){
+    return this.http.get(this.ServerUrl + `/stockadj/locJobPaint?repairNo=${jcNo}&locId=${locId}&reason=${issType}`)
+    // http://localhost:8081/stockadj/locJobPaint?repairNo=JC24001193&locId=1633&reason=PN001
+  }
+
+  getPaintSearchbyDate(issDt,locId,issType){
+    return this.http.get(this.ServerUrl + `/stockadj/locDtPaint?dte=${issDt}&locId=${locId}&reason=${issType}`)
+    // http://localhost:8081/stockadj/locDtPaint?dte=24-jul-2024&locId=1633&reason=PN001
+  }
+
   getsearchByJCpaint(jobno): Observable<any> {
     return this.http.get(this.ServerUrl + `/stockadj/jobPaint/${jobno}`)
     // http://localhost:8081/stockadj/jobPaint/JC-1
