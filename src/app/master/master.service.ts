@@ -405,6 +405,7 @@ export class MasterService {
   // statusList(): Observable<any> {
   //   return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
   // }  OUIdList StateList
+
   UpdateDivMasterById(DivMasterRecord, divisionId) {
     const options = {
       headers: this.headers
@@ -1763,6 +1764,16 @@ export class MasterService {
 
   getsearchByIC(jobno): Observable<any> {
     return this.http.get(this.ServerUrl + `/stockadj/jobcard/${jobno}`)
+  }
+
+  getPaintSearchbyJc(jcNo,locId,issType){
+    return this.http.get(this.ServerUrl + `/stockadj/locJobPaint?repairNo=${jcNo}&locId=${locId}&reason=${issType}`)
+    // http://localhost:8081/stockadj/locJobPaint?repairNo=JC24001193&locId=1633&reason=PN001
+  }
+
+  getPaintSearchbyDate(issDt,locId,issType){
+    return this.http.get(this.ServerUrl + `/stockadj/locDtPaint?dte=${issDt}&locId=${locId}&reason=${issType}`)
+    // http://localhost:8081/stockadj/locDtPaint?dte=24-jul-2024&locId=1633&reason=PN001
   }
 
   getsearchByJCpaint(jobno): Observable<any> {
@@ -4602,7 +4613,14 @@ TransactionTypemiscpPaint(): Observable<any> {
     return this.http.post(url, dipEntryRecord, options);
   }
 
-
+ UpdatePaintMixMaster(PaintMixMasterRecord) {
+    const options = {
+      headers: this.headers
+    };
+    // http://localhost:8081/relateditems/relatedItemUpd
+    const url = (this.ServerUrl + `/relateditems/relatedItemUpd`);
+    return this.http.put(url, PaintMixMasterRecord, options);
+  }
 
 
 

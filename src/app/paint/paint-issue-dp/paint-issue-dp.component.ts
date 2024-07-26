@@ -68,6 +68,8 @@ interface IPaintIssue {
   panelCode:string;
   panelQty:number;
   panelQty1:number;
+  issDate1:Date;
+
 
 }
 
@@ -154,6 +156,11 @@ export class PaintIssueDpComponent implements OnInit {
   displayButton: boolean = true;
   displayaddButton: boolean = true;
   addRow: boolean = true;
+  pipe = new DatePipe('en-US');
+  now = Date.now();
+  public minDate = new Date();
+  issDate1 = this.pipe.transform(Date.now(), 'y-MM-dd');
+
   public InterBrancList: Array<string> = [];
   public BranchList: Array<string> = [];
   public CostCenterList: Array<string> = [];
@@ -214,8 +221,7 @@ export class PaintIssueDpComponent implements OnInit {
   type1: string;
   dispheader: boolean = false;
   displable: boolean = false;
-  pipe = new DatePipe('en-US');
-  now = new Date();
+  
   compileDate = this.pipe.transform(this.now, 'dd-MM-yyyy')
   currentOp: string;
   dispRow: boolean = true;
@@ -292,6 +298,7 @@ export class PaintIssueDpComponent implements OnInit {
       attribute4:[],
       attribute10:[],
       attribute9:[],
+      issDate1: [],
 
 
       cycleLinesList: this.fb.array([]),
@@ -1110,6 +1117,12 @@ export class PaintIssueDpComponent implements OnInit {
       }
     )
   }
+
+  Search2(icNo) {
+    this.paintIssueForm.patchValue({compNo :icNo});
+    this.search(this.compNo)
+  }
+
   search(compNo) {
     if (compNo != undefined) {
       this.currentOp = 'SEARCH';
@@ -1558,35 +1571,14 @@ searchFromArray(arr, regex) {
 };
 
 
-searchByJobNo(){
-   alert(this.JobNo);
-  //  var jobno=(this.paintIssueForm.get('JobNo').value);
-  if(this.JobNo==null || this.JobNo==undefined || this.JobNo.trim()=='') {
-   alert ("Enter a Valid Job Card No."); return;}
-   this.JobNo=this.JobNo.toUpperCase();
-
-  this.service.getsearchByJCpaint(this.JobNo).subscribe(
-    data=>{
-      // if (data.code==200){
-         this.jobData=data;
-         console.log(this.jobData);
-         
-        // } 
-        // else if (data.code==400){
-        //   alert(data.message)
-        // }  
-    }
-  )
-}
-
 calculatewarranty(event){
   alert(event.target.value+'warr');
   var value=event.target.value.split('--');
   var jobNo=value[0]
-var wIregNum=this.workshopIssue.find(d=>d.jobCardNum===jobNo);
-console.log(wIregNum);
-var regNum=wIregNum.regNo;
-this.service.getVehRegDetail(regNum).subscribe(
+  var wIregNum=this.workshopIssue.find(d=>d.jobCardNum===jobNo);
+  console.log(wIregNum);
+  var regNum=wIregNum.regNo;
+  this.service.getVehRegDetail(regNum).subscribe(
   data=>{
     this.getVehRegDetails = data;
     // debugger;
@@ -1736,5 +1728,36 @@ CalculateLineTotal() {
   this.paintIssueForm.patchValue({totalCompileItems :totQty});
   this.paintIssueForm.patchValue({totalItemValue :totValue})
 }
+
+searchByDate(){ 
+  var issdt1=(this.paintIssueForm.get('issDate1').value);
+  var mDate = this.pipe.transform(issdt1, 'dd-MMM-y');
+    // alert(mDate + "....WIP mDate")
+    if(mDate==null || mDate==undefined || mDate.trim()=='') {
+   alert ("Select a Valid Date....."); return;}
+  
+  this.service.getPaintSearchbyDate(mDate,this.locId,'PN002').subscribe(
+    data=>{
+         this.jobData=data;
+         console.log(this.jobData);
+         if(this.jobData.length==0) {alert ("No Records Found..............");}
+
+   });
+  }
+  
+  searchByJobNo(){
+    // alert(this.JobNo + "....WIP")
+    var jobcardno=(this.paintIssueForm.get('JobNo').value);
+   if(jobcardno==null || jobcardno==undefined || jobcardno.trim()=='') {
+    alert ("Enter a Valid Job Card No."); return;}
+    jobcardno=jobcardno.toUpperCase();
+   this.service.getPaintSearchbyJc(jobcardno,this.locId,'PN002').subscribe(
+     data=>{
+          this.jobData=data;
+          console.log(this.jobData);
+          if(this.jobData.length==0) {alert ("No Records Found..............");}
+
+    });
+  }
 
 }

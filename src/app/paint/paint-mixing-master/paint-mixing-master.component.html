@@ -18,7 +18,9 @@
   
                 <input hidden type="number" formControlName="itemId" [(ngModel)]="itemId" >
                 <input hidden type="number" formControlName="relatedItemId" [(ngModel)]="relatedItemId" >
-               
+                <input hidden type="number" formControlName="relationId" [(ngModel)]="relationId" >
+                <input hidden type="number" formControlName="relationID" [(ngModel)]="relationID" >
+
                 <td style="width: 15%" class="LabelFontStyle">Main&nbsp;Colour&nbsp;Code:</td>
                 <!-- <td><input type="text" class="form-control" formControlName="itemCode" [(ngModel)]="itemCode" (change)="Validateitem(itemCode)"   ></td> -->
     
@@ -86,13 +88,14 @@
 
                 <ng-template #upd21>  
                    <td>
-                        <select  formControlName="status" id="status" class="form-control"  [(ngModel)]="status" (ngModelChange)='onOptionsSelected($event)'>
+                        <select  disabled formControlName="status" id="status" class="form-control"  [(ngModel)]="status" (ngModelChange)='onOptionsSelected($event)'>
                         <option *ngFor="let sc of  statusList" [ngValue] ="sc.code">
                             {{sc.code}}
                         </option>
                        </select>
                   </td>
                 </ng-template>
+
 
                 <td style="width: 15%" class="LabelFontStyle"> Start&nbsp;Date&nbsp;:</td>
                 <td><input disabled  type="date"   id="startDate"  formControlName="startDate"  [ngModel]="startDate" class="form-control"  max="{{minDate | date:'yyyy-MM-dd'}}" style="height: 25px;"></td>
@@ -118,9 +121,11 @@
                     <td> <button type="button" class="btn btn-info" id="sveBtn" (click)="newMast()">Save</button></td>
                 </ng-template><ng-template #Block12></ng-template>
                 
+                <td> <button type="button" [disabled]="updateButtonDisable" class="btn btn-info" id="sveBtn" (click)="updateMast()">Update</button></td>
+
                 <div *ngIf="cancelButton; then Block21; else Block22"></div>
                 <ng-template #Block21>
-                    <td> <button type="button" class="btn btn-info" id="register" (click)="deleteRelation()">Cancel</button></td>
+                    <td> <button  type="button" class="btn btn-info" id="register" (click)="deleteRelation()">Delete</button></td>
                 </ng-template><ng-template #Block22></ng-template>
 
                 <td> <button type="button" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>

@@ -407,6 +407,7 @@
             <button disabled type="submit" class="btn btn-primary" (click)="saveMisc()" >Save</button>
           </td>
       </ng-template>
+
   
       </tr>
     </table>
@@ -528,6 +529,58 @@
     </div>
   </div>
    -->
+
+   <table style="width: 100%; background-color: #a4d3e9;">
+    <tr>
+        <td style="width: 15%" class="LabelFontStyle">Issue&nbsp;Date&nbsp;:</td>
+        <td style="background-color: #FFE4B5;">
+        <input   type="date"  formControlName="issDate1"  id="issDate1" [(ngModel)]="issDate1" class="form-control"  ></td>
+        <td colspan="8" style="text-align: left; width: 100%;">
+        <button type="button" class="btn btn-primary" (click)='searchByDate()' ><i class="fa fa-search"></i></button></td>
+   
+        <td style="width: 15%" class="LabelFontStyle">Job&nbsp;No&nbsp;:</td>
+        <td style="background-color: #FFE4B5;">
+        <input class="form-control" formControlName="JobNo" [(ngModel)]='JobNo' [(ngModel)]="JobNo">    </td>     
+        <td colspan="8" style="text-align: left; width: 100%;">
+        <button type="button" class="btn btn-primary" (click)='searchByJobNo()' ><i class="fa fa-search"></i></button></td>
+
+      </tr>
+ 
+</table>
+
+   <div class="Container1">
+    <div class="grid_scroll">
+    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%; font-size: small;">
+        <tbody>
+            <tr class="GridHeader">
+              <th scope="col">Srl#</th>
+              <th scope="col">Issue No.</th>
+              <th scope="col">Issue Date.</th>
+              <th scope="col">Vehicle No.</th>
+              <th scope="col">Jobcard No.</th>
+              <th scope="col">Color Description</th>
+              <th scope="col">Total Amt</th>
+              <th scope="col">Total Qty</th>
+              <th scope="col">Issue Type</th>
+              <th scope="col" style="width: 4rem;">Select</th>                
+            </tr>
+            </tbody>
+            <tr *ngFor="let com of jobData let i=index" style="background-color:#E3EAEB;">
+              <td style="text-align: center;width: 3rem;">{{i+1}}</td>
+              <td>{{com.IcNo}}</td>
+              <td style="text-align:  center;">{{com.IcDate |date:'dd-MM-y'}}</td>
+              <td>{{com.regNo}}</td>
+              <td>{{com.jobCardNum}}</td>
+              <td>{{com.itemCode}} : {{com.description}}</td>
+              <td style="text-align: right;">{{com.amount | number:'1.2-2'}}</td>
+              <td style="text-align: right;">{{com.qty | number:'1.2-2'}}</td>
+              <td style="text-align:  center;"> {{com.reason}}</td>
+              <td style="text-align: center;"><button class="btn btn-info Saibtn-secondary" (click)="Search2(com.IcNo)">Select</button></td>
+            </tr>
+    </table>
+    </div>
+  </div>
+
     </form>
     </div>
   

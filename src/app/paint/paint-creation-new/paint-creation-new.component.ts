@@ -67,6 +67,7 @@ interface IPaintMixing {
 
   totIssuedQty:number;
   totIssuedValue:number;
+  issDate1:Date;
 
 }
 
@@ -148,6 +149,11 @@ export class PaintCreationNewComponent implements OnInit {
   addRow: boolean = true;
   lineItemRepeated = false;
 
+  pipe = new DatePipe('en-US');
+  now = Date.now();
+  public minDate = new Date();
+  issDate1 = this.pipe.transform(Date.now(), 'y-MM-dd');
+
 
   public InterBrancList: Array<string> = [];
   public BranchList: Array<string> = [];
@@ -207,8 +213,7 @@ export class PaintCreationNewComponent implements OnInit {
   type1: string;
   dispheader: boolean = false;
   displable: boolean = false;
-  pipe = new DatePipe('en-US');
-  now = new Date();
+
   compileDate = this.pipe.transform(this.now, 'dd-MM-yyyy')
   currentOp: string;
   dispRow: boolean = true;
@@ -290,6 +295,8 @@ export class PaintCreationNewComponent implements OnInit {
       totIssuedQty:[],
       totIssuedValue:[],
       colorQty:[],
+
+      issDate1: [],
 
       cycleLinesList: this.fb.array([]),
 
@@ -1144,6 +1151,12 @@ export class PaintCreationNewComponent implements OnInit {
       }
     )
   }
+
+  Search2(icNo) {
+    this.paintCreationNewForm.patchValue({compNo :icNo});
+    this.search(this.compNo)
+  }
+
   search(compNo) {
     // alert('In Search' + compNo);
     this.displayButton = false;
@@ -1648,26 +1661,20 @@ searchFromArray(arr, regex) {
 };
 
 
-searchByJobNo(){
-   alert(this.JobNo);
-  //  var jobno=(this.paintCreationNewForm.get('JobNo').value);
-  if(this.JobNo==null || this.JobNo==undefined || this.JobNo.trim()=='') {
-   alert ("Enter a Valid Job Card No."); return;}
-   this.JobNo=this.JobNo.toUpperCase();
+// searchByJobNo(){
+//    alert(this.JobNo);
+//   if(this.JobNo==null || this.JobNo==undefined || this.JobNo.trim()=='') {
+//    alert ("Enter a Valid Job Card No."); return;}
+//    this.JobNo=this.JobNo.toUpperCase();
 
-  this.service.getsearchByIC(this.JobNo).subscribe(
-    data=>{
-      // if (data.code==200){
-         this.jobData=data;
-         console.log(this.jobData);
-         
-        // } 
-        // else if (data.code==400){
-        //   alert(data.message)
-        // }  
-    }
-  )
-}
+//   this.service.getsearchByIC(this.JobNo).subscribe(
+//     data=>{
+//          this.jobData=data;
+//          console.log(this.jobData);
+      
+//     }
+//   )
+// }
 
 calculatewarranty(event){
   alert(event.target.value+'warr');
@@ -1739,7 +1746,38 @@ validateClrQty(clrQty: any) {
 
 }
 
+searchByDate(){ 
+var issdt1=(this.paintCreationNewForm.get('issDate1').value);
+var mDate = this.pipe.transform(issdt1, 'dd-MMM-y');
 
+// alert(mDate + "....WIP mDate")
+
+if(mDate==null || mDate==undefined || mDate.trim()=='') {
+ alert ("Select a Valid Date....."); return;}
+
+this.service.getPaintSearchbyDate(mDate,this.locId,'PN001').subscribe(
+  data=>{
+       this.jobData=data;
+       console.log(this.jobData);
+      //  alert ("this.jobData.length :" +this.jobData.length )
+       if(this.jobData.length==0) {alert ("No Records Found..............");}
+ });
+}
+
+searchByJobNo(){
+  // alert(this.JobNo + "....WIP")
+  var jobcardno=(this.paintCreationNewForm.get('JobNo').value);
+ if(jobcardno==null || jobcardno==undefined || jobcardno.trim()=='') {
+  alert ("Enter a Valid Job Card No."); return;}
+  jobcardno=jobcardno.toUpperCase();
+ this.service.getPaintSearchbyJc(jobcardno,this.locId,'PN001').subscribe(
+   data=>{
+        this.jobData=data;
+        console.log(this.jobData);
+        if(this.jobData.length==0) {alert ("No Records Found..............");}
+
+  });
+}
 
 }
 
