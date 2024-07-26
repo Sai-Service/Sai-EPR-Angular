@@ -558,7 +558,7 @@
               <th scope="col">Issue Date.</th>
               <th scope="col">Vehicle No.</th>
               <th scope="col">Jobcard No.</th>
-              <th scope="col">Color Code</th>
+              <th scope="col">Color Description</th>
               <th scope="col">Total Amt</th>
               <th scope="col">Total Qty</th>
               <th scope="col">Issue Type</th>
@@ -571,7 +571,7 @@
               <td style="text-align:  center;">{{com.IcDate |date:'dd-MM-y'}}</td>
               <td>{{com.regNo}}</td>
               <td>{{com.jobCardNum}}</td>
-              <td>{{com.itemCode}}</td>
+              <td>{{com.itemCode}} : {{com.description}}</td>
               <td style="text-align: right;">{{com.amount | number:'1.2-2'}}</td>
               <td style="text-align: right;">{{com.qty | number:'1.2-2'}}</td>
               <td style="text-align:  center;"> {{com.reason}}</td>
