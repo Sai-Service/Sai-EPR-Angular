@@ -900,6 +900,7 @@ export class ReportServiceService {
   }
 
   internalConsuptionReport(fromDate,toDate,locId,subInvCode){
+  
     const REQUEST_URI = this.ServerUrl +`/SparesReports/ICReport?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}&subInvCode=${subInvCode}`;
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
@@ -907,6 +908,20 @@ export class ReportServiceService {
       headers: this.headers,
     });
   }
+
+  PaintInternalConsuptionReport(fromDate,toDate,locId,subInvCode,ouId){
+    // http://localhost:8081/SparesReports/ICReport?fromDate=01-JUL-2024&toDate=26-JUL-2024&ouId=14&locId=&subInvCode=PN
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/ICReport?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&subInvCode=${subInvCode}`;
+
+    // const REQUEST_URI = this.ServerUrl +`/SparesReports/ICReport?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}&subInvCode=${subInvCode}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+  
 
 
   customerLedger(fromDate,toDate,custAccNo,ouId,deptId){

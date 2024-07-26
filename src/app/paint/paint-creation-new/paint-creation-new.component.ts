@@ -1455,7 +1455,12 @@ export class PaintCreationNewComponent implements OnInit {
   onSelectColor11(event) {
     if(event !=undefined || event !=null || event.trim() !='') {
 
-    var  mainClrCode = event.substr(0, 13);
+
+      // var x = this.paintMixingMasterForm.get('itemCode1').value;
+      var y =event.indexOf(':');
+      // var itmCode = x.substr(0,y);
+
+    var  mainClrCode = event.substr(0, y);
     this.paintCreationNewForm.patchValue({colorCode :mainClrCode,});
 
     // let select1 = this.paintColorList.find(d => d.SEGMENT === mainClrCode);

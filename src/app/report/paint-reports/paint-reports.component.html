@@ -567,9 +567,11 @@ style="margin-left: 10%;" id="panelsparesInventoryAging">
             </tr>
             <tr>
                 <td style="width: 15%" class="LabelFontStyle"> &nbsp;Location&nbsp;Code&nbsp;:&nbsp; </td>
+               
                 <td [style.display]="isVisiblelocationInput ? 'block' : 'none'">
-                    <input type="text" disabled class="form-control" formControlName="locCode">
+                    <input disabled type="text"  class="form-control" formControlName="locCode">
                 </td>
+
                 <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
                     <select formControlName="locCode" id="locCode" class="form-control"
                         (ngModelChange)='onOptionsLocation($event)'>

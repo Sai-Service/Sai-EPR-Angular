@@ -732,7 +732,7 @@ export class PaintReportsComponent implements OnInit {
       const fileName = 'Consumption Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if ((Number(sessionStorage.getItem('deptId'))===4)){
-        this.reportService.internalConsuptionReport(fromDate,toDate, locId, subInventory)
+        this.reportService.PaintInternalConsuptionReport(fromDate,toDate, locId, subInventory,sessionStorage.getItem('ouId'))
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.isDisabled1 = false;
@@ -741,7 +741,7 @@ export class PaintReportsComponent implements OnInit {
         })
       }
       else if ((Number(sessionStorage.getItem('deptId')))!=4){
-        this.reportService.internalConsuptionReport(fromDate,toDate, sessionStorage.getItem('locId'), subInventory)
+        this.reportService.PaintInternalConsuptionReport(fromDate,toDate, sessionStorage.getItem('locId'), subInventory,sessionStorage.getItem('ouId'))
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.isDisabled1 = false;
