@@ -144,8 +144,18 @@ export class ReportServiceService {
   }
 
 
-  spSparesMiscIssueReceiptReport(invcDt1,invcDt4,locId){
-    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprMiscRep?fromDate=${invcDt1}&toDate=${invcDt4}&locId=${locId}`;
+  spSparesMiscIssueReceiptReport(invcDt1,invcDt4,locId,ouId){
+    // const REQUEST_URI = this.ServerUrl +`/SparesReports/SprMiscRep?fromDate=${invcDt1}&toDate=${invcDt4}&locId=${locId}`;
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprMiscRep?fromDate=${invcDt1}&toDate=${invcDt4}&ouId=${ouId}&locId=${locId}`;
+
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+  PaintparesMiscIssueReceiptReport(invcDt1,invcDt4,locId,ouId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprMiscRep?fromDate=${invcDt1}&toDate=${invcDt4}&ouId=${ouId}&locId=${locId}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
@@ -159,6 +169,8 @@ export class ReportServiceService {
       headers: this.headers,
     });
   }
+
+
 
 
   spIncomeStatement(invcDt1,invcDt4,locId){
@@ -899,9 +911,9 @@ export class ReportServiceService {
     });
   }
 
-  internalConsuptionReport(fromDate,toDate,locId,subInvCode){
-  
-    const REQUEST_URI = this.ServerUrl +`/SparesReports/ICReport?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}&subInvCode=${subInvCode}`;
+  internalConsuptionReport(fromDate,toDate,locId,subInvCode,ouId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/ICReport?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&subInvCode=${subInvCode}`;
+    // const REQUEST_URI = this.ServerUrl +`/SparesReports/ICReport?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}&subInvCode=${subInvCode}`;
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -912,7 +924,6 @@ export class ReportServiceService {
   PaintInternalConsuptionReport(fromDate,toDate,locId,subInvCode,ouId){
     // http://localhost:8081/SparesReports/ICReport?fromDate=01-JUL-2024&toDate=26-JUL-2024&ouId=14&locId=&subInvCode=PN
     const REQUEST_URI = this.ServerUrl +`/SparesReports/ICReport?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&subInvCode=${subInvCode}`;
-
     // const REQUEST_URI = this.ServerUrl +`/SparesReports/ICReport?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}&subInvCode=${subInvCode}`;
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
