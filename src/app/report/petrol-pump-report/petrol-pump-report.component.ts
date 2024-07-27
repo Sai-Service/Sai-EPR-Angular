@@ -505,7 +505,7 @@ else if (reportName === 'Sales Register - Petrol Pump'){
       const fileName = 'Pump Stock Adjustment Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.spSparesMiscIssueReceiptReport(fromDate, toDate, locId)
+        this.reportService.spSparesMiscIssueReceiptReport(fromDate, toDate, locId,sessionStorage.getItem('ouId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -514,7 +514,7 @@ else if (reportName === 'Sales Register - Petrol Pump'){
           })
       }
       if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.spSparesMiscIssueReceiptReport(fromDate, toDate, sessionStorage.getItem('locId'))
+        this.reportService.spSparesMiscIssueReceiptReport(fromDate, toDate, sessionStorage.getItem('locId'),sessionStorage.getItem('ouId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
