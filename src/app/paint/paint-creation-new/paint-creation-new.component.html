@@ -325,7 +325,9 @@
               </div>
               <ng-template #thenBlock>
                 <td>
-              <select class="form-control" style="height: 20px; width: 110px;" formControlName="LocatorSegment"  (ngModelChange)='AvailQty($event,trxLineIndex)'#event>
+              <select class="form-control" style="height: 20px; width: 110px;" formControlName="LocatorSegment">
+
+              <!-- <select class="form-control" style="height: 20px; width: 110px;" formControlName="LocatorSegment"  (ngModelChange)='AvailQty($event,trxLineIndex)'#event> -->
                 <!-- <option>--Select--</option> -->
                 <option *ngFor="let locId of  getfrmSubLoc" [ngValue]="locId.locatorId" [Value]="locId.segmentName">{{locId.segmentName}}--{{locId.onHandQty}}</option>
                 <!-- [ngValue]="locId.locatorId" -->

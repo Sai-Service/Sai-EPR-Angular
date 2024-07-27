@@ -784,6 +784,7 @@ export class PaintCreationNewComponent implements OnInit {
 
   }
 
+
   AvailQty(event: any, i) {
 
     // alert(event.target.value);
@@ -831,6 +832,8 @@ export class PaintCreationNewComponent implements OnInit {
     //  var trxLnarronha = this.paintCreationNewForm.get('cycleLinesList').value;
 
   }
+
+  
   resetMiscTrans() {
     window.location.reload();
   }

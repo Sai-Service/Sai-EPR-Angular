@@ -753,23 +753,28 @@ export class PaintIssueDpComponent implements OnInit {
 
   }
 
-
   AvailQty(event: any, i) {
 
     // alert(event.target.value);
     var trxLnArr1 = this.paintIssueForm.get('cycleLinesList') as FormArray;
     var trxLnArr = this.paintIssueForm.get('cycleLinesList').value;
     var itemid = trxLnArr[i].invItemId;
+
     var locId = trxLnArr[i].LocatorSegment;
-    trxLnArr1.controls[i].patchValue({ locatorId: locId });
-    //alert(locId+'locatorID');
+    var pntlocatorId = trxLnArr[i].locatorId;
+    alert ("pntlocatorId ,itemid:"+ pntlocatorId) +" ....,"+itemid;
+// 
+    // trxLnArr1.controls[i].patchValue({ locatorId: locId });
+    // alert(locId+'locatorID');
     var onhandid = trxLnArr[i].id;
     var subcode = trxLnArr[i].subInventory;
-    this.service.getonhandqty(Number(sessionStorage.getItem('locId')), this.subInvCode.subInventoryId, locId, itemid).subscribe
+    this.service.getonhandqty(Number(sessionStorage.getItem('locId')), this.subInvCode.subInventoryId, pntlocatorId, itemid).subscribe
       (data => {
         this.onhand = data;
         console.log(this.onhand);
-        trxLnArr1.controls[i].patchValue({ onHandQty: data.obj });
+        // alert ("testng....avlqty...data.obj... "+data.obj)
+        var ohqty1=Number(data.obj)
+        trxLnArr1.controls[i].patchValue({ onHandQty: ohqty1});
         // onHand1=data.obj.onHandQty;
 
 
@@ -778,6 +783,55 @@ export class PaintIssueDpComponent implements OnInit {
         // alert(reserve+'reserve');
         let avlqty1 = 0;
         // alert(data.obj+'qty');
+        var ohqty1=Math.round((ohqty1+Number.EPSILON)*100)/100
+        avlqty1 = ohqty1- reserve;
+
+        trxLnArr1.controls[i].patchValue({ avlqty: avlqty1 });
+        trxLnArr1.controls[i].patchValue({ resveQty: reserve });
+        if (avlqty1 < 0) {
+          alert("Transfer is not allowed,Item has Reserve quantity - " + reserve);
+          // this.cycleLinesList().clear();
+          // this.addnewcycleLinesList(i);
+
+        }
+
+      });
+    console.log(this.onhand);
+    //  var trxLnarronha = this.paintCreationNewForm.get('cycleLinesList').value;
+
+  }
+
+  AvailQtyOld(event: any, i) {
+
+    // alert(event.target.value);
+    var trxLnArr1 = this.paintIssueForm.get('cycleLinesList') as FormArray;
+    var trxLnArr = this.paintIssueForm.get('cycleLinesList').value;
+    var itemid = trxLnArr[i].invItemId;
+    var locId = trxLnArr[i].LocatorSegment;
+    // trxLnArr1.controls[i].patchValue({ locatorId: locId });
+    var pntlocatorId = trxLnArr[i].locatorId;
+
+    alert(pntlocatorId+'locatorID');
+
+    var onhandid = trxLnArr[i].id;
+    var subcode = trxLnArr[i].subInventory;
+    this.service.getonhandqty(Number(sessionStorage.getItem('locId')), this.subInvCode.subInventoryId, pntlocatorId, itemid).subscribe
+      (data => {
+        this.onhand = data;
+        console.log(this.onhand);
+        // trxLnArr1.controls[i].patchValue({ onHandQty: data.obj });
+
+        // onHand1=data.obj.onHandQty;
+        var ohqty1=Number(data.obj)
+        trxLnArr1.controls[i].patchValue({ onHandQty: ohqty1});
+
+        let reserve = trxLnArr[i].resveQty;
+        // alert(onHand1+'OnHand');
+        // alert(reserve+'reserve');
+        let avlqty1 = 0;
+        // alert(data.obj+'qty');
+
+        var ohqty1=Math.round((ohqty1+Number.EPSILON)*100)/100
         avlqty1 = data.obj - reserve;
         trxLnArr1.controls[i].patchValue({ avlqty: avlqty1 });
         trxLnArr1.controls[i].patchValue({ resveQty: reserve });

@@ -199,6 +199,7 @@
     <tbody>
         <tr class="GridHeader">
             <th scope="col" style="width: 3rem;">Sr. No.</th>
+            <th scope="col" style="width: 3rem;">Main Colour</th> 
             <th scope="col" style="width: 3rem;">Base Colour</th> 
             <th scope="col" style="width: 8rem; ">Base Colour Name</th>   
             <th scope="col" style="width: 5rem;">UOM</th>
@@ -208,6 +209,7 @@
         </tbody>
         <tr *ngFor="let com of abc let k = index" class="ItemStyle" style="text-decoration:none;font-size:small;">
             <td style="width: 4rem; text-align: center;">{{k+1}}</td>
+            <td style="text-align: center;">{{com.itemCode}}</td>
             <td style="text-align: center;">{{com.relItemCode}}</td>
             <td style="width: 4rem; text-align: left;">{{com.relDescription}}</td>   
             <td style="text-align: center;">{{com.uom}}</td> 
