@@ -28,6 +28,8 @@ export class PaintReportsComponent implements OnInit {
   toDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   OUCode: string;
   locCode: string;
+  locCode1: number;
+
   locId: number;
   trxNumber:number;
   public BillShipToList: Array<string> = [];
@@ -93,6 +95,8 @@ export class PaintReportsComponent implements OnInit {
       toDate: [],
       OUCode: [''],
       locCode: [''],
+      locCode1: [''],
+
       locId: [''],
       deptId: [''],
       userName: [''],
@@ -127,11 +131,14 @@ export class PaintReportsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.locId = Number(sessionStorage.getItem('locId'));
+    this.paintReportForm.patchValue({ locId: Number(sessionStorage.getItem('locId')) })
     this.paintReportForm.patchValue({ OUCode: sessionStorage.getItem('ouId') + '-' + sessionStorage.getItem('ouName') })
     this.paintReportForm.patchValue({ locCode: sessionStorage.getItem('locId') + '-' + sessionStorage.getItem('locName') })
-    this.paintReportForm.patchValue({ department: 'Spares' });
-    this.paintReportForm.patchValue({ deptId: 5 })
+    this.paintReportForm.patchValue({ department: 'DP' });
+    this.paintReportForm.patchValue({ deptId: 3 })
+    // this.paintReportForm.patchValue({ locId: Number(sessionStorage.getItem('locId')) })
+
     // Prevent closing from click inside dropdown
     $(document).on('click', '.dropdown-menu', function (e) {
       e.stopPropagation();
@@ -206,6 +213,7 @@ export class PaintReportsComponent implements OnInit {
 
 
   this.paintReportForm.patchValue({ userName: sessionStorage.getItem('ticketNo') })
+
   }
 
 
@@ -527,8 +535,8 @@ export class PaintReportsComponent implements OnInit {
   }
 
   reportParameter(reportName) {
-    // alert ("....Report Not ready....wip");
-    // return;
+
+    
     this.isDisabled1 = true;
     this.closeResetButton = false;
     this.progress = 0;
@@ -545,10 +553,17 @@ export class PaintReportsComponent implements OnInit {
     var segment = this.paintReportForm.get('segment').value;
     var subInventory = this.paintReportForm.get('subInventory').value;
     var tolocId = this.paintReportForm.get('tolocId').value;
-    if (locId === null) {
+
+   
+
+    // alert (locId)
+
+    // return;
+    if (locId === null  ) {
       alert('Please Select location Code.!');
       return;
     }
+
     var fDate =this.paintReportForm.get('fromDate').value;
     var tDate =this.paintReportForm.get('toDate').value;
 
@@ -571,7 +586,7 @@ export class PaintReportsComponent implements OnInit {
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
         const fileName = 'Paint Purchase Register Details-' +  fromDate + '-TO-' + toDate + '.xls';
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-        this.reportService.sppurRegidetailReportSpares(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
+        this.reportService.sppurRegidetailReportSpares(fromDate, toDate, sessionStorage.getItem('ouId'), locId, sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''
@@ -595,7 +610,7 @@ export class PaintReportsComponent implements OnInit {
           })
       }
       else if ((Number(sessionStorage.getItem('deptId'))) != 4) {
-        this.reportService.sppurRegiSummReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
+        this.reportService.sppurRegiSummReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -729,10 +744,12 @@ export class PaintReportsComponent implements OnInit {
     else if (reportName==='Paint Consumption Report'){
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
+      // alert ("Dept id :"+sessionStorage.getItem('deptId'))
+
       const fileName = 'Consumption Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if ((Number(sessionStorage.getItem('deptId'))===4)){
-        this.reportService.internalConsuptionReport(fromDate,toDate, locId, subInventory)
+        this.reportService.PaintInternalConsuptionReport(fromDate,toDate, locId, subInventory,sessionStorage.getItem('ouId'))
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.isDisabled1 = false;
@@ -741,7 +758,7 @@ export class PaintReportsComponent implements OnInit {
         })
       }
       else if ((Number(sessionStorage.getItem('deptId')))!=4){
-        this.reportService.internalConsuptionReport(fromDate,toDate, sessionStorage.getItem('locId'), subInventory)
+        this.reportService.PaintInternalConsuptionReport(fromDate,toDate, locId, subInventory,sessionStorage.getItem('ouId'))
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.isDisabled1 = false;
@@ -757,7 +774,7 @@ export class PaintReportsComponent implements OnInit {
       const fileName = 'Paint Misc Issue Receipt Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.spSparesMiscIssueReceiptReport(fromDate, toDate, locId)
+        this.reportService.PaintparesMiscIssueReceiptReport(fromDate, toDate, locId,sessionStorage.getItem('ouId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -766,7 +783,7 @@ export class PaintReportsComponent implements OnInit {
           })
       }
       if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.spSparesMiscIssueReceiptReport(fromDate, toDate, sessionStorage.getItem('locId'))
+        this.reportService.PaintparesMiscIssueReceiptReport(fromDate, toDate, locId,sessionStorage.getItem('ouId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -956,7 +973,7 @@ export class PaintReportsComponent implements OnInit {
 
   
   onOptionsLocation(event) {
-    // alert("From Location : "+ event);
+    // alert("From Location : "+ event +","+this.paintReportForm.get('locCode').value);
     this.paintReportForm.patchValue({ locId: event })
     // this.paintReportForm.patchValue({ fromLocId: event })
 

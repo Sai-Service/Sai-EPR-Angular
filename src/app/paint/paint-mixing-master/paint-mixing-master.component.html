@@ -146,16 +146,15 @@
                         
 
                              <td>
-                                <input type="text" formControlName="itemCode1" [(ngModel)]="itemCode1" style="width:350px;"
+                                <input type="text" formControlName="itemCode1" id="itemCode1"[(ngModel)]="itemCode1"style="width:350px;"
                                     (keyup)="getUserIdsFirstWayColor($event)" id="userIdFirstWay"
                                     list="dynmicUserIds1" class="form-control" placeholder="Main Color List" />
                                 <datalist id="dynmicUserIds1">
                                     <option *ngFor="let item of paintColorList" [ngValue]="item.SEGMENT">
-                                      {{item.SEGMENT}}-{{item.DESCRIPTION}}
+                                      {{item.SEGMENT}}:{{item.DESCRIPTION}}
                                     </option>
                                 </datalist>
                               </td>
-
         
                             <td style="background-color: #FFE4B5;">
                                 <button type="button" class="btn-primary" (click)="serchByItem(itemCode1)"><i class="fa fa-search"

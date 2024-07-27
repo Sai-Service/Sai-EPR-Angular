@@ -712,7 +712,7 @@ export class AllReportsComponent implements OnInit {
     var invcDt4 = this.pipe.transform(invcDt3, 'dd-MMM-yyyy');
     const fileName = 'Spares Misc Issue Receipt Report-' +  fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.spSparesMiscIssueReceiptReport(fromDate, invcDt4, sessionStorage.getItem('locId'))
+    this.reportService.spSparesMiscIssueReceiptReport(fromDate, invcDt4, sessionStorage.getItem('locId'),sessionStorage.getItem('ouId'))
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.isDisabled15 = false;

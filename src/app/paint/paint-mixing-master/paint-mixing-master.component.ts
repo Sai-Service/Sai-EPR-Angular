@@ -399,10 +399,15 @@ searchFromArray(arr, regex) {
 
 
   serchByItem(clrCode){
-    // alert ("clrCode  :" +clrCode);
 
-    if(clrCode ===null || clrCode===undefined || clrCode.trim()==='') {alert ("Enter Valid Item Code ...");return;}
-    var  itmCode = clrCode.substr(0, 13);
+    if(clrCode ===null || clrCode===undefined || clrCode.trim()==='') {alert ("Select Valid Main Colour Code ...");return;}
+
+    var x = this.paintMixingMasterForm.get('itemCode1').value;
+    var y =clrCode.indexOf(':');
+    // var value = x.substr(x.indexOf(':') + 1, x.length);
+    var itmCode = x.substr(0,y);
+
+    // alert ("x  ,y  ,value1:" +x + ","+ y + " , "+itmCode);
 
       this.spinIcon=false;
       this.dataDisplay='Loading...Please Wait...'

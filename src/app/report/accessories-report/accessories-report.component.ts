@@ -3124,7 +3124,7 @@ reportParameter(reportName) {
     const fileName = 'Accessories Misc Issue Receipt Report-' +  fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     if (Number(sessionStorage.getItem('deptId')) === 4) {
-      this.reportService.spSparesMiscIssueReceiptReport(fromDate, toDate, locId)
+      this.reportService.spSparesMiscIssueReceiptReport(fromDate, toDate, locId,sessionStorage.getItem('ouId'))
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.isDisabled1 = false;
@@ -3133,7 +3133,7 @@ reportParameter(reportName) {
         })
     }
     if (Number(sessionStorage.getItem('deptId')) != 4) {
-      this.reportService.spSparesMiscIssueReceiptReport(fromDate, toDate, sessionStorage.getItem('locId'))
+      this.reportService.spSparesMiscIssueReceiptReport(fromDate, toDate, sessionStorage.getItem('locId'),sessionStorage.getItem('ouId'))
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.isDisabled1 = false;
@@ -3393,7 +3393,7 @@ reportParameter(reportName) {
     const fileName = 'Internal Consumption Report-' +  fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     if ((Number(sessionStorage.getItem('deptId'))===4)){
-      this.reportService.internalConsuptionReport(fromDate,toDate, locId, subInventory)
+      this.reportService.internalConsuptionReport(fromDate,toDate, locId, subInventory,sessionStorage.getItem('ouId'))
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.isDisabled1 = false;
@@ -3402,7 +3402,7 @@ reportParameter(reportName) {
       })
     }
     else if ((Number(sessionStorage.getItem('deptId')))!=4){
-      this.reportService.internalConsuptionReport(fromDate,toDate, sessionStorage.getItem('locId'), subInventory)
+      this.reportService.internalConsuptionReport(fromDate,toDate, sessionStorage.getItem('locId'), subInventory,sessionStorage.getItem('ouId'))
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.isDisabled1 = false;

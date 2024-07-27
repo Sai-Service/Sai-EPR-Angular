@@ -221,7 +221,7 @@
                     (ngModelChange)="onSelectColor11($event)" />
                 <datalist id="dynmicUserIds">
                     <option *ngFor="let item of paintColorList" [ngValue]="item.SEGMENT">
-                      {{item.SEGMENT}}-{{item.DESCRIPTION}}
+                      {{item.SEGMENT}}:{{item.DESCRIPTION}}
                     </option>
                 </datalist>
               </td>
