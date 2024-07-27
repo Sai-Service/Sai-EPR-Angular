@@ -729,6 +729,8 @@ export class PaintReportsComponent implements OnInit {
     else if (reportName==='Paint Consumption Report'){
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
+      // alert ("Dept id :"+sessionStorage.getItem('deptId'))
+
       const fileName = 'Consumption Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if ((Number(sessionStorage.getItem('deptId'))===4)){
@@ -741,7 +743,7 @@ export class PaintReportsComponent implements OnInit {
         })
       }
       else if ((Number(sessionStorage.getItem('deptId')))!=4){
-        this.reportService.PaintInternalConsuptionReport(fromDate,toDate, sessionStorage.getItem('locId'), subInventory,sessionStorage.getItem('ouId'))
+        this.reportService.PaintInternalConsuptionReport(fromDate,toDate, locId, subInventory,sessionStorage.getItem('ouId'))
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.isDisabled1 = false;

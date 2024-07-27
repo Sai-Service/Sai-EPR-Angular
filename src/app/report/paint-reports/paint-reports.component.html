@@ -541,7 +541,7 @@ style="margin-left: 10%;" id="panelsparesInventoryAging">
                      
                 </table>
 
-                <table class="center"   style="margin-left: 10%;" [style.display]="isVisiblefromtosubinventory ? 'block' : 'none'" class="collapse"
+        <table class="center"   style="margin-left: 10%;" [style.display]="isVisiblefromtosubinventory ? 'block' : 'none'" class="collapse"
                     id="panelfromtosubinventory">
 
             <table class="center">
@@ -568,11 +568,11 @@ style="margin-left: 10%;" id="panelsparesInventoryAging">
             <tr>
                 <td style="width: 15%" class="LabelFontStyle"> &nbsp;Location&nbsp;Code&nbsp;:&nbsp; </td>
                
-                <td [style.display]="isVisiblelocationInput ? 'block' : 'none'">
+                <!-- <td [style.display]="isVisiblelocationInput ? 'block' : 'none'">
                     <input disabled type="text"  class="form-control" formControlName="locCode">
-                </td>
+                </td> -->
 
-                <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
+                <!-- <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
                     <select formControlName="locCode" id="locCode" class="form-control"
                         (ngModelChange)='onOptionsLocation($event)'>
                         <option></option>
@@ -581,7 +581,18 @@ style="margin-left: 10%;" id="panelsparesInventoryAging">
                         </option>
                     </select>
                     <input  disabled hidden type="number" class="form-control" formControlName="locId">
-                </td>   
+                </td>    -->
+
+                <td>
+                    <select formControlName="locCode" id="locCode" class="form-control"
+                      (ngModelChange)='onOptionsLocation($event)'>
+                      <option></option>
+                      <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
+                        {{sc.locCode}}-{{sc.locName}}
+                      </option>
+                    </select>
+                    <input hidden disabled type="number" class="form-control" formControlName="locId">
+                  </td>
                
                 <td style="width: 15%" class="LabelFontStyle">&nbsp;SubInventory&nbsp;:&nbsp; </td>
                 <td><input  disabled  type="text" class="form-control" formControlName="subInventory"></td>
