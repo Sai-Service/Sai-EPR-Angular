@@ -1128,6 +1128,16 @@ fndRquestDownload(requestId){
   });
 }
 
+PumpDSRreport(fromDate,ToDate,locId ,tnkId){
+  // http://localhost:8081/PetrolPumpReport/DSRReport?fromDate=01-JUL-2024&toDate=15-JUL-2024&tankId=1&locId=2501
+
+  const REQUEST_URI = this.ServerUrl +`/PetrolPumpReport/DSRReport?fromDate=${fromDate}&toDate=${ToDate}&tankId=${tnkId}&locId=${locId}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
+
 CashCollectionExcessShortFn(fromDate,ToDate,locId){
   // http://localhost:8081/PetrolPumpReport/CashCollectionRep?fromDate=01-DEC-2023&toDate=31-DEC-2023&locId=2501
 
