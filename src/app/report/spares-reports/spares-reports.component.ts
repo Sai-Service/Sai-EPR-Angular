@@ -1963,11 +1963,16 @@ export class SparesReportsComponent implements OnInit {
 
     else if (reportName === 'Stock Transfer Received Detail Report') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
-
+      var toLocI = this.sparesReportForm.get('locId1').value;
+      // alert('------'+toLocI)
+      if (toLocI === null){
+        toLocI=''
+      }
+      // alert('---locId'+locId+'------tolocId'+tolocId)
       const fileName = 'Stock Transfer Received Detail Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate, locId, tolocId, subInventory,sessionStorage.getItem('deptId'))
+        this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate, toLocI, tolocId, subInventory,sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1976,7 +1981,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate, sessionStorage.getItem('locId'), tolocId, subInventory,sessionStorage.getItem('deptId'))
+        this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate, toLocI,sessionStorage.getItem('locId'), subInventory,sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
