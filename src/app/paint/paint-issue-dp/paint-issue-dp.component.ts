@@ -1353,7 +1353,7 @@ export class PaintIssueDpComponent implements OnInit {
   }
 
   goToMixingIssueForm() {
-    this.router.navigate(['/admin/paint/PaintCreation']);
+    this.router.navigate(['/admin/paint/PaintCreationNew']);
  }
 
   saveMisc() {

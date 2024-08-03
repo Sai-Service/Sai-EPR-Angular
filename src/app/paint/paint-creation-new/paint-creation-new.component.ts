@@ -1346,6 +1346,10 @@ export class PaintCreationNewComponent implements OnInit {
      return val;
   }
 
+  goToDpIssueForm() {
+    this.router.navigate(['/admin/paint/PaintIssueDp']);
+ }
+
   saveMisc() {
     // const formValue: IPaintMixing = this.transeData(this.paintCreationNewForm.value);
     

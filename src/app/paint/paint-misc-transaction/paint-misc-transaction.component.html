@@ -2,7 +2,7 @@
     <form [formGroup]="paintMiscellaneousForm" (ngSubmit)="paintMiscellaneous(paintMiscellaneousForm.value)" #stkAdjForm>
       <table style="width: 100%;background-color: white;">
         <tr>
-          <td class="PageHeader">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;STOCK&nbsp;&nbsp;ADJUSTMENT &nbsp;</td>
+          <td class="PageHeader" style="text-indent: 250px;">Miscelleneous&nbsp;&nbsp;Transaction(Stock Adj) &nbsp;</td>
           <table style="width: 100%; background-color: #a4d3e9;">
             <tr>
               <td style="width: 15%" class="LabelFontStyle">Stock&nbsp;Adj&nbsp;No&nbsp;:</td>
@@ -19,6 +19,9 @@
           </table>
         </tr>
       </table>
+      <fieldset class="RFS">
+        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;font-weight: bold;color: black;">Header Details</legend>
+
       <table class="center">
         <tr>
           <div *ngIf="displable; then thenIC1; else elsestock1"></div>
@@ -133,8 +136,7 @@
   
           </td>
           <td style="width: 15%" class="LabelFontStyle">
-            Total Item:
-          </td>
+            Line Total(Qty):          </td>
           <td>
             <input disabled type="number" class="form-control" formControlName="totalCompileItems"
               [(ngModel)]="totalCompileItems">
@@ -148,12 +150,7 @@
           </td>
         </tr>
         <tr>
-          <td style="width: 15%" class="LabelFontStyle">
-            Remark:
-          </td>
-          <td>
-            <input type="text" class="form-control" formControlName="description" [(ngModel)]="description">
-          </td>
+         
   
           <td style="width: 15%" class="LabelFontStyle">
             Made By:
@@ -171,22 +168,23 @@
           <td>
             <input  type="text" class="form-control" formControlName="attribute1" [(ngModel)]="attribute1">
           </td>
-        </tr>
-        <tr>
           <td style="width: 15%" class="LabelFontStyle">
             Claim Date:
           </td>
           <td>
             <input  type="date" class="form-control" formControlName="attribute2" [(ngModel)]="attribute2" onkeydown="return false">
           </td>
-          <!-- (click)="process()" -->
-          <td>
-  
-  
-            <input hidden type="text" formControlName="locId" [(ngModel)]="locId">
+        </tr>
+      
+        <tr>
+          <td style="width: 15%" class="LabelFontStyle">Remark:</td>
+          <td colspan="3">            
+            <input style="width:100%" type="text" class="form-control" formControlName="description" [(ngModel)]="description">
           </td>
+          <td><input hidden type="text" formControlName="locId" [(ngModel)]="locId"></td>
         </tr>
       </table>
+      </fieldset>
 
       <table class="center">
         <tr>
@@ -223,7 +221,11 @@
             </td>
         </tr>
     </table> -->
-      <br>
+      <!-- <br> -->
+      <fieldset class="RFS">
+        <div class="container1">
+          <div class="grid_scroll_3">
+
       <div formArrayName="cycleLinesList">
         <div class="grid_scroll">
   
@@ -347,11 +349,11 @@
                               </div>
                               <ng-template #thendicost>
                           <td><input disabled type="number" class="form-control" style="height: 20px;width: 100px;"
-                              formControlName="itemUnitCost"></td>
+                              formControlName="itemUnitCost" ></td>
                               </ng-template>
                               <ng-template #elseencost>
                                 <td><input  type="number" class="form-control" style="height: 20px;width: 100px;"
-                                    formControlName="itemUnitCost"></td>
+                                    formControlName="itemUnitCost" (change)="validateAvgRate(trxLineIndex,prc)"  #prc></td>
                                     </ng-template>
                           <td><input disabled class="form-control" style="height: 20px; width: 100px;"
                               formControlName="subInventory" [(ngModel)]="subInventory">
@@ -422,6 +424,9 @@
           </table>
         </div>
       </div>
+      </div>
+      </div>
+      </fieldset>
       <br>
       <table class="center">
         <tr>
