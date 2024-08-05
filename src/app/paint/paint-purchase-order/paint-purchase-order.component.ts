@@ -1064,8 +1064,12 @@ export class PaintPurchaseOrderComponent implements OnInit {
      itemType: [],
      unitPrice: ['', [Validators.required]],
      density:[],
-     invoiceQty:[],
-     invoiceRate:[],
+     attribute3:[],
+     invoiceQty:[], 
+     attribute1:[],
+     invoiceRate:[], 
+     attribute2:[],
+
      // orderedQty: ['', [Validators.required, Validators.pattern("^[-]{1}[0-9]*$")]],    //^[0-9]\d*(\.\d+)?$
      // orderedQty: ['', [Validators.pattern("^[-]{1}[0-9]*$")]],    //^[0-9]\d*(\.\d+)?$
      orderedQty: [''],
@@ -1275,6 +1279,7 @@ export class PaintPurchaseOrderComponent implements OnInit {
            var lenC = control3.length
            this.lstcomments1 = data.obj;
            for (let i = 0; i < data.obj.poLines.length; i++) {
+
              if (data.obj.poLines[i].itemType === 'EXPENCE') {
                var hsnSacCode = data.obj.poLines[i].hsnSacCode;
                let hsnSacCodeValue = this.hsnSacCodeList.find(v => v.hsnsaccode == data.obj.poLines[i].hsnSacCode);
@@ -1324,11 +1329,25 @@ export class PaintPurchaseOrderComponent implements OnInit {
                this.hideArray[i] = true;
                control.push(poLine);
              }
+
+           
+
+
              var len = this.lstcomments1.poLines.length - 1
              this.lineDetailsArray.removeAt(len);
              this.paintPoForm.patchValue(this.lstcomments1, { emitEvent: false });
 
              for (var j = 0; j < this.lstcomments1.poLines.length; j++) {
+
+              (control3.controls[j]).patchValue(
+                {
+                  invoiceQty: Number(data.obj.poLines[j].attribute1),
+                  invoiceRate: Number(data.obj.poLines[j].attribute2),
+                  density: Number(data.obj.poLines[j].attribute3),
+                }
+              );
+
+
                if (this.taxCategoryList[j] != undefined) {
                  let selectedtaxValue = this.taxCategoryList[j].find(v => v.taxCategoryName == this.lstcomments1.poLines[j].taxCategoryName);
                  console.log(selectedtaxValue);
@@ -1395,6 +1414,8 @@ export class PaintPurchaseOrderComponent implements OnInit {
              this.paintPoForm.disable();
 
            }
+
+
            if (status === "APPROVED") {
              this.displaySecondButtonDisplay = true;
              this.displayFirstButtonDisplay = true;
@@ -1754,11 +1775,23 @@ export class PaintPurchaseOrderComponent implements OnInit {
    formValue.ouId = this.ouId;
    formValue.divisionId = this.divisionId;
    formValue.currencyCode = 'INR';
-   var arrayControl = this.paintPoForm.get('poLines').value
-  
+
+   
+
    formValue.poType = this.poType;
    formValue.dept = Number(this.dept);
    formValue.supplierCode = this.supplierCode;
+
+  //  var arrayControl = this.paintPoForm.get('poLines').value
+  //  var patch = this.paintPoForm.get('poLines') as FormArray;
+  //  var len1 =arrayControl.length;
+  //  alert ("len1 :" + len1);
+  //  for (let i = 0; i < len1; i++) {
+
+  //      alert ("attribut1,2 : "+arrayControl[i].attribute1 +","+arrayControl[i].attribute2)
+  // }
+
+  // return
    
   //  debugger;
    this.service.poSubmit(formValue).subscribe((res: any) => {
@@ -2348,9 +2381,16 @@ export class PaintPurchaseOrderComponent implements OnInit {
    var trxLnArr = trxLnArrNew.getRawValue();
    var trxLnArr1 = this.paintPoForm.get('poLines') as FormArray
    var invoiceQty = trxLnArr[index].invoiceQty;
-   var uomCode = trxLnArr[index].uom;
+   var invoicePrice = trxLnArr[index].invoiceRate;
+   var density1 = trxLnArr[index].density;
+
   
 
+   var uomCode = trxLnArr[index].uom;
+
+   (trxLnArrNew.controls[index]).patchValue({attribute1: invoiceQty ,   attribute2: invoicePrice,attribute3: density1,});
+  
+   
 
   //  if (uomCode === 'NO') {
   //    if (!(Number.isInteger(invoiceQty))) {
@@ -2362,6 +2402,8 @@ export class PaintPurchaseOrderComponent implements OnInit {
 
    var arrayControl = this.paintPoForm.get('poLines').value;
    var patch = this.paintPoForm.get('poLines') as FormArray;
+
+
    console.log(arrayControl);
 
    trxLnArr[index].baseAmtLineWise = Math.round(((trxLnArr[index].invoiceRate * trxLnArr[index].invoiceQty) + Number.EPSILON) * 100) / 100;
