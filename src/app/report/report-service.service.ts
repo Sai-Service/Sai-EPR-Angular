@@ -59,8 +59,8 @@ export class ReportServiceService {
   }
 
   spstktrfMdSummaryReport(invcDt1,invcDt4,locId,tolocId,subInvCode){
-    alert(locId+'-----'+tolocId)
-    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprStkTrfMadeSummary?fromDate=${invcDt1}&toDate=${invcDt4}&fromLoc=${tolocId}&toLoc=${locId}&subInvCode=${subInvCode}`;
+    // alert(locId+'-----'+tolocId)
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprStkTrfMadeSummary?fromDate=${invcDt1}&toDate=${invcDt4}&fromLoc=${locId}&toLoc=${tolocId}&subInvCode=${subInvCode}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,

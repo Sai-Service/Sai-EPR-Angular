@@ -80,6 +80,7 @@ export class SparesReportsComponent implements OnInit {
   isVisibleSparesDebtorsExecutiveWise: boolean = false;
   isVisibleDepartmentList: boolean = false;
   isVisiblefromtosubinventory:boolean=false;
+  displayLocationList=true;
   isVisiblespClosingStockAsOndate:boolean=false;
   isVisiblecustomerLedger:boolean=false;
   isVisiblepanelspDeadStockNoConsuptionDaywise:boolean=false;
@@ -106,6 +107,8 @@ export class SparesReportsComponent implements OnInit {
       noOfDays:[],
       locCode: [''],
       locId: [''],
+      fromLocName:[],
+      fromLocationId:[],
       deptId: [''],
       userName: [''],
       subInventory: [''],
@@ -139,7 +142,7 @@ export class SparesReportsComponent implements OnInit {
   ngOnInit(): void {
     this.sparesReportForm.patchValue({ OUCode: sessionStorage.getItem('ouId') + '-' + sessionStorage.getItem('ouName') })
     this.sparesReportForm.patchValue({ locCode: sessionStorage.getItem('locId') + '-' + sessionStorage.getItem('locName') })
-    this.sparesReportForm.patchValue({ department: 'Spares' });
+    this.sparesReportForm.patchValue({ department: 'Spares' ,fromLocationId: sessionStorage.getItem('locId')});
     this.sparesReportForm.patchValue({ deptId: 5 })
     this.sparesReportForm.patchValue({ tolocCode: sessionStorage.getItem('locName'),tolocId: sessionStorage.getItem('locId')})
     // Prevent closing from click inside dropdown
@@ -525,16 +528,15 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleEwayBill=false;
       this.isVisiblepanelStockTaking=false;
       this.isVisibleStocMadeSummary=true;
-      // this.dispLocation=false;
-      if (this.dispLocation==false){
-      this.service.TolocationIdList(sessionStorage.getItem('locId')).subscribe
-      (data => {
-        this.BillShipToList = data;
-        console.log(this.BillShipToList);
-      });}
       this.panelspDebtAgByExicutiveSummary=false;
       this.isVisibletoDateLoc=false;
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
+      if (Number(sessionStorage.getItem('deptId'))===4){
+        this.displayLocationList=false;
+      }
+      else{
+        this.displayLocationList=true;
+      }
     }
     else if (reportName === 'gststockTransferReceivedDetails') {
       this.reportName = 'Stock Transfer Received Detail Report';
@@ -555,17 +557,16 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleEwayBill=false;
       this.isVisiblepanelStockTaking=false;
       this.isVisibleStockTransferReceivedSummary=true;
-      // this.dispLocation=false;
-      if (this.dispLocation==false){
-      this.service.TolocationIdList(sessionStorage.getItem('locId')).subscribe
-      (data => {
-        this.BillShipToList = data;
-        console.log(this.BillShipToList);
-      });}
       this.panelspDebtAgByExicutiveSummary=false;
       this.isVisibletoDateLoc=false;
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
+      if (Number(sessionStorage.getItem('deptId'))===4){
+        this.displayLocationList=false
+      }
+      else{
+        this.displayLocationList=true;
+      }
     }
     else if (reportName === 'gststockTransferReceivedSummary') {
       this.reportName = 'Spares Stock Transfer Received Summary Report';
@@ -588,15 +589,15 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelStockTaking=false;
       this.isVisibleStocMadeSummary=false;
       // this.dispLocation=false;
-      if (this.dispLocation==false){
-      this.service.TolocationIdList(sessionStorage.getItem('locId')).subscribe
-      (data => {
-        this.BillShipToList = data;
-        console.log(this.BillShipToList);
-      });}
       this.panelspDebtAgByExicutiveSummary=false;
       this.isVisibletoDateLoc=false;
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
+      if (Number(sessionStorage.getItem('deptId'))===4){
+        this.displayLocationList=false
+      }
+      else{
+        this.displayLocationList=true;
+      }
     }
     else if (reportName === 'gstsparesCustomerOffTakeStatment') {
       this.reportName = 'Spares Customer Off Take Statement';
@@ -1398,7 +1399,7 @@ export class SparesReportsComponent implements OnInit {
 
   onOptionsLocation(event) {
     // alert("From Location : "+ event);
-    this.sparesReportForm.patchValue({ locId: event,tolocationId: event, locId1:event})
+    this.sparesReportForm.patchValue({ locId: event,tolocationId: event, locId1:event,fromLocationId:event})
     // this.sparesReportForm.patchValue({ fromLocId: event })
 
     if(event>0){
@@ -1412,8 +1413,16 @@ export class SparesReportsComponent implements OnInit {
 
   }
 
+  onOptionsFromLocation(event){
+    this.sparesReportForm.patchValue({ fromLocationId:event})  
+  }
+  onOptionsToLocation1(event){
+    this.sparesReportForm.patchValue({ tolocationId:event})  
+  }
+
+
   onOptionsToLocation(event) {
-    alert("To Location : "+ event);
+    // alert("To Location : "+ event);
     this.sparesReportForm.patchValue({ tolocId: event });
     if(event>0){
       var x=this.sparesReportForm.get('locCode').value;
@@ -1906,11 +1915,15 @@ export class SparesReportsComponent implements OnInit {
 
     else if (reportName === 'Stock Transfer Made Detail Report') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
-// debugger;
+      var fromLocationId = this.sparesReportForm.get('fromLocationId').value;
+      var toLocationId = this.sparesReportForm.get('tolocationId').value;
+      if (toLocationId===null){
+        toLocationId=''
+      }
       const fileName = 'Stock Transfer Made Detail Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.stockMadeDetailsReport(fromDate, toDate, locId, tolocId, subInventory,sessionStorage.getItem('deptId'))
+        this.reportService.stockMadeDetailsReport(fromDate, toDate, fromLocationId, toLocationId, subInventory,sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1919,8 +1932,8 @@ export class SparesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        alert(tolocId)
-        this.reportService.stockMadeDetailsReport(fromDate, toDate, sessionStorage.getItem('locId'), tolocId, subInventory,sessionStorage.getItem('deptId'))
+        // alert(tolocId)
+        this.reportService.stockMadeDetailsReport(fromDate, toDate, fromLocationId, toLocationId, subInventory,sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1932,17 +1945,21 @@ export class SparesReportsComponent implements OnInit {
 
     else if (reportName === 'Stock Transfer Made Summary Report') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
-      // debugger;
-      // alert(tolocId)
+   
       var shipFromLoc = this.sparesReportForm.get('tolocationId').value;
-      var shipToLoc = sessionStorage.getItem('locId')
+      var shipToLoc = sessionStorage.getItem('locId');
+      var fromLocationId= this.sparesReportForm.get('fromLocationId').value;
       if (shipFromLoc===null){
         shipFromLoc=''
+      }
+      if (fromLocationId === null){
+       alert('Please Select From Location & Check.!');
+       return;
       }
       const fileName = 'Stock Transfer Made Summary Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.spstktrfMdSummaryReport(fromDate, toDate,  locId,shipFromLoc, subInventory)
+        this.reportService.spstktrfMdSummaryReport(fromDate, toDate,  fromLocationId,shipFromLoc, subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1951,7 +1968,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.spstktrfMdSummaryReport(fromDate, toDate,shipFromLoc, shipToLoc, subInventory)
+        this.reportService.spstktrfMdSummaryReport(fromDate, toDate,fromLocationId,shipFromLoc, subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1963,16 +1980,15 @@ export class SparesReportsComponent implements OnInit {
 
     else if (reportName === 'Stock Transfer Received Detail Report') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
-      var toLocI = this.sparesReportForm.get('locId1').value;
-      // alert('------'+toLocI)
-      if (toLocI === null){
-        toLocI=''
+      var tolocationId= this.sparesReportForm.get('tolocationId').value;
+      if (tolocationId===null){
+        tolocationId=''
       }
-      // alert('---locId'+locId+'------tolocId'+tolocId)
+      var fromLocationId= this.sparesReportForm.get('fromLocationId').value;
       const fileName = 'Stock Transfer Received Detail Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate, toLocI, tolocId, subInventory,sessionStorage.getItem('deptId'))
+        this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate, tolocationId, fromLocationId, subInventory,sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1981,7 +1997,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate, toLocI,sessionStorage.getItem('locId'), subInventory,sessionStorage.getItem('deptId'))
+        this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate,tolocationId, fromLocationId, subInventory,sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1991,18 +2007,16 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Spares Stock Transfer Received Summary Report') {
-      // alert('----'+tolocId+'----')
-      var toLocId1 = this.sparesReportForm.get('locId1').value;
-    //  alert(toLocId1)
        this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
-      if (toLocId1 === null){
-        toLocId1=''
-      }
-
+       var tolocationId= this.sparesReportForm.get('tolocationId').value;
+       if (tolocationId===null){
+         tolocationId=''
+       }
+       var fromLocationId= this.sparesReportForm.get('fromLocationId').value;
       const fileName = 'Spares Stock Transfer Received Summary Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate, locId, toLocId1, subInventory)
+        this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate, tolocationId, fromLocationId, subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2011,7 +2025,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate,  toLocId1, sessionStorage.getItem('locId'),subInventory)
+        this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate,  tolocationId, fromLocationId,subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;

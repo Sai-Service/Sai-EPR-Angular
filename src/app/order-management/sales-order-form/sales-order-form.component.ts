@@ -1451,6 +1451,13 @@ export class SalesOrderFormComponent implements OnInit {
     var lesseeCustName = this.SalesOrderBookingForm.get('lesseeCustName').value;
     var rtoLocation = this.SalesOrderBookingForm.get('attribute17').value;
     var brokerType = this.SalesOrderBookingForm.get('brokerType').value;
+    var msRefNo = this.SalesOrderBookingForm.get('msRefNo').value;
+    if (model ==='CHETAK'){
+      if (msRefNo === undefined || msRefNo===null || msRefNo===''){
+        alert('Please Enter CDMS Booking No.!');
+        return;
+      }
+    }
     if (Number(sessionStorage.getItem('ouId')) == 22 || Number(sessionStorage.getItem('divisionId')) == 2) {
       if (rtoLocation == undefined || rtoLocation == '' || rtoLocation == null) {
         alert('Plesae Select RTO Location List.!');
