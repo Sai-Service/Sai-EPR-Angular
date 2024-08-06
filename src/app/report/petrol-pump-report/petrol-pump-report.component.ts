@@ -46,6 +46,7 @@ export class PetrolPumpReportComponent implements OnInit {
   isVisiblefromtosubinventory= false;
   isVisiblespPurRegDownLoad= false;
   isVisibleDepartmentList: boolean = false;
+  isVisibleDSRRegister : boolean = false;
 
 
 
@@ -56,6 +57,10 @@ export class PetrolPumpReportComponent implements OnInit {
   age4: number=60;
   custAccNo:number;
 
+  tankid:number;
+  tankname:string;
+  tankList:any=[];
+ 
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.petrolPumpReportForm = this.fb.group({
@@ -73,8 +78,12 @@ export class PetrolPumpReportComponent implements OnInit {
 
   OUCode: [''],
   subInventory: [''],
-    })
-   }
+
+  tankid:[],
+  tankname:[],
+
+  })
+  }
 
   ngOnInit(): void {
     this.petrolPumpReportForm.patchValue({ OUCode: sessionStorage.getItem('ouId') + '-' + sessionStorage.getItem('ouName') })
@@ -98,6 +107,12 @@ export class PetrolPumpReportComponent implements OnInit {
       });
     }
 
+    this.service.TankList()
+    .subscribe(
+      data => {
+        this.tankList = data;
+        console.log(this.tankList);
+      });
 
     this.service.DepartmentListNew()
     .subscribe(
@@ -125,6 +140,17 @@ export class PetrolPumpReportComponent implements OnInit {
       });
 
   }
+
+  
+onSelectTank(tnkId){
+  // alert("Tank Id :"+tnkId)
+  
+  var select3 = this.tankList.find((tankList:any)=>tankList.tankId==tnkId);
+  console.log(select3);
+  // alert ("select3.tankName   "+tnkId +"," +select3.tankName)
+  this.petrolPumpReportForm.patchValue({tankname:select3.tankName})
+   
+}
 
 
   department(department) {
@@ -157,6 +183,19 @@ export class PetrolPumpReportComponent implements OnInit {
 
   reportDetails(reportName) {
 
+    if (reportName === 'dsrRegister') {
+      this.reportName='DSR Report';
+      this.isVisibleCashCollectionExcessShort=false;
+      this.isVisiblegstsaiDebtors=false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisiblefromtosubinventory= false;
+      this.isVisiblespPurRegDownLoad=false;
+      this.isVisibleDSRRegister=true;
+
+    }
+
     if (reportName === 'CashCollectionExcessShort') {
       this.reportName='Cash Collection-Excess Short Report';
       this.isVisibleCashCollectionExcessShort=true;
@@ -166,8 +205,10 @@ export class PetrolPumpReportComponent implements OnInit {
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisiblefromtosubinventory= false;
       this.isVisiblespPurRegDownLoad=false;
+      this.isVisibleDSRRegister=false;
 
     }
+
     if (reportName==='gstsaiDebtors'){
       this.reportName='Debtor Report';
       this.isVisiblegstsaiDebtors=true;
@@ -177,6 +218,7 @@ export class PetrolPumpReportComponent implements OnInit {
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisiblefromtosubinventory= false;
       this.isVisiblespPurRegDownLoad=false;
+      this.isVisibleDSRRegister=false;
 
     }
     if (reportName==='cashCardSum'){
@@ -188,6 +230,7 @@ export class PetrolPumpReportComponent implements OnInit {
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisiblefromtosubinventory= false;
       this.isVisiblespPurRegDownLoad=false;
+      this.isVisibleDSRRegister=false;
 
     }
     if (reportName==='cashCardDet'){
@@ -199,6 +242,7 @@ export class PetrolPumpReportComponent implements OnInit {
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisiblefromtosubinventory= false;
       this.isVisiblespPurRegDownLoad=false;
+      this.isVisibleDSRRegister=false;
 
     }
     if (reportName==='saleRegisterCustomerWise'){
@@ -210,6 +254,7 @@ export class PetrolPumpReportComponent implements OnInit {
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisiblefromtosubinventory= false;
       this.isVisiblespPurRegDownLoad=false;
+      this.isVisibleDSRRegister=false;
 
     }
     if (reportName==='salesTotCollReport'){
@@ -222,6 +267,7 @@ export class PetrolPumpReportComponent implements OnInit {
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisiblefromtosubinventory= false;
       this.isVisiblespPurRegDownLoad=false;
+      this.isVisibleDSRRegister=false;
 
     }
     if (reportName==='shiftEntryReport'){
@@ -234,6 +280,7 @@ export class PetrolPumpReportComponent implements OnInit {
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisiblefromtosubinventory= false;
       this.isVisiblespPurRegDownLoad=false;
+      this.isVisibleDSRRegister=false;
 
     }
 
@@ -247,6 +294,7 @@ export class PetrolPumpReportComponent implements OnInit {
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisiblefromtosubinventory= false;
       this.isVisiblespPurRegDownLoad=false;
+      this.isVisibleDSRRegister=false;
 
     }
 
@@ -259,6 +307,7 @@ export class PetrolPumpReportComponent implements OnInit {
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisiblefromtosubinventory= false;
       this.isVisiblespPurRegDownLoad=false;
+      this.isVisibleDSRRegister=false;
 
     }
 
@@ -271,7 +320,8 @@ export class PetrolPumpReportComponent implements OnInit {
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisiblefromtosubinventory= false;
       this.isVisiblespPurRegDownLoad=false;
-     
+      this.isVisibleDSRRegister=false;
+  
   }
 
   if (reportName === 'gstPurRegister') {
@@ -289,6 +339,8 @@ export class PetrolPumpReportComponent implements OnInit {
     this.isVisibleGSTPurchaseRegister = true;
     this.isVisiblefromtosubinventory= false;
     // this.isVisiblespPurRegDownLoad=false;
+    this.isVisibleDSRRegister=false;
+
    
 }
 
@@ -304,6 +356,8 @@ if (reportName === 'gstpurRegSumm') {
   this.isVisibleGSTPurchaseRegister = true;
   this.isVisiblefromtosubinventory= false;
   // this.isVisiblespPurRegDownLoad=false;
+  this.isVisibleDSRRegister=false;
+
  
 }
 
@@ -316,6 +370,8 @@ if (reportName === 'sparesSubinvTransReceived') {
   this.isVisibleGSTPurchaseRegister = false;
   this.isVisiblefromtosubinventory= true;
   this.isVisiblespPurRegDownLoad=false;
+  this.isVisibleDSRRegister=false;
+
 }
 
 if (reportName === 'sparesSubinvTransMade') {
@@ -327,6 +383,8 @@ if (reportName === 'sparesSubinvTransMade') {
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisiblefromtosubinventory= true;
       this.isVisiblespPurRegDownLoad=false;
+      this.isVisibleDSRRegister=false;
+
   }
 }
 
@@ -374,8 +432,30 @@ if (reportName === 'sparesSubinvTransMade') {
     var subInventory = this.petrolPumpReportForm.get('subInventory').value;
     var fDate =this.petrolPumpReportForm.get('fromDate').value;
     var tDate =this.petrolPumpReportForm.get('toDate').value;
+    
 
-    if (reportName === 'Cash Collection-Excess Short Report') {
+    if (reportName === 'DSR Report') {
+      var tnkId =this.petrolPumpReportForm.get('tankid').value;
+      // alert ("tank :" +tnkId);
+      if(tnkId ==null || tnkId==undefined || tnkId<=0 ) {
+        alert ("Please Select Tank Name from the list..." );
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+        return;
+      }
+
+      this.fromToDateValidation(fromDate,toDate); if(this.rptValidation==false){return;}
+      const fileName = 'DSR Report-' +  fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      this.reportService.PumpDSRreport(fromDate, toDate, sessionStorage.getItem('locId'),tnkId)
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+      })
+    }
+
+    else  if (reportName === 'Cash Collection-Excess Short Report') {
       this.fromToDateValidation(fromDate,toDate); if(this.rptValidation==false){return;}
       const fileName = 'Cash Collection-Excess Short-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);

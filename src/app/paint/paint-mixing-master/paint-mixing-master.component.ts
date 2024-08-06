@@ -402,12 +402,12 @@ searchFromArray(arr, regex) {
 
     if(clrCode ===null || clrCode===undefined || clrCode.trim()==='') {alert ("Select Valid Main Colour Code ...");return;}
 
-    var x = this.paintMixingMasterForm.get('itemCode1').value;
+    // var x = this.paintMixingMasterForm.get('itemCode1').value;
     var y =clrCode.indexOf(':');
     // var value = x.substr(x.indexOf(':') + 1, x.length);
-    var itmCode = x.substr(0,y);
+    var itmCode = clrCode.substr(0,y);
 
-    // alert ("x  ,y  ,value1:" +x + ","+ y + " , "+itmCode);
+    // alert ("clrCode, x  ,y  ,itmCode:"+clrCode + ","+ y + " , "+itmCode);
 
       this.spinIcon=false;
       this.dataDisplay='Loading...Please Wait...'

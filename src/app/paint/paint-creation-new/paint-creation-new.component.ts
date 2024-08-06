@@ -784,6 +784,7 @@ export class PaintCreationNewComponent implements OnInit {
 
   }
 
+
   AvailQty(event: any, i) {
 
     // alert(event.target.value);
@@ -831,6 +832,8 @@ export class PaintCreationNewComponent implements OnInit {
     //  var trxLnarronha = this.paintCreationNewForm.get('cycleLinesList').value;
 
   }
+
+  
   resetMiscTrans() {
     window.location.reload();
   }
@@ -1342,6 +1345,10 @@ export class PaintCreationNewComponent implements OnInit {
    
      return val;
   }
+
+  goToDpIssueForm() {
+    this.router.navigate(['/admin/paint/PaintIssueDp']);
+ }
 
   saveMisc() {
     // const formValue: IPaintMixing = this.transeData(this.paintCreationNewForm.value);

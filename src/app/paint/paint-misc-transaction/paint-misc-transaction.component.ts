@@ -214,6 +214,8 @@ export class PaintMiscTransactionComponent implements OnInit {
   dispRow: boolean = true;
   displayCost:boolean=true;
   headerValidation1:boolean=false;
+  lineValidation1=false;
+
 
   jeSource: string;
   name: string;
@@ -356,13 +358,16 @@ export class PaintMiscTransactionComponent implements OnInit {
       var itemqty = trxLnArr1[i].physicalQty;
       var item1 = trxLnArr1[i].segment;
       var loca = trxLnArr1[i].LocatorSegment;
+      var avgRate= trxLnArr1[i].itemUnitCost;
+
       //  alert(item1+itemqty+loca);
       if (
         item1 === '' ||
         itemqty === undefined ||
         loca === undefined ||
         loca === '' ||
-        itemqty === ''
+        itemqty === '' ||
+        avgRate ===undefined || avgRate <=0
       ) {
         alert('Please enter Valid Data');
         return;
@@ -422,6 +427,7 @@ export class PaintMiscTransactionComponent implements OnInit {
     // this.displayRemoveRow[i]=true;
     // alert(i);
   }
+
   removenewcycleLinesList(trxLineIndex) {
     // alert(trxLineIndex);
     var len1 = this.cycleLinesList().length;
@@ -432,6 +438,8 @@ export class PaintMiscTransactionComponent implements OnInit {
     var trxLnArr1 = this.paintMiscellaneousForm.get('cycleLinesList').value;
     var itemid = trxLnArr1[trxLineIndex].segment;
     this.cycleLinesList().removeAt(trxLineIndex);
+    this.CalculateLineTotal();
+
     // alert(itemid+'Delete');
     if (itemid != null || itemid !=' ' || itemid !=undefined) {
       this.deleteReserveLinewise(trxLineIndex);
@@ -448,20 +456,22 @@ export class PaintMiscTransactionComponent implements OnInit {
     }
 
 
-    var btnrm = document.getElementById(
-      'btnrm' + (trxLineIndex - 1)
-    ) as HTMLInputElement;
-    if (document.contains(btnrm)) {
-      (
-        document.getElementById(
-          'btnrm' + (trxLineIndex - 1)
-        ) as HTMLInputElement
-      ).disabled = true;
-      // (document.getElementById('btnrm'+i+1) as HTMLInputElement).disabled = true;
-    }
+    // var btnrm = document.getElementById(
+    //   'btnrm' + (trxLineIndex - 1)
+    // ) as HTMLInputElement;
+    // if (document.contains(btnrm)) {
+    //   (
+    //     document.getElementById(
+    //       'btnrm' + (trxLineIndex - 1)
+    //     ) as HTMLInputElement
+    //   ).disabled = true;
+    // }
 
     this.displayLocator[trxLineIndex] = false;
+
   }
+
+
   ngOnInit(): void {
     // alert(this.route1.queryParams+'hell')
     console.log(this.route1.queryParams + 'hell');
@@ -672,8 +682,9 @@ export class PaintMiscTransactionComponent implements OnInit {
     var trxType = this.paintMiscellaneousForm.get('compileType').value;
 
     var itemCode = event.target.value;
-    if (event.keyCode == 13) {
-      // enter keycode
+    if (event.keyCode == 13 ) {
+      // enter keycode event.keyCode == 9
+      // alert ("key code : "+event.keyCode)
 
       if (itemCode.length == 8) {
         // alert("13-lenngth-8-compileType -"+trxType +" itemCode.length: "+itemCode.length)
@@ -738,6 +749,9 @@ export class PaintMiscTransactionComponent implements OnInit {
       }
     }
   }
+
+
+
 
   getInvItemId($event) {
     // alert('in getInvItemId')
@@ -908,7 +922,7 @@ export class PaintMiscTransactionComponent implements OnInit {
         });
         // this.setFocus('physicalQty'+(i+1));
     } else {
-      alert('item not found');
+      alert('Item Not Found/Stock Not Available');
     }
   }
 
@@ -1294,6 +1308,10 @@ export class PaintMiscTransactionComponent implements OnInit {
     });
   }
 
+  validateAvgRate(i,prc){
+    this.CalculateLineTotal();
+  }
+
   validate(i: number, qty1) {
     //alert("Validate");
 
@@ -1302,6 +1320,8 @@ export class PaintMiscTransactionComponent implements OnInit {
     let avalqty = trxLnArr[i].avlqty;
     let qty = trxLnArr[i].physicalQty;
     let uomCode = trxLnArr[i].uom;
+    let avgRate=trxLnArr[i].itemUnitCost;
+
     //alert(avalqty+'avalqty');
     //alert(trxLnArr[i].physicalQty +' qty');
     if (
@@ -1326,10 +1346,35 @@ export class PaintMiscTransactionComponent implements OnInit {
     //   }
     // }
 
+    // if (avgRate <=0 ) {alert ("Please Enter Valid Average Rate ...");return;}
+
+    this.CalculateLineTotal();
     this.addnewcycleLinesList(i);
     this.setFocus('segment' +(i+1)  )
+
    ;
   }
+
+
+  CalculateLineTotal() {
+    var trxLnArr = this.paintMiscellaneousForm.get('cycleLinesList').value;
+    var trxLnArr1 = this.paintMiscellaneousForm.get('cycleLinesList') as FormArray
+    var totQty=0;
+    var totValue=0;
+    for (let i = 0; i < trxLnArr.length; i++) {
+
+      totQty=totQty+trxLnArr[i].physicalQty;
+      totValue=totValue+(trxLnArr[i].itemUnitCost * trxLnArr[i].physicalQty)
+    }
+      totQty=Math.round((totQty+Number.EPSILON)*100)/100;
+      totValue=Math.round((totValue+Number.EPSILON)*100)/100;
+
+      this.paintMiscellaneousForm.patchValue({totIssuedQty :totQty});
+      this.paintMiscellaneousForm.patchValue({totIssuedValue :totValue})
+      this.paintMiscellaneousForm.patchValue({totalCompileItems :totQty});
+      this.paintMiscellaneousForm.patchValue({totalItemValue :totValue})
+}
+
 
   itemLoad(trxLineIndex){
     alert("i m loaded")
@@ -1450,6 +1495,50 @@ export class PaintMiscTransactionComponent implements OnInit {
     }
   }
 
+  checkLineValidation(i) {
+
+    // alert('addrow index '+i);
+
+    var patch = this.paintMiscellaneousForm.get('cycleLinesList') as FormArray;
+    var trxLnArr1 = this.paintMiscellaneousForm.get('cycleLinesList').value;
+
+    var lineValue1=trxLnArr1[i].segment;
+    var lineValue2=trxLnArr1[i].LocatorSegment;
+    var lineValue3=trxLnArr1[i].physicalQty;
+    var lineValue4=trxLnArr1[i].itemUnitCost;
+
+
+
+    // alert("Line Value :"+lineValue1);
+     var j=i+1;
+    if(lineValue1===undefined || lineValue1===null || lineValue1.trim()=='' ){
+      alert("Line-"+j+ " ITEM CODE:  Should not be null value.");
+      this.lineValidation1=false;
+      return;
+    }
+
+    if(lineValue2===undefined || lineValue2===null || lineValue2==='' ){
+      alert("Line-"+j+ " LOCATOR :  Should not be null value");
+      this.lineValidation1=false;
+      return;
+    }
+
+    if(lineValue3===undefined || lineValue3===null || lineValue3<=0){
+      alert("Line-"+j+ " ISSUE QUANTITY :  Should  be grater than Zero");
+      this.lineValidation1=false;
+      return;
+    }
+
+    if(lineValue4===undefined || lineValue4===null || lineValue4<=0){
+      alert("Line-"+j+ " AVERAGE RATE :  Should  be grater than Zero");
+      this.lineValidation1=false;
+      return;
+    }
+
+    this.lineValidation1=true;
+
+    }
+
   checkHeaderValidation() {
 
     const formValue: Imiscellaneous = this.paintMiscellaneousForm.getRawValue();
@@ -1497,11 +1586,30 @@ export class PaintMiscTransactionComponent implements OnInit {
     this.checkHeaderValidation();
     if (this.headerValidation1==false ) { alert("Header Validation Failed... Please Check");  return;   }
     //  return;
-    this.displayButton = false;
-    this.displayaddButton = true;
 
-    var  resp=confirm("Do You Want to Save this Transaction ???");
-     if(resp==false) { this.displayaddButton = true;this.displayButton = true;  return;} 
+    this.lineValidation1=false;
+    var trxLnArr1 = this.paintMiscellaneousForm.get('cycleLinesList').value;
+    var len1=trxLnArr1.length;
+
+    for (let i = 0; i < len1 ; i++)
+      {
+        this.checkLineValidation(i);
+      }
+
+      if(this.lineValidation1===false ) {alert("Line Validation Failed... Please Check.");return; }
+        this.displayButton = false;
+        this.displayaddButton = true;
+
+
+        if (this.headerValidation1  && this.lineValidation1 ){
+          var  resp=confirm("Do You Want to Save this Transaction ???");
+          if(resp==false) { 
+            this.displayaddButton = true;this.displayButton = true;
+            return;}
+          }
+
+    // var  resp=confirm("Do You Want to Save this Transaction ???");
+    //  if(resp==false) { this.displayaddButton = true;this.displayButton = true;  return;} 
 
      this.closeResetButton = false;
      this.progress = 0;

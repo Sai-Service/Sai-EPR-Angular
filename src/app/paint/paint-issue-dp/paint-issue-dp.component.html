@@ -3,7 +3,7 @@
     <table style="width: 100%;background-color: white;">
       <tr>
         <td class="PageHeader">
-          &nbsp;&nbsp;BodyShop&nbsp;Issue&nbsp;Form
+          &nbsp;&nbsp;BODYSHOP&nbsp;ISSUE&nbsp;FORM
         </td>
         <table style="width: 100%; background-color: #a4d3e9;">
           <tr>
@@ -145,15 +145,11 @@
           <input disabled class="form-control"  formControlName="compileStatus" [(ngModel)]="compileStatus" >
   
         </td>
-        <td style="width: 15%" class="LabelFontStyle">
-          LineTotal(Qty):
-        </td>
+        <td style="width: 15%" class="LabelFontStyle">LineTotal(Qty):</td>
         <td>
           <input disabled type="number" class="form-control" formControlName="totalCompileItems" [(ngModel)]="totalCompileItems">
         </td>
-        <td style="width: 15%" class="LabelFontStyle">
-          Total Value:
-        </td>
+        <td style="width: 15%" class="LabelFontStyle">Total Value:</td>
         <td>
           <input disabled type="number" class="form-control" formControlName="totalItemValue" [(ngModel)]="totalItemValue">
         </td>
@@ -305,10 +301,9 @@
                <input hidden formControlName="compileId" [(ngModel)]="compileId">
                <input hidden formControlName="compileLineId"> 
 
-                <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 150px;text-transform: uppercase;" (ngModelChange)="onOptiongetItem($event,trxLineIndex)" />
+              <td><input type="text" (keyup)="getInvItemId($event)" formControlName="segment"   id="invItemIdFirstWay"  list="dynmicUserIds1" class="form-control"  style="height: 20px;width: 150px;text-transform: uppercase;" (ngModelChange)="onOptiongetItem($event,trxLineIndex)" />
                 <datalist id="dynmicUserIds1">
                   <option *ngFor="let item of ItemIdList" [ngValue]="item.invItemId">
-                    <!-- {{item.SEGMENT}} -->
                     {{item.SEGMENT}}:{{item.DESCRIPTION}}
                     </option>
                    </datalist>
@@ -316,6 +311,8 @@
                    *ngIf="getGroupControllinewise(trxLineIndex,'segment').touched && getGroupControllinewise(trxLineIndex,'segment').invalid" class="error">Valid Item
                   </span>
               </td>
+
+
                             <input hidden type="number" formControlName="itemId">
                             <input hidden type="number" formControlName="invItemId">
               <!-- </td> -->
@@ -340,7 +337,9 @@
               </div>
               <ng-template #thenBlock>
                 <td>
-              <select class="form-control" style="height: 20px; width: 110px;" formControlName="LocatorSegment"  (ngModelChange)='AvailQty($event,trxLineIndex)'#event>
+              <!-- <select class="form-control" style="height: 20px; width: 110px;" formControlName="LocatorSegment"  (ngModelChange)='AvailQty($event,trxLineIndex)'#event> -->
+                <select class="form-control" style="height: 20px; width: 110px;" formControlName="LocatorSegment"  >
+
                 <!-- <option>--Select--</option> -->
                 <option *ngFor="let locId of  getfrmSubLoc" [ngValue]="locId.locatorId" [Value]="locId.segmentName">{{locId.segmentName}}--{{locId.onHandQty}}</option>
                 <!-- [ngValue]="locId.locatorId" -->
@@ -493,8 +492,13 @@
       </div>
     </div>
   <!-- <br> -->
-  <br>
+  <!-- <br> -->
    
+  <table>
+    <tr>
+          <td><button   type="button" class="btn btn-primary" style="width:fit-content" (click)="goToMixingIssueForm()" >Paint&nbsp;Mixing&nbsp;Issue&nbsp;Form</button></td>  
+    </tr>
+  </table>
 
   <table style="width: 100%; background-color: #a4d3e9;">
     <tr>
