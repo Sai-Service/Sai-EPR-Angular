@@ -89,9 +89,9 @@ export class ReportServiceService {
   }
 
 
-  SprStkTrfRecdSummaryReport(invcDt1,invcDt4,locId,fromlocId,subInvCode){
+  SprStkTrfRecdSummaryReport(invcDt1,invcDt4,tolocId,fromlocId,subInvCode){
     // alert(locId+'-----'+fromlocId)
-    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprStkTrfRecdSummary?fromDate=${invcDt1}&toDate=${invcDt4}&shipToLoc=${fromlocId}&shipFromLoc=${locId}&subInvCode=${subInvCode}`;
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprStkTrfRecdSummary?fromDate=${invcDt1}&toDate=${invcDt4}&shipToLoc=${tolocId}&shipFromLoc=${fromlocId}&subInvCode=${subInvCode}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
