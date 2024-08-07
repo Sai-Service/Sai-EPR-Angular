@@ -1602,6 +1602,11 @@
             <th scope="col">Description</th>
             <th scope="col">uom</th>
             <th scope="col">Tax Category</th>
+
+            <th scope="col">Invoice Qty</th>
+            <th scope="col">Invoice Rate</th>
+            <th scope="col">Item Density</th>
+
             <th scope="col">Quantity</th>
             <th scope="col">Price</th>
             <th scope="col">Base Amount</th>
@@ -1620,12 +1625,19 @@
             <td>{{com.invDescription}}</td>
             <td>{{com.uom}}</td>
             <td>{{com.taxCategoryName}}</td>
-            <td>{{com.orderedQty}}</td>
-            <td style="text-align: right;padding-right: 5px;">{{com.unitPrice}}</td>
-            <td style="text-align: right;padding-right: 5px;">{{com.baseAmtLineWise}}</td>
-            <td style="text-align: right;padding-right: 5px;">{{com.discLineAmt}}</td>
-            <td style="text-align: right;padding-right: 5px;">{{com.taxAmtLineWise}}</td>
-            <td style="text-align: right;padding-right: 5px;">{{com.totAmtLineWise}}</td>
+            <td style="text-align: right;padding-right: 5px;">{{com.attribute1}}</td>
+            <td style="text-align: right;padding-right: 5px;">{{com.attribute2}}</td>
+            <td style="text-align: right;padding-right: 5px;">{{com.attribute3}}</td>
+
+            <!-- <td>{{com.orderedQty}}</td> -->
+            <td style="text-align: right;padding-right: 5px;">{{com.orderedQty }}</td>
+            <!-- <td style="text-align: right;">{{com.amount | number:'1.2-2'}}</td> -->
+
+            <td style="text-align: right;padding-right: 5px;">{{com.unitPrice | number:'1.2-2'}}</td>
+            <td style="text-align: right;padding-right: 5px;">{{com.baseAmtLineWise| number:'1.2-2'}}</td>
+            <td style="text-align: right;padding-right: 5px;">{{com.discLineAmt| number:'1.2-2'}}</td>
+            <td style="text-align: right;padding-right: 5px;">{{com.taxAmtLineWise| number:'1.2-2'}}</td>
+            <td style="text-align: right;padding-right: 5px;">{{com.totAmtLineWise | number:'1.2-2'}}</td>
             <td style="text-align: right;padding-right: 5px;">{{com.hsnSacCode}}</td>
             <td>{{com.segmentName}}</td>
         </tr>

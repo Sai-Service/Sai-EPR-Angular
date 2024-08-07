@@ -480,6 +480,8 @@ export class PaintIssueDpComponent implements OnInit {
         this.subInventory = this.subInvCode.subInventoryCode;
         // alert('subInventoryCode');
       });
+
+      
     this.service.BranchList()
       .subscribe(
         data => {
