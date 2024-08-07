@@ -6,9 +6,19 @@
         (click)="dashboard()">&nbsp;&nbsp;Dashboard&nbsp;&nbsp;</a>
     </li>
 
-    <li class="nav-item dropdown">
-      <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-expanded="false" aria-haspopup="true"  data-toggle="dropdown" (click)="LoadModal()" data-toggle="modal" data-target="#partSearch">Search</a>
-    </li>
+    <div  *ngIf="isVisibleSearchPaint; then paintSearch; else bajajSearch"></div>
+    <ng-template #paintSearch>
+        <li class="nav-item dropdown">
+          <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-expanded="false" aria-haspopup="true"  data-toggle="dropdown" (click)="LoadModalpnt()" data-toggle="modal" data-target="#partSearchPnt">Search Item</a>
+        </li>
+    </ng-template>
+    <ng-template #bajajSearch>
+        <li class="nav-item dropdown">
+          <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-expanded="false" aria-haspopup="true"  data-toggle="dropdown" (click)="LoadModal()" data-toggle="modal" data-target="#partSearch">Search</a>
+        </li>
+    </ng-template>
+
+   
     <div [style.display]="isVisibleCustMaster ? 'block' : 'none'">
      <li class="nav-item dropdown">
       <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -766,15 +776,18 @@
             <ng-template #itemYes>
               <td style="width: 15%" class="LabelFontStyle">&nbsp;&nbsp;&nbsp;&nbsp;Item&nbsp;Number&nbsp;:</td>
 
-                <td ><input class="form-control" type="text" (keyup)="filterRecord($event)" formControlName="searchItemCode"
+                <td ><input class="form-control" type="text" (keyup)="filterRecordNew($event)" formControlName="searchItemCode"
                    id="invItemIdFirstWay"  list="dynmicUserIds1"
                    class="form-control"
                    style="width: 300px; background-color: rgb(240, 240, 166); text-transform: uppercase;" />
 
-                  <datalist id="dynmicUserIds1" #input2  >
+                  <!-- <datalist id="dynmicUserIds1" #input2  >
                     <option *ngFor="let item of ItemIdList"  [ngValue]="item.itemId">
                       {{item.segment}}--{{item.description}}
-                      </datalist>
+                      </datalist> -->
+                  </td>
+                  <td style="text-align: left; width: 100%;">
+                    <button type="submit" class="btn btn-primary" (click)="filterRecordNew1(searchItemCode)" style="width: 4em;" ><i class="fa fa-search"></i></button>
                   </td>
 <!--
                   <td>
@@ -982,8 +995,168 @@
                         <td style="width:5rem;text-align: center;">{{com.GSTPERCENTAGE}}</td>
                         <td style="width:8rem;text-align: center;font-weight: bold; ">{{com.ONHANDQTY}}</td>
                         <td style="width:8rem;text-align: center;font-weight: bold; ">{{com.RESQTY}}</td>
-                        <td style="width:8rem;text-align: center;">{{com.MRP}}</td>
-                        <td style="width:8rem;text-align: center;">{{com.NDP}}</td>
+                        <td style="width:8rem;text-align: center;">{{com.MRP | number:'1.2-2'}}</td>
+                        <td style="width:8rem;text-align: center;">{{com.NDP | number:'1.2-2'}}</td>
+                        <td style="width:8rem;text-align: center;">{{com.PRINCPLEITEM}}</td>
+                       </tr>
+            </table>
+            </div>
+            </div>
+            </ng-template>
+
+            <ng-template #ItemNo1></ng-template>
+
+
+            <div *ngIf="searchByDesc; then descYes1; else descNo1"> </div>
+            <ng-template #descYes1>
+            <div class="container1">
+              <div class="grid_scroll_3">
+              <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="font-size:small; border-color:brown;border-collapse:collapse;width: 100%;">
+
+                       <tbody>
+                          <tr class="GridHeader">
+
+                          <th style="width:3rem" scope="col"> Srl&nbsp;</th>
+                          <th style="width:10rem"  scope="col">Item&nbsp;Number</th>
+                          <th style="width:8rem"   scope="col">Description&nbsp;</th>
+                          <th style="width:8rem"   scope="col">Category&nbsp;</th>
+                           <th style="width:3rem"  scope="col">UOM&nbsp;</th>
+                           <th style="width:6rem"  scope="col">Select</th>
+                         </tr>
+                      </tbody>
+                    <tr *ngFor="let com of lstcomments1; let i=index" class="ItemStyle" style="text-decoration:none;">
+                          <td style="width:3rem;text-align: center;">{{i+1}}</td>
+                          <td style="width:10rem;text-align: left;">{{com.segment}}</td>
+                          <td style="width:30rem;text-align: left;">{{com.description}}</td>
+                          <td style="width:8rem;text-align: center;">{{com.itemCategory}}</td>
+                          <td style="width:8rem;text-align: center;">{{com.uom}}</td>
+                          <td><button class="btn btn-secondary" (click)="Select(com.itemId)">Select</button></td>
+
+
+                         </tr>
+              </table>
+              </div>
+              </div>
+              </ng-template>
+              <ng-template #descNo1></ng-template>
+
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+
+      </div>
+    </div>
+</div>
+<!-- </form> -->
+
+<!-- <form [formGroup]="adminForm1" (ngSubmit)="admin(adminForm1.value)"> -->
+  <div class="modal fade" id="partSearchPnt" #partSearchPnt  tabindex="-1" role="dialog" aria-labelledby="partSearchPntLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+
+          <h5 class="modal-title" id="partSearchPntLabel" style="text-align: center;color:blue" >{{ouName}}&nbsp;|&nbsp;{{locCode}}&nbsp;|&nbsp;{{locName}}&nbsp;|&nbsp;{{this.itemLineCount}}&nbsp;Items&nbsp;|&nbsp;&nbsp;</h5>
+          <h5 class="modal-title" id="partSearchPntLabel" style="text-align: center;color:rgb(255, 0, 119)" >&nbsp;{{this.itemDescreption}}</h5>
+
+          <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+
+            <!-- <table class="center" style="width: 100%;"> -->
+
+              <table class="center" style="width: 100%; background-color: #FFE4B5;">
+
+            <tr>
+
+        
+              <td></td> <td></td>
+
+            <!-- <div *ngIf="searchByItem; then itemYes; else descYes"> </div>
+            <ng-template #itemYes> -->
+              <td style="width: 15%" class="LabelFontStyle">&nbsp;&nbsp;&nbsp;&nbsp;Item&nbsp;Code&nbsp;:</td>
+
+                <!-- <td ><input class="form-control" type="text" (keyup)="filterRecord($event)" formControlName="searchItemCode" [(ngModel)]="searchItemCode" 
+                   id="invItemIdFirstWay"  list="dynmicUserIds1"
+                   class="form-control"
+                   style="width: 400px; background-color: rgb(240, 240, 166); text-transform: uppercase;" />
+                  <datalist id="dynmicUserIds1" #input2  >
+                    <option *ngFor="let item of ItemIdList"  [ngValue]="item.itemId">
+                      {{item.segment}}:{{item.description}}
+                      </datalist>
+                  </td> -->
+
+                  <td><input type="text" (keyup)="getInvItemId($event)" formControlName="itemSegment"   id="invItemIdFirstWay"  list="dynmicUserIds99" class="form-control"  style="height: 20px;width: 400px;text-transform: uppercase;" (ngModelChange)="F9SearchPaint($event)" />
+                    <datalist id="dynmicUserIds99">
+                      <option *ngFor="let item of ItemIdList" [ngValue]="item.itemId" >
+                        {{item.SEGMENT}}:{{item.DESCRIPTION}}
+                        </option>
+                       </datalist>
+                  </td>
+    
+                  <input hidden type="number" formControlName="invItemId">
+
+                <input hidden formControlName="searchByItemDesc" [(ngModel)]="searchByItemDesc"  >
+              
+                <td style="text-align: left; width: 100%;">
+                  <button disabled type="submit" class="btn btn-primary" (click)="F9SearchPaint(itemSegment)" style="width: 4em;" ><i class="fa fa-search"></i></button>
+                </td>
+              </tr>
+
+
+
+
+            </table>
+
+           
+            <div *ngIf="searchByItem; then itemYes1; else ItemNo1"> </div>
+            <ng-template #itemYes1>
+            <div class="container1">
+            <div class="grid_scroll_2">
+            <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="font-size:small; border-color:brown;border-collapse:collapse;width: 100%;">
+
+                     <tbody>
+                        <tr class="GridHeader">
+
+
+                        <th style="width:10rem" scope="col">Item&nbsp;Number</th>
+                        <th style="width:20rem" scope="col"> Item&nbsp;Descreption</th>
+                        <th style="width:8rem"  scope="col">SubInventory&nbsp;</th>
+                        <th style="width:8rem" scope="col">Category&nbsp;</th>
+                        <th style="width:3rem"  scope="col">UOM&nbsp;</th>
+                        <th style="width:8rem" scope="col">Stk Locator&nbsp;</th>
+                        <th style="width:8rem" scope="col">Map Locator&nbsp;</th>
+                        <th style="width:8rem"  scope="col">Hsn/Sac&nbsp;</th>
+                        <th style="width:5rem"  scope="col">Tax%&nbsp;</th>
+                        <th style="width:8rem"  scope="col">Quantity&nbsp;</th>
+                        <th style="width:8rem"  scope="col">Reserve Qty&nbsp;</th>
+                        <th style="width:8rem"  scope="col">MRP&nbsp;</th>
+                        <th style="width:8rem"  scope="col">NDP&nbsp;</th>
+                        <th style="width:8rem"  scope="col">Principle&nbsp;Item</th>
+
+                       </tr>
+                    </tbody>
+                  <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
+                        <td style="width:10rem;text-align: center;">{{com.SEGMENT}}</td>
+                        <td style="width:20rem;text-align: center;">{{com.DESCRIPTION}}</td>
+                        <td style="width:8rem;text-align: center;">{{com.SUBINVENTORYCODE}}</td>
+                        <td style="width:8rem;text-align: center;">{{com.CATEGDESC}}</td>
+                        <td style="width:3rem;text-align: center;">{{com.UOM}}</td>
+                        <td style="width:8rem;text-align: center;">{{com.STOCKLOCTR}}</td>
+                        <td style="width:8rem;text-align: center;">{{com.MAPLOCTR}}</td>
+                        <td style="width:8rem;text-align: center;">{{com.HSNSACCODE}}</td>
+                        <td style="width:5rem;text-align: center;">{{com.GSTPERCENTAGE}}</td>
+                        <td style="width:8rem;text-align: center;font-weight: bold; ">{{com.ONHANDQTY}}</td>
+                        <td style="width:8rem;text-align: center;font-weight: bold; ">{{com.RESQTY}}</td>
+                        <td style="width:8rem;text-align: center;">{{com.MRP | number:'1.2-2'}}</td>
+                        <td style="width:8rem;text-align: center;">{{com.NDP | number:'1.2-2'}}</td>
                         <td style="width:8rem;text-align: center;">{{com.PRINCPLEITEM}}</td>
                        </tr>
             </table>

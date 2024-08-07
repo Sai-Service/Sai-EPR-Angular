@@ -402,12 +402,19 @@ searchFromArray(arr, regex) {
 
     if(clrCode ===null || clrCode===undefined || clrCode.trim()==='') {alert ("Select Valid Main Colour Code ...");return;}
 
-    // var x = this.paintMixingMasterForm.get('itemCode1').value;
-    var y =clrCode.indexOf(':');
-    // var value = x.substr(x.indexOf(':') + 1, x.length);
-    var itmCode = clrCode.substr(0,y);
+    var x = this.paintMixingMasterForm.get('itemCode1').value;
+    // M0173-AXA-SLV
+    if (x.includes(':')) {
+       var x1=x.indexOf(':');
+        var x2 =x.substr(0,x1);
+    } else {  x2=x;  }
 
-    // alert ("clrCode, x  ,y  ,itmCode:"+clrCode + ","+ y + " , "+itmCode);
+      // alert ("x,x1,x2 : "+x+","+x1+","+x2);
+    
+      // var y =clrCode.indexOf(':');
+      // var itmCode = clrCode.substr(0,y);
+
+      var itmCode =x2;
 
       this.spinIcon=false;
       this.dataDisplay='Loading...Please Wait...'

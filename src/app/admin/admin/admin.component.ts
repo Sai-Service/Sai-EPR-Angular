@@ -31,6 +31,15 @@ interface IAdmin {
   searchItemCode: string;
   searchItemName: string;
   searchByItemDesc: string;
+  itemDescreption : string;
+  itemSegment :string;
+  invItemId:number;
+
+  subInventory: string;
+  subInventoryId: number;
+  subInventoryCode: string;
+  itemLineCount :number; 
+
 }
 
 declare var $: any;
@@ -51,6 +60,8 @@ export class AdminComponent implements OnInit {
   itemSeg: string = '';
 
   public ItemIdList: any[];
+  public subInvCode: any;
+
   lstcomments: any;
   lstcomments1: any = [];
   ticketNo: string;
@@ -106,6 +117,8 @@ export class AdminComponent implements OnInit {
   isVisibilePetrolPumpSystem:boolean=false;
   isVisibleReturnToVendor:boolean=true;
   isVisibleShortLanded:boolean=true;
+  isVisibleSearchPaint:boolean=false;
+
   fullName: string;
   deptName: string;
   locCode: string;
@@ -124,6 +137,8 @@ export class AdminComponent implements OnInit {
   displayMarutiMenu: Boolean;
 
   segment: string;
+  itemSegment:string;
+  invItemId:number;
   desc: string;
   uom: string;
   hsnSacCode: string;
@@ -136,6 +151,14 @@ export class AdminComponent implements OnInit {
   searchByItem = true;
   searchByDesc = false;
   deptId:string;
+  itemDescreption : string;
+
+  subInventory: string;
+  subInventoryId: number;
+  subInventoryCode: string;
+  itemLineCount :number; 
+
+
 
   @ViewChild('myinput') myInputField: ElementRef;
   emplId: number;
@@ -162,6 +185,14 @@ export class AdminComponent implements OnInit {
       searchItemCode: [],
       searchItemName: [],
       searchByItemDesc: [],
+      itemDescreption :[],
+
+      itemSegment:[],
+      invItemId:[],
+
+      subInventoryId: [],
+      subInventory: [],
+      itemLineCount :[],
 
       segment: [],
       onHandQty: [''],
@@ -263,12 +294,13 @@ export class AdminComponent implements OnInit {
     // if (Number(sessionStorage.getItem('divisionId')) === 1 && Number(sessionStorage.getItem('roleId'))===1 && sessionStorage.getItem('deptName')==='DP' && sessionStorage.getItem('ticketNo') ==='P5678')
     // if (Number(sessionStorage.getItem('divisionId')) === 1 && Number(sessionStorage.getItem('roleId'))===1  && sessionStorage.getItem('ticketNo') ==='P5678')
    
-    
+
     if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem('deptName')==='DP') 
     // && Number(sessionStorage.getItem('roleId'))===1 ) 
     // && sessionStorage.getItem('ticketNo') ==='GM01733')
     // Paint Login -----
     {
+      this.isVisibleSearchPaint=true;
       this.isVisibleMaster=false;
       this.isVisible11=false;
       this.isVisible12=false;
@@ -344,6 +376,8 @@ export class AdminComponent implements OnInit {
       this.isVisibleAccountsRepor=true;
       this.isVisibleAccessories=false;
       this.isVisibilePaintSystem=false
+      this.isVisibleSearchPaint=false;
+
       // this.isVisibilePetrolPumpSystem=true;
       // this.isVisibleShellReport=false;
     }
@@ -381,6 +415,8 @@ export class AdminComponent implements OnInit {
       this.isVisibleAccessories=false;
       this.isVisibilePaintSystem=false;
       this.isVisibleShellReport=false;
+      this.isVisibleSearchPaint=false;
+
       // if (sessionStorage.getItem('deptName')==='Account'){
 
       // }
@@ -422,6 +458,8 @@ export class AdminComponent implements OnInit {
       this.isVisibleCustMaster=false;
       this.isVisibilePaintSystem=false;
       this.isVisibleShellReport=false;
+      this.isVisibleSearchPaint=false;
+
     }
     if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId'))===2 && sessionStorage.getItem('deptName')==='Service'){
       this.isVisible11=false;
@@ -456,6 +494,8 @@ export class AdminComponent implements OnInit {
       this.isVisibleAccessories=false;
       this.isVisibilePaintSystem=false;
       this.isVisibleShellReport=false;
+      this.isVisibleSearchPaint=false;
+
     }
 
 
@@ -492,6 +532,8 @@ export class AdminComponent implements OnInit {
       this.isVisibleAccountsRepor=false;
       this.isVisibleAccessories=true;
       this.isVisibilePaintSystem=false;
+      this.isVisibleSearchPaint=false;
+
       // this.isVisibleShellReport=false;
       // alert((sessionStorage.getItem('deptName')))
       if ((sessionStorage.getItem('deptName'))==='Shell'){
@@ -539,6 +581,8 @@ export class AdminComponent implements OnInit {
       this.isVisibleAccessories=false;
       this.isVisibilePaintSystem=false;
       this.isVisibleShellReport=false;
+      this.isVisibleSearchPaint=false;
+
     }
 
     if (Number(sessionStorage.getItem('divisionId')) === 2 && sessionStorage.getItem('deptName')==='Accessories' && Number(sessionStorage.getItem('roleId'))===4){
@@ -575,6 +619,8 @@ export class AdminComponent implements OnInit {
       this.isVisibleAccessories=true;
       this.isVisibilePaintSystem=false;
       this.isVisibleShellReport=false;
+      this.isVisibleSearchPaint=false;
+
     }
 
 
@@ -613,6 +659,8 @@ export class AdminComponent implements OnInit {
       this.isVisibleAccessories=true;
       this.isVisibilePaintSystem=false;
       this.isVisibleShellReport=false;
+      this.isVisibleSearchPaint=false;
+
     }
     if (Number(sessionStorage.getItem('deptId'))===4){
       this.isVisibleAccountsRepor=true;
@@ -657,6 +705,8 @@ export class AdminComponent implements OnInit {
       this.isVisibilePaintSystem=false;
       // this.isVisibleShellReport=false;
         this.isVisibleShellReport=true;
+        this.isVisibleSearchPaint=false;
+
     }
 
 
@@ -680,11 +730,20 @@ export class AdminComponent implements OnInit {
     //   this.isVisible2 = false;
     // }
 
+    this.service.subInvCode2(this.deptId, this.divisionId).subscribe(
+      data => {
+        this.subInvCode = data;
+        console.log(data);
+        this.subInventory = this.subInvCode.subInventoryCode;
+      });
+   
     this.service
       .searchByItemSegmentDiv(this.divisionId, '36DH1601')
       .subscribe((data) => {
         this.ItemIdList = data;
       });
+
+  
 
     // const ele = this.adminForm1.controls.nativeElement['searchItemCode'];
     // this.searchItemCode..Focus();
@@ -729,13 +788,42 @@ export class AdminComponent implements OnInit {
     this.adminForm1.get('searchItemCode').reset();
     this.resetDet();
     this.searchBy = 'ITEM NUMBER';
+
+    // this.service.ItemIdListDept(this.deptId, Number(sessionStorage.getItem('locId')), this.subInvCode.subInventoryId).subscribe(
+    //   data => {
+    //     this.ItemIdList = data;
+    //   });
+
   } 
+
+  LoadModalpnt() {
+    this.adminForm1.get('itemSegment').reset();
+    this.resetDet();
+    this.searchBy = 'ITEM NUMBER';
+
+    // this.service.ItemIdListDept(this.deptId, Number(sessionStorage.getItem('locId')), 49)
+    //     .subscribe(data => {
+    //     this.ItemIdList = data; 
+    // });
+
+    this.service.ItemIdListDept(this.deptId, Number(sessionStorage.getItem('locId')), this.subInvCode.subInventoryId).subscribe(
+      data => {
+        this.ItemIdList = data;
+        this.itemLineCount=data.length
+        // alert ("data.length " +data.length)
+      });
+    
+
+       
+  } 
+
 
   resetDet() {
     this.searchItemId = null;
     this.searchByItemDesc = null;
     this.searchItemName = null;
     this.segment = null;
+    this.itemSegment=null;
     this.desc = null;
     this.uom = null;
     this.mrp = null;
@@ -745,6 +833,7 @@ export class AdminComponent implements OnInit {
     this.principleItem = null;
     this.lstcomments = null;
     this.lstcomments1 = null;
+    this.ItemIdList=null;
   }
 
   f9Key() {
@@ -767,6 +856,59 @@ export class AdminComponent implements OnInit {
       this.F9SearchItemDesc(itemDesc);
     }
   }
+
+ 
+  
+  F9SearchPaint(event1: any) {
+    this.itemDescreption=event1;
+
+    if (event1 != null) {
+     var event = event1.substr(0,event1.indexOf(':'));
+    } 
+    event =event.toUpperCase();
+
+    let select1 = this.ItemIdList.find(d => d.SEGMENT === event);
+    if (select1 != undefined) {
+     this.getF9DataPaint(select1.itemId);
+    }
+    // alert ("event1 ,event,itemid: "+event1+","+event + ","+select1.itemId);
+}
+
+getF9DataPaint(itemId){
+  this.service
+  .searchByItemf9(
+    itemId,
+    this.locId,
+    this.ouId,
+    this.divisionId,
+    this.deptId,
+  )
+  .subscribe((data) => {
+    this.lstcomments = data;
+    console.log(data);
+    if (this.lstcomments.length > 0) {
+      this.segment = this.lstcomments[0].SEGMENT;
+      this.desc = this.lstcomments[0].DESCRIPTION;
+      this.uom = this.lstcomments[0].UOM;
+      this.mrp = this.lstcomments[0].MRP;
+      this.hsnSacCode = this.lstcomments[0].HSNSACCODE;
+      this.purchPrice = this.lstcomments[0].NDP;
+      this.gstPer = this.lstcomments[0].GSTPERCENTAGE;
+      this.principleItem = this.lstcomments[0].PRINCPLEITEM;
+      this.adminForm1.patchValue(data);
+    
+    } else {
+      alert('Stock Details not availabe for item - ' + itemId);
+     
+    }
+  //  this.ItemIdList =[]; 
+  //  this.adminForm1.get('searchItemCode').setValue('') ;
+  });
+}
+
+
+
+
 
   F9SearchItemCode(abc) {
     // const formValue: IAdmin = this.adminForm1.value;
@@ -918,22 +1060,73 @@ export class AdminComponent implements OnInit {
     }
   }
 
+
+
+  filterRecordNew(event) {
+    var itemCode1 = event.target.value;
+    // alert ("in filter record... "+ itemCode1)
+    this.itemDescreption=itemCode1
+    if (event.keyCode == 13) { 
+      this.service
+      .searchByItemSegmentDiv(this.divisionId, itemCode1.toUpperCase())
+      .subscribe((data) => {
+        this.ItemIdList = data;
+      });
+    }
+
+    let select1 = this.ItemIdList.find((d) => d.segment === itemCode1.toUpperCase());
+    if (select1 != undefined) {
+      this.getF9Data(select1.itemId);}
+  }
+
+  filterRecordNew1(event) {
+    // var itemCode1 = event.target.value;
+    var itemCode1 = this.adminForm1.get('searchItemCode').value;
+
+    // alert ("in filter record... "+ itemCode1)
+    this.itemDescreption=itemCode1
+    
+      this.service
+      .searchByItemSegmentDiv(this.divisionId, itemCode1.toUpperCase())
+      .subscribe((data) => {
+        this.ItemIdList = data;
+
+        let select1 = this.ItemIdList.find((d) => d.segment === itemCode1.toUpperCase());
+        if (select1 != undefined) {
+          this.getF9Data(select1.itemId);}
+
+    });
+
+  }
+
+
+
+
+
   filterRecord(event) {
     var itemCode1 = event.target.value;
-  //  alert ("in filter record")
+   alert ("in filter record... "+ itemCode1)
+   this.itemDescreption=itemCode1
     
     if (event.keyCode == 13) {
+      alert ("in filter record... in 13" + event.keyCode )
+
       var itemCode = '';
       if (itemCode1.includes('--')) {
+        alert ("in if");
         var itemCode2 = itemCode1.split('--');
         itemCode = itemCode2[0];
-        // alert(itemCode + 'item in if');
       } else {
+
         itemCode = itemCode1;
-        // alert(itemCode + 'item in else');
+        alert ("in else..itemCode.length..."+itemCode.length + ","+this.ItemIdList.length);
+
       }
-     // alert(itemCode.length + 'length'+this.ItemIdList.length);
+
+     alert(itemCode.length + " length : "+this.ItemIdList.length);
+     
       // enter keycode
+
       if (itemCode.length >= 4 && this.ItemIdList.length <= 1) {
         this.service
           .searchByItemSegmentDiv(this.divisionId, itemCode.toUpperCase())
@@ -953,9 +1146,7 @@ export class AdminComponent implements OnInit {
       if (itemCode.length === 8 ) {
         // alert('in len if' + itemCode.toUpperCase());
         console.log(this.ItemIdList);
-        let select1 = this.ItemIdList.find(
-          (d) => d.segment === itemCode.toUpperCase()
-        );
+        let select1 = this.ItemIdList.find((d) => d.segment === itemCode.toUpperCase());
         // alert(select1.itemId + 'In len');
         if (select1 != undefined) {
           this.getF9Data(select1.itemId);
@@ -974,9 +1165,7 @@ export class AdminComponent implements OnInit {
 
       if (itemCode.length >= 4 ) {
         console.log(this.ItemIdList);
-        let select1 = this.ItemIdList.find(
-          (d) => d.segment === itemCode.toUpperCase()
-        );
+        let select1 = this.ItemIdList.find((d) => d.segment === itemCode.toUpperCase());
         if (select1 != undefined) {
           this.getF9Data(select1.itemId);
         }else{
@@ -990,11 +1179,10 @@ export class AdminComponent implements OnInit {
         }
       }
     }
-
-
-
     }
   }
+
+
 
   getF9Data(itemId){
     this.service
@@ -1027,6 +1215,8 @@ export class AdminComponent implements OnInit {
      this.adminForm1.get('searchItemCode').setValue('') ;
     });
   }
+
+
   userCheck(roleId: number): boolean {
     //alert(sessionStorage.getItem('roleId') +'--'+roleId );
     if (sessionStorage.getItem('roleId') === 'undefined') {

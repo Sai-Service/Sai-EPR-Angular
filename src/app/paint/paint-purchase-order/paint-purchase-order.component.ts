@@ -1302,6 +1302,9 @@ export class PaintPurchaseOrderComponent implements OnInit {
                  );
              }
            }
+
+           
+
            var approveDate1 = data.obj.approveDate;
            var approveDate2 = this.pipe.transform(approveDate1, 'dd-MM-yyyy');
            this.paintPoForm.patchValue({ approveDate: approveDate2 });
@@ -1311,6 +1314,10 @@ export class PaintPurchaseOrderComponent implements OnInit {
            // alert(approveDate2);
            const status = this.lstcomments1.authorizationStatus;
            this.selSuppTaxCatNm = data.obj.taxCategoryName;
+
+           var totAmt1=Math.round((data.obj.totalAmt+Number.EPSILON)*100)/100;
+           this.paintPoForm.patchValue({ totalAmt: totAmt1 });
+
            if (status === 'Inprogress') {
              this.displayFirstButtonDisplay = true;
              this.displaySecondButtonDisplay = false;
@@ -1452,6 +1459,9 @@ export class PaintPurchaseOrderComponent implements OnInit {
              this.lineDetailsArray.removeAt(len);
              this.paintPoForm.patchValue(this.lstcomments1);
 
+             var totAmt1=Math.round((data.obj.totalAmt+Number.EPSILON)*100)/100;
+             this.paintPoForm.patchValue({ totalAmt: totAmt1 });
+
              for (let i = 0; i <= this.lstcomments1.poLines.length - 1; i++) {
                let taxControl = this.lineDetailsArray.controls[i].get('taxAmounts') as FormArray
                taxControl.clear();
@@ -1553,6 +1563,8 @@ export class PaintPurchaseOrderComponent implements OnInit {
          }
        }
      );
+
+     
  }
 
 
@@ -2388,7 +2400,7 @@ export class PaintPurchaseOrderComponent implements OnInit {
 
    var uomCode = trxLnArr[index].uom;
 
-   (trxLnArrNew.controls[index]).patchValue({attribute1: invoiceQty ,   attribute2: invoicePrice,attribute3: density1,});
+   (trxLnArrNew.controls[index]).patchValue({attribute1: invoiceQty ,attribute2: invoicePrice,attribute3: density1,});
   
    
 
