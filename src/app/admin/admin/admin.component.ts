@@ -38,6 +38,8 @@ interface IAdmin {
   subInventory: string;
   subInventoryId: number;
   subInventoryCode: string;
+  itemLineCount :number; 
+
 }
 
 declare var $: any;
@@ -154,6 +156,8 @@ export class AdminComponent implements OnInit {
   subInventory: string;
   subInventoryId: number;
   subInventoryCode: string;
+  itemLineCount :number; 
+
 
 
   @ViewChild('myinput') myInputField: ElementRef;
@@ -188,6 +192,7 @@ export class AdminComponent implements OnInit {
 
       subInventoryId: [],
       subInventory: [],
+      itemLineCount :[],
 
       segment: [],
       onHandQty: [''],
@@ -804,6 +809,8 @@ export class AdminComponent implements OnInit {
     this.service.ItemIdListDept(this.deptId, Number(sessionStorage.getItem('locId')), this.subInvCode.subInventoryId).subscribe(
       data => {
         this.ItemIdList = data;
+        this.itemLineCount=data.length
+        // alert ("data.length " +data.length)
       });
     
 
@@ -1083,7 +1090,7 @@ getF9DataPaint(itemId){
       .searchByItemSegmentDiv(this.divisionId, itemCode1.toUpperCase())
       .subscribe((data) => {
         this.ItemIdList = data;
-        
+
         let select1 = this.ItemIdList.find((d) => d.segment === itemCode1.toUpperCase());
         if (select1 != undefined) {
           this.getF9Data(select1.itemId);}
