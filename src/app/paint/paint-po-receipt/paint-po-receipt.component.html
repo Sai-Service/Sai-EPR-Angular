@@ -804,7 +804,7 @@
                         <tr class="GridHeader">
                             <th scope="col">SR no</th>
                             <th scope="col">Item</th>
-                            <th scope="col" style="width: 5rem;">Quantity Received</th>
+                            <th scope="col" style="width: 5rem;">Qty&nbsp;Received</th>
                             <th scope="col">Locator</th>
                             <th scope="col">HSN/SAC code</th>
                             <th scope="col">Item Description</th>
@@ -880,12 +880,12 @@
                                         <ng-template #thenBlockqtyReceived>
                                             <input disabled type="number"
                                             formControlName="qtyReceived"  (change)="calculation(i,qty)" #qty
-                                            class="form-control" style="height: 20px;width: 50px;" >
+                                            class="form-control" style="height: 20px;width: 100px;text-align: right;" >
                                         </ng-template>
                                         <ng-template #elseBlockqtyReceived>
                                         <input disabled type="number"
                                             formControlName="qtyReceived"  (change)="calculation(i,qty)" #qty
-                                            class="form-control" style="height: 20px;width: 50px;" >
+                                            class="form-control" style="height: 20px;width: 100px;text-align: right;" >
                                             <!-- [(ngModel)]='qtyReceived' value="qtyReceived"  -->
                                         </ng-template>
                                         </td>
@@ -1037,7 +1037,7 @@
                                     </td>
                                         <td> <input type="text" disabled
                                                 formControlName="qtyReceived" (change)="calculation(i)"
-                                                class="form-control" style="height: 20px;width: 50px;">
+                                                class="form-control" style="height: 20px;width: 100px;text-align: right">
                                         </td>
                                         <td> 
                                             <input type="text" disabled class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal1"
