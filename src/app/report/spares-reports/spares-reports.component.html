@@ -126,11 +126,11 @@
                                 (click)="reportDetails('gstStockLedger')">Stock Ledger</a>
                         </li>
                         <li>
-                            <a class="dropdown-item" data-toggle="collapse" href="#panelstockTransfer" role="tab"
+                            <a class="dropdown-item" data-toggle="collapse" href="#isVisibleStockTransferMadeSummary" role="tab"
                                 (click)="reportDetails('gststockTransfer')">Stock Transfer Made Detail Report</a>
                         </li>
                         <li>
-                            <a class="dropdown-item" data-toggle="collapse" href="#isVisibleStocMadeSummary" role="tab"
+                            <a class="dropdown-item" data-toggle="collapse" href="#isVisibleStockTransferMadeSummary" role="tab"
                                 (click)="reportDetails('gststockTransferSummary')">Stock Transfer Made Summary Report</a>
                         </li>
 
@@ -140,7 +140,7 @@
                         </li>
                         <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#isVisibleStockTransferReceivedSummary" role="tab"
-                                (click)="reportDetails('gststockTransferReceivedSummary')">Spares Stock Transfer Received Summary Report</a>
+                                (click)="reportDetails('gststockTransferReceivedSummary')">Stock Transfer Received Summary Report</a>
                         </li>
                         <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelsparesInventoryAging" role="tab"
@@ -963,13 +963,13 @@ style="margin-left: 10%;" id="panelstockTransfer">
                 <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
                    
                     <select formControlName="locCode" id="locCode" class="form-control"
-                        (ngModelChange)='onOptionsLocation($event)'>
+                        (ngModelChange)='onOptionsFromLocation($event)' style="background-color: yellow;">
                         <option>--Select--</option>
                         <option *ngFor="let sc of  BillShipFromList" [value]="sc.locId">
                             {{sc.locCode}}-{{sc.locName}}
                         </option>
                     </select> 
-                    <input  disabled hidden type="number" class="form-control" formControlName="locId">
+                    <input  disabled hidden type="number" class="form-control" formControlName="fromLocationId">
 
                 </td>
 
@@ -980,12 +980,13 @@ style="margin-left: 10%;" id="panelstockTransfer">
                     <div *ngIf="dispLocation; then dispall; else dispship"></div>
                     <ng-template #dispall>
                             <select formControlName="tolocCode" id="tolocCode" class="form-control"
-                                (ngModelChange)='onOptionsToLocation($event)'>
+                                (ngModelChange)='onOptionsToLocation1($event)'>
                                 <option>--Select--</option>
                                 <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
                                     {{sc.locCode}}-{{sc.locName}}
                                 </option>
                             </select>
+                            <input  disabled hidden type="number" class="form-control" formControlName="tolocationId">
                     </ng-template>
 
                     <ng-template #dispship>
@@ -1124,7 +1125,8 @@ style="margin-left: 10%;" id="panelstockTransferRecd">
 
 
 
-    <table class="center" [style.display]="isVisibleStockTransferReceivedSummary ? 'block' : 'none'" class="collapse"
+
+    <table class="center" [style.display]="isVisibleStockTransferMadeSummary ? 'block' : 'none'" class="collapse"
     style="margin-left: 10%;" id="panelstockTransferRecd">
     
     
@@ -1142,31 +1144,124 @@ style="margin-left: 10%;" id="panelstockTransferRecd">
                     <td><input type="date" class="form-control" formControlName="toDate"  [(ngModel)]="toDate"   max="{{minDate | date:'yyyy-MM-dd'}}"></td>
                 </tr>
                 <tr>
-                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Ship&nbsp;To&nbsp;Location&nbsp;:&nbsp;</td>
-                    <!-- <td [style.display]="isVisiblelocationInput ? 'block' : 'none'">
-                        <input type="text" disabled class="form-control" formControlName="locCode">
-                    </td>
-                    <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'"> -->
-                       <td>
-                        <select formControlName="locCode1" id="locCode" class="form-control"
-                            (ngModelChange)='onOptionsLocation($event)'>
-                            <option value="">--Select--</option>
-                            <option *ngFor="let sc of  BillShipFromList" [value]="sc.locId">
-                                {{sc.locCode}}-{{sc.locName}}
-                            </option>
-                        </select> 
-                        <input  disabled hidden type="number" class="form-control" formControlName="locId1">
-                    </td>
-                    <!-- </td> -->
-    
+                   
                     <td style="width: 15%" class="LabelFontStyle">
                         &nbsp;Ship&nbsp;From&nbsp;Location&nbsp;:&nbsp;
                     </td>
                     <td>
-                        
-                        <input type="text" disabled class="form-control" formControlName="tolocCode">
-                        <input  disabled hidden type="number" class="form-control" formControlName="tolocId">
+                        <div *ngIf="displayLocationList; then thenLocationList; else elseLocationList"></div>
+                        <ng-template #thenLocationList> 
+                         <input type="text" disabled class="form-control" formControlName="locCode">
+                        </ng-template>
+                        <ng-template #elseLocationList> 
+                         <select formControlName="fromLocName" id="fromLocName" class="form-control"
+                             (ngModelChange)='onOptionsFromLocation($event)'  style="background-color: yellow;">
+                         <option value="">--Select--</option>
+                         <option *ngFor="let sc of  BillShipFromList" [value]="sc.locId">
+                             {{sc.locCode}}-{{sc.locName}}
+                         </option>
+                     </select> 
+                     <input  disabled  hidden type="number" class="form-control" formControlName="fromLocationId">
+                        </ng-template>
                     </td>
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Ship&nbsp;To&nbsp;Location&nbsp;:&nbsp;</td>
+                    
+                    <td>
+                        <select formControlName="tolocName" id="tolocName" class="form-control"
+                        (ngModelChange)='onOptionsToLocation1($event)'>
+                        <option value="">--Select--</option>
+                        <option *ngFor="let sc of  BillShipFromList" [value]="sc.locId">
+                            {{sc.locCode}}-{{sc.locName}}
+                        </option>
+                    </select> 
+                    <input  disabled hidden type="number" class="form-control" formControlName="tolocationId">
+                    
+                </td>
+                </tr>
+            </table>
+                                <table class="center">
+                                    <tr>
+                                        <td>
+                                            <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                            <ng-template #hList2> 
+                                                <div class="d-flex justify-content-center">
+                                                    <div class="spinner-border text-primary" role="status" >
+                                                        <span class="sr-only" id="loading"></span>
+                                                
+                                                    </div>
+                                                    </div>
+                                            </ng-template>
+                                            <ng-template #hList1> </ng-template>
+                                        </td>
+                                        <td class="LabelFontStyle" style="color: blue;">&nbsp;{{this.dataDisplay}}&nbsp; </td>
+                                    </tr>
+                                </table>
+    
+                              <table class="center" style="width: 100%;margin-left: 50%;">
+                                  <tr>
+                                    <td>
+                                        <button class="btn-primary" [disabled]="isDisabled1" (click)="reportParameter(reportName)">View
+                                          Report</button>
+                                      </td>
+                                     
+                                  </tr>
+                              </table>
+        </table>
+
+
+
+    <table class="center" [style.display]="isVisibleStockTransferReceivedSummary ? 'block' : 'none'" class="collapse"
+    style="margin-left: 10%;" id="panelstockTransferRecd1">
+    
+
+    <table class="center">
+        <tr>
+          <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;" >{{reportName}}</td>
+        </tr>
+    </table>
+    <br>
+            <table class="center">
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;From&nbsp;Date&nbsp;:&nbsp;</td>
+                    <td><input type="date" class="form-control" formControlName="fromDate" [(ngModel)]="fromDate" max="{{minDate | date:'yyyy-MM-dd'}}"></td>
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;To&nbsp;Date&nbsp;:&nbsp; </td>
+                    <td><input type="date" class="form-control" formControlName="toDate"  [(ngModel)]="toDate"   max="{{minDate | date:'yyyy-MM-dd'}}"></td>
+                </tr>
+                <tr>
+                   
+                    <td style="width: 15%" class="LabelFontStyle">
+                        &nbsp;Ship&nbsp;To&nbsp;Location&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <div *ngIf="displayToLocationList; then thenToLocationList; else elseToLocationList"></div>
+                        <ng-template #thenToLocationList> 
+                         <input type="text" disabled class="form-control" formControlName="locCode">
+                        </ng-template>
+                        <ng-template #elseToLocationList> 
+                         <select formControlName="tolocName" id="tolocName" class="form-control"
+                         (ngModelChange)='onOptionsToLocation1($event)'  style="background-color: yellow;">
+                         <option value="">--Select--</option>
+                         <option *ngFor="let sc of  BillShipFromList" [value]="sc.locId">
+                             {{sc.locCode}}-{{sc.locName}}
+                         </option>
+                     </select> 
+                     <input  disabled  hidden type="number" class="form-control" formControlName="tolocationId">
+                        </ng-template>
+                       
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Ship&nbsp;From&nbsp;Location&nbsp;:&nbsp;</td>
+                    
+                    <td>
+                        <select formControlName="fromLocName" id="fromLocName" class="form-control"
+                        (ngModelChange)='onOptionsFromLocation($event)'>
+                        <option value="">--Select--</option>
+                        <option *ngFor="let sc of  BillShipFromList" [value]="sc.locId">
+                            {{sc.locCode}}-{{sc.locName}}
+                        </option>
+                    </select> 
+                    <input  disabled hidden type="number" class="form-control" formControlName="fromLocationId">
+                    
+                </td>
                 </tr>
             </table>
                                 <table class="center">
@@ -1201,10 +1296,13 @@ style="margin-left: 10%;" id="panelstockTransferRecd">
 
 
 
+
+
+
+
+
         <table class="center" [style.display]="isVisibleStocMadeSummary ? 'block' : 'none'" class="collapse"
         style="margin-left: 10%;" id="panelstockTransferRecd">
-        
-        
         <table class="center">
             <tr>
               <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;" >{{reportName}}</td>
@@ -1222,25 +1320,33 @@ style="margin-left: 10%;" id="panelstockTransferRecd">
                         <td style="width: 15%" class="LabelFontStyle">&nbsp;Ship&nbsp;From&nbsp;Location&nbsp;:&nbsp;</td>
                         
                            <td>
+                            <div *ngIf="displayLocationList; then thenLocationList; else elseLocationList"></div>
+                           <ng-template #thenLocationList> 
                             <input type="text" disabled class="form-control" formControlName="locCode">
-                            <input  disabled hidden type="number" class="form-control" formControlName="locCode">     
+                           </ng-template>
+                           <ng-template #elseLocationList> 
+                            <select formControlName="fromLocName" id="fromLocName" class="form-control"
+                            (ngModelChange)='onOptionsFromLocation($event)'>
+                            <option value="">--Select--</option>
+                            <option *ngFor="let sc of  BillShipFromList" [value]="sc.locId">
+                                {{sc.locCode}}-{{sc.locName}}
+                            </option>
+                        </select> 
+                        <input  disabled  hidden type="number" class="form-control" formControlName="fromLocationId">
+                           </ng-template>
                         </td>
-                        <!-- </td> -->
                         <td style="width: 15%" class="LabelFontStyle">
                             &nbsp;Ship&nbsp;To&nbsp;Location&nbsp;:&nbsp;
                         </td>
                         <td>
-                           
                             <select formControlName="tolocName" id="tolocName" class="form-control"
-                            (ngModelChange)='onOptionsLocation($event)'>
+                            (ngModelChange)='onOptionsToLocation1($event)'>
                             <option value="">--Select--</option>
                             <option *ngFor="let sc of  BillShipFromList" [value]="sc.locId">
                                 {{sc.locCode}}-{{sc.locName}}
                             </option>
                         </select> 
                         <input  disabled hidden type="number" class="form-control" formControlName="tolocationId">
-                            <!-- <input type="text" disabled class="form-control" formControlName="tolocCode">
-                            <input  disabled hidden type="number" class="form-control" formControlName="tolocId"> -->
                         </td>
                     </tr>
                 </table>
