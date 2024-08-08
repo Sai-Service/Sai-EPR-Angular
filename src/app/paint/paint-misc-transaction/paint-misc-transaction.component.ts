@@ -794,11 +794,13 @@ export class PaintMiscTransactionComponent implements OnInit {
     // trxLnArr1.controls[i].get('LocatorSegment').disable();
     var trxType = this.paintMiscellaneousForm.get('compileType').value;
     let select1 = null;
+
     if (trxType === 4) {
       select1 = this.ItemIdList.find((d) => d.SEGMENT === event);
     } else {
       select1 = this.ItemIdList.find((d) => d.segment === event);
     }
+
     if (select1 != null) {
       // var trxLnArr1 = this.paintMiscellaneousForm.get('cycleLinesList') as FormArray;
       // var trxLnArr = this.paintMiscellaneousForm.get('cycleLinesList').value;
