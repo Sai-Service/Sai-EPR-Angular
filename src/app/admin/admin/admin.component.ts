@@ -840,12 +840,22 @@ export class AdminComponent implements OnInit {
     // alert( "Key F9 pressed");
     // this.router.navigate(['/admin/transaction/OnHandDetails']);
     // this.partSearch.open();
-    this.LoadModal();
-    $('#partSearch').modal('show');
-    // this.input2.nativeElement.focus();
-    $('#partSearch').on('shown.bs.modal', function () {
-      $('#invItemIdFirstWay').focus();
-    });
+
+    if (this.isVisibleSearchPaint) {
+        this.LoadModalpnt();
+        $('#partSearchPnt').modal('show');
+        $('#partSearchPnt').on('shown.bs.modal', function () {
+          $('#invItemIdFirstWay').focus();
+        });
+    } else 
+    { 
+        this.LoadModal(); 
+        $('#partSearch').modal('show');
+        $('#partSearch').on('shown.bs.modal', function () {
+          $('#invItemIdFirstWay').focus();
+        });
+      }
+
   }
 
   F9Search(itemDesc) {
