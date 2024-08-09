@@ -812,8 +812,7 @@ export class AdminComponent implements OnInit {
         this.itemLineCount=data.length
         // alert ("data.length " +data.length)
       });
-    
-
+   
        
   } 
 
@@ -1074,7 +1073,13 @@ getF9DataPaint(itemId){
 
   filterRecordNew(event) {
     var itemCode1 = event.target.value;
+
+    if (itemCode1==null || itemCode1 ==undefined || itemCode1.trim()=='')
+    {
+      alert ("Please Enter Valid ItemCode..."); return;
+    }
     // alert ("in filter record... "+ itemCode1)
+
     this.itemDescreption=itemCode1
     if (event.keyCode == 13) { 
       this.service
@@ -1092,6 +1097,11 @@ getF9DataPaint(itemId){
   filterRecordNew1(event) {
     // var itemCode1 = event.target.value;
     var itemCode1 = this.adminForm1.get('searchItemCode').value;
+
+    if (itemCode1==null || itemCode1 ==undefined || itemCode1.trim()=='')
+    {
+      alert ("Please Enter Valid ItemCode..."); return;
+    }
 
     // alert ("in filter record... "+ itemCode1)
     this.itemDescreption=itemCode1
