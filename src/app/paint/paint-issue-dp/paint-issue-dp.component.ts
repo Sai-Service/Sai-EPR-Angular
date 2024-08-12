@@ -65,6 +65,8 @@ interface IPaintIssue {
   attribute4:string;
   attribute10:number;
   attribute9:number;
+  attribute8 :string;
+
   panelCode:string;
   panelQty:number;
   panelQty1:number;
@@ -95,6 +97,8 @@ export class PaintIssueDpComponent implements OnInit {
   attribute9:number;  // old panel qty
   attribute3:string;  // Panel Type Lov : Old Panel;New Panel
   attribute4:string;  // Vehicle Registration No
+  attribute8 :string;
+
   panelCode:string;
   panelQty:number=0;
   panelQty1:number=0;
@@ -294,6 +298,7 @@ export class PaintIssueDpComponent implements OnInit {
 
       panelFlag:[],
 
+      attribute8 :[],
       attribute3:[],
       attribute4:[],
       attribute10:[],
@@ -1341,6 +1346,12 @@ export class PaintIssueDpComponent implements OnInit {
       return;
     }
 
+    if (formValue.attribute8 === undefined || formValue.attribute8 === null || formValue.attribute8.trim()=='') {
+      this.headerValidation1 = false;
+      msg1 = "SERVICE ADVISOR NAME: Should not be null....";
+      alert(msg1);
+      return;
+    }
     
     
     if (formValue.panelQty === undefined || formValue.panelQty === null || formValue.panelQty<=0 || formValue.panelQty>22) {

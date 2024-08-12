@@ -208,7 +208,10 @@
       <td style="width: 15%" class="LabelFontStyle">Vehicle No:</td>
       <td><input  type="text" class="form-control" formControlName="attribute4"[(ngModel)]="attribute4" style="background-color: yellow;text-transform: uppercase;"></td>
 
-      <td></td>
+
+      <td style="width: 15%" class="LabelFontStyle">S.Advisor:</td>
+      <td><input  type="text" class="form-control" formControlName="attribute8"[(ngModel)]="attribute8" style="background-color: yellow;text-transform: uppercase;"></td>
+
 
       <!-- <td >
         <button type="button"  class="btn btn-primary" 
@@ -216,12 +219,7 @@
         &nbsp;Select Panel Details</button>
        </td> -->
 
-       <td >
-        <button type="button"  class="btn btn-primary"  [disabled]='panelButtonDisabled' 
-        data-toggle="modal" data-target="#panelModal"          (click)="LoadPanelListNew()"
-        style="width:fit-content;color: black;">
-        &nbsp;PANEL DETAILS</button>
-       </td>
+      
 
 
          <!-- <td colspan="3">
@@ -254,6 +252,14 @@
         <td style="width: 15%" class="LabelFontStyle">Description:</td>
         <td colspan="3"><input style="width:100%" type="text" class="form-control" formControlName="description"[(ngModel)]="description"></td>
 
+        <td></td>
+
+        <td >
+         <button type="button"  class="btn btn-primary"  [disabled]='panelButtonDisabled' 
+         data-toggle="modal" data-target="#panelModal"          (click)="LoadPanelListNew()"
+         style="width:fit-content;color: black;">
+         &nbsp;PANEL DETAILS</button>
+        </td>
       </tr>
     </table>
     </fieldset>
