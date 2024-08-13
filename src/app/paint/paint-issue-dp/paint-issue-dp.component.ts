@@ -542,28 +542,10 @@ export class PaintIssueDpComponent implements OnInit {
           this.onSelectReason2(select1.reasonName,select1.costCode)
         }
       }
-    )
-
-    // this.service.PaintReasonList().subscribe(
-    //   data => {
-    //     this.reasonlist = data;
-    //     console.log(this.reasonlist);
+    );
 
 
-    //     let selreasonlist: any = [];
-    //     for (let i = 0; i < this.reasonlist.length; i++) {
-    //       if (this.reasonlist[i].reasonName.includes('IC')) {
-    //         selreasonlist.push(this.reasonlist[i]);
-    //       }
-    //     }
-    //     this.reasonlist = selreasonlist;
-    //   }
-    // )
-
-    // this.onSelectReason("ICPN02-32-Paint Issue to BodyShop")
-
-
-    this.service.TypeList().subscribe(
+   this.service.TypeList().subscribe(
       data => {
         this.TypeList = data;
       }
@@ -587,10 +569,43 @@ export class PaintIssueDpComponent implements OnInit {
 
     );
     this.displayRemoveRow[0] = false;
-
-
-
   }
+
+  onSelectReason2(event,event2) {
+    var reasonArr = event.split('-');
+    var reasonArr = event
+
+    // alert("Cost code : " +event2);
+   
+      this.service.reasonaccCode(this.locId, event, event2).subscribe(
+
+      data => {
+        this.acccodedesc = data;
+        this.segmentName = this.acccodedesc.segmentName;
+
+      }
+    );
+    
+    // this.service.ItemIdListDept(this.deptId, Number(sessionStorage.getItem('locId')), this.subInvCode.subInventoryId).subscribe(
+   
+    // alert("Cost code : " +this.deptId +","+this.subInvCode.subInventoryId);
+
+    this.service.ItemIdListDept(Number(sessionStorage.getItem('dept')), Number(sessionStorage.getItem('locId')), 49).subscribe(
+      data => {
+        this.ItemIdList = data;
+      });
+
+    var selreason = this.reasonlist.find(d => d.reasonName === event)
+    this.service.WorkShopIcIssue(this.locId, selreason.attribute2).subscribe(
+      data => {
+        this.workshopIssue = data;
+        console.log(data);
+      }
+    );
+    
+   
+  }
+
 
   paintIssue(paintIssueForm: any) { }
 
@@ -855,6 +870,10 @@ export class PaintIssueDpComponent implements OnInit {
   }
   resetMiscTrans() {
     window.location.reload();
+    // this.paintIssueForm.reset();
+
+   
+
   }
 
   onLocatorSelection(event: any, i) {
@@ -1461,14 +1480,10 @@ export class PaintIssueDpComponent implements OnInit {
 
   onSelectReason(event) {
     var reasonArr = event.split('-');
-
-    // alert(reasonArr+","+reasonArr[0] +","+reasonArr[1])
-
     this.service.reasonaccCode(this.locId, reasonArr[0], reasonArr[1]).subscribe(
 
       data => {
         this.acccodedesc = data;
-        // this.paintIssueForm.patchValue({reason:this.acccodedesc.segmentName});
         this.segmentName = this.acccodedesc.segmentName;
 
       }
@@ -1484,44 +1499,11 @@ export class PaintIssueDpComponent implements OnInit {
     this.service.ItemIdListDept(this.deptId, Number(sessionStorage.getItem('locId')), this.subInvCode.subInventoryId).subscribe(
       data => {
         this.ItemIdList = data;
-        // console.log(this.invItemId);
       });
 
   }
 
-  onSelectReason2(event,event2) {
-    var reasonArr = event.split('-');
-    var reasonArr = event
-    // alert(reasonArr)
-
-    // let select1 = this.reasonlist.find(d => d.reasonName === event);
-    // if (select1 != undefined) { 
-
-      this.service.reasonaccCode(this.locId, event, event2).subscribe(
-
-      data => {
-        this.acccodedesc = data;
-        // this.paintIssueForm.patchValue({reason:this.acccodedesc.segmentName});
-        this.segmentName = this.acccodedesc.segmentName;
-
-      }
-    );
-    var selreason = this.reasonlist.find(d => d.reasonName === event)
-    this.service.WorkShopIcIssue(this.locId, selreason.attribute2).subscribe(
-      data => {
-        this.workshopIssue = data;
-        console.log(data);
-      }
-    );
-    
-    this.service.ItemIdListDept(this.deptId, Number(sessionStorage.getItem('locId')), this.subInvCode.subInventoryId).subscribe(
-      data => {
-        this.ItemIdList = data;
-        // console.log(this.invItemId);
-      });
-    // }
-  }
-
+ 
 
 
 

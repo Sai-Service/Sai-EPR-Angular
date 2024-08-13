@@ -1419,6 +1419,8 @@ export class PaintPurchaseOrderComponent implements OnInit {
                });
              }
              this.paintPoForm.disable();
+             this.paintPoForm.get('description').enable();
+
 
            }
 
@@ -1494,6 +1496,8 @@ export class PaintPurchaseOrderComponent implements OnInit {
                  }));
                });
                // this.taxDetails('Search',i, 'taxCategoryId');
+               this.paintPoForm.get('description').enable();
+
              }
 
            }

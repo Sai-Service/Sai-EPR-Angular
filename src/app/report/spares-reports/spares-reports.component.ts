@@ -2821,6 +2821,7 @@ export class SparesReportsComponent implements OnInit {
     })
   }
   }
+  
   else if (reportName === 'Spares Debtor O/S Letter') {
 
     this.isDisabled1=false;
