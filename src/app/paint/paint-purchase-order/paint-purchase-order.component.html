@@ -498,7 +498,7 @@
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">Description:</td>
                                     <td colspan="2">
-                                        <input disabled type="text" formControlName="description" class="form-control"
+                                        <input  type="text" formControlName="description" class="form-control"
                                             placeholder="Enter the description" style="width: 100%;">
                                     </td>
                                     <!-- <td></td> -->
@@ -1838,6 +1838,11 @@
             <td>
                 <button type="button" class="btn btn-primary" (click)="clearFormArray()" style="width: 4rem;">Reset</button>
             </td> -->
+            <td>
+            <button type="button" class="btn btn-primary" id="UpdateBtn" data-toggle="modal"
+                data-target="#confirmAlert" (click)="getMessage('Update')">Update</button>
+           </td>
+
             <td>
 
                 <input hidden type="text" disabled formControlName="segment1" class="form-control"

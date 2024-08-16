@@ -254,8 +254,6 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
 
-
-
     }
     else if (reportName === 'gstpurRegSumm') {
       this.reportName = 'Paint Purchase Register - Summary';
@@ -516,7 +514,34 @@ export class PaintReportsComponent implements OnInit {
 
     }
 
-    
+    if (reportName === 'billHandedoverToActReport') {
+      this.reportName = 'Accounts Bill Handover Report';
+      if (this.reportName === 'Accounts Bill Handover Report') {
+        this.isVisiblespPurRegDownLoad = true;
+      }
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.isVisibleDepartmentList = true;
+      }
+      this.isVisibleGSTPurchaseRegister = true;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisiblestockTransferRecd=false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleEwayBill=false;
+      this.isVisiblepanelStockTaking=false;
+      this.isVisiblesparesPaintPanelReport=false;
+
+    }
+
+      
 
   
   }
@@ -939,11 +964,29 @@ export class PaintReportsComponent implements OnInit {
           })
       }
     }
-    
-
-
-   
-   
+    else if (reportName==='Accounts Bill Handover Report'){
+      const fileName = 'Receipt-Other Details Report-' +  '-TO-' + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      this.reportService.actBillHandoverReport(fromDate,toDate,sessionStorage.getItem('ouId'),locId,deptId)
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+        this.isDisabled1=false;
+      })
+    }
+    else if (Number(sessionStorage.getItem('deptId')) != 4) {
+      this.reportService.actBillHandoverReport(fromDate,toDate,sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'),sessionStorage.getItem('deptId'))
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+        this.isDisabled1=false;
+      })
+    }
+    }
+     
 
   }
 
