@@ -1078,22 +1078,37 @@ getF9DataPaint(itemId){
     {
       alert ("Please Enter Valid ItemCode..."); return;
     }
-    // alert ("in filter record... "+ itemCode1)
 
-    this.itemDescreption=itemCode1
+    var itemCode = '';
+
+    if (itemCode1.includes(':')) {
+      var itemCode2 = itemCode1.split(':');
+       itemCode = itemCode2[0];
+    } else {
+       itemCode = itemCode1;
+      // alert ("in else..itemCode.length..."+itemCode.length + ","+this.ItemIdList.length);
+    }
+    
+
+    this.itemDescreption=itemCode
     if (event.keyCode == 13) { 
+      // alert ("in filter record... "+ itemCode)
+
       this.service
-      .searchByItemSegmentDiv(this.divisionId, itemCode1.toUpperCase())
+      .searchByItemSegmentDiv(this.divisionId, itemCode.toUpperCase())
       .subscribe((data) => {
         this.ItemIdList = data;
       });
     }
 
-    let select1 = this.ItemIdList.find((d) => d.segment === itemCode1.toUpperCase());
+    let select1 = this.ItemIdList.find((d) => d.segment === itemCode.toUpperCase());
     if (select1 != undefined) {
       this.getF9Data(select1.itemId);}
   }
 
+
+
+  
   filterRecordNew1(event) {
     // var itemCode1 = event.target.value;
     var itemCode1 = this.adminForm1.get('searchItemCode').value;
