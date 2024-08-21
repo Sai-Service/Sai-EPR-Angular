@@ -589,8 +589,9 @@ export class AdminComponent implements OnInit {
       // alert((sessionStorage.getItem('roleId')))
       this.isVisible11=true;
       this.isVisible12=false;
+      this.isVisibleSubInventoryTransfer=true;
       this.isVisibleWsVehicleMaster=false;
-      this.isVisibleSubInventoryTransfer=false;
+      // this.isVisibleSubInventoryTransfer=false;
       this.isVisible13=false;
       this.isVisible14=true;
       this.isVisible15=true;
