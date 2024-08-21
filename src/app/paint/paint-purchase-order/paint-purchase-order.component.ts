@@ -2559,7 +2559,12 @@ export class PaintPurchaseOrderComponent implements OnInit {
    // this.displayNewButtonUpdate = false;
    // this.displayNewButtonSave = false;
    // this.displayNewButtonReset = false;
-   const formValue: IpostPO = this.transUData(this.paintPoForm.value);
+
+  //  const formValue: IpostPO = this.transUData(this.paintPoForm.value);
+   const formValue: IpostPO = this.transUData(this.paintPoForm.getRawValue());
+
+  //  alert ( "formValue.segment1 -- "+formValue.segment1);
+
    formValue.ouId = this.ouId;
    formValue.dept = Number(this.dept);
    formValue.currencyCode = 'INR';
