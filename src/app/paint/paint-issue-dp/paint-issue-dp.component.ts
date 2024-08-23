@@ -1248,6 +1248,7 @@ export class PaintIssueDpComponent implements OnInit {
 
             let control = this.paintIssueForm.get('cycleLinesList') as FormArray;
            
+            this.cycleLinesList().clear();
             var len = this.cycleLinesList().length;
             for (let i = 0; i < data.obj.cycleLinesList.length - len; i++) {
               var trxlist: FormGroup = this.newcycleLinesList();
