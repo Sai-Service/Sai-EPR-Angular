@@ -838,7 +838,7 @@ export class PaintReportsComponent implements OnInit {
       }
     }
 
-    else if (reportName === 'Paint Panel Report') {
+    else if (reportName === 'Paint Panel Summary Report') {
       //PANEL REPORT
 
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
@@ -846,7 +846,7 @@ export class PaintReportsComponent implements OnInit {
       // this.closeResetButton = true;
       
 
-      const fileName = 'Paint Panel Report-' +  fromDate + '.xls';
+      const fileName = 'Paint Panel Summary Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.paintPanelReportSummary(fromDate, toDate, locId)
