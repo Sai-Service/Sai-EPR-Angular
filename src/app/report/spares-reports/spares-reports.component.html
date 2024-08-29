@@ -1154,11 +1154,11 @@ style="margin-left: 10%;" id="panelstockTransferRecd">
                          <input type="text" disabled class="form-control" formControlName="locCode">
                         </ng-template>
                         <ng-template #elseLocationList> 
-                         <select formControlName="fromLocName" id="fromLocName" class="form-control"
+                        1 <select formControlName="fromLocName" id="fromLocName" class="form-control"
                              (ngModelChange)='onOptionsFromLocation($event)'  style="background-color: yellow;">
                          <option value="">--Select--</option>
                          <option *ngFor="let sc of  BillShipFromList" [value]="sc.locId">
-                             {{sc.locCode}}-{{sc.locName}}
+                             {{sc.toLocation}}-{{sc.locName}}
                          </option>
                      </select> 
                      <input  disabled  hidden type="number" class="form-control" formControlName="fromLocationId">
@@ -1170,8 +1170,8 @@ style="margin-left: 10%;" id="panelstockTransferRecd">
                         <select formControlName="tolocName" id="tolocName" class="form-control"
                         (ngModelChange)='onOptionsToLocation1($event)'>
                         <option value="">--Select--</option>
-                        <option *ngFor="let sc of  BillShipFromList" [value]="sc.locId">
-                            {{sc.locCode}}-{{sc.locName}}
+                        <option *ngFor="let sc of  BillShipFromList1" [value]="sc.toLocationId">
+                            {{sc.toLocation}}
                         </option>
                     </select> 
                     <input  disabled hidden type="number" class="form-control" formControlName="tolocationId">

@@ -34,7 +34,7 @@ export class SparesReportsComponent implements OnInit {
   public BillShipToList: Array<string> = [];
   public BillShipFromList: Array<string> = [];
   periodNameList: any = [];
-
+  BillShipFromList1:any=[];
   public DepartmentList: any = [];
   
   closeResetButton = true;
@@ -178,6 +178,12 @@ export class SparesReportsComponent implements OnInit {
           this.BillShipFromList = data;
         }
       );
+
+      this.service.TolocationIdList(sessionStorage.getItem('locId')).subscribe
+      (data => {
+        this.BillShipFromList1 = data;
+        // console.log(this.locIdList);
+      });
 
 
     this.service.DepartmentListNew()
@@ -2082,7 +2088,7 @@ export class SparesReportsComponent implements OnInit {
     else if (reportName === 'Stock Transfer Received Detail Report') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
       var tolocationId= this.sparesReportForm.get('tolocationId').value;
-      alert(tolocationId)
+      // alert(tolocationId)
       var fromLocName= this.sparesReportForm.get('fromLocName').value;
       var fromLocationId= this.sparesReportForm.get('fromLocationId').value;
       if (fromLocName === null){
