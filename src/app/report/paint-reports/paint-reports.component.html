@@ -29,6 +29,19 @@
                         </li>
 
                         <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelfromtosubinventory" role="tab"
+                                (click)="reportDetails('internalConsumptionReport')">Consumption Report</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#paintPanelReport" role="tab"
+                                (click)="reportDetails('gstsparesPaintPanel')">Panel Summary Report</a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#paintPanelReport" role="tab"
+                                (click)="reportDetails('gstsparesPaintPanelDtlRpt')">Panel Detail Report</a>
+                        </li>
+                        <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelStockLedger" role="tab"
                                 (click)="reportDetails('gstStockLedger')">Stock Ledger</a>
                         </li>
@@ -58,20 +71,14 @@
                                 (click)="reportDetails('gstsparesMiscIssueReceipt')">Paint Issue Report</a>
                         </li> -->
 
-                        <li>
-                            <a class="dropdown-item" data-toggle="collapse" href="#panelfromtosubinventory" role="tab"
-                                (click)="reportDetails('internalConsumptionReport')">Consumption Report</a>
-                        </li>
+                        
 
                         <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelsparesMiscIssueReceipt" role="tab"
                                 (click)="reportDetails('gstsparesMiscIssueReceipt')">Stock Adjustment Report</a>
                         </li>
 
-                        <li>
-                            <a class="dropdown-item" data-toggle="collapse" href="#paintPanelReport" role="tab"
-                                (click)="reportDetails('gstsparesPaintPanel')">Panel Report</a>
-                        </li>
+                       
 
                         <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelstockTransfer" role="tab"

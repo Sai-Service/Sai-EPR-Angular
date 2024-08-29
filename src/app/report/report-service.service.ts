@@ -143,6 +143,16 @@ export class ReportServiceService {
     });
   }
 
+  paintPanelReportDetail(frmdt,todt,locId){
+    // http://localhost:8081/PaintReports/PanelDtlsRep?fromDate=01-JUL-2024&toDate=26-JUL-2024&locId=1634
+
+    const REQUEST_URI = this.ServerUrl +`/PaintReports/PanelDtlsRep?fromDate=${frmdt}&toDate=${todt}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
 
   spSparesMiscIssueReceiptReport(invcDt1,invcDt4,locId,ouId){
     // const REQUEST_URI = this.ServerUrl +`/SparesReports/SprMiscRep?fromDate=${invcDt1}&toDate=${invcDt4}&locId=${locId}`;
