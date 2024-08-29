@@ -1201,7 +1201,10 @@ export class PaintCreationNewComponent implements OnInit {
               return;
             }
             let control = this.paintCreationNewForm.get('cycleLinesList') as FormArray;
+            this.cycleLinesList().clear();
+
             var len = this.cycleLinesList().length;
+
             for (let i = 0; i < data.obj.cycleLinesList.length - len; i++) {
               var trxlist: FormGroup = this.newcycleLinesList();
               this.cycleLinesList().push(trxlist);

@@ -410,7 +410,27 @@ export class PaintReportsComponent implements OnInit {
     }
 
     else if (reportName === 'gstsparesPaintPanel') {
-      this.reportName = 'Paint Panel Report';
+      this.reportName = 'Paint Panel Summary Report';
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisiblestockTransferRecd=false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleEwayBill=false;
+      this.isVisiblepanelStockTaking=false;
+      this.isVisiblesparesPaintPanelReport=true;
+
+    }
+    else if (reportName === 'gstsparesPaintPanelDtlRpt') {
+      this.reportName = 'Paint Panel Detail Report';
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
       this.isVisiblespClosingStockAsOndate=false;
@@ -818,7 +838,7 @@ export class PaintReportsComponent implements OnInit {
       }
     }
 
-    else if (reportName === 'Paint Panel Report') {
+    else if (reportName === 'Paint Panel Summary Report') {
       //PANEL REPORT
 
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
@@ -826,7 +846,7 @@ export class PaintReportsComponent implements OnInit {
       // this.closeResetButton = true;
       
 
-      const fileName = 'Paint Panel Report-' +  fromDate + '.xls';
+      const fileName = 'Paint Panel Summary Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.paintPanelReportSummary(fromDate, toDate, locId)
@@ -847,6 +867,38 @@ export class PaintReportsComponent implements OnInit {
           })
       }
     }
+
+    else if (reportName === 'Paint Panel Detail Report') {
+      //PANEL REPORT
+
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+      // alert ("Work In Progress ...");
+      // this.closeResetButton = true;
+      
+
+      const fileName = 'Paint Panel Detail Report-' +  fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.paintPanelReportDetail(fromDate, toDate, locId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.paintPanelReportDetail(fromDate, toDate, sessionStorage.getItem('locId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
+
+
 
     else if (reportName === 'Paint Stock Transfer Made Detail Report') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
