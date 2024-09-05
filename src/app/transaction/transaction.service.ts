@@ -373,5 +373,9 @@ export class TransactionService {
   }
 
 
+  viewInterconsumptionNote(orderNumber): Observable<any> {
+    return this.http.get(this.ServerUrl + `/SparesReports/SprICConTrx?shipmentNumber=${orderNumber}`);
+  }
+
 
 }
