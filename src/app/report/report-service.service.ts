@@ -1225,5 +1225,14 @@ spDeadStockNoConsuptionDaywiseFn(ouId,locId,noOfday,subId){
   }); 
 }
 
+
+StockMissMatchFN(fromDate,toDate,subInventory,locId,userName){
+  const REQUEST_URI = this.ServerUrl +`/SparesReports/StockMismatch/?fromDate=${fromDate}&toDate=${toDate}&subInvCode=${subInventory}&locId=${locId}&userName=${userName}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  }); 
+}
+
 }
 

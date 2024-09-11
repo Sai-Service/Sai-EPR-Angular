@@ -3,6 +3,8 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MasterService } from 'src/app/master/master.service';
+import { TransactionService } from 'src/app/transaction/transaction.service';
+
 
 
 interface InternalConsumption {
@@ -215,7 +217,8 @@ export class InternalConsumptionComponent implements OnInit {
   dataDisplay: any;
   progress = 0;
 
-  constructor(private fb: FormBuilder, private router: Router, private route1: ActivatedRoute, private service: MasterService) {
+  constructor(private fb: FormBuilder, private router: Router, private route1: ActivatedRoute, private service: MasterService,
+    private TransactionService:TransactionService) {
     this.InternalConsumptionForm = fb.group({
       compNo: [''],
       compileName: [''],
@@ -1277,6 +1280,19 @@ export class InternalConsumptionComponent implements OnInit {
         }
       }
     );
+  }
+
+  viewDocument(){
+    var orderNumber = this.InternalConsumptionForm.get('compileName').value;
+    const fileName = 'download.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.TransactionService.viewInterconsumptionNote(orderNumber)
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      })
   }
 
 }
