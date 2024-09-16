@@ -125,7 +125,7 @@
 
                 <div *ngIf="cancelButton; then Block21; else Block22"></div>
                 <ng-template #Block21>
-                    <td> <button  type="button" class="btn btn-info" id="register" (click)="deleteRelation()">Delete</button></td>
+                    <td> <button  disabled type="button" class="btn btn-info" id="register" (click)="deleteRelation()">Delete</button></td>
                 </ng-template><ng-template #Block22></ng-template>
 
                 <td> <button type="button" class="btn btn-info" id="register" (click)="resetMast()">Reset</button></td>
