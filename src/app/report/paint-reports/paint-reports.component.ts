@@ -534,6 +534,26 @@ export class PaintReportsComponent implements OnInit {
 
     }
 
+    else if (reportName === 'gstSparesClosingStockAsOnDate') {
+      this.reportName = 'Spares Closing Stock As On Date';
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblespClosingStockAsOndate=true;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisiblestockTransferRecd=false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleEwayBill=false;
+      this.isVisiblepanelStockTaking=false;
+      this.isVisiblesparesPaintPanelReport=false;
+
+    }
     if (reportName === 'billHandedoverToActReport') {
       this.reportName = 'Accounts Bill Handover Report';
       if (this.reportName === 'Accounts Bill Handover Report') {
@@ -734,34 +754,6 @@ export class PaintReportsComponent implements OnInit {
           })
       }
     }
-   
-   
-    // else if (reportName === 'Paint Closing Stock Report') {
-    //   this.toDateValidation(tDate);if(this.rptValidation==false){return;}
-
-    //   const fileName = 'Paint Closing Stock Report-' +  toDate + '.xls';
-    //   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    //   if (Number(sessionStorage.getItem('deptId')) === 4) {
-    //     this.reportService.sprClsAsonDtReport(toDate, locId,subInventory)
-    //       .subscribe(data => {
-    //         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-    //         this.isDisabled1 = false;
-    //         this.closeResetButton = true;
-    //         this.dataDisplay = ''
-    //       })
-    //   }
-    //   else if (Number(sessionStorage.getItem('deptId')) != 4) {
-    //     this.reportService.sprClsAsonDtReport(toDate, sessionStorage.getItem('locId'),subInventory)
-    //     .subscribe(data => {
-    //       saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-    //       this.isDisabled1 = false;
-    //       this.closeResetButton = true;
-    //       this.dataDisplay = ''
-    //     })
-    //    }
-    // }
-
-
     else if (reportName === 'Paint Closing Stock Report') {
       const fileName = 'PAINT-Closing-Stock-' + sessionStorage.getItem('locName').trim() + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
@@ -839,13 +831,7 @@ export class PaintReportsComponent implements OnInit {
     }
 
     else if (reportName === 'Paint Panel Summary Report') {
-      //PANEL REPORT
-
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
-      // alert ("Work In Progress ...");
-      // this.closeResetButton = true;
-      
-
       const fileName = 'Paint Panel Summary Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -869,13 +855,7 @@ export class PaintReportsComponent implements OnInit {
     }
 
     else if (reportName === 'Paint Panel Detail Report') {
-      //PANEL REPORT
-
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
-      // alert ("Work In Progress ...");
-      // this.closeResetButton = true;
-      
-
       const fileName = 'Paint Panel Detail Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -897,15 +877,9 @@ export class PaintReportsComponent implements OnInit {
           })
       }
     }
-
-
-
     else if (reportName === 'Paint Stock Transfer Made Detail Report') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
-      // alert ("Work In Progress ...");
-      // this.closeResetButton = true;
-      // return;
-
+     
       const fileName = 'Stock Transfer Made Detail Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -930,11 +904,6 @@ export class PaintReportsComponent implements OnInit {
 
     else if (reportName === 'Paint Stock Transfer Made Summary Report') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
-
-      // alert ("Work In Progress ...");
-      // this.closeResetButton = true;
-      // return;
-
       const fileName = 'Stock Transfer Made Summary Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -959,11 +928,6 @@ export class PaintReportsComponent implements OnInit {
 
     else if (reportName === 'Paint Stock Transfer Received Detail Report') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
-
-      // alert ("Work In Progress ...");
-      // this.closeResetButton = true;
-      // return;
-
       const fileName = 'Stock Transfer Received Detail Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -991,10 +955,7 @@ export class PaintReportsComponent implements OnInit {
         alert('Please Select To Location.!');
         return;
       }
-      // alert ("Work In Progress ...");
-      // this.closeResetButton = true;
-      // return;
-
+     
       const fileName = 'Spares Stock Transfer Received Summary Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -1030,6 +991,29 @@ export class PaintReportsComponent implements OnInit {
     }
     else if (Number(sessionStorage.getItem('deptId')) != 4) {
       this.reportService.actBillHandoverReport(fromDate,toDate,sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'),sessionStorage.getItem('deptId'))
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+        this.isDisabled1=false;
+      })
+    }
+    }
+    else if (reportName==='Spares Closing Stock As On Date'){
+      const fileName = 'Spares Closing Stock As On Date-' +  '-TO-' + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      var subInventory = this.paintReportForm.get('subInventory').value;
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      this.reportService.gstSparesClosingStockAsOnDateFN(toDate,locId,subInventory)
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+        this.isDisabled1=false;
+      })
+    }
+    else if (Number(sessionStorage.getItem('deptId')) != 4) {
+      this.reportService.gstSparesClosingStockAsOnDateFN(toDate,sessionStorage.getItem('locId'),subInventory)
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.closeResetButton = true;

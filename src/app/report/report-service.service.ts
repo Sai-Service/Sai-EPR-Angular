@@ -215,6 +215,15 @@ export class ReportServiceService {
     });
   }
 
+  gstSparesClosingStockAsOnDateFN(toDate,locId,subInvcd){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprClsAsonDt?toDate=${toDate}&locId=${locId}&subInvCode=${subInvcd}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+
   sspInvAgingReport(spInvAging1,spInvAging2,spInvAging3,ouId,locId,subInv,userNam){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/InventoryAging?age1=${spInvAging1}&age2=${spInvAging2}&age3=${spInvAging3}&subInvCode=${subInv}&locId=${locId}&ouId=${ouId}&userName=${userNam}`;
     return this.http.get(REQUEST_URI, {
