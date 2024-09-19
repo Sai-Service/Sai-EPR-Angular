@@ -63,7 +63,12 @@
 
                         <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelonlyLocationCode" role="tab"
-                                (click)="reportDetails('gstClosingReport')">Closing Stock Report(Current Date)</a>
+                                (click)="reportDetails('gstClosingReport')">Closing Stock(Current Date)</a>
+                        </li>
+
+                         <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelspClosingStockAsOndate" role="tab"
+                                (click)="reportDetails('gstSparesClosingStockAsOnDate')">Closing Stock(As On Date)</a>
                         </li>
 
                         <li>
@@ -96,10 +101,10 @@
                             <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab"
                               (click)="reportDetails('billHandedoverToActReport')">Account Bill Handover Report</a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelspClosingStockAsOndate" role="tab"
                                 (click)="reportDetails('gstSparesClosingStockAsOnDate')">Paint Closing Stock As On Date</a>
-                        </li>
+                        </li> -->
 
                     </ul>
                 </li>
