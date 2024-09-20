@@ -51,10 +51,24 @@
                                 (click)="reportDetails('gstsparesInventoryAging')">Inventory Aging Report</a>
                         </li>
 
+                        <!-- <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelonlyLocationCode" role="tab"
+                                (click)="reportDetails('gstClosingReport')">Paint Closing Stock Report</a>
+                        </li> -->
+
+                        <!-- <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelspClosingStockAsOndate" role="tab"
+                                (click)="reportDetails('gstSparesClosingStockAsOnDate')">Closing Stock Report(As on Date)</a>
+                        </li> -->
 
                         <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelonlyLocationCode" role="tab"
-                                (click)="reportDetails('gstClosingReport')">Closing Stock Report</a>
+                                (click)="reportDetails('gstClosingReport')">Closing Stock(Current Date)</a>
+                        </li>
+
+                         <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelspClosingStockAsOndate" role="tab"
+                                (click)="reportDetails('gstSparesClosingStockAsOnDate')">Closing Stock(As On Date)</a>
                         </li>
 
                         <li>
@@ -87,10 +101,10 @@
                             <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab"
                               (click)="reportDetails('billHandedoverToActReport')">Account Bill Handover Report</a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelspClosingStockAsOndate" role="tab"
-                                (click)="reportDetails('gstSparesClosingStockAsOnDate')">Spares Closing Stock As On Date</a>
-                        </li>
+                                (click)="reportDetails('gstSparesClosingStockAsOnDate')">Paint Closing Stock As On Date</a>
+                        </li> -->
 
                     </ul>
                 </li>
