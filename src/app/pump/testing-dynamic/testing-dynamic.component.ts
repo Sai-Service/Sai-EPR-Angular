@@ -1449,6 +1449,8 @@ addlineCalculation(index,k,event){
       }
     }
 
+
+
     if (lineDetArr[l].payType === 'PAYTM' ) {
       if (lineDetArr[l].lineAmt == undefined || lineDetArr[l].lineAmt == null || lineDetArr[l].lineAmt == '') {
       } else {
@@ -1462,8 +1464,6 @@ addlineCalculation(index,k,event){
         driveTracSales = driveTracSales + Number(lineDetArr[l].lineAmt);
       }
     }
-
-
 
 
 if (lineDetArr[l].payType === 'CHEQUE' || lineDetArr[l].payType === 'CHEQUE' ||
@@ -1527,6 +1527,12 @@ if (payType1==='PAYTM'){
 
 if (payType1==='DRIVE TRACK'){
   this.employeeSkills(index).controls[k].patchValue({customercode:79872,custName:'DRIVE TRACK',customerid:73702});
+  this.employeeSkills(index).controls[k].get('customercode').disable();
+  this.addEmployeeSkill(index)
+}
+
+if (payType1==='MOBIKWIK'){
+  this.employeeSkills(index).controls[k].patchValue({customercode:79936,custName:'MOBIKWIK',customerid:73800});
   this.employeeSkills(index).controls[k].get('customercode').disable();
   this.addEmployeeSkill(index)
 }
