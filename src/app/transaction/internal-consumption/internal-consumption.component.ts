@@ -1285,14 +1285,18 @@ export class InternalConsumptionComponent implements OnInit {
   viewDocument(){
     var orderNumber = this.InternalConsumptionForm.get('compileName').value;
     const fileName = 'download.pdf';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.TransactionService.viewInterconsumptionNote(orderNumber)
+  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  this.TransactionService.viewInterconsumptionNote(orderNumber)
       .subscribe(data => {
-        var blob = new Blob([data], { type: 'application/pdf' });
-        var url = URL.createObjectURL(blob);
-        var printWindow = window.open(url, '', 'width=800,height=500');
-        printWindow.open
-      })
+      var blob = new Blob([data], { type: 'application/pdf' });
+      var url = URL.createObjectURL(blob);
+      var printWindow = window.open(url, '', 'width=800,height=500');
+      printWindow.open
+    })
+
+    
   }
 
+
+  
 }
