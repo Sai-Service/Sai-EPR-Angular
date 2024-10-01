@@ -1047,10 +1047,28 @@ export class SalesOrderFormComponent implements OnInit {
       .subscribe(
         data => {
           this.invItemList1 = data;
-          // this.orderedItem=data.description;
-          this.itemMap.set(orderType, data);
+
+          if (this.SalesOrderBookingForm.get('variant').value ==='00GL61' && orderType ==='SS_OTHER'){
+           
+            this.itemMap.set(orderType, data);
+            this.itemMap2.set(lnNo, this.itemMap.get(orderType));
+            (controlinv.controls[lnNo]).patchValue({ 'segment': '--Select--' });
+          }
+          else{
+            if (this.SalesOrderBookingForm.get('variant').value !='00GL61' && orderType ==='SS_OTHER'){
+              let otherItemList = this.invItemList1.filter((itemList) => ((itemList.segment.includes('OFFER-00GL61') == false)));
+              this.invItemList1=otherItemList;
+              this.itemMap.set(orderType, this.invItemList1);
           this.itemMap2.set(lnNo, this.itemMap.get(orderType));
           (controlinv.controls[lnNo]).patchValue({ 'segment': '--Select--' });
+            }
+        }
+        if (orderType !='SS_OTHER'){
+        this.itemMap.set(orderType, data);
+        this.itemMap2.set(lnNo, this.itemMap.get(orderType));
+        (controlinv.controls[lnNo]).patchValue({ 'segment': '--Select--' });
+        }
+         
         }
       );
     if (orderType.includes('VEHICLE')) {
@@ -1059,6 +1077,7 @@ export class SalesOrderFormComponent implements OnInit {
     else {
       this.displaytaxCategoryName[lnNo] = false;
     }
+   
     // debugger;
     if (orderType.includes('VEHICLE') === false) {
       let lineLevelOrderStatusListVehicle = this.lineLevelOrderStatusList.filter((customer) => ((customer.codeDesc.includes('ALLOTED') == false) && (customer.codeDesc.includes('INVOICED') == false)));
@@ -4171,7 +4190,7 @@ if (Number(sessionStorage.getItem('deptId'))!=4){
     // debugger;
     if (trxArrVal[i].flowStatusCode === 'READY FOR INVOICE' && trxArrVal[i].invType === 'SS_VEHICLE') {
       for (let k = 0; k < trxArrVal.length; k++) {
-        if (trxArrVal[k].segment.includes('SUBSIDY')) {
+        if (trxArrVal[k].segment.includes('SUBSIDY') || trxArrVal[k].segment.includes('OFFER-00GL61')) {
           trxArr.controls[k].patchValue({ flowStatusCode: 'READY FOR INVOICE' });
         }
       }

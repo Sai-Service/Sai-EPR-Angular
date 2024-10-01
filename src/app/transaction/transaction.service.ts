@@ -373,8 +373,14 @@ export class TransactionService {
   }
 
 
-  viewInterconsumptionNote(orderNumber): Observable<any> {
-    return this.http.get(this.ServerUrl + `/SparesReports/SprICConsPrint?shipmentNumber=${orderNumber}`);
+ 
+
+  viewInterconsumptionNote(orderNumber) {
+    const REQUEST_URI = this.ServerUrl + `/SparesReports/SprICConsPrint?shipmentNumber=${orderNumber}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
   }
 
 
