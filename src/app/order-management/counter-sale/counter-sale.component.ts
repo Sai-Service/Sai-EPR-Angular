@@ -1888,16 +1888,11 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   }
 
   onKey(index, fldName, event) {
-    // alert (event.keyCode)
-    // alert("index, fldName, event >> "+index+ ","+ fldName +","+ event.keyCode);
     if (event.keyCode != 13) {
-      // alert(index +'Onkey Alert' +'---'+fldName)
-      // var arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
       var arrayControlNew = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
       var arrayControl = arrayControlNew.getRawValue();
       var pricingQty = arrayControl[index].pricingQty;
       var Avalqty = arrayControl[index].Avalqty;
-      // alert(pricingQty)
       if (pricingQty === null || pricingQty === undefined || pricingQty === '') {
         return;
       }
@@ -1921,11 +1916,9 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       console.log(arrayControl);
       var itemId = arrayControl[index].itemId;
       var taxcatName = arrayControl[index].taxCategoryName;
-      // alert(taxcatName)
       console.log(taxcatName);
       let select;
       var taxCategoryId = arrayControl[index].taxCategoryId;
-      // alert(taxCategoryId);
       if (taxCategoryId === null) {
         select = this.taxCategoryList[index].find(d => d.taxCategoryName === taxcatName.taxCategoryName);
         taxCategoryId = select.taxCategoryId;
@@ -1963,7 +1956,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
           (data: any[]) => {
             this.taxCalforItem = data;
             console.log(this.taxCalforItem);
-
+// debugger;
             for (let i = 0; i < this.taxCalforItem.length; i++) {
 
               if (this.taxCalforItem[i].totTaxPer != 0) {
@@ -1977,7 +1970,6 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               totAmt: Math.round(((baseAmt + sum - disAmt1) + Number.EPSILON) * 100) / 100,
               disAmt: Math.round((((disPer / 100) * baseAmt) + Number.EPSILON) * 100) / 100,
             });
-            // taxAmt: Math.round((sum + Number.EPSILON) * 100) / 100,
             let controlinv1 = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
             let distAmtArray = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
             console.log(controlinv1);
@@ -1997,8 +1989,6 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
             else {
               patch.controls[index].patchValue({ disAmt: 0 });
             }
-            // let taxMapData = this.CounterSaleOrderBookingForm.get('taxAmounts').value;
-            // this.taxMap.set(index, taxMapData);
             this.updateTotAmtPerline(index);
             let taxMapData = this.CounterSaleOrderBookingForm.get('taxAmounts').value;
             var ln: string = String(index);
@@ -2011,9 +2001,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       var item = arrayControl[index].segment;
       var pricingQty = arrayControl[index].pricingQty;
       var isNewLine: boolean = false;
-      // alert(orderLines.length);
       for (let i = 0; i < arrayControl.length; i++) {
-        // alert(arrayControl[i].itemId)
         if (arrayControl[i].itemId === null) {
           isNewLine = true;
         }
@@ -2726,8 +2714,6 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
           this.reservePos(i);
         }
         else {
-          // debugger;
-          // this.deleteReserveLinewise(i,itemid);COMMENT BY VINITA
           this.reservePos(i);
         }
         this.displayRemoveRow.push(true);
@@ -2735,14 +2721,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         this.displayLineflowStatusCode.push(true);
       }
     }
-
-    //  if (i != -1 && trxLnArr1[i-1].itemId === null || trxLnArr1[i-1].itemId===''|| trxLnArr1[i-1].itemId=== undefined){
-    //     alert('First Select Item And then add New Line');
-    //     return;
-    //   }
     var disPer = this.CounterSaleOrderBookingForm.get('disPer').value;
-
-
     this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
     var len = this.orderlineDetailsArray().length;
     var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
@@ -2908,7 +2887,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       var ln = i
       if (ln < formArr.length - 1) {
         formArr.controls[i].disable();
-        formArr.controls[i].get('pricingQty').enable();
+        formArr.controls[i].get('pricingQty').disable();
         formArr.controls[i].get('flowStatusCode').enable();
       }
 
