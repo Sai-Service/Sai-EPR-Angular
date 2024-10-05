@@ -46,6 +46,12 @@
                                 (click)="reportDetails('gstStockLedger')">Stock Ledger</a>
                         </li>
 
+                       
+                        <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab"
+                              (click)="reportDetails('billHandedoverToActReport')">Account Bill Handover Report</a>
+                        </li>
+
 
                     </ul>
                 </li>
@@ -55,9 +61,14 @@
                     <ul class="dropdown-menu">
                         
                         <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelsparesMiscIssueReceipt" role="tab"
+                                (click)="reportDetails('gstsparesMiscIssueReceipt')">Stock Adjustment Report</a>
+                        </li>
+                        <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelsparesInventoryAging" role="tab"
                                 (click)="reportDetails('gstsparesInventoryAging')">Inventory Aging Report</a>
                         </li>
+
                         <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelonlyLocationCode" role="tab"
                                 (click)="reportDetails('gstClosingReport')">Closing Stock(Current Date)</a>
@@ -68,10 +79,7 @@
                                 (click)="reportDetails('gstSparesClosingStockAsOnDate')">Closing Stock(As On Date)</a>
                         </li>
 
-                        <li>
-                            <a class="dropdown-item" data-toggle="collapse" href="#panelsparesMiscIssueReceipt" role="tab"
-                                (click)="reportDetails('gstsparesMiscIssueReceipt')">Stock Adjustment Report</a>
-                        </li>
+                        
 
                         <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelstockTransfer" role="tab"
@@ -92,10 +100,7 @@
                                 (click)="reportDetails('gststockTransferReceivedSummary')">Stock Transfer Received Summary Report</a>
                         </li>
                       
-                        <li>
-                            <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab"
-                              (click)="reportDetails('billHandedoverToActReport')">Account Bill Handover Report</a>
-                        </li>
+                      
 
 
 
