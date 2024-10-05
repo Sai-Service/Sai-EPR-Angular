@@ -554,6 +554,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblesparesPaintPanelReport=false;
 
     }
+
     if (reportName === 'billHandedoverToActReport') {
       this.reportName = 'Accounts Bill Handover Report';
       if (this.reportName === 'Accounts Bill Handover Report') {
@@ -580,6 +581,74 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblesparesPaintPanelReport=false;
 
     }
+
+    if (reportName === 'paintStockTakingBlankFormat') {
+
+      this.reportName = 'Stock Taking - Blank Format';
+      this.isVisibleonlyLocationCode = true;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisiblestockTransferRecd=false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleEwayBill=false;
+      this.isVisiblepanelStockTaking=false;
+      this.isVisiblesparesPaintPanelReport=false;
+
+    }
+
+    if (reportName === 'paintStockTakingDetailFormat') {
+
+      this.reportName = 'Stock Taking - Detail Format';
+      this.isVisibleonlyLocationCode = true;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisiblestockTransferRecd=false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleEwayBill=false;
+      this.isVisiblepanelStockTaking=false;
+      this.isVisiblesparesPaintPanelReport=false;
+
+    }
+
+    if (reportName === 'paintStockTakinUploadFormat') {
+
+      this.reportName = 'Stock Taking - Phy Stock Upload Format';
+      this.isVisibleonlyLocationCode = true;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisiblestockTransferRecd=false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleEwayBill=false;
+      this.isVisiblepanelStockTaking=false;
+      this.isVisiblesparesPaintPanelReport=false;
+
+    }
+
+
 
       
 
@@ -1052,6 +1121,75 @@ export class PaintReportsComponent implements OnInit {
         this.isDisabled1=false;
       })
     }
+    }
+
+    else if (reportName === 'Stock Taking - Blank Format') {
+      const fileName = 'PAINT-Stock Taking-Blank Format-' + sessionStorage.getItem('locName').trim() + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.paintStockTakingReport(locId,subInventory,'blank')
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.paintStockTakingReport(sessionStorage.getItem('locId'),subInventory,'blank')
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
+
+    else if (reportName === 'Stock Taking - Detail Format') {
+      const fileName = 'PAINT-Stock Taking-Detail Format-' + sessionStorage.getItem('locName').trim() + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.paintStockTakingReport(locId,subInventory,'detail')
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.paintStockTakingReport(sessionStorage.getItem('locId'),subInventory,'detail')
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
+
+    else if (reportName === 'Stock Taking - Phy Stock Upload Format') {
+      const fileName = 'PAINT-Stock Taking-Upload Format-' + sessionStorage.getItem('locName').trim() + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.paintStockTakingReport(locId,subInventory,'upload')
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.paintStockTakingReport(sessionStorage.getItem('locId'),subInventory,'upload')
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
     }
      
 

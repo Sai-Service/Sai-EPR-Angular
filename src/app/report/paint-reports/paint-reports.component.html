@@ -17,7 +17,7 @@
             <ul class="navbar-nav">
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" (click)="department('Spares')">Paint Reports</a>
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" (click)="department('Spares')">Transaction</a>
                     <ul class="dropdown-menu">
                         <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab"
@@ -46,21 +46,18 @@
                                 (click)="reportDetails('gstStockLedger')">Stock Ledger</a>
                         </li>
 
+
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" (click)="department('Spares')">Stock Reports</a>
+                    <ul class="dropdown-menu">
+                        
                         <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelsparesInventoryAging" role="tab"
                                 (click)="reportDetails('gstsparesInventoryAging')">Inventory Aging Report</a>
                         </li>
-
-                        <!-- <li>
-                            <a class="dropdown-item" data-toggle="collapse" href="#panelonlyLocationCode" role="tab"
-                                (click)="reportDetails('gstClosingReport')">Paint Closing Stock Report</a>
-                        </li> -->
-
-                        <!-- <li>
-                            <a class="dropdown-item" data-toggle="collapse" href="#panelspClosingStockAsOndate" role="tab"
-                                (click)="reportDetails('gstSparesClosingStockAsOnDate')">Closing Stock Report(As on Date)</a>
-                        </li> -->
-
                         <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelonlyLocationCode" role="tab"
                                 (click)="reportDetails('gstClosingReport')">Closing Stock(Current Date)</a>
@@ -75,8 +72,6 @@
                             <a class="dropdown-item" data-toggle="collapse" href="#panelsparesMiscIssueReceipt" role="tab"
                                 (click)="reportDetails('gstsparesMiscIssueReceipt')">Stock Adjustment Report</a>
                         </li>
-
-                       
 
                         <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelstockTransfer" role="tab"
@@ -101,13 +96,38 @@
                             <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab"
                               (click)="reportDetails('billHandedoverToActReport')">Account Bill Handover Report</a>
                         </li>
-                        <!-- <li>
-                            <a class="dropdown-item" data-toggle="collapse" href="#panelspClosingStockAsOndate" role="tab"
-                                (click)="reportDetails('gstSparesClosingStockAsOnDate')">Paint Closing Stock As On Date</a>
-                        </li> -->
+
+
 
                     </ul>
                 </li>
+
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" (click)="department('Spares')">Stock Taking</a>
+                    <ul class="dropdown-menu">
+                        
+                        <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelonlyLocationCode" role="tab"
+                                (click)="reportDetails('paintStockTakingBlankFormat')">Stock Taking - Blank Format</a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelonlyLocationCode" role="tab"
+                                (click)="reportDetails('paintStockTakingDetailFormat')">Stock Taking - Detail Format</a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelonlyLocationCode" role="tab"
+                                (click)="reportDetails('paintStockTakinUploadFormat')">Stock Taking - Phy Stock Upload Format</a>
+                        </li>
+
+                    </ul>
+                </li>
+              
+
+
+
             </ul>
         </div>
     </nav>

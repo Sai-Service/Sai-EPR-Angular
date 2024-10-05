@@ -661,8 +661,35 @@ export class ReportServiceService {
       headers: this.headers,
     });
   }
-  // http://localhost:8081/AccountsReports/GstPurchaseRep?fromDate=01-FEB-2022&toDate=02-FEB-2022&ouId=21&locId=&deptId=5
  
+
+  paintStockTakingReport(locId,subInvCode,rep1){
+    if(rep1=='blank') {
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/StkBlankFormat?compileName=&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+  if(rep1=='detail') {
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/StkQtyDtlsFormat?compileName=&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+  if(rep1=='upload') {
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/PhyStkUploadFormat?compileName=&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+  
+  }
 
   spclosstrockReport(locId,subInvCode){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/SprClosingStk?locId=${locId}&subInvCode=${subInvCode}`;
