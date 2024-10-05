@@ -1026,9 +1026,7 @@
                                                     </button>
                                                     </td>
                                                     <td>
-                                                        <!-- <input disabled type="text" formControlName="invType" value="invType"
-                                            [(ngModel)]='invType'    class="form-control" style="height: 20px;width: 160px;"> -->
-                                                        <!-- id="invType{{i}}" -->
+                                                      
                                                         <select formControlName="invType"
                                                             (ngModelChange)='onOptionsSelectedCategory($event, i)'
                                                             class="form-control"
@@ -1082,7 +1080,7 @@
                                                     </td>
 
                                                     <td>
-                                                        <!--   (keydown.enter)="enterKeyLock($event)" oninput="this.value = Math.abs(this.value)"  (change)="onKey(i,'prc')" -->
+                                                       
                                                         <input type="number" formControlName="pricingQty"
                                                             name="pricingQty{{i}}" class="form-control"
                                                             (keydown.tab)="onKey(i,'prc',$event)" 
@@ -1102,18 +1100,6 @@
                                                             value="orderedItem" [ngValue]="orderedItem"
                                                             class="form-control" style="height: 20px;width:120px;">
                                                     </td>
-
-
-                                                    <!-- <td> -->
-                                                    <!-- <input hidden type="text" formControlName="uom" class="form-control" [(ngModel)]="uom"
-                                            style="height: 20px;width: 70px;"  > -->
-                                                    <!-- </td> -->
-                                                    <!-- <td>
-                                            <input  type="number" formControlName="pricingQty" class="form-control"
-                                                (change)="onKey(i)"   style="height: 20px;width: 70px;" min="0" oninput="this.value = Math.abs(this.value)">
-
-                                    </td> -->
-                                                    <!-- (keydown.tab)="qtyvalidation(i,uom,pricingQty)" (keypress)="validateNumber($event)"/// oninput="this.value = Math.abs(this.value)"-->
                                                     <td>
                                                         <input disabled type="number" formControlName="unitSellingPrice"
                                                             class="form-control" min="0" step="0.01"
@@ -1213,6 +1199,7 @@
                                                             style="height: 20px;width: 50px;">
                                                     </td>
                                                     <td>
+                                                        1
                                                         <input disabled type="number" formControlName="pricingQty"
                                                             class="form-control" (change)="onKey(i)"
                                                             style="height: 20px;width: 50px;">
