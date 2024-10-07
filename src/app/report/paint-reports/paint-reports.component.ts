@@ -44,6 +44,8 @@ export class PaintReportsComponent implements OnInit {
   deptId: number;
   userName: string;
   subInventory: string;
+  issCatg:string='PN002';
+
   subInvCode: any;
   segment: string;
   fromlocCode:string;
@@ -101,6 +103,8 @@ export class PaintReportsComponent implements OnInit {
       deptId: [''],
       userName: [''],
       subInventory: [''],
+      issCatg: [''],
+
       segment: [''],
       fromlocCode:[],
       fromLocId:[],
@@ -879,11 +883,13 @@ export class PaintReportsComponent implements OnInit {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
       // alert ("Dept id :"+sessionStorage.getItem('deptId'))
+      var issCategory =this.paintReportForm.get('issCatg').value;
+
 
       const fileName = 'Consumption Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if ((Number(sessionStorage.getItem('deptId'))===4)){
-        this.reportService.PaintInternalConsuptionReport(fromDate,toDate, locId, subInventory,sessionStorage.getItem('ouId'))
+        this.reportService.PaintInternalConsuptionReport(fromDate,toDate, locId, subInventory,sessionStorage.getItem('ouId'),issCategory)
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.isDisabled1 = false;
@@ -892,7 +898,7 @@ export class PaintReportsComponent implements OnInit {
         })
       }
       else if ((Number(sessionStorage.getItem('deptId')))!=4){
-        this.reportService.PaintInternalConsuptionReport(fromDate,toDate, locId, subInventory,sessionStorage.getItem('ouId'))
+        this.reportService.PaintInternalConsuptionReport(fromDate,toDate, locId, subInventory,sessionStorage.getItem('ouId'),issCategory)
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.isDisabled1 = false;

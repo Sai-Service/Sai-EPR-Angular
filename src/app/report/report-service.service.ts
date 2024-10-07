@@ -967,20 +967,21 @@ export class ReportServiceService {
     });
   }
 
-  PaintInternalConsuptionReport(fromDate,toDate,locId,subInvCode,ouId){
-    // http://localhost:8081/SparesReports/ICReport?fromDate=01-JUL-2024&toDate=26-JUL-2024&ouId=14&locId=&subInvCode=PN
-    const REQUEST_URI = this.ServerUrl +`/SparesReports/ICReport?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&subInvCode=${subInvCode}`;
-    // const REQUEST_URI = this.ServerUrl +`/SparesReports/ICReport?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}&subInvCode=${subInvCode}`;
-    return this.http.get(REQUEST_URI, {
+  PaintInternalConsuptionReport(fromDate,toDate,locId,subInvCode,ouId,issCatg){
+     const REQUEST_URI = this.ServerUrl +`/SparesReports/ICReport?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&subInvCode=${subInvCode}&issueCatg=${issCatg}`;
+     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
       headers: this.headers,
     });
   }
 
+       // http://localhost:8081/SparesReports/ICReport?fromDate=01-JUL-2024&toDate=26-JUL-2024&ouId=14&locId=&subInvCode=PN
+       // http://localhost:8081/SparesReports/ICReport?fromDate=01-Oct-2024&toDate=07-Oct-2024&ouId=16&locId=1634&subInvCode=PN&issueCatg=PN001
+      // const REQUEST_URI = this.ServerUrl +`/SparesReports/ICReport?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&subInvCode=${subInvCode}`;
+      // const REQUEST_URI = this.ServerUrl +`/SparesReports/ICReport?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}&subInvCode=${subInvCode}`;
+ 
   
-
-
   customerLedger(fromDate,toDate,custAccNo,ouId,deptId){
     const REQUEST_URI = this.ServerUrl +`/AccountsReports/CustomerLedger?fromDate=${fromDate}&toDate=${toDate}&custAcctNo=${custAccNo}&ouId=${ouId}&deptId=${deptId}`;
     return this.http.get(REQUEST_URI, {

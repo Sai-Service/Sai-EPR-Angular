@@ -620,6 +620,18 @@ style="margin-left: 10%;" id="panelsparesInventoryAging">
                 <td style="width: 15%" class="LabelFontStyle">&nbsp;SubInventory&nbsp;:&nbsp; </td>
                 <td><input  disabled  type="text" class="form-control" formControlName="subInventory"></td>
             </tr>
+            <tr>
+
+                 <td style="width: 15%" class="LabelFontStyle">&nbsp;Issue Category&nbsp;:&nbsp; </td>
+                <!-- <td><input  disabled  type="text" class="form-control" formControlName="issCatg"></td> -->
+
+                <td> 
+                    <select formControlName="issCatg" [ngModel]="issCatg" class="form-control" >
+                        <option value="PN002">PN002</option>
+                        <option value="PN001">PN001</option>
+                    </select>
+                </td>
+              </tr>
         </table>
 
                         <table class="center">
