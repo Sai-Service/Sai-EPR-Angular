@@ -71,6 +71,7 @@ export class PaintReportsComponent implements OnInit {
   isVisiblelocationLOV: boolean = false;
   isVisiblespPurRegDownLoad: boolean = false;
   isVisibleonlyLocationCode: boolean = false;
+  isVisibleonlyOuCode: boolean = false;
   isVisiblegstsaiDebtors: boolean = false;
   isVisibleStockLedger: boolean = false;
   isVisiblestockTransfer: boolean = false;
@@ -352,6 +353,28 @@ export class PaintReportsComponent implements OnInit {
     else if (reportName === 'gstClosingReport') {
       this.reportName = 'Paint Closing Stock Report';
       this.isVisibleonlyLocationCode = true;
+      this.isVisiblegstsaiDebtors = false;
+       this.isVisiblespClosingStockAsOndate=false;
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisiblestockTransferRecd=false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleEwayBill=false;
+      this.isVisiblepanelStockTaking=false;
+      this.isVisiblesparesPaintPanelReport=false;
+
+    }
+
+    else if (reportName === 'gstClosingStocksummary') {
+      this.reportName = 'Paint Closing Stock Summary';
+      this.isVisibleonlyOuCode = true;
+      this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
        this.isVisiblespClosingStockAsOndate=false;
       this.isVisibleGSTPurchaseRegister = false;
@@ -674,6 +697,7 @@ export class PaintReportsComponent implements OnInit {
 
   reportParameter(reportName) {
 
+    alert ("reportName:"+reportName)
     
     this.isDisabled1 = true;
     this.closeResetButton = false;
@@ -1127,6 +1151,32 @@ export class PaintReportsComponent implements OnInit {
         this.isDisabled1=false;
       })
     }
+    }
+    // Stock-Summary-OuWise
+    else if (reportName === 'Paint Closing Stock Summary') {
+      // alert ('reportName---'+reportName)
+
+      const fileName = 'PAINT-Closing-StockSummary-' + sessionStorage.getItem('ouName').trim() + '.xls';
+      // alert (fileName)
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.paintclosingstockSummary(sessionStorage.getItem('ouId'),subInventory)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.paintclosingstockSummary(sessionStorage.getItem('ouId'),subInventory)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
     }
 
     else if (reportName === 'Stock Taking - Blank Format') {

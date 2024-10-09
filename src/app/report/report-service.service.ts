@@ -699,6 +699,18 @@ export class ReportServiceService {
     });
   }
 
+  paintclosingstockSummary(ouId,subInvCode){
+    // alert ("in report api")
+    // http://localhost:8081/SparesReports/SprClosingSummary?ouId=16&locId=&subInvCode=PN
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprClosingSummary?ouId=${ouId}&locId=&subInvCode=${subInvCode}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+
+
   spstktrfRecivedReport(fromDate,toDate,shipFromLocId,shipToLocId){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/SprStkTrfRecdDtls?fromDate=${fromDate}&toDate=${toDate}&shipToLoc=${shipFromLocId}&shipFromLoc=${shipToLocId}`;
     return this.http.get(REQUEST_URI, {
