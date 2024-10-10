@@ -66,6 +66,8 @@ interface IPaintIssue {
   attribute10:number;
   attribute9:number;
   attribute8 :string;
+  attribute6:string;  // painter name
+  attribute7:string; // Labour Amt
 
   panelCode:string;
   panelQty:number;
@@ -98,6 +100,8 @@ export class PaintIssueDpComponent implements OnInit {
   attribute3:string;  // Panel Type Lov : Old Panel;New Panel
   attribute4:string;  // Vehicle Registration No
   attribute8 :string;
+  attribute6:string;   // painter name
+  attribute7:string;   // Labour Amt
 
   panelCode:string;
   panelQty:number=0;
@@ -298,6 +302,10 @@ export class PaintIssueDpComponent implements OnInit {
 
       panelFlag:[],
 
+
+      attribute6:[], // painter name
+      attribute7:[], // Labour Amt
+      pntlaborAmt:[],
       attribute8 :[],
       attribute3:[],
       attribute4:[],
@@ -1369,6 +1377,13 @@ export class PaintIssueDpComponent implements OnInit {
     if (formValue.attribute8 === undefined || formValue.attribute8 === null || formValue.attribute8.trim()=='') {
       this.headerValidation1 = false;
       msg1 = "SERVICE ADVISOR NAME: Should not be null....";
+      alert(msg1);
+      return;
+    }
+
+    if (formValue.attribute6 === undefined || formValue.attribute6 === null || formValue.attribute6.trim()=='') {
+      this.headerValidation1 = false;
+      msg1 = "PAINTER NAME: Should not be null....";
       alert(msg1);
       return;
     }

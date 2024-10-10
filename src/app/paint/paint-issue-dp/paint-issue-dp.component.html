@@ -209,7 +209,7 @@
       <td><input  type="text" class="form-control" formControlName="attribute4"[(ngModel)]="attribute4" style="background-color: yellow;text-transform: uppercase;"></td>
 
 
-      <td style="width: 15%" class="LabelFontStyle">S.Advisor:</td>
+      <td style="width: 15%" class="LabelFontStyle">S.Advisor&nbsp;Name:</td>
       <td><input  type="text" class="form-control" formControlName="attribute8" [(ngModel)]="attribute8" style="background-color: yellow;text-transform: uppercase;"></td>
 
 
@@ -250,16 +250,21 @@
       </tr>
       <tr>
         <td style="width: 15%" class="LabelFontStyle">Description:</td>
-        <td colspan="3"><input style="width:100%" type="text" class="form-control" formControlName="description"[(ngModel)]="description"></td>
+        <td colspan="2"><input style="width:100%" type="text" class="form-control" formControlName="description"[(ngModel)]="description"></td>
 
-        <td></td>
 
-        <td >
-         <button type="button"  class="btn btn-primary"  [disabled]='panelButtonDisabled' 
-         data-toggle="modal" data-target="#panelModal"          (click)="LoadPanelListNew()"
-         style="width:fit-content;color: black;">
-         &nbsp;PANEL DETAILS</button>
-        </td>
+        <td>
+          <button type="button"  class="btn btn-primary"  [disabled]='panelButtonDisabled' 
+          data-toggle="modal" data-target="#panelModal"          (click)="LoadPanelListNew()"
+          style="width:fit-content;color: black;">
+          &nbsp;PANEL DETAILS</button>
+         </td>
+       
+        <td style="width: 15%" class="LabelFontStyle">Painter&nbsp;Name:</td>
+        <td><input  type="text" class="form-control" formControlName="attribute6" [(ngModel)]="attribute6" style="background-color: yellow;text-transform: uppercase;"></td>
+  
+
+        
       </tr>
     </table>
     </fieldset>

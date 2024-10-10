@@ -661,8 +661,35 @@ export class ReportServiceService {
       headers: this.headers,
     });
   }
-  // http://localhost:8081/AccountsReports/GstPurchaseRep?fromDate=01-FEB-2022&toDate=02-FEB-2022&ouId=21&locId=&deptId=5
  
+
+  paintStockTakingReport(locId,subInvCode,rep1){
+    if(rep1=='blank') {
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/StkBlankFormat?compileName=&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+  if(rep1=='detail') {
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/StkQtyDtlsFormat?compileName=&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+  if(rep1=='upload') {
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/PhyStkUploadFormat?compileName=&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+  
+  }
 
   spclosstrockReport(locId,subInvCode){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/SprClosingStk?locId=${locId}&subInvCode=${subInvCode}`;
@@ -671,6 +698,18 @@ export class ReportServiceService {
       headers: this.headers,
     });
   }
+
+  paintclosingstockSummary(ouId,subInvCode){
+    // alert ("in report api")
+    // http://localhost:8081/SparesReports/SprClosingSummary?ouId=16&locId=&subInvCode=PN
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprClosingSummary?ouId=${ouId}&locId=&subInvCode=${subInvCode}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+
 
   spstktrfRecivedReport(fromDate,toDate,shipFromLocId,shipToLocId){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/SprStkTrfRecdDtls?fromDate=${fromDate}&toDate=${toDate}&shipToLoc=${shipFromLocId}&shipFromLoc=${shipToLocId}`;
@@ -940,20 +979,21 @@ export class ReportServiceService {
     });
   }
 
-  PaintInternalConsuptionReport(fromDate,toDate,locId,subInvCode,ouId){
-    // http://localhost:8081/SparesReports/ICReport?fromDate=01-JUL-2024&toDate=26-JUL-2024&ouId=14&locId=&subInvCode=PN
-    const REQUEST_URI = this.ServerUrl +`/SparesReports/ICReport?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&subInvCode=${subInvCode}`;
-    // const REQUEST_URI = this.ServerUrl +`/SparesReports/ICReport?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}&subInvCode=${subInvCode}`;
-    return this.http.get(REQUEST_URI, {
+  PaintInternalConsuptionReport(fromDate,toDate,locId,subInvCode,ouId,issCatg){
+     const REQUEST_URI = this.ServerUrl +`/SparesReports/ICReport?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&subInvCode=${subInvCode}&issueCatg=${issCatg}`;
+     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
       headers: this.headers,
     });
   }
 
+       // http://localhost:8081/SparesReports/ICReport?fromDate=01-JUL-2024&toDate=26-JUL-2024&ouId=14&locId=&subInvCode=PN
+       // http://localhost:8081/SparesReports/ICReport?fromDate=01-Oct-2024&toDate=07-Oct-2024&ouId=16&locId=1634&subInvCode=PN&issueCatg=PN001
+      // const REQUEST_URI = this.ServerUrl +`/SparesReports/ICReport?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&subInvCode=${subInvCode}`;
+      // const REQUEST_URI = this.ServerUrl +`/SparesReports/ICReport?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}&subInvCode=${subInvCode}`;
+ 
   
-
-
   customerLedger(fromDate,toDate,custAccNo,ouId,deptId){
     const REQUEST_URI = this.ServerUrl +`/AccountsReports/CustomerLedger?fromDate=${fromDate}&toDate=${toDate}&custAcctNo=${custAccNo}&ouId=${ouId}&deptId=${deptId}`;
     return this.http.get(REQUEST_URI, {
