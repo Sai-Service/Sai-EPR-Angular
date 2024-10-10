@@ -1055,7 +1055,7 @@ export class SalesOrderFormComponent implements OnInit {
           }
           else{
             if (this.SalesOrderBookingForm.get('variant').value !='00GL61' && orderType ==='SS_OTHER'){
-              let otherItemList = this.invItemList1.filter((itemList) => ((itemList.segment.includes('OFFER-00GL61') == false|| itemList.segment.includes('OFFERGL61BX') == false)));
+              let otherItemList = this.invItemList1.filter((itemList) => ((itemList.segment.includes('OFFER-00GL61') == false && itemList.segment.includes('OFFERGL61BX') == false)));
               this.invItemList1=otherItemList;
               this.itemMap.set(orderType, this.invItemList1);
           this.itemMap2.set(lnNo, this.itemMap.get(orderType));

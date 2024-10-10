@@ -1038,11 +1038,32 @@
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        <input type="text"
-                                                            style="height: 20px;width: 100px;text-transform: uppercase;"
-                                                            class="form-control" formControlName="itemSeg"
-                                                            [(ngModel)]='itemSeg' name="itemSeg{{i}}"
-                                                            (keydown.tab)="searchByItemSegmentDiv(itemSeg,i)" />
+                                                        <table>
+                                                            <tr>
+                                                                <td>
+                                                                    <input type="text"
+                                                                    style="height: 20px;width: 100px;text-transform: uppercase;"
+                                                                    class="form-control" formControlName="itemSeg"
+                                                                    [(ngModel)]='itemSeg' name="itemSeg{{i}}" 
+                                                                    (keydown.tab)="searchByItemSegmentDiv(itemSeg,i)" />
+                                                                </td>
+                                                                <div *ngIf="displayBackOrderBtn[i]; then thenBackOrderBtn; else elseBackOrderBtn"> </div>
+                                                                <ng-template #thenBackOrderBtn>
+                                                                <td>
+                                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#backOrderModel" 
+                                                                    (click)="backOrderDetails(i)"
+                                                                    style="font-size: 10px;width: 40px;">
+                                                                        BO
+                                                                      </button>
+                                                                </td>
+                                                                </ng-template>
+                                                                <ng-template #elseBackOrderBtn></ng-template>
+                                                            </tr>
+                                                        </table>
+                                                       
+                                                           
+                                                            
+                                
                                                     </td>
                                                     <td>
                                                         <input type="text" formControlName="segment"
@@ -1055,7 +1076,7 @@
                                                                 {{item.segment}}
                                                             </option>
                                                         </datalist>
-                                                        <input hidden type="number" formControlName="itemId">
+                                                        <input  type="number" hidden formControlName="itemId">
                                                     </td>
                                                     <input hidden type="number" formControlName="onHandQty">
                                                     <input hidden formControlName="id">
@@ -1084,7 +1105,7 @@
                                                         <input type="number" formControlName="pricingQty"
                                                             name="pricingQty{{i}}" class="form-control"
                                                             (keydown.tab)="onKey(i,'prc',$event)" 
-                                                            style="height: 20px;width:50px;" min="0">
+                                                            style="height: 20px;width:50px;" min="0" >
                                                             
                                                         <input hidden type="text" formControlName="uom"
                                                             class="form-control" style="height: 20px;width: 70px;"
@@ -2149,18 +2170,61 @@
         </table>
     </fieldset>
 
-    <!-- ******************** Customer Creation Modal Start *************************************-->
-    <!-- Modal -->
-    <!-- <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
-        <p style="color: white">Please Wait. </p>
-        </ngx-spinner> -->
+  
+
+
+
+
+<div class="modal fade" id="backOrderModel">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+            Back &nbsp; Order 
+          <button type="button" class="close" data-dismiss="modal">×</button>
+        </div>
+        
+        <div class="modal-body">
+            <table class="GridFont" id="excel-table" cellspacing="0"
+            cellpadding="4">
+            <tbody>
+                <tr class="GridHeader">
+                    <th scope="col">Customer No</th>
+                    <th scope="col">Item</th>
+                    <th scope="col">Order Number</th>
+                    <th scope="col">Qty</th>
+                    <th scope="col">Status</th>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" disabled style="width: 120px;height: 25px;" class="form-control" formControlName="customerNo">
+                    </td>
+                    <td>
+                        <input type="text" disabled style="width: 120px;height: 25px;" class="form-control" formControlName="item">
+                        <input type="number" hidden disabled style="width: 120px;height: 25px;" class="form-control" formControlName="itemId">
+                    </td>
+                    <td>
+                        <input type="text" disabled style="width: 120px;height: 25px;" class="form-control" formControlName="orderNumber1">
+                    </td>
+                    <td>
+                        <input type="number"  style="width: 120px;height: 25px;" class="form-control" formControlName="qty1">
+                    </td>
+                    <td>
+                        <input type="text" disabled style="width: 120px;height: 25px;" class="form-control" formControlName="status1">
+                    </td>
+                </tr>
+        </table>    
+        </div>
+        
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary"  [style.display]="isVisibleBackOrderSaveBtn ? 'block' : 'none'"  (click)="saveBackOrderItem()">Save</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+</div>
 
 </form>
-
-
-
-
-
 
 
 
