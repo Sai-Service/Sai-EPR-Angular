@@ -258,6 +258,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleEwayBill=false;
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
+      this.isVisibleonlyOuCode = false;
+
 
     }
     else if (reportName === 'gstpurRegSumm') {
@@ -281,6 +283,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleEwayBill=false;
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
+      this.isVisibleonlyOuCode = false;
 
 
     }
@@ -302,6 +305,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleEwayBill=false;
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
+      this.isVisibleonlyOuCode = false;
 
 
     }
@@ -323,6 +327,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleEwayBill=false;
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
+      this.isVisibleonlyOuCode = false;
 
 
     }
@@ -368,6 +373,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleEwayBill=false;
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
+      this.isVisibleonlyOuCode = false;
 
     }
 
@@ -376,7 +382,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleonlyOuCode = true;
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
-       this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblespClosingStockAsOndate=false;
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
@@ -412,6 +418,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleEwayBill=false;
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
+      this.isVisibleonlyOuCode = false;
 
 
     }
@@ -433,6 +440,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleEwayBill=false;
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
+      this.isVisibleonlyOuCode = false;
 
     }
 
@@ -454,6 +462,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleEwayBill=false;
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=true;
+      this.isVisibleonlyOuCode = false;
 
     }
     else if (reportName === 'gstsparesPaintPanelDtlRpt') {
@@ -474,6 +483,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleEwayBill=false;
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=true;
+      this.isVisibleonlyOuCode = false;
 
     }
 
@@ -495,6 +505,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleEwayBill=false;
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
+      this.isVisibleonlyOuCode = false;
 
     }
 
@@ -516,6 +527,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleEwayBill=false;
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
+      this.isVisibleonlyOuCode = false;
 
     }
 
@@ -537,6 +549,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleEwayBill=false;
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
+      this.isVisibleonlyOuCode = false;
 
     }
 
@@ -558,6 +571,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleEwayBill=false;
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
+      this.isVisibleonlyOuCode = false;
 
     }
 
@@ -579,6 +593,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleEwayBill=false;
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
+      this.isVisibleonlyOuCode = false;
 
     }
 
@@ -606,6 +621,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleEwayBill=false;
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
+      this.isVisibleonlyOuCode = false;
 
     }
 
@@ -628,6 +644,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleEwayBill=false;
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
+      this.isVisibleonlyOuCode = false;
 
     }
 
@@ -650,6 +667,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleEwayBill=false;
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
+      this.isVisibleonlyOuCode = false;
 
     }
 
@@ -672,12 +690,10 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleEwayBill=false;
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
+      this.isVisibleonlyOuCode = false;
 
     }
 
-
-
-      
 
   
   }
@@ -697,7 +713,7 @@ export class PaintReportsComponent implements OnInit {
 
   reportParameter(reportName) {
 
-    alert ("reportName:"+reportName)
+    // alert ("reportName:"+reportName)
     
     this.isDisabled1 = true;
     this.closeResetButton = false;
