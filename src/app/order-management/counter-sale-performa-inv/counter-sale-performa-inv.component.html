@@ -980,19 +980,13 @@
                                                     </ng-template>
                                                 </td>
                                                 <td>
-                                                    <div
-                                                        *ngIf="displayRemoveRow[i]; then thenRemoveRow; else elseRemoveRow">
-                                                    </div>
+                                                    <div *ngIf="displayRemoveRow[i]; then thenRemoveRow; else elseRemoveRow"> </div>
                                                     <ng-template #thenRemoveRow>
                                                         <button type="submit" class="btn btn-primary"
                                                             (click)="RemoveRow(i)" style="width: min-content;"><i
                                                                 class="fa fa-trash"></i></button>
                                                     </ng-template>
                                                     <ng-template #elseRemoveRow>
-                                                        <!-- <button disabled type="submit" class="btn btn-primary"
-                                                            (click)="RemoveRow(OrderLineIndex)"
-                                                            style="width: min-content;"><i
-                                                                class="fa fa-trash"></i></button> -->
                                                     </ng-template>
                                                 </td>
                                             </tr>

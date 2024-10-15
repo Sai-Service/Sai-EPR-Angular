@@ -1850,6 +1850,7 @@ orderNumber1:[],
     // if (this.orderNumber === undefined && Avalqty != null || Avalqty != undefined) {
     if (qty1 > Avalqty) {
       var bckOrd = qty1 - Avalqty;
+      this.displayBackOrderBtn[index]=true;
       trxLnArr1.controls[index].patchValue({ orderedQty: bckOrd });
       trxLnArr1.controls[index].patchValue({ pricingQty: Avalqty });
     }
@@ -2209,12 +2210,6 @@ orderNumber1:[],
                             }
                           );
 
-                        // if (this.CounterSaleOrderBookingForm.get('issueCodeType').value.includes('Only Oil Part') && data.obj[i].uom === 'LTR' && Number(sessionStorage.getItem('divisionId')) === 2) {
-                        //   (controlinv.controls[k]).patchValue({
-                        //     disPer: 0,
-                        //     disAmt: 0
-                        //   })
-                        // }
                       }
                     }
                     if (select.itemId != null) {
@@ -2238,7 +2233,8 @@ orderNumber1:[],
                           if (data.length === 0) {
                            
                             alert(('Item Not Found In Stock !.\n' + 'Item Description :- ' + select.description + ".!\n") + "And MRP :- " + mrp);
-                           this.displayBackOrderBtn[k]=true;
+                            alert('If You Want Add Back Order Quantity Then Click on BO Button and save the same.!')
+                            this.displayBackOrderBtn[k]=true;
                             this.service.getAlterNetItem(select.itemId)
                             .subscribe(
                               data => {

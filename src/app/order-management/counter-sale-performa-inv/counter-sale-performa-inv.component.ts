@@ -1040,33 +1040,6 @@ export class CounterSalePerformaInvComponent implements OnInit {
     var disAmt = (baseAmt * trxLnArr1[index].disPer) / 100;
     var baseAmtAfterDisc = baseAmt - disAmt;
     var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-    // alert(custtaxCategoryName)
-    // if (custtaxCategoryName.includes('IGST')) {
-    //   (patch.controls[index]).patchValue(
-    //     {
-    //       baseAmt: baseAmt,
-    //       igst: Math.round(((baseAmtAfterDisc * trxLnArr1[index].taxPer / 100) + Number.EPSILON) * 100) / 100,
-    //       totAmt: Math.round(((baseAmtAfterDisc + (baseAmtAfterDisc * trxLnArr1[index].taxPer / 100)) + Number.EPSILON) * 100) / 100,
-    //       disAmt: Math.round(((disAmt) + Number.EPSILON) * 100) / 100,
-    //       taxAmt: Math.round(((baseAmtAfterDisc * trxLnArr1[index].taxPer / 100) + Number.EPSILON) * 100) / 100,
-    //       sgst: 0,
-    //       cgst: 0,
-    //     })
-    //   this.updateTotAmtPerline(index);
-    // }
-    // else {
-    //   (patch.controls[index]).patchValue(
-    //     {
-    //       baseAmt: baseAmt,
-    //       sgst: Math.round((((baseAmtAfterDisc * trxLnArr1[index].taxPer / 100) / 2) + Number.EPSILON) * 100) / 100,
-    //       cgst: Math.round((((baseAmtAfterDisc * trxLnArr1[index].taxPer / 100) / 2) + Number.EPSILON) * 100) / 100,
-    //       disAmt: Math.round(((disAmt) + Number.EPSILON) * 100) / 100,
-    //       totAmt: Math.round(((baseAmtAfterDisc + (baseAmtAfterDisc * trxLnArr1[index].taxPer / 100)) + Number.EPSILON) * 100) / 100,
-    //       taxAmt: Math.round(((baseAmtAfterDisc * trxLnArr1[index].taxPer / 100) + Number.EPSILON) * 100) / 100,
-    //       igst: 0
-    //     })
-    //   this.updateTotAmtPerline(index);
-    // }
     var arrayControlNew = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var arrayControl = arrayControlNew.getRawValue();
     // alert(arrayControl[index].taxCategoryId) 
@@ -1108,6 +1081,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
         this.updateTotAmtPerline(index);
       });
     var itemId1 = trxLnArr1[index].itemId;
+    // debugger;
     if (itemId1 != null && fldName != "locator") {
       this.addRow(index);
     }
@@ -1142,7 +1116,8 @@ export class CounterSalePerformaInvComponent implements OnInit {
       );
     }
     this.displaysegmentInvType.push(true);
-    this.displayRemoveRow[len - 1] = true;
+    this.displayRemoveRow.push(true)
+    // this.displayRemoveRow[len - 1] = true;
     this.displayCounterSaleLine.push(true);
     this.displayLineflowStatusCode.push(true);
     this.itemSeg = '';
