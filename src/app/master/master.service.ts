@@ -1748,7 +1748,6 @@ export class MasterService {
   }
 
   getreserqtyNew(locId, itemID, locatorId, rate): Observable<any> {
-
     return this.http.get(this.ServerUrl + `/reserveQty/locResQty?locId=${locId}&invItemId=${itemID}&locatorId=${locatorId}&rate=${rate}`)
   }
 
