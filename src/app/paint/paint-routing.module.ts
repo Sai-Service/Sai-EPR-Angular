@@ -12,6 +12,7 @@ import { PaintPoListComponent } from './paint-po-list/paint-po-list.component';
 import { PaintMiscTransactionComponent } from './paint-misc-transaction/paint-misc-transaction.component';
 import { PaintStockTransferComponent } from './paint-stock-transfer/paint-stock-transfer.component';
 import { PaintCreationNewComponent } from './paint-creation-new/paint-creation-new.component';
+import { PaintAvgCostComponent } from './paint-avg-cost/paint-avg-cost.component';
 
 
 const routes: Routes = [
@@ -32,8 +33,8 @@ const routes: Routes = [
   {path:'PaintMiscTransaction',component:PaintMiscTransactionComponent},
   {path:'PaintStockTransfer',component:PaintStockTransferComponent},
   {path:'PaintCreationNew',component:PaintCreationNewComponent},
-
-
+  {path:'PaintCreationNew',component:PaintCreationNewComponent},
+  {path:'PaintAvgCost',component:PaintAvgCostComponent},
 
 
   {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}

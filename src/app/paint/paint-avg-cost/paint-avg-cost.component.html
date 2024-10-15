@@ -1,0 +1,133 @@
+<div class="center">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td class="PageHeader"> &nbsp;AVERAGE&nbsp;COST&nbsp;</td>
+        </tr>
+    </table>
+
+    <div class="center" style="width: 100%;">
+        <div class="form-bg">
+            <div class="center" style="width: 100%;">
+                <form [formGroup]="pntAvgCostForm" (ngSubmit)="pntAvgCost(pntAvgCostForm.value)">
+                <br>
+                <!-- <table style="width: 100%;background-color: white;">
+                    <tr>
+                        <td class="PageHeader"> &nbsp;AVERAGE&nbsp;COST&nbsp;HISTORY</td>
+                    </tr>
+                </table> -->
+                <table style="width: 100%; background-color: #FFE4B5;">
+                            
+                                 
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">Item&nbsp;Code:&nbsp;</td>
+                       
+                        <td><input type="text" class="form-control" formControlName="sItemCode" [(ngModel)]="sItemCode" (change)="Validateitem1(sItemCode)"></td>
+
+                        <!-- <td>
+                            
+                            <input type="text" formControlName="searchItemId"
+                            (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
+                            list="dynmicUserIds1" class="form-control"
+                            (ngModelChange)="onOptioninvItemIdSelectedSingle($event)" >
+                            <datalist id="dynmicUserIds1">
+                                <option *ngFor="let item of invItemList"
+                                    [ngValue]="item.itemId"> 
+                                </option>
+                            </datalist>
+                        </td>  -->
+
+                        <td style="width: 15%" class="LabelFontStyle">Description&nbsp;:&nbsp;</td>
+                        <td>
+                            <input style="width: 230px;" disabled  type="text" formControlName="itemName" id="itemName"  [(ngModel)]="itemName"   class="form-control" placeholder="item description" >
+                        </td>
+
+                        <td style="width: 15%" class="LabelFontStyle">From&nbsp;Date:&nbsp;</td>
+                        <td>
+                            <input style="width: 170px;"  type="date" formControlName="fromDate" id="fromDate"  [(ngModel)]="fromDate"   class="form-control" >
+                        </td>
+    
+    
+                        <td style="width: 15%" class="LabelFontStyle">To&nbsp;Date:&nbsp;</td>
+        
+                        <td>
+                            <!-- <input  disabled type="text"  formControlName="glDate"  id="glDate" [(ngModel)]="glDate" class="form-control" > -->
+                            <input  style="width: 170px;"  type="date"  formControlName="toDate"  id="toDate" max="{{minDate | date:'yyyy-MM-dd'}}" [(ngModel)]="toDate" class="form-control" >
+                        </td>
+    
+                        <td colspan="8" style="text-align: left; width: 100%;">
+                            <button type="submit"  (click)="searchMast(locId,searchItemId,fromDate,toDate)" class="btn btn-primary" style="width: 3em;"><i
+                                    class="fa fa-search"></i></button> 
+
+
+                                    <!-- <td>
+                                        <button type="button" class="btn btn-info" (click)="searchMast(locId,itemId,fromDate,toDate)">History</button>
+                                    </td> -->
+    
+                    </tr>
+    
+                    
+                 </table>
+                
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+                        
+
+
+
+<br>
+
+<div class="container1">
+    <div class="grid_scroll">
+        <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0"
+        id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+   <tbody>
+        <tr class="GridHeader" style="font-size: 14px;">
+            <th  scope="col">Srl&nbsp;No</th>
+            <!-- <th  scope="col">TransactionId</th> -->
+            <th  scope="col">Date</th>
+            <th  scope="col">ItemId/Code</th>
+            <th  scope="col">Description</th>
+            <th  scope="col">Rate</th>
+            <th  scope="col">Old Rate</th>
+            <th  scope="col">Location</th>
+            <th  scope="col">Source Type</th>
+           <!-- <th style="width:6rem" scope="col">Select</th> -->
+    </tr>
+   </tbody>
+            <tr *ngFor="let com of lstcomments let i=index" class="ItemStyle" style="text-decoration:none;font-size: 14px;text-align: center;">
+            
+                <td style="width: fit-content;">{{i+1}}</td>
+                <!-- <td style="width: fit-content;text-align: right;padding-right: 5px;">{{com.transactionId}}</td> -->
+                <td style="width: fit-content;">{{com.creationDate |date:'dd-MM-y'}}</td>
+                <td style="width: fit-content;">{{com.itemId}}/{{segment}}</td>
+                <td style="width: fit-content;">{{itemName}}</td> 
+                <td style="width: fit-content;text-align: right;padding-right: 10px;">{{com.rate | number:'1.2-2'}}</td> 
+                <td style="width: fit-content;text-align: right;padding-right: 10px;">{{com.oldRate | number:'1.2-2'}}</td>
+                <td style="width: fit-content;">{{com.locationId}}</td>  
+                <td style="width: fit-content;">{{com.transSourceTypeId}}</td>
+               
+                <!-- <td><button class="btn btn-secondary" (click)="Select(com.avgCostId)">Select</button></td>    -->
+            </tr>
+    </table>
+    <table class="center">
+        <tr>
+            <td>
+                <button type="submit" class="btn btn-primary" id="register" (click)="refresh()">
+                    Clear
+                </button>
+            </td>
+            <td>
+                <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+</div>
+
+
