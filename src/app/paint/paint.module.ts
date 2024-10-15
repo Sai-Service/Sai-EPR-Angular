@@ -15,10 +15,11 @@ import { PaintPoListComponent } from './paint-po-list/paint-po-list.component';
 import { PaintMiscTransactionComponent } from './paint-misc-transaction/paint-misc-transaction.component';
 import { PaintStockTransferComponent } from './paint-stock-transfer/paint-stock-transfer.component';
 import { PaintCreationNewComponent } from './paint-creation-new/paint-creation-new.component';
+import { PaintAvgCostComponent } from './paint-avg-cost/paint-avg-cost.component';
 
 
 @NgModule({
-  declarations: [PaintIssueDpComponent, PaintCreationComponent, PaintMixingMasterComponent, PaintPurchaseOrderComponent, PaintPoReceiptComponent, PaintPanelMasterComponent, PaintItemMasterComponent, PaintPoListComponent,  PaintMiscTransactionComponent, PaintStockTransferComponent, PaintCreationNewComponent],
+  declarations: [PaintIssueDpComponent, PaintCreationComponent, PaintMixingMasterComponent, PaintPurchaseOrderComponent, PaintPoReceiptComponent, PaintPanelMasterComponent, PaintItemMasterComponent, PaintPoListComponent,  PaintMiscTransactionComponent, PaintStockTransferComponent, PaintCreationNewComponent,  PaintAvgCostComponent],
   imports: [
     CommonModule,
     PaintRoutingModule,
