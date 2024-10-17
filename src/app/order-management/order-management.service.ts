@@ -958,7 +958,16 @@ export class OrderManagementService {
   }
 
   
+  downloadDateFn(frmDt,tDt,locId,custAccountN) {
+    const REQUEST_URI = this.ServerUrl + `/SparesReports/EwayRegisterRep?fromDate=${frmDt}&toDate=${tDt}&locId=${locId}&custAccountNo=${custAccountN}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
 
+  
 }
 
 
