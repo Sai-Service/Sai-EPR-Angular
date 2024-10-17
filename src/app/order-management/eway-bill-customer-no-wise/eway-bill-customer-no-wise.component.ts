@@ -122,7 +122,6 @@ export class EwayBillCustomerNoWiseComponent implements OnInit {
 
     var endDtSt = this.ewayBillDataForm.get('endDt').value;
     var endDt1 = new Date(endDtSt);
-    // endDt1.setDate(endDt1.getDate() + 1);
    var endDt = this.pipe.transform(endDt1, 'dd-MMM-yyyy');
    var custAccountNo = this.ewayBillDataForm.get('custAccountNo').value;
    this.closeResetButton=false;
@@ -135,10 +134,6 @@ export class EwayBillCustomerNoWiseComponent implements OnInit {
    this.service.getemwayBillcustNo(stDate, endDt,sessionStorage.getItem('locId'),sessionStorage.getItem('deptId'),custAccountNo).subscribe((res: any) => {
     if (res.code === 200) {
       this.ewayListDetails = res.obj;
-      // this.ewayBillDataForm.patchValue({DOCU_DT:res.obj.DOCU_DT})
-      // alert(res.obj.DOCU_DT)
-      // this.DOCU_DT= res.obj.DOCU_DT;
-      // this.docDate = this.DOCU_DT;
       this.dataDisplay ='Data Display Sucessfully....'
       this.closeResetButton=true;
     }
@@ -149,4 +144,28 @@ export class EwayBillCustomerNoWiseComponent implements OnInit {
     }
   })
   }
+
+
+  downloadDate(){
+    var stDt = this.ewayBillDataForm.get('startDt').value;
+    var stDate = this.pipe.transform(stDt, 'dd-MMM-yyyy');
+
+    var endDtSt = this.ewayBillDataForm.get('endDt').value;
+    var endDt1 = new Date(endDtSt);
+   var endDt = this.pipe.transform(endDt1, 'dd-MMM-yyyy');
+   var custAccountNo = this.ewayBillDataForm.get('custAccountNo').value;
+   this.closeResetButton=false;
+   this.progress = 0;
+   this.dataDisplay ='Data Loading in progress....Do not refresh the Page'
+   if (custAccountNo === undefined){
+    custAccountNo=''
+   }
+   const fileName = 'Proforma Invoice-' + sessionStorage.getItem('locName').trim() + '.xls';
+   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+   this.orderManagementService.downloadDateFn(stDate, endDt,sessionStorage.getItem('locId'),custAccountNo)
+     .subscribe(data => {
+       saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+     })
+  }
+
 }
