@@ -1088,7 +1088,7 @@
                                                             (ngModelChange)="onSelLocaPrice($event,i)">
                                                             <option *ngFor="let locId of  locData[i]"
                                                                 [value]="locId.ROWNUM">
-                                                                {{locId.segmentName}}--{{locId.onHandQty}}--{{locId.prc}}
+                                                                {{locId.segmentName}}--{{locId.onHandQty}}--{{locId.prc}}--{{locId.mrp}}
                                                             </option>
                                                         </select>
                                                         <input hidden formControlName="frmLocatorId">

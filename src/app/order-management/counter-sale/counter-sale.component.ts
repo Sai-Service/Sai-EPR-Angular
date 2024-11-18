@@ -1043,13 +1043,16 @@ orderNumber1:[],
                       this.CounterSaleOrderBookingForm.patchValue({ creditDays: data.obj.creditDays });
                       this.CounterSaleOrderBookingForm.patchValue({ daysMsg: data.obj.daysMsg });
                       var typ = this.CounterSaleOrderBookingForm.get('transactionTypeName').value;
+                      
                       if (!typ.includes('Accessories Sale')) {
+                        if (this.CounterSaleOrderBookingForm.get('daysMsg').value != undefined &&
+                      this.CounterSaleOrderBookingForm.get('daysMsg').value != null){
                         if (this.CounterSaleOrderBookingForm.get('daysMsg').value.includes('Exceeded')) {
                           alert('Credit Days is exceeded.!');
 
                           // this.isDisabled10 = true;
                           this.isDisabled=true;
-                        }
+                        }}
                         else if (this.allDatastore.totAmt >= data.obj.outStandingAmt) {
                           alert('Credit Amount is exceeded.! ... Credit Amount is' + ' ' + this.allDatastore.crdAmt + ' ' + 'Total Amount is' + ' ' + this.allDatastore.totAmt + '.!')
                         }
@@ -2129,6 +2132,7 @@ orderNumber1:[],
                                 alert(data.obj)
                               }
                             );
+                            // alert(selLocator[0].mrp)
                             var lotList = [{ locatorId: 0, segmentName: 'Not Found' }]
                             controlinv.controls[k].patchValue({ frmLocatorId: lotList });
                             controlinv.controls[k].patchValue({ onHandQty: 0 });
@@ -2146,6 +2150,7 @@ orderNumber1:[],
                               controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].ROWNUM });
                               controlinv.controls[k].patchValue({ frmLocator: selLocator[0].segmentName });
                               controlinv.controls[k].patchValue({ onHandQty: selLocator[0].onHandQty });
+                              controlinv.controls[k].patchValue({ onHandQty: selLocator[0].mrp });
                               controlinv.controls[k].patchValue({ id: selLocator[0].id });
                               controlinv.controls[k].patchValue({ unitSellingPrice: selLocator[0].prc })
                             }
@@ -2157,6 +2162,7 @@ orderNumber1:[],
                               controlinv.controls[k].patchValue({ frmLocator: selLocator[0].segmentName });
                               // controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].locatorId });
                               controlinv.controls[k].patchValue({ onHandQty: selLocator[0].onHandQty })
+                              controlinv.controls[k].patchValue({ onHandQty: selLocator[0].mrp })
                               controlinv.controls[k].patchValue({ id: selLocator[0].id });
                               controlinv.controls[k].patchValue({ unitSellingPrice: selLocator[0].prc });
                             }
@@ -2212,6 +2218,7 @@ orderNumber1:[],
 
                       }
                     }
+                    // debugger;
                     if (select.itemId != null) {
                       let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
                       var invTp = controlinv.controls[k].get('invType').value;
@@ -2229,7 +2236,7 @@ orderNumber1:[],
                       this.service.getfrmSubLocPrice(this.locId, select.itemId, this.subInventoryId).subscribe(
                         data => {
                           console.log(data);
-                        
+                          // debugger;
                           if (data.length === 0) {
                            
                             alert(('Item Not Found In Stock !.\n' + 'Item Description :- ' + select.description + ".!\n") + "And MRP :- " + mrp);
@@ -2242,6 +2249,7 @@ orderNumber1:[],
                                 alert(data.obj)
                               }
                             );
+                            
                             var lotList = [{ locatorId: 0, segmentName: 'Not Found' }]
                             controlinv.controls[k].patchValue({ frmLocatorId: lotList });
                             controlinv.controls[k].patchValue({ onHandQty: 0 });
@@ -2267,6 +2275,7 @@ orderNumber1:[],
                             } else {
                               utc = selLocator[0].prc;
                             }
+                            // alert(selLocator[0].mrp)
                             controlinv.controls[k].get('frmLocatorId').enable();
                             if (this.getfrmSubLoc.length == 1) {
 
@@ -2274,6 +2283,7 @@ orderNumber1:[],
                               controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].ROWNUM });
                               controlinv.controls[k].patchValue({ frmLocator: selLocator[0].segmentName });
                               controlinv.controls[k].patchValue({ onHandQty: selLocator[0].onHandQty });
+                              controlinv.controls[k].patchValue({ onHandQty: selLocator[0].mrp });
                               controlinv.controls[k].patchValue({ id: selLocator[0].id });
                               controlinv.controls[k].patchValue({ unitSellingPrice: utc });
                             }
@@ -2284,6 +2294,7 @@ orderNumber1:[],
                               controlinv.controls[k].patchValue({ frmLocator: selLocator[0].segmentName });
                               // controlinv.controls[k].patchValue({ frmLocatorId: selLocator[0].locatorId });
                               controlinv.controls[k].patchValue({ onHandQty: selLocator[0].onHandQty })
+                              controlinv.controls[k].patchValue({ onHandQty: selLocator[0].mrp })
                               controlinv.controls[k].patchValue({ id: selLocator[0].id });
                               controlinv.controls[k].patchValue({ unitSellingPrice: utc });
                             }
@@ -2358,10 +2369,12 @@ orderNumber1:[],
       itemId = trxLnArr[i].itemId;
     }
     var locId;
+    // debugger;
     if (calledFrom === 'Item') {
       var linLocData = this.locData[i];
       let sellocId = linLocData.find(d => Number(d.ROWNUM) === trxLnArr[i].frmLocatorId);
       locId = sellocId.locatorId;
+      // alert(locId);
       (trxLnFormArr.controls[i]).patchValue({
         frmLocatorName: locId,
       });
@@ -2686,20 +2699,46 @@ orderNumber1:[],
   }
 
   addRow(i) {
+    // alert(i+'--------i value')
     var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     if (this.op == 'Search') {
       i = trxLnArr1.length;
       this.isDisabled10 = true;
     }
-    if (i > -1) {
+    // debugger;
+    if (i ==0) {
+      var len1 = i;
+      if (trxLnArr1[0] != undefined) {
+        // this.isDisabled10=false;
+        console.log(trxLnArr1[i].pricingQty);
+        var itemqty = trxLnArr1[i].pricingQty;
+        var item = trxLnArr1[i].segment;
+        var itemid = trxLnArr1[i].itemId;
+       
+        if (item === '' || itemqty === '') {
+          alert('Please enter data in blank field');
+          return;
+        }
+        if (!this.itemMap3.has(item)) {
+          this.reservePos(i);
+        }
+        else {
+          this.reservePos(i);
+        }
+        this.displayRemoveRow.push(true);
+        this.displayCounterSaleLine.push(true);
+        this.displayLineflowStatusCode.push(true);
+      }
+    }
+    if (i >= 1 && i != 0) {
       var len1 = i;
       if (trxLnArr1[len1] != undefined) {
         // this.isDisabled10=false;
-        console.log(trxLnArr1[len1].pricingQty);
-        var itemqty = trxLnArr1[len1].pricingQty;
-        var item = trxLnArr1[len1].segment;
-        var itemid = trxLnArr1[len1].itemId;
-        // debugger;
+        console.log(trxLnArr1[i].pricingQty);
+        var itemqty = trxLnArr1[i].pricingQty;
+        var item = trxLnArr1[i].segment;
+        var itemid = trxLnArr1[i].itemId;
+       
         if (item === '' || itemqty === '') {
           alert('Please enter data in blank field');
           return;
@@ -3737,9 +3776,9 @@ orderNumber1:[],
     var patch1 = patch.getRawValue();
     var item= patch1[i].segment;
     var itemid= patch1[i].itemId;
-    alert(itemid)
+    // alert(itemid)
     var qty1=  this.CounterSaleOrderBookingForm.get('qty1').value;
-    alert(qty1)
+    // alert(qty1)
     if (qty1 != null ){
       // this.CounterSaleOrderBookingForm.get('customerNo').reset();
       // this.CounterSaleOrderBookingForm.get('item').reset();
