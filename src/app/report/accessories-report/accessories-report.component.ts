@@ -19,1290 +19,7 @@ const MIME_TYPES = {
   styleUrls: ['./accessories-report.component.css']
 })
 export class AccessoriesReportComponent implements OnInit {
-//   sparesReportForm: FormGroup;
-//   public minDate = new Date();
-//   fromDate: Date;
-//   toDate: Date;
-//   OUCode: string;
-//   locCode: string;
-//   locId: number;
-//   public BillShipToList: Array<string> = [];
-//   periodNameList: any = [];
 
-//   public DepartmentList: any = [];
-//   pipe = new DatePipe('en-US');
-//   now = new Date();
-//   closeResetButton = true;
-//   dataDisplay: any;
-//   progress = 0;
-//   deptId: number;
-//   userName: string;
-//   subInventory: string;
-//   subInvCode: any;
-//   segment: string;
-//   tolocCode: string;
-//   tolocId: number;
-//   orderNumber: number;
-//   custAccNo: number;
-//   spInvAging1: number;
-//   spInvAging2: number;
-//   spInvAging3: number;
-//   invItemList = new Array();
-//   isVisibleGSTPurchaseRegister: boolean = false;
-//   isVisiblelocationInput: boolean = false;
-//   isVisiblelocationLOV: boolean = false;
-//   isVisiblespPurRegDownLoad: boolean = false;
-//   isVisibleonlyLocationCode: boolean = false;
-//   isVisiblegstsaiDebtors: boolean = false;
-//   isVisibleStockLedger: boolean = false;
-//   isVisiblestockTransfer: boolean = false;
-//   isVisibleSparesBackOrderQty: boolean = false;
-//   isVisiblesparesMiscIssueReceipt: boolean = false;
-//   isVisiblesparesInventoryAging: boolean = false;
-//   isVisibleSparesDebtorsExecutiveWise: boolean = false;
-//   isVisiblespClosingStockAsOndate:boolean=false;
-//   isVisibleDepartmentList: boolean = false;
-//   isVisiblefromtosubinventory:boolean=false;
-//   isDisabled1 = false;
-//   userName1:string;
-//   displayCustAccountNo=false;
-//   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
-//     this.sparesReportForm = this.fb.group({
-//       fromDate: [''],
-//       toDate: [''],
-//       OUCode: [''],
-//       locCode: [''],
-//       locId: [''],
-//       deptId: [''],
-//       userName: [''],
-//       subInventory: [''],
-//       segment: [''],
-//       tolocCode: [''],
-//       tolocId: [''],
-//       custAccNo: [''],
-//       orderNumber: [''],
-//       spInvAging1: [''],
-//       spInvAging2: [''],
-//       spInvAging3: [''],
-//       department: [''],
-//       userName1:[''],
-//     })
-//    }
-
-//    sparesReport(sparesReportForm) {
-//   }
-
-
-//   ngOnInit(): void {
-
-//    this.sparesReportForm.patchValue({ OUCode: sessionStorage.getItem('ouId') + '-' + sessionStorage.getItem('ouName') })
-//     this.sparesReportForm.patchValue({ locCode: sessionStorage.getItem('locId') + '-' + sessionStorage.getItem('locName') })
-//     this.sparesReportForm.patchValue({ department: 'Accessories' });
-//     this.sparesReportForm.patchValue({ deptId: 6 })
-//     // Prevent closing from click inside dropdown
-//     $(document).on('click', '.dropdown-menu', function (e) {
-//       e.stopPropagation();
-//     });
-
-//     // make it as accordion for smaller screens
-//     if ($(window).width() < 992) {
-//       $('.dropdown-menu a').click(function (e) {
-//         e.preventDefault();
-//         if ($(this).next('.submenu').length) {
-//           $(this).next('.submenu').toggle();
-//         }
-//         $('.dropdown').on('hide.bs.dropdown', function () {
-//           $(this).find('.submenu').hide();
-//         })
-//       });
-//     }
-
-//     this.service.getLocationSearch1(sessionStorage.getItem('ouId'))
-//       .subscribe(
-//         data => {
-//           this.BillShipToList = data;
-//         }
-//       );
-
-//     this.service.DepartmentListNew()
-//       .subscribe(
-//         data => {
-//           this.DepartmentList = data;
-//         }
-//       );
-
-//     this.service.FinancialPeriod()
-//       .subscribe(
-//         data => {
-//           this.periodNameList = data.obj;
-//         }
-//       );
-
-
-//     this.sparesReportForm.patchValue({ userName: sessionStorage.getItem('ticketNo') })
-
-//     if (Number(sessionStorage.getItem('deptId')) === 4) {
-//       this.isVisiblelocationLOV = true;
-//       this.isVisiblelocationInput = false;
-//       this.sparesReportForm.patchValue({ subInventory: 'AC' })
-//     }
-//     else {
-//       this.isVisiblelocationLOV = false;
-//       this.isVisiblelocationInput = true;
-//     }
-
-//     this.service.subInvCode2(sessionStorage.getItem('deptId'), sessionStorage.getItem('divisionId')).subscribe(
-//       data => {
-//         this.subInvCode = data;
-//         console.log(this.subInvCode);
-//         if (this.subInvCode.subInventoryCode != null) {
-//           this.subInventory = this.subInvCode.subInventoryCode;
-//           this.sparesReportForm.patchValue({ subInventory: this.subInvCode.subInventoryCode })
-//         }
-//       });
-
-//     this.service.invItemList2New('GOODS', 'Spares', (sessionStorage.getItem('divisionId')), '36DH1601')
-//       .subscribe(
-//         data => {
-//           this.invItemList = data;
-//           console.log(this.invItemList);
-//         }
-//       );
-//   }
-
-//   refresh() {
-//     window.location.reload();
-//   }
-
-//   close() {
-//     this.location1.back();
-//   }
-
-//   reportName: string;
-//   reportDetails(reportName) {
-//     if (reportName === 'gstPurRegister') {
-//       this.reportName = 'Purchase Register Details';
-//       if (this.reportName === 'Purchase Register Details') {
-//         this.isVisiblespPurRegDownLoad = true;
-//       }
-//       if (Number(sessionStorage.getItem('deptId')) === 4) {
-//         this.isVisibleDepartmentList = true;
-//       }
-//       this.isVisibleGSTPurchaseRegister = true;
-//       this.isVisiblespClosingStockAsOndate=false;
-//       this.isVisibleonlyLocationCode = false;
-//       this.isVisiblegstsaiDebtors = false;
-//       this.displayCustAccountNo=false;
-//       this.isVisibleStockLedger = false;
-//       this.isVisiblestockTransfer = false;
-//       this.isVisibleSparesBackOrderQty = false;
-//       this.isVisiblesparesMiscIssueReceipt = false;
-//       this.isVisiblesparesInventoryAging = false;
-//       this.isVisibleSparesDebtorsExecutiveWise = false;
-//       this.isVisiblefromtosubinventory=false;
-//     }
-//     else if (reportName === 'gstpurRegSumm') {
-//       this.reportName = 'AccessoriePurchase Register - Summary';
-//       if (Number(sessionStorage.getItem('deptId')) === 4) {
-//         this.isVisibleDepartmentList = true;
-//       }
-//       this.isVisibleGSTPurchaseRegister = true;
-//       this.isVisibleonlyLocationCode = false;
-//       this.isVisiblegstsaiDebtors = false;
-//       this.isVisibleStockLedger = false;
-//       this.displayCustAccountNo=false;
-//       this.isVisiblestockTransfer = false;
-//       this.isVisibleSparesBackOrderQty = false;
-//       this.isVisiblesparesMiscIssueReceipt = false;
-//       this.isVisiblesparesInventoryAging = false;
-//       this.isVisiblespClosingStockAsOndate=false;
-//       this.isVisibleSparesDebtorsExecutiveWise = false;
-//       this.isVisiblefromtosubinventory=false;
-//     }
-//     else if (reportName === 'gstIssueDetails') {
-//       this.reportName = 'AccessorieIssue Details Report';
-//       this.isVisibleGSTPurchaseRegister = true;
-//       this.isVisibleonlyLocationCode = false;
-//       this.isVisiblegstsaiDebtors = false;
-//       this.isVisibleStockLedger = false;
-//       this.displayCustAccountNo=false;
-//       this.isVisiblestockTransfer = false;
-//       this.isVisibleSparesBackOrderQty = false;
-//       this.isVisiblesparesMiscIssueReceipt = false;
-//       this.isVisiblesparesInventoryAging = false;
-//       this.isVisibleSparesDebtorsExecutiveWise = false;
-//       this.isVisiblefromtosubinventory=false;
-//       this.isVisiblespClosingStockAsOndate=false;
-//     }
-//     else if (reportName === 'gstIssueSummary') {
-//       this.reportName = 'AccessorieIssue Summary';
-//       this.isVisibleGSTPurchaseRegister = true;
-//       this.isVisibleonlyLocationCode = false;
-//       this.isVisiblegstsaiDebtors = false;
-//       this.displayCustAccountNo=true;
-//       this.isVisibleStockLedger = false;
-//       this.isVisiblestockTransfer = false;
-//       this.isVisibleSparesBackOrderQty = false;
-//       this.isVisiblesparesMiscIssueReceipt = false;
-//       this.isVisiblesparesInventoryAging = false;
-//       this.isVisibleSparesDebtorsExecutiveWise = false;
-//       this.isVisiblefromtosubinventory=false;
-//       this.isVisiblespClosingStockAsOndate=false;
-//     }
-//     else if (reportName === 'gstReceiptRegister') {
-//       this.reportName = 'AccessorieReceipt Register';
-//       if (Number(sessionStorage.getItem('deptId')) === 4) {
-//         this.isVisibleDepartmentList = true;
-//       }
-//       this.isVisibleonlyLocationCode = false;
-//       this.isVisibleGSTPurchaseRegister = true;
-//       this.isVisiblegstsaiDebtors = false;
-//       this.isVisibleStockLedger = false;
-//       this.isVisiblestockTransfer = false;
-//       this.displayCustAccountNo=false;
-//       this.isVisibleSparesBackOrderQty = false;
-//       this.isVisiblespClosingStockAsOndate=false;
-//       this.isVisiblesparesMiscIssueReceipt = false;
-//       this.isVisiblesparesInventoryAging = false;
-//       this.isVisibleSparesDebtorsExecutiveWise = false;
-//       this.isVisiblefromtosubinventory=false;
-//     }
-//     else if (reportName === 'gstClosingReport') {
-//       this.reportName = 'AccessorieClosing Stock Report';
-//       this.isVisibleonlyLocationCode = true;
-//       this.isVisiblegstsaiDebtors = false;
-//       this.isVisibleGSTPurchaseRegister = false;
-//       this.isVisibleStockLedger = false;
-//       this.isVisiblestockTransfer = false;
-//       this.displayCustAccountNo=false;
-//       this.isVisibleSparesBackOrderQty = false;
-//       this.isVisiblesparesMiscIssueReceipt = false;
-//       this.isVisiblespClosingStockAsOndate=false;
-//       this.isVisiblesparesInventoryAging = false;
-//       this.isVisibleSparesDebtorsExecutiveWise = false;
-//       this.isVisiblefromtosubinventory=false;
-//     }
-//     else if (reportName === 'gstsaiDebtors') {
-//       this.reportName = 'Sai Debtors';
-//       if (Number(sessionStorage.getItem('deptId'))===4){
-//         this.isVisibleDepartmentList=true;
-//       }
-//       this.isVisibleonlyLocationCode = false;
-//       this.isVisiblegstsaiDebtors = true;
-//       this.isVisibleGSTPurchaseRegister = false;
-//       this.isVisibleStockLedger = false;
-//       this.displayCustAccountNo=false;
-//       this.isVisiblespClosingStockAsOndate=false;
-//       this.isVisiblestockTransfer = false;
-//       this.isVisibleSparesBackOrderQty = false;
-//       this.isVisiblesparesMiscIssueReceipt = false;
-//       this.isVisiblesparesInventoryAging = false;
-//       this.isVisibleSparesDebtorsExecutiveWise = false;
-//       this.isVisiblefromtosubinventory=false;
-//     }
-//     else if (reportName === 'gstStockLedger') {
-//       this.reportName = 'Stock Ledger';
-//       this.isVisibleonlyLocationCode = false;
-//       this.isVisiblegstsaiDebtors = false;
-//       this.isVisibleGSTPurchaseRegister = false;
-//       this.isVisibleStockLedger = true;
-//       this.displayCustAccountNo=false;
-//       this.isVisiblestockTransfer = false;
-//       this.isVisibleSparesBackOrderQty = false;
-//       this.isVisiblesparesMiscIssueReceipt = false;
-//       this.isVisiblespClosingStockAsOndate=false;
-//       this.isVisiblesparesInventoryAging = false;
-//       this.isVisibleSparesDebtorsExecutiveWise = false;
-//       this.isVisiblefromtosubinventory=false;
-//     }
-//     else if (reportName === 'gststockTransfer') {
-//       this.reportName = 'Stock Transfer Made Detail Report';
-//       this.isVisibleonlyLocationCode = false;
-//       this.isVisiblegstsaiDebtors = false;
-//       this.displayCustAccountNo=false;
-//       this.isVisibleGSTPurchaseRegister = false;
-//       this.isVisibleStockLedger = false;
-//       this.isVisiblestockTransfer = true;
-//       this.isVisibleSparesBackOrderQty = false;
-//       this.isVisiblesparesMiscIssueReceipt = false;
-//       this.isVisiblespClosingStockAsOndate=false;
-//       this.isVisiblesparesInventoryAging = false;
-//       this.isVisibleSparesDebtorsExecutiveWise = false;
-//       this.isVisiblefromtosubinventory=false;
-//     }
-//     else if (reportName === 'gststockTransferSummary') {
-//       this.reportName = 'Stock Transfer Made Summary Report';
-//       this.isVisibleonlyLocationCode = false;
-//       this.isVisiblegstsaiDebtors = false;
-//       this.isVisibleGSTPurchaseRegister = false;
-//       this.isVisibleStockLedger = false;
-//       this.displayCustAccountNo=false;
-//       this.isVisiblestockTransfer = true;
-//       this.isVisibleSparesBackOrderQty = false;
-//       this.isVisiblespClosingStockAsOndate=false;
-//       this.isVisiblesparesMiscIssueReceipt = false;
-//       this.isVisiblesparesInventoryAging = false;
-//       this.isVisibleSparesDebtorsExecutiveWise = false;
-//       this.isVisiblefromtosubinventory=false;
-//     }
-//     else if (reportName === 'gststockTransferReceivedDetails') {
-//       this.reportName = 'Stock Transfer Received Detail Report';
-//       this.isVisibleonlyLocationCode = false;
-//       this.isVisiblegstsaiDebtors = false;
-//       this.isVisibleGSTPurchaseRegister = false;
-//       this.isVisibleStockLedger = false;
-//       this.displayCustAccountNo=false;
-//       this.isVisiblespClosingStockAsOndate=false;
-//       this.isVisiblestockTransfer = true;
-//       this.isVisibleSparesBackOrderQty = false;
-//       this.isVisiblesparesMiscIssueReceipt = false;
-//       this.isVisiblesparesInventoryAging = false;
-//       this.isVisibleSparesDebtorsExecutiveWise = false;
-//       this.isVisiblefromtosubinventory=false;
-//     }
-//     else if (reportName === 'gststockTransferReceivedSummary') {
-//       this.reportName = 'AccessorieStock Transfer Received Summary Report';
-//       this.isVisibleonlyLocationCode = false;
-//       this.isVisiblegstsaiDebtors = false;
-//       this.isVisibleGSTPurchaseRegister = false;
-//       this.isVisiblespClosingStockAsOndate=false;
-//       this.isVisibleStockLedger = false;
-//       this.isVisiblestockTransfer = true;
-//       this.isVisibleSparesBackOrderQty = false;
-//       this.displayCustAccountNo=false;
-//       this.isVisiblesparesMiscIssueReceipt = false;
-//       this.isVisiblesparesInventoryAging = false;
-//       this.isVisibleSparesDebtorsExecutiveWise = false;
-//       this.isVisiblefromtosubinventory=false;
-//     }
-//     else if (reportName === 'gstsparesCustomerOffTakeStatment') {
-//       this.reportName = 'AccessorieCustomer Off Take Statement';
-//       this.isVisibleGSTPurchaseRegister = true;
-//       this.isVisibleonlyLocationCode = false;
-//       this.isVisiblegstsaiDebtors = false;
-//       this.isVisiblespClosingStockAsOndate=false;
-//       this.isVisibleStockLedger = false;
-//       this.isVisiblestockTransfer = false;
-//       this.displayCustAccountNo=false;
-//       this.isVisibleSparesBackOrderQty = false;
-//       this.isVisiblesparesMiscIssueReceipt = false;
-//       this.isVisiblesparesInventoryAging = false;
-//       this.isVisibleSparesDebtorsExecutiveWise = false;
-//       this.isVisiblefromtosubinventory=false;
-//     }
-//     else if (reportName === 'gstSparesBackOrderQty') {
-//       this.reportName = 'AccessorieBack Order Qty Report';
-//       this.isVisibleGSTPurchaseRegister = false;
-//       this.isVisibleonlyLocationCode = false;
-//       this.isVisiblegstsaiDebtors = false;
-//       this.isVisibleStockLedger = false;
-//       this.isVisiblestockTransfer = false;
-//       this.isVisibleSparesBackOrderQty = true;
-//       this.isVisiblespClosingStockAsOndate=false;
-//       this.isVisiblesparesMiscIssueReceipt = false;
-//       this.displayCustAccountNo=false;
-//       this.isVisiblesparesInventoryAging = false;
-//       this.isVisibleSparesDebtorsExecutiveWise = false;
-//       this.isVisiblefromtosubinventory=false;
-//     }
-//     else if (reportName === 'gstsparesMiscIssueReceipt') {
-//       this.reportName = 'AccessorieMisc Issue Receipt Report';
-//       this.isVisibleGSTPurchaseRegister = false;
-//       this.isVisibleonlyLocationCode = false;
-//       this.displayCustAccountNo=false;
-//       this.isVisiblegstsaiDebtors = false;
-//       this.isVisiblespClosingStockAsOndate=false;
-//       this.isVisibleStockLedger = false;
-//       this.isVisiblestockTransfer = false;
-//       this.isVisibleSparesBackOrderQty = false;
-//       this.isVisiblesparesMiscIssueReceipt = true;
-//       this.isVisiblesparesInventoryAging = false;
-//       this.isVisibleSparesDebtorsExecutiveWise = false;
-//       this.isVisiblefromtosubinventory=false;
-//     }
-//     else if (reportName === 'gstSaleReturnRegister') {
-//       this.reportName = 'AccessorieSales Return Register';
-//       this.isVisibleGSTPurchaseRegister = false;
-//       this.isVisiblespClosingStockAsOndate=false;
-//       this.isVisibleonlyLocationCode = false;
-//       this.isVisiblegstsaiDebtors = false;
-//       this.isVisibleStockLedger = false;
-//       this.displayCustAccountNo=false;
-//       this.isVisiblestockTransfer = false;
-//       this.isVisibleSparesBackOrderQty = false;
-//       this.isVisiblesparesMiscIssueReceipt = true;
-//       this.isVisiblesparesInventoryAging = false;
-//       this.isVisibleSparesDebtorsExecutiveWise = false;
-//       this.isVisiblefromtosubinventory=false;
-//     }
-//     else if (reportName === 'gstIncomeStatement') {
-//       this.reportName = 'Income Statement';
-//       this.isVisibleGSTPurchaseRegister = false;
-//       this.isVisibleonlyLocationCode = false;
-//       this.isVisiblegstsaiDebtors = false;
-//       this.isVisiblespClosingStockAsOndate=false;
-//       this.isVisibleStockLedger = false;
-//       this.isVisiblestockTransfer = false;
-//       this.isVisibleSparesBackOrderQty = false;
-//       this.displayCustAccountNo=false;
-//       this.isVisiblesparesMiscIssueReceipt = true;
-//       this.isVisiblesparesInventoryAging = false;
-//       this.isVisibleSparesDebtorsExecutiveWise = false;
-//       this.isVisiblefromtosubinventory=false;
-//     }
-//     else if (reportName === 'gstSparesClosingStockAsOnDate') {
-//       this.reportName = 'AccessorieClosing Stock As On Date';
-//       this.isVisibleonlyLocationCode = false;
-//       this.isVisiblegstsaiDebtors = false;
-//       this.isVisiblespClosingStockAsOndate=true;
-//       this.isVisibleGSTPurchaseRegister = false;
-//       this.isVisibleStockLedger = false;
-//       this.isVisiblestockTransfer = false;
-//       this.displayCustAccountNo=false;
-//       this.isVisibleSparesBackOrderQty = false;
-//       this.isVisiblesparesMiscIssueReceipt = false;
-//       this.isVisiblesparesInventoryAging = false;
-//       this.isVisibleSparesDebtorsExecutiveWise = false;
-//       this.isVisiblefromtosubinventory=false;
-//     }
-//     else if (reportName === 'gstSpresProformaDetailsReports') {
-//       this.reportName = 'AccessorieProforma Details Report';
-//       this.isVisibleGSTPurchaseRegister = false;
-//       this.isVisibleonlyLocationCode = false;
-//       this.isVisiblespClosingStockAsOndate=false;
-//       this.isVisiblegstsaiDebtors = false;
-//       this.isVisibleStockLedger = false;
-//       this.isVisiblestockTransfer = false;
-//       this.isVisibleSparesBackOrderQty = false;
-//       this.isVisiblesparesMiscIssueReceipt = true;
-//       this.displayCustAccountNo=false;
-//       this.isVisiblesparesInventoryAging = false;
-//       this.isVisibleSparesDebtorsExecutiveWise = false;
-//       this.isVisiblefromtosubinventory=false;
-//     }
-//     else if (reportName === 'gstChequeBounceReport') {
-//       this.reportName = 'Cheque Bounce Report';
-//       this.isVisibleGSTPurchaseRegister = false;
-//       this.isVisiblespClosingStockAsOndate=false;
-//       this.isVisibleonlyLocationCode = false;
-//       this.isVisiblegstsaiDebtors = false;
-//       this.isVisibleStockLedger = false;
-//       this.isVisiblestockTransfer = false;
-//       this.displayCustAccountNo=false;
-//       this.isVisibleSparesBackOrderQty = false;
-//       this.isVisiblesparesMiscIssueReceipt = true;
-//       this.isVisiblesparesInventoryAging = false;
-//       this.isVisibleSparesDebtorsExecutiveWise = false;
-//       this.isVisiblefromtosubinventory=false;
-//     }
-//     else if (reportName === 'gstsparesInventoryAging') {
-//       this.reportName = 'AccessorieInventory Aging Report';
-//       this.isVisibleGSTPurchaseRegister = false;
-//       this.isVisibleonlyLocationCode = false;
-//       this.isVisiblespClosingStockAsOndate=false;
-//       this.displayCustAccountNo=false;
-//       this.isVisiblegstsaiDebtors = false;
-//       this.isVisibleStockLedger = false;
-//       this.isVisiblestockTransfer = false;
-//       this.isVisibleSparesBackOrderQty = false;
-//       this.isVisiblesparesMiscIssueReceipt = false;
-//       this.isVisiblesparesInventoryAging = true;
-//       this.isVisibleSparesDebtorsExecutiveWise = false;
-//       this.isVisiblefromtosubinventory=false;
-//     }
-//     else if (reportName === 'gstSparesDebtorsExecutiveWise') {
-//       this.reportName = 'AccessorieDebtors Executive Wise report';
-//       if (Number(sessionStorage.getItem('deptId')) === 4) {
-//         this.isVisibleDepartmentList = true;
-//       }
-//       this.isVisibleGSTPurchaseRegister = false;
-//       this.displayCustAccountNo=false;
-//       this.isVisibleonlyLocationCode = false;
-//       this.isVisiblespClosingStockAsOndate=false;
-//       this.isVisiblegstsaiDebtors = false;
-//       this.isVisibleStockLedger = false;
-//       this.isVisiblestockTransfer = false;
-//       this.isVisibleSparesBackOrderQty = false;
-//       this.isVisiblesparesMiscIssueReceipt = false;
-//       this.isVisiblesparesInventoryAging = false;
-//       this.isVisibleSparesDebtorsExecutiveWise = true;
-//       this.isVisiblefromtosubinventory=false;
-//     }
-//     else if (reportName === 'sparesSubinvTransReceived') {
-//       this.reportName = 'Sub Inventory Transfer Received Report';
-//       this.isVisibleGSTPurchaseRegister = false;
-//       this.isVisibleonlyLocationCode = false;
-//       this.isVisiblegstsaiDebtors = false;
-//       this.displayCustAccountNo=false;
-//       this.isVisibleStockLedger = false;
-//       this.isVisiblestockTransfer = false;
-//       this.isVisibleSparesBackOrderQty = false;
-//       this.isVisiblesparesMiscIssueReceipt = false;
-//       this.isVisiblesparesInventoryAging = false;
-//       this.isVisibleSparesDebtorsExecutiveWise = false;
-//       this.isVisiblefromtosubinventory=true;
-//       this.isVisiblespClosingStockAsOndate=false;
-//     }
-//     else if (reportName === 'sparesSubinvTransMade') {
-//       this.reportName = 'Sub Inventory Transfer Made Report';
-//       this.isVisibleGSTPurchaseRegister = false;
-//       this.isVisibleonlyLocationCode = false;
-//       this.isVisiblegstsaiDebtors = false;
-//       this.isVisibleStockLedger = false;
-//       this.isVisiblestockTransfer = false;
-//       this.isVisibleSparesBackOrderQty = false;
-//       this.isVisiblespClosingStockAsOndate=false;
-//       this.isVisiblesparesMiscIssueReceipt = false;
-//       this.isVisiblesparesInventoryAging = false;
-//       this.isVisibleSparesDebtorsExecutiveWise = false;
-//       this.displayCustAccountNo=false;
-//       this.isVisiblefromtosubinventory=true;
-//     }
-//     else if (reportName === 'internalConsumptionReport') {
-//       this.reportName = 'Internal Consumption Report';
-//       this.isVisibleGSTPurchaseRegister = false;
-//       this.isVisibleonlyLocationCode = false;
-//       this.isVisiblegstsaiDebtors = false;
-//       this.isVisibleStockLedger = false;
-//       this.isVisiblestockTransfer = false;
-//       this.isVisibleSparesBackOrderQty = false;
-//       this.isVisiblesparesMiscIssueReceipt = false;
-//       this.isVisiblesparesInventoryAging = false;
-//       this.isVisibleSparesDebtorsExecutiveWise = false;
-//       this.isVisiblefromtosubinventory=true;
-//       this.isVisiblespClosingStockAsOndate=false;
-//       this.displayCustAccountNo=false;
-//     }
-//   }
-
-  
-
-
-
-//   onOptionsLocation(event) {
-//     // alert(event);
-//     this.sparesReportForm.patchValue({ locId: event })
-//   }
-
-//   onOptionsToLocation(event) {
-//     this.sparesReportForm.patchValue({ tolocId: event })
-//   }
-
-//   onOptionsDepartmentList(event: string) {
-//     // alert(event);
-//     var deptList = this.DepartmentList.find(d => d.code === event);
-//     console.log(deptList);
-
-//     this.sparesReportForm.patchValue({ deptId: deptList.cmnTypeId })
-//   }
-
-
-//   reportParameter(reportName) {
-//     this.isDisabled1 = true;
-//     this.closeResetButton = false;
-//     this.progress = 0;
-//     this.dataDisplay = 'Report Is Running....Do not refresh the Page';
-//     var purStDt = this.sparesReportForm.get('fromDate').value;
-//     var fromDate = this.pipe.transform(purStDt, 'dd-MMM-yyyy');
-//     var toDate1 = this.sparesReportForm.get('toDate').value;
-//     var toDate = this.pipe.transform(toDate1, 'dd-MMM-yyyy');
-//     var locId = this.sparesReportForm.get('locId').value;
-//     var tolocId = this.sparesReportForm.get('tolocId').value;
-//     var deptId = this.sparesReportForm.get('deptId').value;
-//     var userName = this.sparesReportForm.get('userName').value;
-//     var segment = this.sparesReportForm.get('segment').value;
-//     var subInventory = this.sparesReportForm.get('subInventory').value;
-//     var tolocId = this.sparesReportForm.get('tolocId').value;
-//     var custAccNo=this.sparesReportForm.get('custAccNo').value;
-//     // alert(deptId);
-//     if (locId === null) {
-//       alert('Please Select location Code.!');
-//       return;
-//     }
-//     //   alert(reportName.includes('AccessorieClosing Stock'))
-//     // if ( reportName.includes('AccessorieClosing Stock') ===false || reportName.includes('Sai Debtors')===false){
-//     //   if (fromDate === null ||fromDate ===undefined|| fromDate==='' ) {
-//     //     alert('Please Select From Date.!');
-//     //     this.isDisabled1 = false;
-//     //     this.closeResetButton = false;
-//     //     this.progress = 0;
-//     //     this.dataDisplay = 'Please Select From Date.!';
-//     //     return;
-//     //   }
-//     // }
-//     // else if (reportName !='AccessorieClosing Stock Report'){
-//     //   if (toDate === null || toDate===undefined || toDate ==='') {
-//     //     alert('Please Select To Date.!');
-//     //     this.isDisabled1 = false;
-//     //     this.closeResetButton = false;
-//     //     this.progress = 0;
-//     //     this.dataDisplay = 'Please Select To Date.!';
-//     //     return;
-//     //   }
-//     // }
-//     if (reportName === 'Stock Ledger') {
-//       if (userName === null || userName === undefined || userName === '' || segment === null || segment === undefined || segment === '') {
-//         alert('Please Enter userName.!');
-//         this.isDisabled1 = false;
-//         this.closeResetButton = false;
-//         this.progress = 0;
-//         this.dataDisplay = 'Please Enter userName.!';
-//         return;
-//       }
-//     }
-//     else if (reportName === '') {
-//       if (tolocId === null || tolocId === undefined || tolocId === '') {
-//         alert('Please Select To Location.!');
-//         this.isDisabled1 = false;
-//         this.closeResetButton = false;
-//         this.progress = 0;
-//         this.dataDisplay = 'Please Select To Location.!';
-//         return;
-//       }
-//     }
-//     if (reportName === 'Purchase Register Details') {
-//       if (Number(sessionStorage.getItem('deptId')) === 4) {
-//         const fileName = 'Purchase Register Details-' +  fromDate + '-TO-' + toDate + '.xls';
-//         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-//         this.reportService.sppurRegidetailReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.dataDisplay = ''
-//             this.closeResetButton = true;
-//             this.isDisabled1 = false;
-//           })
-//       }
-//       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-//         const fileName = 'Purchase Register Details-' +  fromDate + '-TO-' + toDate + '.xls';
-//         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-//         this.reportService.sppurRegidetailReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.dataDisplay = ''
-//             this.closeResetButton = true;
-//             this.isDisabled1 = false;
-//           })
-//       }
-//     }
-//     else if (reportName === 'AccessoriePurchase Register - Summary') {
-//       const fileName = 'AccessoriePurchase Register - Summary-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
-//       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-//       if (Number(sessionStorage.getItem('deptId')) === 4) {
-//         this.reportService.sppurRegiSummReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//       else if ((Number(sessionStorage.getItem('deptId'))) != 4) {
-//         this.reportService.sppurRegiSummReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//     }
-//     else if (reportName === 'AccessorieIssue Details Report') {
-//       const fileName = 'AccessorieIssue Details Report-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
-//       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-//       if (Number(sessionStorage.getItem('deptId')) === 4) {
-//         this.reportService.spIssueDetailsReport(fromDate, toDate, locId)
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = '';
-//           })
-//       }
-//       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-//         this.reportService.spIssueDetailsReport(fromDate, toDate, sessionStorage.getItem('locId'))
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = '';
-//           })
-//       }
-//     }
-//     else if (reportName === 'AccessorieIssue Summary') {
-//       alert(custAccNo)
-//       if (custAccNo === null || custAccNo === undefined || custAccNo === ''){
-//         custAccNo='';
-//       }
-//       const fileName = 'AccessorieIssue Summary Report-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
-//       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-//       if (Number(sessionStorage.getItem('deptId')) === 4) {
-//         this.reportService.spIssueSummaryReport(fromDate, toDate, locId,custAccNo)
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-//         this.reportService.spIssueSummaryReport(fromDate, toDate, sessionStorage.getItem('locId'),custAccNo)
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//     }
-//     else if (reportName === 'AccessorieReceipt Register') {
-//       const fileName = 'AccessorieReceipt Register-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
-//       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-//       if (Number(sessionStorage.getItem('deptId')) === 4) {
-//         this.reportService.spReceiptRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-//         this.reportService.spReceiptRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//     }
-//     else if (reportName === 'AccessorieClosing Stock Report') {
-//       const fileName = 'SP-Closing-Stock-' + sessionStorage.getItem('locName').trim() + '.xls';
-//       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-//       if (Number(sessionStorage.getItem('deptId')) === 4) {
-//         this.reportService.spclosstrockReport(locId,subInventory)
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-//         this.reportService.spclosstrockReport(sessionStorage.getItem('locId'),subInventory)
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//     }
-//     else if (reportName === 'Sai Debtors') {
-//       var custAccNo = this.sparesReportForm.get('custAccNo').value;
-//       if (custAccNo === undefined || custAccNo === null) {
-//         custAccNo = '';
-//       }
-//       const fileName = 'SP-Debtors-' +  fromDate + '.xls';
-//       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-//       if (Number(sessionStorage.getItem('deptId')) === 4) {
-//         this.reportService.SPDebtorReport(toDate, sessionStorage.getItem('ouId'), locId,custAccNo,deptId,0,0,0,0)
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-//         this.reportService.SPDebtorReport(toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),custAccNo,deptId,0,0,0,0)
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//     }
-//     else if (reportName === 'Stock Ledger') {
-//       if (Number(sessionStorage.getItem('deptId')) === 4) {
-//         this.reportService.stockLedgerReport(fromDate, toDate, subInventory, segment, locId, userName)
-//           .subscribe(data => {
-//             var blob = new Blob([data], { type: 'application/pdf' });
-//             var url = URL.createObjectURL(blob);
-//             var printWindow = window.open(url, '', 'width=800,height=500');
-//             printWindow.open;
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-//         this.reportService.stockLedgerReport(fromDate, toDate, subInventory, segment, sessionStorage.getItem('locId'), userName)
-//           .subscribe(data => {
-//             var blob = new Blob([data], { type: 'application/pdf' });
-//             var url = URL.createObjectURL(blob);
-//             var printWindow = window.open(url, '', 'width=800,height=500');
-//             printWindow.open;
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//     }
-//     else if (reportName === 'Stock Transfer Made Detail Report') {
-//       const fileName = 'Stock Transfer Made Detail Report-' +  fromDate + '.xls';
-//       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-//       if (Number(sessionStorage.getItem('deptId')) === 4) {
-//         this.reportService.stockMadeDetailsReport(fromDate, toDate, locId, tolocId, subInventory,sessionStorage.getItem('deptId'))
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-//         this.reportService.stockMadeDetailsReport(fromDate, toDate, sessionStorage.getItem('locId'), tolocId, subInventory,sessionStorage.getItem('deptId'))
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//     }
-//     else if (reportName === 'Stock Transfer Made Summary Report') {
-//       const fileName = 'Stock Transfer Made Summary Report-' +  fromDate + '.xls';
-//       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-//       if (Number(sessionStorage.getItem('deptId')) === 4) {
-//         this.reportService.spstktrfMdSummaryReport(fromDate, toDate, locId, tolocId, subInventory)
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-//         this.reportService.spstktrfMdSummaryReport(fromDate, toDate, sessionStorage.getItem('locId'), tolocId, subInventory)
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//     }
-//     else if (reportName === 'Stock Transfer Received Detail Report') {
-//       const fileName = 'Stock Transfer Received Detail Report-' +  fromDate + '.xls';
-//       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-//       if (Number(sessionStorage.getItem('deptId')) === 4) {
-//         this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate, locId, tolocId, subInventory,sessionStorage.getItem('deptId'))
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-//         this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate, sessionStorage.getItem('locId'), tolocId, subInventory,sessionStorage.getItem('deptId'))
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//     }
-//     else if (reportName === 'AccessorieStock Transfer Received Summary Report') {
-//       const fileName = 'AccessorieStock Transfer Received Summary Report-' +  fromDate + '.xls';
-//       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-//       if (Number(sessionStorage.getItem('deptId')) === 4) {
-//         this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate, locId, tolocId, subInventory)
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-//         this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate, sessionStorage.getItem('locId'), tolocId, subInventory)
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//     }
-//     else if (reportName === 'AccessorieCustomer Off Take Statement') {
-//       const fileName = 'Spares-Customer-Off-Take-Statement-' +  fromDate + '.xls';
-//       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-//       if (Number(sessionStorage.getItem('deptId')) === 4) {
-//         this.reportService.SprcusttakestatReport(fromDate, toDate, locId)
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-//         this.reportService.SprcusttakestatReport(fromDate, toDate, sessionStorage.getItem('locId'))
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//     }
-//     else if (reportName === 'AccessorieBack Order Qty Report') {
-//       var custAccNo = this.sparesReportForm.get('custAccNo').value;
-//       var orderNumber = this.sparesReportForm.get('orderNumber').value;
-//       if (custAccNo === undefined || custAccNo === null) {
-//         custAccNo = '';
-//       }
-//       if (orderNumber === undefined || orderNumber === null) {
-//         orderNumber = ''
-//       }
-//       const fileName = 'AccessorieBack Order Qty Report-' +  fromDate + '.xls';
-//       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-//       if (Number(sessionStorage.getItem('deptId')) === 4) {
-//         this.reportService.spbackOrderQtyReport(fromDate, toDate, locId, custAccNo, orderNumber)
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-//         this.reportService.spbackOrderQtyReport(fromDate, toDate, sessionStorage.getItem('locId'), custAccNo, orderNumber)
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//     }
-//     else if (reportName === 'AccessorieMisc Issue Receipt Report') {
-//       const fileName = 'AccessorieMisc Issue Receipt Report-' +  fromDate + '.xls';
-//       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-//       if (Number(sessionStorage.getItem('deptId')) === 4) {
-//         this.reportService.spSparesMiscIssueReceiptReport(fromDate, toDate, locId)
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//       if (Number(sessionStorage.getItem('deptId')) != 4) {
-//         this.reportService.spSparesMiscIssueReceiptReport(fromDate, toDate, sessionStorage.getItem('locId'))
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//     }
-//     else if (reportName === 'AccessorieSales Return Register') {
-//       const fileName = 'AccessorieSales Return Register-' +  fromDate + '.xls';
-//       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-//       if (Number(sessionStorage.getItem('deptId')) === 4) {
-//         this.reportService.spslReturnRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-//         this.reportService.spslReturnRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//     }
-//     else if (reportName === 'Income Statement') {
-//       const fileName = 'AccessorieIncome Statement-' +  fromDate + '.xls';
-//       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-//       if (Number(sessionStorage.getItem('deptId')) === 4) {
-//         this.reportService.spIncomeStatement(fromDate, toDate, locId)
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-//         this.reportService.spIncomeStatement(fromDate, toDate, sessionStorage.getItem('locId'))
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//     }
-//     else if (reportName === 'AccessorieClosing Stock As On Date') {
-//       const fileName = 'AccessorieClosing Stock As On Date-' +  toDate + '.xls';
-//       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-//       if (Number(sessionStorage.getItem('deptId')) === 4) {
-//         this.reportService.sprClsAsonDtReport(toDate, locId,subInventory)
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//       else if (Number(sessionStorage.getItem('deptId')) != 4) { 
-//         this.reportService.sprClsAsonDtReport(toDate, sessionStorage.getItem('locId'),subInventory)
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//     }
-//     else if (reportName === 'AccessorieProforma Details Report') {
-//       const fileName = 'AccessorieProforma Details Report-' +  fromDate + '.xls';
-//       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-//       if (Number(sessionStorage.getItem('deptId')) === 4) {
-//         this.reportService.spProforDtReport(fromDate, toDate, locId)
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-//         this.reportService.spProforDtReport(fromDate, toDate, sessionStorage.getItem('locId'))
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//     }
-//     else if (reportName === 'Cheque Bounce Report') {
-//       const fileName = 'Cheque Bounce Report-' +  fromDate + '.xls';
-//       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-//       if (Number(sessionStorage.getItem('deptId')) === 4) {
-//         this.reportService.chequebounceReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-//         this.reportService.chequebounceReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//     }
-//     else if (reportName === 'AccessorieInventory Aging Report') {
-//       var spInvAging1 = this.sparesReportForm.get('spInvAging1').value;
-//       var spInvAging2 = this.sparesReportForm.get('spInvAging2').value;
-//       var spInvAging3 = this.sparesReportForm.get('spInvAging3').value;
-//       if (spInvAging1 > spInvAging2) {
-//         alert('Please check Aging.!');
-//         this.dataDisplay = 'Please check Aging.';
-//         return;
-//       }
-//       else if (spInvAging1 > spInvAging3) {
-//         alert('Please check Aging.!');
-//         this.dataDisplay = 'Please check Aging.';
-//         return;
-//       }
-//       else if (spInvAging2 > spInvAging3) {
-//         alert('Please check Aging.!');
-//         this.dataDisplay = 'Please check Aging.';
-//         return;
-//       }
-//       const fileName = 'AccessorieInventory Aging Report-' +  '.xls';
-//       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-//       if (Number(sessionStorage.getItem('deptId')) === 4) {
-//         this.reportService.sspInvAgingReport(spInvAging1, spInvAging2, spInvAging3, sessionStorage.getItem('ouId'), locId,subInventory,userName)
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-//         this.reportService.sspInvAgingReport(spInvAging1, spInvAging2, spInvAging3, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),subInventory,userName)
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//     }
-//     else if (reportName === 'AccessorieDebtors Executive Wise report') {
-//       var custAcctNo = this.sparesReportForm.get('custAccNo').value;
-//       var ticketNo = this.sparesReportForm.get('userName1').value
-//       if (custAcctNo === undefined || custAcctNo === null) {
-//         custAcctNo = '';
-//       }
-//       if (ticketNo === undefined || ticketNo === null) {
-//         ticketNo = '';
-//       }
-//       const fileName = 'AccessorieDebtors Executive Wise report-' +  fromDate + '.xls';
-//       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-//       if (Number(sessionStorage.getItem('deptId')) === 4) {
-//         this.reportService.spDebtorExicutiveWise(toDate, sessionStorage.getItem('ouId'), locId, ticketNo, custAcctNo, deptId)
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-//         this.reportService.spDebtorExicutiveWise(toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), ticketNo, custAcctNo, sessionStorage.getItem('deptId'))
-//           .subscribe(data => {
-//             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//             this.isDisabled1 = false;
-//             this.closeResetButton = true;
-//             this.dataDisplay = ''
-//           })
-//       }
-//     }
-//     else if (reportName==='Sub Inventory Transfer Received Report'){
-//       const fileName = 'Sub Inventory Transfer Received Report-' +  fromDate + '.xls';
-//       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-//       if ((Number(sessionStorage.getItem('deptId'))===4)){
-//         this.reportService.spInvTransRecFuc(fromDate,toDate, locId, subInventory)
-//         .subscribe(data => {
-//           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//           this.isDisabled1 = false;
-//           this.closeResetButton = true;
-//           this.dataDisplay = ''
-//         })
-//       }
-//       else if ((Number(sessionStorage.getItem('deptId')))!=4){
-//         this.reportService.spInvTransRecFuc(fromDate,toDate, sessionStorage.getItem('locId'), subInventory)
-//         .subscribe(data => {
-//           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//           this.isDisabled1 = false;
-//           this.closeResetButton = true;
-//           this.dataDisplay = ''
-//         })
-//       }
-//     }
-//     else if (reportName==='Sub Inventory Transfer Made Report'){
-//       const fileName = 'Sub Inventory Transfer Made Report-' +  fromDate + '.xls';
-//       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-//       if ((Number(sessionStorage.getItem('deptId'))===4)){
-//         this.reportService.spInvTransMadeFuc(fromDate,toDate, locId, subInventory)
-//         .subscribe(data => {
-//           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//           this.isDisabled1 = false;
-//           this.closeResetButton = true;
-//           this.dataDisplay = ''
-//         })
-//       }
-//       else if ((Number(sessionStorage.getItem('deptId')))!=4){
-//         this.reportService.spInvTransMadeFuc(fromDate,toDate, sessionStorage.getItem('locId'), subInventory)
-//         .subscribe(data => {
-//           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//           this.isDisabled1 = false;
-//           this.closeResetButton = true;
-//           this.dataDisplay = ''
-//         })
-//       } 
-//     }
-//     else if (reportName==='Internal Consumption Report'){
-//       const fileName = 'Internal Consumption Report-' +  fromDate + '.xls';
-//       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-//       if ((Number(sessionStorage.getItem('deptId'))===4)){
-//         this.reportService.internalConsuptionReport(fromDate,toDate, locId, subInventory)
-//         .subscribe(data => {
-//           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//           this.isDisabled1 = false;
-//           this.closeResetButton = true;
-//           this.dataDisplay = ''
-//         })
-//       }
-//       else if ((Number(sessionStorage.getItem('deptId')))!=4){
-//         this.reportService.internalConsuptionReport(fromDate,toDate, sessionStorage.getItem('locId'), subInventory)
-//         .subscribe(data => {
-//           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//           this.isDisabled1 = false;
-//           this.closeResetButton = true;
-//           this.dataDisplay = ''
-//         })
-//       } 
-//     }
-//   }
-//   spPurRegDownLoad() {
-//     const fileName = 'Purchase-Register-' +  '.xls';
-//     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-//     this.reportService.spPurRegDownLoadReport(sessionStorage.getItem('ouId'))
-//       .subscribe(data => {
-//         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-//         this.dataDisplay = ''
-//         this.closeResetButton = true;
-//         this.isDisabled1 = false;
-//       })
-//   }
-
-
-//   filterRecord(event) {
-//     var itemCode = event.target.value;
-//     if (itemCode.length === 4) {
-//       // if (event.keyCode == 13) {
-//       this.service.invItemList2New('GOODS', 'Spares', (sessionStorage.getItem('divisionId')), itemCode.toUpperCase())
-//         .subscribe((data) => {
-//           if (data.length === 0) {
-//             alert('Item Not Present in Master');
-//             return;
-//           }
-//           else {
-//             this.invItemList = data;
-//           }
-//         });
-//       // }
-//     }
-//     else if (itemCode.length === 3) {
-//       alert('Please Enter 4 characters of item number!!');
-//       return;
-//     }
-//   }
-
-//   department(department) {
-//     if (department === 'Spares') {
-//       let department = this.DepartmentList.filter((customer) => ((customer.codeDesc.includes('Spares') == true)));
-//       console.log(department);
-//       this.DepartmentList = department;
-//     }
-//   }
-
-// }
 sparesReportForm: FormGroup;
 pipe = new DatePipe('en-US');
 now = new Date();
@@ -1371,6 +88,9 @@ userName1:string;
 dispLocation:boolean=true;
 rptValidation=true;
 displayCustAccountNo=false;
+isVisibleStockMissMatch:boolean=false;
+isVisiblepanelspDeadStockNoConsuptionDaywise:boolean=false;
+noOfDays:number;
 
 constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
   this.sparesReportForm = this.fb.group({
@@ -1402,6 +122,7 @@ constructor(private fb: FormBuilder, private router: Router, private service: Ma
     spDbAging4:[],
 
     compileCode:[''],
+    noOfDays:[],
   })
 }
 
@@ -1468,7 +189,7 @@ ngOnInit(): void {
   if (Number(sessionStorage.getItem('deptId')) === 4) {
     this.isVisiblelocationLOV = true;
     this.isVisiblelocationInput = false;
-    this.sparesReportForm.patchValue({ subInventory: 'SP' })
+    this.sparesReportForm.patchValue({ subInventory: 'AC' })
     this.dispLocation=true;
   }
   else {
@@ -1519,6 +240,8 @@ reportDetails(reportName) {
     this.isVisibleonlyLocationCode = false;
     this.isVisiblegstsaiDebtors = false;
     this.isVisibleStockLedger = false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
     this.isVisiblestockTransfer = false;
     this.isVisiblestockTransferRecd=false;
     this.isVisibleSparesBackOrderQty = false;
@@ -1543,6 +266,8 @@ reportDetails(reportName) {
     this.isVisiblegstsaiDebtors = false;
     this.isVisibleStockLedger = false;
     this.displayCustAccountNo=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
     this.isVisiblestockTransfer = false;
     this.isVisiblestockTransferRecd=false;
     this.isVisiblespClosingStockAsOndate=false;
@@ -1562,6 +287,8 @@ reportDetails(reportName) {
     this.isVisibleonlyLocationCode = false;
     this.isVisiblegstsaiDebtors = false;
     this.isVisibleStockLedger = false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
      this.isVisiblespClosingStockAsOndate=false;
     this.isVisiblestockTransfer = false;
     this.isVisiblestockTransferRecd=false;
@@ -1583,6 +310,8 @@ reportDetails(reportName) {
     this.isVisibleonlyLocationCode = false;
     this.displayCustAccountNo=true;
     this.isVisiblegstsaiDebtors = false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
     this.isVisiblespClosingStockAsOndate=false;
     this.isVisibleStockLedger = false;
     this.isVisiblestockTransfer = false;
@@ -1605,6 +334,8 @@ reportDetails(reportName) {
     this.isVisibleonlyLocationCode = false;
     this.isVisibleGSTPurchaseRegister = true;
     this.isVisiblegstsaiDebtors = false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
      this.isVisiblespClosingStockAsOndate=false;
     this.isVisibleStockLedger = false;
     this.isVisiblestockTransfer = false;
@@ -1640,6 +371,8 @@ reportDetails(reportName) {
     this.isVisibleEwayBill=false;
     this.isVisiblepanelStockTaking=false;
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
 
   else if (reportName === 'gstsaiDebtors') {
@@ -1664,6 +397,8 @@ reportDetails(reportName) {
     this.isVisibleEwayBill=false;
     this.isVisiblepanelStockTaking=false;
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName === 'gstSprAgingSummary') {
     this.reportName = 'Accessories Debtors Aging Report Summary';
@@ -1687,6 +422,8 @@ reportDetails(reportName) {
     this.isVisibleEwayBill=false;
     this.isVisiblepanelStockTaking=false;
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName === 'gstStockLedger') {
     this.reportName = 'Stock Ledger';
@@ -1707,6 +444,8 @@ reportDetails(reportName) {
     this.isVisibleEwayBill=false;
     this.isVisiblepanelStockTaking=false;
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName === 'gststockTransfer') {
     this.reportName = 'Stock Transfer Made Detail Report';
@@ -1735,7 +474,8 @@ reportDetails(reportName) {
       console.log(this.BillShipToList);
     });}
     this.panelspDebtAgByExicutiveSummary=false;
-
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName === 'gststockTransferSummary') {
     this.reportName = 'Stock Transfer Made Summary Report';
@@ -1764,6 +504,8 @@ reportDetails(reportName) {
       console.log(this.BillShipToList);
     });}
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName === 'gststockTransferReceivedDetails') {
     this.reportName = 'Stock Transfer Received Detail Report';
@@ -1792,6 +534,8 @@ reportDetails(reportName) {
       console.log(this.BillShipToList);
     });}
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName === 'gststockTransferReceivedSummary') {
     this.reportName = 'Accessories Stock Transfer Received Summary Report';
@@ -1820,6 +564,8 @@ reportDetails(reportName) {
       console.log(this.BillShipToList);
     });}
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName === 'gstsparesCustomerOffTakeStatment') {
     this.reportName = 'Accessories Customer Off Take Statement';
@@ -1840,6 +586,8 @@ reportDetails(reportName) {
      this.isVisibleEwayBill=false;
      this.isVisiblepanelStockTaking=false;
      this.panelspDebtAgByExicutiveSummary=false;
+     this.isVisibleStockMissMatch = false;
+     this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName === 'gstSparesBackOrderQty') {
     this.reportName = 'Accessories Back Order Qty Report';
@@ -1861,6 +609,8 @@ reportDetails(reportName) {
     this.isVisibleEwayBill=false;
     this.isVisiblepanelStockTaking=false;
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName === 'gstsparesMiscIssueReceipt') {
     this.reportName = 'Accessories Misc Issue Receipt Report';
@@ -1881,6 +631,8 @@ reportDetails(reportName) {
     this.isVisibleEwayBill=false;
     this.isVisiblepanelStockTaking=false;
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName === 'gstSaleReturnRegister') {
     this.reportName = 'Accessories Sales Return Register';
@@ -1901,6 +653,8 @@ reportDetails(reportName) {
     this.displayCustAccountNo=false;
     this.isVisiblepanelStockTaking=false;
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName === 'gstIncomeStatement') {
     this.reportName = 'Income Statement';
@@ -1921,6 +675,8 @@ reportDetails(reportName) {
     this.isVisibleEwayBill=false;
     this.isVisiblepanelStockTaking=false;
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName === 'gstSparesClosingStockAsOnDate') {
     this.reportName = 'Accessories Closing Stock As On Date';
@@ -1941,6 +697,8 @@ reportDetails(reportName) {
     this.isVisibleEwayBill=false;
     this.isVisiblepanelStockTaking=false;
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName === 'gstSpresProformaDetailsReports') {
     this.reportName = 'Accessories Proforma Details Report';
@@ -1961,6 +719,8 @@ reportDetails(reportName) {
     this.isVisibleEwayBill=false;
     this.isVisiblepanelStockTaking=false;
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName === 'gstChequeBounceReport') {
     this.reportName = 'Cheque Bounce Report';
@@ -1981,6 +741,8 @@ reportDetails(reportName) {
     this.isVisibleEwayBill=false;
     this.isVisiblepanelStockTaking=false;
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName === 'gstsparesInventoryAging') {
     this.reportName = 'Accessories Inventory Aging Report';
@@ -2001,6 +763,8 @@ reportDetails(reportName) {
     this.isVisibleEwayBill=false;
     this.isVisiblepanelStockTaking=false;
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName === 'gstSparesDebtorsExecutiveWise') {
     this.reportName = 'Accessories Debtors Executive Wise report';
@@ -2024,6 +788,8 @@ reportDetails(reportName) {
     this.isVisibleEwayBill=false;
     this.isVisiblepanelStockTaking=false;
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName === 'sparesSubinvTransReceived') {
     this.reportName = 'Sub Inventory Transfer Received Report';
@@ -2044,6 +810,8 @@ reportDetails(reportName) {
     this.displayCustAccountNo=false;
     this.isVisiblepanelStockTaking=false;
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName === 'sparesSubinvTransMade') {
     this.reportName = 'Sub Inventory Transfer Made Report';
@@ -2064,6 +832,8 @@ reportDetails(reportName) {
     this.isVisibleEwayBill=false;
     this.isVisiblepanelStockTaking=false;
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
     
   }
   else if (reportName === 'internalConsumptionReport') {
@@ -2085,6 +855,8 @@ reportDetails(reportName) {
     this.isVisibleEwayBill=false;
     this.isVisiblepanelStockTaking=false;
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName === 'customerLedger') {
     this.reportName = 'Customer Ledger Report';
@@ -2109,6 +881,8 @@ reportDetails(reportName) {
       this.isVisibleDepartmentList = true;
     }
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName === 'creditNoteReg') {
     this.reportName = 'Credit Note Register';
@@ -2129,6 +903,8 @@ reportDetails(reportName) {
     this.isVisibleEwayBill=false;
     this.isVisiblepanelStockTaking=false;
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName === 'EwayBill') {
     this.reportName = 'Eway Bill Report';
@@ -2149,6 +925,8 @@ reportDetails(reportName) {
     this.isVisibleEwayBill=true;
     this.isVisiblepanelStockTaking=false;
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName === 'IrnGenerationReport') {
     this.reportName = 'IRN Generation Report';
@@ -2173,6 +951,8 @@ reportDetails(reportName) {
       this.isVisibleDepartmentList = true;
     }
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
 
   else if (reportName === 'sparesIssSummaryTransWise') {
@@ -2198,6 +978,8 @@ reportDetails(reportName) {
       this.isVisibleDepartmentList = true;
     }
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
 
   else if (reportName === 'sparesZeroStkReport') {
@@ -2219,6 +1001,8 @@ reportDetails(reportName) {
     this.isVisibleEwayBill=false;
     this.isVisiblepanelStockTaking=false;
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName === 'sparesIssSummaryAvgCost') {
     this.reportName = 'Accessories Issue Summary-Average Cost';
@@ -2238,10 +1022,9 @@ reportDetails(reportName) {
     this.isVisiblecustomerLedger=false;
     this.isVisibleEwayBill=false;
     this.isVisiblepanelStockTaking=false;
-    // if (Number(sessionStorage.getItem('deptId')) === 4) {
-    //   this.isVisibleDepartmentList = true;
-    // }
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
 
   else if (reportName === 'stkTakingBlankFormat') {
@@ -2263,6 +1046,8 @@ reportDetails(reportName) {
     this.isVisibleEwayBill=false;
     this.isVisiblepanelStockTaking=true;
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName === 'stkTakingQtyDet') {
     this.reportName = 'Stock Taking Report - Qty Details';
@@ -2283,6 +1068,8 @@ reportDetails(reportName) {
     this.isVisibleEwayBill=false;
     this.isVisiblepanelStockTaking=true;
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName === 'stkTakingPhyStk') {
     this.reportName = 'Stock Taking - Physical Stock Upload';
@@ -2303,6 +1090,8 @@ reportDetails(reportName) {
     this.isVisibleEwayBill=false;
     this.isVisiblepanelStockTaking=true;
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName === 'sparesDbAgingExicutiveSum') {
     this.reportName = 'Accessories Debtors Aging Report - Executive summary';
@@ -2323,6 +1112,8 @@ reportDetails(reportName) {
     this.isVisibleEwayBill=false;
     this.isVisiblepanelStockTaking=false;
     this.panelspDebtAgByExicutiveSummary=true;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName === 'spConsumptionReport') {
     this.reportName = 'Accessories Item Consumption Report';
@@ -2343,6 +1134,8 @@ reportDetails(reportName) {
     this.isVisibleEwayBill=false;
     this.isVisiblepanelStockTaking=false;
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName==='gstsaiDebtorsAsOf'){
     this.reportName = 'Accessories Debtor Report As Of';
@@ -2363,6 +1156,8 @@ reportDetails(reportName) {
     this.isVisibleEwayBill=false;
     this.isVisiblepanelStockTaking=false;
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName==='receiptOtherDetails'){
     this.reportName = 'Receipt-Other Details Report';
@@ -2383,6 +1178,8 @@ reportDetails(reportName) {
     this.isVisibleEwayBill=false;
     this.isVisiblepanelStockTaking=false;
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName==='billHandedoverToActReport'){
     this.reportName = 'Account Bill Handover Report';
@@ -2403,6 +1200,8 @@ reportDetails(reportName) {
     this.isVisibleEwayBill=false;
     this.isVisiblepanelStockTaking=false;
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName==='spDebtorOSLetter'){
     this.reportName = 'Accessories Debtor O/S Letter';
@@ -2423,6 +1222,8 @@ reportDetails(reportName) {
     this.isVisibleEwayBill=false;
     this.isVisiblepanelStockTaking=false;
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
   else if (reportName==='shortLandedClaim'){
     this.reportName = 'Short Landed Claim Report';
@@ -2443,9 +1244,53 @@ reportDetails(reportName) {
     this.isVisibleEwayBill=false;
     this.isVisiblepanelStockTaking=false;
     this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
   }
-
-  
+  else if (reportName==='spDeadStockNoConsuptionDaywise'){
+    this.reportName = 'Spares Dead Stock-No Consumption-Daywise';
+    this.isVisiblegstsaiDebtors=false;
+    this.isVisibleGSTPurchaseRegister = false;
+    this.isVisibleonlyLocationCode = false;
+    this.isVisibleStockLedger = false;
+    this.displayCustAccountNo=false;
+    this.isVisiblespClosingStockAsOndate=false;
+    this.isVisiblestockTransfer = false;
+    this.isVisiblestockTransferRecd=false;
+    this.isVisibleSparesBackOrderQty = false;
+    this.isVisiblesparesMiscIssueReceipt = false;
+    this.isVisiblesparesInventoryAging = false;
+    this.isVisibleSparesDebtorsExecutiveWise = false;
+    this.isVisiblefromtosubinventory=false;
+    this.isVisiblecustomerLedger=false;
+    this.isVisibleEwayBill=false;
+    this.isVisiblepanelStockTaking=false;
+    this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = false;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=true;
+  }
+  else if (reportName==='StockMissMatch'){
+    this.reportName = 'Spares Stock Mismatch Report';
+    this.isVisiblegstsaiDebtors=false;
+    this.isVisibleGSTPurchaseRegister = false;
+    this.isVisibleonlyLocationCode = false;
+    this.isVisibleStockLedger = false;
+    this.displayCustAccountNo=false;
+    this.isVisiblespClosingStockAsOndate=false;
+    this.isVisiblestockTransfer = false;
+    this.isVisiblestockTransferRecd=false;
+    this.isVisibleSparesBackOrderQty = false;
+    this.isVisiblesparesMiscIssueReceipt = false;
+    this.isVisiblesparesInventoryAging = false;
+    this.isVisibleSparesDebtorsExecutiveWise = false;
+    this.isVisiblefromtosubinventory=false;
+    this.isVisiblecustomerLedger=false;
+    this.isVisibleEwayBill=false;
+    this.isVisiblepanelStockTaking=false;
+    this.panelspDebtAgByExicutiveSummary=false;
+    this.isVisibleStockMissMatch = true;
+    this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
+  }
 
 }
 
@@ -2821,12 +1666,6 @@ reportParameter(reportName) {
     // alert('Hello');
     this.toDateValidation(tDate);if(this.rptValidation==false){return;}
     var custAccNo = this.sparesReportForm.get('custAccNo').value;
-
-    // if (custAccNo<=0 || custAccNo==undefined || custAccNo==null ) {
-    //   this.closeResetButton=true;
-    //   // this.dataDisplay = 'Please check Customer No.'
-    //   return; }comment by vinita
-
     if (custAccNo<=0 || custAccNo==undefined || custAccNo==null ) {
       custAccNo='';
         }
@@ -3804,6 +2643,52 @@ else if (reportName ==='Short Landed Claim Report')
       this.isDisabled1=false;
     })  
   } 
+}
+else if (reportName==='Spares Stock Mismatch Report'){
+  const fileName = 'Spares Stock Mismatch Report-' +  '-TO-' + '.pdf';
+  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  if (Number(sessionStorage.getItem('deptId')) === 4) {
+  this.reportService.StockMissMatchFN(fromDate,toDate,subInventory,locId,userName)
+  .subscribe(data => {
+    saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+    this.closeResetButton = true;
+    this.dataDisplay = ''
+    this.isDisabled1=false;
+  })
+}
+else if (Number(sessionStorage.getItem('deptId')) != 4) {
+  this.reportService.StockMissMatchFN(fromDate,toDate,subInventory,sessionStorage.getItem('locId'),sessionStorage.getItem('ticketNo'))
+  .subscribe(data => {
+    saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+    this.closeResetButton = true;
+    this.dataDisplay = ''
+    this.isDisabled1=false;
+  })
+}
+}
+else if (reportName=='Spares Dead Stock-No Consumption-Daywise'){
+  const fileName = 'Spares Dead Stock-No Consumption-Daywise' +  '.xls';
+  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  var subInventory = this.sparesReportForm.get('subInventory').value;
+  var noOfDays = this.sparesReportForm.get('noOfDays').value;
+  if (Number(sessionStorage.getItem('deptId')) === 4) {
+    this.reportService.spDeadStockNoConsuptionDaywiseFn(sessionStorage.getItem('ouId'),locId,noOfDays,subInventory)
+    .subscribe(data => {
+      saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+      this.closeResetButton = true;
+      this.dataDisplay = ''
+      this.isDisabled1=false;
+    })  
+  }
+  if (Number(sessionStorage.getItem('deptId')) != 4) {
+    this.reportService.spDeadStockNoConsuptionDaywiseFn(sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'),noOfDays,subInventory)
+    .subscribe(data => {
+      saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+      this.closeResetButton = true;
+      this.dataDisplay = ''
+      this.isDisabled1=false;
+    })  
+  }
 }
 }
 

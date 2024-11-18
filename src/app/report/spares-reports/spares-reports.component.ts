@@ -2899,7 +2899,7 @@ export class SparesReportsComponent implements OnInit {
   }
   
   else if (reportName==='Spares Stock Mismatch Report'){
-    const fileName = 'Spares Stock Mismatch Report-' +  '-TO-' + '.xls';
+    const fileName = 'Spares Stock Mismatch Report-' +  '-TO-' + '.pdf';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     if (Number(sessionStorage.getItem('deptId')) === 4) {
     this.reportService.StockMissMatchFN(fromDate,toDate,subInventory,locId,userName)
