@@ -103,7 +103,7 @@ export class SalesOrderProformaComponent implements OnInit {
   mrp: number;
   creditDays: string;
   daysMsg: string;
-
+  attribute1:number;
   // orderedDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
   // custPoDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
 
@@ -240,6 +240,7 @@ export class SalesOrderProformaComponent implements OnInit {
       basicValue: [],
       financeyn:[],
       attribute4:[],
+      attribute1:[],
       oeOrderLinesAllList: this.fb.array([this.orderlineDetailsGroup()]),
     })
   }
@@ -486,7 +487,16 @@ export class SalesOrderProformaComponent implements OnInit {
               sgst: ((this.basicChassisPrice * data.obj[0].gstPercentage / 100) / 2),
               cgst: ((this.basicChassisPrice * data.obj[0].gstPercentage / 100) / 2),
               totAmt: (this.basicChassisPrice + (this.basicChassisPrice * data.obj[0].gstPercentage / 100))
+             
             });
+            ////////////prayag//////////
+            // if(totAmt>="100000"){
+            //   attribute1
+            //   var tcsAmt = Number((totAmt )*tcsPer/100);
+            //   // alert('tcsAmt---'+tcsAmt)
+            //   this.CounterSaleOrderBookingForm.patchValue({ 'attribute1': tcsAmt });
+
+            // }
             this.updateTotAmtPerline(0)
             this.addRow(0)
           }
@@ -1050,6 +1060,13 @@ export class SalesOrderProformaComponent implements OnInit {
       this.displayRemoveRow.push(true);
     }
 
+    ////////prayag//////////
+    // if(totAmt>="100000"){
+    //   var tcsAmt = Number((totAmt )*tcsPer/100);
+    //   tcsAmt = Math.round(((tcsAmt) + Number.EPSILON) * 100) / 100;
+    //   this.CounterSaleOrderBookingForm.patchValue({ 'attribute1': tcsAmt });
+    // }
+    
   }
 
 

@@ -968,6 +968,10 @@ export class OrderManagementService {
   }
 
   
+  panNoCheckFn(panNo): Observable<any> {
+    // alert('------'+panNo)
+    return this.http.get(this.ServerUrl + `/Customer/findByPanNoDetails?panNo=${panNo}`);
+  }
 }
 
 

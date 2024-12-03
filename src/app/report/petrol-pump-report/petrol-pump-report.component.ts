@@ -386,6 +386,19 @@ if (reportName === 'sparesSubinvTransMade') {
       this.isVisibleDSRRegister=false;
 
   }
+
+  if (reportName === 'cashSale') {
+    this.reportName = 'Cash Sale Report';
+    this.isVisibleCashCollectionExcessShort=true;
+    this.isVisiblegstsaiDebtors=false;
+    this.isVisiblesparesMiscIssueReceipt = false;
+    this.isVisibleonlyLocationCode = false;
+    this.isVisibleGSTPurchaseRegister = false;
+    this.isVisiblefromtosubinventory= false;
+    this.isVisiblespPurRegDownLoad=false;
+    this.isVisibleDSRRegister=false;
+
+}
 }
 
 
@@ -739,6 +752,27 @@ else if (reportName === 'Sales Register - Petrol Pump'){
       } 
     }
 
+    else if (reportName==='Cash Sale Report'){
+      this.closeResetButton = true;
+      this.dataDisplay = ''
+      alert("Cash Sale Report...WIP....");
+      // return;
+      
+  this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
+  const fileName = 'Cash Sale Report-' +  fromDate + '.xls';
+  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  
+  // else if ((Number(sessionStorage.getItem('deptId')))!=4){
+    this.reportService.cashSaleReportFn(fromDate,toDate, sessionStorage.getItem('locId'))
+    .subscribe(data => {
+      saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+      this.isDisabled1 = false;
+      this.closeResetButton = true;
+      this.dataDisplay = ''
+    })
+  // }
+  }
     
 
 

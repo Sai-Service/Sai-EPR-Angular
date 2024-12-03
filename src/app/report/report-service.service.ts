@@ -1283,5 +1283,13 @@ StockMissMatchFN(fromDate,toDate,subInventory,locId,userName){
   }); 
 }
 
+cashSaleReportFn(fromDate,toDate,locId){
+  const REQUEST_URI = this.ServerUrl +`/PetrolPumpReport/CashSaleRep?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  }); 
+}
+
 }
 
