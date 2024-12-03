@@ -562,6 +562,8 @@ EwayUpdate(){
     }
   });
 }
+
+
 validate(i:number,qty1)
 {
   // alert("Validate");
@@ -585,14 +587,16 @@ validate(i:number,qty1)
     trxLnArr1.controls[i].patchValue({primaryQty:''});
     qty1.focus();
   }
-  if(uomCode==='NO')
-  {
-    // alert(Number.isInteger(qty)+'Status');
-    if(!(Number.isInteger(qty)))
-    {
-    alert('Please enter correct No');
-    trxLnArr1.controls[i].patchValue({primaryQty:''});
-  }}
+
+    //   if(uomCode==='NO')
+    //   {
+    //     if(!(Number.isInteger(qty)))
+    //     {
+    //     alert('Please enter correct No');
+    //     trxLnArr1.controls[i].patchValue({primaryQty:''});
+    //   }
+    // }
+
   this.updateTotAmtPerline(i);
 }
 
