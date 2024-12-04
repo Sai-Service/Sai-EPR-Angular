@@ -94,6 +94,7 @@ interface IcustomerMaster {
   shipTo:string;
   sshipToState:string;
   sshipTo:string;
+  panCheckMes:string;
 }
 
 @Component({
@@ -934,9 +935,11 @@ export class CustomerMasterComponent implements OnInit {
     const formValue: IcustomerMaster = this.transDataWithSite(this.customerMasterForm.value);
     formValue.customerId1 = this.custAccountNo;
     formValue.termId=this.customerMasterForm.get('paymentType').value;
-    // if (formValue.tdsPer === 'Organization') {
-    //   formValue.title = 'M/S';
-    // }
+    // alert(formValue.panCheckMes);
+    if (formValue.panCheckMes != null){
+      alert(formValue.panCheckMes);
+      return;
+    };
     if (formValue.custType === 'Organization') {
       formValue.title = 'M/S';
     }

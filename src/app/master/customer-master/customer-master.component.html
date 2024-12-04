@@ -764,7 +764,7 @@
                                         [ngClass]="{ 'is-invalid': submitted && f.panNo.errors }"
                                         placeholder="Enter panNo" (blur)="onSelectPan($event)" (keydown.tab)="panCardCheck(panNo)"
                                         >
-                                        <input disabled hidden formControlName="panCheckMes"  class="form-control" >
+                                        <input disabled  formControlName="panCheckMes"  class="form-control" >
                                         <!-- pattern="^[A-Z]{5}[0-9]{4}[A-Z]{1}$" -->
                                     <div *ngIf="submitted && f.panNo.errors" class="invalid-feedback">
                                         <div *ngIf="f.panNo.errors.pattern">Invalid PAN No format</div>
@@ -1259,7 +1259,7 @@
                                             <div *ngIf="f.spanNo.errors.pattern">Invalid PAN format</div>
                                             <!-- <div *ngIf="f.spanNo.errors.maxLength">PAN no Maximum length error</div> -->
                                         </div>
-                                        <input disabled hidden formControlName="panCheckMes"  class="form-control" >
+                                        <input disabled  formControlName="panCheckMes"  class="form-control" >
                                      </td>
                                      <td style="width: 15%" class="LabelFontStyle">Tan&nbsp;No&nbsp;:&nbsp;</td>
                                     <td>
