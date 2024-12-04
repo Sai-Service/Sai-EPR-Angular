@@ -901,6 +901,10 @@ export class CustomerMasterComponent implements OnInit {
       alert('Please Select OU Name.!');
       return;
     }
+    if (formValue.panCheckMes != null){
+      alert(formValue.panCheckMes);
+      return;
+    };
     this.service.CustMasterOnlySitSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
@@ -1033,6 +1037,10 @@ export class CustomerMasterComponent implements OnInit {
     //   alert('Please Select OU Name.!');
     //   return;
     // }
+    if (formValue.panCheckMes != null){
+      alert(formValue.panCheckMes);
+      return;
+    };
     formValue.termId = this.customerMasterForm.get('paymentType').value;
     formValue.staxCategoryName = this.customerMasterForm.get('staxCatName').value;
     // formValue.sGstNo = this.customerMasterForm.get('sGstNo').value;
