@@ -457,7 +457,9 @@ export class SalesOrderProformaComponent implements OnInit {
     // }
   }
   basicChassisPrice: number;
-
+  totAmt1 : number;
+  tcsAmt1 : number;
+  tottcs:number;
   onOptionsSelectedBasicPrice(color: any) {
     // alert(color)
     if (Number(sessionStorage.getItem('divisionId')) === 2) {
@@ -466,15 +468,38 @@ export class SalesOrderProformaComponent implements OnInit {
       this.orderManagementService.dealerShipBaseAmtNew(model, variant, color,sessionStorage.getItem('ouId'))
         .subscribe(
           data => {
+            // debugger;
             this.CounterSaleOrderBookingForm.patchValue({ basicValue: data.obj[0].basicValue })
             this.basicChassisPrice = data.obj[0].basicValue
-
+            this.totAmt1= (Math.round(((this.basicChassisPrice+Number(this.basicChassisPrice * data.obj[0].gstPercentage / 100)) + Number.EPSILON) * 100) / 100);
+            this.tcsAmt1=(Math.round(((this.totAmt1*data.obj[0].tcsPer/100) + Number.EPSILON) * 100) / 100);
+            this.tottcs=(Math.round(((Number(this.totAmt1)+Number(this.tcsAmt1)) + Number.EPSILON) * 100) / 100);
             var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
             this.displaysegmentInvType[0] = false;
             var chassisItem = this.CounterSaleOrderBookingForm.get('model').value + '-' +
               this.CounterSaleOrderBookingForm.get('variant').value + '-' +
               this.CounterSaleOrderBookingForm.get('color').value;
             //  alert(chassisItem +'Basic Amt---'+data.obj[0].basicValue);
+            if (this.totAmt1 > 1000000){
+            (patch.controls[0]).patchValue({
+              invType: 'SS_VEHICLE',
+              segment: chassisItem,
+              orderedItem: chassisItem,
+              pricingQty: 1,
+              unitSellingPrice: data.obj[0].basicValue,
+              baseAmt: this.basicChassisPrice,
+              taxPer: (data.obj[0].gstPercentage+data.obj[0].cessPer+data.obj[0].tcsPer),
+              taxAmt: (this.basicChassisPrice * data.obj[0].gstPercentage / 100),
+              sgst: ((this.basicChassisPrice * data.obj[0].gstPercentage / 100) / 2),
+              cgst: ((this.basicChassisPrice * data.obj[0].gstPercentage / 100) / 2),
+              totAmt: (this.tottcs),
+            }
+            // alert(totAmt)
+          )
+         
+          }
+          else {
+            // alert('else------');
             (patch.controls[0]).patchValue({
               invType: 'SS_VEHICLE',
               segment: chassisItem,
@@ -487,16 +512,8 @@ export class SalesOrderProformaComponent implements OnInit {
               sgst: ((this.basicChassisPrice * data.obj[0].gstPercentage / 100) / 2),
               cgst: ((this.basicChassisPrice * data.obj[0].gstPercentage / 100) / 2),
               totAmt: (this.basicChassisPrice + (this.basicChassisPrice * data.obj[0].gstPercentage / 100))
-             
-            });
-            ////////////prayag//////////
-            // if(totAmt>="100000"){
-            //   attribute1
-            //   var tcsAmt = Number((totAmt )*tcsPer/100);
-            //   // alert('tcsAmt---'+tcsAmt)
-            //   this.CounterSaleOrderBookingForm.patchValue({ 'attribute1': tcsAmt });
-
-            // }
+            })
+            }
             this.updateTotAmtPerline(0)
             this.addRow(0)
           }
