@@ -400,12 +400,14 @@ export class SalesOrderProformaComponent implements OnInit {
 
     this.displaysegmentInvType[0] = true;
 
-    this.orderManagementService.categoryList1()
+    this.orderManagementService.categoryList()
       .subscribe(
         data1 => {
           this.categoryList = data1;
+          console.log(this.categoryList);
           if (this.deptName === 'TrueValue') { }
           else {
+           
             for (let i = 0; i < data1.length; i++) {
               if (data1[i].itemType === 'SS_VEHICLE') {
                 this.categoryList.splice(i, 1)
@@ -496,7 +498,8 @@ export class SalesOrderProformaComponent implements OnInit {
             }
             // alert(totAmt)
           )
-         
+          // this.updateTotAmtPerline(0)
+          //   this.addRow(0)
           }
           else {
             // alert('else------');
@@ -513,6 +516,8 @@ export class SalesOrderProformaComponent implements OnInit {
               cgst: ((this.basicChassisPrice * data.obj[0].gstPercentage / 100) / 2),
               totAmt: (this.basicChassisPrice + (this.basicChassisPrice * data.obj[0].gstPercentage / 100))
             })
+            // this.updateTotAmtPerline(0)
+            // this.addRow(0)
             }
             this.updateTotAmtPerline(0)
             this.addRow(0)
