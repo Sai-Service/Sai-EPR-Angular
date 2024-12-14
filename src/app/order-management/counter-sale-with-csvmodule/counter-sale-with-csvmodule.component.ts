@@ -711,15 +711,16 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
         }
       );
 
-    this.orderManagementService.priceListNameList1(sessionStorage.getItem('ouId'), (sessionStorage.getItem('divisionId')))
+      // alert(sessionStorage.getItem('ouId')+'---------')
+    this.orderManagementService.priceListNameListouwise(sessionStorage.getItem('ouId'), (sessionStorage.getItem('divisionId')), sessionStorage.getItem('deptId'))
       .subscribe(
         data => {
           this.priceListNameList = data;
           for (let i = 0; i < data.length; i++) {
-            if (data[i].ouId === 999) {
+            // if (data[i].ouId === 999) {
               this.CounterSaleOrderBookingForm.patchValue({ priceListName: data[i].priceListName })
               this.CounterSaleOrderBookingForm.patchValue({ priceListId: data[i].priceListHeaderId })
-            }
+            // }
           }
         }
       );

@@ -285,9 +285,11 @@ export class PaymentReceiptComponent implements OnInit {
       console.log(this.lstcomments);
       var panNo = this.paymentReceiptForm.get('custPan').value;
       if (this.lstcomments.length != 0) {
+        // debugger;
         for (let k = 0; k < this.lstcomments.length; k++) {
           if (panNo != 'APPLIEDFOR') {
             if (this.lstcomments[k].payType == 'CASH') {
+              if (this.lstcomments[k].status !='REVERSED'){
               cashsum = paymentAmt + this.lstcomments[k].paymentAmt;
               // alert(cashsum)
               if (cashsum > 150000) {
@@ -296,13 +298,16 @@ export class PaymentReceiptComponent implements OnInit {
               }
             }
           }
+          }
           if (panNo == 'APPLIEDFOR') {
-            if (this.lstcomments[k].payType == 'CASH') {
+            if (this.lstcomments[k].payType == 'CASH' ) {
+              if (this.lstcomments[k].status !='REVERSED'){
               cashsum = paymentAmt + this.lstcomments[k].paymentAmt;
               if (cashsum > 25000) {
                 alert('Please check Pan Number Not updated And Total cash Amount 25000 please confirm.!');
                 return;
               }
+            }
             }
           }
 
