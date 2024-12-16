@@ -1283,21 +1283,5 @@ StockMissMatchFN(fromDate,toDate,subInventory,locId,userName){
   }); 
 }
 
-sparesDailyReportFn(toDate,locId){
-  const REQUEST_URI = this.ServerUrl +`/SparesReports/SprDailyRep?toDate=${toDate}&locId=${locId}`;
-  return this.http.get(REQUEST_URI, {
-    responseType: 'arraybuffer',
-    headers: this.headers,
-  }); 
-}
-
-cashSaleReportFn(fromDate,toDate,locId){
-  const REQUEST_URI = this.ServerUrl +`/PetrolPumpReport/CashSaleRep?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
-  return this.http.get(REQUEST_URI, {
-    responseType: 'arraybuffer',
-    headers: this.headers,
-  }); 
-}
-
 }
 
