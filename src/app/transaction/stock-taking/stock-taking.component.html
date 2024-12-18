@@ -476,13 +476,13 @@
                     <tr *ngFor="let com of lstData" style="background-color:#E3EAEB;">
                       <td>{{com.segment}}</td>
                       <td>{{com.description}}</td>
-                      <td>{{com.uom}}</td>
-                      <td>{{com.systemAmt}}</td>
-                      <td>{{com.subInventory}}</td>
-                      <td>{{com.LocatorSegment}}</td>
-                      <td>{{com.systemQty}}</td>
-                      <td>{{com.physicalQty}}</td>
-                      <td>{{com.adjustmentQty}}</td>
+                      <td style="text-align: center;">{{com.uom}}</td>
+                      <td style="text-align: right;">{{com.systemAmt | number:'1.2-2'}}</td>
+                      <td style="text-align: center;">{{com.subInventory}}</td>
+                      <td style="text-align: center;">{{com.LocatorSegment}}</td>
+                      <td style="text-align: right;"> {{com.systemQty | number:'1.2-3'}}</td>
+                      <td style="text-align: right;"> {{com.physicalQty | number:'1.2-3'}}</td>
+                      <td style="text-align: right;"> {{com.adjustmentQty | number:'1.2-3'}}</td>
                      </tr>
                       <!-- <tr>
                         <input type="number" min="0"  hidden formControlName="trxLineId">
