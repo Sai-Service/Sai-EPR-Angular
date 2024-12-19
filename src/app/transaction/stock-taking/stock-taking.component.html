@@ -456,7 +456,7 @@
                 <table   class="GridFont"  style="border-color:#494949;border-collapse:collapse;width: 100%;">
                   <thead>
                       <tr class="GridHeader">
-                              <!-- <th scope="col">Srl No.</th> -->
+                              <th scope="col">Srl No.</th>
                               <!-- <th scope="col">Type</th> -->
                               <th scope="col">Item Code</th>
                               <th scope="col">Item Description</th>
@@ -473,11 +473,12 @@
                     </thead>
                     <tbody>
                     
-                    <tr *ngFor="let com of lstData" style="background-color:#E3EAEB;">
-                      <td>{{com.segment}}</td>
-                      <td>{{com.description}}</td>
+                    <tr *ngFor="let com of lstData let i=index " style="background-color:#E3EAEB;">
+                      <td style="text-align: center;width: 3rem;">{{i+1}}</td>
+                       <td>{{com.segment}}</td>
+                      <td style="width: 300px;" > {{com.description}}</td>
                       <td style="text-align: center;">{{com.uom}}</td>
-                      <td style="text-align: right;">{{com.systemAmt | number:'1.2-2'}}</td>
+                      <td style="text-align: right;"> {{com.systemAmt | number:'1.2-2'}}</td>
                       <td style="text-align: center;">{{com.subInventory}}</td>
                       <td style="text-align: center;">{{com.LocatorSegment}}</td>
                       <td style="text-align: right;"> {{com.systemQty | number:'1.2-3'}}</td>

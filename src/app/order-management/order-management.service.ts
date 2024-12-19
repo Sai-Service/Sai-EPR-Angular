@@ -850,6 +850,12 @@ export class OrderManagementService {
   }
 
 
+
+  counterSaleReturnSearchHeader1(orderNumber,locId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/orderHeader/salesReturn1?orderNumber=${orderNumber}&locationId=${locId}`);
+  }
+
+
   SaleReturnSearchHeader(orderNumber): Observable<any> {
     return this.http.get(this.ServerUrl + `/orderHeader/vehReturn/${orderNumber}`);
   }
