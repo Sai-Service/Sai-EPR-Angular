@@ -357,7 +357,7 @@ export class CounterSaleReturnComponent implements OnInit {
           }
       this.counterSaleReturnOrderForm.get("searchCntrSaleOrderNo").disable();
       // this.lineDetailsArray.controls[0].get('itemName').disable();
-      this.orderManagementService.counterSaleReturnSearchHeader(mOrderNumber)
+      this.orderManagementService.counterSaleReturnSearchHeader1(mOrderNumber,sessionStorage.getItem('locId'))
       .subscribe(
         data => {
           this.lstOrderHeader = data.obj;

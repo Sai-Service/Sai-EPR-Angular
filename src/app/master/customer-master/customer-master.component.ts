@@ -1633,5 +1633,26 @@ export class CustomerMasterComponent implements OnInit {
         }
       );
   }
+
+
+  panCardCheck1(pan){
+    // var panNo = this.customerMasterForm.get('panNo').value;
+    // alert(pan)
+    this.orderManagementService.panNoCheckFn(pan)
+      .subscribe(
+        data => {
+          if (data.code === 200) {
+            alert(data.obj[0].custname);
+            this.customerMasterForm.patchValue({panCheckMes:data.obj[0].custname})
+          }
+          else {
+            if (data.code === 400) {
+              // alert(data.message);
+              this.customerMasterForm.patchValue({panCheckMes:null})
+            }
+          }
+        }
+      );
+  }
 }
 

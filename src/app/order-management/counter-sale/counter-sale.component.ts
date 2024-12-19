@@ -10,6 +10,7 @@ import { DatePipe, Location } from '@angular/common';
 import { escapeRegExp } from '@angular/compiler/src/util';
 import { saveAs } from 'file-saver';
 import { v4 as uuidv4 } from 'uuid';
+import * as xlsx from 'xlsx';
  
 
 
@@ -358,6 +359,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
   @ViewChild('aForm') aForm: ElementRef;
 
+  @ViewChild('epltable', { static: false }) epltable: ElementRef;
 
   title: string;
   customerId1: number;
@@ -2618,10 +2620,7 @@ orderNumber1:[],
         this.isDisabled = false;
         return;
       }
-      // debugger;
-      // alert(orderLines[j].segment.length)
-      // if (orderLines[j].segment.includes('MTSS')===false || orderLines[j].segment.includes('MCAS')===false || orderLines[j].segment.includes('MTUS')===false){
-      if ((orderLines[j].segment.length >=12) && (this.deptId===5 || this.deptId ===6) && this.divisionId===2) {
+      if ((orderLines[j].segment.length >=20) && (this.deptId===5 || this.deptId ===6) && this.divisionId===2) {
         alert('Line No' + ' ' + orderLines[j].segment + ' ' + 'Select Item Is Wrong... Please confirm');
         this.closeResetButton = true;
         this.dataDisplay = ''
@@ -3920,6 +3919,14 @@ orderNumber1:[],
   )
      
 }
-  
+
+exportToExcel() {
+  const ws: xlsx.WorkSheet =
+    // xlsx.utils.table_to_sheet(this.epltable.nativeElement);
+    xlsx.utils.json_to_sheet(this.lstgetOrderLineDetails);
+  const wb: xlsx.WorkBook = xlsx.utils.book_new();
+  xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
+  xlsx.writeFile(wb, 'CounterSaleOrderList-'+this.orderNumber+'.xlsx');
+}
 
 }

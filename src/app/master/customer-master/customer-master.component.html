@@ -1251,7 +1251,7 @@
                                     <td style="width: 15%" class="LabelFontStyle">Pan&nbsp;No&nbsp;:&nbsp;</td>
                                     <td>
                                         <input formControlName="spanNo" value={{spanNo}} [(ngModel)]='spanNo'
-                                            class="form-control" (change)="onPanSelect($event)" (keydown.tab)="panCardCheck(panNo)"
+                                            class="form-control" (change)="onPanSelect($event)" (keydown.tab)="panCardCheck1(spanNo)"
                                          placeholder="Enter Pan No"
                                          [ngClass]="{ 'is-invalid': submitted && f.spanNo.errors }">
                                          <div *ngIf="submitted && f.spanNo.errors" class="invalid-feedback">
