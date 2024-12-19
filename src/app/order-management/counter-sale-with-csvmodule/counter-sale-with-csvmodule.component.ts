@@ -1,5 +1,6 @@
 import { Component, OnInit, HostListener, ViewChild, ElementRef, NgModule } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, NgForm, Validators, FormArray, FormsModule } from '@angular/forms';
+
 import { Url } from 'url';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { MasterService } from 'src/app/master/master.service';
@@ -710,16 +711,15 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
         }
       );
 
-      // alert(sessionStorage.getItem('ouId')+'---------')
-    this.orderManagementService.priceListNameListouwise(sessionStorage.getItem('ouId'), (sessionStorage.getItem('divisionId')), sessionStorage.getItem('deptId'))
+    this.orderManagementService.priceListNameList1(sessionStorage.getItem('ouId'), (sessionStorage.getItem('divisionId')))
       .subscribe(
         data => {
           this.priceListNameList = data;
           for (let i = 0; i < data.length; i++) {
-            // if (data[i].ouId === 999) {
+            if (data[i].ouId === 999) {
               this.CounterSaleOrderBookingForm.patchValue({ priceListName: data[i].priceListName })
               this.CounterSaleOrderBookingForm.patchValue({ priceListId: data[i].priceListHeaderId })
-            // }
+            }
           }
         }
       );

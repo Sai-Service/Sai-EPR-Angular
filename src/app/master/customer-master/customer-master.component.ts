@@ -1586,25 +1586,5 @@ export class CustomerMasterComponent implements OnInit {
       this.tdsPercentage = this.originalTdsPer;
     }
   }
-
-  panCardCheck(pan){
-    var panNo = this.customerMasterForm.get('panNo').value;
-    // alert(panNo)
-    this.orderManagementService.panNoCheckFn(panNo)
-      .subscribe(
-        data => {
-          if (data.code === 200) {
-            alert(data.obj[0].custname);
-            this.customerMasterForm.patchValue({panCheckMes:data.obj[0].custname})
-          }
-          else {
-            if (data.code === 400) {
-              // alert(data.message);
-              this.customerMasterForm.patchValue({panCheckMes:null})
-            }
-          }
-        }
-      );
-  }
 }
 
