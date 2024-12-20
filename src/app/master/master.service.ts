@@ -480,10 +480,11 @@ export class MasterService {
   }
 
 
-  // getDipScaleSearchByTankIdPage(pageNo): Observable<any> {
-  //   return this.http.get(this.ServerUrl + `/opUnit?page=${pageNo}&size=5`);
+  getDipScaleOpenReading(tnkid,dt1): Observable<any> {
+    return this.http.get(this.ServerUrl + `/DipEntry/getClosDp?tankId=${tnkid}&shiftDate=${dt1}`)
+    // http://localhost:8081/DipEntry/getClosDp?tankId=1&shiftDate=18-DEC-2024
 
-  // }
+  }
 
 
 
@@ -1695,6 +1696,7 @@ export class MasterService {
     const url = this.ServerUrl + '/mtrlIssue';
     return this.http.post(url, MoveOrderRecord, options);
   }
+  
   public reservePost(reserverecord) {
     const options = {
       headers: this.headers
@@ -1703,6 +1705,7 @@ export class MasterService {
     return this.http.post(url, reserverecord, options);
   }
 
+ 
   public reservePostNew(formData: FormData, transtypeid, locId, prqty, itemId) {
     formData.append('transtypeid', transtypeid);
     formData.append('locId', locId);
@@ -1750,6 +1753,13 @@ export class MasterService {
   getreserqtyNew(locId, itemID, locatorId, rate): Observable<any> {
     return this.http.get(this.ServerUrl + `/reserveQty/locResQty?locId=${locId}&invItemId=${itemID}&locatorId=${locatorId}&rate=${rate}`)
   }
+
+  getreserqtyNew1(locId, itemID, locatorId, rate): Observable<any> {
+    return this.http.get(this.ServerUrl + `/reserveQty/locResQtyPP?locId=${locId}&invItemId=${itemID}&locatorId=${locatorId}`)
+    // http://localhost:8081/reserveQty/locResQtyPP?locId=2501&invItemId=89891&locatorId=63953
+  }
+
+
 
   transType(): Observable<any> {
     return this.http.get(this.ServerUrl + '/mtlTrxTypes/IPO');

@@ -850,12 +850,6 @@ export class OrderManagementService {
   }
 
 
-
-  counterSaleReturnSearchHeader1(orderNumber,locId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/orderHeader/salesReturn1?orderNumber=${orderNumber}&locationId=${locId}`);
-  }
-
-
   SaleReturnSearchHeader(orderNumber): Observable<any> {
     return this.http.get(this.ServerUrl + `/orderHeader/vehReturn/${orderNumber}`);
   }
@@ -974,10 +968,6 @@ export class OrderManagementService {
   }
 
   
-  panNoCheckFn(panNo): Observable<any> {
-    // alert('------'+panNo)
-    return this.http.get(this.ServerUrl + `/Customer/findByPanNoDetails?panNo=${panNo}`);
-  }
 }
 
 

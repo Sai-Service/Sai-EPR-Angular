@@ -483,13 +483,6 @@
                     <input disabled type="number" formControlName="totTax" [(ngModel)]='totTax' value={{totTax}}
                         class="form-control" placeholder="0.00" style="width: 160px;text-align: right;">
                 </td>
-                <!-- <td style="width: 15%" class="LabelFontStyle">
-                    Tcs&nbsp;Amount&nbsp;:&nbsp;
-                </td>
-                <td>
-                    <input disabled type="number" formControlName="attribute1" [(ngModel)]='attribute1' value={{attribute1}}
-                        class="form-control" placeholder="0.00" style="width: 160px;text-align: right;">
-                </td> -->
                 <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
                     Total&nbsp;Amount&nbsp;:&nbsp;
                 </td>
@@ -719,7 +712,9 @@
                             <ng-container *ngFor="let group of orderlineDetailsArray().controls; let i= index"
                                 [formGroupName]="i">
                                 <tr>
-                                    <div *ngIf="displaysegmentInvType[i]; then thensegmentInvType; else elsesegmentInvType"></div>
+                                    <div
+                                        *ngIf="displaysegmentInvType[i]; then thensegmentInvType; else elsesegmentInvType">
+                                    </div>
                                     <ng-template #thensegmentInvType>
                                         <td>
                                             <a id="line{{i}}" [value]="i+1" class="nav-link waves-light"
@@ -739,7 +734,18 @@
                                             </select>
                                         </td>
                                         <td>
-                                           
+                                            <!-- <input type="text" formControlName="segment"
+                                                id="invItemIdFirstWay" list="dynmicUserIds1"
+                                                class="form-control" style="height: 20px;width:120px;"
+                                                (ngModelChange)='onOptionsSelectedDescription($event,i)'>
+                                            <datalist id="dynmicUserIds1">
+                                                <option *ngFor="let item of  itemMap2.get(i)"
+                                                    [value]="item.segment">
+                                                    {{item.segment}}
+                                                </option>
+                                            </datalist>
+                                            <input hidden type="number" formControlName="itemId"> -->
+
                                             <select formControlName="segment" id="segment{{i}}"
                                                 (ngModelChange)='onOptionsSelectedDescription($event,i)'
                                                 class="form-control" style="width:250px;height: 25px;font-size: 10px;">
@@ -756,7 +762,11 @@
                                                 value="orderedItem" [ngValue]="orderedItem" class="form-control"
                                                 style="height: 20px;width:250px;">
                                         </td>
-                                       
+                                        <!-- <td>
+                                            <input disabled type="text" formControlName="hsnSacCode"
+                                                class="form-control" style="height: 20px;width: 80px;">
+                                        </td> -->
+
                                         <td>
                                             <input disabled type="number" formControlName="pricingQty"
                                                 name="pricingQty{{i}}" class="form-control" (change)="onKey(i,'prc')"
@@ -831,7 +841,11 @@
                                                 value="orderedItem" [ngValue]="orderedItem" class="form-control"
                                                 style="height: 20px;width:250px;">
                                         </td>
-                                      
+                                        <!-- <td>
+                                            <input disabled type="text" formControlName="hsnSacCode"
+                                                class="form-control" style="height: 20px;width: 80px;">
+                                        </td> -->
+
                                         <td>
                                             <input disabled type="number" formControlName="pricingQty"
                                                 name="pricingQty{{i}}" class="form-control" (change)="onKey(i,'prc')"
@@ -850,7 +864,12 @@
                                             <input disabled type="number" formControlName="baseAmt" class="form-control"
                                                 (change)="onKey(i,'ba')" style="height: 20px;width: 80px;">
                                         </td>
-                                       
+                                        <!-- <td>
+                                            <input disabled type="number" formControlName="disPer"
+                                                value="{{disPer}}" class="form-control" (change)="onKey(i)"
+                                                style="height: 20px;width: 40px;" min="0.00">
+                                        </td> -->
+                                        <!-- <td> -->
                                         <input hidden disabled type="number" formControlName="disAmt"
                                             class="form-control" min="0.00" (keydown.tab)="onKey(i)"
                                             style="height: 20px;width: 80px;">

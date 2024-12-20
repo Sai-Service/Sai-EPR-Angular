@@ -386,13 +386,41 @@ onSelectEmplName(event){
 
 
 onSelectTank(tnkId){
-  // alert("Tank Id :"+tnkId)
   
   var select3 = this.tankList.find((tankList:any)=>tankList.tankId==tnkId);
   console.log(select3);
-  // alert ("select3.tankName   "+select3.tankName)
-  this.pumpDipEntryForm.patchValue({tankname:select3.tankName})
+   this.pumpDipEntryForm.patchValue({tankname:select3.tankName})
+   var dipEntDate=this.pumpDipEntryForm.get('dipentrydate').value;
+
+    var  d = new Date(dipEntDate); d.setDate(d.getDate() -1);
    
+   var mDate = this.pipe.transform(d, 'dd-MMM-y');
+
+  // alert("Tank Id,tnk name,date :"+tnkId+","+select3.tankName+","+mDate )
+
+  alert("Opening DIP Reading is Closing DIP Reading of " +mDate  )
+
+  this.getOpenTankQty(tnkId,mDate)
+ 
+}
+
+
+getOpenTankQty(tnkId,dipEntdt){
+
+  // http://localhost:8081/DipEntry/getClosDp?tankId=1&shiftDate=18-DEC-2024
+
+   if(tnkId===undefined || dipEntdt===undefined ) { 
+    alert ("Please Select Tank, Dip Entry date");
+    return}
+
+  this.service.getDipScaleOpenReading(tnkId,dipEntdt)
+  .subscribe(
+    data => {
+
+        this.opendip  =data.closedip;
+        this.openstock=data.closestock
+        }
+      );
 }
 
 

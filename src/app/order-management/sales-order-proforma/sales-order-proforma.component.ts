@@ -103,7 +103,7 @@ export class SalesOrderProformaComponent implements OnInit {
   mrp: number;
   creditDays: string;
   daysMsg: string;
-  attribute1:number;
+
   // orderedDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
   // custPoDate = this.pipe.transform(this.now, 'dd-MM-yyyy');
 
@@ -240,7 +240,6 @@ export class SalesOrderProformaComponent implements OnInit {
       basicValue: [],
       financeyn:[],
       attribute4:[],
-      attribute1:[],
       oeOrderLinesAllList: this.fb.array([this.orderlineDetailsGroup()]),
     })
   }
@@ -400,14 +399,12 @@ export class SalesOrderProformaComponent implements OnInit {
 
     this.displaysegmentInvType[0] = true;
 
-    this.orderManagementService.categoryList()
+    this.orderManagementService.categoryList1()
       .subscribe(
         data1 => {
           this.categoryList = data1;
-          console.log(this.categoryList);
           if (this.deptName === 'TrueValue') { }
           else {
-           
             for (let i = 0; i < data1.length; i++) {
               if (data1[i].itemType === 'SS_VEHICLE') {
                 this.categoryList.splice(i, 1)
@@ -459,9 +456,7 @@ export class SalesOrderProformaComponent implements OnInit {
     // }
   }
   basicChassisPrice: number;
-  totAmt1 : number;
-  tcsAmt1 : number;
-  tottcs:number;
+
   onOptionsSelectedBasicPrice(color: any) {
     // alert(color)
     if (Number(sessionStorage.getItem('divisionId')) === 2) {
@@ -470,39 +465,15 @@ export class SalesOrderProformaComponent implements OnInit {
       this.orderManagementService.dealerShipBaseAmtNew(model, variant, color,sessionStorage.getItem('ouId'))
         .subscribe(
           data => {
-            // debugger;
             this.CounterSaleOrderBookingForm.patchValue({ basicValue: data.obj[0].basicValue })
             this.basicChassisPrice = data.obj[0].basicValue
-            this.totAmt1= (Math.round(((this.basicChassisPrice+Number(this.basicChassisPrice * data.obj[0].gstPercentage / 100)) + Number.EPSILON) * 100) / 100);
-            this.tcsAmt1=(Math.round(((this.totAmt1*data.obj[0].tcsPer/100) + Number.EPSILON) * 100) / 100);
-            this.tottcs=(Math.round(((Number(this.totAmt1)+Number(this.tcsAmt1)) + Number.EPSILON) * 100) / 100);
+
             var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
             this.displaysegmentInvType[0] = false;
             var chassisItem = this.CounterSaleOrderBookingForm.get('model').value + '-' +
               this.CounterSaleOrderBookingForm.get('variant').value + '-' +
               this.CounterSaleOrderBookingForm.get('color').value;
             //  alert(chassisItem +'Basic Amt---'+data.obj[0].basicValue);
-            if (this.totAmt1 > 1000000){
-            (patch.controls[0]).patchValue({
-              invType: 'SS_VEHICLE',
-              segment: chassisItem,
-              orderedItem: chassisItem,
-              pricingQty: 1,
-              unitSellingPrice: data.obj[0].basicValue,
-              baseAmt: this.basicChassisPrice,
-              taxPer: (data.obj[0].gstPercentage+data.obj[0].cessPer+data.obj[0].tcsPer),
-              taxAmt: (this.basicChassisPrice * data.obj[0].gstPercentage / 100),
-              sgst: ((this.basicChassisPrice * data.obj[0].gstPercentage / 100) / 2),
-              cgst: ((this.basicChassisPrice * data.obj[0].gstPercentage / 100) / 2),
-              totAmt: (this.tottcs),
-            }
-            // alert(totAmt)
-          )
-          // this.updateTotAmtPerline(0)
-          //   this.addRow(0)
-          }
-          else {
-            // alert('else------');
             (patch.controls[0]).patchValue({
               invType: 'SS_VEHICLE',
               segment: chassisItem,
@@ -515,10 +486,7 @@ export class SalesOrderProformaComponent implements OnInit {
               sgst: ((this.basicChassisPrice * data.obj[0].gstPercentage / 100) / 2),
               cgst: ((this.basicChassisPrice * data.obj[0].gstPercentage / 100) / 2),
               totAmt: (this.basicChassisPrice + (this.basicChassisPrice * data.obj[0].gstPercentage / 100))
-            })
-            // this.updateTotAmtPerline(0)
-            // this.addRow(0)
-            }
+            });
             this.updateTotAmtPerline(0)
             this.addRow(0)
           }
@@ -1082,13 +1050,6 @@ export class SalesOrderProformaComponent implements OnInit {
       this.displayRemoveRow.push(true);
     }
 
-    ////////prayag//////////
-    // if(totAmt>="100000"){
-    //   var tcsAmt = Number((totAmt )*tcsPer/100);
-    //   tcsAmt = Math.round(((tcsAmt) + Number.EPSILON) * 100) / 100;
-    //   this.CounterSaleOrderBookingForm.patchValue({ 'attribute1': tcsAmt });
-    // }
-    
   }
 
 
