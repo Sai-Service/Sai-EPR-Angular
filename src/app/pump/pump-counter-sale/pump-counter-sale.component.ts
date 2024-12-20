@@ -2187,7 +2187,7 @@ export class PumpCounterSaleComponent implements OnInit {
                             //     this.AvailQty(k, select.itemId,'Item');
                             //     this.setFocus('pricingQty');
                             //   });
-                            this.service.getreserqtyNew(this.locId, select.itemId, selLocator[0].locatorId, selLocator[0].prc).subscribe
+                            this.service.getreserqtyNew1(this.locId, select.itemId, selLocator[0].locatorId, selLocator[0].prc).subscribe
                               (data => {
                                 this.resrveqty = data;
                                 controlinv.controls[k].patchValue({ resveQty: this.resrveqty });
@@ -2313,7 +2313,7 @@ export class PumpCounterSaleComponent implements OnInit {
                             }
 
 
-                            this.service.getreserqtyNew(this.locId, select.itemId, selLocator[0].locatorId, selLocator[0].prc).subscribe
+                            this.service.getreserqtyNew1(this.locId, select.itemId, selLocator[0].locatorId, selLocator[0].prc).subscribe
                               (data => {
                                 this.resrveqty = data;
                                 controlinv.controls[k].patchValue({ resveQty: this.resrveqty });
@@ -2366,7 +2366,7 @@ export class PumpCounterSaleComponent implements OnInit {
 
   resverQty(i, itemId, locatorId, prc) {
     let controlinv = this.pumpCounterSaleOrderForm.get('oeOrderLinesAllList') as FormArray;
-    this.service.getreserqtyNew(this.locId, itemId, locatorId, prc).subscribe
+    this.service.getreserqtyNew1(this.locId, itemId, locatorId, prc).subscribe
       (data => {
         this.resrveqty = data;
         controlinv.controls[i].patchValue({ resveQty: this.resrveqty });
