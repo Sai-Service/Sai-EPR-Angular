@@ -967,7 +967,7 @@
                             <div class="col-md-12 table-responsive" #epltable>
                                 <div style="padding-bottom: 10px;padding-top: 10px;">
                                     <div class="row">
-                                        <div class="col-sm-12">
+                                        <div class="col-sm-12" [style.display]="isVisibleexportToexcel ? 'block' : 'none'">
                                             <button (click)="exportToExcel()" class="btn btn-success" style="width: fit-content;">Export&nbsp;To&nbsp;Excel&nbsp;Counter&nbsp;Sale</button>
                                         </div>
                                     </div>

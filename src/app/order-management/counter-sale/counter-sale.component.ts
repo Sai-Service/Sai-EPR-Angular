@@ -175,7 +175,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   isVisible16: boolean = false;
   isVisible17: boolean = false;
   isVisible18: boolean = false;
-
+  isVisibleexportToexcel:boolean=false;
   isVisibleCreateOrder: boolean = false;
   isVisiblePickTiPreview: boolean = false;
   isVisibleUpdate: boolean = false;
@@ -845,6 +845,7 @@ orderNumber1:[],
             this.isVisibleCreateOrder = false;
             this.isVisiblePickTiPreview = true;
             this.isVisibleUpdate = true;
+            this.isVisibleexportToexcel=true;
             this.isVisibleGenerateInvoice = true;
             this.lstgetOrderLineDetails = data.obj.oeOrderLinesAllList;
             this.lstgetOrderTaxDetails = data.obj.taxAmounts;
@@ -2680,6 +2681,7 @@ orderNumber1:[],
         this.isDisabled = true;
         this.dataDisplay = ''
         this.closeResetButton = true;
+        this.isVisibleexportToexcel=true;
         console.log(this.orderNumber);
         alert(res.message);
         this.orderNumber = res.obj;
