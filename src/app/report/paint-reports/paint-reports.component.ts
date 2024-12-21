@@ -694,6 +694,31 @@ export class PaintReportsComponent implements OnInit {
 
     }
 
+    else if (reportName === 'paintStockTakingQtyDetails') {
+
+      this.reportName = 'Stock Taking Report - Qty Details';
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisiblestockTransferRecd=false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleEwayBill=false;
+      this.isVisiblepanelStockTaking=true;
+      this.isVisiblesparesPaintPanelReport=false;
+      this.isVisibleonlyOuCode = false;
+
+    }
+
+
+
     else if (reportName === 'icConsumptionReport') {
       this.reportName = 'Internal Consumption Report';
         this.isVisibleGSTPurchaseRegister = false;
@@ -1284,6 +1309,34 @@ export class PaintReportsComponent implements OnInit {
           })
       }
     }
+
+     else if (reportName ==='Stock Taking Report - Qty Details'){
+          // this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+    
+          const fileName = 'Stock Taking Report - Qty Details-' +  '.xls';
+          const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+          // var locId=this.sparesReportForm.get('locId').value;
+          var compileName =this.paintReportForm.get('compileCode').value;
+
+          if (Number(sessionStorage.getItem('deptId')) === 4) {
+            this.reportService.stockTakingQtyReport( locId,compileName)
+              .subscribe(data => {
+                saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+                this.isDisabled1 = false;
+                this.closeResetButton = true;
+                this.dataDisplay = ''
+              })
+          } else if ((Number(sessionStorage.getItem('deptId'))) !=4){
+            this.reportService.stockTakingQtyReport( sessionStorage.getItem('locId'),compileName)
+            .subscribe(data => {
+              saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+              this.isDisabled1 = false;
+              this.closeResetButton = true;
+              this.dataDisplay = ''
+            })
+          }
+         
+        }
 
     else if (reportName==='Internal Consumption Report'){
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
