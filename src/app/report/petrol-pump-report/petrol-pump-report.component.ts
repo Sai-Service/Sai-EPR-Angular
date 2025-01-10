@@ -245,6 +245,17 @@ onSelectTank(tnkId){
       this.isVisibleDSRRegister=false;
 
     }
+    if (reportName==='cashSaleReport'){
+      this.reportName='Cash Sale Report';
+      this.isVisibleCashCollectionExcessShort=true;
+      this.isVisiblegstsaiDebtors=false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisiblefromtosubinventory= false;
+      this.isVisiblespPurRegDownLoad=false;
+      this.isVisibleDSRRegister=false;
+    }
     if (reportName==='saleRegisterCustomerWise'){
       this.reportName='Sales Register - Customer Wise';
       this.isVisibleCashCollectionExcessShort=true;
@@ -484,6 +495,17 @@ else if (reportName === 'Cash Card Detail Report'){
   const fileName = 'Cash Card Detail Report-' +  fromDate + '.xls';
   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
   this.reportService.cashCardDetFn(fromDate, toDate, sessionStorage.getItem('locId'))
+  .subscribe(data => {
+    saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+    this.closeResetButton = true;
+    this.dataDisplay = ''
+  })
+}
+else if (reportName === 'Cash Sale Report'){
+  this.fromToDateValidation(fromDate,toDate); if(this.rptValidation==false){return;}
+  const fileName = 'Cash Sale Report-' +  fromDate + '.xls';
+  const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+  this.reportService.cashSaleReportFn(fromDate, toDate, sessionStorage.getItem('locId'))
   .subscribe(data => {
     saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
     this.closeResetButton = true;
