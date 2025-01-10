@@ -1158,12 +1158,26 @@
 
 
                         </ng-template>
+
+                        <div *ngIf="showApplyButton ; then showApplyButtonYes; else showApplyButtonNo"></div>
+                        <ng-template #showApplyButtonYes> 
                         <td>
                             <!-- [style.display]="isVisibleApply ? 'block' : 'none'"  -->
                             <button  type="button"  class="btn btn-primary"
                             data-toggle="modal" data-target="#exampleModal2"  (click)="SearchInvoices()"  style="width: 8rem;">
                             &nbsp;Apply</button>
                         </td>
+                        </ng-template>
+
+                        <ng-template #showApplyButtonNo> 
+                            <td>
+                                <button  disabled type="button"  class="btn btn-primary"
+                                data-toggle="modal" data-target="#exampleModal2"  (click)="SearchInvoices()"  style="width: 8rem;">
+                                &nbsp;Apply</button>
+                            </td>
+                        </ng-template>
+
+
                         <td> <button disabled type="button" class="btn btn-primary" style="width: 8rem;" [style.display]="isVisibleUpdate ? 'block' : 'none'">Update</button></td>
                         <!-- <td> <button type="button" class="btn btn-primary"  style="width: 8rem;" (click)="getTaxDetail()">Get Tax Detail</button></td> -->
                         <div *ngIf="disabledComplete ; then thenenableComplete; else elsedisableComplete"></div>

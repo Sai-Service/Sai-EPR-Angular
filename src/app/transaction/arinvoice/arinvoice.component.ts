@@ -80,6 +80,7 @@ export class ARInvoiceComponent implements OnInit {
   displaytaxDisscountButton = true;
   displayTaxDetailForm = true;
   displayinvItem = true;
+  showApplyButton=true;
   ouId: number;
   trxNumber1: string;
   trxNumber: string;
@@ -910,7 +911,10 @@ export class ARInvoiceComponent implements OnInit {
           if (data.code === 200) {
 
             this.lstcomments = data.obj;
-            // alert(data.obj.class)
+
+            alert("data.obj.status >> " +data.obj.status);
+
+            if(data.obj.status=='CLOSE') {this.showApplyButton=false;}else{this.showApplyButton=true;}
 
             this.orderManagementService.accountNoSearchFn(data.obj.billToCustNo, this.ouId, this.divisionId)
 
