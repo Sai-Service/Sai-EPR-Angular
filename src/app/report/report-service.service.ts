@@ -1227,6 +1227,15 @@ cashCardDetFn(fromDate,toDate,locId){
   }); 
 }
 
+
+cashSaleReportFn(fromDate,toDate,locId){
+  const REQUEST_URI = this.ServerUrl +`/PetrolPumpReport/CashSaleRep?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  }); 
+}
+
 saleRegisterCustomerWiseFn(fromDate,toDate,locId){
   // http://localhost:8081/PetrolPumpReport/PP_CustSaleReg?fromDate=01-FEB-2024&toDate=20-FEB-2024&locId=2501
 
