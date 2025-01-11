@@ -6,6 +6,7 @@
     <input hidden class="form-control" formControlName="shipLocName" [(ngModel)]='shipLocName'>
     <input hidden class="form-control" formControlName="customerId" [(ngModel)]='customerId'>
     <input hidden class="form-control" formControlName="locationId" [(ngModel)]='locationId'>
+
     <table style="width: 100%;background-color: rgb(255, 255, 255);">
         <tr>
             <td colspan="4" class="PageHeader" style="width: 100%;">
@@ -473,6 +474,20 @@
                                         <input type="date" class="form-control" formControlName="custPoDate"
                                             value={{custPoDate}} style="width:100%;">
                                     </td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;Type&nbsp;:&nbsp;</td>
+                                    <td>
+                                        <input disabled type="text" class="form-control" formControlName="custType"
+                                        [(ngModel)]='custType' style="width:100%;">
+                                    </td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">GSTN&nbsp;:&nbsp;</td>
+                                    <td>
+                                        <input disabled type="text" class="form-control"
+                                            formControlName="gstNo" [(ngModel)]='gstNo' value={{gstNo}}
+                                            style="width: 150px;">
+                                    </td>
+
                                     <!-- <td style="width: 15%" class="LabelFontStyle">
                                         &nbsp;Reference&nbsp;No&nbsp;:&nbsp;
                                     </td>
