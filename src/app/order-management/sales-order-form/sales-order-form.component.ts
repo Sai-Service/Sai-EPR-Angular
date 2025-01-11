@@ -873,9 +873,13 @@ export class SalesOrderFormComponent implements OnInit {
       if ( i !=k) {
       if (controlinvext1[i].segment == segment && controlinvext1[i].pricingQty != 0) {
         alert('Already Selected this Item. Please Confirm.!');
-        controlinvext1[i].segment=""
 
-        return;
+        (controlinv.controls[k]).patchValue({
+          segment:"", itemId: "", orderedItem: "", hsnSacCode: "", uom: "", flowStatusCode:"",
+          isTaxable: "",pricingQty: "",unitSellingPrice:"", taxCategoryName:"",taxCategoryId:"",
+          baseAmt: "",taxAmt: "",totAmt:""});
+        
+         return;
       }
     }
 
@@ -1781,6 +1785,7 @@ export class SalesOrderFormComponent implements OnInit {
                      this.isVisiblemodelDetailsUpdate = true;
                    }
                  }
+                 
                  if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE') || this.lstgetOrderLineDetails[i].flowStatusCode === 'ALLOTED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'READY FOR INVOICE') {
                    this.SalesOrderBookingForm.get('financeType').enable();
                    this.SalesOrderBookingForm.get('financerName').enable();
@@ -1795,13 +1800,18 @@ export class SalesOrderFormComponent implements OnInit {
                    this.SalesOrderBookingForm.get('offerPrice').enable();
                    this.isVisiblemodelDetailsUpdate = false;
                  }
+
+               
+
+
                  if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE') && this.lstgetOrderLineDetails[i].flowStatusCode === 'ALLOTED') {
-                   this.displayLineflowStatusCodeVehicle[i] = true;
-                   console.log(this.lineLevelOrderStatusVehicleList);
-                   let lineLevelOrderStatusListVehicle = this.lineLevelOrderStatusVehicleList.filter((customer) => ((customer.code.includes('ALLOTED') == true) || (customer.code.includes('READY FOR INVOIC') == true)));
-                   console.log(lineLevelOrderStatusListVehicle);
-                   this.lineLevelOrderStatusVehicleList = lineLevelOrderStatusListVehicle;
-                 }
+                  this.displayLineflowStatusCodeVehicle[i] = true;
+                  console.log(this.lineLevelOrderStatusVehicleList);
+                  let lineLevelOrderStatusListVehicle = this.lineLevelOrderStatusVehicleList.filter((customer) => ((customer.code.includes('ALLOTED') == true) || (customer.code.includes('READY FOR INVOIC') == true)));
+                  console.log(lineLevelOrderStatusListVehicle);
+                  this.lineLevelOrderStatusVehicleList = lineLevelOrderStatusListVehicle;
+                }
+
                  if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE') == false && this.lstgetOrderLineDetails[i].flowStatusCode != 'ALLOTED') {
                    this.displayLineflowStatusCodeVehicle[i] = false;
                    console.log(this.lineLevelOrderStatusList);
@@ -2173,6 +2183,8 @@ if (Number(sessionStorage.getItem('deptId'))!=4){
                   this.SalesOrderBookingForm.get('offerPrice').enable();
                   this.isVisiblemodelDetailsUpdate = false;
                 }
+
+                
                 if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE') && this.lstgetOrderLineDetails[i].flowStatusCode === 'ALLOTED') {
                   this.displayLineflowStatusCodeVehicle[i] = true;
                   console.log(this.lineLevelOrderStatusVehicleList);
@@ -2180,6 +2192,7 @@ if (Number(sessionStorage.getItem('deptId'))!=4){
                   console.log(lineLevelOrderStatusListVehicle);
                   this.lineLevelOrderStatusVehicleList = lineLevelOrderStatusListVehicle;
                 }
+
                 if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE') == false && this.lstgetOrderLineDetails[i].flowStatusCode != 'ALLOTED') {
                   this.displayLineflowStatusCodeVehicle[i] = false;
                   console.log(this.lineLevelOrderStatusList);
@@ -3956,7 +3969,7 @@ if (Number(sessionStorage.getItem('deptId'))!=4){
     //  alert(siteName);
     //  alert(sessionStorage.getItem('ouId'));
 
-    
+
     console.log(this.custSiteList);
     let selSite = this.custSiteList.find(d => d.siteName === siteName);
     console.log(selSite);
