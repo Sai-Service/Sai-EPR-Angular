@@ -79,6 +79,7 @@ interface IPaintItemMaster {
   taxCategoryPurIGST: number;
   taxCategorySaleIGST: number;
   attribute10:string;
+  emplId: number;
 }
 
 
@@ -230,10 +231,11 @@ export class PaintItemMasterComponent implements OnInit {
   taxCategorySaleIGSTNm: string;
   displaytaxCategoryListSalesIGST = true;
   taxCategorySaleNm: string;
-
+  emplId: number;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService) {
     this.paintItemMasterForm = fb.group({
+      emplId: [],
       segmentName: [],
       taxCategoryPurNm: [],
       taxCategorySaleIGSTNm: [],
@@ -321,6 +323,9 @@ export class PaintItemMasterComponent implements OnInit {
 
   ngOnInit(): void {
     $("#wrapper").toggleClass("toggled");
+
+    this.emplId = Number(sessionStorage.getItem('emplId'));
+
     this.service.SSitemTypeListFn()
       .subscribe(
         data => {
@@ -996,11 +1001,14 @@ export class PaintItemMasterComponent implements OnInit {
 
   executeAction() {
     if (this.msgType.includes("Save")) {
-      this.newItemMast();
+      if (this.emplId ===2142 ){ this.newItemMast();}
+      else { alert ("You are Not Authorised to Add/Modify Item Master...");}
+
     }
 
     if (this.msgType.includes("Update")) {
-      this.updateItemMast();
+      if (this.emplId ===2142 ) { this.updateItemMast();} 
+      else { alert ("You are Not Authorised to Add/Modify Item Master...");}
     }
 
     if (this.msgType.includes("Reset")) {
@@ -1109,6 +1117,9 @@ export class PaintItemMasterComponent implements OnInit {
   closeItemMast() { this.router.navigate(['admin']); }
 
   updateItemMast() {
+
+    // if (this.emplId !=2142 ){ alert ("You are Not Authorised to Modify Item Master..."); return;} 
+
     if (this.isTaxable == 'Y') {
       // alert(this.taxCategoryPur)
       if (this.taxCategoryPur == undefined || this.taxCategoryPur == null) {

@@ -14,6 +14,8 @@
                         </td>
 
                         <td> <button type="button" class="btn btn-primary" [disabled]="!segment1" (click)="SearchItemCode(segment1)" >Find</button> </td> 
+                       
+                       
 
 
                         <!-- <td colspan="10" style="text-align: left; width: 100%;">
@@ -33,6 +35,9 @@
             <div *ngIf="displayActiveHeader; then thenActiveHeader; else elseActiveHeader"></div>
             <ng-template #thenActiveHeader>
             <tr>
+                <!-- <td style="width: 15%" class="LabelFontStyle">Emp&nbsp;Id&nbsp;:&nbsp;</td> -->
+                <input  hidden type="number" formControlName="emplId" value={{emplId}} class="form-control"  [(ngModel)]="emplId">
+
                 <td style="width:12%" class="LabelFontStyle1">Item&nbsp;Type&nbsp;:&nbsp;</td>
                 <td>
                     <select  formControlName="itemTypeForCat" id="itemTypeForCat"
@@ -145,7 +150,9 @@
                 <td><input formControlName="attribute10" [(ngModel)]="attribute10" value={{attribute10}} style="width:100px ;" class="form-control"  placeholder="Enter Item Density" ></td>
                 <td style="width: 15%" class="LabelFontStyle">Lot&nbsp;Size&nbsp;:&nbsp;</td>
                 <td><input formControlName="lotSize" [(ngModel)]="lotSize" value={{lotSize}}  style="width:100px ;" class="form-control"  placeholder="Enter Item lot Size" ></td>
-            </tr>
+            
+            
+                </tr>
         </ng-template>
         <ng-template #elseActiveHeader>
             <tr>
@@ -244,6 +251,7 @@
                 <!-- <td><input type="text" disabled formControlName="lotSize" [(ngModel)]="lotSize" value={{lotSize}} style="width:100px;"  class="form-control"  placeholder="Enter Item lot Size" ></td> -->
                 <td><input type="text"  formControlName="lotSize" [(ngModel)]="lotSize" value={{lotSize}} style="width:100px;"  class="form-control"  placeholder="Enter Item lot Size" ></td>
 
+              
             </tr>
         </ng-template>
             <!-- <tr>

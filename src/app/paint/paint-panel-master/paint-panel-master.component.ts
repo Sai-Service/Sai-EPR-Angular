@@ -184,6 +184,8 @@ export class PaintPanelMasterComponent implements OnInit {
 
   saveComnMast() {
 
+    if (this.emplId !=2142 )  { alert ("You are Not Authorised to Add/Modify Panel Master...");return;}
+
     this.CheckDataValidations()
     
     if (this.checkValidation===true) {
@@ -213,6 +215,9 @@ export class PaintPanelMasterComponent implements OnInit {
 
 
   updateComnMast() {
+
+    if (this.emplId !=2142 )  { alert ("You are Not Authorised to Add/Modify Panel Master...");return;}
+
 
     // this.CheckDataValidations();
     // if (this.checkValidation===true) {
