@@ -549,6 +549,14 @@ export class ReportServiceService {
     });
   }
 
+  paintDailyReportFN(fromDate,toDate,orgId,subId){
+    const REQUEST_URI = this.ServerUrl +`/PaintReports/PN_DailyRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${orgId}&subInvCode=${subId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
   performaRegister(invcDt1,invcDt4,locId){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/ProformaIssueDtls?fromDate=${invcDt1}&toDate=${invcDt4}&locId=${locId}`;
     return this.http.get(REQUEST_URI, {
