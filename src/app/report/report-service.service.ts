@@ -541,7 +541,13 @@ export class ReportServiceService {
       headers: this.headers,
     });
   }
-
+  spareDailyReportFn(toDate,locId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprDailyRep?toDate=${toDate}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
 
   performaRegister(invcDt1,invcDt4,locId){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/ProformaIssueDtls?fromDate=${invcDt1}&toDate=${invcDt4}&locId=${locId}`;

@@ -1494,6 +1494,32 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockMissMatch=false;
     }
+    else if (reportName==='spareDailyReport'){
+      this.reportName = 'Spares Daily Report';
+      this.isVisiblegstsaiDebtors=false;
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisibleStockLedger = false;
+      this.displayCustAccountNo=false;
+      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisibleStockTransferReceivedSummary=false;
+      this.isVisiblestockTransfer = false;
+      this.isVisiblestockTransferRecd=false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisibleStockTransferMadeSummary=false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleEwayBill=false;
+      this.isVisiblepanelStockTaking=false;
+      this.panelspDebtAgByExicutiveSummary=false;
+      this.isVisibletoDateLoc=true;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
+      this.isVisibleStocMadeSummary=false;
+      this.isVisibleStockMissMatch=false;
+    }
     else if (reportName==='spDeadStockNoConsuptionDaywise'){
       this.reportName = 'Spares Dead Stock-No Consumption-Daywise';
       this.isVisiblegstsaiDebtors=false;
@@ -3023,7 +3049,28 @@ export class SparesReportsComponent implements OnInit {
       })  
     }
   }
-
+  else if (reportName=='Spares Daily Report'){
+    const fileName = 'Spares Daily Report' +  '.pdf';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    if (Number(sessionStorage.getItem('deptId')) === 4) {
+      this.reportService.spareDailyReportFn(toDate,locId)
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+        this.isDisabled1=false;
+      })  
+    }
+    if (Number(sessionStorage.getItem('deptId')) != 4) {
+      this.reportService.spareDailyReportFn(toDate,sessionStorage.getItem('locId'))
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+        this.isDisabled1=false;
+      })  
+    }
+  }
   else if (reportName=='Spares Dead Stock-No Consumption-Daywise'){
     const fileName = 'Spares Dead Stock-No Consumption-Daywise' +  '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
