@@ -846,48 +846,45 @@ export class SalesOrderFormComponent implements OnInit {
 
   onOptionsSelectedDescription(segment: string, k) {
 
-    // alert(segment +' --- '+ k +' ---- '+OrderTypeName);
-
-  //   if (OrderTypeName==='Sale Corporate' ) {
-  //   if (segment==='STATE-GOVT.-SUBSIDY' || segment==='00GL52-STATE-GOVT.-SUBSIDY-1-DEC-23') {
-  //     alert(segment + " : User not Allowed to select this Item...")
-  //     segment='';
-  //     return;
-  //   }
-  // }
+  
+  let controlinv = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+  let controlinvext = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+  let controlinvext1 = controlinvext.getRawValue();
+  var itemType = (controlinv.controls[k]).get('invType').value;
+ 
+ 
+ 
   var custTp = this.SalesOrderBookingForm.get('custType').value;
-
-  var modelVariant = this.SalesOrderBookingForm.get('variant').value;
-
-      //  alert ("Variant: " + modelVariant)
-
 
   if (custTp==='Organization' ) {
       if (segment.includes('STATE-GOVT.-SUBSIDY')) {
-        alert(segment + " : User not Allowed to select this Item...")
-        segment='';
+        alert(segment + " : User not Allowed to select this Item...");
+
+        (controlinv.controls[k]).patchValue({
+          segment:"", itemId: "", orderedItem: "", hsnSacCode: "", uom: "", flowStatusCode:"",
+          isTaxable: "",pricingQty: "",unitSellingPrice:"", taxCategoryName:"",taxCategoryId:"",
+          baseAmt: "",taxAmt: "",totAmt:""});
         return;
       }
-    }
+      }
+    
+
+    var modelVariant = this.SalesOrderBookingForm.get('variant').value;
 
     if (modelVariant != '00GL68' ) {
       if (segment.includes('OFFERGL68')) {
-        alert(segment + " : User not Allowed to select this Item...Applicable for Model [00GL68] Only")
-        segment='';
+        alert(segment + " : User not Allowed to select this Item...Applicable for Model [00GL68] Only");
+   
+        (controlinv.controls[k]).patchValue({
+          segment:"", itemId: "", orderedItem: "", hsnSacCode: "", uom: "", flowStatusCode:"",
+          isTaxable: "",pricingQty: "",unitSellingPrice:"", taxCategoryName:"",taxCategoryId:"",
+          baseAmt: "",taxAmt: "",totAmt:""});
         return;
       }
     }
+  
 
-    
-
-    
-
-    // alert('HI')
-    let controlinv = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-    let controlinvext = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-    let controlinvext1 = controlinvext.getRawValue();
-    var itemType = (controlinv.controls[k]).get('invType').value;
-    // alert(controlinvext1.length)
+       // alert(controlinvext1.length)
     for (let i = 0; i < controlinvext1.length; i++) {
       // alert(controlinvext1[i].segment+'----'+ controlinvext1[i].pricingQty + ", i="+i+" ,k="+k)
 
@@ -909,6 +906,7 @@ export class SalesOrderFormComponent implements OnInit {
       }
 
     }
+
     console.log(this.invItemList1);
     let select = this.invItemList1.find(d => d.segment === segment);
     console.log(select);
