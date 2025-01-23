@@ -91,6 +91,7 @@ export class PaintReportsComponent implements OnInit {
   userName1:string;
   dispLocation:boolean=true;
   rptValidation=true;
+  isVisiblePanelOUFromDateToDateSubInv:boolean=false;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.paintReportForm = this.fb.group({
@@ -259,7 +260,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
-
+      this.isVisiblePanelOUFromDateToDateSubInv=false;
 
     }
     else if (reportName === 'gstpurRegSumm') {
@@ -284,7 +285,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
-
+      this.isVisiblePanelOUFromDateToDateSubInv=false;
 
     }
     else if (reportName === 'gstStockLedger') {
@@ -306,7 +307,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
-
+      this.isVisiblePanelOUFromDateToDateSubInv=false;
 
     }
     else if (reportName === 'gstsparesInventoryAging') {
@@ -328,33 +329,10 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
-
+      this.isVisiblePanelOUFromDateToDateSubInv=false;
 
     }
    
-   
-    // else if (reportName === 'gstSparesClosingStockAsOnDate') {
-    //   this.reportName = 'Paint Closing Stock As On Date';
-    //   this.isVisibleonlyLocationCode = false;
-    //   this.isVisiblegstsaiDebtors = false;
-    //   this.isVisiblespClosingStockAsOndate=true;
-    //   this.isVisibleGSTPurchaseRegister = false;
-    //   this.isVisibleStockLedger = false;
-    //   this.isVisiblestockTransfer = false;
-    //   this.isVisiblestockTransferRecd=false;
-    //   this.isVisibleSparesBackOrderQty = false;
-    //   this.isVisiblesparesMiscIssueReceipt = false;
-    //   this.isVisiblesparesInventoryAging = false;
-    //   this.isVisibleSparesDebtorsExecutiveWise = false;
-    //   this.isVisiblefromtosubinventory=false;
-    //   this.isVisiblecustomerLedger=false;
-    //   this.isVisibleEwayBill=false;
-    //   this.isVisiblepanelStockTaking=false;
-    //   this.isVisiblesparesPaintPanelReport=false;
-
-
-    // }
-
     else if (reportName === 'gstClosingReport') {
       this.reportName = 'Paint Closing Stock Report';
       this.isVisibleonlyLocationCode = true;
@@ -374,7 +352,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
-
+      this.isVisiblePanelOUFromDateToDateSubInv=false;
     }
 
     else if (reportName === 'gstClosingStocksummary') {
@@ -396,7 +374,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleEwayBill=false;
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
-
+      this.isVisiblePanelOUFromDateToDateSubInv=false;
     }
 
 
@@ -419,7 +397,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
-
+      this.isVisiblePanelOUFromDateToDateSubInv=false;
 
     }
     else if (reportName === 'gstsparesMiscIssueReceipt') {
@@ -441,7 +419,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
-
+      this.isVisiblePanelOUFromDateToDateSubInv=false;
     }
 
     else if (reportName === 'gstsparesPaintPanel') {
@@ -463,7 +441,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=true;
       this.isVisibleonlyOuCode = false;
-
+      this.isVisiblePanelOUFromDateToDateSubInv=false;
     }
     else if (reportName === 'gstsparesPaintPanelDtlRpt') {
       this.reportName = 'Paint Panel Detail Report';
@@ -484,7 +462,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=true;
       this.isVisibleonlyOuCode = false;
-
+      this.isVisiblePanelOUFromDateToDateSubInv=false;
     }
 
     else if (reportName === 'gststockTransfer') {
@@ -506,7 +484,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
-
+      this.isVisiblePanelOUFromDateToDateSubInv=false;
     }
 
     else if (reportName === 'gststockTransferSummary') {
@@ -528,7 +506,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
-
+      this.isVisiblePanelOUFromDateToDateSubInv=false;
     }
 
     else if (reportName === 'gststockTransferReceivedDetails') {
@@ -550,7 +528,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
-
+      this.isVisiblePanelOUFromDateToDateSubInv=false;
     }
 
     else if (reportName === 'gststockTransferReceivedSummary') {
@@ -572,7 +550,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
-
+      this.isVisiblePanelOUFromDateToDateSubInv=false;
     }
 
     else if (reportName === 'gstSparesClosingStockAsOnDate') {
@@ -594,7 +572,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
-
+      this.isVisiblePanelOUFromDateToDateSubInv=false;
     }
 
     else if (reportName === 'billHandedoverToActReport') {
@@ -622,7 +600,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
-
+      this.isVisiblePanelOUFromDateToDateSubInv=false;
     }
 
     else if (reportName === 'paintStockTakingBlankFormat') {
@@ -645,7 +623,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
-
+      this.isVisiblePanelOUFromDateToDateSubInv=false;
     }
 
     else if (reportName === 'paintStockTakingDetailFormat') {
@@ -668,7 +646,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
-
+      this.isVisiblePanelOUFromDateToDateSubInv=false;
     }
 
     else if (reportName === 'paintStockTakinUploadFormat') {
@@ -691,7 +669,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
-
+      this.isVisiblePanelOUFromDateToDateSubInv=false;
     }
 
     else if (reportName === 'paintStockTakingQtyDetails') {
@@ -714,11 +692,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblepanelStockTaking=true;
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
-
+      this.isVisiblePanelOUFromDateToDateSubInv=false;
     }
-
-
-
     else if (reportName === 'icConsumptionReport') {
       this.reportName = 'Internal Consumption Report';
         this.isVisibleGSTPurchaseRegister = false;
@@ -738,9 +713,29 @@ export class PaintReportsComponent implements OnInit {
         this.isVisiblepanelStockTaking=false;
         this.isVisiblesparesPaintPanelReport=true;
         this.isVisibleonlyOuCode = false;
-  
+        this.isVisiblePanelOUFromDateToDateSubInv=false;
       }
-
+      else if (reportName === 'paintDailyReport') {
+        this.reportName = 'Paint Daily Report';
+          this.isVisibleGSTPurchaseRegister = false;
+          this.isVisibleonlyLocationCode = false;
+          this.isVisiblespClosingStockAsOndate=false;
+          this.isVisiblegstsaiDebtors = false;
+          this.isVisibleStockLedger = false;
+          this.isVisiblestockTransfer = false;
+          this.isVisiblestockTransferRecd=false;
+          this.isVisibleSparesBackOrderQty = false;
+          this.isVisiblesparesMiscIssueReceipt = false;
+          this.isVisiblesparesInventoryAging = false;
+          this.isVisibleSparesDebtorsExecutiveWise = false;
+          this.isVisiblefromtosubinventory=false;
+          this.isVisiblecustomerLedger=false;
+          this.isVisibleEwayBill=false;
+          this.isVisiblepanelStockTaking=false;
+          this.isVisiblesparesPaintPanelReport=false;
+          this.isVisibleonlyOuCode = false;
+          this.isVisiblePanelOUFromDateToDateSubInv=true;
+        }
   
   }
 
@@ -913,32 +908,23 @@ export class PaintReportsComponent implements OnInit {
           })
       }
     }
-   
-   
-    // else if (reportName === 'Closing Stock Report(As on Date)') {
-    //   this.toDateValidation(tDate);if(this.rptValidation==false){return;}
-
-    //   const fileName = 'PAINT-Closing Stock - ' +sessionStorage.getItem('locName').trim() +' As On ' +  toDate + '.xls';
-    //   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    //   if (Number(sessionStorage.getItem('deptId')) === 4) {
-    //     this.reportService.sprClsAsonDtReport(toDate, locId,subInventory)
-    //       .subscribe(data => {
-    //         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-    //         this.isDisabled1 = false;
-    //         this.closeResetButton = true;
-    //         this.dataDisplay = ''
-    //       })
-    //   }
-    //   else if (Number(sessionStorage.getItem('deptId')) != 4) {
-    //     this.reportService.sprClsAsonDtReport(toDate, sessionStorage.getItem('locId'),subInventory)
-    //     .subscribe(data => {
-    //       saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-    //       this.isDisabled1 = false;
-    //       this.closeResetButton = true;
-    //       this.dataDisplay = ''
-    //     })
-    //    }
-    // }
+  
+    else if (reportName === 'Paint Daily Report') {
+      const fileName = 'Paint Daily Report-' +  '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+         this.reportService.paintDailyReportFN(fromDate, toDate,sessionStorage.getItem('ouId'), subInventory )
+           .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            //  var url = URL.createObjectURL(blob);
+            //  var printWindow = window.open(url, '', 'width=800,height=500');
+            //  printWindow.open;
+             this.isDisabled1 = false;
+             this.closeResetButton = true;
+             this.dataDisplay = ''
+           })
+      
+     }
 
 
     else if (reportName === 'Paint Closing Stock Report') {
