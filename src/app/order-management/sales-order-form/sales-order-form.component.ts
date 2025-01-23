@@ -97,6 +97,7 @@ interface ISalesBookingForm {
   lesseeCustId: number;
   attribute17: string;
   taxAmounts: IterableIterator<any[]>;
+  ordStatus:string
 }
 
 interface AccOrderLinesPost1 {
@@ -362,6 +363,8 @@ export class SalesOrderFormComponent implements OnInit {
   isDisabledlesseeCustName = false;
   isDisabledtaxbtn: Array<boolean> = [];
   attribute17: string;
+  ordStatus:string
+  isdisbaleCancelButton =true;
   // isDisabledtaxbtn=false;
 
   displaysegmentInvType: Array<boolean> = [];
@@ -441,6 +444,7 @@ export class SalesOrderFormComponent implements OnInit {
       basicValue: [''],
       weddingDate: [''],
       attribute17: ['', [Validators.required]],
+      ordStatus:[],
       name: [''],
       lesseeCustName: [''],
       customerSiteId: [''],
@@ -842,31 +846,45 @@ export class SalesOrderFormComponent implements OnInit {
 
   onOptionsSelectedDescription(segment: string, k) {
 
-    // alert(segment +' --- '+ k +' ---- '+OrderTypeName);
-
-  //   if (OrderTypeName==='Sale Corporate' ) {
-  //   if (segment==='STATE-GOVT.-SUBSIDY' || segment==='00GL52-STATE-GOVT.-SUBSIDY-1-DEC-23') {
-  //     alert(segment + " : User not Allowed to select this Item...")
-  //     segment='';
-  //     return;
-  //   }
-  // }
+  
+  let controlinv = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+  let controlinvext = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
+  let controlinvext1 = controlinvext.getRawValue();
+  var itemType = (controlinv.controls[k]).get('invType').value;
+ 
+ 
+ 
   var custTp = this.SalesOrderBookingForm.get('custType').value;
 
   if (custTp==='Organization' ) {
       if (segment.includes('STATE-GOVT.-SUBSIDY')) {
-        alert(segment + " : User not Allowed to select this Item...")
-        segment='';
+        alert(segment + " : User not Allowed to select this Item...");
+
+        (controlinv.controls[k]).patchValue({
+          segment:"", itemId: "", orderedItem: "", hsnSacCode: "", uom: "", flowStatusCode:"",
+          isTaxable: "",pricingQty: "",unitSellingPrice:"", taxCategoryName:"",taxCategoryId:"",
+          baseAmt: "",taxAmt: "",totAmt:""});
+        return;
+      }
+      }
+    
+
+    var modelVariant = this.SalesOrderBookingForm.get('variant').value;
+
+    if (modelVariant != '00GL68' ) {
+      if (segment.includes('OFFERGL68')) {
+        alert(segment + " : User not Allowed to select this Item...Applicable for Model [00GL68] Only");
+   
+        (controlinv.controls[k]).patchValue({
+          segment:"", itemId: "", orderedItem: "", hsnSacCode: "", uom: "", flowStatusCode:"",
+          isTaxable: "",pricingQty: "",unitSellingPrice:"", taxCategoryName:"",taxCategoryId:"",
+          baseAmt: "",taxAmt: "",totAmt:""});
         return;
       }
     }
+  
 
-    // alert('HI')
-    let controlinv = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-    let controlinvext = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
-    let controlinvext1 = controlinvext.getRawValue();
-    var itemType = (controlinv.controls[k]).get('invType').value;
-    // alert(controlinvext1.length)
+       // alert(controlinvext1.length)
     for (let i = 0; i < controlinvext1.length; i++) {
       // alert(controlinvext1[i].segment+'----'+ controlinvext1[i].pricingQty + ", i="+i+" ,k="+k)
 
@@ -888,6 +906,7 @@ export class SalesOrderFormComponent implements OnInit {
       }
 
     }
+
     console.log(this.invItemList1);
     let select = this.invItemList1.find(d => d.segment === segment);
     console.log(select);
@@ -1435,9 +1454,15 @@ export class SalesOrderFormComponent implements OnInit {
   refresh() {
     window.location.reload();
   }
+
   close() {
     this.router.navigate(['admin']);
   }
+
+  CancelOrder() {
+     alert ("Order Cancellation...wip")
+  }
+
 
 
   // goReceiptForm() {
@@ -1582,7 +1607,7 @@ export class SalesOrderFormComponent implements OnInit {
 
 
   OrderFind(orderNumber) {
-    // alert(orderNumber)
+    alert(orderNumber)
     this.displaySalesLines = false;
     this.displayAllButtons = false;
     this.displayCreateOrderButton = true;
@@ -1610,6 +1635,8 @@ export class SalesOrderFormComponent implements OnInit {
          data => {
           // debugger;
            if (data != null) {
+            alert("in data : "+ orderNumber)
+
              this.lstgetOrderLineDetails = data.obj.oeOrderLinesAllList;
              this.lstgetOrderTaxDetails = data.obj.taxAmounts;
              this.allDatastore = data.obj;
@@ -1644,8 +1671,17 @@ export class SalesOrderFormComponent implements OnInit {
                    }
                  );
              }
+
+            //  this.SalesOrderBookingForm.patchValue({ ordStatus: data.obj.orderStatus });
+            //  alert ("Order Status : " +data.obj.orderStatus);
+            //  if (data.obj.orderStatus === 'ENTERED' ) {
+            //   this.isdisbaleCancelButton = false;
+            // }
+
+
              if (data.obj.orderStatus === 'CANCELLED' || data.obj.orderStatus === 'CLOSED') {
                this.isVisible6 = false;
+               alert("hello")
              }
              if (data.obj.orderStatus === 'INVOICED') {
                if (Number(sessionStorage.getItem('deptId')) != 4) {
@@ -3915,6 +3951,7 @@ if (Number(sessionStorage.getItem('deptId'))!=4){
             this.selCustomer = data.obj;
             this.custSiteList = data.obj.customerSiteMasterList;
             this.SalesOrderBookingForm.patchValue({ custType: data.obj.custType });
+
             this.SalesOrderBookingForm.patchValue({ tcsYN: data.obj.tcsYN });
             this.SalesOrderBookingForm.patchValue({ tcsPer: data.obj.tcsPer });
             this.SalesOrderBookingForm.patchValue({ accountNo: custAccountNo });

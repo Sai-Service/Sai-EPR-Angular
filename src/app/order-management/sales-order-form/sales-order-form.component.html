@@ -6,6 +6,8 @@
     <input hidden class="form-control" formControlName="shipLocName" [(ngModel)]='shipLocName'>
     <input hidden class="form-control" formControlName="customerId" [(ngModel)]='customerId'>
     <input hidden class="form-control" formControlName="locationId" [(ngModel)]='locationId'>
+    <!-- <input hidden class="form-control" formControlName="ordStatus" [(ngModel)]='ordStatus'> -->
+
 
     <table style="width: 100%;background-color: rgb(255, 255, 255);">
         <tr>
@@ -749,6 +751,14 @@
                                 <input disabled type="text" formControlName="totAmt" [(ngModel)]='totAmt'
                                     value={{totAmt}} class="form-control" style="width: 170px;font-weight: bold;">
                             </td>
+
+                            <td style="width: 15%;font-weight: bold;" class="LabelFontStyle"> Order&nbsp;Status&nbsp;:&nbsp; </td>
+                            <td>
+                                <input disabled type="text" formControlName="ordStatus" [(ngModel)]='ordStatus'
+                                    value={{ordStatus}} class="form-control" >
+                            </td>
+
+
                         </tr>
                     </table>
                 </ng-template>
@@ -877,6 +887,11 @@
                             <td>
                                 <input disabled type="text" formControlName="totAmt" [(ngModel)]='totAmt'
                                     value={{totAmt}} class="form-control" style="width: 170px;font-weight: bold;">
+                            </td>
+                            <td style="width: 15%;font-weight: bold;" class="LabelFontStyle"> Order&nbsp;Status&nbsp;:&nbsp; </td>
+                            <td>
+                                <input disabled type="text" formControlName="ordStatus" [(ngModel)]='ordStatus'
+                                    value={{ordStatus}} class="form-control" >
                             </td>
                         </tr>
                     </table>
@@ -1598,6 +1613,10 @@
                             </td>
                             <td>
                                 <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+                            </td>
+
+                           <td>
+                                <button  [disabled]="isdisbaleCancelButton" (click)="CancelOrder()" class="btn btn-primary" style="width: 7rem;">Cancel Order</button>
                             </td>
                         </tr>
                     </table>
