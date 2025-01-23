@@ -97,6 +97,7 @@ interface ISalesBookingForm {
   lesseeCustId: number;
   attribute17: string;
   taxAmounts: IterableIterator<any[]>;
+  ordStatus:string
 }
 
 interface AccOrderLinesPost1 {
@@ -362,6 +363,8 @@ export class SalesOrderFormComponent implements OnInit {
   isDisabledlesseeCustName = false;
   isDisabledtaxbtn: Array<boolean> = [];
   attribute17: string;
+  ordStatus:string
+  isdisbaleCancelButton =true;
   // isDisabledtaxbtn=false;
 
   displaysegmentInvType: Array<boolean> = [];
@@ -441,6 +444,7 @@ export class SalesOrderFormComponent implements OnInit {
       basicValue: [''],
       weddingDate: [''],
       attribute17: ['', [Validators.required]],
+      ordStatus:[],
       name: [''],
       lesseeCustName: [''],
       customerSiteId: [''],
@@ -853,6 +857,11 @@ export class SalesOrderFormComponent implements OnInit {
   // }
   var custTp = this.SalesOrderBookingForm.get('custType').value;
 
+  var modelVariant = this.SalesOrderBookingForm.get('variant').value;
+
+      //  alert ("Variant: " + modelVariant)
+
+
   if (custTp==='Organization' ) {
       if (segment.includes('STATE-GOVT.-SUBSIDY')) {
         alert(segment + " : User not Allowed to select this Item...")
@@ -860,6 +869,18 @@ export class SalesOrderFormComponent implements OnInit {
         return;
       }
     }
+
+    if (modelVariant != '00GL68' ) {
+      if (segment.includes('OFFERGL68')) {
+        alert(segment + " : User not Allowed to select this Item...Applicable for Model [00GL68] Only")
+        segment='';
+        return;
+      }
+    }
+
+    
+
+    
 
     // alert('HI')
     let controlinv = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
@@ -1435,9 +1456,15 @@ export class SalesOrderFormComponent implements OnInit {
   refresh() {
     window.location.reload();
   }
+
   close() {
     this.router.navigate(['admin']);
   }
+
+  CancelOrder() {
+     alert ("Order Cancellation...wip")
+  }
+
 
 
   // goReceiptForm() {
@@ -1582,7 +1609,7 @@ export class SalesOrderFormComponent implements OnInit {
 
 
   OrderFind(orderNumber) {
-    // alert(orderNumber)
+    alert(orderNumber)
     this.displaySalesLines = false;
     this.displayAllButtons = false;
     this.displayCreateOrderButton = true;
@@ -1610,6 +1637,8 @@ export class SalesOrderFormComponent implements OnInit {
          data => {
           // debugger;
            if (data != null) {
+            alert("in data : "+ orderNumber)
+
              this.lstgetOrderLineDetails = data.obj.oeOrderLinesAllList;
              this.lstgetOrderTaxDetails = data.obj.taxAmounts;
              this.allDatastore = data.obj;
@@ -1644,8 +1673,17 @@ export class SalesOrderFormComponent implements OnInit {
                    }
                  );
              }
+
+            //  this.SalesOrderBookingForm.patchValue({ ordStatus: data.obj.orderStatus });
+            //  alert ("Order Status : " +data.obj.orderStatus);
+            //  if (data.obj.orderStatus === 'ENTERED' ) {
+            //   this.isdisbaleCancelButton = false;
+            // }
+
+
              if (data.obj.orderStatus === 'CANCELLED' || data.obj.orderStatus === 'CLOSED') {
                this.isVisible6 = false;
+               alert("hello")
              }
              if (data.obj.orderStatus === 'INVOICED') {
                if (Number(sessionStorage.getItem('deptId')) != 4) {
@@ -3915,6 +3953,7 @@ if (Number(sessionStorage.getItem('deptId'))!=4){
             this.selCustomer = data.obj;
             this.custSiteList = data.obj.customerSiteMasterList;
             this.SalesOrderBookingForm.patchValue({ custType: data.obj.custType });
+
             this.SalesOrderBookingForm.patchValue({ tcsYN: data.obj.tcsYN });
             this.SalesOrderBookingForm.patchValue({ tcsPer: data.obj.tcsPer });
             this.SalesOrderBookingForm.patchValue({ accountNo: custAccountNo });

@@ -1315,9 +1315,12 @@
                                                 <th scope="col" style="width: 40px;">Line No</th>
                                                 <th scope="col" style="width: 40px;">Type Category</th>
                                                 <th scope="col" style="width: 160px;">Item code</th>
-                                                <th scope="col" style="width: 160px;">Available QTY</th>
-                                                <th scope="col" style="width: 70px;">Qty</th>
-                                                <th scope="col" style="width: 70px;">Back Order Qty</th>
+
+                                                <th scope="col" style="width: 160px;">Available QTY</th>    //avlqty//
+                                               
+                                                <th scope="col" style="width: 70px;">Qty</th>    //pricing qty
+                                                <th scope="col" style="width: 70px;">Back Order Qty</th>  //orderd qty
+
                                                 <th scope="col" style="width: 160px;">Description</th>
                                                 <th scope="col" style="width: 160px;">Locator</th>
                                                 <th scope="col" style="width: 90px;">Unit Price</th>
@@ -1398,11 +1401,13 @@
                                                                     class="form-control" (change)="onKey(i)"
                                                                     style="height: 20px;width: 70px;" min="0"
                                                                     oninput="this.value = Math.abs(this.value)">
+                                                                    
                                                                 <input hidden type="text" formControlName="uom"
                                                                     class="form-control" (change)="onKey(i)"
                                                                     style="height: 20px;width: 70px;" min="0"
                                                                     oninput="this.value = Math.abs(this.value)">
                                                             </td>
+
                                                             <td>
                                                                 <input disabled type="number"
                                                                     formControlName="orderedQty" value="orderedQty"
@@ -1410,6 +1415,7 @@
                                                                     style="height: 20px;width: 70px;" min="0"
                                                                     oninput="this.value = Math.abs(this.value)">
                                                             </td>
+
                                                             <td>
                                                                 <input disabled type="text"
                                                                     formControlName="orderedItem" value="orderedItem"
