@@ -10,6 +10,7 @@ import { DatePipe, Location } from '@angular/common';
 import { escapeRegExp } from '@angular/compiler/src/util';
 import { saveAs } from 'file-saver';
 import { v4 as uuidv4 } from 'uuid';
+import * as xlsx from 'xlsx';
  
 
 
@@ -174,7 +175,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   isVisible16: boolean = false;
   isVisible17: boolean = false;
   isVisible18: boolean = false;
-  isVisibleexportToexcel:boolean=false;
+
   isVisibleCreateOrder: boolean = false;
   isVisiblePickTiPreview: boolean = false;
   isVisibleUpdate: boolean = false;
@@ -358,6 +359,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
   @ViewChild('aForm') aForm: ElementRef;
 
+  @ViewChild('epltable', { static: false }) epltable: ElementRef;
 
   title: string;
   customerId1: number;
@@ -843,7 +845,6 @@ orderNumber1:[],
             this.isVisibleCreateOrder = false;
             this.isVisiblePickTiPreview = true;
             this.isVisibleUpdate = true;
-            this.isVisibleexportToexcel=true;
             this.isVisibleGenerateInvoice = true;
             this.lstgetOrderLineDetails = data.obj.oeOrderLinesAllList;
             this.lstgetOrderTaxDetails = data.obj.taxAmounts;
@@ -2619,10 +2620,7 @@ orderNumber1:[],
         this.isDisabled = false;
         return;
       }
-      // debugger;
-      // alert(orderLines[j].segment.length)
-      // if (orderLines[j].segment.includes('MTSS')===false || orderLines[j].segment.includes('MCAS')===false || orderLines[j].segment.includes('MTUS')===false){
-      if ((orderLines[j].segment.length > 15) && (this.deptId===5 || this.deptId ===6) && this.divisionId===2) {
+      if ((orderLines[j].segment.length >=20) && (this.deptId===5 || this.deptId ===6) && this.divisionId===2) {
         alert('Line No' + ' ' + orderLines[j].segment + ' ' + 'Select Item Is Wrong... Please confirm');
         this.closeResetButton = true;
         this.dataDisplay = ''
@@ -2682,7 +2680,6 @@ orderNumber1:[],
         this.isDisabled = true;
         this.dataDisplay = ''
         this.closeResetButton = true;
-        this.isVisibleexportToexcel=true;
         console.log(this.orderNumber);
         alert(res.message);
         this.orderNumber = res.obj;
@@ -3922,6 +3919,14 @@ orderNumber1:[],
   )
      
 }
-  
+
+exportToExcel() {
+  const ws: xlsx.WorkSheet =
+    // xlsx.utils.table_to_sheet(this.epltable.nativeElement);
+    xlsx.utils.json_to_sheet(this.lstgetOrderLineDetails);
+  const wb: xlsx.WorkBook = xlsx.utils.book_new();
+  xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
+  xlsx.writeFile(wb, 'CounterSaleOrderList-'+this.orderNumber+'.xlsx');
+}
 
 }

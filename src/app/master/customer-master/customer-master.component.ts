@@ -90,6 +90,11 @@ interface IcustomerMaster {
   aadharNo: number;
   tdsApplDate: string;
   staxCategoryName: string;
+  shipToState:string;
+  shipTo:string;
+  sshipToState:string;
+  sshipTo:string;
+  panCheckMes:string;
 }
 
 @Component({
@@ -236,6 +241,11 @@ export class CustomerMasterComponent implements OnInit {
   staxCategoryName: string;
   tcsPer: number;
   displayTcsPer: boolean;
+  panCheckMes:string;
+  shipToState:string;
+  shipTo:string;
+  sshipToState:string;
+  sshipTo:string;
 
   constructor(private fb: FormBuilder, private router: Router, private orderManagementService: OrderManagementService, private location1: Location, private service: MasterService) {
     this.customerMasterForm = fb.group({
@@ -334,6 +344,11 @@ export class CustomerMasterComponent implements OnInit {
       aadharNo: [],
       tdsApplDate: [],
       tcsPer: [],
+      panCheckMes:[],
+      shipToState:[],
+      shipTo:[],
+      sshipToState:[],
+  sshipTo:[],
     })
 
   }
@@ -517,6 +532,7 @@ export class CustomerMasterComponent implements OnInit {
   // }
 
   onOptionStateSeleted(event: any) {
+    // alert(event)
     if (event != undefined) {
       this.service.taxCategoryList1(this.locId, event)
         .subscribe(
@@ -527,16 +543,11 @@ export class CustomerMasterComponent implements OnInit {
 
           }
         );
+        this.customerMasterForm.patchValue({shipToState:event})
     }
   }
   onOptionSiteStateSeleted(event: any) {
 
-// alert(event+'--'+this.customerSiteId)
-    // this.lstcomments2 = this.lstcomments.customerSiteMasterList;
-    // console.log(this.lstcomments2);
-    // let select = this.lstcomments2.find(d => d.customerSiteId === customerSiteId);
-
-    // if (event != undefined && this.customerSiteId === undefined)comment by vinita on 16jan23
     if (event != undefined)
      {
       this.service.taxCategoryList1(this.locId, event)
@@ -548,6 +559,7 @@ export class CustomerMasterComponent implements OnInit {
 
           }
         );
+        this.customerMasterForm.patchValue({sshipToState:event})
     }
   }
   onOptionClassCode(event: any) {
@@ -889,6 +901,10 @@ export class CustomerMasterComponent implements OnInit {
       alert('Please Select OU Name.!');
       return;
     }
+    if (formValue.panCheckMes != null){
+      alert(formValue.panCheckMes);
+      return;
+    };
     this.service.CustMasterOnlySitSubmit(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
@@ -923,9 +939,11 @@ export class CustomerMasterComponent implements OnInit {
     const formValue: IcustomerMaster = this.transDataWithSite(this.customerMasterForm.value);
     formValue.customerId1 = this.custAccountNo;
     formValue.termId=this.customerMasterForm.get('paymentType').value;
-    // if (formValue.tdsPer === 'Organization') {
-    //   formValue.title = 'M/S';
-    // }
+    // alert(formValue.panCheckMes);
+    if (formValue.panCheckMes != null){
+      alert(formValue.panCheckMes);
+      return;
+    };
     if (formValue.custType === 'Organization') {
       formValue.title = 'M/S';
     }
@@ -1019,6 +1037,10 @@ export class CustomerMasterComponent implements OnInit {
     //   alert('Please Select OU Name.!');
     //   return;
     // }
+    if (formValue.panCheckMes != null){
+      alert(formValue.panCheckMes);
+      return;
+    };
     formValue.termId = this.customerMasterForm.get('paymentType').value;
     formValue.staxCategoryName = this.customerMasterForm.get('staxCatName').value;
     // formValue.sGstNo = this.customerMasterForm.get('sGstNo').value;
@@ -1176,15 +1198,12 @@ export class CustomerMasterComponent implements OnInit {
       .subscribe(
         data => {
           this.lstcomments = data.obj;
+          // debugger;
           this.lstSiteList=data.obj.customerSiteMasterList;
           console.log(this.lstcomments);
           this.customerMasterForm.patchValue(this.lstcomments);
           this.displayenable = false;
-
-          // this.city = this.lstcomments.city
-
-          // let birDate =this.pipe.transform(this.lstcomments[0].birthDate, 'yyyy-MM-dd');
-          //  alert("----"+birDate)
+          // alert(data.obj.customerSiteMasterList[0].shipTo)
           this.customerMasterForm.patchValue({
             panNo: this.lstcomments.customerSiteMasterList[0].panNo,
             gstNo: this.lstcomments.customerSiteMasterList[0].gstNo,
@@ -1193,7 +1212,10 @@ export class CustomerMasterComponent implements OnInit {
             creditAmt: this.lstcomments.customerSiteMasterList[0].creditAmt,
             disPer: this.lstcomments.customerSiteMasterList[0].disPer,
             location: this.lstcomments.customerSiteMasterList[0].location,
+            shipTo: data.obj.customerSiteMasterList[0].shipTo,
+            shipToState: data.obj.customerSiteMasterList[0].shipToState,
           });
+          // 79943
           var title1 = this.titleList.find(d => d.code === this.lstcomments.title);
           var payTerm = this.payTermDescList.find(d => d.lookupValueId === this.lstcomments.termId);
           this.customerMasterForm.patchValue({ title: this.lstcomments.title, paymentType: payTerm.lookupValueId });
@@ -1202,8 +1224,6 @@ export class CustomerMasterComponent implements OnInit {
           this.customerMasterForm.get('mName').disable();
           this.customerMasterForm.get('lName').disable();
           this.customerMasterForm.get('custName').disable();
-          
-
           this.customerMasterForm.get('address1').disable();
           this.customerMasterForm.get('address2').disable();
           this.customerMasterForm.get('address3').disable();
@@ -1216,8 +1236,7 @@ export class CustomerMasterComponent implements OnInit {
           this.customerMasterForm.get('highAmt').disable();
           this.customerMasterForm.get('disPer').disable();
           this.customerMasterForm.get('perAdd').disable();
-          // this.customerMasterForm.get('siteName').disable();
-          // this.customerMasterForm.get('souId').disable();
+          this.customerMasterForm.get('shipTo').disable();
           this.dispstatus = false;
 
         });
@@ -1264,7 +1283,7 @@ export class CustomerMasterComponent implements OnInit {
       this.customerMasterForm.patchValue({ sdisPer: select.disPer });
       this.customerMasterForm.patchValue({ staxCatName: select.taxCategoryName });
       this.customerMasterForm.patchValue({ spinCd: select.pinCd });
-      this.customerMasterForm.patchValue({ sGstNo : select.gstNo})
+      this.customerMasterForm.patchValue({ sGstNo : select.gstNo,sshipToState:select.state,sshipTo:select.shipTo})
       // this.sstatus=select.status
       // ticketNo not in  json
       let selstatus = this.statusList.find(d => d.codeDesc === select.status);
@@ -1437,6 +1456,14 @@ export class CustomerMasterComponent implements OnInit {
       alert('Please enter valid PAN Number');
       return false;
     }
+    // var mess = this.customerMasterForm.get('panCheckMes').value;
+    // if (mess != null){
+    //   alert(mess);
+    //   return false;
+    // }
+    // else if (mess === null){
+    //   return validdata;
+    // }
   }
 
   message: string = "Please Fix the Errors !";
@@ -1586,5 +1613,45 @@ export class CustomerMasterComponent implements OnInit {
       this.tdsPercentage = this.originalTdsPer;
     }
   }
-}
 
+  panCardCheck(pan){
+    var panNo = this.customerMasterForm.get('panNo').value;
+    // alert(panNo)
+    this.orderManagementService.panNoCheckFn(panNo)
+      .subscribe(
+        data => {
+          if (data.code === 200) {
+            alert(data.obj[0].custname);
+            this.customerMasterForm.patchValue({panCheckMes:data.obj[0].custname})
+          }
+          else {
+            if (data.code === 400) {
+              // alert(data.message);
+              this.customerMasterForm.patchValue({panCheckMes:null})
+            }
+          }
+        }
+      );
+  }
+
+
+  panCardCheck1(pan){
+    // var panNo = this.customerMasterForm.get('panNo').value;
+    // alert(pan)
+    this.orderManagementService.panNoCheckFn(pan)
+      .subscribe(
+        data => {
+          if (data.code === 200) {
+            alert(data.obj[0].custname);
+            this.customerMasterForm.patchValue({panCheckMes:data.obj[0].custname})
+          }
+          else {
+            if (data.code === 400) {
+              // alert(data.message);
+              this.customerMasterForm.patchValue({panCheckMes:null})
+            }
+          }
+        }
+      );
+  }
+}

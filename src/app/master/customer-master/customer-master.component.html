@@ -552,10 +552,7 @@
                             <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
                                 <td style="width: 10%" class="LabelFontStyle1">&nbsp;Mobile&nbsp;1&nbsp;:&nbsp;</td>
                                 <td>
-                                    <!-- <input type="number" formControlName="mobile1" [(ngModel)]='mobile1' value={{mobile1}}
-                                        (keyup)="onKey($event)" class="form-control"
-                                        [ngClass]="{ 'is-invalid': submitted && f.mobile1.errors }"
-                                        placeholder="Enter mobile1"> -->
+                                   
                                     <input  formControlName="mobile1" value={{mobile1}} class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.mobile1.errors }" placeholder="Enter Mobile 1"
                                         onKeyPress="if(this.value.length==10) return false;">
@@ -613,10 +610,7 @@
                                 <td style="width: 10%" class="LabelFontStyle">&nbsp;Email&nbsp;ID&nbsp;2&nbsp;:&nbsp;
                                 </td>
                                 <td>
-                                    <!-- <input formControlName="emailId1" [(ngModel)]='emailId1' value={{emailId1}}
-                                        (keyup)="onKey($event)" class="form-control"
-                                        [ngClass]="{ 'is-invalid': submitted && f.emailId1.errors }"
-                                        placeholder="Enter emailId"> -->
+                                   
                                         <input type="emailId1" formControlName="emailId1" value={{emailId1}} class="form-control"
                                          [ngClass]="{ 'is-invalid': submitted && f.emailId1.errors }"
                                           placeholder="Enter Email id">
@@ -634,12 +628,9 @@
                                         placeholder="Enter contact Person" >
                                     <div *ngIf="submitted && f.contactPerson.errors" class="invalid-feedback">
                                         <div *ngIf="f.contactPerson.errors?.pattern">Please enter correct data</div>
-                                        <!-- <div *ngIf="f.contactPerson.errors.maxLength">contactPerson must -->
-                                        <!-- </div> -->
+                                     
                                     </div>
-                                    <!-- <span
-                                        *ngIf="!customerMasterForm.get('contactPerson').valid && customerMasterForm.get('contactPerson').touched">Please
-                                        Enter contactPerson must</span> -->
+                                   
                                 </td>
                             </tr>
                             <tr>
@@ -650,15 +641,24 @@
                                         (keyup)="onKey($event)" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.contactNo.errors }"
                                         placeholder="Enter contact Person No" onKeyPress="if(this.value.length==10) return false;">
-                                    <!-- <div *ngIf="submitted && f.contactNo.errors" class="invalid-feedback"> -->
-                                        <!-- <div *ngIf="f.contactNo.errors.required">contact Person No must</div>
-                                        <div *ngIf="f.contactNo.errors.maxLength">contact Person No must -->
-                                        <!-- </div> -->
-                                    <!-- </div> -->
-                                    <!-- <span
-                                        *ngIf="!customerMasterForm.get('contactNo').valid && customerMasterForm.get('contactNo').touched">Please
-                                        Enter contact Person no must</span> -->
+                                    
                                 </td>
+                            </tr>
+                            <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
+                                <td style="width: 10%" class="LabelFontStyle">
+                                    &nbsp;Ship&nbsp;To&nbsp;State&nbsp;:&nbsp;</td>
+                                
+                                    <td>
+                                        <input disabled type="text" formControlName="shipToState" [(ngModel)]='shipToState'
+                                        value={{shipToState}}  class="form-control">
+                                    </td>
+                                    <td style="width: 10%" class="LabelFontStyle">
+                                        &nbsp;Ship&nbsp;To&nbsp;Address&nbsp;:&nbsp;</td>
+                                    
+                                        <td colspan="3">
+                                            <input  type="text" formControlName="shipTo" [(ngModel)]='shipTo'
+                                            value={{shipTo}}  class="form-control" style="width: 100%">
+                                        </td>
                             </tr>
                             <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
                                 <td style="width: 10%" class="LabelFontStyle">
@@ -762,8 +762,9 @@
                                     <!-- (keyup)="onKey($event)"  -->
                                     <input formControlName="panNo"  value={{panNo}} class="form-control" type="text" maxlength="10"
                                         [ngClass]="{ 'is-invalid': submitted && f.panNo.errors }"
-                                        placeholder="Enter panNo" (blur)="onSelectPan($event)"
+                                        placeholder="Enter panNo" (blur)="onSelectPan($event)" (keydown.tab)="panCardCheck(panNo)"
                                         >
+                                        <input disabled hidden formControlName="panCheckMes"  class="form-control" >
                                         <!-- pattern="^[A-Z]{5}[0-9]{4}[A-Z]{1}$" -->
                                     <div *ngIf="submitted && f.panNo.errors" class="invalid-feedback">
                                         <div *ngIf="f.panNo.errors.pattern">Invalid PAN No format</div>
@@ -1169,22 +1170,14 @@
                                         <td>
                                                 <input formControlName="scity" id="scity" [(ngModel)]='scity' class="form-control"(ngModelChange)='onOptionsiteSelectedCity($event)'
                                                 [ngClass]="{ 'is-invalid': submitted && f.scity.errors }">
-                                            <!-- <select formControlName="scity" id="scity" [(ngModel)]='scity' class="form-control"(ngModelChange)='onOptionsiteSelectedCity($event)'
-                                            [ngClass]="{ 'is-invalid': submitted && f.scity.errors }">
-                                            <option></option>
-                                            <option *ngFor="let sc of  cityList">
-                                            {{sc.codeDesc}}
-                                            </option>
-                                            </select> -->
+                                           
                                             <div *ngIf="submitted && f.scity.errors" class="invalid-feedback">
                                                 <div *ngIf="f.scity.errors.required">City cannot be blank </div>
                                                 <div *ngIf="f.scity.errors.minlength">Minimum 3 characters required</div>
                                                 <div *ngIf="f.scity.errors.maxlength">Maximum 50 characters allowed</div>
 
                                             </div>
-                                            <!-- <span
-                                                *ngIf="!customerMasterForm.get('scity').valid && customerMasterForm.get('scity').touched">Please
-                                                Enter Item Category </span> -->
+                                           
                                         </td>
                                         <tr>
                                         <td style="width: 15%" class="LabelFontStyle">Pin&nbsp;Code&nbsp;:&nbsp;</td>
@@ -1197,9 +1190,7 @@
                                                 <div *ngIf="f.pinCd.spinCd.required">Enter pin code </div>
                                                 <div *ngIf="f.pinCd.spinCd.maxlength">Enter pin code </div>
                                             </div>
-                                            <!-- <span
-                                                *ngIf="!customerMasterForm.get('pinCd').valid && customerMasterForm.get('pinCd').touched">Please
-                                                Enter pin code </span> -->
+                                          
                                         </td>
 
                                          <td style="width: 15%" class="LabelFontStyle">State&nbsp;:&nbsp;</td>
@@ -1216,20 +1207,29 @@
                                                     <div *ngIf="f.sstate.errors.required">State cannot be blank</div>
                                                     <!-- <div *ngIf="f.sstate.errors.maxLength">Enter state</div> -->
                                                 </div>
-                                                <!-- <span
-                                                    *ngIf="!customerMasterForm.get('sstate').valid && customerMasterForm.get('sstate').touched">Please
-                                                    Enter state </span> -->
+                                                
                                             </td>
                                             <td style="width: 15%" class="LabelFontStyle">Tax&nbsp;Category&nbsp;Name:&nbsp;</td>
                                          <td>
                                             <input disabled formControlName="staxCatName" id="staxCatName" class="form-control" [ngModel]="staxCatName">
-                                              <!-- <select formControlName="staxCatName" id="staxCatName" class="form-control" [ngModel]="staxCatName">
-                                                    <option>--Select--</option>
-                                                    <option *ngFor="let taxcate of  taxCategoryList1">
-                                                        {{taxcate.taxCategoryName}}
-                                                    </option>
-                                                </select> -->
+                                             
                                           </td>
+                                    </tr>
+                                    <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;">
+                                        <td style="width: 10%" class="LabelFontStyle">
+                                            &nbsp;Ship&nbsp;To&nbsp;State&nbsp;:&nbsp;</td>
+                                        
+                                            <td>
+                                                <input disabled type="text" formControlName="sshipToState" [(ngModel)]='sshipToState'
+                                                value={{sshipToState}}  class="form-control">
+                                            </td>
+                                            <td style="width: 10%" class="LabelFontStyle">
+                                                &nbsp;Ship&nbsp;To&nbsp;Address&nbsp;:&nbsp;</td>
+                                            
+                                                <td colspan="3">
+                                                    <input  type="text" formControlName="sshipTo" [(ngModel)]='sshipTo'
+                                                    value={{sshipTo}}  class="form-control" style="width:100%">
+                                                </td>
                                     </tr>
                                     <tr style="width: 100%; border-top-style: ridge;border-top-color: #92a8d1;"></tr>
                                     <td style="width: 15%" class="LabelFontStyle">&nbsp;GST&nbsp;No&nbsp;:&nbsp;</td>
@@ -1251,7 +1251,7 @@
                                     <td style="width: 15%" class="LabelFontStyle">Pan&nbsp;No&nbsp;:&nbsp;</td>
                                     <td>
                                         <input formControlName="spanNo" value={{spanNo}} [(ngModel)]='spanNo'
-                                            class="form-control" (change)="onPanSelect($event)"
+                                            class="form-control" (change)="onPanSelect($event)" (keydown.tab)="panCardCheck1(spanNo)"
                                          placeholder="Enter Pan No"
                                          [ngClass]="{ 'is-invalid': submitted && f.spanNo.errors }">
                                          <div *ngIf="submitted && f.spanNo.errors" class="invalid-feedback">
@@ -1259,6 +1259,7 @@
                                             <div *ngIf="f.spanNo.errors.pattern">Invalid PAN format</div>
                                             <!-- <div *ngIf="f.spanNo.errors.maxLength">PAN no Maximum length error</div> -->
                                         </div>
+                                        <input disabled hidden formControlName="panCheckMes"  class="form-control" >
                                      </td>
                                      <td style="width: 15%" class="LabelFontStyle">Tan&nbsp;No&nbsp;:&nbsp;</td>
                                     <td>
