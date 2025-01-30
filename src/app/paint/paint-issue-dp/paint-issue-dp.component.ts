@@ -52,6 +52,7 @@ interface IPaintIssue {
   approvedBy: string;
   totalCompileItems: number;
   totalItemValue: number;
+  totalConsumbleValue:number;
   compileDate: Date;
   compileLineId: number;
   Adjustment: string;
@@ -73,6 +74,9 @@ interface IPaintIssue {
   panelQty:number;
   panelQty1:number;
   issDate1:Date;
+  estLabrAmt:number;
+  mtrlLbrConvPer:number;
+  consumLbrPer:number;
 
 
 }
@@ -203,6 +207,7 @@ export class PaintIssueDpComponent implements OnInit {
   click: boolean = false;
   totalCompileItems: number;
   totalItemValue: number;
+  totalConsumbleValue:number;
   // compileDate:Date;
   lstcomment: any;
   segment: string;
@@ -235,6 +240,11 @@ export class PaintIssueDpComponent implements OnInit {
   dispRow: boolean = true;
   displayRemoveRow: Array<boolean> = [];
   name:string;
+
+  estLabrAmt:number=0;
+  mtrlLbrConvPer:number;
+  consumLbrPer:number;
+
 
   public itemMap = new Map<string, IcTrans>();
 
@@ -282,6 +292,7 @@ export class PaintIssueDpComponent implements OnInit {
       description: [''],
       totalCompileItems: [''],
       totalItemValue: [''],
+      totalConsumbleValue:[''],
       compileDate: ['', Validators.required],
       segment: [''],
       itemId: [''],
@@ -312,6 +323,11 @@ export class PaintIssueDpComponent implements OnInit {
       attribute10:[],
       attribute9:[],
       issDate1: [],
+
+      estLabrAmt:[],
+      mtrlLbrConvPer:[],
+      consumLbrPer:[],
+
 
 
       cycleLinesList: this.fb.array([]),
@@ -1288,11 +1304,15 @@ export class PaintIssueDpComponent implements OnInit {
               if(panelLineArr[i].paneltype==='OLD'){att9=att9+panelLineArr[i].attribute1}
               if(panelLineArr[i].paneltype==='NEW'){att10=att10+panelLineArr[i].attribute1}
             }
-                    
+              
+
+            this.panelQty=att9+att10;
             this.paintIssueForm.patchValue(data.obj);
             this.totalItemValue=Math.round((data.obj.totalItemValue+Number.EPSILON)*100)/100;
-
             this.paintIssueForm.patchValue({attribute9:att9 , attribute10:att10 });
+
+            this.getConvPer();
+
 
             this.currentOp = 'INSERT';
             this.paintIssueForm.disable();
@@ -1792,6 +1812,7 @@ CalculateLineTotal() {
   totValue=Math.round((totValue+Number.EPSILON)*100)/100;
   this.paintIssueForm.patchValue({totalCompileItems :totQty});
   this.paintIssueForm.patchValue({totalItemValue :totValue})
+  this.getConvPer();
 }
 
 searchByDate(){ 
@@ -1824,5 +1845,34 @@ searchByDate(){
 
     });
   }
+
+  validateEstrLbrAmt(lbrAmt: any) {
+   
+    if (lbrAmt === null || lbrAmt === undefined || lbrAmt <= 0) {
+      alert("LABOUR AMOUNT :  Should not be below Zero.");
+      this.estLabrAmt = 0;
+      return;
+    }
+
+    this.getConvPer();
+  }
+
+  getConvPer(){
+
+    // alert ('hello ...in getConvPer')
+
+    var matAmt =this.paintIssueForm.get("totalItemValue").value
+    var lbrAmt =this.paintIssueForm.get('estLabrAmt').value
+
+    var convP =(matAmt/lbrAmt)*100;
+    // alert ("hello..." + matAmt +","+lbrAmt);    alert ("Labor-Matrl Conv Per : "+convP);
+
+    convP=Math.round((convP+Number.EPSILON)*100)/100
+   
+    if (lbrAmt>0) {
+    this.paintIssueForm.patchValue({ mtrlLbrConvPer: convP });
+     } else { this.paintIssueForm.patchValue({ mtrlLbrConvPer: 0 });  }
+  }
+
 
 }
