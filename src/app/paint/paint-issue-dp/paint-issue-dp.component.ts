@@ -371,7 +371,7 @@ export class PaintIssueDpComponent implements OnInit {
       systemQty: [''],
       locatorId: [''],
       subInventory: [''],
-      subType:[''],
+      category:[''],
       avlqty: [''],
       itemUnitCost: [''],
       uom: [''],
@@ -694,7 +694,7 @@ export class PaintIssueDpComponent implements OnInit {
             trxLnArr1.controls[i].patchValue({ uom: this.getItemDetail.uom });
             // trxLnArr1.controls[i].patchValue({entryStatusCode:2});
             trxLnArr1.controls[i].patchValue({ subInventory: subcode })
-            trxLnArr1.controls[i].patchValue({ subType: this.getItemDetail.categoryId.subType })
+            trxLnArr1.controls[i].patchValue({ category: this.getItemDetail.categoryId.subType })
 
             trxLnArr1.controls[i].patchValue({ locId: Number(sessionStorage.getItem('locId')) })
             trxLnArr1.controls[i].patchValue({ segment: select1.SEGMENT });
@@ -1812,7 +1812,7 @@ CalculateLineTotal() {
   var totCons=0;
   for (let i = 0; i < trxLnArr.length; i++) {
     totQty=totQty+trxLnArr[i].physicalQty;
-    if(trxLnArr[i].subType==='OTHER')
+    if(trxLnArr[i].category==='OTHER')
          {totCons=totCons+(trxLnArr[i].itemUnitCost * trxLnArr[i].physicalQty);   }
     else {totValue=totValue+(trxLnArr[i].itemUnitCost * trxLnArr[i].physicalQty); }
   }
