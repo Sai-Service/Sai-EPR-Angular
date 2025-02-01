@@ -139,7 +139,7 @@
        
         <td style="width: 15%" class="LabelFontStyle">Consumable&nbsp;Total :</td>
         <td>
-          <input disabled type="number" class="form-control" formControlName="totalConsumbleValue" [(ngModel)]="totalConsumbleValue" >
+          <input disabled type="number" class="form-control" formControlName="accountCode" [(ngModel)]="accountCode" >
         </td>
        
 
@@ -253,8 +253,8 @@
         <td style="width: 15%" class="LabelFontStyle">S.Advisor&nbsp;Name:</td>
         <td><input  type="text" class="form-control" formControlName="attribute8" [(ngModel)]="attribute8" style="background-color: yellow;text-transform: uppercase;"></td>
   
-        <td style="width: 15%" class="LabelFontStyle">Total&nbsp;Labour&nbsp;:</td>
-        <td><input  type="number" class="form-control" formControlName="estLabrAmt" [(ngModel)]="estLabrAmt" (change)="validateEstrLbrAmt(estLabrAmt)" style="background-color: yellow;text-transform: uppercase;"></td>
+        <td style="width: 15%" class="LabelFontStyle">Labour&nbsp;Total&nbsp;:</td>
+        <td><input  type="number" class="form-control" formControlName="attribute7" [(ngModel)]="attribute7" (change)="validateEstrLbrAmt(attribute7)" ></td>
       
        
     
@@ -276,19 +276,21 @@
 
       <tr>
         <td style="width: 15%" class="LabelFontStyle">Description:</td>
-        <td colspan="3"><input style="width:100%" type="text" class="form-control" formControlName="description"[(ngModel)]="description"></td>
+        <td colspan="2"><input style="width:100%" type="text" class="form-control" formControlName="description"[(ngModel)]="description"></td>
 
-        <td></td>
+        <!-- <td></td> -->
         <td>
           <button type="button"  class="btn btn-primary"  [disabled]='panelButtonDisabled' 
           data-toggle="modal" data-target="#panelModal"          (click)="LoadPanelListNew()"
-          style="width:fit-content;color: black;">
+          style="width:190px;color: black;">
           &nbsp;PANEL DETAILS</button>
          </td>
 
-         <!-- <td style="width: 15%" class="LabelFontStyle">Consumable-Lbr%&nbsp;:</td>
+       
+
+         <td style="width: 15%" class="LabelFontStyle">Consumable-Lbr%&nbsp;:</td>
          <td><input disabled type="number" class="form-control" formControlName="consumLbrPer" [(ngModel)]="consumLbrPer" ></td>
-        -->
+       
        
       </tr>
     
@@ -315,7 +317,8 @@
                       <th scope="col">Item Description</th>
                       <th scope="col">UOM</th>
                       <th scope="col">Average Rate</th>
-                      <th scope="col">Subinventory</th>
+                      <th scope="col">SubInv</th>
+                      <th scope="col">Type</th>
                       <th scope="col">Locator</th>
                       <th scope="col" rowspan="2">Available Quantity</th>
                       <th scope="col">Transaction Quantity</th>
@@ -359,7 +362,10 @@
               <td><input disabled type="text" class="form-control" style="height: 20px;width:250px" formControlName="description"></td>
               <td><input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="uom" ></td>
               <td><input disabled type="number" class="form-control" style="height: 20px;width: 70px;" formControlName="itemUnitCost" ></td>
-              <td><input disabled class="form-control" style="height: 20px; width: 110px;" formControlName="subInventory" [(ngModel)]="subInventory" >
+              <td><input disabled class="form-control" style="height: 20px; width: 50px;text-align: right;" formControlName="subInventory" [(ngModel)]="subInventory" >
+              <td><input disabled class="form-control" style="height: 20px; width: 60px;text-align: left;" formControlName="subType" >
+
+              
                 <!-- <option>--Select--</option>
                 <option *ngFor="let subinv of subInvCode">{{subinv.subInventoryCode}}</option>
                 </select> -->

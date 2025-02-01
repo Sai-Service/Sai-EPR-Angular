@@ -52,7 +52,7 @@ interface IPaintIssue {
   approvedBy: string;
   totalCompileItems: number;
   totalItemValue: number;
-  totalConsumbleValue:number;
+  accountCode:number; // for storing Consumable Value
   compileDate: Date;
   compileLineId: number;
   Adjustment: string;
@@ -74,7 +74,7 @@ interface IPaintIssue {
   panelQty:number;
   panelQty1:number;
   issDate1:Date;
-  estLabrAmt:number;
+  // estLabrAmt:number;
   mtrlLbrConvPer:number;
   consumLbrPer:number;
 
@@ -207,7 +207,7 @@ export class PaintIssueDpComponent implements OnInit {
   click: boolean = false;
   totalCompileItems: number;
   totalItemValue: number;
-  totalConsumbleValue:number;
+  accountCode:number;  // for storing Consumable Value
   // compileDate:Date;
   lstcomment: any;
   segment: string;
@@ -241,7 +241,7 @@ export class PaintIssueDpComponent implements OnInit {
   displayRemoveRow: Array<boolean> = [];
   name:string;
 
-  estLabrAmt:number=0;
+  // estLabrAmt:number=0;
   mtrlLbrConvPer:number;
   consumLbrPer:number;
 
@@ -292,7 +292,7 @@ export class PaintIssueDpComponent implements OnInit {
       description: [''],
       totalCompileItems: [''],
       totalItemValue: [''],
-      totalConsumbleValue:[''],
+      accountCode:[''],
       compileDate: ['', Validators.required],
       segment: [''],
       itemId: [''],
@@ -324,7 +324,7 @@ export class PaintIssueDpComponent implements OnInit {
       attribute9:[],
       issDate1: [],
 
-      estLabrAmt:[],
+      // estLabrAmt:[],
       mtrlLbrConvPer:[],
       consumLbrPer:[],
 
@@ -371,6 +371,7 @@ export class PaintIssueDpComponent implements OnInit {
       systemQty: [''],
       locatorId: [''],
       subInventory: [''],
+      subType:[''],
       avlqty: [''],
       itemUnitCost: [''],
       uom: [''],
@@ -677,6 +678,7 @@ export class PaintIssueDpComponent implements OnInit {
       var compId = this.paintIssueForm.get('compileId').value;
       var compileType1 = this.paintIssueForm.get('compileType').value;
       var subcode = this.paintIssueForm.get('subInventory').value;
+
       this.displayheader = false;
 
       this.duplicateLineCheck(i, select1.itemId,select1.SEGMENT);
@@ -692,6 +694,8 @@ export class PaintIssueDpComponent implements OnInit {
             trxLnArr1.controls[i].patchValue({ uom: this.getItemDetail.uom });
             // trxLnArr1.controls[i].patchValue({entryStatusCode:2});
             trxLnArr1.controls[i].patchValue({ subInventory: subcode })
+            trxLnArr1.controls[i].patchValue({ subType: this.getItemDetail.categoryId.subType })
+
             trxLnArr1.controls[i].patchValue({ locId: Number(sessionStorage.getItem('locId')) })
             trxLnArr1.controls[i].patchValue({ segment: select1.SEGMENT });
 
@@ -1805,13 +1809,21 @@ CalculateLineTotal() {
 
   var totQty=0;
   var totValue=0;
+  var totCons=0;
   for (let i = 0; i < trxLnArr.length; i++) {
     totQty=totQty+trxLnArr[i].physicalQty;
-    totValue=totValue+(trxLnArr[i].itemUnitCost * trxLnArr[i].physicalQty)
+    if(trxLnArr[i].subType==='OTHER')
+         {totCons=totCons+(trxLnArr[i].itemUnitCost * trxLnArr[i].physicalQty);   }
+    else {totValue=totValue+(trxLnArr[i].itemUnitCost * trxLnArr[i].physicalQty); }
   }
+
   totValue=Math.round((totValue+Number.EPSILON)*100)/100;
+  totCons=Math.round((totCons+Number.EPSILON)*100)/100;
+
   this.paintIssueForm.patchValue({totalCompileItems :totQty});
-  this.paintIssueForm.patchValue({totalItemValue :totValue})
+  this.paintIssueForm.patchValue({totalItemValue :totValue});
+  this.paintIssueForm.patchValue({accountCode :totCons});
+
   this.getConvPer();
 }
 
@@ -1847,10 +1859,12 @@ searchByDate(){
   }
 
   validateEstrLbrAmt(lbrAmt: any) {
+
+    var lbrAmt1=Number(lbrAmt)
    
-    if (lbrAmt === null || lbrAmt === undefined || lbrAmt <= 0) {
+    if (lbrAmt1 === null || lbrAmt1 === undefined || lbrAmt1 <= 0) {
       alert("LABOUR AMOUNT :  Should not be below Zero.");
-      this.estLabrAmt = 0;
+      this.attribute7 = '0';
       return;
     }
 
@@ -1859,20 +1873,25 @@ searchByDate(){
 
   getConvPer(){
 
-    // alert ('hello ...in getConvPer')
+    var matAmt =this.paintIssueForm.get("totalItemValue").value;
+    var lbrAmt =Number(this.paintIssueForm.get('attribute7').value);
+    var consumbaleAmt=this.paintIssueForm.get("accountCode").value;
+    
+    var matLabConvP =(matAmt/lbrAmt)*100;
+    matLabConvP=Math.round((matLabConvP+Number.EPSILON)*100)/100;
 
-    var matAmt =this.paintIssueForm.get("totalItemValue").value
-    var lbrAmt =this.paintIssueForm.get('estLabrAmt').value
-
-    var convP =(matAmt/lbrAmt)*100;
-    // alert ("hello..." + matAmt +","+lbrAmt);    alert ("Labor-Matrl Conv Per : "+convP);
-
-    convP=Math.round((convP+Number.EPSILON)*100)/100
-   
-    if (lbrAmt>0) {
-    this.paintIssueForm.patchValue({ mtrlLbrConvPer: convP });
-     } else { this.paintIssueForm.patchValue({ mtrlLbrConvPer: 0 });  }
+    var consLabConvP=consumbaleAmt/lbrAmt*100;
+    consLabConvP=Math.round((consLabConvP+Number.EPSILON)*100)/100;
+ 
+if (lbrAmt>0) {
+    this.paintIssueForm.patchValue({ mtrlLbrConvPer: matLabConvP });
+    this.paintIssueForm.patchValue({ consumLbrPer: consLabConvP });
+    } 
+    
+    else
+  {
+    this.paintIssueForm.patchValue({ mtrlLbrConvPer: 0 });
+    this.paintIssueForm.patchValue({ consumLbrPer: 0 });
   }
-
-
+  }
 }
