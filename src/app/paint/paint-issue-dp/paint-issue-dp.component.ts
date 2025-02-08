@@ -1312,8 +1312,12 @@ export class PaintIssueDpComponent implements OnInit {
 
             this.panelQty=att9+att10;
             this.paintIssueForm.patchValue(data.obj);
-            this.totalItemValue=Math.round((data.obj.totalItemValue+Number.EPSILON)*100)/100;
+            // this.totalItemValue=Math.round((data.obj.totalItemValue+Number.EPSILON)*100)/100;
             this.paintIssueForm.patchValue({attribute9:att9 , attribute10:att10 });
+
+            var matrlTotal =data.obj.totalItemValue-Number(data.obj.accountCode)
+            this.totalItemValue=Math.round((matrlTotal+Number.EPSILON)*100)/100;
+
 
             this.getConvPer();
 
@@ -1812,6 +1816,7 @@ CalculateLineTotal() {
   var totCons=0;
   for (let i = 0; i < trxLnArr.length; i++) {
     totQty=totQty+trxLnArr[i].physicalQty;
+    
     if(trxLnArr[i].category==='OTHER')
          {totCons=totCons+(trxLnArr[i].itemUnitCost * trxLnArr[i].physicalQty);   }
     else {totValue=totValue+(trxLnArr[i].itemUnitCost * trxLnArr[i].physicalQty); }

@@ -798,7 +798,9 @@ export class PaintMiscTransactionComponent implements OnInit {
     if (trxType === 4) {
       select1 = this.ItemIdList.find((d) => d.SEGMENT === event);
     } else {
-      select1 = this.ItemIdList.find((d) => d.segment === event);
+      // select1 = this.ItemIdList.find((d) => d.segment === event);
+      select1 = this.ItemIdList.find((d) => d.SEGMENT === event);
+
     }
 
     if (select1 != null) {
