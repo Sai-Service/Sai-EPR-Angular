@@ -1316,7 +1316,10 @@ export class PaintIssueDpComponent implements OnInit {
             this.paintIssueForm.patchValue({attribute9:att9 , attribute10:att10 });
 
             var matrlTotal =data.obj.totalItemValue-Number(data.obj.accountCode)
-            this.totalItemValue=Math.round((matrlTotal+Number.EPSILON)*100)/100;
+            
+            // this.totalItemValue=Math.round((matrlTotal+Number.EPSILON)*100)/100;
+            matrlTotal=Math.round((matrlTotal+Number.EPSILON)*100)/100;
+            this.paintIssueForm.patchValue({totalItemValue:matrlTotal});
 
 
             this.getConvPer();
@@ -1881,6 +1884,10 @@ searchByDate(){
     var matAmt =this.paintIssueForm.get("totalItemValue").value;
     var lbrAmt =Number(this.paintIssueForm.get('attribute7').value);
     var consumbaleAmt=this.paintIssueForm.get("accountCode").value;
+    
+    //  var matAmt=totItemValue-consumbaleAmt;
+
+    // alert ("matAmt :" +matAmt);
     
     var matLabConvP =(matAmt/lbrAmt)*100;
     matLabConvP=Math.round((matLabConvP+Number.EPSILON)*100)/100;
