@@ -788,7 +788,7 @@ export class PaintMiscTransactionComponent implements OnInit {
     if (this.currentOp === 'SEARCH') {
       return;
     }
-    // alert('onOptiongetItem' + event);
+    // alert('onOptiongetItem >>' + event);
     var trxLnArr1 = this.paintMiscellaneousForm.get('cycleLinesList') as FormArray;
     var trxLnArr = this.paintMiscellaneousForm.get('cycleLinesList').value;
     // trxLnArr1.controls[i].get('LocatorSegment').disable();
@@ -798,10 +798,13 @@ export class PaintMiscTransactionComponent implements OnInit {
     if (trxType === 4) {
       select1 = this.ItemIdList.find((d) => d.SEGMENT === event);
     } else {
-      // select1 = this.ItemIdList.find((d) => d.segment === event);
-      select1 = this.ItemIdList.find((d) => d.SEGMENT === event);
+      select1 = this.ItemIdList.find((d) => d.segment === event);
+      // select1 = this.ItemIdList.find((d) => d.SEGMENT === event);
 
     }
+
+
+    // alert ("event : "+event  );
 
     if (select1 != null) {
       // var trxLnArr1 = this.paintMiscellaneousForm.get('cycleLinesList') as FormArray;
