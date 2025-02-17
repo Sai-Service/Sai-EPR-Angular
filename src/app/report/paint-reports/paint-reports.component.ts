@@ -286,8 +286,36 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
+    }
+    else if (reportName === 'consumptionSummary') {
+      this.reportName = 'Paint Consumption Summary';
+    
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.isVisibleDepartmentList = true;
+      }
+
+      this.isVisibleGSTPurchaseRegister = true;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisiblestockTransferRecd=false;
+      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleEwayBill=false;
+      this.isVisiblepanelStockTaking=false;
+      this.isVisiblesparesPaintPanelReport=false;
+      this.isVisibleonlyOuCode = false;
+      this.isVisiblePanelOUFromDateToDateSubInv=false;
 
     }
+
+
     else if (reportName === 'gstStockLedger') {
       this.reportName = 'Paint Stock Ledger';
       this.isVisibleonlyLocationCode = false;
@@ -379,7 +407,7 @@ export class PaintReportsComponent implements OnInit {
 
 
     else if (reportName === 'internalConsumptionReport') {
-      this.reportName = 'Paint Consumption Report';
+      this.reportName = 'Paint Consumption Detail Report';
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
       this.isVisiblespClosingStockAsOndate=false;
@@ -838,6 +866,31 @@ export class PaintReportsComponent implements OnInit {
           })
       }
     }
+
+    else if (reportName === 'Paint Consumption Summary') {
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
+      const fileName = 'Paint Consumption Summary-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.PaintConsumptionSummReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if ((Number(sessionStorage.getItem('deptId'))) != 4) {
+        this.reportService.PaintConsumptionSummReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, sessionStorage.getItem('deptId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
     
     else if (reportName === 'Paint Stock Ledger') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
@@ -951,14 +1004,14 @@ export class PaintReportsComponent implements OnInit {
     }
     
 
-    else if (reportName==='Paint Consumption Report'){
+    else if (reportName==='Paint Consumption Detail Report'){
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
       // alert ("Dept id :"+sessionStorage.getItem('deptId'))
       var issCategory =this.paintReportForm.get('issCatg').value;
 
 
-      const fileName = 'Consumption Report-' +  fromDate + '.xls';
+      const fileName = 'Paint Consumption Detail Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if ((Number(sessionStorage.getItem('deptId'))===4)){
         this.reportService.PaintInternalConsuptionReport(fromDate,toDate, locId, subInventory,sessionStorage.getItem('ouId'),issCategory)

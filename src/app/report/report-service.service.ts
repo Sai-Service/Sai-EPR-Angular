@@ -616,6 +616,16 @@ export class ReportServiceService {
     });
   }
 
+  PaintConsumptionSummReport(fromDate,toDate,ouId,locId,deptId){
+    const REQUEST_URI = this.ServerUrl +`/PaintReports/PanelConsRep?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+
+    // http://localhost:8081/PaintReports/PanelConsRep?fromDate=01-JAN-2025&toDate=15-FEB-2025&locId=1604
+  }
+
   sparesDbAgingExicutiveSum(toDate,ouId,locId,ticketNo,custAcctNo,deptId,age1,age2,age3,age4){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/DebtorsExecSummary?toDate=${toDate}&ouId=${ouId}&locId=${locId}&ticketNo=${ticketNo}&custAcctNo=${custAcctNo}&deptId=${deptId}&age1=${age1}&age2=${age2}&age3=${age3}&age4=${age4}`;
     return this.http.get(REQUEST_URI, {
