@@ -736,7 +736,27 @@ export class PaintReportsComponent implements OnInit {
           this.isVisibleonlyOuCode = false;
           this.isVisiblePanelOUFromDateToDateSubInv=true;
         }
-  
+        else if (reportName === 'panelConsuptionRe') {
+        this.reportName = 'Paint Daily Report';
+        this.isVisibleGSTPurchaseRegister = false;
+        this.isVisibleonlyLocationCode = false;
+        this.isVisiblespClosingStockAsOndate=false;
+        this.isVisiblegstsaiDebtors = false;
+        this.isVisibleStockLedger = false;
+        this.isVisiblestockTransfer = true;
+        this.isVisiblestockTransferRecd=false;
+        this.isVisibleSparesBackOrderQty = false;
+        this.isVisiblesparesMiscIssueReceipt = false;
+        this.isVisiblesparesInventoryAging = false;
+        this.isVisibleSparesDebtorsExecutiveWise = false;
+        this.isVisiblefromtosubinventory=false;
+        this.isVisiblecustomerLedger=false;
+        this.isVisibleEwayBill=false;
+        this.isVisiblepanelStockTaking=false;
+        this.isVisiblesparesPaintPanelReport=false;
+        this.isVisibleonlyOuCode = false;
+        this.isVisiblePanelOUFromDateToDateSubInv=false;
+        }
   }
 
   spPurRegDownLoad() {
@@ -1349,6 +1369,31 @@ export class PaintReportsComponent implements OnInit {
       } 
     }
      
+
+    else if (reportName==='Panel Consumption Report'){
+      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+
+      const fileName = 'Panel Consumption Report-' +  fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if ((Number(sessionStorage.getItem('deptId'))===4)){
+        this.reportService.panelConsuptionReFn(fromDate,toDate, locId)
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.isDisabled1 = false;
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+        })
+      }
+      else if ((Number(sessionStorage.getItem('deptId')))!=4){
+        this.reportService.panelConsuptionReFn(fromDate,toDate, sessionStorage.getItem('locId'))
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.isDisabled1 = false;
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+        })
+      } 
+    }
 
   }
 

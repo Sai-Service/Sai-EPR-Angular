@@ -24,6 +24,7 @@ export class SalesReportsComponent implements OnInit {
   closeResetButton = true;
   dataDisplay: any;
   progress = 0;
+  soaParameter:string;
   public minDate = new Date();
   pipe = new DatePipe('en-US');
   now = new Date();
@@ -58,6 +59,7 @@ export class SalesReportsComponent implements OnInit {
   isVisiblelocationInput: boolean = false;
   isVisibleDepartmentList: boolean = false;
   isVisiblegstsaiDebtors: boolean = false;
+  isVisibleSaleSOAParameter:boolean = false;
   // fromDate: Date;
   // toDate: Date;
   fromDate = this.pipe.transform(Date.now(), 'y-MM-dd');
@@ -120,6 +122,7 @@ export class SalesReportsComponent implements OnInit {
       toDate: [''],
       locId: [''],
       locCode:[],
+      soaParameter:[],
       deptName1:[],
       OUCode: [''],
       custAccNo: [''],
@@ -236,22 +239,6 @@ export class SalesReportsComponent implements OnInit {
         }
       );
 
-    // this.service.getInterBranchNatural()
-    //   .subscribe(
-    //     data => {
-    //       this.NaturalAccountList = data.obj;
-    //       console.log(data.obj);
-    //       console.log(this.NaturalAccountList);
-    //     }
-    //   );
-
-    // this.service.NaturalAccountList1()
-    // .subscribe(
-    //   data=> {
-    //     this.NaturalAccountList = data.obj;
-    //     console.log(this.NaturalAccountList);
-    //   }
-    // );
 
     this.service.getInterBranchNatural()
     .subscribe(
@@ -302,6 +289,7 @@ export class SalesReportsComponent implements OnInit {
     if (reportName === 'gstVehicleSaleRegister') {
       this.reportName = 'Vehicle Sales Register'
       this.isVisibleVehicleSaleRegister = true;
+      this.isVisibleSaleSOAParameter=false;
       this.isVisibleSaleIND = false;
       this.isSaleClosingStock = false;
       this.isVisiblefromtolocationdepartment = false;
@@ -327,6 +315,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isVisiblefromtoloccustaccno = false;
       this.isVisibleSalesInventoryAging = false;
       this.isVisiblepanelfromtolocation1 = false;
@@ -347,6 +336,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isVisiblefromtoloccustaccno = false;
       this.isVisibleSalesInventoryAging = false;
       this.isVisiblepanelfromtolocation1 = false;
@@ -364,6 +354,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = true;
       this.isSaleClosingStock = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer = false;
@@ -384,6 +375,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
       this.isSaleClosingStock = true;
+      this.isVisibleSaleSOAParameter=false;
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblefromtoloccustaccno = false;
@@ -403,6 +395,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
       this.isSaleClosingStock = true;
+      this.isVisibleSaleSOAParameter=false;
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblefromtoloccustaccno = false;
@@ -425,6 +418,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isVisiblepanelfromtolocation1 = false;
       this.isVisiblefromtoloccustaccno = false;
       this.isVisibleSalesInventoryAging = false;
@@ -445,6 +439,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleSaleIND = false;
       this.inVisiblepanelSaleSaiDebtors = true;
       this.isSaleClosingStock = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblestockTransfer = false;
@@ -470,6 +465,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
       this.isSaleClosingStock = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer = false;
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -495,6 +491,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtolocationdepartment = false;
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblecustomerLedger = true;
@@ -519,6 +516,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
       this.isSaleClosingStock = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isVisiblestockTransfer = true;
       this.isVisiblecustomerLedger = false;
       this.isVisiblefromtoloccustaccno = false;
@@ -541,6 +539,7 @@ export class SalesReportsComponent implements OnInit {
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer = true;
       this.isVisiblecustomerLedger = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isVisiblefromtoloccustaccno = false;
       this.isVisibleSalesInventoryAging = false;
       this.isVisiblepanelfromtolocation = false;
@@ -560,6 +559,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleSaleIND = false;
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer = true;
+      this.isVisibleSaleSOAParameter=false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblefromtoloccustaccno = false;
       this.isVisibleSalesInventoryAging = false;
@@ -581,6 +581,7 @@ export class SalesReportsComponent implements OnInit {
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblecustomerLedger = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isVisiblefromtoloccustaccno = false;
       this.isVisibleSalesInventoryAging = false;
       this.isVisiblepanelfromtolocation = false;
@@ -598,6 +599,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtolocationdepartment = false;
       this.isVisibleVehicleSaleRegister = true;
       this.isVisibleSaleIND = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblecustomerLedger = false;
@@ -619,6 +621,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
       this.isSaleClosingStock = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isVisiblestockTransfer = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblefromtoloccustaccno = true;
@@ -640,6 +643,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleSaleIND = false;
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblefromtoloccustaccno = false;
       this.isVisibleSalesInventoryAging = true;
@@ -661,6 +665,7 @@ export class SalesReportsComponent implements OnInit {
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblecustomerLedger = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isVisiblefromtoloccustaccno = false;
       this.isVisibleSalesInventoryAging = false;
       this.isVisiblepanelfromtolocation = false;
@@ -679,6 +684,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleVehicleSaleRegister = true;
       this.isVisibleSaleIND = false;
       this.isSaleClosingStock = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isVisiblestockTransfer = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblefromtoloccustaccno = false;
@@ -698,6 +704,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtolocationdepartment = false;
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblecustomerLedger = false;
@@ -718,6 +725,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtolocationdepartment = false;
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblecustomerLedger = false;
@@ -740,6 +748,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleSaleIND = false;
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblefromtoloccustaccno = false;
       this.isVisibleSalesInventoryAging = false;
@@ -758,6 +767,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtolocationdepartment = false;
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblecustomerLedger = false;
@@ -778,6 +788,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
       this.isSaleClosingStock = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isVisiblestockTransfer = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblefromtoloccustaccno = false;
@@ -801,6 +812,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtolocationdepartment = false;
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblecustomerLedger = false;
@@ -823,6 +835,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtolocationdepartment = true;
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isSaleClosingStock = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer = false;
@@ -848,6 +861,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtolocationdepartment = true;
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isSaleClosingStock = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer = false;
@@ -871,6 +885,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtolocationdepartment = false;
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isSaleClosingStock = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer = false;
@@ -892,6 +907,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
       this.isSaleClosingStock = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblefromtoloccustaccno = false;
@@ -911,6 +927,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtolocationdepartment = false;
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isSaleClosingStock = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer = false;
@@ -932,6 +949,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtolocationdepartment = false;
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isSaleClosingStock = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer = false;
@@ -953,6 +971,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
       this.isSaleClosingStock = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblefromtoloccustaccno = false;
@@ -973,6 +992,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtolocationdepartment = false;
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isSaleClosingStock = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer = false;
@@ -993,6 +1013,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
       this.isSaleClosingStock = true;
+      this.isVisibleSaleSOAParameter=false;
       this.isVisiblepanelfromtolocation1 = false;
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblestockTransfer = false;
@@ -1014,6 +1035,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleSaleIND = false;
       this.ispanelTolocationOu = false;
       this.isSaleClosingStock = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblefromtoloccustaccno = false;
@@ -1027,16 +1049,17 @@ export class SalesReportsComponent implements OnInit {
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblepanelfromtolocation1 = true;
     }
-    else if (reportName === 'saleSOALinewiseReport') {
-      this.reportName = 'Sales SOA LineWise Report';
+    else if (reportName === 'SaleSOAParameter') {
+      this.reportName = 'Sales SOA Line wise Report';
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
       this.ispanelTolocationOu = false;
       this.isSaleClosingStock = false;
       this.salesReportForm.patchValue({ department: 'Sales' });
       this.salesReportForm.patchValue({ deptId: 1 });
-      this.isVisiblefromtolocationdepartment = true;
+      this.isVisiblefromtolocationdepartment = false;
       this.isVisiblestockTransfer = false;
+      this.isVisibleSaleSOAParameter=true;
       this.isVisiblefromtoloccustaccno = false;
       this.isVisibleSalesInventoryAging = false;
       this.isVisiblepanelreceiptNo = false;
@@ -1055,6 +1078,7 @@ export class SalesReportsComponent implements OnInit {
       this.reportName = 'Sale Debtor Report As Of';
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isVisiblegstsaiDebtors = true;
       this.ispanelTolocationOu = false;
       this.isSaleClosingStock = false;
@@ -1079,6 +1103,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtolocationdepartment = false;
       this.isVisibleVehicleSaleRegister = true;
       this.isVisibleSaleIND = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblecustomerLedger = false;
@@ -1102,6 +1127,7 @@ export class SalesReportsComponent implements OnInit {
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblecustomerLedger = false;
+      this.isVisibleSaleSOAParameter=false;
       this.isVisiblefromtoloccustaccno = false;
       this.isVisibleSalesInventoryAging = false;
       this.isVisiblepanelfromtolocation = false;
@@ -1285,12 +1311,16 @@ export class SalesReportsComponent implements OnInit {
           })
       }
     }
-
     else if (reportName === 'GST Sales Register') {
-      const fileName = 'GST Sales Register-' +  '-TO-' + '.xls';
+
+    }
+    else if (reportName === 'Sales SOA Line wise Report') {
+      const fileName = 'Sales SOA Line wise Report-' +  '-TO-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      var reportPar = this.salesReportForm.get('soaParameter').value;
+      if (reportPar==='InvoiceWise'){
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.gstSaleRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
+        this.reportService.soaLineWiseInvoiceWise(fromDate, toDate, sessionStorage.getItem('ouId'), locId,sessionStorage.getItem('deptId'),reportPar)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''
@@ -1299,7 +1329,7 @@ export class SalesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.gstSaleRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
+        this.reportService.soaLineWiseInvoiceWise(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),sessionStorage.getItem('deptId'),reportPar)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''
@@ -1307,6 +1337,27 @@ export class SalesReportsComponent implements OnInit {
             this.isDisabled1 = false;
           })
       }
+    }
+    if (reportPar==='OrderWise'){
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.soaLineWiseOrderWise(fromDate, toDate, sessionStorage.getItem('ouId'), locId,sessionStorage.getItem('deptId'),reportPar)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.dataDisplay = ''
+            this.closeResetButton = true;
+            this.isDisabled1 = false;
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.soaLineWiseOrderWise(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),sessionStorage.getItem('deptId'),reportPar)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.dataDisplay = ''
+            this.closeResetButton = true;
+            this.isDisabled1 = false;
+          })
+      }
+    }
     }
     else if (reportName === 'Sai Debtors') {
       var custAccNo = this.salesReportForm.get('custAccNo').value;

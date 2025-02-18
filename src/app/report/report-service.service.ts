@@ -67,6 +67,15 @@ export class ReportServiceService {
     });
   }
 
+  panelConsuptionReFn(fromDate,toDate, locId){
+    // alert(locId+'-----'+tolocId)
+    const REQUEST_URI = this.ServerUrl +`/PaintReports/PanelConsRep?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
   templateDownload(name){
     const REQUEST_URI = this.ServerUrl +`/template/${name}`;
     return this.http.get(REQUEST_URI, {
@@ -1305,6 +1314,23 @@ StockMissMatchFN(fromDate,toDate,subInventory,locId,userName){
     headers: this.headers,
   }); 
 }
+
+soaLineWiseOrderWise(fromDate,toDate,ouId,locId,deptId,parameter){
+  const REQUEST_URI = this.ServerUrl +`/SalesReports/SalesSOARep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&deptId=${deptId}&repType=${parameter}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  }); 
+}
+
+soaLineWiseInvoiceWise(fromDate,toDate,ouId,locId,deptId,parameter){
+  const REQUEST_URI = this.ServerUrl +`/SalesReports/SalesSOARep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&deptId=${deptId}&repType=${parameter}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  }); 
+}
+
 
 }
 

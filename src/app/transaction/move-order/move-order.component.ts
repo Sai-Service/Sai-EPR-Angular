@@ -363,7 +363,7 @@ newmoveOrder(){
   var lineLevelData=this.moveOrderForm.get('trxLinesList').value;
   console.log(lineLevelData);
   for (let i=0;i<lineLevelData.length;i++){
-    if (lineLevelData[i].segment.length >8){
+    if (lineLevelData[i].segment.length >15){
       alert('Line No' + ' ' + lineLevelData[i].segment + ' ' + 'Select Item Is Wrong... Please confirm');
       return;
     }
@@ -509,7 +509,7 @@ getrepairOrder($event)
  onOptionSelectedSubInv(event:any,i)
  {
 
- if (event.length > 8){
+ if (event.length > 15){
    alert('Please check Item not valid.!');
    return;
  }

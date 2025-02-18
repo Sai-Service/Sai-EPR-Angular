@@ -852,8 +852,7 @@ export class SalesOrderFormComponent implements OnInit {
   let controlinvext1 = controlinvext.getRawValue();
   var itemType = (controlinv.controls[k]).get('invType').value;
  
- 
- 
+    
   var custTp = this.SalesOrderBookingForm.get('custType').value;
 
   if (custTp==='Organization' ) {
@@ -915,6 +914,10 @@ export class SalesOrderFormComponent implements OnInit {
     var custtaxCategoryName = this.SalesOrderBookingForm.get('custTaxCat').value;
     var priceListId = this.SalesOrderBookingForm.get('priceListHeaderId').value;
     // alert(segment +'---'+ custtaxCategoryName+'---'+priceListId)
+    // alert(segment)
+    // if (segment==='FINANACE-COMMISION'){
+    //   controlinvext1[k].unitSellingPrice.enable();
+    // }
     console.log(priceListId);
     if (custtaxCategoryName === 'Sales-IGST') {
       this.orderManagementService.addonDescList1(segment, custtaxCategoryName, priceListId)
@@ -4146,9 +4149,9 @@ if (Number(sessionStorage.getItem('deptId'))!=4){
     if (event.target.value != 'None') {
       this.DisplayfinanceSelectionYes = false;
       this.DisplayfinanceSelectionYes1 = false;
-
-      // this.orderManagementService.finananceList(event.target.value, sessionStorage.getItem('divisionId'))
-      // new API -- Changes done by rk 02/07/22
+      let categoryListnEW = this.categoryList;
+      console.log(categoryListnEW);
+      this.categoryList=categoryListnEW;
       this.orderManagementService.finananceListNew(sessionStorage.getItem('divisionId'))
         .subscribe(
           data => {
@@ -4161,7 +4164,12 @@ if (Number(sessionStorage.getItem('deptId'))!=4){
       this.DisplayfinanceSelectionYes = true;
       this.DisplayfinanceSelectionYes1 = true;
     }
+    // alert(event.target.value)
     if (event.target.value === 'None') {
+      console.log(this.categoryList);
+      let categoryListnEW = this.categoryList.filter((itemList) => ((itemList.itemType.includes('SS_FINCHARG') == false)))
+      console.log(categoryListnEW);
+      this.categoryList=categoryListnEW;
       this.SalesOrderBookingForm.get('financerName').reset();
       this.SalesOrderBookingForm.get('financeAmt').reset();
       this.SalesOrderBookingForm.get('emi').reset();

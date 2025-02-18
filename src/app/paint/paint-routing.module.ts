@@ -13,7 +13,7 @@ import { PaintMiscTransactionComponent } from './paint-misc-transaction/paint-mi
 import { PaintStockTransferComponent } from './paint-stock-transfer/paint-stock-transfer.component';
 import { PaintCreationNewComponent } from './paint-creation-new/paint-creation-new.component';
 import { PaintAvgCostComponent } from './paint-avg-cost/paint-avg-cost.component';
-
+import { PanelConsupReComponent } from './panel-consup-re/panel-consup-re.component';
 
 const routes: Routes = [
   {path:'PaintMixingMaster', component: PaintMixingMasterComponent},
@@ -35,7 +35,7 @@ const routes: Routes = [
   {path:'PaintCreationNew',component:PaintCreationNewComponent},
   {path:'PaintCreationNew',component:PaintCreationNewComponent},
   {path:'PaintAvgCost',component:PaintAvgCostComponent},
-
+  {path:'panelCons',component:PanelConsupReComponent},
 
   {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full'}
 ];
