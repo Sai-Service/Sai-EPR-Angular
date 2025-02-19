@@ -1410,8 +1410,6 @@ if(this.deptId==2){
             console.log(this.receiptDetails);
             // ---------------------------Applied history
             this.lstApplyHistory = data.obj.invApplyLst;
-            
-
             console.log(this.lstApplyHistory);
 
             var len1 = data.obj.invApplyLst.length;
@@ -1454,13 +1452,6 @@ if(this.deptId==2){
 
             this.showRefundHist = false;
 
-            // if (data.obj.oePayList[0].receiptStatus === 'Closed') {
-            //   this.othSaveButton=false;
-            //   this.othAddRemoveButton=true;
-            //   this.paymentArForm.disable();
-            //   return;
-            // }
-          
             if (data.obj.oePayList[0].status === 'REFUND') {
               this.showReasonDetails = false; this.enableCancelButton = false; this.enableApplyButton = false;
               this.showRefundHist = true;
@@ -1476,10 +1467,8 @@ if(this.deptId==2){
               this.paymentArForm.disable();
               // return;
             // }
-
+           
             if (data.obj.oePayList[0].reversalReasonCode != null) {
-              // if (data.obj.oePayList[0].reversalReasonCode.length>0 ) {
-              // alert ("Reversal Reason :" +data.obj.oePayList[0].reversalReasonCode);
               if (data.obj.oePayList[0].reversalReasonCode === 'ChqBounce') { this.chqBounceStatus = true; }
               this.printButton = false;
               this.showModalForm = false;
@@ -1499,20 +1488,14 @@ if(this.deptId==2){
 
             }
           }
-
-
             var rcptdt = data.obj.oePayList[0].receiptDate
             var tDate = this.pipe.transform(Date.now(), 'y-MM-dd');
             var mDays = this.diffDays(rcptdt);
             var reversalDays = this.getRevDays(data.obj.oePayList[0].payType)
-            // var reversalDays=30;
-            // alert ("Receipt Date :"+rcptdt + "  , sys date :"+ tDate + " , mdays :"+mDays);
-
-            // alert ("Receipt Type :"+ data.obj.oePayList[0].payType+  ". Receipt aging days :"+mDays + ". Reversal Days Limit :" + reversalDays);
-
-
+            
             if (data.obj.oePayList[0].payType === 'CHEQUE' && mDays <= reversalDays) {
-              this.showReasonDetails = true; this.enableCancelButton = true;
+              this.showReasonDetails = true; 
+               this.enableCancelButton = true; 
               this.paymentArForm.get('reversalReasonCode').enable();
               this.paymentArForm.get('reversalCategory').enable();
               this.paymentArForm.get('reversalComment').enable();
@@ -1524,21 +1507,29 @@ if(this.deptId==2){
             }
 
             if (data.obj.oePayList[0].payType != 'CHEQUE' && mDays < reversalDays) {
-              this.showReasonDetails = true; this.enableCancelButton = true;
+              this.showReasonDetails = true; 
+              //  this.enableCancelButton = true; 
+              var currDate = this.pipe.transform(this.now, 'y-MM-dd');
+              // alert(data.obj.oePayList[0].receiptDate)
+              // alert('current date---'+ currDate)
+              if (Number(sessionStorage.getItem('deptId')) !=4){
+                if (data.obj.oePayList[0].receiptDate===currDate){
+                  this.enableCancelButton=true;
+                }
+                else{
+                  this.enableCancelButton=false;
+                }
+              }
+              if (Number(sessionStorage.getItem('deptId')) ===4){
+                this.enableCancelButton=true;
+              }
               this.paymentArForm.get('reversalReasonCode').enable();
               this.paymentArForm.get('reversalCategory').enable();
               this.paymentArForm.get('reversalComment').enable();
             }
-
-            // if( data.obj.oePayList[0].payType !='CHEQUE' && mDays !=0) {
             if (data.obj.oePayList[0].payType != 'CHEQUE' && mDays > reversalDays) {
               this.showReasonDetails = false; this.enableCancelButton = false;
             }
-
-
-            // if ( data.obj.oePayList[0].totAppliedtAmount>0 && data.obj.oePayList[0].totAppliedtAmount < data.obj.oePayList[0].paymentAmt) {
-            //   this.enableApplyButton = true;
-            //  } 
 
             if (data.obj.oePayList[0].totUnAppliedtAmount > 0) {
               this.enableApplyButton = true;
@@ -1547,6 +1538,7 @@ if(this.deptId==2){
 
 
           });
+         
     }
     else if (Number(sessionStorage.getItem('deptId')) === 4) {
       // alert(receiptNumber+'---'+this.locId)
@@ -1664,7 +1656,8 @@ if(this.deptId==2){
 
 
             if (data.obj.oePayList[0].payType === 'CHEQUE' && mDays <= reversalDays) {
-              this.showReasonDetails = true; this.enableCancelButton = true;
+              this.showReasonDetails = true; 
+              this.enableCancelButton = true; 
               this.paymentArForm.get('reversalReasonCode').enable();
               this.paymentArForm.get('reversalCategory').enable();
               this.paymentArForm.get('reversalComment').enable();
@@ -1676,7 +1669,8 @@ if(this.deptId==2){
             }
 
             if (data.obj.oePayList[0].payType != 'CHEQUE' && mDays < reversalDays) {
-              this.showReasonDetails = true; this.enableCancelButton = true;
+              this.showReasonDetails = true; 
+              this.enableCancelButton = true; 
               this.paymentArForm.get('reversalReasonCode').enable();
               this.paymentArForm.get('reversalCategory').enable();
               this.paymentArForm.get('reversalComment').enable();

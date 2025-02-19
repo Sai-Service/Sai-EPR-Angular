@@ -226,6 +226,7 @@ export class ItemMasterNewComponent implements OnInit {
   taxCategorySaleIGSTNm: string;
   displaytaxCategoryListSalesIGST = true;
   taxCategorySaleNm: string;
+  isVisibleUpdateBtn:boolean=false;
 
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService) {
@@ -499,6 +500,9 @@ export class ItemMasterNewComponent implements OnInit {
           this.displaytaxCategoryListPIGST = false;
           this.displaytaxCategoryListSalesIGST = false;
           this.displaytaxCategoryListSalesSAndCGST = false;
+          if (sessionStorage.getItem('ticketNo')==='2M27189'){
+            this.isVisibleUpdateBtn=true;
+          }
         }
       );
   }
