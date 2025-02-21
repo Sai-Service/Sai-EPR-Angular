@@ -16,6 +16,8 @@ interface IExtendedWarranty {
   custId:number;
   kmsEwSale: number;
   soldByEmpId : number;
+  salesExecutiveName:string;
+  // salesExecutiveId:number;
   variant:string;
   deliveryDate:Date;
   regDate:Date;
@@ -144,6 +146,8 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   dealerCode:string;
   kmsEwSale:number;
   soldByEmpId : number;
+  salesExecutiveName:string;
+  // salesExecutiveId:number;
 
   custId:number; 
   dmsCustNo:number;
@@ -290,6 +294,9 @@ export class SaiExtendedWarrantyComponent implements OnInit {
       paytmentSource :[],
       kmsEwSale:[],
       soldByEmpId:[],
+      salesExecutiveName:[],
+      // salesExecutiveId :[],
+
 
       ewType:[],
       ewInsurerId : [],
@@ -466,8 +473,8 @@ export class SaiExtendedWarrantyComponent implements OnInit {
             this.showOrderInputLine=true;  
            }
           else { 
-            this.showOrderInputLine=false;
-         
+            this.showOrderInputLine=false; 
+                   
            }
            
            if(this.displayButton) {
@@ -552,6 +559,8 @@ export class SaiExtendedWarrantyComponent implements OnInit {
             this.customerPanNo=null;
             this.customerType=null;
             this.kmsEwSale=null;
+            this.soldByEmpId=null;
+            this.salesExecutiveName=null;
             }
 
             resetSection2() {
@@ -1161,7 +1170,8 @@ export class SaiExtendedWarrantyComponent implements OnInit {
                 regDate: this.vehicleSaleOrderDetails.regDate,
                 itemDesc: this.vehicleSaleOrderDetails.itemId.segment,
                 custId: this.vehicleSaleOrderDetails.customerId,
-                
+                salesExecutiveName:this.vehicleSaleOrderDetails.insuPeriod+"-"+this.vehicleSaleOrderDetails.batteryNumber,
+                soldByEmpId :this.vehicleSaleOrderDetails.insuPeriod,              
            });
 
            this.getEwStatus(this.vehRegNo);

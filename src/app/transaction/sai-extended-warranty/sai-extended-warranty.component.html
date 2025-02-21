@@ -687,7 +687,10 @@
                            
                             <td style="width: 15%" class="LabelFontStyle1">Exective&nbsp;Name:&nbsp;</td>
 
-                            <td>
+                            <div *ngIf="showOrderInputLine; then exeLovNo; else exeLovYes"></div>
+
+                            <ng-template #exeLovYes>
+                            <td colspan="2">
                                 <select type="text" class="form-control" formControlName="soldByEmpId" style="background-color: yellow;">
                                 <option disabled>--Select--</option>
                                 <option *ngFor="let sc of issueByList" [ngValue]="sc.emplId" >
@@ -696,13 +699,14 @@
                                 </option>
                                 </select>
                             </td>
+                            </ng-template>
 
+                            <ng-template #exeLovNo>
+                                <td colspan="2"><input disabled   type="text"  formControlName="salesExecutiveName"  id="salesExecutiveName"  class="form-control" style="width: 100%;"> </td>
+                                <td><input disabled  hidden type="text"  formControlName="soldByEmpId"  id="soldByEmpId" [(ngModel)]="soldByEmpId" class="form-control" style="width: 100%;"> </td>
 
-                          
-               
-                           
-
-          
+                            </ng-template>
+         
                           </tr>
 
                         
