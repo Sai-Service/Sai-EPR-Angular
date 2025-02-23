@@ -626,12 +626,13 @@ export class ReportServiceService {
   }
 
   PaintConsumptionSummReport(fromDate,toDate,ouId,locId,deptId){
-    const REQUEST_URI = this.ServerUrl +`/PaintReports/PanelConsRep?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
+    const REQUEST_URI = this.ServerUrl +`/PaintReports/PanelConsRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
     });
 
+    // http://localhost:8081/PaintReports/PanelConsRep?fromDate=15-FEB-2025&toDate=22-FEB-2025&ouId=16&locId=
     // http://localhost:8081/PaintReports/PanelConsRep?fromDate=01-JAN-2025&toDate=15-FEB-2025&locId=1604
   }
 

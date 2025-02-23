@@ -1237,6 +1237,7 @@ export class PaintIssueDpComponent implements OnInit {
       var compno = this.paintIssueForm.get('compNo').value;
       var appflag = this.paintIssueForm.get('trans').value;
       compno =compno.trim();
+      this.attribute7='';
 
       // var oploc ;
       // oploc= sessionStorage.getItem('locCode');
