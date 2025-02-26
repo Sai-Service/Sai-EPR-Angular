@@ -536,6 +536,7 @@ itemId:[],
 qty1:[],
 status1:[],
 orderNumber1:[],
+indexNo:[],
     })
 
   }
@@ -2123,6 +2124,7 @@ orderNumber1:[],
                         data => {
                           console.log(data);
                           if (data.length === 0) {
+                            this.isVisibleBackOrderSaveBtn=true;
                             alert(('Item Not Found In Stock !.\n' + 'Item Description :- ' + select.description + ".!\n") + "And MRP :- " + mrp);
                             alert('If You Want Add Back Order Quantity Then Click on BO Button and save the same.!')
                             this.displayBackOrderBtn[k]=true;
@@ -2240,7 +2242,7 @@ orderNumber1:[],
                           console.log(data);
                           // debugger;
                           if (data.length === 0) {
-                           
+                            this.isVisibleBackOrderSaveBtn=true;
                             alert(('Item Not Found In Stock !.\n' + 'Item Description :- ' + select.description + ".!\n") + "And MRP :- " + mrp);
                             alert('If You Want Add Back Order Quantity Then Click on BO Button and save the same.!')
                             this.displayBackOrderBtn[k]=true;
@@ -3786,7 +3788,7 @@ orderNumber1:[],
       this.CounterSaleOrderBookingForm.get('qty1').reset();
     }
     else{
-    this.CounterSaleOrderBookingForm.patchValue({customerNo:accNo,item:item,itemId:itemid,status1:'Open',orderNumber1:9999999})
+    this.CounterSaleOrderBookingForm.patchValue({indexNo:i,customerNo:accNo,item:item,itemId:itemid,status1:'Open',orderNumber1:9999999})
     }
   }
 
@@ -3904,6 +3906,14 @@ orderNumber1:[],
     formValue.status=this.CounterSaleOrderBookingForm.get('status1').value;
     formValue.orderNumber=this.CounterSaleOrderBookingForm.get('orderNumber1').value;
    console.log(formValue);  
+   var index = this.CounterSaleOrderBookingForm.get('indexNo').value;
+   var qty1=this.CounterSaleOrderBookingForm.get('qty1').value;
+   var item=this.CounterSaleOrderBookingForm.get('item').value;
+   if (qty1=== null || qty1 === undefined || qty1===''){
+    alert('Line No -'+index+' Item Name-'+item+' '+'Please Select Back Order Qyantity and then save.!');
+    this.isVisibleBackOrderSaveBtn=true;
+    return;
+   }
     this.orderManagementService.saveBackOrderItem(formValue).subscribe((res: any) => {
         if (res.code === 200) {
           alert(res.message);
