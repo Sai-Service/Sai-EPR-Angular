@@ -56,6 +56,11 @@ export class MasterService {
     return this.http.get(this.ServerUrl + `/opUnit/divisionWise/${mDivId}`);
   }
 
+  LocationListOu(mOuId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/locationMst/locListOuwise/${mOuId}`);
+    // http://saihorizon.com:8051/ErpReplica/locationMst/locListOuwise/15
+  }
+
   StateList(): Observable<any> {
     return this.http.get(this.ServerUrl + '/cmnLookup/States');
   }
@@ -463,9 +468,15 @@ export class MasterService {
     return this.http.get(this.ServerUrl + `/CompMst/${searchText}`);
   }
 
-  getCommonLookupSearchNew(cmnTp, divId): Observable<any> {
+  getCommonLookupSearchNew(cmnTp, divId ): Observable<any> {
     return this.http.get(this.ServerUrl + `/cmnLookup/CmnTypeDivision?cmnType=${cmnTp}&divisionId=${divId}`)
     // http://localhost:8081/cmnLookup/CmnTypeDivision?cmnType=PhysicalLocation&divisionId=2
+  }
+
+  getCommonLookupSearchNewWithLocId(cmnTp, divId,locCode): Observable<any> {
+    return this.http.get(this.ServerUrl + `/cmnLookup/CmnTypePaintEmpl?cmnType=${cmnTp}&divisionId=${divId}&attribute1=${locCode}`)
+    // http://localhost:8081/cmnLookup/CmnTypePaintEmpl?cmnType=PN-ADVISOR&divisionId=1&attribute1=1602
+ 
   }
 
 

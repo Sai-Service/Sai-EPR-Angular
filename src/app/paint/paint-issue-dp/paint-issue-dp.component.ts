@@ -181,6 +181,10 @@ export class PaintIssueDpComponent implements OnInit {
   public TypeList: Array<string> = [];
   public issueByList: Array<string> = [];
   public workshopIssue: any[];
+  public advisorList: Array<string> = [];
+  public painterList: Array<string> = [];
+
+
   segmentNameList: any;
   codeCombinationId: number;
   compileType: number;
@@ -495,6 +499,21 @@ export class PaintIssueDpComponent implements OnInit {
     // document.getElementById("processButton").setAttribute("disabled","disabled");
     this.approvedBy = (sessionStorage.getItem('name'));
     this.displayLocator[0] = false;
+
+    
+    this.service.getCommonLookupSearchNewWithLocId('PN-ADVISOR',sessionStorage.getItem('divisionId'),sessionStorage.getItem('locId'))
+    .subscribe(
+      data => {
+        this.advisorList = data;
+      }
+    );
+
+    this.service.getCommonLookupSearchNewWithLocId('PN-PAINTER',sessionStorage.getItem('divisionId'),sessionStorage.getItem('locId'))
+    .subscribe(
+      data => {
+        this.painterList = data;
+      }
+    );
 
     this.service.paintPanelCodeList(this.divisionId,'Panel').subscribe(
       data => {

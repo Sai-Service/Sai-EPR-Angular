@@ -166,8 +166,7 @@
         <td>
           <input disabled type="number" class="form-control" formControlName="totalItemValue" [(ngModel)]="totalItemValue" >
         </td>
-
-       
+      
       
         <!-- <td>
           <input type="text" formControlName="attribute1" (keyup)="getUserIdsFirstWay($event)" id="userIdFirstWay" list="dynmicUserIds" class="form-control" (change)="calculatewarranty($event)" style="background-color: yellow;">
@@ -251,21 +250,43 @@
         <td><input  type="text" class="form-control" formControlName="attribute4"[(ngModel)]="attribute4" style="background-color: yellow;text-transform: uppercase;"></td>
   
         <td style="width: 15%" class="LabelFontStyle">S.Advisor&nbsp;Name:</td>
+        <div *ngIf="displayButton; then Block21; else Block22"></div>
+        <ng-template #Block21>
+        <td>
+          <select formControlName="attribute8" id="attribute8" [(ngModel)]="attribute8" class="form-control" style="background-color: yellow;text-transform: uppercase;">
+          <option *ngFor="let sc of  advisorList" [ngValue]="sc.codeDesc">
+            {{sc.codeDesc}}-{{sc.code}}
+            </option>
+          </select>
+        </td>
+        </ng-template>
+        <ng-template #Block22>
         <td><input  type="text" class="form-control" formControlName="attribute8" [(ngModel)]="attribute8" style="background-color: yellow;text-transform: uppercase;"></td>
-  
+        </ng-template>
+
         <td style="width: 15%" class="LabelFontStyle">Labour&nbsp;Total&nbsp;:</td>
         <td><input  type="number" class="form-control" formControlName="attribute7" [(ngModel)]="attribute7" (change)="validateEstrLbrAmt(attribute7)" ></td>
-      
-       
     
-  </tr>
+     </tr>
   <tr>
         <td style="width: 15%" class="LabelFontStyle">Job Card No:</td>
         <td><input  type="text" class="form-control" formControlName="attribute1" [(ngModel)]="attribute1" style="background-color: yellow; text-transform: uppercase;"></td>
 
         <td style="width: 15%" class="LabelFontStyle">Painter&nbsp;Name:</td>
+        <div *ngIf="displayButton; then Block23; else Block24"></div>
+        <ng-template #Block23>
+        <td>
+          <select formControlName="attribute6" id="attribute6" [(ngModel)]="attribute6" class="form-control" style="background-color: yellow;text-transform: uppercase;">
+          <option *ngFor="let sc of  painterList" [ngValue]="sc.codeDesc">
+            {{sc.codeDesc}}-{{sc.code}}
+            </option>
+          </select>
+        </td>
+        </ng-template>
+        <ng-template #Block24>
         <td><input  type="text" class="form-control" formControlName="attribute6" [(ngModel)]="attribute6" style="background-color: yellow;text-transform: uppercase;"></td>
-       
+        </ng-template>
+
        
         <td style="width: 15%" class="LabelFontStyle">Matrl-Lbr%&nbsp;:</td>
         <td><input disabled type="number" class="form-control" formControlName="mtrlLbrConvPer" [(ngModel)]="mtrlLbrConvPer" ></td>
@@ -450,8 +471,7 @@
         <td>
           <button type="button" class="btn btn-primary" (click)="resetMiscTrans()">Reset</button>
         </td>
-        <div *ngIf="displayButton; then thenBlock2; else elseBlock2">
-        </div>
+        <div *ngIf="displayButton; then thenBlock2; else elseBlock2"></div>
         <ng-template #thenBlock2>
         <td>
           <button type="button" class="btn btn-primary" (click)="saveMisc()" >Save</button>

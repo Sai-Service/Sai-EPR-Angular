@@ -806,6 +806,7 @@ deleteReserveLinewise(i, itemid, transferId) {
     window.location.reload();
     
   }
+  
   onSubInveSelect(event){
     var toSub=event.target.value
     var loc=this.paintStockTranferForm.get('transferOrgId').value;
