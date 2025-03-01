@@ -288,7 +288,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePanelOUFromDateToDateSubInv=false;
     }
     else if (reportName === 'consumptionSummary') {
-      this.reportName = 'Paint Consumption Summary';
+      this.reportName = 'Paint Consumption Summary(Labour Based)';
     
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.isVisibleDepartmentList = true;
@@ -887,10 +887,10 @@ export class PaintReportsComponent implements OnInit {
       }
     }
 
-    else if (reportName === 'Paint Consumption Summary') {
+    else if (reportName === 'Paint Consumption Summary(Labour Based)') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
-      const fileName = 'Paint Consumption Summary-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
+      const fileName = 'Paint Consumption Summary-Labour Based-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.PaintConsumptionSummReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
