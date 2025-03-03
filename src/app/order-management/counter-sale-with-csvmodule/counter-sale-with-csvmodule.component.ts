@@ -2569,10 +2569,15 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
               itemId: res.obj[k].itemId,
               taxCategoryName: itemCateNameList.taxCategoryName,
               taxCategoryId: res.obj[k].taxCategoryId,
-                          })
+              })
             if(res.obj[k].onhandList.length >=1){
               (controlinv.controls[k]).patchValue({frmLocatorId: res.obj[k].onhandList[0].locatorId})
             }
+
+            if(res.obj[k].pricingQty > res.obj[k].avalqty) {
+              (controlinv.controls[k]).patchValue({pricingQty: res.obj[k].avalqty})
+            }
+
            
             // this.onOptionsSelectedDescriptionNew(res.obj[k].segment, res.obj[k].itemId,k)
           }
