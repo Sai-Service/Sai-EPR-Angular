@@ -454,6 +454,8 @@
       <a class="nav-link dropdown-toggle " id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="false">Paint Management </a>
       <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
        
+        <div [style.display]="isVisiblePaintMaster ? 'block' : 'none'">
+
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Master</a>
                 <ul class="dropdown-menu">
                 <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintItemMaster']">Paint Item Master</a></li>
@@ -468,6 +470,9 @@
 
               </ul>
         </li>
+        </div>
+
+        <div [style.display]="isVisiblePaintTrans ? 'block' : 'none'">
 
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Transactions</a>
           <ul class="dropdown-menu">
@@ -476,9 +481,11 @@
             <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintIssueDp']">BodyShop Issue</a></li>
             <li><a class="dropdown-item"  [routerLink]="['/admin/transaction/InternalConsumption']">Internal Consumption</a></li>
             <!-- <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintCreationNew']">Paint Creation Test</a></li> -->
-
         </ul>
         </li>
+        </div>
+
+        <div [style.display]="isVisiblePaintPurchase ? 'block' : 'none'">
 
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Purchase</a>
           <ul class="dropdown-menu">
@@ -491,11 +498,14 @@
             <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintMiscTransaction']">Stock Adjustment</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/StockTaking']">Stock Taking</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintAvgCost']">Average Cost </a></li>
-
           </ul>
        </li>
+       </div>
 
-       <li><a class="dropdown-submenu" style="padding-left: 28px ;" [routerLink]="['/admin/Report/PaintReports']">Reports</a></li>
+       <div [style.display]="isVisiblePaintReport ? 'block' : 'none'">
+         <li><a class="dropdown-submenu" style="padding-left: 28px ;" [routerLink]="['/admin/Report/PaintReports']">Reports</a></li>
+       </div>
+
       </ul>
     </li>
   </div>
