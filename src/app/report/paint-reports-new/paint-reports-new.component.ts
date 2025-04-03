@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -14,13 +15,13 @@ const MIME_TYPES = {
 };
 
 @Component({
-  selector: 'app-paint-reports',
-  templateUrl: './paint-reports.component.html',
-  styleUrls: ['./paint-reports.component.css']
+  selector: 'app-paint-reports-new',
+  templateUrl: './paint-reports-new.component.html',
+  styleUrls: ['./paint-reports-new.component.css']
 })
 
-export class PaintReportsComponent implements OnInit {
-  paintReportForm: FormGroup;
+export class PaintReportsNewComponent implements OnInit {
+  paintReportFormNew: FormGroup;
   pipe = new DatePipe('en-US');
   now = new Date();
   public minDate = new Date();
@@ -32,7 +33,7 @@ export class PaintReportsComponent implements OnInit {
 
   locId: number;
   trxNumber:number;
-  public OpUnitList: Array<string> = [];
+  locId1: number;
 
 
   public BillShipToList: Array<string> = [];
@@ -40,6 +41,9 @@ export class PaintReportsComponent implements OnInit {
   periodNameList: any = [];
 
   public DepartmentList: any = [];
+
+  public OuLocationList: Array<string> = [];
+  public OpUnitList: Array<string> = [];
   
   closeResetButton = true;
   dataDisplay: any;
@@ -95,9 +99,11 @@ export class PaintReportsComponent implements OnInit {
   dispLocation:boolean=true;
   rptValidation=true;
   isVisiblePanelOUFromDateToDateSubInv:boolean=false;
+  opUnitId:number;
+  
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
-    this.paintReportForm = this.fb.group({
+    this.paintReportFormNew = this.fb.group({
       fromDate: [''],
       toDate: [],
       OUCode: [''],
@@ -105,6 +111,8 @@ export class PaintReportsComponent implements OnInit {
       locCode1: [''],
 
       locId: [''],
+      locId1: [''],
+
       deptId: [''],
       userName: [''],
       subInventory: [''],
@@ -128,24 +136,23 @@ export class PaintReportsComponent implements OnInit {
       spDbAging2:[],
       spDbAging3:[],
       spDbAging4:[],
-
-
-
       compileCode:[''],
+
+      opUnitId:[],
     })
   }
 
 
-  paintReport(paintReportForm) {
+  paintReport(paintReportFormNew) {
   }
 
   ngOnInit(): void {
     this.locId = Number(sessionStorage.getItem('locId'));
-    this.paintReportForm.patchValue({ locId: Number(sessionStorage.getItem('locId')) })
-    this.paintReportForm.patchValue({ OUCode: sessionStorage.getItem('ouId') + '-' + sessionStorage.getItem('ouName') })
-    this.paintReportForm.patchValue({ locCode: sessionStorage.getItem('locId') + '-' + sessionStorage.getItem('locName') })
-    this.paintReportForm.patchValue({ department: 'DP' });
-    this.paintReportForm.patchValue({ deptId: 3 })
+  //  this.paintReportFormNew.patchValue({ locId: Number(sessionStorage.getItem('locId')) })
+    this.paintReportFormNew.patchValue({ OUCode: sessionStorage.getItem('ouId') + '-' + sessionStorage.getItem('ouName') })
+    this.paintReportFormNew.patchValue({ locCode: sessionStorage.getItem('locId') + '-' + sessionStorage.getItem('locName') })
+    this.paintReportFormNew.patchValue({ department: 'DP' });
+    this.paintReportFormNew.patchValue({ deptId: 3 })
     // this.paintReportForm.patchValue({ locId: Number(sessionStorage.getItem('locId')) })
 
     // Prevent closing from click inside dropdown
@@ -174,19 +181,19 @@ export class PaintReportsComponent implements OnInit {
       });
 
 
-    this.service.getLocationSearch1(sessionStorage.getItem('ouId'))
-    .subscribe(
-      data => {
-        this.BillShipToList = data;
-      }
-    );
+    // this.service.getLocationSearch1(sessionStorage.getItem('ouId'))
+    // .subscribe(
+    //   data => {
+    //     this.BillShipToList = data;
+    //   }
+    // );
 
-    this.service.getLocationSearch1(sessionStorage.getItem('ouId'))
-    .subscribe(
-      data => {
-        this.BillShipFromList = data;
-      }
-    );
+    // this.service.getLocationSearch1(sessionStorage.getItem('ouId'))
+    // .subscribe(
+    //   data => {
+    //     this.BillShipFromList = data;
+    //   }
+    // );
 
 
   this.service.DepartmentListNew()
@@ -223,12 +230,12 @@ export class PaintReportsComponent implements OnInit {
         console.log(this.subInvCode);
         if (this.subInvCode.subInventoryCode != null) {
           this.subInventory = this.subInvCode.subInventoryCode;
-          this.paintReportForm.patchValue({ subInventory: this.subInvCode.subInventoryCode })
+          this.paintReportFormNew.patchValue({ subInventory: this.subInvCode.subInventoryCode })
         }
       });
 
 
-  this.paintReportForm.patchValue({ userName: sessionStorage.getItem('ticketNo') })
+  this.paintReportFormNew.patchValue({ userName: sessionStorage.getItem('ticketNo') })
 
   }
 
@@ -812,37 +819,36 @@ export class PaintReportsComponent implements OnInit {
 
   reportParameter(reportName) {
 
-    // alert ("reportName:"+reportName)
-    
+   
     this.isDisabled1 = true;
     this.closeResetButton = false;
     this.progress = 0;
     this.dataDisplay = 'Report Is Running....Do not refresh the Page';
-    var purStDt = this.paintReportForm.get('fromDate').value;
+    var purStDt = this.paintReportFormNew.get('fromDate').value;
     var fromDate = this.pipe.transform(purStDt, 'dd-MMM-yyyy');
-    var toDate1 = this.paintReportForm.get('toDate').value;
+    var toDate1 = this.paintReportFormNew.get('toDate').value;
     var toDate = this.pipe.transform(toDate1, 'dd-MMM-yyyy');
-    var locId = this.paintReportForm.get('locId').value;
-    var fromlocId = this.paintReportForm.get('fromLocId').value;
-    var tolocId = this.paintReportForm.get('tolocId').value;
-    var deptId = this.paintReportForm.get('deptId').value;
-    var userName = this.paintReportForm.get('userName').value;
-    var segment = this.paintReportForm.get('segment').value;
-    var subInventory = this.paintReportForm.get('subInventory').value;
-    var tolocId = this.paintReportForm.get('tolocId').value;
-
-   
+    var fromlocId = this.paintReportFormNew.get('fromLocId').value;
+    var tolocId = this.paintReportFormNew.get('tolocId').value;
+    var deptId = this.paintReportFormNew.get('deptId').value;
+    var userName = this.paintReportFormNew.get('userName').value;
+    var segment = this.paintReportFormNew.get('segment').value;
+    var subInventory = this.paintReportFormNew.get('subInventory').value;
+    var tolocId = this.paintReportFormNew.get('tolocId').value;
+    var locId = this.paintReportFormNew.get('locId').value;
 
     // alert (locId)
 
     // return;
-    if (locId === null  ) {
-      alert('Please Select location Code.!');
-      return;
-    }
+    // if (locId === null  ) {
+    //   alert('Please Select location Code.!');
+    //   return;
+    // }
+    var fDate =this.paintReportFormNew.get('fromDate').value;
+    var tDate =this.paintReportFormNew.get('toDate').value;
+    var operatingUnitId=this.paintReportFormNew.get('opUnitId').value;
 
-    var fDate =this.paintReportForm.get('fromDate').value;
-    var tDate =this.paintReportForm.get('toDate').value;
+      // alert ("OU ID, LOCID:" +operatingUnitId + " , "+locId );
 
 
     if (reportName === 'Paint Purchase Register Details') {
@@ -852,8 +858,10 @@ export class PaintReportsComponent implements OnInit {
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         const fileName = 'Paint Purchase Register Details-' +  fromDate + '-TO-' + toDate + '.xls';
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-        this.reportService.sppurRegidetailReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
-          .subscribe(data => {
+        // this.reportService.sppurRegidetailReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
+        this.reportService.sppurRegidetailReport(fromDate, toDate, operatingUnitId, locId, deptId)
+
+        .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''
             this.closeResetButton = true;
@@ -863,7 +871,7 @@ export class PaintReportsComponent implements OnInit {
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
         const fileName = 'Paint Purchase Register Details-' +  fromDate + '-TO-' + toDate + '.xls';
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-        this.reportService.sppurRegidetailReportSpares(fromDate, toDate, sessionStorage.getItem('ouId'), locId, sessionStorage.getItem('deptId'))
+        this.reportService.sppurRegidetailReportSpares(fromDate, toDate, operatingUnitId, locId, sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''
@@ -872,13 +880,14 @@ export class PaintReportsComponent implements OnInit {
           })
       }
     }
+
     else if (reportName === 'Paint Purchase Register - Summary') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
       const fileName = 'Paint Purchase Register - Summary-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.sppurRegiSummReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
+        this.reportService.sppurRegiSummReport(fromDate, toDate, operatingUnitId, locId, deptId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -887,7 +896,7 @@ export class PaintReportsComponent implements OnInit {
           })
       }
       else if ((Number(sessionStorage.getItem('deptId'))) != 4) {
-        this.reportService.sppurRegiSummReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, sessionStorage.getItem('deptId'))
+        this.reportService.sppurRegiSummReport(fromDate, toDate, operatingUnitId, locId, sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -903,7 +912,7 @@ export class PaintReportsComponent implements OnInit {
       const fileName = 'Paint Consumption Summary-Labour Based-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.PaintConsumptionSummReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
+        this.reportService.PaintConsumptionSummReport(fromDate, toDate, operatingUnitId, locId, deptId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -912,7 +921,7 @@ export class PaintReportsComponent implements OnInit {
           })
       }
       else if ((Number(sessionStorage.getItem('deptId'))) != 4) {
-        this.reportService.PaintConsumptionSummReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, sessionStorage.getItem('deptId'))
+        this.reportService.PaintConsumptionSummReport(fromDate, toDate, operatingUnitId, locId, sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -952,9 +961,9 @@ export class PaintReportsComponent implements OnInit {
      else if (reportName === 'Paint Inventory Aging Report') {
       this.isDisabled1=false;
       this.rptValidation=true;
-      var spInvAging1 = this.paintReportForm.get('spInvAging1').value;
-      var spInvAging2 = this.paintReportForm.get('spInvAging2').value;
-      var spInvAging3 = this.paintReportForm.get('spInvAging3').value;
+      var spInvAging1 = this.paintReportFormNew.get('spInvAging1').value;
+      var spInvAging2 = this.paintReportFormNew.get('spInvAging2').value;
+      var spInvAging3 = this.paintReportFormNew.get('spInvAging3').value;
       
 
       if(spInvAging1<0 || spInvAging1==null || spInvAging1==undefined) {this.rptValidation=false;}
@@ -1038,13 +1047,13 @@ export class PaintReportsComponent implements OnInit {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
       // alert ("Dept id :"+sessionStorage.getItem('deptId'))
-      var issCategory =this.paintReportForm.get('issCatg').value;
+      var issCategory =this.paintReportFormNew.get('issCatg').value;
 
 
       const fileName = 'Paint Consumption Detail Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if ((Number(sessionStorage.getItem('deptId'))===4)){
-        this.reportService.PaintInternalConsuptionReport(fromDate,toDate, locId, subInventory,sessionStorage.getItem('ouId'),issCategory)
+        this.reportService.PaintInternalConsuptionReport(fromDate,toDate, locId, subInventory,operatingUnitId,issCategory)
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.isDisabled1 = false;
@@ -1053,7 +1062,7 @@ export class PaintReportsComponent implements OnInit {
         })
       }
       else if ((Number(sessionStorage.getItem('deptId')))!=4){
-        this.reportService.PaintInternalConsuptionReport(fromDate,toDate, locId, subInventory,sessionStorage.getItem('ouId'),issCategory)
+        this.reportService.PaintInternalConsuptionReport(fromDate,toDate, locId, subInventory,operatingUnitId,issCategory)
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.isDisabled1 = false;
@@ -1069,7 +1078,7 @@ export class PaintReportsComponent implements OnInit {
       const fileName = 'Paint Misc Issue Receipt Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.PaintparesMiscIssueReceiptReport(fromDate, toDate, locId,sessionStorage.getItem('ouId'))
+        this.reportService.PaintparesMiscIssueReceiptReport(fromDate, toDate, locId,operatingUnitId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1078,7 +1087,7 @@ export class PaintReportsComponent implements OnInit {
           })
       }
       if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.PaintparesMiscIssueReceiptReport(fromDate, toDate, locId,sessionStorage.getItem('ouId'))
+        this.reportService.PaintparesMiscIssueReceiptReport(fromDate, toDate, locId,operatingUnitId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1239,7 +1248,7 @@ export class PaintReportsComponent implements OnInit {
       const fileName = 'Receipt-Other Details Report-' +  '-TO-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-      this.reportService.actBillHandoverReport(fromDate,toDate,sessionStorage.getItem('ouId'),locId,deptId)
+      this.reportService.actBillHandoverReport(fromDate,toDate,operatingUnitId,locId,deptId)
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.closeResetButton = true;
@@ -1248,7 +1257,7 @@ export class PaintReportsComponent implements OnInit {
       })
     }
     else if (Number(sessionStorage.getItem('deptId')) != 4) {
-      this.reportService.actBillHandoverReport(fromDate,toDate,sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'),sessionStorage.getItem('deptId'))
+      this.reportService.actBillHandoverReport(fromDate,toDate,operatingUnitId,locId,sessionStorage.getItem('deptId'))
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.closeResetButton = true;
@@ -1263,7 +1272,7 @@ export class PaintReportsComponent implements OnInit {
       const fileName = 'PAINT-Closing Stock - ' +sessionStorage.getItem('locName').trim() +' As On ' +  toDate + '.xls';
 
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      var subInventory = this.paintReportForm.get('subInventory').value;
+      var subInventory = this.paintReportFormNew.get('subInventory').value;
       if (Number(sessionStorage.getItem('deptId')) === 4) {
       this.reportService.gstSparesClosingStockAsOnDateFN(toDate,locId,subInventory)
       .subscribe(data => {
@@ -1291,7 +1300,7 @@ export class PaintReportsComponent implements OnInit {
       // alert (fileName)
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.paintclosingstockSummary(sessionStorage.getItem('ouId'),subInventory)
+        this.reportService.paintclosingstockSummary(operatingUnitId,subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1300,7 +1309,7 @@ export class PaintReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.paintclosingstockSummary(sessionStorage.getItem('ouId'),subInventory)
+        this.reportService.paintclosingstockSummary(operatingUnitId,subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1385,7 +1394,7 @@ export class PaintReportsComponent implements OnInit {
           const fileName = 'Stock Taking Report - Qty Details-' +  '.xls';
           const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
           // var locId=this.sparesReportForm.get('locId').value;
-          var compileName =this.paintReportForm.get('compileCode').value;
+          var compileName =this.paintReportFormNew.get('compileCode').value;
 
           if (Number(sessionStorage.getItem('deptId')) === 4) {
             this.reportService.stockTakingQtyReport( locId,compileName)
@@ -1486,15 +1495,15 @@ export class PaintReportsComponent implements OnInit {
 
   
   onOptionsLocation(event) {
-    // alert("From Location : "+ event +","+this.paintReportForm.get('locCode').value);
-    this.paintReportForm.patchValue({ locId: event })
-    // this.paintReportForm.patchValue({ fromLocId: event })
+    // alert("From Location : "+ event +","+this.paintReportFormNew.get('locCode').value);
+    this.paintReportFormNew.patchValue({ locId: event })
+    // this.paintReportFormNew.patchValue({ fromLocId: event })
 
     if(event>0){
-      var x=this.paintReportForm.get('locCode').value;
-      var y=this.paintReportForm.get('tolocCode').value;
+      var x=this.paintReportFormNew.get('locCode').value;
+      var y=this.paintReportFormNew.get('tolocCode').value;
       if(x===y) {alert ("From/To Locations Should not be Same...");
-       this.paintReportForm.get('locCode').reset();
+       this.paintReportFormNew.get('locCode').reset();
       return;
     }}
   
@@ -1503,12 +1512,12 @@ export class PaintReportsComponent implements OnInit {
 
   onOptionsToLocation(event) {
     // alert("To Location : "+ event);
-    this.paintReportForm.patchValue({ tolocId: event });
+    this.paintReportFormNew.patchValue({ tolocId: event });
     if(event>0){
-      var x=this.paintReportForm.get('locCode').value;
-      var y=this.paintReportForm.get('tolocCode').value;
+      var x=this.paintReportFormNew.get('locCode').value;
+      var y=this.paintReportFormNew.get('tolocCode').value;
       if(x===y) {alert ("From/To Locations Should not be Same...");
-       this.paintReportForm.get('tolocCode').reset();
+       this.paintReportFormNew.get('tolocCode').reset();
       return;
     }}
   }
@@ -1518,7 +1527,7 @@ export class PaintReportsComponent implements OnInit {
     var deptList = this.DepartmentList.find(d => d.code === event);
     console.log(deptList);
 
-    this.paintReportForm.patchValue({ deptId: deptList.cmnTypeId })
+    this.paintReportFormNew.patchValue({ deptId: deptList.cmnTypeId })
   }
 
   department(department) {
@@ -1551,4 +1560,14 @@ export class PaintReportsComponent implements OnInit {
     }
   }
 
+  onOUSelect(event){
+    // alert("ou id : " +event)
+    this.service.LocationListOu(event).subscribe
+    (data => {
+      this.BillShipToList = data;
+      console.log(this.BillShipToList);
+    });
+  }
+
 }
+

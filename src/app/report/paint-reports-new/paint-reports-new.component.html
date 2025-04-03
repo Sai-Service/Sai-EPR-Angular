@@ -1,4 +1,4 @@
-<form [formGroup]="paintReportForm" (ngSubmit)="paintReport(paintReportForm.value)">
+<form [formGroup]="paintReportFormNew" (ngSubmit)="paintReport(paintReportFormNew.value)">
     <div class="center">
         <table style="width: 100%;background-color: white;">
             <tr>
@@ -20,23 +20,23 @@
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" (click)="department('Spares')">Transaction</a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab"
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab" style="font-weight: bold; font-size: small;"
                                 (click)="reportDetails('gstPurRegister')">Purchase&nbsp;Register&nbsp;Details</a>
                         </li>
                         <li>
-                            <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab"
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab" style="font-weight: bold; font-size: small;"
                                 (click)="reportDetails('gstpurRegSumm')">Purchase&nbsp;Register&nbsp;Summary</a>
                         </li>
 
                         
 
                         <li>
-                            <a class="dropdown-item" data-toggle="collapse" href="#panelfromtosubinventory" role="tab"
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelfromtosubinventory" role="tab" style="font-weight: bold; font-size: small;"
                                 (click)="reportDetails('internalConsumptionReport')">Paint&nbsp;Consumption&nbsp;Detail</a>
                         </li>
 
                         <li>
-                            <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab"
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab" style="font-weight: bold; font-size: small;"
                                 (click)="reportDetails('consumptionSummary')">Paint&nbsp;Consumption&nbsp;Summary(Labour Based)</a>
                         </li>
                         
@@ -61,7 +61,7 @@
                         </li>
 
                         <li>
-                            <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab"
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab" style="font-weight: bold; font-size: small;"
                               (click)="reportDetails('billHandedoverToActReport')">Account Bill Handover Report</a>
                         </li>
 
@@ -73,7 +73,7 @@
                     <ul class="dropdown-menu">
                         
                         <li>
-                            <a class="dropdown-item" data-toggle="collapse" href="#panelsparesMiscIssueReceipt" role="tab"
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelsparesMiscIssueReceipt" role="tab" style="font-weight: bold; font-size: small;"
                                 (click)="reportDetails('gstsparesMiscIssueReceipt')">Stock Adjustment Report</a>
                         </li>
                         <li>
@@ -112,7 +112,7 @@
                         </li>
                       
                         <li>
-                            <a class="dropdown-item" data-toggle="collapse" href="#panelonlyOUCode" role="tab"
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelonlyOUCode" role="tab" style="font-weight: bold; font-size: small;"
                                 (click)="reportDetails('gstClosingStocksummary')">Paint Closing Stock Summary(OU)</a>
                         </li>
 
@@ -184,15 +184,16 @@
                     <table class="center">
                         <tr>
                             <td style="width: 15%" class="LabelFontStyle"> &nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;</td>
-                            <td><input disabled type="text" class="form-control" formControlName="OUCode"></td>
-
-                            <!-- <td>
-                                <select  formControlName="opUnitId" id="opUnitId" [(ngModel)]="opUnitId" class="form-control" (change)="onOUSelect(opUnitId)">
+                            <!-- <td><input disabled type="text" class="form-control" formControlName="OUCode"></td> -->
+                          
+                            <td>
+                                <select  formControlName="opUnitId" id="opUnitId" [(ngModel)]="opUnitId" class="form-control" (change)="onOUSelect(opUnitId)" placeholder="Select OU">
                                     <option *ngFor="let sc of  OpUnitList"  [value]="sc.ouId">
                                         {{sc.ouId}}-{{sc.ouName}}
                                     </option>
                                 </select>
-                            </td> -->
+                            </td>
+                           
 
                         </tr>
                         <tr>
@@ -207,11 +208,13 @@
 
                             <td>
                                 <select formControlName="locId" id="locId" [(ngModel)]="locId" class="form-control"
-                                  (ngModelChange)='onOptionsLocation($event)'>
+                                  (ngModelChange)='onOptionsLocation($event)' placeholder="Select Location">
                                   <option></option>
+
                                   <option *ngFor="let sc of  BillShipToList" [ngValue]="sc.locId">
                                     {{sc.locCode}}-{{sc.locName}}
                                   </option>
+
                                 </select>
                                 <input hidden disabled type="number" class="form-control" formControlName="locId" [(ngModel)]="locId">
                               </td>
@@ -616,8 +619,16 @@ style="margin-left: 10%;" id="panelsparesInventoryAging">
                                 <table class="center">
                                         <tr>
                                             <td style="width: 15%" class="LabelFontStyle"> &nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;</td>
-                                            <td><input disabled type="text" class="form-control" formControlName="OUCode"></td>
+                                            <!-- <td><input disabled type="text" class="form-control" formControlName="OUCode"></td> -->
                                      
+                                            <td>
+                                                <select  formControlName="opUnitId" id="opUnitId" [(ngModel)]="opUnitId" class="form-control" (change)="onOUSelect(opUnitId)" placeholder="Select OU">
+                                                    <option *ngFor="let sc of  OpUnitList"  [value]="sc.ouId">
+                                                        {{sc.ouId}}-{{sc.ouName}}
+                                                    </option>
+                                                </select>
+                                            </td>
+
                                         <td style="width: 15%" class="LabelFontStyle"> &nbsp;SubInventory&nbsp;:&nbsp; </td>
                                         <td><input  disabled  type="text" class="form-control" formControlName="subInventory"></td>
                                  
@@ -669,7 +680,15 @@ style="margin-left: 10%;" id="panelsparesInventoryAging">
         <table class="center">
             <tr>
                 <td style="width: 15%" class="LabelFontStyle"> &nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;</td>
-                <td><input disabled type="text" class="form-control" formControlName="OUCode"></td>
+                <!-- <td><input disabled type="text" class="form-control" formControlName="OUCode"></td> -->
+
+                <td>
+                    <select  formControlName="opUnitId" id="opUnitId" [(ngModel)]="opUnitId" class="form-control" (change)="onOUSelect(opUnitId)" placeholder="Select OU">
+                        <option *ngFor="let sc of  OpUnitList"  [value]="sc.ouId">
+                            {{sc.ouId}}-{{sc.ouName}}
+                        </option>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <td style="width: 15%" class="LabelFontStyle">
@@ -746,8 +765,19 @@ style="margin-left: 10%;" id="panelsparesInventoryAging">
         <table class="center">
             <tr>
                 <td style="width: 15%" class="LabelFontStyle"> &nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;</td>
-                <td><input disabled type="text" class="form-control" formControlName="OUCode"></td>
+                <!-- <td><input disabled type="text" class="form-control" formControlName="OUCode"></td> -->
+                <td>
+                    <select  formControlName="opUnitId" id="opUnitId" [(ngModel)]="opUnitId" class="form-control" (change)="onOUSelect(opUnitId)" placeholder="Select OU">
+                        <option *ngFor="let sc of  OpUnitList"  [value]="sc.ouId">
+                            {{sc.ouId}}-{{sc.ouName}}
+                        </option>
+                    </select>
+                </td>
+           
+           
             </tr>
+
+
             <tr>
                 <td style="width: 15%" class="LabelFontStyle">&nbsp;From&nbsp;Date&nbsp;:&nbsp; </td>
                 <td><input type="date" class="form-control" formControlName="fromDate"  [(ngModel)]="fromDate"  max="{{minDate | date:'yyyy-MM-dd'}}"></td>
@@ -836,7 +866,15 @@ style="margin-left: 20%;" id="panelsparesMiscIssueReceipt">
         <table class="center">
             <tr>
                 <td style="width: 15%" class="LabelFontStyle"> &nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;</td>
-                <td><input disabled type="text" class="form-control" formControlName="OUCode"></td>
+                <!-- <td><input disabled type="text" class="form-control" formControlName="OUCode"></td> -->
+                <td>
+                    <select  formControlName="opUnitId" id="opUnitId" [(ngModel)]="opUnitId" class="form-control" (change)="onOUSelect(opUnitId)" placeholder="Select OU">
+                        <option *ngFor="let sc of  OpUnitList"  [value]="sc.ouId">
+                            {{sc.ouId}}-{{sc.ouName}}
+                        </option>
+                    </select>
+                </td>
+            
             </tr>
             <tr>
                 <td style="width: 15%" class="LabelFontStyle">
@@ -1289,3 +1327,4 @@ style="margin-left: 20%;" id="paintPanelReport">
             </table>
 
 </form>
+

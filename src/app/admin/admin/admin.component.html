@@ -504,7 +504,15 @@
 
        <div [style.display]="isVisiblePaintReport ? 'block' : 'none'">
          <li><a class="dropdown-submenu" style="padding-left: 28px ;" [routerLink]="['/admin/Report/PaintReports']">Reports</a></li>
+         <!-- <li><a class="dropdown-submenu" style="padding-left: 28px ;" [routerLink]="['/admin/Report/PaintReportsNew']">Reports New</a></li> -->
        </div>
+
+       <div [style.display]="isVisiblePaintReportAuditor ? 'block' : 'none'">
+        <!-- <li><a class="dropdown-submenu" style="padding-left: 28px ;" [routerLink]="['/admin/Report/PaintReports']">Reports</a></li> -->
+        <li><a class="dropdown-submenu" style="padding-left: 28px ;" [routerLink]="['/admin/Report/PaintReportsNew']">Paint Reports</a></li>
+      </div>
+
+       
 
       </ul>
     </li>

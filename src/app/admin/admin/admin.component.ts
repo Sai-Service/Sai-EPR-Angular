@@ -123,6 +123,8 @@ export class AdminComponent implements OnInit {
   isVisiblePaintTrans:boolean=true;
   isVisiblePaintPurchase:boolean=true;
   isVisiblePaintReport:boolean=true;
+  isVisiblePaintReportAuditor:boolean=true;
+
 
   fullName: string;
   deptName: string;
@@ -300,7 +302,7 @@ export class AdminComponent implements OnInit {
     // if (Number(sessionStorage.getItem('divisionId')) === 1 && Number(sessionStorage.getItem('roleId'))===1  && sessionStorage.getItem('ticketNo') ==='P5678')
    
 
-    if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem('deptName')==='DP' && (sessionStorage.getItem('roleId')) !== 'PaintReportUser' ) 
+    if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem('deptName')==='DP' && (sessionStorage.getItem('roleId')) !== 'AUDITOR' ) 
     // && sessionStorage.getItem('ticketNo') ==='GM01733')
     // Paint Login -----
     // alert("role Id :" + (sessionStorage.getItem('roleId')))
@@ -346,11 +348,12 @@ export class AdminComponent implements OnInit {
       this.isVisiblePaintTrans=true;
       this.isVisiblePaintPurchase=true;
       this.isVisiblePaintReport=true;
+      this.isVisiblePaintReportAuditor=false;
       // this.isVisibleShellReport=false;
 
     }
     
-    if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem('deptName')==='DP' && (sessionStorage.getItem('roleId'))==='PaintReportUser' ) 
+    if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem('deptName')==='DP' && (sessionStorage.getItem('roleId'))==='AUDITOR' ) 
       {
         this.isVisibleSearchPaint=true;
         this.isVisibleMaster=false;
@@ -391,7 +394,9 @@ export class AdminComponent implements OnInit {
         this.isVisiblePaintMaster=false;
         this.isVisiblePaintTrans=false;
         this.isVisiblePaintPurchase=false;
-        this.isVisiblePaintReport=true;
+        this.isVisiblePaintReport=false;
+        this.isVisiblePaintReportAuditor=true;
+
       }
 
     // && sessionStorage.getItem('ticketNo') ==='P5678'
