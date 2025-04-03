@@ -885,8 +885,7 @@ export class SalesOrderFormComponent implements OnInit {
 
        // alert(controlinvext1.length)
     for (let i = 0; i < controlinvext1.length; i++) {
-      // alert(controlinvext1[i].segment+'----'+ controlinvext1[i].pricingQty + ", i="+i+" ,k="+k)
-
+     
       if ( i !=k) {
       if (controlinvext1[i].segment == segment && controlinvext1[i].pricingQty != 0) {
         alert('Already Selected this Item. Please Confirm.!');

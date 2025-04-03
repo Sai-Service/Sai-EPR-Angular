@@ -500,7 +500,7 @@ export class ItemMasterNewComponent implements OnInit {
           this.displaytaxCategoryListPIGST = false;
           this.displaytaxCategoryListSalesIGST = false;
           this.displaytaxCategoryListSalesSAndCGST = false;
-          if (sessionStorage.getItem('ticketNo')==='2M27189'){
+          if (sessionStorage.getItem('ticketNo')==='2M27189' && Number(sessionStorage.getItem('deptId'))!=3){
             this.isVisibleUpdateBtn=true;
           }
         }

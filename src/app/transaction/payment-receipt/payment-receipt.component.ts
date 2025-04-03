@@ -278,7 +278,7 @@ export class PaymentReceiptComponent implements OnInit {
 
   onPayTypeSelected(payType: any, rmStatus: any) {
     var payType = payType.target.value;
-    // alert(payType)
+    alert(payType)
     if (payType === 'CASH') {
       var cashsum = 0;
       var paymentAmt = this.paymentReceiptForm.get('paymentAmt').value;

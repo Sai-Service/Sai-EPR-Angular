@@ -113,11 +113,6 @@
                             <a class="dropdown-item" data-toggle="collapse" href="#panelfromtolocation1" role="tab"
                                 (click)="reportDetails('receiptOtherDetails')">Receipt-Other Details Report</a>
                         </li>
-
-                        <!-- <li>
-                            <a class="dropdown-item" data-toggle="collapse" href="#panelfromtolocationdepartment"
-                                role="tab" (click)="reportDetails('saleSOALinewiseReport')">Sales SOA LineWise Report</a>
-                        </li> -->
                         <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelVehicleSaleRegister" role="tab"
                                 (click)="reportDetails('saleQtyChartForVehicle')">Sales Qty Chart for Vehicle</a>
@@ -133,11 +128,7 @@
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" (click)="department('Sales')">Stock
                         Reports</a>
                     <ul class="dropdown-menu">
-                        <!-- <li>
-                            <a class="dropdown-item" data-toggle="collapse" href="#panelSaleClosingStock" role="tab"
-                                (click)="reportDetails('gstSaleClosingStock')">Vehicle Closing Stock</a>
-                        </li> -->
-
+                        
                         <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelSaleClosingStock" role="tab"
                                 (click)="reportDetails('gstSaleClosingStockNew')">Vehicle Closing Stock-New</a>
@@ -212,6 +203,10 @@
                         <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelSaleSOAParameter" role="tab"
                                 (click)="reportDetails('SaleSOAParameter')">Sales SOA Line wise Report</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelTodateOuIdLocId" role="tab"
+                                (click)="reportDetails('salesPendingPaymentDtls')">Sales Pending Payment Dtls Report</a>
                         </li>
                     </ul>
                 </li>
@@ -515,18 +510,13 @@ style="margin-left: 20%;" id="panelSaleSOAParameter">
 
         <table class="center" [style.display]="isVisiblegstsaiDebtors ? 'block' : 'none'" class="collapse"
             id="panelgstsaiDebtors">
-
-            <!-- <table class="center" [style.display]="isVisiblegstsaiDebtors ? 'block' : 'none'" class="collapse"
-       style="margin-left: 20%;" id="panelgstsaiDebtors"> -->
-
             <table class="center">
                 <tr>
                     <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;">{{reportName}}</td>
                 </tr>
             </table>
             <br>
-            <!-- <tr>
-           <td> -->
+           
             <table class="center">
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle">
@@ -630,18 +620,7 @@ style="margin-left: 20%;" id="panelSaleSOAParameter">
 
         <table class="center" [style.display]="isSaleClosingStock ? 'block' : 'none'" class="collapse"
             style="margin-left: 10%;" id="panelSaleClosingStock">
-            <!-- <tr>
-                <td>
-                    <table class="center">
-                        <tr>
-                            <td colspan="4" class="LabelFontStyle" style="width: 100%;">
-                                {{reportName}}
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr> -->
-
+          
             <table class="center">
                 <tr>
                     <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;">{{reportName}}</td>
@@ -649,9 +628,6 @@ style="margin-left: 20%;" id="panelSaleSOAParameter">
             </table>
             <br>
 
-
-            <!-- <tr>
-                <td> -->
             <table class="center">
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle">
@@ -663,11 +639,6 @@ style="margin-left: 20%;" id="panelSaleSOAParameter">
                 </tr>
             </table>
 
-            <!-- <tr>
-                            <td colspan="4">
-                                <table class="center">
-                                    <tr>
-                                        <td colspan="4"> -->
             <table class="center">
                 <tr>
                     <div *ngIf="closeResetButton; then hList1; else hList2"></div>
@@ -683,12 +654,9 @@ style="margin-left: 20%;" id="panelSaleSOAParameter">
                         &nbsp;{{dataDisplay}}&nbsp; </td>
                 </tr>
             </table>
-            <!-- </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="4"> -->
+           
             <table class="center">
-                <!-- style="width: 100%;margin-left: 50%;"> -->
+             
                 <tr>
                     <td>
                         <button class="btn-primary" [disabled]="isDisabled1" (click)="reportParameter(reportName)">View
@@ -842,25 +810,14 @@ style="margin-left: 20%;" id="panelSaleSOAParameter">
 
         <table class="center" style="margin-left: 10%;" [style.display]="isVisiblecustomerLedger ? 'block' : 'none'"
             class="collapse" id="panelcustomerLedger">
-            <!-- <tr>
-                <td>
-                    <table class="center">
-                        <tr>
-                            <td colspan="4" class="LabelFontStyle" style="width: 100%;">
-                                {{reportName}}
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr> -->
+          
             <table class="center">
                 <tr>
                     <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;">{{reportName}}</td>
                 </tr>
             </table>
             <br>
-            <!-- <tr>
-                <td> -->
+          
             <table class="center">
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle">
@@ -962,26 +919,14 @@ style="margin-left: 20%;" id="panelSaleSOAParameter">
 
         <table class="center" [style.display]="isVisiblestockTransfer ? 'block' : 'none'" class="collapse"
             style="margin-left: 10%;" id="panelstockTransfer">
-            <!-- <tr>
-                <td>
-                    <table class="center">
-                        <tr>
-                            <td colspan="4" class="LabelFontStyle" style="width: 100%;">
-                                {{reportName}}
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr> -->
-
+          
             <table class="center">
                 <tr>
                     <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;">{{reportName}}</td>
                 </tr>
             </table>
             <br>
-            <!-- <tr>
-                <td> -->
+          
             <table class="center">
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle">
@@ -1117,18 +1062,7 @@ style="margin-left: 20%;" id="panelSaleSOAParameter">
 
         <table class="center" style="margin-left: 10%;" [style.display]="isVisiblefromtoloccustaccno ? 'block' : 'none'"
             class="collapse" id="panelfromtoloccustaccno">
-            <!-- <tr>
-                <td>
-                    <table class="center">
-                        <tr>
-                            <td colspan="4" class="LabelFontStyle" style="width: 100%;">
-                                {{reportName}}
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr> -->
-
+           
             <table class="center">
                 <tr>
                     <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;">{{reportName}}</td>
@@ -1136,8 +1070,6 @@ style="margin-left: 20%;" id="panelSaleSOAParameter">
             </table>
             <br>
 
-            <!-- <tr>
-                <td> -->
             <table class="center">
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle">
@@ -1227,18 +1159,7 @@ style="margin-left: 20%;" id="panelSaleSOAParameter">
 
         <table class="center" [style.display]="isVisibleSalesInventoryAging ? 'block' : 'none'" class="collapse"
             style="margin-left: 10%;" id="panelSalesaggingReports">
-            <!-- <tr>
-                <td>
-                    <table class="center">
-                        <tr>
-                            <td colspan="4" class="LabelFontStyle" style="width: 100%;">
-                                {{reportName}}
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr> -->
-
+           
             <table class="center">
                 <tr>
                     <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;">{{reportName}}</td>
@@ -1246,8 +1167,6 @@ style="margin-left: 20%;" id="panelSaleSOAParameter">
             </table>
             <br>
 
-            <!-- <tr>
-                <td> -->
             <table class="center">
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle">
@@ -1341,8 +1260,6 @@ style="margin-left: 20%;" id="panelSaleSOAParameter">
             </table>
             <br>
 
-            <!-- <tr>
-                <td> -->
             <table class="center">
 
                 <tr>
@@ -1462,8 +1379,6 @@ style="margin-left: 20%;" id="panelSaleSOAParameter">
             </table>
             <br>
 
-            <!-- <tr>
-            <td> -->
             <table class="center">
 
                 <tr>
@@ -1571,18 +1486,7 @@ style="margin-left: 20%;" id="panelSaleSOAParameter">
 
         <table class="center" style="margin-left: 10%;" [style.display]="isVisiblepaneltolocation ? 'block' : 'none'"
             class="collapse" id="paneltolocation">
-            <!-- <tr>
-            <td>
-                <table class="center">
-                    <tr>
-                        <td colspan="4" class="LabelFontStyle" style="width: 100%;">
-                            {{reportName}}
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr> -->
-
+         
             <table class="center">
                 <tr>
                     <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;">{{reportName}}</td>
@@ -1590,8 +1494,6 @@ style="margin-left: 20%;" id="panelSaleSOAParameter">
             </table>
             <br>
 
-            <!-- <tr>
-            <td> -->
             <table class="center">
 
                 <tr>
@@ -1686,17 +1588,7 @@ style="margin-left: 20%;" id="panelSaleSOAParameter">
 
         <table class="center" style="margin-left: 30%;" [style.display]="isVisiblepanelreceiptNo ? 'block' : 'none'"
             class="collapse" id="panelreceiptNo">
-            <!-- <tr>
-                <td>
-                    <table class="center">
-                        <tr>
-                            <td colspan="4" class="LabelFontStyle" style="width: 100%;">
-                                {{reportName}}
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr> -->
+           
 
             <table class="center">
                 <tr>
@@ -1704,8 +1596,7 @@ style="margin-left: 20%;" id="panelSaleSOAParameter">
                 </tr>
             </table>
             <br>
-            <!-- <tr>
-                <td> -->
+            
             <table class="center">
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle">
@@ -1765,17 +1656,7 @@ style="margin-left: 20%;" id="panelSaleSOAParameter">
         <table class="center" style="margin-left: 30%;"
             [style.display]="isVisiblepanelSalesAddonReconciliation ? 'block' : 'none'" class="collapse"
             id="panelSalesAddonReconciliation">
-            <!-- <tr>
-                <td>
-                    <table class="center">
-                        <tr>
-                            <td colspan="4" class="LabelFontStyle" style="width: 100%;">
-                                {{reportName}}
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr> -->
+            
 
             <table class="center">
                 <tr>
@@ -1783,8 +1664,7 @@ style="margin-left: 20%;" id="panelSaleSOAParameter">
                 </tr>
             </table>
             <br>
-            <!-- <tr>
-                <td> -->
+      
             <table class="center">
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle">
@@ -2049,25 +1929,14 @@ style="margin-left: 20%;" id="panelSaleSOAParameter">
 
         <table class="center" style="margin-left: 10%;" [style.display]="isVisiblefromtosubinventory ? 'block' : 'none'"
             class="collapse" id="panelfromtosubinventory">
-            <!-- <tr>
-                <td>
-                    <table class="center">
-                        <tr>
-                            <td colspan="4" class="LabelFontStyle" style="width: 100%;">
-                                {{reportName}}
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr> -->
+           
             <table class="center">
                 <tr>
                     <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;">{{reportName}}</td>
                 </tr>
             </table>
             <br>
-            <!-- <tr>
-                <td> -->
+         
             <table class="center">
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle">
@@ -2210,18 +2079,7 @@ style="margin-left: 20%;" id="panelSaleSOAParameter">
 
         <table class="center" [style.display]="ispanelTolocationOu ? 'block' : 'none'" class="collapse"
             style="margin-left: 20%;" id="panelTolocationOu">
-            <!-- <tr>
-              <td>
-                  <table class="center">
-                      <tr>
-                          <td colspan="4" class="LabelFontStyle" style="width: 100%;">
-                              {{reportName}}
-                          </td>
-                      </tr>
-                  </table>
-              </td>
-          </tr> -->
-
+           
             <table class="center">
                 <tr>
                     <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;">{{reportName}}</td>
@@ -2229,8 +2087,6 @@ style="margin-left: 20%;" id="panelSaleSOAParameter">
             </table>
             <br>
 
-            <!-- <tr>
-              <td> -->
             <table class="center">
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle">
@@ -2249,11 +2105,6 @@ style="margin-left: 20%;" id="panelSaleSOAParameter">
                 </tr>
             </table>
 
-            <!-- <tr>
-                          <td colspan="4">
-                              <table class="center">
-                                  <tr>
-                                      <td colspan="4"> -->
             <table class="center" style="width: 100%;">
                 <tr>
                     <div *ngIf="closeResetButton; then hList1; else hList2"></div>
@@ -2293,6 +2144,80 @@ style="margin-left: 20%;" id="panelSaleSOAParameter">
           </tr> -->
         </table>
 
+   
+        <table class="center" [style.display]="isVisiblespTodateOuIdLocId ? 'block' : 'none'" class="collapse"
+        style="margin-left: 20%;" id="panelTodateOuIdLocId">
+        
+        <table class="center">
+            <tr>
+              <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;" >{{reportName}}</td>
+            </tr>
+        </table>
+        <br>
+        
+                <table class="center">
+                    <tr>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            &nbsp;To&nbsp;Date&nbsp;:&nbsp;
+                        </td>
+                        <td>
+                            <input type="date" class="form-control" formControlName="toDate"  [(ngModel)]="toDate"
+                                max="{{minDate | date:'yyyy-MM-dd'}}">
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">
+                            &nbsp;Location&nbsp;Code&nbsp;:&nbsp;
+                        </td>
+                        <td [style.display]="isVisiblelocationInput ? 'block' : 'none'">
+                            <input type="text" disabled class="form-control" formControlName="locCode">
+                        </td>
+                        <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
+                            <select formControlName="locCode" id="locCode" class="form-control"
+                                (ngModelChange)='onOptionsLocation($event)'>
+                                <option></option>
+                                <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
+                                    {{sc.locCode}}
+                                </option>
+                            </select>
+                            <input  disabled hidden type="number" class="form-control" formControlName="locId">
+                        </td>
+        
+                        <td style="width: 15%" class="LabelFontStyle"> &nbsp;SubInventory&nbsp;:&nbsp; </td>
+                        <td><input  disabled  type="text" class="form-control" formControlName="subInventory"></td>
+                    </tr>
+        
+                </table>
+                                <table class="center">
+                                    <tr>
+                                        <td>
+                                            <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                                            <ng-template #hList2> 
+                                                <div class="d-flex justify-content-center">
+                                                    <div class="spinner-border text-primary" role="status" >
+                                                        <span class="sr-only" id="loading"></span>
+                                                
+                                                    </div>
+                                                    </div>
+                                            </ng-template>
+                                            <ng-template #hList1> </ng-template>
+                                        </td>
+                                        <td class="LabelFontStyle" style="color: blue;">&nbsp;{{this.dataDisplay}}&nbsp; </td>
+                                    </tr>
+                                </table>
+        
+        
+                                  <table class="center" style="width: 100%;margin-left: 50%;">
+                                      <tr>
+                                        <td>
+                                            <button class="btn-primary" [disabled]="isDisabled1" (click)="reportParameter(reportName)">View
+                                              Report</button>
+                                          </td>
+                                         
+                                      </tr>
+                                  </table>
+                             
+        </table>
+   
+   
     </fieldset>
 
     <table class="center">

@@ -74,6 +74,7 @@ export class SalesReportsComponent implements OnInit {
   isVisiblecustomerLedger: boolean = false;
   isVisiblespPurRegDownLoad: boolean = false;
   isVisiblestockTransfer: boolean = false;
+  isVisiblespTodateOuIdLocId:boolean=false;
   isVisiblefromtoloccustaccno: boolean = false;
   isVisibleSalesInventoryAging: boolean = false;
   inVisiblepanelSaleSaiDebtors: boolean = false;
@@ -306,6 +307,7 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName === 'gstSaleIND') {
       this.reportName = 'Sales Invoiced Not Delivered'
@@ -327,6 +329,7 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName === 'gstVehicleBookingReg') {
       this.reportName = 'Vehicle Booking Register'
@@ -348,6 +351,7 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName === 'gstSaleAllotNotInv') {
       this.reportName = 'Sales Alloted Not Invoiced Report'
@@ -369,6 +373,7 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName === 'gstSaleClosingStock') {
       this.reportName = 'Vehicle Closing Stock'
@@ -389,6 +394,7 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName === 'gstSaleClosingStockNew') {
       this.reportName = 'Vehicle Closing Stock-New'
@@ -409,6 +415,7 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName === 'gstSaleRegister') {
       this.reportName = 'GST Sales Register'
@@ -430,6 +437,7 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName === 'gstSparesSaiDebtors') {
       // alert(reportName +'---'+this.inVisiblepanelSaleSaiDebtors);
@@ -443,6 +451,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblecustomerLedger = false;
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblestockTransfer = false;
+      this.isVisiblespTodateOuIdLocId=false;
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.isVisibleDepartmentList = true;
 
@@ -484,6 +493,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.isVisiblepanelfromtolocation1 = false;
       this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
 
     else if (reportName === 'customerLedger') {
@@ -509,6 +519,7 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName === 'gststockTransferSummary') {
       this.reportName = 'Stock Transfer Made Detail Report';
@@ -530,6 +541,7 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName === 'gststockTransferReceivedDetails') {
       this.reportName = 'Stock Transfer Received Detail Report';
@@ -551,6 +563,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.isVisiblepanelfromtolocation1 = false;
       this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName === 'gststockTransferReceivedSummary') {
       this.reportName = 'Sales Stock Transfer Received Summary Report';
@@ -572,6 +585,7 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName === 'saleProformaSummary') {
       this.reportName = 'Sales Proforma Summary Report';
@@ -593,6 +607,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.isVisiblepanelfromtolocation1 = false;
       this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName === 'creditNoteReg') {
       this.reportName = 'Credit Note Register';
@@ -614,6 +629,7 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName === 'subDealerRep') {
       this.reportName = 'SubDealer-Sales Register Report';
@@ -635,6 +651,7 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName === 'salesaggingReports') {
       this.reportName = 'Sales Aging Report';
@@ -656,6 +673,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelfromtolocation1 = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName === 'saleAddonRegister') {
       this.reportName = 'Sales Addon Register';
@@ -677,6 +695,7 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName === 'EWSaleRegister') {
       this.reportName = 'EW Sales Register';
@@ -698,6 +717,7 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName === 'reinsuarnceReceiptPrint') {
       this.reportName = 'Reinsurance Receipt Print';
@@ -719,6 +739,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.isVisiblepanelfromtolocation1 = false;
       this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName === 'salesAddonReconciliation') {
       this.reportName = 'Sales Addon Reconciliation';
@@ -740,6 +761,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelfromtolocation1 = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName === 'sparesSubinvTransReceived') {
       this.reportName = 'Sub Inventory Transfer Received Report';
@@ -761,6 +783,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelfromtolocation1 = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName === 'sparesSubinvTransMade') {
       this.reportName = 'Sub Inventory Transfer Made Report';
@@ -781,6 +804,7 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName === 'IrnGenerationReport') {
       this.reportName = 'IRN Generation Report';
@@ -806,6 +830,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.isVisiblepanelfromtolocation1 = false;
       this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName === 'amcHistrory') {
       this.reportName = 'AMC History Report';
@@ -827,6 +852,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.isVisiblepanelfromtolocation1 = false;
       this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName === 'reInsuarnceRegister') {
       this.salesReportForm.patchValue({ department: 'Sales' });
@@ -853,6 +879,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.isVisiblepanelfromtolocation1 = false;
       this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName === 'gstPurRegister') {
       this.reportName = 'Purchase Register Details';
@@ -879,6 +906,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.isVisiblepanelfromtolocation1 = false;
       this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName === 'vehicleClosingStockAsOn') {
       this.reportName = 'Vehicle Closing Stock As on Date';
@@ -900,6 +928,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblepanelfromtolocation1 = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName === 'deliverySummary') {
       this.reportName = 'Delivery Summary Report';
@@ -921,6 +950,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblepanelfromtolocation1 = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName === 'fscCouponData') {
       this.reportName = 'FSC Coupon Data Report';
@@ -942,6 +972,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblepanelfromtolocation1 = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
 
     else if (reportName === 'salesPendingPayment') {
@@ -964,6 +995,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = true;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblepanelfromtolocation1 = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName === 'salesBookingCancReport') {
       this.reportName = 'Sales Booking Cancellation Report';
@@ -985,6 +1017,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblepanelfromtolocation1 = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
 
     else if (reportName === 'salesRtoRegister') {
@@ -1007,6 +1040,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblepanelfromtolocation1 = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName === 'pendBookingChetakLy') {
       this.reportName = 'Chetak Pending Booking-Last Year'
@@ -1027,6 +1061,7 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
 
     else if (reportName === 'receiptOtherDetails') {
@@ -1048,6 +1083,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblepanelfromtolocation1 = true;
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName === 'SaleSOAParameter') {
       this.reportName = 'Sales SOA Line wise Report';
@@ -1073,6 +1109,7 @@ export class SalesReportsComponent implements OnInit {
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.isVisibleDepartmentList = true;
       }
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName === 'gstsaiDebtorsAsOf') {
       this.reportName = 'Sale Debtor Report As Of';
@@ -1097,6 +1134,7 @@ export class SalesReportsComponent implements OnInit {
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.isVisibleDepartmentList = true;
       }
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if (reportName ==='saleQtyChartForVehicle'){
       this.reportName = 'Sales Qty Chart for Vehicle';
@@ -1118,6 +1156,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.isVisiblepanelfromtolocation1 = false;
       this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId=false;
     }
     else if(reportName=='salesInvoiceCan'){
       this.reportName = 'Sales Invoice Cancellation Report';
@@ -1139,6 +1178,29 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.isVisiblepanelfromtolocation1 = true;
       this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId=false;
+    }
+    else if(reportName=='salesPendingPaymentDtls'){
+      this.reportName = 'Sales Pending Payment Dtls Report';
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisibleVehicleSaleRegister = false;
+      this.isVisibleSaleIND = false;
+      this.isSaleClosingStock = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleSaleSOAParameter=false;
+      this.isVisiblefromtoloccustaccno = false;
+      this.isVisibleSalesInventoryAging = false;
+      this.isVisiblepanelfromtolocation = false;
+      this.isVisiblepanelreceiptNo = false;
+      this.isVisiblepanelSalesAddonReconciliation = false;
+      this.isVisiblefromtosubinventory = false;
+      this.panelamcHistrory = false;
+      this.ispanelTolocationOu = false;
+      this.isVisiblepaneltolocation = false;
+      this.isVisiblepanelfromtolocation1 = false;
+      this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId=true;
     }
   }
 
@@ -1858,6 +1920,28 @@ export class SalesReportsComponent implements OnInit {
           this.closeResetButton = true;
           this.isDisabled1 = false;
         })
+    }
+    else if (reportName == 'Sales Pending Payment Dtls Report') {
+      const fileName = 'Sales Pending Payment Dtls Report-' +  fromDate + '-TO-' + toDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId'))!=4){
+      this.reportService.salesPendingPaymentDtlsFn(toDate, sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'))
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.dataDisplay = ''
+          this.closeResetButton = true;
+          this.isDisabled1 = false;
+        })
+      }
+      if (Number(sessionStorage.getItem('deptId'))===4){
+        this.reportService.salesPendingPaymentDtlsFn(toDate, sessionStorage.getItem('ouId'),locId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.dataDisplay = ''
+            this.closeResetButton = true;
+            this.isDisabled1 = false;
+          })
+        }
     }
     else if (reportName == 'Delivery Summary Report') {
       const fileName = 'Delivery Summary Report-' +  fromDate + '-TO-' + toDate + '.xls';

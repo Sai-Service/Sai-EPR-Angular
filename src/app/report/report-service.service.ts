@@ -310,7 +310,7 @@ export class ReportServiceService {
       responseType: 'arraybuffer',
       headers: this.headers,
     });
-    // http://localhost:8081/AccountsReports/JVRegister?fromDate=01-APR-2022&toDate=29-JUL-2022&ouId=21
+    // http://localhost:8081/JVRegister?fromDate=01-APR-2022&toDate=29-JUL-2022&ouId=21
   }
 
   actMatDistReport(fromDate,toDate,ouId){
@@ -321,6 +321,15 @@ export class ReportServiceService {
     });
     // http://localhost:8081/AccountsReports/AcctDistMatTrxRep?fromDate=01-NOV-2022&toDate=15-NOV-2022&ouId=22
 
+  }
+
+
+  salesPendingPaymentDtlsFn(toDate,ouId,locId){
+    const REQUEST_URI = this.ServerUrl +`/SalesReports/SlPendingPymtDtlsRep?toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
   }
 
   shortLandedClaimReport(fromDate,toDate,ouId,locaId,deptId){

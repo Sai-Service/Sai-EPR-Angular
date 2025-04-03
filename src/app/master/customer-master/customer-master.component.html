@@ -850,7 +850,7 @@
                                                     <input type="checkbox" formControlName="tcsYN" [(ngModel)]="tcsYN"  (change)="tcssel($event)">
                                                 </td>
                                                 <div *ngIf="displayTcsPer;then showdispY;else showdispN"></div>
-                                <ng-template #showdispY>
+                                                <ng-template #showdispY>
                                                 <td style="width: 15%" class="LabelFontStyle">TCS&nbsp;Percentage&nbsp;:&nbsp;</td>
                                     <!-- <td> -->
 
@@ -860,8 +860,6 @@
                                                 </ng-template>
                                                 <ng-template #showdispN>
                                                   <td style="width: 15%" class="LabelFontStyle">TCS&nbsp;Percentage&nbsp;:&nbsp;</td>
-                                      <!-- <td> -->
-
                                               <td>
                                                       <input disabled type="text" class="form-control" formControlName="tcsPer" [(ngModel)]="tcsPer">
                                                   </td>

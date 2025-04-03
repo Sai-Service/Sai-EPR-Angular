@@ -1091,11 +1091,22 @@ export class CustomerMasterComponent implements OnInit {
       alert('In Validation(d) ');
       return;
     }
+    // debugger;
+    var tcsPer = Number(this.tcsPer);
+    // alert(this.tcsYN||'------'||tcsPer)
+    if (tcsPer===0){
+      this.tcsYN='N'
+    }
+    // alert(this.tcsYN||'-uuuuu-----'||tcsPer)
     const formValue: IcustomerMaster = this.transDataUppdateCustomer(this.customerMasterForm.getRawValue());
     formValue.termId=this.customerMasterForm.get('paymentType').value;
+    formValue.tcsYN=this.tcsYN;
+    // debugger;
+    // return;
     this.service.UpdateCustMasterById(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
+        this.customerMasterForm.get('tcsPer').disable();
         // window.location.reload();
       } else {
         if (res.code === 400) {
@@ -1238,7 +1249,12 @@ export class CustomerMasterComponent implements OnInit {
           this.customerMasterForm.get('perAdd').disable();
           this.customerMasterForm.get('shipTo').disable();
           this.dispstatus = false;
-
+          if (data.obj.tcsYN==='N'){
+            this.displayTcsPer = false;
+        };
+          if (data.obj.tcsYN==='Y'){
+            this.displayTcsPer=true;
+          }
         });
 
 
@@ -1317,12 +1333,16 @@ export class CustomerMasterComponent implements OnInit {
         );
     }
   }
+  
+
   tcssel(e) {
+    // alert(e.target.checked)
     if (e.target.checked === true) {
       this.tcsYN = 'Y'
       this.displayTcsPer = true;
     }
     if (e.target.checked === false) {
+      e.target.checked=false;
       this.tcsYN = 'N'
       this.displayTcsPer = false;
     }
