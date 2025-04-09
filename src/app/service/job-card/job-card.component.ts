@@ -2838,42 +2838,53 @@ export class JobCardComponent implements OnInit {
     this.preInvButton=false;
     this.reopenButton=false;
 
-    var jcTp =this.jobcardForm.get('jcType').value;
-
-    this.serviceService.GenerateInvoiceFN(jobCardNum).subscribe((res: any) => {
-
-
-      if (res.code === 200) {
-        this.printInvoiceButton=true;
-        this.saveBillButton=false;
-        this.preInvButton=false;
-        this.reopenButton=false;
-        alert(res.message);
-
-         if(jcTp==='Service') {
-          this.arInvNum = res.obj.InvoiceNo;
-          this.addonInvoiceNo=res.obj.AddonInvoiceNo;
-          this.cwiInvoiceNo=res.obj.CWIInvoiceNo;
-          if(res.obj.AddonInvoiceNo>0) {this.printAddonInvButton=true;}
-          if(res.obj.cwiInvoiceNo>0) {this.printCwiInvButton=true;}
-          
+    var jcTp ='Customer';
+    // this.jobcardForm.get('jcType').value;
+      alert(jcTp+'-------jcTp')
+      this.serviceService.getJobCardInvDet(jobCardNum,jcTp).subscribe((res: any) => {
+        if (res.code===200){
+          if (res.obj[0].CNT != 0){
+            alert(res.obj[0].INVDET);
+            return
+          }
+          if (res.obj[0].CNT === 0){
+            this.serviceService.GenerateInvoiceFN(jobCardNum).subscribe((res: any) => {
+              if (res.code === 200) {
+                this.printInvoiceButton=true;
+                this.saveBillButton=false;
+                this.preInvButton=false;
+                this.reopenButton=false;
+                alert(res.message);
+        
+                 if(jcTp==='Service') {
+                  this.arInvNum = res.obj.InvoiceNo;
+                  this.addonInvoiceNo=res.obj.AddonInvoiceNo;
+                  this.cwiInvoiceNo=res.obj.CWIInvoiceNo;
+                  if(res.obj.AddonInvoiceNo>0) {this.printAddonInvButton=true;}
+                  if(res.obj.cwiInvoiceNo>0) {this.printCwiInvButton=true;}
+                  
+                }
+                if(jcTp==='BS') {
+                  this.custInvoiceNo  = res.obj.CustomerInvoiceNo;
+                  this.insInvoiceNo   = res.obj.InsuranceInvoiceNo;
+                }
+            
+              } else {
+                // if (res.code === 400) {
+                  this.genBillButton=true;
+                  this.saveBillButton=true;
+                  this.preInvButton=false; /// comited by Jyotik
+                  this.reopenButton=true;
+                  alert(res.code+" - "+res.message);
+                // }
+              }
+        
+            });
+          }
         }
-        if(jcTp==='BS') {
-          this.custInvoiceNo  = res.obj.CustomerInvoiceNo;
-          this.insInvoiceNo   = res.obj.InsuranceInvoiceNo;
-        }
-    
-      } else {
-        // if (res.code === 400) {
-          this.genBillButton=true;
-          this.saveBillButton=true;
-          this.preInvButton=false; /// comited by Jyotik
-          this.reopenButton=true;
-          alert(res.code+" - "+res.message);
-        // }
       }
-
-    });
+    )
+  
   }
 }
 
