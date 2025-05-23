@@ -36,6 +36,10 @@ getJonCardNoSearchOu(jcNum,jDate,jStatus,jRegNo,jouId): Observable<any> {
   return this.http.get(this.ServerUrl +`/jobCard/pendingList?locId=${jLocId}&regNo=${jRegNo}`);
  }
 
+ getJobCardInvDet(jobCardNum,jcTp): Observable<any> {
+  return this.http.get(this.ServerUrl +`/jobCard/jobCardInvDetails?referenceNo=${jobCardNum}&invType=${jcTp}`);
+ }
+
  getGatePassIdDetails(gpId): Observable<any> {
   return this.http.get(this.ServerUrl +`/SRGatepass/byGatepassId/${gpId}`);
   // http://localhost:8081/SRGatepass/byGatepassId/181
