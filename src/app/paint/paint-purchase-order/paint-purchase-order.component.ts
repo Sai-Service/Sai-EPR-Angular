@@ -1943,6 +1943,11 @@ export class PaintPurchaseOrderComponent implements OnInit {
       if (this.itemType === "GOODS") {
         this.service.ItemDetailsList(this.invItemId, this.selSuppTaxCatNm, this.billToLoc).subscribe((res: any) => {
           if (res.code === 200) {
+                if(res.obj.invCategory=="PN.MAIN")
+                  {
+                    alert("You are Not Allowed to select this item...");
+                    return;
+                  }
             if (res.obj.itemId === null) {
               alert('Item Or PO Charge Account Not Found in Master !')
               var patch = this.paintPoForm.get('poLines') as FormArray;
@@ -2787,6 +2792,8 @@ export class PaintPurchaseOrderComponent implements OnInit {
 
  onOptioninvitemTypeSelected(e: any, lineNum) {
    var itemType = e.target.value;
+
+  //  alert ("item type : "+itemType);
 
    if (this.itemMap.has(itemType)) {
      this.invItemList = this.itemMap.get(itemType);
