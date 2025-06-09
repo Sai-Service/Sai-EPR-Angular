@@ -1945,7 +1945,7 @@ export class PaintPurchaseOrderComponent implements OnInit {
           if (res.code === 200) {
                 if(res.obj.invCategory=="PN.MAIN")
                   {
-                    alert("You are Not Allowed to select this item...");
+                    alert("You are Not Allowed to select this Item...");
                     return;
                   }
             if (res.obj.itemId === null) {

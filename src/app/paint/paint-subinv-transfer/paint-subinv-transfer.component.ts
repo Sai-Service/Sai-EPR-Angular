@@ -102,6 +102,8 @@ export class PaintSubinvTransferComponent implements OnInit {
   Floor: string;
   content: number;
   issueTo: string;
+  // issueTo: string ='3';
+
   title: string;
   name: string;
 
@@ -285,11 +287,22 @@ export class PaintSubinvTransferComponent implements OnInit {
 
     });
 
-    this.service
-      .getsubTrfSubinventory(this.deptId, this.divisionId)
+    // this.service
+    //   .getsubTrfSubinventory(this.deptId, this.divisionId)
+    //   .subscribe((data) => {
+    //     this.tosubInvCode = data;
+    //   });
+
+
+       this.service
+      .getsubTrfSubinventoryPaint(this.deptId, this.divisionId)
       .subscribe((data) => {
         this.tosubInvCode = data;
       });
+
+
+
+      
     // this.service
     //   .issueByList(this.locId, this.deptId, this.divisionId)
     //   .subscribe((data) => {
@@ -323,7 +336,9 @@ export class PaintSubinvTransferComponent implements OnInit {
     //   console.log(this.issueByList);
     // });
     // var designation='Sales Manager';
-    this.service.issueByListNew(seltoSubInv.deptId,this.locId).subscribe((data) => {
+    // this.service.issueByListNew(seltoSubInv.deptId,this.locId).subscribe((data) => {
+
+    this.service.issueByListNew(3,this.locId).subscribe((data) => {
       this.issueByList = data.obj;
       console.log(this.issueByList);
     });
@@ -542,6 +557,8 @@ export class PaintSubinvTransferComponent implements OnInit {
       }
     }
   }
+
+  
   OpenLocator(i) {
     var LocSegment =
       this.trfLinesList().controls[i].get('LocatorSegment').value;
@@ -715,7 +732,7 @@ export class PaintSubinvTransferComponent implements OnInit {
   }
 
   newSubtrf() {
-    if (this.PaintSubinventoryTransferForm.valid) {
+    // if (this.PaintSubinventoryTransferForm.valid) {
       const formValue: IsubinventoryTransfer =
         this.PaintSubinventoryTransferForm.value;
       let variants = <FormArray>this.trfLinesList();
@@ -805,10 +822,11 @@ export class PaintSubinvTransferComponent implements OnInit {
             }
           }
         });
-    } else {
-      this.HeaderValidation();
-    }
+
+    // } else { this.HeaderValidation();  }
   }
+
+
   HeaderValidation() {
     var isValid: boolean = false;
     Object.keys(this.PaintSubinventoryTransferForm.controls).forEach((key) => {
@@ -905,7 +923,7 @@ export class PaintSubinvTransferComponent implements OnInit {
     }
   }
   ValLocator(i: number, loc) {
-    // alert("Validate");
+    alert("Validate");
     // if(qty1)
     var trxLnArr = this.PaintSubinventoryTransferForm.get('trfLinesList').value;
     var trxLnArr1 = this.PaintSubinventoryTransferForm.get(

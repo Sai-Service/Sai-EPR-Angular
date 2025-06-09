@@ -1526,8 +1526,16 @@ export class MasterService {
     const url = this.ServerUrl + '/mmtTrx/subtransfer';
     return this.http.post(url, subInvTransferRecord, option);
   }
+
   getsubTrfSubinventory(deptId, divId): Observable<any> {
     return this.http.get(this.ServerUrl + `/subInvMst/subIssue?deptId=${deptId}&divisionId=${divId}`)
+  }
+
+  
+  getsubTrfSubinventoryPaint(deptId, divId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/subInvMst/PnWIPIss?deptId=${deptId}&divisionId=${divId}`)
+//  http://localhost:8081/subInvMst/PnWIPIss?deptId=5&divisionId=1
+ 
   }
 
   downloadSubGatePassSaslesFn(shipNo) {

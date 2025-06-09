@@ -67,23 +67,23 @@
 
        
           
-            <td style="width: 15%" class="LabelFontStyle">
-                  Issue&nbsp;To:
-                </td>
-                <td>
+            <td style="width: 15%" class="LabelFontStyle">  Issue&nbsp;To: </td>
+            <!-- <td> <input disabled type="text" class="form-control" formControlName="issueTo" [(ngModel)]="issueTo"></td> -->
+
+                             
+             <td>
                   <select type="text" class="form-control" formControlName="issueTo">
                     <option>--Select--</option>
                     <option *ngFor="let ib of issueByList">{{ib.FULLNAME}}</option>
                     </select>
-                </td>
+              </td>
+
             <input hidden formControlName=locId [(ngModel)]='locId'>
              </tr>
             
             <tr>
 
-            <td style="width: 15%" class="LabelFontStyle">
-             Remark:
-             </td>
+            <td style="width: 15%" class="LabelFontStyle"> Remark:</td>
              <td colspan="3" >
                <input  type="text" class="form-control"formControlName="remarks"  style="width: 100%;">
              </td>
@@ -171,7 +171,7 @@
                             </td>
                            </ng-template>
                            <td>
-                                <input disabled type="number" class="form-control" style="height: 20px;width: 70px;"formControlName="onHandQty">
+                                <input disabled type="number" class="form-control" style="height: 20px;width: 100px;"formControlName="onHandQty">
                            </td>
                            <div *ngIf="displayLocator; then thenBlock; else elseBlock">
                           </div>
@@ -315,7 +315,9 @@
                     </table>
                   </div>
                   <div class="modal-footer">
-                      <button type="button" class="btn btn-primary" data-dismiss="modal" id="btnok"  (click)="okLocator(content)" #input6>Ok</button>
+                      <button type="button" class="btn btn-primary" data-dismiss="modal" id="btnok"  (click)="okLocator(content)">Ok</button>
+                    <!-- <button type="button" class="btn btn-primary" data-dismiss="modal" id="btnok"  (click)="okLocator(content)" #input6>Ok</button> -->
+
                   </div>
                 </div>
               </div>
