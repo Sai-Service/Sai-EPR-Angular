@@ -10,11 +10,14 @@ export class BankService {
   httpclient: any;
   headers: any;
   ServerUrl : string;
+  lstcommentsUserSm = JSON.parse(sessionStorage.getItem('logRes'));
+  token = this.lstcommentsUserSm.token;
 
 
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders();
     this.headers = this.headers.set('Content-Type', 'application/json; charset=utf-8');
+    this.headers = this.headers.append("Authorization", "Bearer " + this.token);
     this.ServerUrl = AppConstants.ServerUrl;
    }
 ///////////////BANK ACCOUNT USES///////////////
@@ -41,30 +44,30 @@ public BankAccUseFun(bankRecord) {
   // } 
   
   BankNameListFn(): Observable<any> {
-    return this.http.get(this.ServerUrl +'/Customer/ClassCode/BANK');
+    return this.http.get(this.ServerUrl +'/Customer/ClassCode/BANK',{ headers: this.headers });
   } 
   BankNameList(): Observable<any> {
-    return this.http.get(this.ServerUrl +'/Customer/ClassCodeCompany');
+    return this.http.get(this.ServerUrl +'/Customer/ClassCodeCompany',{ headers: this.headers });
   } 
   BankBranchList(BkName): Observable<any> {
-    return this.http.get(this.ServerUrl +`/ceBankBranch/branchList/${BkName}`);
+    return this.http.get(this.ServerUrl +`/ceBankBranch/branchList/${BkName}`,{ headers: this.headers });
   } 
   
 
   BankAcccountList(bkBranchName,bkName): Observable<any> {
-      return this.http.get(this.ServerUrl +`/abc/${bkBranchName}${bkName}`);
+      return this.http.get(this.ServerUrl +`/abc/${bkBranchName}${bkName}`,{ headers: this.headers });
 
   } 
 
   BankAcDtlsList(bkBranchName): Observable<any> {
-    return this.http.get(this.ServerUrl +`/ceBankAccounts/BranchwiseBankAcct/${bkBranchName}`);
+    return this.http.get(this.ServerUrl +`/ceBankAccounts/BranchwiseBankAcct/${bkBranchName}`,{ headers: this.headers });
   } 
 
   BranchSearchFn(bkBranchName): Observable<any> {
-    return this.http.get(this.ServerUrl +`/ceBankBranch/branchName/${bkBranchName}`);
+    return this.http.get(this.ServerUrl +`/ceBankBranch/branchName/${bkBranchName}`,{ headers: this.headers });
   } 
   BranchNumberSearchFn(bkBranchNoName): Observable<any> {
-    return this.http.get(this.ServerUrl +`/ceBankBranch/branchNo/${bkBranchNoName}`);
+    return this.http.get(this.ServerUrl +`/ceBankBranch/branchNo/${bkBranchNoName}`,{ headers: this.headers });
   } 
 
 public BankBranchCreation(bankBranchRecord) {

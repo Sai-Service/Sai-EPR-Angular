@@ -100,6 +100,7 @@ interface IpostPO {
 export class OPMasterDtoComponent implements OnInit {
   // @ViewChild('poMasterDtoForm') poMasterDtoForm: ElementRef;
   supSelCnt: number;
+  poInvMes:string;
   isDisabled = true;
   discLineAmt: number;
   accountLocId:number;
@@ -354,11 +355,13 @@ export class OPMasterDtoComponent implements OnInit {
   // @ViewChild("poCancel1") myInputField1: ElementRef;
   @ViewChild("hsnSacCode1") hsnSacCode1: ElementRef;
   displaypoCancel = true;
+  isDisabledSave = false;
 
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private router: Router, private service: MasterService) {
     this.poMasterDtoForm = this.fb.group({
 
       poHeaderId: [],
+      poInvMes:[],
       // ouId: ['', [Validators.required]],
       // poDate: ['', [Validators.required]],
       // poType: ['', [Validators.required]],
@@ -3207,7 +3210,28 @@ export class OPMasterDtoComponent implements OnInit {
     }
   }
 
-
+  suppInvDetail(suppNo){
+    // alert(suppNo);
+    this.service.suppInvDetailFn(suppNo).subscribe((res: any) => {
+            if (res.code === 200) {
+              if (res.obj.mes != undefined){
+              alert(res.obj.mes);
+              }
+              if (res.obj.cnt <=1){
+                this.poMasterDtoForm.patchValue({poInvMes:res.obj.mes});
+                this.isDisabledSave=true;
+              }
+              else{
+                this.isDisabledSave=false;
+                this.poMasterDtoForm.get('poInvMes').reset();
+              }
+            } else {
+              if (res.code === 400) {
+                alert('Error In File : \n' + res.obj);
+              }
+            }
+          });
+  }
 
 
 }

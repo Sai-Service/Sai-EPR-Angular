@@ -3136,6 +3136,19 @@ export class ARInvoiceComponent implements OnInit {
     this.invLineArray[len-1].get('applAmt').enable();
   }
 
+  viewInvPrint(){
+    var invoiceNumber = this.arInvoiceForm.get('trxNumber').value;
+    const fileName = 'download.pdf';
+      this.transactionService.arInvoicePrint(invoiceNumber)
+        .subscribe(data => {
+          var blob = new Blob([data], { type: 'application/pdf' });
+          var url = URL.createObjectURL(blob);
+          var printWindow = window.open(url, '', 'width=800,height=500');
+          printWindow.open
+        });
+  }
+
+
 }
 
 

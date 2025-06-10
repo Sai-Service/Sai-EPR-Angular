@@ -81,9 +81,9 @@
             </tr>
             <tr *ngFor="let com of orderListDetails ; let i= index" class="ItemStyle" style="text-decoration:none;font-size: 11px;">
                 <td style="padding-left: 5px;padding-top: 10px;">
-                    <a [routerLink]="['/admin/OrderManagement/CounterSaleOrder',com.orNum]"
-                        href="{{orNum}}">{{com.orNum}}</a>
+                    <a (click)="counterSaleOrder(com.orNum)" style="color: blue;">{{com.orNum}}</a>
                 </td>
+                <!-- href="{{orNum}}" -->
                 <td style="padding-left: 5px; text-align: center;">{{com.orDate}}</td>
                 <td style="padding-left: 5px; text-align: center;">{{com.custActNo}}</td>
                 <td style="padding-left: 5px; text-align: left;">{{com.custName}}</td>

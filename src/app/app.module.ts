@@ -35,6 +35,7 @@ import { AllReportsComponent } from './report/all-reports.component';
     PoReceiptFormComponent,
     FaCommanMasterComponent,
     AllReportsComponent,
+    
   ],
   imports: [
     BrowserModule,

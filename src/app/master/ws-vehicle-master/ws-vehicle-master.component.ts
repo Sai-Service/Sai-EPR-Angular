@@ -737,7 +737,7 @@ export class WsVehicleMasterComponent implements OnInit {
         mReg=mReg.trim();
         this.regNo=mReg;
          //  ---------------------------------------------------
-      if(mReg.length<9 || mReg.length>10) { alert (mReg+ " :Registration No should have minimum 9 & maximum 10 characters. " ) ; this.wsVehicleMasterForm.patchValue({regNo :''});return;}
+      if(mReg.length<8 || mReg.length>10) { alert (mReg+ " :Registration No should have minimum 8 & maximum 10 characters. " ) ; this.wsVehicleMasterForm.patchValue({regNo :''});return;}
    
     this.service.getVehRegDetailsNew(mReg)
     .subscribe(
@@ -1348,9 +1348,9 @@ export class WsVehicleMasterComponent implements OnInit {
     this.wsVehicleMasterForm.patchValue({vin :formValue.vin.trim()});
     // alert ("regno:"+formValue.regNo);
 
-    if (formValue.regNo === undefined || formValue.regNo === null || formValue.regNo.trim() === '' || formValue.regNo.length <9 || formValue.regNo.length>10) {
+    if (formValue.regNo === undefined || formValue.regNo === null || formValue.regNo.trim() === '' || formValue.regNo.length <8 || formValue.regNo.length>10) {
       this.checkValidation = false;
-      alert("REGISTRATION NO  is not valid ...\nShould have minimum 9 & maximum 10 characters.");
+      alert("REGISTRATION NO  is not valid ...\nShould have minimum 8 & maximum 10 characters.");
       return;
     }
 

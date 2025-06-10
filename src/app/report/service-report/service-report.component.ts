@@ -489,6 +489,10 @@ export class ServiceReportComponent implements OnInit {
     else if (reportName === 'Service Invoice Not Delivered') {
       const fileName = 'Invoice-Not-Delivery-' +  fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (locId === null || locId === undefined){
+        alert('Please Select Location ID.!');
+        return;
+      }
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.servindToDtReport(toDate, locId)
           .subscribe(data => {

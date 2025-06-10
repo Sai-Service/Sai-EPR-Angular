@@ -11,138 +11,129 @@ export class ServiceService {
   httpclient: any;
   headers: any;
   ServerUrl: string;
+  lstcommentsUserSm = JSON.parse(sessionStorage.getItem('logRes'));
+  token = this.lstcommentsUserSm.token;
 
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders();
     this.headers = this.headers.set('Content-Type', 'application/json; charset=utf-8');
+    this.headers = this.headers.append("Authorization", "Bearer " + this.token);
     this.ServerUrl = AppConstants.ServerUrl;
    }
 ///////////////////Job Card //////////////
 getJonCardNoSearch(jonCardNo): Observable<any> {
-  return this.http.get(this.ServerUrl +`/jobCard/jobDtls/${jonCardNo}`);
+  return this.http.get(this.ServerUrl +`/jobCard/jobDtls/${jonCardNo}`, { headers: this.headers });
 }
 
 getJonCardNoSearchLoc(jcNum,jDate,jStatus,jRegNo,jLocId): Observable<any> {
-  return this.http.get(this.ServerUrl +`/jobCard/jobList?jobDate=${jDate}&status=${jStatus}&locId=${jLocId}&jobCardNum=${jcNum}&regNo=${jRegNo}`);
+  return this.http.get(this.ServerUrl +`/jobCard/jobList?jobDate=${jDate}&status=${jStatus}&locId=${jLocId}&jobCardNum=${jcNum}&regNo=${jRegNo}`, { headers: this.headers });
   }
 
 getJonCardNoSearchOu(jcNum,jDate,jStatus,jRegNo,jouId): Observable<any> {
-  return this.http.get(this.ServerUrl +`/jobCard/jobListAccount?jobDate=${jDate}&status=${jStatus}&ouId=${jouId}&jobCardNum=${jcNum}&regNo=${jRegNo}`);
-  // http://localhost:8081/jobCard/jobListAccount?jobDate=2022-07-08&status=Opened&ouId=21&jobCardNum=null&regNo=null
+  return this.http.get(this.ServerUrl +`/jobCard/jobListAccount?jobDate=${jDate}&status=${jStatus}&ouId=${jouId}&jobCardNum=${jcNum}&regNo=${jRegNo}`, { headers: this.headers });
+  
 }
 
 
   getPendingjcListForGP(jRegNo,jLocId): Observable<any> {
-  return this.http.get(this.ServerUrl +`/jobCard/pendingList?locId=${jLocId}&regNo=${jRegNo}`);
+  return this.http.get(this.ServerUrl +`/jobCard/pendingList?locId=${jLocId}&regNo=${jRegNo}`, { headers: this.headers });
  }
 
  getJobCardInvDet(jobCardNum,jcTp): Observable<any> {
-  return this.http.get(this.ServerUrl +`/jobCard/jobCardInvDetails?referenceNo=${jobCardNum}&invType=${jcTp}`);
+  return this.http.get(this.ServerUrl +`/jobCard/jobCardInvDetails?referenceNo=${jobCardNum}&invType=${jcTp}`, { headers: this.headers });
  }
 
  getGatePassIdDetails(gpId): Observable<any> {
-  return this.http.get(this.ServerUrl +`/SRGatepass/byGatepassId/${gpId}`);
-  // http://localhost:8081/SRGatepass/byGatepassId/181
-
+  return this.http.get(this.ServerUrl +`/SRGatepass/byGatepassId/${gpId}`, { headers: this.headers });
+  
  }
 
-
-
-
-
-
-
 getByRegNo(RegNo,ouId,jcType): Observable<any> {
-  // alert ("reg,ou,jtype:"+RegNo+","+ouId +","+jcType);
-  return this.http.get(this.ServerUrl +`/jobCard/regDtls?regNo=${RegNo}&ouId=${ouId}&jyType=${jcType}`);
-  // http://localhost:8081/jobCard/regDtls?regNo=MH12EM8970&ouId=101&jyType=Service
+  
+  return this.http.get(this.ServerUrl +`/jobCard/regDtls?regNo=${RegNo}&ouId=${ouId}&jyType=${jcType}`, { headers: this.headers });
+  
 }
 jobCarStatusListFn(): Observable<any> {
-  return this.http.get(this.ServerUrl +`/cmnLookup/type/jobCardStatus`);
+  return this.http.get(this.ServerUrl +`/cmnLookup/type/jobCardStatus`, { headers: this.headers });
 }
 pickupTypeListFN(): Observable<any> {
   return this.http.get(this.ServerUrl +`/cmnLookup/type/pickUpType`);
 }
 srTypeIdListFN(): Observable<any> {
-  return this.http.get(this.ServerUrl +`/srvType`);
+  return this.http.get(this.ServerUrl +`/srvType`, { headers: this.headers });
 }
 srTypeIdstFN(jcTyp): Observable<any> {
-  return this.http.get(this.ServerUrl +`/srvType/srTypeWise/${jcTyp}`);
+  return this.http.get(this.ServerUrl +`/srvType/srTypeWise/${jcTyp}`, { headers: this.headers });
 }
 getSubSrTypeIdList(srTypeId): Observable<any> {
-  return this.http.get(this.ServerUrl +`/srvType/subTy/${srTypeId}`);
+  return this.http.get(this.ServerUrl +`/srvType/subTy/${srTypeId}`, { headers: this.headers });
 }
 matStatusListFN(): Observable<any> {
-  return this.http.get(this.ServerUrl +`/cmnLookup/type/matStatus`);
+  return this.http.get(this.ServerUrl +`/cmnLookup/type/matStatus`, { headers: this.headers });
 } 
 matDiscPerListFN(): Observable<any> {
-  return this.http.get(this.ServerUrl +`/cmnLookup/type/matDisPercentage`);
+  return this.http.get(this.ServerUrl +`/cmnLookup/type/matDisPercentage`, { headers: this.headers });
 } 
 labDiscPerListFN(): Observable<any> {
-  return this.http.get(this.ServerUrl +`/cmnLookup/type/labDisPercentage`);
+  return this.http.get(this.ServerUrl +`/cmnLookup/type/labDisPercentage`, { headers: this.headers });
 } 
 srvAdvisorListtFN(locId,deptId) : Observable<any> {
-  return this.http.get(this.ServerUrl +`/teamMaster/srvAdvisor?locId=${locId}&deptId=${deptId}`);
+  return this.http.get(this.ServerUrl +`/teamMaster/srvAdvisor?locId=${locId}&deptId=${deptId}`, { headers: this.headers });
 } 
 srvAdvisorListFN(locId,jcTyp) : Observable<any> {
-  return this.http.get(this.ServerUrl +`/teamMaster/srvAdvisorNew?locId=${locId}&jcType=${jcTyp}`);
+  return this.http.get(this.ServerUrl +`/teamMaster/srvAdvisorNew?locId=${locId}&jcType=${jcTyp}`, { headers: this.headers });
 } 
 groupIdListFN(locId,deptId) : Observable<any> {
-  return this.http.get(this.ServerUrl +`/teamMaster/srvGroup?locId=${locId}&deptId=${deptId}`);
+  return this.http.get(this.ServerUrl +`/teamMaster/srvGroup?locId=${locId}&deptId=${deptId}`, { headers: this.headers });
 } 
-// RegNoListFN() : Observable<any> {
-//   return this.http.get(this.ServerUrl +`/itemMst/regList`);
-// } 
-// RegNoListDividionwiseFN(divisionId) : Observable<any> {
-//   return this.http.get(this.ServerUrl +`/itemMst/regList/${divisionId}`);
-// } comment by vinita on 26dec22
+
 billableTyIdListFN() : Observable<any> {
-  return this.http.get(this.ServerUrl +`/billableTy`);
+  return this.http.get(this.ServerUrl +`/billableTy`, { headers: this.headers });
 } 
 billableTyIdLstFN(type,regno) : Observable<any> {
-  return this.http.get(this.ServerUrl +`/jobCard/billType?srTy=${type}&regNo=${regno}`);
+  return this.http.get(this.ServerUrl +`/jobCard/billType?srTy=${type}&regNo=${regno}`, { headers: this.headers });
 } 
 LaborItemListFN() : Observable<any> {
-  return this.http.get(this.ServerUrl +`/itemMst/ItemType?itemType=Labor&dept=Service`);
+  return this.http.get(this.ServerUrl +`/itemMst/ItemType?itemType=Labor&dept=Service`, { headers: this.headers });
 } 
 LaborItemListDivisionFN(divisionId,deptname) : Observable<any> {
-  return this.http.get(this.ServerUrl +`/itemMst/ItemTypeNew?itemType=Labor&divisionId=${divisionId}&dept=${deptname}`);
-  // http://localhost:8081/itemMst/ItemTypeNew?itemType=Labor&divisionId=2&dept=Service
+  return this.http.get(this.ServerUrl +`/itemMst/ItemTypeNew?itemType=Labor&divisionId=${divisionId}&dept=${deptname}`, { headers: this.headers });
+  
 } 
 splitRatioListFN() : Observable<any> {
-  return this.http.get(this.ServerUrl +`/billableTy/splitRatio`);
+  return this.http.get(this.ServerUrl +`/billableTy/splitRatio`, { headers: this.headers });
 } 
 
 disCategoryListFn() : Observable<any> {
-  return this.http.get(this.ServerUrl +`/cmnLookup/type/srvDisType`);
+  return this.http.get(this.ServerUrl +`/cmnLookup/type/srvDisType`, { headers: this.headers });
 } 
 
 bayTypeLst() : Observable<any> {
-  return this.http.get(this.ServerUrl +`/byCodeMst`);
-  // http://localhost:8081/byCodeMst
+  return this.http.get(this.ServerUrl +`/byCodeMst`, { headers: this.headers });
+  
 } 
 
 
 
 TechnicianListFN(locId) : Observable<any> {
-  return this.http.get(this.ServerUrl +`/teamMaster/techDtls/${locId}`);
+  return this.http.get(this.ServerUrl +`/teamMaster/techDtls/${locId}`, { headers: this.headers });
 } 
 priceListFN(locId,segment) : Observable<any> {
-  return this.http.get(this.ServerUrl +`/jobCard/labPrice?labCode=${segment}&srvModel=RN&locId=${locId}`);
+  return this.http.get(this.ServerUrl +`/jobCard/labPrice?labCode=${segment}&srvModel=RN&locId=${locId}`, { headers: this.headers });
 } 
 priceListDivisionFN(segment,serModel,locId,ouId) : Observable<any> {
-  return this.http.get(this.ServerUrl +`/jobCard/labPrice?labCode=${segment}&srvModel=${serModel}&locId=${locId}&ouId=${ouId}`);
+  return this.http.get(this.ServerUrl +`/jobCard/labPrice?labCode=${segment}&srvModel=${serModel}&locId=${locId}&ouId=${ouId}`, { headers: this.headers });
 } 
 jobCardCount(jobNum) : Observable<any> {
-  return this.http.get(this.ServerUrl +`/jobCard//dpPreInvPrintStatus/${jobNum}`);
+  return this.http.get(this.ServerUrl +`/jobCard//dpPreInvPrintStatus/${jobNum}`, { headers: this.headers });
 } 
 
 jobCardCountDp(jobNum): Observable<any> {
-  return this.http.get(this.ServerUrl +`/jobCard//CustPreInvPrintStatus/${jobNum}`);
+  return this.http.get(this.ServerUrl +`/jobCard//CustPreInvPrintStatus/${jobNum}`, { headers: this.headers });
 } 
 
 MatImptWipFn(jobCardNum,locId) : Observable<any> {
-  return this.http.get(this.ServerUrl +`/jobCard/partLines?jobNum=${jobCardNum}&locId=${locId}`);
+  return this.http.get(this.ServerUrl +`/jobCard/partLines?jobNum=${jobCardNum}&locId=${locId}`, { headers: this.headers });
 } 
 public jobcardHeaderSubmit(Record) {
   const options = {
@@ -204,13 +195,13 @@ generateServiceGatePass(regNo,mlocId,balAmt,authBy,dType){
 
 
 printWsGatePass(jcNumber,gpNum,locId){
-  // const REQUEST_URI = this.ServerUrl +`/SRGatepass/print/${jcNumber}`;  
+  
   const REQUEST_URI = this.ServerUrl +`/SRGatepass/printSrvGatePass?vehicleNo=${jcNumber}&gatepassId=${gpNum}`;  
   return this.http.get(REQUEST_URI, {
   responseType: 'arraybuffer',
   headers: this.headers,
 });
-// http://localhost:8081/SRGatepass/printSrvGatePass?vehicleNo=MH12TJ9161&gatepassId=43
+
 }
 
 
@@ -242,25 +233,23 @@ saveMaterialSubmit(Record) {
 
 
 printWsPreInvdocument(jcNumber,jtype){
-  //  if (jtype==='Service') {
+  
      const REQUEST_URI = this.ServerUrl +`/jobCard/wsPreInvoicePrint/${jcNumber}`;
      return this.http.get(REQUEST_URI, {
-       // params: REQUEST_PARAMS,
+     
        responseType: 'arraybuffer',
        headers: this.headers,
      });
-  //  }
+  
   
  }
 
 printWsPreInvdocumentDp(jcNumber,jtype,custtp){
-  // http://localhost:8081/jobCard/dpPreInvCust/12PU.2202-237
-  // http://localhost:8081/jobCard/dpPreInvInsu/12PU.2202-237
-
+ 
   if (custtp==='cust') {
     const REQUEST_URI = this.ServerUrl +`/jobCard/dpPreInvCust/${jcNumber}`;
     return this.http.get(REQUEST_URI, {
-      // params: REQUEST_PARAMS,
+     
       responseType: 'arraybuffer',
       headers: this.headers,
     }); 
@@ -269,7 +258,7 @@ printWsPreInvdocumentDp(jcNumber,jtype,custtp){
   if (custtp==='ins') {
     const REQUEST_URI = this.ServerUrl +`/jobCard/dpPreInvInsu/${jcNumber}`;
     return this.http.get(REQUEST_URI, {
-      // params: REQUEST_PARAMS,
+     
       responseType: 'arraybuffer',
       headers: this.headers,
     }); 
@@ -296,9 +285,7 @@ printWsAddonInvoicedocument(jcNumber,jtype){
 
 
 printWsInvoicedocumentDp(jcNumber,jtype,custtp){
-  // http://localhost:8081/jobCard/dpCustInvoice/12PU.2202-237
-  // http://localhost:8081/jobCard/dpInsInvoice/12PU.2202-237
-
+ 
       if (custtp==='cust') {
         const REQUEST_URI = this.ServerUrl +`/jobCard/dpCustInvoice/${jcNumber}`;  
         return this.http.get(REQUEST_URI, {
@@ -320,14 +307,14 @@ printWsInvoicedocumentDp(jcNumber,jtype,custtp){
 
 
 printVehicleHistory(vehNum){
-  alert("History : "+vehNum);
+  
   const REQUEST_URI = this.ServerUrl +`/jobCard/vehHistory/${vehNum}`;  
   return this.http.get(REQUEST_URI, {
   responseType: 'arraybuffer',
   headers: this.headers,
 });
 
-//  http://localhost:8081/jobCard/vehHistory/MH12MP9225
+
 }
 
 }

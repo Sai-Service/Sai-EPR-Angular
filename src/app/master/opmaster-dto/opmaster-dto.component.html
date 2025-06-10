@@ -257,22 +257,11 @@
                                         Supp&nbsp;Inv&nbsp;No:&nbsp;</td>
                                     <td colspan="">
                                         <input type="text" formControlName="suppInvNo" class="form-control"
-                                            [(ngModel)]="suppInvNo" style="width: 100%;"
+                                            [(ngModel)]="suppInvNo" style="width: 100%;" 
+                                            (keydown.tab)="suppInvDetail(suppInvNo)" 
                                             [ngClass]="{ 'is-invalid': submitted && f.suppInvNo.errors }"
                                             placeholder="Please enter supplier invoice number">
-                                        <!-- <div *ngIf="submitted && f.suppInvNo.errors" class="invalid-feedback">
-                                            <div *ngIf="f.suppInvNo.errors?.maxLength">Maximum 8
-                                                characters characters valid</div>
-                                            <div *ngIf="f.suppInvNo.errors?.minLength">Minimum 6
-                                                characters valid</div>
-                                        </div>
-                                        <span
-                                            *ngIf="!poMasterDtoForm.get('suppInvNo').valid && poMasterDtoForm.get('suppInvNo').touched">
-                                            Supplier invoice no valid for minimum 3 digit and
-                                            maximum 30
-                                            digit
-                                        </span> -->
-
+                                        
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle1">Supp&nbsp;Inv&nbsp;Date:</td>
                                     <td>
@@ -308,6 +297,13 @@
                                             data-target="#exampleModalScrollable" style="width: 8rem;">
                                             Additional Information
                                         </button> -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">Supp&nbsp;Inv&nbsp;Mes:</td>
+                                    <td colspan="3">
+                                        <input type="text" disabled formControlName="poInvMes" class="form-control" style="width: 100%;">
+                                        
                                     </td>
                                 </tr>
                             </ng-template>
@@ -515,19 +511,7 @@
                             </ng-template>
 
                         </table>
-                        <!-- <table style="width: 100%; background-color: #FFE4B5;">
-                            <tr>
-                                <td style="width: 15%" class="LabelFontStyle">PO&nbsp;Number&nbsp;:</td>
-                                <td>
-                                    <input type="text" formControlName="poNo" [(ngModel)]="poNo" class="form-control">
-                                </td>
-                                <td colspan="8" style="text-align: left; width: 100%;">
-                                    <button type="button" [disabled]="!poNo" (click)="Search(poNo)"
-                                        class="btn btn-primary"><i class="fa fa-search"></i></button>
-
-                                </td>
-                            </tr>
-                        </table> -->
+                       
                         <table class="center">
                             <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
@@ -1704,25 +1688,17 @@
 <ng-template #elseFirstButtonDisplay>
     <table class="center">
         <tr>
-            <!-- <td>
-                <button type="button" class="btn btn-primary" id="register" (click)="closeMast()">Close1</button>
-            </td>
-            <td>
-                <button type="button" class="btn btn-primary" (click)="clearFormArray()" style="width: 4rem;">Reset</button>
-            </td>
-            <td>
-                <button type="button" class="btn btn-primary" (click)="newPOMast()" style="width: 4rem;">Save</button>
-            </td> -->
+           
             <td class="center">
                 <button type="button" class="btn btn-primary" id="saveBtn" data-toggle="modal"
+                [disabled]="isDisabledSave"
                     data-target="#confirmAlert" (click)="getMessage('Save')">Save</button>
-                <!-- [disabled]="!itemCategoryMasterForm.valid"  -->
-
+               
             </td>
             <td>
                 <button type="button" class="btn btn-primary" id="resetBtn" data-toggle="modal"
                     data-target="#confirmAlert" (click)="getMessage('Reset')">Reset</button>
-                <!-- (click)="resetItemCatMast()" -->
+              
             </td>
             <td>
                 <button type="button" class="btn btn-primary" id="closeBtn" data-toggle="modal"
@@ -1739,27 +1715,22 @@
 <ng-template #elseSecondButtonDisplay>
     <table class="center">
         <tr>
-            <!-- <td>
-            <button type="button" class="btn btn-primary" id="register" (click)="closeMast()">Close2</button>
-        </td>
-        <td>
-            <button type="button" class="btn btn-primary" (click)="clearFormArray()" style="width: 4rem;">Reset</button>
-        </td> -->
+          
             <td>
-                <!-- <button type="button"  class="btn btn-primary" (click)="UpdatePOMast()" style="width: 8rem;">Update</button> -->
+               
                 <button type="button" class="btn btn-primary" id="UpdateBtn" data-toggle="modal"
                     data-target="#confirmAlert" (click)="getMessage('Update')">Update</button>
             </td>
             <td>
-                <!-- <button type="button" class="btn btn-primary" (click)="Approve()" style="width: 8rem;">Approve</button> -->
+               
                 <button type="button" class="btn btn-primary" id="UpdateBtn" data-toggle="modal"
                     data-target="#confirmAlert" (click)="getMessage('Approve')">Approve</button>
             </td>
             <td>
-                <!-- hi2 -->
+               
                 <input hidden type="text" disabled formControlName="segment1" class="form-control"
                     [(ngModel)]='segment1' placeholder="">
-                <!-- <button type="button" class="btn btn-primary" (click)="poCancel(segment1)" style="width: 8rem;">PO Cancelled</button> -->
+             
                 <button type="button" class="btn btn-primary" id="poCancel" style="width: fit-content;"
                     data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('poCancel(segment1)')"
                     #poCancel1>PO Cancelled</button>
@@ -1770,7 +1741,7 @@
 
                 <button type="button" class="btn btn-primary" id="resetBtn" data-toggle="modal"
                     data-target="#confirmAlert" (click)="getMessage('Reset')">Reset</button>
-                <!-- (click)="resetItemCatMast()" -->
+               
             </td>
             <td>
                 <button type="button" class="btn btn-primary" id="closeBtn" data-toggle="modal"
@@ -1787,17 +1758,12 @@
 <ng-template #elseThirdButtonDisplay>
     <table class="center">
         <tr>
-            <!-- <td>
-                <button type="button" class="btn btn-primary" id="register" (click)="closeMast()">Close3</button>
-            </td>
-            <td>
-                <button type="button" class="btn btn-primary" (click)="clearFormArray()" style="width: 4rem;">Reset</button>
-            </td> -->
+            
             <td>
 
                 <input hidden type="text" disabled formControlName="segment1" class="form-control"
                     [(ngModel)]='segment1' placeholder="">
-                <!-- <button type="button" class="btn btn-primary" (click)="poCancel(segment1)" style="width: 8rem;">PO Cancelled</button> -->
+               
                 <div [style.display]="isVisible ? 'block' : 'none'">
                     <button type="button" class="btn btn-primary" id="poCancel" style="width: fit-content;"
                         data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('poCancel(segment1)')"

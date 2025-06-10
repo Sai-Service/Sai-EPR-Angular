@@ -50,7 +50,7 @@ export class AllOrderListComponent implements OnInit {
           this.storeAllOrderData =res.obj;
           for (let x=0; x<this.orderListDetails.length; x++){
             this.totInvAmt = Math.round(((this.totInvAmt += (this.orderListDetails[x].orAmt)) + Number.EPSILON) * 100) / 100;
-            console.log(this.totInvAmt);
+            // console.log(this.totInvAmt);
         }
         }
         else {
@@ -76,12 +76,12 @@ export class AllOrderListComponent implements OnInit {
       if (res.code === 200) {
         this.orderListDetails = res.obj;
         this.storeAllOrderData =res.obj;
-        console.log(this.storeAllOrderData);
+        // console.log(this.storeAllOrderData);
         
         for (let x=0; x<this.orderListDetails.length; x++){
          
           this.totInvAmt = Math.round(((this.totInvAmt += (this.orderListDetails[x].orAmt)) + Number.EPSILON) * 100) / 100;
-          console.log(this.totInvAmt);
+          // console.log(this.totInvAmt);
       }
       (document.getElementById('search') as HTMLInputElement).disabled = false;
       }
@@ -98,13 +98,13 @@ export class AllOrderListComponent implements OnInit {
   
 onSelectStatus(event:any){
   // alert(event);
-  console.log(this.orderListDetails);
+  // console.log(this.orderListDetails);
   var orderList = this.orderListDetails;
   let currCustomer = this.storeAllOrderData.filter((orderList) => (orderList.orStatus === event));
-  console.log(currCustomer);
+  // console.log(currCustomer);
   this.orderListDetails=currCustomer;
   for (let x=0; x<currCustomer.length; x++){
-    console.log(this.totInvAmt);
+    // console.log(this.totInvAmt);
     this.totInvAmt = Math.round((( this.totInvAmt += (currCustomer[x].orAmt)) + Number.EPSILON) * 100) / 100;
 }
 }
@@ -126,4 +126,10 @@ onSelectStatus(event:any){
     xlsx.utils.book_append_sheet(wb, ws, 'Sheet1');
     xlsx.writeFile(wb, 'CounterSaleOrderList.xlsx');
   }
+
+  counterSaleOrder(orderNum){
+    // alert(orderNum)
+  this.router.navigate(['/admin/OrderManagement/CounterSaleOrder',orderNum],{ skipLocationChange: true });
+  }
+
 }
