@@ -773,36 +773,38 @@ export class PumpMiscTransactionComponent implements OnInit {
     if (this.currentOp === 'SEARCH') {
       return;
     }
-    // alert('onOptiongetItem' + event);
+ 
     var trxLnArr1 = this.pumpMiscellaneousForm.get('cycleLinesList') as FormArray;
     var trxLnArr = this.pumpMiscellaneousForm.get('cycleLinesList').value;
-    // trxLnArr1.controls[i].get('LocatorSegment').disable();
+    
     var trxType = this.pumpMiscellaneousForm.get('compileType').value;
     let select1 = null;
+     debugger;
+    alert('------'||event||'-----')
+    console.log(this.ItemIdList);
+    
     if (trxType === 4) {
-      select1 = this.ItemIdList.find((d) => d.SEGMENT === event);
+      select1 = this.ItemIdList.find((d) => d.segment === event);
     } else {
       select1 = this.ItemIdList.find((d) => d.segment === event);
     }
+       console.log(select1);
+        
     if (select1 != null) {
-      // var trxLnArr1 = this.pumpMiscellaneousForm.get('cycleLinesList') as FormArray;
-      // var trxLnArr = this.pumpMiscellaneousForm.get('cycleLinesList').value;
+
       trxLnArr1.controls[i].patchValue({ invItemId: select1.itemId });
       var compId = this.pumpMiscellaneousForm.get('compileId').value;
       var compileType1 = this.pumpMiscellaneousForm.get('compileType').value;
       var subcode = this.pumpMiscellaneousForm.get('subInventory').value;
-      // let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
-      //  alert(select2.subInventoryId+'Subcode');
-      // alert(compId);
-      // alert(compLnId+'CompileLineId')
+     
       this.displayheader = false;
       this.service.getItemDetail(select1.itemId).subscribe((data) => {
         this.getItemDetail = data;
-        // alert("this.getItemDetail.description" + this.getItemDetail.description);
+     
         if (this.getItemDetail.description != undefined) {
           trxLnArr1.controls[i].patchValue({description: this.getItemDetail.description,});
           trxLnArr1.controls[i].patchValue({ uom: this.getItemDetail.uom });
-          // trxLnArr1.controls[i].patchValue({entryStatusCode:2});
+        
           trxLnArr1.controls[i].patchValue({ subInventory: subcode });
           trxLnArr1.controls[i].patchValue({locId: Number(sessionStorage.getItem('locId')),});
           this.cycleLinesList().controls[i].get('LocatorSegment').enable();
@@ -1536,6 +1538,8 @@ export class PumpMiscTransactionComponent implements OnInit {
       // this.displayButton=true;
       // this.displayaddButton=true;
       const formValue: Imiscellaneous = this.pumpMiscellaneousForm.getRawValue();
+      console.log(formValue);
+      
       this.service.miscSubmit(formValue).subscribe((res: any) => {
         if (res.code === 200) {
           this.compileName = res.obj.compileName;

@@ -13,163 +13,159 @@ export class MasterService {
   httpclient: any;
   headers: any;
   ServerUrl: string;
+  lstcommentsUserSm = JSON.parse(sessionStorage.getItem('logRes'));
+  token = this.lstcommentsUserSm.token;
 
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders();
     this.headers = this.headers.set('Content-Type', 'application/json; charset=utf-8');
+    this.headers = this.headers.append("Authorization", "Bearer " + this.token);
     this.ServerUrl = AppConstants.ServerUrl;
   }
 
-  //  public  getCurrentDate(): Date {
-  //   var res  : any = this.http.get('http://worldtimeapi.org/api/timezone/Asia/Kolkata');
-  //   var cDate=res.datetime.substr(0,res.datetime.indexOf('T'));
-  //   return new Date(cDate);
-  // }
-
+  
 
   ////////////////////////////////////////Comman Lov//////////////////////////////////////////////////
   statusList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus');
+    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus',{ headers: this.headers });
   }
 
   taxCategoryNameList(ouId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/taxCtgHeader/${ouId}`);
+    return this.http.get(this.ServerUrl + `/taxCtgHeader/${ouId}`,{ headers: this.headers });
   }
   taxCategoryList1(locId, state): Observable<any> {
-    return this.http.get(this.ServerUrl + `/taxCtgHeader/taxCtgName?locId=${locId}&custState=${state}`);
+    return this.http.get(this.ServerUrl + `/taxCtgHeader/taxCtgName?locId=${locId}&custState=${state}`,{ headers: this.headers });
   }
   taxCategorySiteList1(ouId, state): Observable<any> {
-    return this.http.get(this.ServerUrl + `/taxCtgHeader/taxCtgNameSuppSitewise?ouId=${ouId}&custState=${state}`);
+    return this.http.get(this.ServerUrl + `/taxCtgHeader/taxCtgNameSuppSitewise?ouId=${ouId}&custState=${state}`,{ headers: this.headers });
   }
   memberTicketNo(locCode, deptId, divisionId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/empMst/teamMemberList?locId=${locCode}&deptId=${deptId}&divisionId=${divisionId}`);
+    return this.http.get(this.ServerUrl + `/empMst/teamMemberList?locId=${locCode}&deptId=${deptId}&divisionId=${divisionId}`,{ headers: this.headers });
   }
   teamRoleListFN(deptName): Observable<any> {
-    return this.http.get(this.ServerUrl + `/cmnLookup/TeamRole/${deptName}`);
+    return this.http.get(this.ServerUrl + `/cmnLookup/TeamRole/${deptName}`,{ headers: this.headers });
   }
 
   OUIdList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/opUnit');
+    return this.http.get(this.ServerUrl + '/opUnit',{ headers: this.headers });
   }
 
   OUIdListDiv(mDivId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/opUnit/divisionWise/${mDivId}`);
+    return this.http.get(this.ServerUrl + `/opUnit/divisionWise/${mDivId}`,{ headers: this.headers });
   }
 
   LocationListOu(mOuId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/locationMst/locListOuwise/${mOuId}`);
-    // http://saihorizon.com:8051/ErpReplica/locationMst/locListOuwise/15
+    return this.http.get(this.ServerUrl + `/locationMst/locListOuwise/${mOuId}`,{ headers: this.headers });
   }
 
   StateList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/States');
+    return this.http.get(this.ServerUrl + '/cmnLookup/States',{ headers: this.headers });
   }
   cityList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/City');
+    return this.http.get(this.ServerUrl + '/cmnLookup/City',{ headers: this.headers });
   }
   regionList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/Region');
+    return this.http.get(this.ServerUrl + '/cmnLookup/Region',{ headers: this.headers });
   }
 
   DivisionIDList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/divMst');
+    return this.http.get(this.ServerUrl + '/divMst',{ headers: this.headers });
   }
 
   poTypeList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/PoTypes');
+    return this.http.get(this.ServerUrl + '/cmnLookup/PoTypes',{ headers: this.headers });
   }
   APiNVOICEtYPETypeList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/type/AP INVOICE TYPE');
+    return this.http.get(this.ServerUrl + '/cmnLookup/type/AP INVOICE TYPE',{ headers: this.headers });
   }
   APitemtYPEList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/type/AP Item TYPE');
+    return this.http.get(this.ServerUrl + '/cmnLookup/type/AP Item TYPE',{ headers: this.headers });
   }
   invItemList1(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/itemMst');
+    return this.http.get(this.ServerUrl + '/itemMst',{ headers: this.headers });
   }
 
   invItemListNew(divisionId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemMst/itemDetails/${divisionId}`);
+    return this.http.get(this.ServerUrl + `/itemMst/itemDetails/${divisionId}`,{ headers: this.headers });
   }
 
   invItemListEw(mEwType, mVariant, mPeriod): Observable<any> {
-    // alert("type,varinat,period   "+ mEwType +","+mVariant +","+mPeriod)
-    return this.http.get(this.ServerUrl + `/itemMst/ewItems?ewType=${mEwType}&variant=${mVariant}&ewPeriod=${mPeriod} `);
+    return this.http.get(this.ServerUrl + `/itemMst/ewItems?ewType=${mEwType}&variant=${mVariant}&ewPeriod=${mPeriod}`,{ headers: this.headers });
   }
 
 
   companyCodeList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/CompMst');
+    return this.http.get(this.ServerUrl + '/CompMst',{ headers: this.headers });
   }
   YesNoList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/YesNo');
+    return this.http.get(this.ServerUrl + '/cmnLookup/YesNo',{ headers: this.headers });
   }
   SSitemTypeListFn(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/itemCategory/type');
+    return this.http.get(this.ServerUrl + '/itemCategory/type',{ headers: this.headers });
   }
   subTypeList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/SubCtg');
+    return this.http.get(this.ServerUrl + '/cmnLookup/SubCtg',{ headers: this.headers });
   }
   mainTypeList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/MainCtg');
+    return this.http.get(this.ServerUrl + '/cmnLookup/MainCtg',{ headers: this.headers });
   }
 
   mainTypeNewList(divisionId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/cmnLookup/Catgtype?cmnType=MainCtg&divisionId=${divisionId}`);
+    return this.http.get(this.ServerUrl + `/cmnLookup/Catgtype?cmnType=MainCtg&divisionId=${divisionId}`,{ headers: this.headers });
   }
   subTypeNewList(divisionId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/cmnLookup/Catgtype?cmnType=SubCtg&divisionId=${divisionId}`);
+    return this.http.get(this.ServerUrl + `/cmnLookup/Catgtype?cmnType=SubCtg&divisionId=${divisionId}`,{ headers: this.headers });
   }
 
   locationIdList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/locationMst');
+    return this.http.get(this.ServerUrl + '/locationMst',{ headers: this.headers });
   }
 
   locationIdList1(ouId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/locationMst/locListOuwise/${ouId}`);
+    return this.http.get(this.ServerUrl + `/locationMst/locListOuwise/${ouId}`,{ headers: this.headers });
   }
 
   TolocationIdList(locId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/shippingNetwork/shiptoloc/${locId}`);
+    return this.http.get(this.ServerUrl + `/shippingNetwork/shiptoloc/${locId}`,{ headers: this.headers });
   }
   locationCodeList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/SS_Location');
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/SS_Location',{ headers: this.headers });
   }
   subinventoryIdList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/subInvMst');
+    return this.http.get(this.ServerUrl + '/subInvMst',{ headers: this.headers });
   }
 
   subinventoryIdList1(divisionId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/subInvMst/subInv/${divisionId}`);
+    return this.http.get(this.ServerUrl + `/subInvMst/subInv/${divisionId}`,{ headers: this.headers });
   }
   titleList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/TitleList');
+    return this.http.get(this.ServerUrl + '/cmnLookup/TitleList',{ headers: this.headers });
   }
   DepartmentList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/DeptList');
+    return this.http.get(this.ServerUrl + '/cmnLookup/DeptList',{ headers: this.headers });
   }
 
   DepartmentListNew(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/CmnType/Dept');
+    return this.http.get(this.ServerUrl + '/cmnLookup/CmnType/Dept',{ headers: this.headers });
   }
   DepartmentListNew1(divisionId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/subInvMst/subInv/${divisionId}`);
+    return this.http.get(this.ServerUrl + `/subInvMst/subInv/${divisionId}`,{ headers: this.headers });
   }
 
   empIdListFn(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/empMst/All');
+    return this.http.get(this.ServerUrl + '/empMst/All',{ headers: this.headers });
   }
   DepartmentListById(dept): Observable<any> {
-    return this.http.get(this.ServerUrl + `/divMst/${dept}`);
+    return this.http.get(this.ServerUrl + `/divMst/${dept}`,{ headers: this.headers });
   }
   emplIdList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/empMst');
+    return this.http.get(this.ServerUrl + '/empMst',{ headers: this.headers });
   }
   DesignationList(Department): Observable<any> {
-    return this.http.get(this.ServerUrl + `/cmnLookup/Designation/${Department}`);
+    return this.http.get(this.ServerUrl + `/cmnLookup/Designation/${Department}`,{ headers: this.headers });
   }
   recvTypeIdList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/DeptList');
+    return this.http.get(this.ServerUrl + '/cmnLookup/DeptList',{ headers: this.headers });
   }
 
   invItemList(itemType, deptName, divisionId): Observable<any> {
@@ -179,6 +175,7 @@ export class MasterService {
     const REQUEST_URI = this.ServerUrl + '/itemMst/ItemType';
     return this.http.get(REQUEST_URI, {
       params: REQUEST_PARAMS,
+      headers: this.headers,
     });
   }
 
@@ -192,6 +189,7 @@ export class MasterService {
     const REQUEST_URI = this.ServerUrl + '/itemMst/ItemType';
     return this.http.get(REQUEST_URI, {
       params: REQUEST_PARAMS,
+      headers: this.headers,
     });
   }
 
@@ -203,6 +201,7 @@ export class MasterService {
     const REQUEST_URI = this.ServerUrl + '/itemMst/ItemType';
     return this.http.get(REQUEST_URI, {
       params: REQUEST_PARAMS,
+      headers: this.headers,
     });
   }
 
@@ -215,53 +214,54 @@ export class MasterService {
     const REQUEST_URI = this.ServerUrl + '/itemMst/ItemType';
     return this.http.get(REQUEST_URI, {
       params: REQUEST_PARAMS,
+      headers: this.headers,
     });
   }
   supplierCodeList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/supp');
+    return this.http.get(this.ServerUrl + '/supp',{ headers: this.headers });
   }
 
 
   supplierCodeListNew(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/supp/typewiseDet/Supplier');
+    return this.http.get(this.ServerUrl + '/supp/typewiseDet/Supplier',{ headers: this.headers });
   }
 
   supplierCodeWithEmplListNew(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/supp/getAllSupp');
+    return this.http.get(this.ServerUrl + '/supp/getAllSupp',{ headers: this.headers });
   }
 
   pricelIstListFn(ouId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/pricelist/NDPPrc?ouId=${ouId}`);
+    return this.http.get(this.ServerUrl + `/pricelist/NDPPrc?ouId=${ouId}`,{ headers: this.headers });
   }
 
   getTdsType(): Observable<any> {
-    return this.http.get(this.ServerUrl + `/cmnLookup/CmnType/SuppTdsType`);
+    return this.http.get(this.ServerUrl + `/cmnLookup/CmnType/SuppTdsType`,{ headers: this.headers });
   }
 
   supplierCodeList1(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/supp');
+    return this.http.get(this.ServerUrl + '/supp',{ headers: this.headers });
   }
   supplierName(supName): Observable<any> {
-    return this.http.get(this.ServerUrl + `/supp/suppName?name=${supName}`);
+    return this.http.get(this.ServerUrl + `/supp/suppName?name=${supName}`,{ headers: this.headers });
   }
 
   taxCategoryList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/JaiTaxCatg/taxCate/PURCHASE');
+    return this.http.get(this.ServerUrl + '/JaiTaxCatg/taxCate/PURCHASE',{ headers: this.headers });
   }
 
   createOrderTypeListFn(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/CmnType/AccOrderType');
+    return this.http.get(this.ServerUrl + '/cmnLookup/CmnType/AccOrderType',{ headers: this.headers });
   }
 
   issueCodeFunction(divisionId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/cmnLookup/CmnTypeDivision?cmnType=IssueCode&divisionId=${divisionId}`);
+    return this.http.get(this.ServerUrl + `/cmnLookup/CmnTypeDivision?cmnType=IssueCode&divisionId=${divisionId}`,{ headers: this.headers });
   }
 
   taxCategoryListForSALES(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/JaiTaxCatg/taxCate/SALES');
+    return this.http.get(this.ServerUrl + '/JaiTaxCatg/taxCate/SALES',{ headers: this.headers });
   }
   taxCategoryIgstListForSALES(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/JaiTaxCatg/getByCateTypeIGST1/SALES');
+    return this.http.get(this.ServerUrl + '/JaiTaxCatg/getByCateTypeIGST1/SALES',{ headers: this.headers });
   }
 
 
@@ -276,123 +276,110 @@ export class MasterService {
     const REQUEST_URI = this.ServerUrl + '/poHdr/potaxcal';
     return this.http.get(REQUEST_URI, {
       params: REQUEST_PARAMS,
-
+      headers: this.headers,
     });
   }
 
 
   taxCategoryListHSN(mPer, mType): Observable<any> {
-    // alert("MTYPE= "+mType + "  MPER= " + mPer);
-    return this.http.get(this.ServerUrl + `/JaiTaxCatg/taxCateGstPer?taxCatType=${mType}&gstPer=${mPer}`);
+    return this.http.get(this.ServerUrl + `/JaiTaxCatg/taxCateGstPer?taxCatType=${mType}&gstPer=${mPer}`,{ headers: this.headers });
   }
 
 
 
   taxCategoryListPoInvoice(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/JaiTaxCatg/taxCate');
-    // return this.http.get(this.ServerUrl +'/JaiTaxCatg/taxCate/Purchase');
+    return this.http.get(this.ServerUrl + '/JaiTaxCatg/taxCate',{ headers: this.headers });
   }
 
   suppSiteList(suppId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/supp/sites/${suppId}`);
+    return this.http.get(this.ServerUrl + `/supp/sites/${suppId}`,{ headers: this.headers });
   }
 
   suppIdList(suppId, ouId) {
     const REQUEST_PARAMS = new HttpParams().set('suppId', suppId)
       .set('ouId', ouId)
-
     const REQUEST_URI = this.ServerUrl + '/supp/ouSites';
     return this.http.get(REQUEST_URI, {
       params: REQUEST_PARAMS,
-
+      headers: this.headers,
     });
   }
 
   suppIdList1(suppId, ouId) {
     const REQUEST_PARAMS = new HttpParams().set('suppId', suppId)
       .set('ouId', ouId)
-
     const REQUEST_URI = this.ServerUrl + '/supp/ouSites';
     return this.http.get(REQUEST_URI, {
       params: REQUEST_PARAMS,
-
+      headers: this.headers,
     });
   }
   siteIdList(siteId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/supp/site/${siteId}`);
+    return this.http.get(this.ServerUrl + `/supp/site/${siteId}`,{ headers: this.headers });
   }
 
   chassisList(ouId, addonType): Observable<any> {
-    return this.http.get(this.ServerUrl + `/arInv/chssisListOrder?orgId=${ouId}&addonType=${addonType}`);
+    return this.http.get(this.ServerUrl + `/arInv/chssisListOrder?orgId=${ouId}&addonType=${addonType}`,{ headers: this.headers });
   }
-
-  // http://localhost:8081/arInv/chssisListOrder?orgId=21&addonType=SS_ADDON_RTO
-
 
   segmentNameList(segmentName): Observable<any> {
-    return this.http.get(this.ServerUrl + `/glCodeCmbn/codeComb/${segmentName}`);
+    return this.http.get(this.ServerUrl + `/glCodeCmbn/codeComb/${segmentName}`,{ headers: this.headers });
   }
 
-
-
-  //   taxCategoryList(): Observable<any> {
-  //   return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
-  // }
   custTypeList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus');
+    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus',{ headers: this.headers });
   }
   classCodeTypeList1(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/classCode');
+    return this.http.get(this.ServerUrl + '/cmnLookup/classCode',{ headers: this.headers });
   }
   classCodeTypeList(divId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/cmnLookup/CmnTypeDivision?cmnType=ClassCode&divisionId=${divId}`);
+    return this.http.get(this.ServerUrl + `/cmnLookup/CmnTypeDivision?cmnType=ClassCode&divisionId=${divId}`,{ headers: this.headers });
   }
   getTaxCat(ouId): Observable<any> {
-    // return this.http.get(this.ServerUrl + `/JaiTaxCatg/${ouId}`);
-    return this.http.get(this.ServerUrl + `/taxCtgHeader/${ouId}`);
+    return this.http.get(this.ServerUrl + `/taxCtgHeader/${ouId}`,{ headers: this.headers });
   }
   BranchList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/SS_Branch');
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/SS_Branch',{ headers: this.headers });
   }
   BranchListDiv(compId, divId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/fndAcctLookup/lookupTypeInfo?compId=${compId}&divisionId=${divId}&lookupType=SS_Branch`)
+    return this.http.get(this.ServerUrl + `/fndAcctLookup/lookupTypeInfo?compId=${compId}&divisionId=${divId}&lookupType=SS_Branch`,{ headers: this.headers })
   }
   CostCenterList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/CostCentre');
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/CostCentre',{ headers: this.headers });
   }
   NaturalAccountList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/NaturalAccount');
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/NaturalAccount',{ headers: this.headers });
   }
   NaturalAccountList1(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/naturalAcc/Payable');
+    return this.http.get(this.ServerUrl + '/naturalAcc/Payable',{ headers: this.headers });
   }
   NaturalAccountListRec(): Observable<any> {
-    return this.http.get(this.ServerUrl + `/naturalAcc/Receivable`);
+    return this.http.get(this.ServerUrl + `/naturalAcc/Receivable`,{ headers: this.headers });
   }
   NaturalAccountListJV(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/naturalAcc/JV');
+    return this.http.get(this.ServerUrl + '/naturalAcc/JV',{ headers: this.headers });
   }
   InterBrancList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/SS_Interbranch');
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/SS_Interbranch',{ headers: this.headers });
   }
   FutureList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/SS_Future');
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/SS_Future',{ headers: this.headers });
   }
   SubAccountList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/SS_SubAccount');
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/SS_SubAccount',{ headers: this.headers });
   }
   /////////////IOT Transfer/////////////////////
 
   iotOrderTypeList1(ouId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/OrderTrnType/stkorder/${ouId}`);
+    return this.http.get(this.ServerUrl + `/OrderTrnType/stkorder/${ouId}`,{ headers: this.headers });
   }
   iotOrderTypeList(): Observable<any> {
-    return this.http.get(this.ServerUrl + `/OrderTrnType/stkorder1`);
+    return this.http.get(this.ServerUrl + `/OrderTrnType/stkorder1`,{ headers: this.headers });
   }
   getShiptoLoc(locId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/shippingNetwork/shiptoInterState/${locId}`);
+    return this.http.get(this.ServerUrl + `/shippingNetwork/shiptoInterState/${locId}`,{ headers: this.headers });
   }
-  /////////////////////////////////////////Division Master////////////////////////////////////////////
+  
   public divisionMasterSubmit(divMasterRecord) {
     const options = {
       headers: this.headers
@@ -401,15 +388,13 @@ export class MasterService {
     return this.http.post(url, divMasterRecord, options);
   }
   getDiviSearch(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/divMst');
+    return this.http.get(this.ServerUrl + '/divMst',{ headers: this.headers });
 
   }
   getDiviSearchPach(divisionCode): Observable<any> {
-    return this.http.get(this.ServerUrl + `/divMst/divCode/${divisionCode}`);
+    return this.http.get(this.ServerUrl + `/divMst/divCode/${divisionCode}`,{ headers: this.headers });
   }
-  // statusList(): Observable<any> {
-  //   return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
-  // }  OUIdList StateList
+
 
   UpdateDivMasterById(DivMasterRecord, divisionId) {
     const options = {
@@ -433,7 +418,7 @@ export class MasterService {
   }
 
   getcompanySearch(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/CompMst');
+    return this.http.get(this.ServerUrl + '/CompMst',{ headers: this.headers });
 
   }
 
@@ -441,8 +426,7 @@ export class MasterService {
   ///////////////////////////common look up //////////////////////////
 
   cmnTypeListNew(divId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/cmnLookup/AllCmnType/${divId}`);
-    // http://localhost:8081/cmnLookup/AllCmnType/2
+    return this.http.get(this.ServerUrl + `/cmnLookup/AllCmnType/${divId}`,{ headers: this.headers });
   }
 
   public commonMasterSubmit(commonMasterRecord) {
@@ -460,41 +444,33 @@ export class MasterService {
     };
     const url = (this.ServerUrl + `/cmnLookup/${cmnId}`);
     return this.http.put(url, commnMasterRecord, options);
-    // http://localhost:8081/cmnLookup/732
   }
 
 
   getCommonLookupSearch(searchText): Observable<any> {
-    return this.http.get(this.ServerUrl + `/CompMst/${searchText}`);
+    return this.http.get(this.ServerUrl + `/CompMst/${searchText}`,{ headers: this.headers });
   }
 
   getCommonLookupSearchNew(cmnTp, divId ): Observable<any> {
-    return this.http.get(this.ServerUrl + `/cmnLookup/CmnTypeDivision?cmnType=${cmnTp}&divisionId=${divId}`)
-    // http://localhost:8081/cmnLookup/CmnTypeDivision?cmnType=PhysicalLocation&divisionId=2
+    return this.http.get(this.ServerUrl + `/cmnLookup/CmnTypeDivision?cmnType=${cmnTp}&divisionId=${divId}`,{ headers: this.headers })
   }
 
   getCommonLookupSearchNewWithLocId(cmnTp, divId,locCode): Observable<any> {
-    return this.http.get(this.ServerUrl + `/cmnLookup/CmnTypePaintEmpl?cmnType=${cmnTp}&divisionId=${divId}&attribute1=${locCode}`)
-    // http://localhost:8081/cmnLookup/CmnTypePaintEmpl?cmnType=PN-ADVISOR&divisionId=1&attribute1=1602
- 
+    return this.http.get(this.ServerUrl + `/cmnLookup/CmnTypePaintEmpl?cmnType=${cmnTp}&divisionId=${divId}&attribute1=${locCode}`,{ headers: this.headers })
   }
 
 
   getDipScaleSearchByTankId(tankId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/DipMaster/tankId/${tankId}`);
-    // http://localhost:8081/DipMaster/tankId/1
+    return this.http.get(this.ServerUrl + `/DipMaster/tankId/${tankId}`,{ headers: this.headers });
   }
 
   getDipScaleSearchByTankIdAndVol(tankId,dipVol): Observable<any> {
-    return this.http.get(this.ServerUrl + `/DipMaster/tankVol?tankId=${tankId}&vol=${dipVol}`)
-    // http://localhost:8081/DipMaster/tankVol?tankId=1&vol=169.0    
+    return this.http.get(this.ServerUrl + `/DipMaster/tankVol?tankId=${tankId}&vol=${dipVol}`,{ headers: this.headers })   
   }
 
 
   getDipScaleOpenReading(tnkid,dt1): Observable<any> {
-    return this.http.get(this.ServerUrl + `/DipEntry/getClosDp?tankId=${tnkid}&shiftDate=${dt1}`)
-    // http://localhost:8081/DipEntry/getClosDp?tankId=1&shiftDate=18-DEC-2024
-
+    return this.http.get(this.ServerUrl + `/DipEntry/getClosDp?tankId=${tnkid}&shiftDate=${dt1}`,{ headers: this.headers })
   }
 
 
@@ -515,12 +491,9 @@ export class MasterService {
     const url = this.ServerUrl + '/opUnit/hrOperatingUnits';
     return this.http.post(url, operatingUnitMasterRecord, options);
   }
-  // getoperatingUnitSearch(): Observable<any> {
-  //   return this.http.get(this.ServerUrl + '/opUnit');
 
-  // }
   getoperatingUnitSearch(pageNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/opUnit?page=${pageNo}&size=5`);
+    return this.http.get(this.ServerUrl + `/opUnit?page=${pageNo}&size=5`,{ headers: this.headers });
 
   }
 
@@ -543,19 +516,19 @@ export class MasterService {
 
 
   getLocationSearch1(ouId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/locationMst/locListOuwise/${ouId}`);
+    return this.http.get(this.ServerUrl + `/locationMst/locListOuwise/${ouId}`,{ headers: this.headers });
   }
 
   accountNameList(): Observable<any> {
-    return this.http.get(this.ServerUrl + `/receiptMethod/rcptMethod`);
+    return this.http.get(this.ServerUrl + `/receiptMethod/rcptMethod`,{ headers: this.headers });
   }
 
   accountNameListbank(): Observable<any> {
-    return this.http.get(this.ServerUrl + `/receiptMethod/bankRcptMethod`);
+    return this.http.get(this.ServerUrl + `/receiptMethod/bankRcptMethod`,{ headers: this.headers });
   }
 
   getLocationSearch(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/locationMst');
+    return this.http.get(this.ServerUrl + '/locationMst',{ headers: this.headers });
   }
   UpdateLocationMasterById(LocationMasterRecord, locId) {
     const options = {
@@ -568,41 +541,30 @@ export class MasterService {
   ///////////////////////////////// Sales Order Gruop Master ////////
 
   getGruopSearch(teamName, ouId, locId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/teamMaster/Team?teamName=${teamName}&ouId=${ouId}&locId=${locId}`);
+    return this.http.get(this.ServerUrl + `/teamMaster/Team?teamName=${teamName}&ouId=${ouId}&locId=${locId}`,{ headers: this.headers });
   }
 
   leadTicketNoList(locId, deptId): Observable<any> {
-    // return this.http.get(this.ServerUrl + `/empMst/EmpLocDept?locId=${locId}&divisionId=${divisionId}&deptId=${deptId}`);
-    return this.http.get(this.ServerUrl + `/empMst/teamList?locId=${locId}&deptId=${deptId}`);
+    return this.http.get(this.ServerUrl + `/empMst/teamList?locId=${locId}&deptId=${deptId}`,{ headers: this.headers });
   }
+
   public GroupMasterSubmit(LocationMasterRecord) {
     const options = {
       headers: this.headers
     };
-    // const url = this.ServerUrl + '/locationMst/postLoc';
     const url = this.ServerUrl + '/teamMaster/post';
     return this.http.post(url, LocationMasterRecord, options);
   }
 
 
 
-  // public GroupMasterSubmit(LocationMasterRecord) {
-  //   const options = {
-  //     headers: this.headers
-  //   };
-  //   // const url = this.ServerUrl + '/locationMst/postLoc';
-  //   const url = this.ServerUrl + '/teamMaster/post';
-  //   return this.http.post(url, LocationMasterRecord, options);
-  // }
-
-
   ////////////////// Item Category Master /////////////////////////////////////////////////////////
   getItemCategorySearch(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/itemCategory');
+    return this.http.get(this.ServerUrl + '/itemCategory',{ headers: this.headers });
   }
 
   getItemCategorySearchbydivisionId(divisionId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemCategory/div/${divisionId}`);
+    return this.http.get(this.ServerUrl + `/itemCategory/div/${divisionId}`,{ headers: this.headers });
   }
   public ItemCatMastSubmit(ItemCategoryRecord) {
     const options = {
@@ -634,16 +596,16 @@ export class MasterService {
     return this.http.put(url, LocatorMasterRecord, options);
   }
   getItemLocatorMasterSearch(locId, subId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemlctrmst/byLocSub?locId=${locId}&subInventoryId=${subId}`);
+    return this.http.get(this.ServerUrl + `/itemlctrmst/byLocSub?locId=${locId}&subInventoryId=${subId}`,{ headers: this.headers });
   }
 
   getItemLocatorMasterSearchNew(locId, subId, itemId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemlctrmst/byLocSubItem?locId=${locId}&subInventoryId=${subId}&itemId=${itemId}`);
+    return this.http.get(this.ServerUrl + `/itemlctrmst/byLocSubItem?locId=${locId}&subInventoryId=${subId}&itemId=${itemId}`,{ headers: this.headers });
   }
   ////////////////////////////////Locator Master/////////////////////////////
 
   getLocatorMasterSearch(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/lctrmst');
+    return this.http.get(this.ServerUrl + '/lctrmst',{ headers: this.headers });
   }
   public LocatorMasterSubmit(LocatorMasterRecord) {
     const options = {
@@ -680,110 +642,109 @@ export class MasterService {
   }
 
   categoryIdList1(category, divisionId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemCategory/typeDivision?itemType=${category}&divisionId=${divisionId}`);
+    return this.http.get(this.ServerUrl + `/itemCategory/typeDivision?itemType=${category}&divisionId=${divisionId}`,{ headers: this.headers });
   }
 
   categoryIdList(category): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemCategory/type/${category}`);
+    return this.http.get(this.ServerUrl + `/itemCategory/type/${category}`,{ headers: this.headers });
   }
 
   getCategoryIdListByDivision(category): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemCategory/type/` + sessionStorage.getItem('divisionId') + `/${category}`);
+    return this.http.get(this.ServerUrl + `/itemCategory/type/` + sessionStorage.getItem('divisionId') + `/${category}`,{ headers: this.headers });
   }
   uomList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/type/UOM');
+    return this.http.get(this.ServerUrl + '/cmnLookup/type/UOM',{ headers: this.headers });
   }
 
   costingList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus');
+    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus',{ headers: this.headers });
   }
 
   stockableList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus');
+    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus',{ headers: this.headers });
   }
 
   purchasableList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus');
+    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus',{ headers: this.headers });
   }
 
   costCenterList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/CostCentre');
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/CostCentre',{ headers: this.headers });
   }
 
   hsnSacCodeList(): Observable<any> {
     // return this.http.get(this.ServerUrl +'/hsnsacMst/HsnSacCode');
-    return this.http.get(this.ServerUrl + '/hsnSacMst');
+    return this.http.get(this.ServerUrl + '/hsnSacMst',{ headers: this.headers });
   }
 
   hsnSacCodeData(type): Observable<any> {
     // return this.http.get(this.ServerUrl +'/hsnsacMst/HsnSacCode');
-    return this.http.get(this.ServerUrl + `/hsnSacMst/codeType/${type}`);
+    return this.http.get(this.ServerUrl + `/hsnSacMst/codeType/${type}`,{ headers: this.headers });
   }
 
   hsnSacCodeDet(mHsnCode): Observable<any> {
     // alert("ms >> "+mHsnCode);
-    return this.http.get(this.ServerUrl + `/hsnSacMst/${mHsnCode}`);
+    return this.http.get(this.ServerUrl + `/hsnSacMst/${mHsnCode}`,{ headers: this.headers });
   }
 
   hsnSacCodeDetNew(mHsnCode): Observable<any> {
     // alert("ms >> "+mHsnCode);
-    return this.http.get(this.ServerUrl + `/hsnSacMst/ls/${mHsnCode}`);
+    return this.http.get(this.ServerUrl + `/hsnSacMst/ls/${mHsnCode}`,{ headers: this.headers });
   }
 
   internalOrderList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus');
+    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus',{ headers: this.headers });
   }
 
   marginCategoryList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus');
+    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus',{ headers: this.headers });
   }
 
   assetItemList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus');
+    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus',{ headers: this.headers });
   }
 
   itemStatusList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus');
+    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus',{ headers: this.headers });
   }
 
   typeList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus');
+    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus',{ headers: this.headers });
   }
 
   mainModelList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/MulModel');
+    return this.http.get(this.ServerUrl + '/cmnLookup/MulModel',{ headers: this.headers });
   }
-
+colorList(): Observable<any> {
+ return this.http.get(this.ServerUrl + `/cmnLookup/CmnType/MulColour`,{ headers: this.headers });
+}
   mainModelListByDivisionId(): Observable<any> {
-
-    //http://localhost:8081/cmnLookup/Catgtype?cmnType=Model&divisionId=2
-    return this.http.get(this.ServerUrl + '/cmnLookup/Catgtype?cmnType=Model&divisionId=' + sessionStorage.getItem('divisionId'));
+    return this.http.get(this.ServerUrl + '/cmnLookup/Catgtype?cmnType=Model&divisionId=' + sessionStorage.getItem('divisionId'),{ headers: this.headers });
   }
 
 
   mcpReasonLst(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/type/McpCancelRsn');
+    return this.http.get(this.ServerUrl + '/cmnLookup/type/McpCancelRsn',{ headers: this.headers });
   }
 
   mcpRemarkLst(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/type/McpCancRemark');
+    return this.http.get(this.ServerUrl + '/cmnLookup/type/McpCancRemark',{ headers: this.headers });
   }
 
 
 
   VariantSearchFn(mainModel): Observable<any> {
-    // alert("MS>> "+mainModel);
     if (mainModel != null) {
-      return this.http.get(this.ServerUrl + `/VariantMst/VariantList/${mainModel}`);
+      return this.http.get(this.ServerUrl + `/VariantMst/VariantList/${mainModel}`,{ headers: this.headers });
     }
   }
 
   colorCodeList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/MulColour');
+    return this.http.get(this.ServerUrl + '/cmnLookup/MulColour',{ headers: this.headers });
   }
 
   colorCodeListByVariant(variant): Observable<any> {
-    return this.http.get(this.ServerUrl + `/VariantMst/ColorList/${variant}`);
+    return this.http.get(this.ServerUrl + `/VariantMst/ColorList/${variant}`,{ headers: this.headers });
   }
 
   transactionTypeNameList(deptId, locId, ouId): Observable<any> {
@@ -791,10 +752,8 @@ export class MasterService {
   }
 
   payTermDescList(): Observable<any> {
-    return this.http.get(this.ServerUrl + `/fndAcctLookup/lookupTypeWise/PaymentTerms`);
+    return this.http.get(this.ServerUrl + `/fndAcctLookup/lookupTypeWise/PaymentTerms`,{ headers: this.headers });
   }
-
-  // taxCategoryListForSALES1(){}
 
 
   taxCategoryListForSALES1(orderNumber, segment) {
@@ -810,124 +769,122 @@ export class MasterService {
 
 
   salesRepNameList(ouId, locId, dept): Observable<any> {
-    return this.http.get(this.ServerUrl + `/teamMaster/StatusOuswise?ouId=${ouId}&locId=${locId}&dept=${dept}`);
+    return this.http.get(this.ServerUrl + `/teamMaster/StatusOuswise?ouId=${ouId}&locId=${locId}&dept=${dept}`,{ headers: this.headers });
   }
 
   mainModelListDivisionWise(divisionId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/cmnLookup/Catgtype?cmnType=Model&divisionId=${divisionId}`);
+    return this.http.get(this.ServerUrl + `/cmnLookup/Catgtype?cmnType=Model&divisionId=${divisionId}`,{ headers: this.headers });
   }
 
 
   transactionTypeNameListNew(deptId, ouId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/OrderTrnType/otList?deptId=${deptId}&ouId=${ouId}`);
+    return this.http.get(this.ServerUrl + `/OrderTrnType/otList?deptId=${deptId}&ouId=${ouId}`,{ headers: this.headers });
   }
 
   brokerListFn(): Observable<any> {
-    return this.http.get(this.ServerUrl + `/Customer/ClassCode/BROKER`);
+    return this.http.get(this.ServerUrl + `/Customer/ClassCode/BROKER`,{ headers: this.headers });
   }
 
   insTypeListFn(): Observable<any> {
-    return this.http.get(this.ServerUrl + `/cmnLookup/CmnType/insType`);
+    return this.http.get(this.ServerUrl + `/cmnLookup/CmnType/insType`,{ headers: this.headers });
   }
 
   brokerListFnNew(classCodeType): Observable<any> {
-    return this.http.get(this.ServerUrl + `/Customer/ClassCode/${classCodeType}`);
+    return this.http.get(this.ServerUrl + `/Customer/ClassCode/${classCodeType}`,{ headers: this.headers });
   }
 
   brokerTypeListFn(): Observable<any> {
-    return this.http.get(this.ServerUrl + `/cmnLookup/CmnType/ClassCodeSL`);
+    return this.http.get(this.ServerUrl + `/cmnLookup/CmnType/ClassCodeSL`,{ headers: this.headers });
   }
 
   truValueListFn(): Observable<any> {
-    return this.http.get(this.ServerUrl + `/Customer/ClassCode/TRUE VALUE`);
+    return this.http.get(this.ServerUrl + `/Customer/ClassCode/TRUE VALUE`,{ headers: this.headers });
   }
 
 
 
   variantCodeList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus');
+    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus',{ headers: this.headers });
   }
 
   manYaerList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus');
+    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus',{ headers: this.headers });
   }
 
   octraiBillDateList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus');
+    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus',{ headers: this.headers });
   }
 
   octraiTypeList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus');
+    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus',{ headers: this.headers });
   }
 
   warrantyStatusList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus');
+    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus',{ headers: this.headers });
   }
 
   ewStatusList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus');
+    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus',{ headers: this.headers });
   }
 
   ewPeriodList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus');
+    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus',{ headers: this.headers });
   }
 
   ewInsNameList(): Observable<any> {
-    // return this.http.get(this.ServerUrl +'/Customer/ClassCode/INSURER');
-    return this.http.get(this.ServerUrl + '/Customer/ClassCode/EWINSURER');
+    return this.http.get(this.ServerUrl + '/Customer/ClassCode/EWINSURER',{ headers: this.headers });
   }
 
   ewInsSiteList(customerId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/Customer/${customerId}`);
+    return this.http.get(this.ServerUrl + `/Customer/${customerId}`,{ headers: this.headers });
   }
 
   itemTypeList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/ItemType');
+    return this.http.get(this.ServerUrl + '/cmnLookup/ItemType',{ headers: this.headers });
   }
 
   fuelTypeList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/type/FuelType');
+    return this.http.get(this.ServerUrl + '/cmnLookup/type/FuelType',{ headers: this.headers });
+  }
+
+  findByvariantAndColorFn(varCode,ouId,ColoCd): Observable<any> {
+    return this.http.get(this.ServerUrl + `/VariantMst/Variant?variant=${varCode}&ouId=${ouId}&code=${ColoCd}`,{ headers: this.headers });
   }
 
   serviceModelLst(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/type/ServModel');
+    return this.http.get(this.ServerUrl + '/cmnLookup/type/ServModel',{ headers: this.headers });
   }
 
 
 
 
   McpPackageTypeList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/type/McpPackageType');
+    return this.http.get(this.ServerUrl + '/cmnLookup/type/McpPackageType',{ headers: this.headers });
   }
 
   McpPackageCategoryList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/type/McpPackageCatg');
+    return this.http.get(this.ServerUrl + '/cmnLookup/type/McpPackageCatg',{ headers: this.headers });
   }
 
 
   AmcCouponList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/schHdr/couponLst');
-    // http://localhost:8081/schHdr/couponLst
+    return this.http.get(this.ServerUrl + '/schHdr/couponLst',{ headers: this.headers });
   }
 
   AmcSchemeList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/schHdr');
-    // http://localhost:8081/schHdr
+    return this.http.get(this.ServerUrl + '/schHdr',{ headers: this.headers });
   }
 
   AmcSchemeDetails(schNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/schHdr/schemeName/${schNo}`);
-    // http://localhost:8081/schHdr/schemeName/AM10
+    return this.http.get(this.ServerUrl + `/schHdr/schemeName/${schNo}`,{ headers: this.headers });
   }
 
   AmcEnrollmentDetails(enrollNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/McpEnrollMst/amcEnrollNo/${enrollNo}`);
-    // http://localhost:8081/McpEnrollMst/amcEnrollNo/AMC2209-2
+    return this.http.get(this.ServerUrl + `/McpEnrollMst/amcEnrollNo/${enrollNo}`,{ headers: this.headers });
   }
 
   AmcEnrollmentDetailsRegNo(regNum): Observable<any> {
-    return this.http.get(this.ServerUrl + `/McpEnrollMst/amcDtls/${regNum}`);
-    // http://localhost:8081/McpEnrollMst/amcDtls/MH01DC0007
+    return this.http.get(this.ServerUrl + `/McpEnrollMst/amcDtls/${regNum}`,{ headers: this.headers });
   }
 
 
@@ -939,11 +896,9 @@ export class MasterService {
     };
     const url = this.ServerUrl + '/schHdr';
     return this.http.post(url, AmcSchemeMasterRecord, options);
-    // http://localhost:8081/schHdr
   }
 
   public AmcEnrollMasterSubmit(AmcEnrollMasterRecord) {
-    // alert ("in amc enrollment");
     const options = {
       headers: this.headers
     };
@@ -953,74 +908,54 @@ export class MasterService {
 
 
   insNameList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/Customer/ClassCode/INSURER');
+    return this.http.get(this.ServerUrl + '/Customer/ClassCode/INSURER',{ headers: this.headers });
   }
 
   insSiteList(customerId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/Customer/${customerId}`);
+    return this.http.get(this.ServerUrl + `/Customer/${customerId}`,{ headers: this.headers });
 
   }
 
   ripsList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus');
+    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus',{ headers: this.headers });
   }
 
   twoToneList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus');
+    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus',{ headers: this.headers });
   }
 
   holdList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus');
+    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus',{ headers: this.headers });
   }
 
   holdReasonList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/HoldReason');
+    return this.http.get(this.ServerUrl + '/cmnLookup/HoldReason',{ headers: this.headers });
   }
   getItemCodePach(segment): Observable<any> {
-    // return this.http.get(this.ServerUrl +`/itemMst/${segment}`);
-    return this.http.get(this.ServerUrl + `/itemMst/bySegment/${segment}`);
+    return this.http.get(this.ServerUrl + `/itemMst/bySegment/${segment}`,{ headers: this.headers });
   }
 
   GetCustomerSiteDetails(mCustomerId, mOuId): Observable<any> {
-    // alert("customerId ,OuId :" +mCustomerId +" ,"+mOuId);
     return this.http.get(this.ServerUrl + `/Customer/custsite?customerId=${mCustomerId}&ouId=${mOuId}`);
   }
   getTDSPercentage(): Observable<any> {
-    return this.http.get(this.ServerUrl + `/cmnLookup/CmnType/TDSPer`)
+    return this.http.get(this.ServerUrl + `/cmnLookup/CmnType/TDSPer`,{ headers: this.headers })
   }
 
   ////////////////////////////////Supplier Master///////////////////////////
 
-  // cityList(): Observable<any> {
-  //   return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
-  // }
-
-  // pinCodeList(): Observable<any> {
-  //   return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
-  // }
-
-  // stateList(): Observable<any> {
-  //   return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
-  // }
-
-
-
-  // ouList(): Observable<any> {
-  //   return this.http.get(this.ServerUrl +'/cmnLookup/ACStatus');
-  // }
-
-
+  
   getsupplierMastSearch(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/supp');
+    return this.http.get(this.ServerUrl + '/supp',{ headers: this.headers });
   }
   getsearchBySuppCode(suppNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/supp/bycode/${suppNo}`);
+    return this.http.get(this.ServerUrl + `/supp/bycode/${suppNo}`,{ headers: this.headers });
   }
   taxCategoryListSupp(locId, state): Observable<any> {
-    return this.http.get(this.ServerUrl + `/taxCtgHeader/taxCtgNameSupp?locId=${locId}&custState=${state}`)
+    return this.http.get(this.ServerUrl + `/taxCtgHeader/taxCtgNameSupp?locId=${locId}&custState=${state}`,{ headers: this.headers })
   }
   supplierType(): Observable<any> {
-    return this.http.get(this.ServerUrl + `/cmnLookup/CmnType/SuppType`);
+    return this.http.get(this.ServerUrl + `/cmnLookup/CmnType/SuppType`,{ headers: this.headers });
   }
 
   public SupliMasterSubmit(SupliMasterRecord) {
@@ -1034,7 +969,6 @@ export class MasterService {
     const options = {
       headers: this.headers
     };
-    // const url = this.ServerUrl + '/supp/withSite';
     const url = this.ServerUrl + '/supp/site';
     return this.http.post(url, SupliMasterRecord, options);
   }
@@ -1049,18 +983,17 @@ export class MasterService {
     const options = {
       headers: this.headers
     };
-    // const url = (this.ServerUrl + `/supp/${suppId}`);
     const url = (this.ServerUrl + '/supp/site');
     return this.http.put(url, SupliMasterRecord, options);
   }
   ///////////////////////////common Master///////////////////////
-  cmnTypeList(): Observable<any> { return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus'); }
+  cmnTypeList(): Observable<any> { return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus',{ headers: this.headers }); }
   applicationList(): Observable<any> {
     return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus');
   }
   //////////////////////////////////////document sequence master//////////
   getdocSeqSearch(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/docsrlmst');
+    return this.http.get(this.ServerUrl + '/docsrlmst',{ headers: this.headers });
   }
   public docSeqMasterSubmit(docSeqMasterRecord) {
     const options = {
@@ -1078,46 +1011,45 @@ export class MasterService {
   }
 
   getLocationId(orgCode): Observable<any> {
-    return this.http.get(this.ServerUrl + `/locationMst/locListOuwise/${orgCode}`);
+    return this.http.get(this.ServerUrl + `/locationMst/locListOuwise/${orgCode}`,{ headers: this.headers });
   }
 
   getLocationById(locId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/locationMst/${locId}`);
+    return this.http.get(this.ServerUrl + `/locationMst/${locId}`,{ headers: this.headers });
   }
 
 
   getOrganizationId(divCode): Observable<any> {
-    return this.http.get(this.ServerUrl + `/docsrlmst/divName/${divCode}`);
+    return this.http.get(this.ServerUrl + `/docsrlmst/divName/${divCode}`,{ headers: this.headers });
   }
   FinancialYear(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/docsrlmst/getYear');
+    return this.http.get(this.ServerUrl + '/docsrlmst/getYear',{ headers: this.headers });
   }
 
   docTypeList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/DocType');
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/DocType',{ headers: this.headers });
   }
   getTransType(transType, OrgId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/docsrlmst/getTransTy?trnsType=${transType}&ouId=${OrgId}`)
+    return this.http.get(this.ServerUrl + `/docsrlmst/getTransTy?trnsType=${transType}&ouId=${OrgId}`,{ headers: this.headers })
   }
   getSrlNo(doctype, trantype): Observable<any> {
-    return this.http.get(this.ServerUrl + `/docsrlmst/getTypeDtls?trnsType=${doctype}&TypeId=${trantype}`)
+    return this.http.get(this.ServerUrl + `/docsrlmst/getTypeDtls?trnsType=${doctype}&TypeId=${trantype}`,{ headers: this.headers })
   }
   getcoCent(deptype): Observable<any> {
-    return this.http.get(this.ServerUrl + `/cmnLookup/lookup?codeDesc=${deptype}&cmnType=Dept`)
+    return this.http.get(this.ServerUrl + `/cmnLookup/lookup?codeDesc=${deptype}&cmnType=Dept`,{ headers: this.headers })
   }
   /////////////////////////////EMPLOYEE MASTER////////////////////////////
 
   getEmpSearch(): Observable<any> {
-    // return this.http.get(this.ServerUrl + '/empMst');
-    return this.http.get(this.ServerUrl + '/empMst/All ');
+    return this.http.get(this.ServerUrl + '/empMst/All',{ headers: this.headers });
   }
   getEmpIdDetails(ticketNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/empMst/EmpTicket/${ticketNo}`);
+    return this.http.get(this.ServerUrl + `/empMst/EmpTicket/${ticketNo}`,{ headers: this.headers });
   }
 
 
   getEmpIdDetails1(fullName): Observable<any> {
-    return this.http.get(this.ServerUrl + `/empMst/EmpSearchByName?fullName=${fullName}`);
+    return this.http.get(this.ServerUrl + `/empMst/EmpSearchByName?fullName=${fullName}`,{ headers: this.headers });
   }
 
 
@@ -1135,24 +1067,8 @@ export class MasterService {
     const url = (this.ServerUrl + `/empMst/${emplId}`);
     return this.http.put(url, EmpMasterRecord, options);
   }
-  //////////////////////////////Document Sequence master///////////////////////
-  // getdocSeqSearch(): Observable<any> {
-  //   return this.http.get(this.ServerUrl + '/docsrlmst');
-  // }
-  // public docSeqMasterSubmit(docSeqMasterRecord) {
-  //   const options = {
-  //     headers: this.headers
-  //   };
-  //   const url = this.ServerUrl + '/docsrlmst/docsrlmaster';
-  //   return this.http.post(url, docSeqMasterRecord, options);
-  // }
-  // UpdatedocSeqMasterById(docSeqMasterRecord,docSrlId) {
-  //   const options = {
-  //     headers: this.headers
-  //   };
-  //   const url = (this.ServerUrl + `/docsrlmst/${docSrlId}`);
-  //   return this.http.put(url, docSeqMasterRecord, options);
-  // }
+
+  
   ////////////////////////Customer master//////////////////
   UpdateCustMasterById(CustMasterRecord) {
     const options = {
@@ -1183,47 +1099,43 @@ export class MasterService {
     return this.http.post(url, CustMasterRecord, options);
   }
   getsearchByAccountNo(customerId1): Observable<any> {
-    return this.http.get(this.ServerUrl + `/Customer/getByAccountNo1/${customerId1}`);
+    return this.http.get(this.ServerUrl + `/Customer/getByAccountNo1/${customerId1}`,{ headers: this.headers });
   }
   Limitdata(ouId, custId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/Customer/getCrAmtHighAmt?ouId=${ouId}&customerId=${custId}`)
+    return this.http.get(this.ServerUrl + `/Customer/getCrAmtHighAmt?ouId=${ouId}&customerId=${custId}`,{ headers: this.headers })
   }
 
   getsearchByAccountNo1(accountId, divisionId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/Customer/getByAccountNo1?accountNo=${accountId}&divisionId=${divisionId}`);
+    return this.http.get(this.ServerUrl + `/Customer/getByAccountNo1?accountNo=${accountId}&divisionId=${divisionId}`,{ headers: this.headers });
   }
 
   searchCustomerByContact(contactNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/Customer/contactNo/${contactNo}`);
+    return this.http.get(this.ServerUrl + `/Customer/contactNo/${contactNo}`,{ headers: this.headers });
   }
 
   searchCustomerByAccount(accountNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/Customer/getByCustAcctNo?accountNo=${accountNo}`);
+    return this.http.get(this.ServerUrl + `/Customer/getByCustAcctNo?accountNo=${accountNo}`,{ headers: this.headers });
   }
 
   custAccountNoSearch(accountNo, ouId, divId): Observable<any> {
-    // alert("ms >>account no:"+accountNo+","+ouId +","+divId);
-    return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}&divisionId=${divId}`);
+    return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}&divisionId=${divId}`,{ headers: this.headers });
   }
 
   exicutiveNameByCustName(accountNo, locId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/empCust/exeDtls?accountNo=${accountNo}&locId=${locId}`);
+    return this.http.get(this.ServerUrl + `/empCust/exeDtls?accountNo=${accountNo}&locId=${locId}`,{ headers: this.headers });
   }
 
-  // crediteLimitFn(customerId,customerSiteId): Observable<any>{
-  //   return this.http.get(this.ServerUrl+`/Customer/getCreditAmt?customerId=${customerId}&customerSiteId=${customerSiteId}`);
-  // }
 
   crediteLimitFn(customerId, locId, customerSiteId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/Customer/getOutStandingDetails?billToCustId=${customerId}&locId=${locId}&customerSiteId=${customerSiteId}`);
+    return this.http.get(this.ServerUrl + `/Customer/getOutStandingDetails?billToCustId=${customerId}&locId=${locId}&customerSiteId=${customerSiteId}`,{ headers: this.headers });
   }
   /////////AccountEnquiry////////////////////
   public FinancialPeriod(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/glPeriod/periodName');
+    return this.http.get(this.ServerUrl + '/glPeriod/periodName',{ headers: this.headers });
   }
 
   public glPeriodYear(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/glPeriod/periodYear');
+    return this.http.get(this.ServerUrl + '/glPeriod/periodYear',{ headers: this.headers });
   }
 
   public AccountEnquirySearch(AccountEnquiryRecord): Observable<any> {
@@ -1241,25 +1153,25 @@ export class MasterService {
     return this.http.post(url, AccountGlRecord, options);
   }
   public viewAccountingjv(JVNO): Observable<any> {
-    return this.http.get(this.ServerUrl + `/glHeader/receiptNoWise/${JVNO}`);
+    return this.http.get(this.ServerUrl + `/glHeader/receiptNoWise/${JVNO}`,{ headers: this.headers });
   }
   ////Receivable///////////
   public viewAccountingAR(tranNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/glHeader/arInv/${tranNo}`);
+    return this.http.get(this.ServerUrl + `/glHeader/arInv/${tranNo}`,{ headers: this.headers });
   }
 
   viewAccountingMCP(tranNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/glHeader/viewAccount/${tranNo}`);
+    return this.http.get(this.ServerUrl + `/glHeader/viewAccount/${tranNo}`,{ headers: this.headers });
   }
 
 
   viewApplyHistoryAR(tranNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/arInv/trxNumber/${tranNo}`);
+    return this.http.get(this.ServerUrl + `/arInv/trxNumber/${tranNo}`,{ headers: this.headers });
   }
 
   ///Stock transfer////
   public viewAccountingST(tranNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/glHeader/Invntory/${tranNo}`);
+    return this.http.get(this.ServerUrl + `/glHeader/Invntory/${tranNo}`,{ headers: this.headers });
   }
   //stock taking////
   bulkstockTakinguploadCsv(formData: FormData) {
@@ -1269,11 +1181,11 @@ export class MasterService {
 
   }
   public dataDisplay(locId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/stockadj/stockList/${locId}`);
+    return this.http.get(this.ServerUrl + `/stockadj/stockList/${locId}`,{ headers: this.headers });
   }
   /////////////////////////////HSN-SAC CODE//////////////////////
   getHsnSacSearch(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/hsnsacMst');
+    return this.http.get(this.ServerUrl + '/hsnsacMst',{ headers: this.headers });
   }
 
   public HSNSACMasterSubmit(HsnSacMasterRecord) {
@@ -1294,26 +1206,20 @@ export class MasterService {
   ///////////////////////////Purchese order/////////////////
 
   TransactionNatureList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/TranNature');
+    return this.http.get(this.ServerUrl + '/cmnLookup/TranNature',{ headers: this.headers });
   }
   purchaseLocationList(temp): Observable<any> {
-    // return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/SS_Location');
-    return this.http.get(this.ServerUrl + `/fndAcctLookup/lookupTypeBrLoc?lookupType=SS_Branch&lookupValue=${temp}`);
-    // http://localhost:8081/fndAcctLookup/lookupTypeBrLoc?lookupType=SS_Branch&lookupValue=${temp}
-
+   
+    return this.http.get(this.ServerUrl + `/fndAcctLookup/lookupTypeBrLoc?lookupType=SS_Branch&lookupValue=${temp}`,{ headers: this.headers });
   }
 
   getsearchByPOHeder(poNo, locId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/poHdr/poNum?segment1=${poNo}&locId=${locId}`);
+    return this.http.get(this.ServerUrl + `/poHdr/poNum?segment1=${poNo}&locId=${locId}`,{ headers: this.headers });
   }
 
   getsearchByPOHederPaint(poNo, locId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/poHdr/paintPoNum?segment1=${poNo}&locId=${locId}`);
-    // http://localhost:8081/poHdr/paintPoNum?segment1=2221205802099&locId=1207
+    return this.http.get(this.ServerUrl + `/poHdr/paintPoNum?segment1=${poNo}&locId=${locId}`,{ headers: this.headers });
   }
-
-
-
 
   cancelledPO(poNo) {
     const options = {
@@ -1364,16 +1270,16 @@ export class MasterService {
     const REQUEST_URI = this.ServerUrl + '/itemMst/ItemDetails';
     return this.http.get(REQUEST_URI, {
       params: REQUEST_PARAMS,
-
+      headers: this.headers,
     });
   }
 
   taxCategoryListNew(taxCategoryName, hsnTaxPer): Observable<any> {
-    return this.http.get(this.ServerUrl + `/JaiTaxCatg/taxCateDtls?taxCatType=PURCHASE&suppTaxCate=${taxCategoryName}&hsnTaxPer=${hsnTaxPer}`);
+    return this.http.get(this.ServerUrl + `/JaiTaxCatg/taxCateDtls?taxCatType=PURCHASE&suppTaxCate=${taxCategoryName}&hsnTaxPer=${hsnTaxPer}`,{ headers: this.headers });
   }
 
   expenceItemDetailsList(invItemId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemMst/ItemDetailsExp/${invItemId}`);
+    return this.http.get(this.ServerUrl + `/itemMst/ItemDetailsExp/${invItemId}`,{ headers: this.headers });
   }
 
 
@@ -1387,7 +1293,7 @@ export class MasterService {
     const REQUEST_URI = this.ServerUrl + '/poHdr/potaxcal';
     return this.http.get(REQUEST_URI, {
       params: REQUEST_PARAMS,
-
+      headers: this.headers,
     });
   }
 
@@ -1399,6 +1305,7 @@ export class MasterService {
     const REQUEST_URI = this.ServerUrl + '/poHdr/potaxcal';
     return this.http.get(REQUEST_URI, {
       params: REQUEST_PARAMS,
+      headers: this.headers,
     });
   }
 
@@ -1415,7 +1322,7 @@ export class MasterService {
     const REQUEST_URI = this.ServerUrl + '/poHdr/potaxcal';
     return this.http.get(REQUEST_URI, {
       params: REQUEST_PARAMS,
-
+      headers: this.headers,
     });
   }
 
@@ -1432,7 +1339,7 @@ export class MasterService {
     const REQUEST_URI = this.ServerUrl + '/orderHeader/sotaxcal';
     return this.http.get(REQUEST_URI, {
       params: REQUEST_PARAMS,
-
+      headers: this.headers,
     });
   }
 
@@ -1446,7 +1353,7 @@ export class MasterService {
     const REQUEST_URI = this.ServerUrl + '/arInv/arTaxcal';
     return this.http.get(REQUEST_URI, {
       params: REQUEST_PARAMS,
-
+      headers: this.headers,
     });
   }
   distributionApi1(custTrxTypeId, ouId, locId, basicAmt, extendedAmount) {
@@ -1459,7 +1366,7 @@ export class MasterService {
     const REQUEST_URI = this.ServerUrl + '/arInv/invLnDis';
     return this.http.get(REQUEST_URI, {
       params: REQUEST_PARAMS,
-
+      headers: this.headers,
     });
   }
   // addDiscount(totTaxAmt,taxTypeName)
@@ -1478,26 +1385,12 @@ export class MasterService {
     let options = {
       headers: this.headers
     };
-    // const url = 'http://saireplica.horizon.org:8080/ErpReplica/loginpage';
     const url = '/taxDetails';
-    // const url = 'http://localhost:8081/taxDetails';
     console.log(body);
     return this.httpclient.post(url, body, options);
   }
 
-  // distributionApi1(custTrxTypeId, ouId, locId,basicAmt,extendedAmount){
-  //   const REQUEST_PARAMS = new HttpParams().set('custTrxTypeId', custTrxTypeId)
-  //   .set('ouId',ouId)
-  //   .set('locId', locId)
-  //   .set('invAmount', basicAmt)
-  //   .set('taxableAmt', extendedAmount)
-
-  //   const REQUEST_URI = this.ServerUrl +'/arInv/invLnDis';
-  //   return this.http.get(REQUEST_URI, {
-  //     params: REQUEST_PARAMS,
-
-  //   });
-  // }
+  
 
   public completeInvoice(invoiceno) {
     const option = {
@@ -1508,11 +1401,11 @@ export class MasterService {
   }
 
   arInvoiceList(type): Observable<any> {
-    return this.http.get(this.ServerUrl + `/rcvType/typeWise/${type}`);
+    return this.http.get(this.ServerUrl + `/rcvType/typeWise/${type}`,{ headers: this.headers });
   }
   ////////////Subinventory Transfer////////
   getsearchBySubInvTrfNo(subtrfNo, locId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/mmtTrx/subInvTrf?shipmentNumber=${subtrfNo}&transferOrgId=${locId}`)
+    return this.http.get(this.ServerUrl + `/mmtTrx/subInvTrf?shipmentNumber=${subtrfNo}&transferOrgId=${locId}`,{ headers: this.headers })
   }
 
    getsearchBySubInvTrfNoForPaint(subtrfNo, locId): Observable<any> {
@@ -1521,7 +1414,7 @@ export class MasterService {
   }
 
   getPhysicalLoc(locId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/cmnLookup/physicalLoc/${locId}`)
+    return this.http.get(this.ServerUrl + `/cmnLookup/physicalLoc/${locId}`,{ headers: this.headers })
   }
 
   public subInvTransferSubmit(subInvTransferRecord) {
@@ -1533,7 +1426,7 @@ export class MasterService {
   }
 
   getsubTrfSubinventory(deptId, divId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/subInvMst/subIssue?deptId=${deptId}&divisionId=${divId}`)
+    return this.http.get(this.ServerUrl + `/subInvMst/subIssue?deptId=${deptId}&divisionId=${divId}`,{ headers: this.headers })
   }
 
   
@@ -1576,53 +1469,37 @@ export class MasterService {
     return this.http.put(url, EwayRecord, options);
   }
 
-  // UpdateStkEway(EwayRecord) {
-  //   const REQUEST_PARAMS = new HttpParams().set('shipmentNumber', EwayRecord.shipmentNumber)
-  //                                          .set('transferOrgId', EwayRecord.transferOrgId)
-  //                                          .set('ewayBill', EwayRecord.ewayBill)
-  //                                          .set('ewayBillDate', EwayRecord.ewayBillDate)
-  //   const REQUEST_URI = this.ServerUrl +'/mmtTrx/EwayUpdate';
-  //   return this.http.put(REQUEST_URI,null, {
-  //     params: REQUEST_PARAMS,
-  //   });
-  // }
+ 
   getsearchByShipmentNo(shipNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/mmtTrx/stktrf/${shipNo}`)
+    return this.http.get(this.ServerUrl + `/mmtTrx/stktrf/${shipNo}`,{ headers: this.headers })
   }
 
   ItemIdListDept(deptId, locId, subId): Observable<any> {
-    // alert (deptId +","+locId+","+subId)
-    return this.http.get(this.ServerUrl + `/itemMst/itemDepartent1?deptId=${deptId}&locationId=${locId}&subInventoryId=${subId}`)
+    return this.http.get(this.ServerUrl + `/itemMst/itemDepartent1?deptId=${deptId}&locationId=${locId}&subInventoryId=${subId}`,{ headers: this.headers })
   }
 
   ItemIdListDeptPaint(deptId, locId, subId,clrCode): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemMst/itemDepartent3?deptId=${deptId}&locationId=${locId}&subInventoryId=${subId}&colorCode=${clrCode}`)
+    return this.http.get(this.ServerUrl + `/itemMst/itemDepartent3?deptId=${deptId}&locationId=${locId}&subInventoryId=${subId}&colorCode=${clrCode}`,{ headers: this.headers })
   }
 
   ItemIdListDeptByCode(deptId, locId, subId, itemCode): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemMst/itemDepartent?deptId=${deptId}&locationId=${locId}&subInventoryId=${subId}&segment=${itemCode}`)
+    return this.http.get(this.ServerUrl + `/itemMst/itemDepartent?deptId=${deptId}&locationId=${locId}&subInventoryId=${subId}&segment=${itemCode}`,{ headers: this.headers })
   }
 
 
   Shipmentdue(frmLoc, toLoc, subInvCode): Observable<any> {
-    return this.http.get(this.ServerUrl + `/rcvShipment/overDueList?fromLoc=${frmLoc}&toLoc=${toLoc}&subInventoryCode=${subInvCode}`)
+    return this.http.get(this.ServerUrl + `/rcvShipment/overDueList?fromLoc=${frmLoc}&toLoc=${toLoc}&subInventoryCode=${subInvCode}`,{ headers: this.headers })
   }
   viewStocknote(shipmentNumber) {
-    // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/rcvShipment/StkTransferNote/${shipmentNumber}`;
-    // local
     const REQUEST_URI = this.ServerUrl + `/rcvShipment/StkTransferNote/${shipmentNumber}`;
     return this.http.get(REQUEST_URI, {
-      // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
       headers: this.headers,
     });
   }
   viewStockgatePass(shipmentNumber, empId) {
-    //  const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/rcvShipment/SS_Stk_Gatepass/${shipmentNumber}`;
-    // local
     const REQUEST_URI = this.ServerUrl + `/rcvShipment/postSTKGatepass?shipmentNumber=${shipmentNumber}&emplId=${empId}`;
     return this.http.get(REQUEST_URI, {
-      // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
       headers: this.headers,
     });
@@ -1638,33 +1515,29 @@ export class MasterService {
 
 
   searchByItemCodeInclude(itemCd): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemMst/segment/${itemCd}`)
-    // http://localhost:8081/itemMst/segment/DH
+    return this.http.get(this.ServerUrl + `/itemMst/segment/${itemCd}`,{ headers: this.headers })
   }
 
   searchByItemDescInclude(itemDesc, divId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemMst/searchByLabdesc/${divId}?itemDesc=${itemDesc}`)
-    // http://localhost:8081/itemMst/searchBydesc/2?itemDesc=ring
-    //  http://localhost:8081/itemMst/searchByLabdesc/2?itemDesc=ring
+    return this.http.get(this.ServerUrl + `/itemMst/searchByLabdesc/${divId}?itemDesc=${itemDesc}`,{ headers: this.headers })
   }
 
   searchByItemByLoc(locId, itemid, ouId, divId): Observable<any> {
-    //  alert("MS>>> "+ itemid+","+locId+","+ouId+","+divId);
     if (ouId === 'ALL') {
-      return this.http.get(this.ServerUrl + `/onhandqty/onhandItemListAll?itemId=${itemid}&divisionId=${divId}`)
+      return this.http.get(this.ServerUrl + `/onhandqty/onhandItemListAll?itemId=${itemid}&divisionId=${divId}`,{ headers: this.headers })
     } else if (ouId > 0 && locId === 'ALL') {
-      return this.http.get(this.ServerUrl + `/onhandqty/onhandItemListOUwise?itemId=${itemid}&ouId=${ouId}&divisionId=${divId}`)
+      return this.http.get(this.ServerUrl + `/onhandqty/onhandItemListOUwise?itemId=${itemid}&ouId=${ouId}&divisionId=${divId}`,{ headers: this.headers })
     }
     else {
-      return this.http.get(this.ServerUrl + `/onhandqty/onhandItemListOUwise?itemId=${itemid}&ouId=${ouId}&divisionId=${divId}&locationId=${locId}`)
+      return this.http.get(this.ServerUrl + `/onhandqty/onhandItemListOUwise?itemId=${itemid}&ouId=${ouId}&divisionId=${divId}&locationId=${locId}`,{ headers: this.headers })
     }
   }
 
   searchByItemf9(itemid, locId, ouId, divId, deptId): Observable<any> {
     if(divId===2) {
-     return this.http.get(this.ServerUrl + `/itemMst/ItemDtlsF9?locId=${locId}&itemId=${itemid}&ouId=${ouId}&divisionId=${divId}&deptId=${deptId}`)
+     return this.http.get(this.ServerUrl + `/itemMst/ItemDtlsF9?locId=${locId}&itemId=${itemid}&ouId=${ouId}&divisionId=${divId}&deptId=${deptId}`,{ headers: this.headers })
     } else {
-      return this.http.get(this.ServerUrl + `/itemMst/PaintF9?locId=${locId}&itemId=${itemid}&ouId=${ouId}&divisionId=${divId}&deptId=${deptId}`)
+      return this.http.get(this.ServerUrl + `/itemMst/PaintF9?locId=${locId}&itemId=${itemid}&ouId=${ouId}&divisionId=${divId}&deptId=${deptId}`,{ headers: this.headers })
     }
 
     }
@@ -1672,44 +1545,30 @@ export class MasterService {
 
 
     searchByItemSegmentPP( itemSeg): Observable<any> {
-      return this.http.get(this.ServerUrl + `/itemMst/ByPPnonInv?segment=${itemSeg}`)
-
-  
-    // http://localhost:8081/itemMst/ByPPnonInv?segment=PP
+      return this.http.get(this.ServerUrl + `/itemMst/ByPPnonInv?segment=${itemSeg}`,{ headers: this.headers })
   }
  
 
   searchByItemSegmentDiv(divId, itemSeg): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemMst/details/${divId}/${itemSeg}`)
-
-    // http://localhost:8081/itemMst/searchBydesc/2/ring
+    return this.http.get(this.ServerUrl + `/itemMst/details/${divId}/${itemSeg}`,{ headers: this.headers })
   }
 
   searchByItemSegmentAR(itemSeg): Observable<any> {
     var divId = sessionStorage.getItem("divisionId");
-    return this.http.get(this.ServerUrl + `/itemMst/${divId}/bycond?segment=${itemSeg}&isStock=N`)
+    return this.http.get(this.ServerUrl + `/itemMst/${divId}/bycond?segment=${itemSeg}&isStock=N`,{ headers: this.headers })
 
   }
   searchByItemDescf9(divId, itemDesc): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemMst/searchBydesc/${divId}?itemDesc=${itemDesc}`)
-
-    // http://localhost:8081/itemMst/searchBydesc/2/ring
+    return this.http.get(this.ServerUrl + `/itemMst/searchBydesc/${divId}?itemDesc=${itemDesc}`,{ headers: this.headers })
   }
 
   searchByItemBYSegment(divId, itemDesc): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemMst/segment/${itemDesc}`)
-
-    // http://localhost:8081/itemMst/searchBydesc/2/ring
+    return this.http.get(this.ServerUrl + `/itemMst/segment/${itemDesc}`,{ headers: this.headers })
   }
-
-  // viewReserveData(locId,invId):Observable<any>
-  // {
-  //   return this.http.get(this.ServerUrl+`/reserveQty/reserveDtls?locId=${locId}&invItemId=${invId}`)
-  // }
 
 
   viewReserveData(locId, invId) {
-    return this.http.get(this.ServerUrl + `/reserveQty/reserveDtls?locId=${locId}&invItemId=${invId}`)
+    return this.http.get(this.ServerUrl + `/reserveQty/reserveDtls?locId=${locId}&invItemId=${invId}`,{ headers: this.headers })
   }
 
   //////////Move Order//////////////
@@ -1743,80 +1602,77 @@ export class MasterService {
   }
 
   public reserveDelete(transno, locId) {
-    return this.http.delete(this.ServerUrl + `/reserveQty/remove/?transactionNumber=${transno}&locId=${locId}`);
+    return this.http.delete(this.ServerUrl + `/reserveQty/remove/?transactionNumber=${transno}&locId=${locId}`,{ headers: this.headers });
   }
 
 
   public reserveQtyDelete(itemCode, locId) {
-    return this.http.delete(this.ServerUrl + `/reserveQty/removeSingle/?itemCode=${itemCode}&locId=${locId}`);
+    return this.http.delete(this.ServerUrl + `/reserveQty/removeSingle/?itemCode=${itemCode}&locId=${locId}`,{ headers: this.headers });
   }
 
   public reserveDeleteLine(transno, locId, itemId) {
-    return this.http.delete(this.ServerUrl + `/reserveQty/removeItem/?transactionNumber=${transno}&locId=${locId}&invItemId=${itemId}`);
+    return this.http.delete(this.ServerUrl + `/reserveQty/removeItem/?transactionNumber=${transno}&locId=${locId}&invItemId=${itemId}`,{ headers: this.headers });
   }
   WorkShopIssue(locId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/jobCard/jobNo?locId=${locId}`);
+    return this.http.get(this.ServerUrl + `/jobCard/jobNo?locId=${locId}`,{ headers: this.headers });
   }
   getPriceDetail(locId, itemid, subInv, repNo, divId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/onhandqty/onhandlocsubinv1?locId=${locId}&itemId=${itemid}&subInventoryId=${subInv}&repairNo=${repNo}&divisionId=${divId}`)
+    return this.http.get(this.ServerUrl + `/onhandqty/onhandlocsubinv1?locId=${locId}&itemId=${itemid}&subInventoryId=${subInv}&repairNo=${repNo}&divisionId=${divId}`,{ headers: this.headers })
   }
   BillableType(): Observable<any> {
-    return this.http.get(this.ServerUrl + `/billableTy`);
+    return this.http.get(this.ServerUrl + `/billableTy`,{ headers: this.headers });
   }
   searchall(locId, divId, deptId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/mmtTrx/PendingRecMyloc?locationId=${locId}&divisionId=${divId}&deptId=${deptId}`);
+    return this.http.get(this.ServerUrl + `/mmtTrx/PendingRecMyloc?locationId=${locId}&divisionId=${divId}&deptId=${deptId}`,{ headers: this.headers });
   }
   searchallatother(locId, divId, deptId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/mmtTrx/PendingRecOthLoc?locationId=${locId}&divisionId=${divId}&deptId=${deptId}`);
+    return this.http.get(this.ServerUrl + `/mmtTrx/PendingRecOthLoc?locationId=${locId}&divisionId=${divId}&deptId=${deptId}`,{ headers: this.headers });
 
   }
   getreserqty(locId, itemID): Observable<any> {
-    return this.http.get(this.ServerUrl + `/reserveQty/locResQty?locId=${locId}&invItemId=${itemID}`)
+    return this.http.get(this.ServerUrl + `/reserveQty/locResQty?locId=${locId}&invItemId=${itemID}`,{ headers: this.headers })
   }
 
   getreserqtyNew(locId, itemID, locatorId, rate): Observable<any> {
-    return this.http.get(this.ServerUrl + `/reserveQty/locResQty?locId=${locId}&invItemId=${itemID}&locatorId=${locatorId}&rate=${rate}`)
+    return this.http.get(this.ServerUrl + `/reserveQty/locResQty?locId=${locId}&invItemId=${itemID}&locatorId=${locatorId}&rate=${rate}`,{ headers: this.headers })
   }
 
   getreserqtyNew1(locId, itemID, locatorId, rate): Observable<any> {
-    return this.http.get(this.ServerUrl + `/reserveQty/locResQtyPP?locId=${locId}&invItemId=${itemID}&locatorId=${locatorId}`)
-    // http://localhost:8081/reserveQty/locResQtyPP?locId=2501&invItemId=89891&locatorId=63953
+    return this.http.get(this.ServerUrl + `/reserveQty/locResQtyPP?locId=${locId}&invItemId=${itemID}&locatorId=${locatorId}`,{ headers: this.headers })
   }
 
 
 
   transType(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/mtlTrxTypes/IPO');
+    return this.http.get(this.ServerUrl + '/mtlTrxTypes/IPO',{ headers: this.headers });
   }
   getsearchByJob(jobno): Observable<any> {
-    return this.http.get(this.ServerUrl + `/mtrlIssue/repair?repairNo=${jobno}`)
+    return this.http.get(this.ServerUrl + `/mtrlIssue/repair?repairNo=${jobno}`,{ headers: this.headers })
   }
 
   gettotalAmt(jobno): Observable<any> {
-    return this.http.get(this.ServerUrl + `/mtrlIssue/repairAmt?repairNo=${jobno}`)
+    return this.http.get(this.ServerUrl + `/mtrlIssue/repairAmt?repairNo=${jobno}`,{ headers: this.headers })
   }
 
   getsearchByIC(jobno): Observable<any> {
-    return this.http.get(this.ServerUrl + `/stockadj/jobcard/${jobno}`)
+    return this.http.get(this.ServerUrl + `/stockadj/jobcard/${jobno}`,{ headers: this.headers })
   }
 
   getPaintSearchbyJc(jcNo,locId,issType){
-    return this.http.get(this.ServerUrl + `/stockadj/locJobPaint?repairNo=${jcNo}&locId=${locId}&reason=${issType}`)
-    // http://localhost:8081/stockadj/locJobPaint?repairNo=JC24001193&locId=1633&reason=PN001
+    return this.http.get(this.ServerUrl + `/stockadj/locJobPaint?repairNo=${jcNo}&locId=${locId}&reason=${issType}`,{ headers: this.headers })
   }
 
   getPaintSearchbyDate(issDt,locId,issType){
-    return this.http.get(this.ServerUrl + `/stockadj/locDtPaint?dte=${issDt}&locId=${locId}&reason=${issType}`)
-    // http://localhost:8081/stockadj/locDtPaint?dte=24-jul-2024&locId=1633&reason=PN001
+    return this.http.get(this.ServerUrl + `/stockadj/locDtPaint?dte=${issDt}&locId=${locId}&reason=${issType}`,{ headers: this.headers })
+    
   }
 
   getsearchByJCpaint(jobno): Observable<any> {
-    return this.http.get(this.ServerUrl + `/stockadj/jobPaint/${jobno}`)
-    // http://localhost:8081/stockadj/jobPaint/JC-1
+    return this.http.get(this.ServerUrl + `/stockadj/jobPaint/${jobno}`,{ headers: this.headers })
   }
 
   subInvCode(deptId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/subInvMst/wipissue/${deptId}`);
+    return this.http.get(this.ServerUrl + `/subInvMst/wipissue/${deptId}`,{ headers: this.headers });
   }
 
 
@@ -1826,92 +1682,88 @@ export class MasterService {
     const REQUEST_URI = this.ServerUrl + '/subInvMst/wipissue/';
     return this.http.get(REQUEST_URI, {
       params: REQUEST_PARAMS,
-
+      headers: this.headers,
     });
   }
   subInvCode1(): Observable<any> {
-    return this.http.get(this.ServerUrl + `/subInvMst/wipissue`);
+    return this.http.get(this.ServerUrl + `/subInvMst/wipissue`,{ headers: this.headers });
   }
 
   issueByList(locId, deptId, divisionId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/empMst/EmpLocDept?locId=${locId}&divisionId=${divisionId}&deptId=${deptId}`)
+    return this.http.get(this.ServerUrl + `/empMst/EmpLocDept?locId=${locId}&divisionId=${divisionId}&deptId=${deptId}`,{ headers: this.headers })
   }
   issueByListNew(deptId,locId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/empMst/mangerEmplList?deptId=${deptId}&locId=${locId}`)
+    return this.http.get(this.ServerUrl + `/empMst/mangerEmplList?deptId=${deptId}&locId=${locId}`,{ headers: this.headers })
   }
 
   getAlterNetItem(itemId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/relateditems/relItems/${itemId}`)
+    return this.http.get(this.ServerUrl + `/relateditems/relItems/${itemId}`,{ headers: this.headers })
   }
 
   paintColorCodeList(divisionId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemMst/onlyPn/${divisionId}`)
+    return this.http.get(this.ServerUrl + `/itemMst/onlyPn/${divisionId}`,{ headers: this.headers })
   }
 
   paintPanelCodeList(divisionId,cmtype): Observable<any> {
-    // http://localhost:8081/cmnLookup/CmnTypeDivision?cmnType=Panel&divisionId=1
-    return this.http.get(this.ServerUrl + `/cmnLookup/CmnTypeDivision?cmnType=${cmtype}&divisionId=${divisionId}`)
+    return this.http.get(this.ServerUrl + `/cmnLookup/CmnTypeDivision?cmnType=${cmtype}&divisionId=${divisionId}`,{ headers: this.headers })
   }
 
   ItemIdList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/itemMst/category');
+    return this.http.get(this.ServerUrl + '/itemMst/category',{ headers: this.headers });
   }
   ItemIdDivisionList(divisionId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemMst/SpAcItems/${divisionId}`);
+    return this.http.get(this.ServerUrl + `/itemMst/SpAcItems/${divisionId}`,{ headers: this.headers });
   }
   getfrmSubLoc(locId, invItemId, subInventoryId): Observable<any> {
-    // alert ("ms >> subInventoryId :" +subInventoryId);
-    return this.http.get(this.ServerUrl + `/onhandqty/onhandlocsubinv?locId=${locId}&itemId=${invItemId}&subInventoryId=${subInventoryId}`)
+    return this.http.get(this.ServerUrl + `/onhandqty/onhandlocsubinv?locId=${locId}&itemId=${invItemId}&subInventoryId=${subInventoryId}`,{ headers: this.headers })
   }
   getWIPrice(locId, invItemId, subInventoryId, repNo, divId, deptId): Observable<any> {
-    // alert ("ms >> subInventoryId :" +subInventoryId);
-    return this.http.get(this.ServerUrl + `/onhandqty/onhandlocsubinv3?locId=${locId}&itemId=${invItemId}&subInventoryId=${subInventoryId}&repairNo=${repNo}&divisionId=${divId}&deptId=${deptId}`)
+    return this.http.get(this.ServerUrl + `/onhandqty/onhandlocsubinv3?locId=${locId}&itemId=${invItemId}&subInventoryId=${subInventoryId}&repairNo=${repNo}&divisionId=${divId}&deptId=${deptId}`,{ headers: this.headers })
   }
   getfrmSubLocPrice(locId, invItemId, subInventoryId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/onhandqty/onhandlocPrc?locId=${locId}&itemId=${invItemId}&subInventoryId=${subInventoryId}`)
+    return this.http.get(this.ServerUrl + `/onhandqty/onhandlocPrc?locId=${locId}&itemId=${invItemId}&subInventoryId=${subInventoryId}`,{ headers: this.headers })
   }
   getItemLoc(locId, subInventoryId, invItemId): Observable<any> {
-    // alert ("ms >> subInventoryId :" +subInventoryId);
-    return this.http.get(this.ServerUrl + `/itemlctrmst/byLocSubItem?locId=${locId}&subInventoryId=${subInventoryId}&itemId=${invItemId}`)
+    return this.http.get(this.ServerUrl + `/itemlctrmst/byLocSubItem?locId=${locId}&subInventoryId=${subInventoryId}&itemId=${invItemId}`,{ headers: this.headers })
   }
   getSearchByTrans(reqNo): Observable<any> {
 
-    return this.http.get(this.ServerUrl + `/mtrlIssue/reqNum/${reqNo}`)
+    return this.http.get(this.ServerUrl + `/mtrlIssue/reqNum/${reqNo}`,{ headers: this.headers })
 
   }
 
   getItemDetail(itemid): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemMst/${itemid}`)
+    return this.http.get(this.ServerUrl + `/itemMst/${itemid}`,{ headers: this.headers })
   }
   ////////////WorkShop Return/////////////////
   transTypereturn(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/mtlTrxTypes/IPOReturn');
+    return this.http.get(this.ServerUrl + '/mtlTrxTypes/IPOReturn',{ headers: this.headers });
   }
   issueReturn(locId1): Observable<any> {
-    return this.http.get(this.ServerUrl + `/mtrlIssue/wipjob?locId=${locId1}`);
+    return this.http.get(this.ServerUrl + `/mtrlIssue/wipjob?locId=${locId1}`,{ headers: this.headers });
   }
   returnBillableType(repno): Observable<any> {
-    return this.http.get(this.ServerUrl + `/mtrlIssue/jobBillable?repairNo=${repno}`);
+    return this.http.get(this.ServerUrl + `/mtrlIssue/jobBillable?repairNo=${repno}`,{ headers: this.headers });
   }
   itemLst(jobno, typ, subId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/mtrlIssue/wipItems?jobNo=${jobno}&billable=${typ}&subInventoryId=${subId}`);
+    return this.http.get(this.ServerUrl + `/mtrlIssue/wipItems?jobNo=${jobno}&billable=${typ}&subInventoryId=${subId}`,{ headers: this.headers });
   }
   getsubInv(subId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/subInvMst/subinvname/${subId}`);
+    return this.http.get(this.ServerUrl + `/subInvMst/subinvname/${subId}`,{ headers: this.headers });
   }
   getdivsubInv(subId, divId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/subInvMst/subinvname?subInventoryCode=${subId}&divisionId=${divId}`);
+    return this.http.get(this.ServerUrl + `/subInvMst/subinvname?subInventoryCode=${subId}&divisionId=${divId}`,{ headers: this.headers });
   }
 
   getSearchByWorkReturn(reqNo): Observable<any> {
 
-    return this.http.get(this.ServerUrl + `/mtrlIssue/reqNumRet/${reqNo}`)
+    return this.http.get(this.ServerUrl + `/mtrlIssue/reqNumRet/${reqNo}`,{ headers: this.headers })
 
   }
 
 
   getretfrmSubLoc(locId, itemId, subId, jobno): Observable<any> {
-    return this.http.get(this.ServerUrl + `/onhandqty/onhandJobNo/?locId=${locId}&itemId=${itemId}&subInventoryId=${subId}&jobNo=${jobno}`);
+    return this.http.get(this.ServerUrl + `/onhandqty/onhandJobNo/?locId=${locId}&itemId=${itemId}&subInventoryId=${subId}&jobNo=${jobno}`,{ headers: this.headers });
   }
   /////////Subinventory/////////////
   public saveSubinventory(subInvRecord) {
@@ -1923,7 +1775,7 @@ export class MasterService {
   }
 
   public getSubInvSearch(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/subInvMst');
+    return this.http.get(this.ServerUrl + '/subInvMst',{ headers: this.headers });
   }
 
   UpdateSubInventory(SubinvRecord) {
@@ -1980,13 +1832,13 @@ export class MasterService {
     return this.http.post(url, glReverseValue, options);
   }
   JournalType(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/JVType');
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/JVType',{ headers: this.headers });
   }
   SerchBydocseqval(docseqval): Observable<any> {
-    return this.http.get(this.ServerUrl + `/glHeader/docSeqValueWise/${docseqval}`);
+    return this.http.get(this.ServerUrl + `/glHeader/docSeqValueWise/${docseqval}`,{ headers: this.headers });
   }
   lineStatus(): Observable<any> {
-    return this.http.get(this.ServerUrl + `/cmnLookup/glLinesStatus`);
+    return this.http.get(this.ServerUrl + `/cmnLookup/glLinesStatus`,{ headers: this.headers });
   }
 
 
@@ -2003,22 +1855,22 @@ export class MasterService {
 
 
   applList(): Observable<any> {
-    return this.http.get(this.ServerUrl + `/fndAppl`);
+    return this.http.get(this.ServerUrl + `/fndAppl`,{ headers: this.headers });
   }
 
   getTitle(applId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/FlexHeader/applWise/${applId}`);
+    return this.http.get(this.ServerUrl + `/FlexHeader/applWise/${applId}`,{ headers: this.headers });
   }
   getFlexField(applid, titles): Observable<any> {
-    return this.http.get(this.ServerUrl + `/FlexHeader/titleAndApp?applicationId=${applid}&title=${titles}`);
+    return this.http.get(this.ServerUrl + `/FlexHeader/titleAndApp?applicationId=${applid}&title=${titles}`,{ headers: this.headers });
   }
 
   //////////////////Jai Regime Master////////////////
   regimeTypeLisFunt(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/JaiRegimeType');
+    return this.http.get(this.ServerUrl + '/cmnLookup/JaiRegimeType',{ headers: this.headers });
   }
   getJaiRegimeSearch(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/jairegime');
+    return this.http.get(this.ServerUrl + '/jairegime',{ headers: this.headers });
 
   }
 
@@ -2040,7 +1892,7 @@ export class MasterService {
 
   //////////////////////////TaxAccountMaster/////////////
   getTaxAccountSearch(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/TaxAccounts');
+    return this.http.get(this.ServerUrl + '/TaxAccounts',{ headers: this.headers });
   }
 
   public taxAccountMasterSubmit(taxAccountMasterRecord) {
@@ -2060,23 +1912,20 @@ export class MasterService {
     return this.http.put(url, taxAccountMasterRecord, options);
   }
   //////////////////////Tax Category Master //////////////////////
-  // geActDetails(taxTypeCode): Observable<any> {
-  //   return this.http.get(this.ServerUrl + `/taxType/acInfo/${taxTypeCode}`);
-  //  }
 
   geActDetails1(mtaxTypeId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/taxType/taxTypeId/${mtaxTypeId}`);
+    return this.http.get(this.ServerUrl + `/taxType/taxTypeId/${mtaxTypeId}`,{ headers: this.headers });
   }
   getTaxCategorySearch(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/JaiTaxCatg');
+    return this.http.get(this.ServerUrl + '/JaiTaxCatg',{ headers: this.headers });
   }
 
   selectTypewiseCategory(cateType): Observable<any> {
-    return this.http.get(this.ServerUrl + `/JaiTaxCatg/taxCate/${cateType}`);
+    return this.http.get(this.ServerUrl + `/JaiTaxCatg/taxCate/${cateType}`,{ headers: this.headers });
   }
 
   getsearchCategoryData(taxCategoryId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/JaiTaxCatg/${taxCategoryId}`);
+    return this.http.get(this.ServerUrl + `/JaiTaxCatg/${taxCategoryId}`,{ headers: this.headers });
   }
 
   public TaxCategoryMasterSubmit(TaxCategoryMasterRecord) {
@@ -2096,7 +1945,7 @@ export class MasterService {
   }
   ///////////////////////JAI TAX TYPE MASTER ///////////////////////
   getTaxTypeSearch(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/taxType');
+    return this.http.get(this.ServerUrl + '/taxType',{ headers: this.headers });
   }
 
   public jaiTaxTypeMasterSubmit(JaiTaxTypeMasterRecord) {
@@ -2117,101 +1966,91 @@ export class MasterService {
 
   //////  JAI TAX RATE       ///////
   getTaxRateSearch(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/taxRates');
+    return this.http.get(this.ServerUrl + '/taxRates',{ headers: this.headers });
   }
 
 
   taxTypeIdList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/taxType');
+    return this.http.get(this.ServerUrl + '/taxType',{ headers: this.headers });
   }
 
   // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\PRICE LIST MASTER\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   priceListIdList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/pricelist');
+    return this.http.get(this.ServerUrl + '/pricelist',{ headers: this.headers });
   }
 
 
 
   itemIdList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/itemMst');
+    return this.http.get(this.ServerUrl + '/itemMst',{ headers: this.headers });
 
   }
 
   itemNameList(itemId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemMst/${itemId}`);
+    return this.http.get(this.ServerUrl + `/itemMst/${itemId}`,{ headers: this.headers });
   }
 
 
   priceDescList(priceListId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/pricelist/${priceListId}`);
+    return this.http.get(this.ServerUrl + `/pricelist/${priceListId}`,{ headers: this.headers });
   }
 
-  // http://localhost:8081/itemMst/itemName/HCL
-
-
-
   getItemDetailsByCode(itmCode): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemMst/itemName/${itmCode}`);
+    return this.http.get(this.ServerUrl + `/itemMst/itemName/${itmCode}`,{ headers: this.headers });
   }
 
   getItemDetailsByCodeNew(itmCode): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemMst/itemName1/${itmCode}`);
+    return this.http.get(this.ServerUrl + `/itemMst/itemName1/${itmCode}`,{ headers: this.headers });
   }
 
 
   getDealerAMCLabStatus(regNo, labCode): Observable<any> {
-    return this.http.get(this.ServerUrl + `/jobCard/amcLabValidation?regNo=${regNo}&labCode=${labCode}`);
-    // http://localhost:8081/jobCard/amcLabValidation?regNo=MH01DC0007&labCode=AMSR
+    return this.http.get(this.ServerUrl + `/jobCard/amcLabValidation?regNo=${regNo}&labCode=${labCode}`,{ headers: this.headers });
+    
   }
 
 
   /////////////////////////////////////////////////////////
   taxTypeNameList(taxTypeId): Observable<any> {
     if (taxTypeId > 0) {
-      return this.http.get(this.ServerUrl + `/taxType/${taxTypeId}`);
+      return this.http.get(this.ServerUrl + `/taxType/${taxTypeId}`,{ headers: this.headers });
     }
   }
 
   locationNameList(locCode): Observable<any> {
-    return this.http.get(this.ServerUrl + `/locationMst/LocationCode/${locCode}`);
+    return this.http.get(this.ServerUrl + `/locationMst/LocationCode/${locCode}`,{ headers: this.headers });
   }
 
   locationNameList1(locId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/locationMst/${locId}`);
+    return this.http.get(this.ServerUrl + `/locationMst/${locId}`,{ headers: this.headers });
   }
 
   regimeIdList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/jairegime');
+    return this.http.get(this.ServerUrl + '/jairegime',{ headers: this.headers });
 
   }
 
   thresholdTypeList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/type/JAI_THRESHOLD_TYPE');
+    return this.http.get(this.ServerUrl + '/cmnLookup/type/JAI_THRESHOLD_TYPE',{ headers: this.headers });
 
   }
 
   tdsVendorList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/type/JAI_TDS_VENDOR_TYPE');
+    return this.http.get(this.ServerUrl + '/cmnLookup/type/JAI_TDS_VENDOR_TYPE',{ headers: this.headers });
 
   }
 
   tdsSectionList(): Observable<any> {
-    // return this.http.get(this.ServerUrl +'/cmnLookup/type/JAI_TDS_SECTION');
-    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/JAI_TDS_SECTION');
-
-
-
-  }
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/JAI_TDS_SECTION',{ headers: this.headers });
+}
 
   tdsTaxCategoryList(): Observable<any> {
-    // return this.http.get(this.ServerUrl +'/JaiTaxCatg');
-    return this.http.get(this.ServerUrl + '/JaiTaxCatg/taxCate/TDS');
+    return this.http.get(this.ServerUrl + '/JaiTaxCatg/taxCate/TDS',{ headers: this.headers });
   }
 
   tdsTaxCategoryList1(): Observable<any> {
-    // return this.http.get(this.ServerUrl +'/JaiTaxCatg');
-    return this.http.get(this.ServerUrl + '/JaiTaxCatg/taxCate/TDS');
+    return this.http.get(this.ServerUrl + '/JaiTaxCatg/taxCate/TDS',{ headers: this.headers });
   }
 
 
@@ -2225,21 +2064,14 @@ export class MasterService {
 
 
   getJaiTaxRateSearch(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/taxRates');
+    return this.http.get(this.ServerUrl + '/taxRates',{ headers: this.headers });
 
   }
-  // UpdateJaiTaxRatesMasterById(JaiTaxRatesMasterRecord) {
-  //   const options = {
-  //     headers: this.headers
-  //   };
-  //   const url = (this.ServerUrl + '/JaiTaxRates/TaxRatesPut');
-  //   return this.http.put(url, JaiTaxRatesMasterRecord, options);
-  // }
-
+  
   ////////////////////////Jai Tax Category Line //////////////////
 
   getJaiTaxCategoryLineSearch(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/jaiCateLines');
+    return this.http.get(this.ServerUrl + '/jaiCateLines',{ headers: this.headers });
   }
 
   public JaiTaxCategoryLineMasterSubmit(JaiTaxCategoryLineMasterRecord) {
@@ -2259,16 +2091,15 @@ export class MasterService {
   }
   //////////////////////////////
   regimNameList(regimeId): Observable<any> {
-    // alert("Regime Id: "+regimeId);
     if (regimeId > 0) {
-      return this.http.get(this.ServerUrl + `/jairegime/${regimeId}`);
+      return this.http.get(this.ServerUrl + `/jairegime/${regimeId}`,{ headers: this.headers });
     }
   }
 
 
 
   LedgerList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/SSLedger');
+    return this.http.get(this.ServerUrl + '/SSLedger',{ headers: this.headers });
   }
 
   UpdateJaiTaxRatesMasterById(JaiTaxRatesMasterRecord, taxRateId) {
@@ -2289,42 +2120,40 @@ export class MasterService {
 
 
   getJaiTaxTypeSearch(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/taxType');
+    return this.http.get(this.ServerUrl + '/taxType',{ headers: this.headers });
 
   }
 
   ///////////GL CodeCombination//////////////
   branchlist(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/SS_Branch');
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/SS_Branch',{ headers: this.headers });
   }
 
   locationlist(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/SS_Location');
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/SS_Location',{ headers: this.headers });
   }
   costcentre(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/CostCentre');
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/CostCentre',{ headers: this.headers });
   }
   naturalaccount(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/NaturalAccount');
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/NaturalAccount',{ headers: this.headers });
   }
   interbranch(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/SS_Interbranch');
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/SS_Interbranch',{ headers: this.headers });
   }
   getnaturalaccount(naturalAccount1): Observable<any> {
-    return this.http.get(this.ServerUrl + `/fndAcctLookup/lookupValueWise/${naturalAccount1}`);
+    return this.http.get(this.ServerUrl + `/fndAcctLookup/lookupValueWise/${naturalAccount1}`,{ headers: this.headers });
   }
   getbranch(branch1): Observable<any> {
-    return this.http.get(this.ServerUrl + `/fndAcctLookup/lookupValueWise/${branch1}`);
+    return this.http.get(this.ServerUrl + `/fndAcctLookup/lookupValueWise/${branch1}`,{ headers: this.headers });
   }
   getloc(loc1): Observable<any> {
-    return this.http.get(this.ServerUrl + `/fndAcctLookup/lookupValueWise/${loc1}`);
+    return this.http.get(this.ServerUrl + `/fndAcctLookup/lookupValueWise/${loc1}`,{ headers: this.headers });
   }
   getcostCentre(costCentre1): Observable<any> {
-    return this.http.get(this.ServerUrl + `/fndAcctLookup/lookupValueWise/${costCentre1}`);
+    return this.http.get(this.ServerUrl + `/fndAcctLookup/lookupValueWise/${costCentre1}`,{ headers: this.headers });
   }
-  // getInterBranch(InterBranch1):Observable<any>{
-  //   return this.http.get(this.ServerUrl + `/fndAcctLookup/lookupTypeValueWise?lookupType=SS_InterBranch& +${InterBranch1}`);
-  // }
+  
   glCodeCombinationSubmit(glcodecmbnmstRecord) {
     const comb = {
       headers: this.headers
@@ -2333,7 +2162,7 @@ export class MasterService {
     return this.http.post(url, glcodecmbnmstRecord, comb)
   }
   getGlCodeCombinationSearch(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/glCodeCmbn');
+    return this.http.get(this.ServerUrl + '/glCodeCmbn',{ headers: this.headers });
   }
   UpdateGlMasterById(GlMasterRecord) {
     const options = {
@@ -2344,40 +2173,34 @@ export class MasterService {
   }
 
   cityList1(city): Observable<any> {
-    return this.http.get(this.ServerUrl + `/cmnLookup/lookup?codeDesc=${city}&cmnType=City`);
+    return this.http.get(this.ServerUrl + `/cmnLookup/lookup?codeDesc=${city}&cmnType=City`,{ headers: this.headers });
   }
-  // receipt service
-
+  
   getLocatorPoLines(locatorDesc, locId, subinventoryId): Observable<any> {
-    // return this.http.get(this.ServerUrl + `/lctrmst/nameandloc?segmentName=${locatorDesc}&locId=${locId}`);
-    return this.http.get(this.ServerUrl + `/lctrmst/nameandloc?segmentName=${locatorDesc}&locId=${locId}&subinventoryId=${subinventoryId}`)
+    return this.http.get(this.ServerUrl + `/lctrmst/nameandloc?segmentName=${locatorDesc}&locId=${locId}&subinventoryId=${subinventoryId}`,{ headers: this.headers })
   }
 
 
   getsearchByPOlines(segment1): Observable<any> {
-    return this.http.get(this.ServerUrl + `/rcvShipment/rcv/${segment1}`);
+    return this.http.get(this.ServerUrl + `/rcvShipment/rcv/${segment1}`,{ headers: this.headers });
   }
 
   receiptnotdonetaxDeatils(trxId, trxLineId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/rcvShipment/trxLineDet?trxId=${trxId}&trxLineId=${trxLineId}&updVenOnTransaction=PO_TRANSACTION`);
+    return this.http.get(this.ServerUrl + `/rcvShipment/trxLineDet?trxId=${trxId}&trxLineId=${trxLineId}&updVenOnTransaction=PO_TRANSACTION`,{ headers: this.headers });
   }
 
   receiptdonetaxDeatils(trxId, trxLineId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/rcvShipment/trxLineDet?trxId=${trxId}&trxLineId=${trxLineId}&updVenOnTransaction=RCV_TRANSACTION`);
+    return this.http.get(this.ServerUrl + `/rcvShipment/trxLineDet?trxId=${trxId}&trxLineId=${trxLineId}&updVenOnTransaction=RCV_TRANSACTION`,{ headers: this.headers });
   }
 
 
 
   getsearchByReceiptNo(segment1, mLocId): Observable<any> {
-    // alert ("Receipt/Rtn No :"+segment1  +","+mLocId);
-    return this.http.get(this.ServerUrl + `/rcvShipment/receiptNoWise?receiptNo=${segment1}&billToLocId=${mLocId}`);
-    // http://localhost:8081/rcvShipment/rtvReceiptNoWise?receiptNo=52121101119&shipFromLocId=121
+    return this.http.get(this.ServerUrl + `/rcvShipment/receiptNoWise?receiptNo=${segment1}&billToLocId=${mLocId}`,{ headers: this.headers });
   }
 
   getsearchByGlReceiptNo(segment1): Observable<any> {
-    // alert ("Receipt/Rtn No :"+segment1  +","+mLocId);
-    return this.http.get(this.ServerUrl + `/rcvShipment/receiptNo?receiptNo=${segment1}`);
-    // http://localhost:8081/rcvShipment/rtvReceiptNoWise?receiptNo=52121101119&shipFromLocId=121
+    return this.http.get(this.ServerUrl + `/rcvShipment/receiptNo?receiptNo=${segment1}`,{ headers: this.headers });
   }
   uploadVehBookings(formData: FormData) {
     return this.http.post(this.ServerUrl + `/Proforma/upload/bookings`, formData)
@@ -2391,7 +2214,6 @@ export class MasterService {
   printRTVdocument(mRtnNumber) {
     const REQUEST_URI = this.ServerUrl + `/rcvShipment/printRTV/${mRtnNumber}`;
     return this.http.get(REQUEST_URI, {
-      // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
       headers: this.headers,
     });
@@ -2400,24 +2222,19 @@ export class MasterService {
   printShortLandClaimdocument(mRtnNumber) {
     const REQUEST_URI = this.ServerUrl + `/rcvShipment/RTVPrint/${mRtnNumber}`;
     return this.http.get(REQUEST_URI, {
-      // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
       headers: this.headers,
     });
-
-    // http://localhost:8081/rcvShipment/RTVPrint/22221024400558
   }
 
   getsearchByReceiptNo1(segment1, mLocId): Observable<any> {
-    // return this.http.get(this.ServerUrl + `/rcvShipment/receiptNoWise/${segment1}`);
-    return this.http.get(this.ServerUrl + `/rcvShipment/receiptNoWise?receiptNo=${segment1}&shipFromLocId=${mLocId}`);
+    return this.http.get(this.ServerUrl + `/rcvShipment/receiptNoWise?receiptNo=${segment1}&shipFromLocId=${mLocId}`,{ headers: this.headers });
 
   }
 
 
   getsearchByReceiptNoLine(mPoNumber, mRcptNumber): Observable<any> {
-    // alert("Po/Rct :"+mPoNumber +","+mRcptNumber);
-    return this.http.get(this.ServerUrl + `/rcvShipment/rtvSearch?segment1=${mPoNumber}&receiptNo=${mRcptNumber}`);
+    return this.http.get(this.ServerUrl + `/rcvShipment/rtvSearch?segment1=${mPoNumber}&receiptNo=${mRcptNumber}`,{ headers: this.headers });
   }
 
   
@@ -2440,7 +2257,6 @@ public shortLandedClaimSave(rtvRecord) {
       headers: this.headers
     };
     const url = this.ServerUrl + '/rcvShipment/rtvPost';
-    // http://localhost:8081/rcvShipment/rtvPost
     return this.http.post(url, PoReceiptRtnrRecord, options);
   }
 
@@ -2451,13 +2267,12 @@ public shortLandedClaimSave(rtvRecord) {
       headers: this.headers
     };
     const url = this.ServerUrl + '/rcvShipment/DatewisePODto';
-    // const url = this.ServerUrl + '/rcvShipment/rcvPoDate';
     return this.http.post(url, content, options);
   }
 
 
   POApproveDateWise(poDate, locId) {
-    return this.http.get(this.ServerUrl + `/rcvShipment/rcvPoDate?poDate=${poDate}&billToLoc=${locId}`);
+    return this.http.get(this.ServerUrl + `/rcvShipment/rcvPoDate?poDate=${poDate}&billToLoc=${locId}`,{ headers: this.headers });
   }
 
 
@@ -2470,34 +2285,31 @@ public shortLandedClaimSave(rtvRecord) {
   }
 
   getsearchByRcvSupp(rcvSupp1): Observable<any> {
-    return this.http.get(this.ServerUrl + `/rcvShipment/rcvSupp1/${rcvSupp1}`);
+    return this.http.get(this.ServerUrl + `/rcvShipment/rcvSupp1/${rcvSupp1}`,{ headers: this.headers });
   }
 
   viewAccounting1(receiptNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/glHeader/receiptNoWise/${receiptNo}`);
+    return this.http.get(this.ServerUrl + `/glHeader/receiptNoWise/${receiptNo}`,{ headers: this.headers });
   }
 
-  // viewAPAccounting(invoiceNum): Observable<any> {
-  //   return this.http.get(this.ServerUrl + `/glHeader/apInv?invoiceNum=${invoiceNum}`);
-  // }
+
 
    viewAPAccounting(invoiceNum,suppId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/glHeader/apInv?invoiceNum=${invoiceNum}&suppId=${suppId}`);
+    return this.http.get(this.ServerUrl + `/glHeader/apInv?invoiceNum=${invoiceNum}&suppId=${suppId}`,{ headers: this.headers });
   }
 
 
 
   viewPayAccounting(invoiceNum): Observable<any> {
-    return this.http.get(this.ServerUrl + `/glHeader/docSequenceValue/${invoiceNum}`);
+    return this.http.get(this.ServerUrl + `/glHeader/docSequenceValue/${invoiceNum}`,{ headers: this.headers });
   }
   getsearchByshipmentNo(shipmentNo, locId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/rcvShipment/shipmentNo?shipmentNumber=${shipmentNo}&shipFromLocId=${locId}`);
+    return this.http.get(this.ServerUrl + `/rcvShipment/shipmentNo?shipmentNumber=${shipmentNo}&shipFromLocId=${locId}`,{ headers: this.headers });
   }
 
 
   viewAccountingCSRev(ordNum): Observable<any> {
-    return this.http.get(this.ServerUrl + `/glHeader/arInv/${ordNum}`);
-    // http://localhost:8081/glHeader/arInv/202110112239
+    return this.http.get(this.ServerUrl + `/glHeader/arInv/${ordNum}`,{ headers: this.headers });
   }
 
 
@@ -2512,18 +2324,15 @@ public shortLandedClaimSave(rtvRecord) {
 
 
   poAllRecFind(segment1, billToLoc): Observable<any> {
-    return this.http.get(this.ServerUrl + `/rcvShipment/findByPONumber?segment1=${segment1}&billToLoc=${billToLoc}`);
+    return this.http.get(this.ServerUrl + `/rcvShipment/findByPONumber?segment1=${segment1}&billToLoc=${billToLoc}`,{ headers: this.headers });
   }
 
 
 
 
   downloadgrrPrint(receiptNo): Observable<any> {
-    //  const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica//rcvShipment/POReceipt/${receiptNo}`;
-    // local
     const REQUEST_URI = this.ServerUrl + `/rcvShipment/POReceipt/${receiptNo}`;
     return this.http.get(REQUEST_URI, {
-      // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
       headers: this.headers,
     });
@@ -2531,7 +2340,7 @@ public shortLandedClaimSave(rtvRecord) {
 
 
   delearCodeList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/DealerMst');
+    return this.http.get(this.ServerUrl + '/DealerMst',{ headers: this.headers });
   }
 
   getInterBranch(InterBranch1, lType): Observable<any> {
@@ -2540,28 +2349,26 @@ public shortLandedClaimSave(rtvRecord) {
     const REQUEST_URI = this.ServerUrl + '/fndAcctLookup/lookupTypeValueWise';
     return this.http.get(REQUEST_URI, {
       params: REQUEST_PARAMS,
-
+      headers: this.headers,
     });
   }
 
   getInterBranchNatural(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/naturalAcc/Payable');
+    return this.http.get(this.ServerUrl + '/naturalAcc/Payable',{ headers: this.headers });
   }
 
   getInterBranchNewApi(naturalAccout): Observable<any> {
-    return this.http.get(this.ServerUrl + `/naturalAcc/interBranch/${naturalAccout}`);
+    return this.http.get(this.ServerUrl + `/naturalAcc/interBranch/${naturalAccout}`,{ headers: this.headers });
   }
 
 
   lookupNameList(mlookupValue, mlookupType) {
-    // alert('servie=call');
     const REQUEST_PARAMS = new HttpParams().set('lookupType', mlookupType)
       .set('lookupValue', mlookupValue)
-
     const REQUEST_URI = this.ServerUrl + '/fndAcctLookup/lookupTypeValueWise';
     return this.http.get(REQUEST_URI, {
       params: REQUEST_PARAMS,
-
+      headers: this.headers,
     });
   }
 
@@ -2586,34 +2393,18 @@ public shortLandedClaimSave(rtvRecord) {
   // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\PRICE LIST MASTER\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
   PriceTypeList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/PriceListType');
+    return this.http.get(this.ServerUrl + '/cmnLookup/PriceListType',{ headers: this.headers });
   }
 
   PriceSubTypeList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/PriceListSubType');
+    return this.http.get(this.ServerUrl + '/cmnLookup/PriceListSubType',{ headers: this.headers });
   }
 
 
-  // PriceListIdList(): Observable<any> {
-  //   return this.http.get(this.ServerUrl +'/pricelist');
-
-  // }
-
-
-  PriceListIdList(mOuId, mDivId): Observable<any> {
-    // return this.http.get(this.ServerUrl +'/pricelist');
-    return this.http.get(this.ServerUrl + `/pricelist/priceHdr?ouId=${mOuId}&divisionId=${mDivId}`);
-    // http://localhost:8081/pricelist/priceHdr?ouId=101&divisionId=2
+   PriceListIdList(mOuId, mDivId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/pricelist/priceHdr?ouId=${mOuId}&divisionId=${mDivId}`,{ headers: this.headers });
   }
 
-
-
-
-
-
-  // getPriceListSearch(): Observable<any> {
-  //   return this.http.get(this.ServerUrl +`/pricelist/prcline/${priceListHeaderId}`);
-  //  }
 
   public PriceListMasterSubmit(PriceListMasterRecord) {
     const options = {
@@ -2624,22 +2415,17 @@ public shortLandedClaimSave(rtvRecord) {
   }
 
   UpdatePriceListById(PriceListMasterRecord, priceListHeaderId) {
-    // alert("PL HEADER ID : "+priceListHeaderId);
     const options = {
       headers: this.headers
     };
-    // const url = (this.ServerUrl + `/pricelist/${priceListHeaderId}`);
     const url = (this.ServerUrl + `/pricelist`);
     return this.http.put(url, PriceListMasterRecord, options);
   }
 
   UpdatePriceListByIdHeader(PriceListMasterRecord, priceListHeaderId) {
-    // alert("PL HEADER ID : "+priceListHeaderId);
     const options = {
       headers: this.headers
     };
-    // const url = (this.ServerUrl + `/pricelist/${priceListHeaderId}`);
-    // URL - http://localhost:8081/pricelist/prcheader
     const url = (this.ServerUrl + `/pricelist/prcheader`);
     return this.http.put(url, PriceListMasterRecord, options);
   }
@@ -2662,49 +2448,40 @@ public shortLandedClaimSave(rtvRecord) {
   }
 
   getPriceListSearch(ouId, divId): Observable<any> {
-    // return this.http.get(this.ServerUrl + '/pricelist');
-    return this.http.get(this.ServerUrl + `/pricelist/prcListDto?ouId=${ouId}&divisionId=${divId}`);
+    return this.http.get(this.ServerUrl + `/pricelist/prcListDto?ouId=${ouId}&divisionId=${divId}`,{ headers: this.headers });
   }
 
   getPriceListHistorySearch(priceListId, itemId): Observable<any> {
-    // alert("MS>>PL ID="+priceListId + " item id="+itemId);
-    return this.http.get(this.ServerUrl + `/priceHistory/itemhist?priceListHeaderId=${priceListId}&itemId=${itemId}`);
+    return this.http.get(this.ServerUrl + `/priceHistory/itemhist?priceListHeaderId=${priceListId}&itemId=${itemId}`,{ headers: this.headers });
   }
 
   searchByItemDetails(segment): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemMst/details/${segment}`);
+    return this.http.get(this.ServerUrl + `/itemMst/details/${segment}`,{ headers: this.headers });
   }
 
   getPriceListSearchNew(ouId, divisionId): Observable<any> {
-    // alert("MS>>PL ID="+priceListId + " item id="+itemId);
-    return this.http.get(this.ServerUrl + `/pricelist/priceHdr?ouId=${ouId}&divisionId=${divisionId}`);
+    return this.http.get(this.ServerUrl + `/pricelist/priceHdr?ouId=${ouId}&divisionId=${divisionId}`,{ headers: this.headers });
   }
 
   getLineDetails(priceListHeaderId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/pricelist/priceDtl?priceListHeaderId=${priceListHeaderId}`);
+    return this.http.get(this.ServerUrl + `/pricelist/priceDtl?priceListHeaderId=${priceListHeaderId}`,{ headers: this.headers });
   }
 
   getLineDetailsSingleItem(plName, itmId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/pricelist/ItmPrcList/?priceListName=${plName}&itemId=${itmId}`);
-    // http://localhost:8081/pricelist/ItmPrcList/?priceListName=Bajaj Regular MRP&itemId=544
+    return this.http.get(this.ServerUrl + `/pricelist/ItmPrcList/?priceListName=${plName}&itemId=${itmId}`,{ headers: this.headers });
   }
 
   getLineDetailsSingleItemNew(plName, mSeg): Observable<any> {
-    return this.http.get(this.ServerUrl + `/pricelist/ItmPrcListNew/?priceListName=${plName}&segment=${mSeg}`);
-
-    //  http://localhost:8081/pricelist/ItmPrcListNew?priceListName=Bajaj Regular MRP&segment=JX402222
+    return this.http.get(this.ServerUrl + `/pricelist/ItmPrcListNew/?priceListName=${plName}&segment=${mSeg}`,{ headers: this.headers });
   }
 
 
   getLineDetailsWithItemBatchCode(plName, itmId, bCode): Observable<any> {
-    // alert("Pl,itmid,bcode : "+plName+" , "+itmId +" , "+bCode);
-    return this.http.get(this.ServerUrl + `/pricelist/ItmPrcBatch/?priceListName=${plName}&itemId=${itmId}&batchCode=${bCode}`);
-    // http://localhost:8081/pricelist/ItmPrcBatch/?priceListName=Bajaj%20Regular%20MRP&itemId=3382&batchCode=
+    return this.http.get(this.ServerUrl + `/pricelist/ItmPrcBatch/?priceListName=${plName}&itemId=${itmId}&batchCode=${bCode}`,{ headers: this.headers });
   }
 
 
   public OrderGenNewItemSubmit(locId, itemCode, mths, ordNum, dlrCd, plHd) {
-    // alert ("in  OrderGenNewItemSubmit -"+itemCode);
     const options = {
       headers: this.headers
     };
@@ -2713,13 +2490,8 @@ public shortLandedClaimSave(rtvRecord) {
   }
 
   getNewLineConsDetails(itmId, orderNum): Observable<any> {
-    return this.http.get(this.ServerUrl + `/spareOrder/ByOrderItem?&itemId=${itmId}&orderNumber=${orderNum}`);
+    return this.http.get(this.ServerUrl + `/spareOrder/ByOrderItem?&itemId=${itmId}&orderNumber=${orderNum}`,{ headers: this.headers });
   }
-
-  // POST - http://localhost:8081/spareOrder/addCons?locId=2102&itemCode=DK73012V&months=3&orderNumber=BJ-2102100022
-
-  //  GET - http://localhost:8081/spareOrder/ByOrderItem?itemId=29649&orderNumber=BJ-2102100022
-
 
   ////////////////////////////OrderTypeMaster//////////////////
   UpdateOrderTypeMasterById1(OrderTypeMasterRecord) {
@@ -2731,72 +2503,61 @@ public shortLandedClaimSave(rtvRecord) {
   }
 
   getOrderTypeSearch(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/OrderTrnType');
+    return this.http.get(this.ServerUrl + '/OrderTrnType',{ headers: this.headers });
 
   }
   InvSourceList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/InvoiceSource');
+    return this.http.get(this.ServerUrl + '/cmnLookup/InvoiceSource',{ headers: this.headers });
   }
   OrderCategoryList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/OrderCategory');
+    return this.http.get(this.ServerUrl + '/cmnLookup/OrderCategory',{ headers: this.headers });
   }
 
   ///////////////////////// AR RECEIPT  //////////////////////////////////////
 
   CustomerList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/Customer');
+    return this.http.get(this.ServerUrl + '/Customer',{ headers: this.headers });
   }
-
-  // CustomerSiteList(customerId: any): Observable<any> {
-  //   return this.http.get(this.ServerUrl +`/Customer/${customerId}`);
-  // }
-
 
 
   ReceiptTypeArList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/type/ArReceiptType');
-    // cmnLookup/type/ReceiptStatus
+    return this.http.get(this.ServerUrl + '/cmnLookup/type/ArReceiptType',{ headers: this.headers });
   }
 
 
   ReceiptStatusList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/type/ReceiptStatus');
-    // cmnLookup/type/ReceiptStatus
+    return this.http.get(this.ServerUrl + '/cmnLookup/type/ReceiptStatus',{ headers: this.headers });
   }
 
   ReceiptStateLst(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/CmnType/ReceiptState');
-    // http://localhost:8081/cmnLookup/CmnType/ReceiptState
+    return this.http.get(this.ServerUrl + '/cmnLookup/CmnType/ReceiptState',{ headers: this.headers });
   }
 
 
   ReverseReasonList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/CmnType/ReversalReason');
+    return this.http.get(this.ServerUrl + '/cmnLookup/CmnType/ReversalReason',{ headers: this.headers });
   }
 
   RcptReverseReasonList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/CmnType/RcptRevReason');
+    return this.http.get(this.ServerUrl + '/cmnLookup/CmnType/RcptRevReason',{ headers: this.headers });
   }
 
   RcptChqBounceReasonList(chqBncRsn): Observable<any> {
-    return this.http.get(this.ServerUrl + `/cmnLookup/CmnType/${chqBncRsn}`);
-    // http://localhost:8081/cmnLookup/CmnType/ChqBncRsn
+    return this.http.get(this.ServerUrl + `/cmnLookup/CmnType/${chqBncRsn}`,{ headers: this.headers });
   }
 
   RcptChqBounceReasonListNew(ouId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/chqBounceReason/reasonList/${ouId}`);
-    //  http://localhost:8081/chqBounceReason/reasonList/21
-
+    return this.http.get(this.ServerUrl + `/chqBounceReason/reasonList/${ouId}`,{ headers: this.headers });
   }
 
 
   RefReasonLst(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/CmnType/REFUND_REASON');
+    return this.http.get(this.ServerUrl + '/cmnLookup/CmnType/REFUND_REASON',{ headers: this.headers });
   }
 
 
   GLperiod(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/glPeriod/currentMonthPeriod');
+    return this.http.get(this.ServerUrl + '/glPeriod/currentMonthPeriod',{ headers: this.headers });
   }
 
   public ArReceiptSubmit(ArReceiptRecord) {
@@ -2807,18 +2568,14 @@ public shortLandedClaimSave(rtvRecord) {
     return this.http.post(url, ArReceiptRecord, options);
   }
 
-  // ReverseArReceipt
+  
 
   ReverseArReceiptSubmit(ArReceiptReversalRecord) {
-    // alert( "MS >> AR RECEIPT REVERSAL" +ArReceiptReversalRecord);
     const options = {
       headers: this.headers
     };
     const url = (this.ServerUrl + `/arCashReceipts/ArReceiptReversal`);
     return this.http.put(url, ArReceiptReversalRecord, options);
-    // http://localhost:8081/arCashReceipts/ArReceiptReversal
-
-    // http://localhost:8081/arCashReceipts/ArReceiptReversal--PUT METHOD
   }
 
 
@@ -2833,13 +2590,11 @@ public shortLandedClaimSave(rtvRecord) {
   ////////////////////////// UNAPPLY///////////////////////////////////////
 
   UnApplyArReceiptSubmit(ArReceiptUnApplyRecord, mRcptNo) {
-    // alert( "MS >> AR RECEIPT REVERSAL" +ArReceiptReversalRecord);
     const options = {
       headers: this.headers
     };
     const url = (this.ServerUrl + `/arCashReceipts/unapplyRcptManNew/${mRcptNo}`);
     return this.http.put(url, ArReceiptUnApplyRecord, options);
-    // http://localhost:8081/arCashReceipts/unapplyRcptManNew/{receiptNumber}
   }
 
 
@@ -2870,122 +2625,113 @@ public shortLandedClaimSave(rtvRecord) {
 
   getArReceiptSearchByRcptNo(rcptNumber, ouId): Observable<any> {
     if (rcptNumber != undefined || rcptNumber != null) {
-      return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptNumber=${rcptNumber}&orgId=${ouId}`);
+      return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptNumber=${rcptNumber}&orgId=${ouId}`,{ headers: this.headers });
     }
 
   }
 
 
   gatePassStatusCheck(soNumber): Observable<any> {
-      return this.http.get(this.ServerUrl + `/orderHeader/getSaleOrder/${soNumber}`);
-     // http://localhost:8081/orderHeader/getSaleOrder/222220910400034
+      return this.http.get(this.ServerUrl + `/orderHeader/getSaleOrder/${soNumber}`,{ headers: this.headers });
   }
 
   
 
 
   getArReceiptSearchByRcptNoByloc(rcptNumber, ouId, locId, deptId): Observable<any> {
-    // alert ("MS >> dept Id : " +deptId)
     if (rcptNumber != undefined || rcptNumber != null) {
-      return this.http.get(this.ServerUrl + `/arCashReceipts/Search/${deptId}?receiptNumber=${rcptNumber}&orgId=${ouId}&locId=${locId}`);
-      //  return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptNumber=${rcptNumber}&orgId=${ouId}&locId=${locId}`);
+      return this.http.get(this.ServerUrl + `/arCashReceipts/Search/${deptId}?receiptNumber=${rcptNumber}&orgId=${ouId}&locId=${locId}`,{ headers: this.headers });
+     
     }
   }
 
   SearchRcptByDate(rcptDate, ouId, locId, deptId): Observable<any> {
-    // old >> return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptDate='${rcptDate}'&orgId=${ouId}&locId=${locId}`)
-    return this.http.get(this.ServerUrl + `/arCashReceipts/Search/${deptId}?receiptDate='${rcptDate}'&orgId=${ouId}&locId=${locId}`)
+    
+    return this.http.get(this.ServerUrl + `/arCashReceipts/Search/${deptId}?receiptDate='${rcptDate}'&orgId=${ouId}&locId=${locId}`,{ headers: this.headers })
   }
 
 
   SearchRcptByCustNo(custActNo, ouId, locId, deptId): Observable<any> {
-    //old>> return this.http.get(this.ServerUrl + `/arCashReceipts/Search?accountNo=${custActNo}&orgId=${ouId}&locId=${locId}`);
-    return this.http.get(this.ServerUrl + `/arCashReceipts/Search/${deptId}?accountNo=${custActNo}&orgId=${ouId}&locId=${locId}`);
+    
+    return this.http.get(this.ServerUrl + `/arCashReceipts/Search/${deptId}?accountNo=${custActNo}&orgId=${ouId}&locId=${locId}`,{ headers: this.headers });
 
   }
 
   getArReceiptDetailsByRcptNo(rcptNumber): Observable<any> {
-    return this.http.get(this.ServerUrl + `/arCashReceipts/receipt/${rcptNumber}`);
+    return this.http.get(this.ServerUrl + `/arCashReceipts/receipt/${rcptNumber}`,{ headers: this.headers });
   }
 
   getArReceiptDetailsByRcptNoAndloc(rcptNumber): Observable<any> {
-    return this.http.get(this.ServerUrl + `/arCashReceipts/receipt/${rcptNumber}?locId=` + sessionStorage.getItem('locId'));
+    return this.http.get(this.ServerUrl + `/arCashReceipts/receipt/${rcptNumber}?locId=` + sessionStorage.getItem('locId'),{ headers: this.headers });
   }
 
 
 
   getArReceiptDetailsByRcptNoAndlocDeptIDAccou(rcptNumber, locId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/arCashReceipts/receipt/${rcptNumber}?locId=` + locId);
+    return this.http.get(this.ServerUrl + `/arCashReceipts/receipt/${rcptNumber}?locId=` + locId,{ headers: this.headers });
   }
 
 
   getArReceiptAppliedHistory(rcptNumber): Observable<any> {
-    return this.http.get(this.ServerUrl + `/arCashReceipts/receipt/${rcptNumber}`);
+    return this.http.get(this.ServerUrl + `/arCashReceipts/receipt/${rcptNumber}`,{ headers: this.headers });
   }
 
 
 
   getArReceiptSearchByInvoiceNo(custAccountNo, billToSiteId, rcptNo, loginDeptId): Observable<any> {
-    // alert("MS>>RCPT NO -getArReceiptSearchByRcptNo: CustActNo " +custAccountNo +'billToSiteId:'+billToSiteId );
-    return this.http.get(this.ServerUrl + `/arCashReceipts/apply/inv?recepitNo=${rcptNo}&custAccountNo=${custAccountNo}&billToSiteId=${billToSiteId}&loginDeptId=${loginDeptId} `);
+   
+    return this.http.get(this.ServerUrl + `/arCashReceipts/apply/inv?recepitNo=${rcptNo}&custAccountNo=${custAccountNo}&billToSiteId=${billToSiteId}&loginDeptId=${loginDeptId}`,{ headers: this.headers });
 
   }
 
 
   getCreditMemoSearchByInvoiceNo(custAccountNo, billToSiteId, crMemoNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/arCashReceipts/apply/cm?creditNo=${crMemoNo}&custAccountNo=${custAccountNo}&billToSiteId=${billToSiteId}`);
-    // http://localhost:8081/arCashReceipts/apply/cm?creditNo=12121101817&custAccountNo=1212&billToSiteId=101
+    return this.http.get(this.ServerUrl + `/arCashReceipts/apply/cm?creditNo=${crMemoNo}&custAccountNo=${custAccountNo}&billToSiteId=${billToSiteId}`,{ headers: this.headers });
+    
   }
 
 
   viewAccountingArReceipt(receiptNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/glHeader/docSequenceValue/${receiptNo}`);
-    // http://localhost:8081/glHeader/docSequenceValue/212121110100075
+    return this.http.get(this.ServerUrl + `/glHeader/docSequenceValue/${receiptNo}`,{ headers: this.headers });
+    
   }
 
   ////////////////////////// CREDIT MEMO APPLICATION /////////////////////
   public CreditMemmoApplySubmit(creditMemoApplyRecord, mCrmNo) {
-    // alert("MS >> " + mCrmNo);
+   
     const options = {
       headers: this.headers
     };
     const url = (this.ServerUrl + `/arInv/apply/inv/${mCrmNo}`);
     return this.http.post(url, creditMemoApplyRecord, options);
-
-    // http://localhost:8081/arInv/apply/inv/12121101820
   }
   ////////////////////////// ///////////////////////////////////////
 
 
   PaymentModeList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/PayType');
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/PayType',{ headers: this.headers });
   }
 
   PaymentModeListPP(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/PP_PayType');
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/PP_PayType',{ headers: this.headers });
   }
 
   ReceiptMethodList(mPaytype, mLocId, mStatus): Observable<any> {
-    // alert("Master Service :"+ mPaytype+" "+mLocId+" " +mStatus);
-    return this.http.get(this.ServerUrl + `/receiptMethod?methodType=${mPaytype}&locId=${mLocId}&status=${mStatus}`);
+    return this.http.get(this.ServerUrl + `/receiptMethod?methodType=${mPaytype}&locId=${mLocId}&status=${mStatus}`,{ headers: this.headers });
   }
 
   ReceiptMethodListNew(mPaytype, mStatus, deptId, mOrgId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/receiptMethod/rctMethodDeptwise?methodType=${mPaytype}&status=${mStatus}&attribute2=${deptId}&orgId=${mOrgId}`);
-    // http://localhost:8081/receiptMethod/rctMethodDeptwise?methodType=CASH&status=Active&attribute2=1&orgId=22
-
-    // http://saihorizon.com:8051/ErpReplica/receiptMethod/rctMethodDeptwise?methodType=CHEQUE&status=5&attribute2=21&orgId=Active
+    return this.http.get(this.ServerUrl + `/receiptMethod/rctMethodDeptwise?methodType=${mPaytype}&status=${mStatus}&attribute2=${deptId}&orgId=${mOrgId}`,{ headers: this.headers });
+   
   }
 
   ///////////////////////////AVERAGE COST UPDATE//////////////////////////
 
   avgCurrentCost(mitemId, mLocId): Observable<any> {
-    // alert("Master Service :"+ mitemId+" ,"+mLocId);
-    return this.http.get(this.ServerUrl + `/averageCost/avgLocItem?locationId=${mLocId}&itemId=${mitemId}`);
+    return this.http.get(this.ServerUrl + `/averageCost/avgLocItem?locationId=${mLocId}&itemId=${mitemId}`,{ headers: this.headers });
   }
 
   public AvgCostUpdateSubmit(AvgCostUpdateRecord) {
-    // alert('in service')
     const options = {
       headers: this.headers
     };
@@ -2993,10 +2739,9 @@ public shortLandedClaimSave(rtvRecord) {
     return this.http.post(url, AvgCostUpdateRecord, options);
   }
 
-  // getAvgHistoryList
+  
   getAvgHistoryList(mLocId, mitemId, frmDate, toDate): Observable<any> {
-    // alert("Master Service :"+ mLocId+","+mitemId+" ,"+frmDate+","+toDate);
-    return this.http.get(this.ServerUrl + `/averageCost/avghistory?locationId=${mLocId}&itemId=${mitemId}&startDate=${frmDate}&endDate=${toDate}`);
+    return this.http.get(this.ServerUrl + `/averageCost/avghistory?locationId=${mLocId}&itemId=${mitemId}&startDate=${frmDate}&endDate=${toDate}`,{ headers: this.headers });
   }
 
   ///////////////////Price list File upload/////////////////////
@@ -3019,24 +2764,23 @@ public shortLandedClaimSave(rtvRecord) {
     var docType1 = formData.get('docType');
     formData.append('locId', mlocId);
     return this.http.post(this.ServerUrl + `/fileImport/uploadbkord`, formData)
-    // http://localhost:8081/fileImport/uploadbkord
+   
   }
   ////////////////////////////// Back order File upload /////////
 
 
 
   orderCancellationUpload(formData: FormData, emplId,receiptMethodName) {
-    // alert(emplId);
-    // alert ("Org Id :"+mouId + "  BankAccountId :"+bnkAcccountId);
+    
     let headers1 = new HttpHeaders();
     formData.append('empId', emplId);
     formData.append('bankAc', receiptMethodName);
     return this.http.post(this.ServerUrl + `/Proforma/cancel/bookings`, formData)
-    // http://localhost:8081/fileImport/uploadBankStmt/
+   
   }
 
   public orderGenBajaj(ordeGenRecord, mLocId, mths, dlrCd, plHd, ordNum) {
-    // alert (  "MS>> Loc Id :" +mLocId + " ," +mths);
+   
     const options = {
       headers: this.headers
     };
@@ -3047,19 +2791,19 @@ public shortLandedClaimSave(rtvRecord) {
 
 
   getOrderListBajaj(ordNumber): Observable<any> {
-    return this.http.get(this.ServerUrl + `/spareOrder/ByOrderNumber/${ordNumber}`);
-    // http://localhost:8081/spareOrder/ByOrderNumber/BJ-2102100035
+    return this.http.get(this.ServerUrl + `/spareOrder/ByOrderNumber/${ordNumber}`,{ headers: this.headers });
+  
   }
 
   getOrderNumberLatest(mLocId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/spareOrder/Order?locId=${mLocId}`);
-    // http://localhost:8081/spareOrder/Order?locId=2102
+    return this.http.get(this.ServerUrl + `/spareOrder/Order?locId=${mLocId}`,{ headers: this.headers });
+    
   }
 
 
 
   orderLineDelete(ordNumber, itemId) {
-    return this.http.delete(this.ServerUrl + `/spareOrder/removeLine?OrderNumber=${ordNumber}&itemId=${itemId}`);
+    return this.http.delete(this.ServerUrl + `/spareOrder/removeLine?OrderNumber=${ordNumber}&itemId=${itemId}`,{ headers: this.headers });
   }
 
   OrderLineAddUpdate(orderLineRecord) {
@@ -3069,7 +2813,6 @@ public shortLandedClaimSave(rtvRecord) {
     const url = (this.ServerUrl + `/spareOrder/addLine`);
     return this.http.post(url, orderLineRecord, options);
 
-    // http://localhost:8081/spareOrder/addLine
   }
 
 
@@ -3077,10 +2820,7 @@ public shortLandedClaimSave(rtvRecord) {
 
 
   ///////////////////////////////////////////////////////////////////////////////////
-  // bulkpouploadSales(formData: FormData) {
-  //     return this.http.post(this.ServerUrl + `/fileImport/uploadVhPO`, formData)
-  //   }
-
+ 
   bulkpouploadSales(formData: FormData, locCode, suppNo, supplierSite, username) {
     formData.append('location', locCode);
     formData.append('supplierNo', suppNo);
@@ -3101,36 +2841,32 @@ public shortLandedClaimSave(rtvRecord) {
   }
 
 
-  // bulkpouploadSalesVhiecleAndAddonItem(file,addonfile,empId,priceListName) {
-  //   return this.http.get(this.ServerUrl + `/orderHeader/uploadVehiclePriceList?file=${file}&addonfile=${addonfile}&empId=${empId}&priceListName=${priceListName}`)
-  // }
-
   pendingPOList(emplId) {
-    return this.http.get(this.ServerUrl + `/poHdr/user/All?userId=${emplId}`)
+    return this.http.get(this.ServerUrl + `/poHdr/user/All?userId=${emplId}`,{ headers: this.headers })
   }
 
   getPOByUser(emplId, startDt, endDt, locId) {
-    return this.http.get(this.ServerUrl + `/poHdr/byDate?userId=${emplId}&startDt=${startDt}&endDt=${endDt}&locId=${locId}`)
+    return this.http.get(this.ServerUrl + `/poHdr/byDate?userId=${emplId}&startDt=${startDt}&endDt=${endDt}&locId=${locId}`,{ headers: this.headers })
   }
 
   getsearchApInvList(ouId, startDt, endDt) {
-    return this.http.get(this.ServerUrl + `/apInv/SearchDateWise?orgId=${ouId}&frmInvoiceDate=${startDt}&toInvoiceDate=${endDt}`)
+    return this.http.get(this.ServerUrl + `/apInv/SearchDateWise?orgId=${ouId}&frmInvoiceDate=${startDt}&toInvoiceDate=${endDt}`,{ headers: this.headers })
   }
 
   getPOByUserAccc(deptId, startDt, endDt, locId) {
-    return this.http.get(this.ServerUrl + `/poHdr/Acc/byDate?deptId=${deptId}&startDt=${startDt}&endDt=${endDt}&locId=${locId}`)
+    return this.http.get(this.ServerUrl + `/poHdr/Acc/byDate?deptId=${deptId}&startDt=${startDt}&endDt=${endDt}&locId=${locId}`,{ headers: this.headers })
   }
 
   getOrderByUser(locId, startDt, endDt, deptId) {
-    return this.http.get(this.ServerUrl + `/orderHeader/getByDate?locId=${locId}&startDt=${startDt}&endDt=${endDt}&dept=${deptId}`)
+    return this.http.get(this.ServerUrl + `/orderHeader/getByDate?locId=${locId}&startDt=${startDt}&endDt=${endDt}&dept=${deptId}`,{ headers: this.headers })
   }
 
   getemwayBill(startDt, endDt, locId, deptId) {
-    return this.http.get(this.ServerUrl + `/arRecvTrx/EwayInv?fromDate=${startDt}&toDate=${endDt}&locId=${locId}&deptId=${deptId}`)
+    return this.http.get(this.ServerUrl + `/arRecvTrx/EwayInv?fromDate=${startDt}&toDate=${endDt}&locId=${locId}&deptId=${deptId}`,{ headers: this.headers })
   }
 
   getemwayBillcustNo(startDt, endDt, locId, deptId, custAccNo) {
-    return this.http.get(this.ServerUrl + `/arRecvTrx/EwayList?fromDate=${startDt}&toDate=${endDt}&locId=${locId}&custAccountNo=${custAccNo}`)
+    return this.http.get(this.ServerUrl + `/arRecvTrx/EwayList?fromDate=${startDt}&toDate=${endDt}&locId=${locId}&custAccountNo=${custAccNo}`,{ headers: this.headers })
   }
 
   EwayBill(trxNumber) {
@@ -3142,24 +2878,24 @@ public shortLandedClaimSave(rtvRecord) {
   }
 
   getLaborByUser(ouId) {
-    return this.http.get(this.ServerUrl + `/pricelist/laborPrice/${ouId}`)
+    return this.http.get(this.ServerUrl + `/pricelist/laborPrice/${ouId}`,{ headers: this.headers })
   }
 
   getClosingStock(ouId) {
-    return this.http.get(this.ServerUrl + `/orderHeader/onHandList/${ouId}`)
+    return this.http.get(this.ServerUrl + `/orderHeader/onHandList/${ouId}`,{ headers: this.headers })
   }
 
   getSalesOrderByUser(locId, startDt, endDt, deptId) {
-    return this.http.get(this.ServerUrl + `/orderHeader/getByDateOM?startDt=${startDt}&endDt=${endDt}&locId=${locId}&dept=${deptId}`)
+    return this.http.get(this.ServerUrl + `/orderHeader/getByDateOM?startDt=${startDt}&endDt=${endDt}&locId=${locId}&dept=${deptId}`,{ headers: this.headers })
   }
 
   getRtoDataList(startDt, endDt, ouId, locId) {
-    return this.http.get(this.ServerUrl + `/orderHeader/getRTOList?fromDate=${startDt}&toDate=${endDt}&ouId=${ouId}&locId=${locId}`)
+    return this.http.get(this.ServerUrl + `/orderHeader/getRTOList?fromDate=${startDt}&toDate=${endDt}&ouId=${ouId}&locId=${locId}`,{ headers: this.headers })
   }
 
 
   getModelWisePrice(orgId) {
-    return this.http.get(this.ServerUrl + `/orderHeader/priceModelwise/${orgId}`)
+    return this.http.get(this.ServerUrl + `/orderHeader/priceModelwise/${orgId}`,{ headers: this.headers })
   }
 
   bulkpouploadSpares(formData: FormData) {
@@ -3223,49 +2959,68 @@ public shortLandedClaimSave(rtvRecord) {
 
   BindUser(): Observable<OPMasterDtoComponent[]> {
     var userId1 = sessionStorage.getItem('userId');
-    return this.http.get<OPMasterDtoComponent[]>(this.ServerUrl + `/header/FileList?userId=` + userId1);
-    // return this.http.get<HomePageComponent[]>(this.ServerUrl + `/header/FileList`);
+    return this.http.get<OPMasterDtoComponent[]>(this.ServerUrl + `/header/FileList?userId=` + userId1,{ headers: this.headers });
+    
   }
   //////////////////////////EXTENDED WARRANTY/////////////////////////////
 
 
   EwSourceList(): Observable<any> {
-    //////
-    return this.http.get(this.ServerUrl + '/cmnLookup/type/EWSource');
+
+    return this.http.get(this.ServerUrl + '/cmnLookup/type/EWSource',{ headers: this.headers });
   }
 
   EwSchemeList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/type/EWScheme');
+    return this.http.get(this.ServerUrl + '/cmnLookup/type/EWScheme',{ headers: this.headers });
   }
 
   EWSlabList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/type/EWSlab');
+    return this.http.get(this.ServerUrl + '/cmnLookup/type/EWSlab',{ headers: this.headers });
   }
 
 
   EwTypeList(divId): Observable<any> {
-    // return this.http.get(this.ServerUrl +'/cmnLookup/type/EWType');
-    return this.http.get(this.ServerUrl + `/cmnLookup/Catgtype?cmnType=EWType&divisionId=${divId}`);
-    // http://localhost:8081/cmnLookup/Catgtype?cmnType=EWType&divisionId=2
+   
+    return this.http.get(this.ServerUrl + `/cmnLookup/Catgtype?cmnType=EWType&divisionId=${divId}`,{ headers: this.headers });
+    
 
   }
 
   EwCancelReasonList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/type/EW CANCEL REASON');
+    return this.http.get(this.ServerUrl + '/cmnLookup/type/EW CANCEL REASON',{ headers: this.headers });
   }
 
 
   ModelVariantList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/type/Variant');
+    return this.http.get(this.ServerUrl + '/cmnLookup/type/Variant',{ headers: this.headers });
   }
 
+  varianListFn(id:number): Observable<any> {
+    return this.http.get(this.ServerUrl + `/cmnLookup/mainModelWiseVariant?mainModel=${id}`,{ headers: this.headers });
+  }
+
+  colorListFn(id:number): Observable<any> {
+    return this.http.get(this.ServerUrl + `/cmnLookup/variantWiseColor?variantid=${id}`,{ headers: this.headers });
+  }
+
+
+public saveVariantMstFn(variantMaster) {
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + '/VariantMst/AddVariant ';
+    return this.http.post(url, variantMaster, options);
+  }
+
+
+
   PremiumPeriodList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/type/EWPeriod');
+    return this.http.get(this.ServerUrl + '/cmnLookup/type/EWPeriod',{ headers: this.headers });
   }
 
   getEWSchemeSearch(mOuId): Observable<any> {
-    // alert("OUID ="+mOuId);
-    return this.http.get(this.ServerUrl + `/EwScheme/ouEwScheme?ouId=${mOuId}`);
+   
+    return this.http.get(this.ServerUrl + `/EwScheme/ouEwScheme?ouId=${mOuId}`,{ headers: this.headers });
   }
 
   public SaiEwSchemeSubmit(EwSchemeMasterRecord) {
@@ -3287,122 +3042,115 @@ public shortLandedClaimSave(rtvRecord) {
 
 
   RegNoListFN(): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemMst/regList/1`);
+    return this.http.get(this.ServerUrl + `/itemMst/regList/1`,{ headers: this.headers });
   }
 
   VehVinList(): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemMst/vinList`);
+    return this.http.get(this.ServerUrl + `/itemMst/vinList`,{ headers: this.headers });
   }
 
   getEWSlabDetailsByCodeDesc(mCode): Observable<any> {
-    // alert("MS >> "+mCodeDesc);
-    return this.http.get(this.ServerUrl + `/cmnLookup/CmnTypeCode?code=${mCode}&cmnType=EWSlab`);
+   
+    return this.http.get(this.ServerUrl + `/cmnLookup/CmnTypeCode?code=${mCode}&cmnType=EWSlab`,{ headers: this.headers });
   }
 
   getSectionTdsDetailsByCode(mCode): Observable<any> {
-    // alert("MS >> "+mCodeDesc);
-    return this.http.get(this.ServerUrl + `/cmnLookup/CmnTypeCode?code=${mCode}&cmnType=JAI_TDS_SECTION`);
+   
+    return this.http.get(this.ServerUrl + `/cmnLookup/CmnTypeCode?code=${mCode}&cmnType=JAI_TDS_SECTION`,{ headers: this.headers });
   }
 
   EwSchemeItemList(mVariant, mOuId, mAging, mKms): Observable<any> {
-    // alert(  "ms>>> "+ mVariant+","+mAging+","+mKms+","+mOuId);
-    return this.http.get(this.ServerUrl + `/EwScheme/ewvariant?variant=${mVariant}&ouId=${mOuId}&aging=${mAging}&kms=${mKms}`);
+ 
+    return this.http.get(this.ServerUrl + `/EwScheme/ewvariant?variant=${mVariant}&ouId=${mOuId}&aging=${mAging}&kms=${mKms}`,{ headers: this.headers });
   }
 
   getEWSchemeDetails(mSchemeId): Observable<any> {
 
     if (mSchemeId > 0) {
-      // alert(mSchemeId );
-      return this.http.get(this.ServerUrl + `/EwScheme/${mSchemeId}`);
+    
+      return this.http.get(this.ServerUrl + `/EwScheme/${mSchemeId}`,{ headers: this.headers });
     }
   }
 
   variantDetailsList(mVariant): Observable<any> {
-    // alert(mVariant );
-    return this.http.get(this.ServerUrl + `/VariantMst/VariantDesc/${mVariant}`);
+
+    return this.http.get(this.ServerUrl + `/VariantMst/VariantDesc/${mVariant}`,{ headers: this.headers });
   }
 
   getVariantList(): Observable<any> {
-    // alert(mVariant );
-    return this.http.get(this.ServerUrl + `/VariantMst/Variants`);
+
+    return this.http.get(this.ServerUrl + `/VariantMst/Variants`,{ headers: this.headers });
   }
 
 
   getVehRegDetails(mRegNumber): Observable<any> {
-    // alert(mRegNumber );
-    return this.http.get(this.ServerUrl + `/VehAddInfo/RegNo/${mRegNumber}`);
+
+    return this.http.get(this.ServerUrl + `/VehAddInfo/RegNo/${mRegNumber}`,{ headers: this.headers });
   }
 
   getVehRegDetailsNew(mRegNumber): Observable<any> {
-    return this.http.get(this.ServerUrl + `/VehAddInfo/ws/RegNo/${mRegNumber}`);
-    // http://localhost:8081/VehAddInfo/ws/RegNo/KL07BV4680
+    return this.http.get(this.ServerUrl + `/VehAddInfo/ws/RegNo/${mRegNumber}`,{ headers: this.headers });
+    
   }
 
   getVehRegDetail(RegNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/VehAddInfo/valwarr/${RegNo}`);
+    return this.http.get(this.ServerUrl + `/VehAddInfo/valwarr/${RegNo}`,{ headers: this.headers });
   }
   getVehDetailsByModelChassis(mdl, chas): Observable<any> {
-    return this.http.get(this.ServerUrl + `/VehAddInfo/ws/mdlChs?mainModel=${mdl}&chassisNo=${chas}`);
-    //http://localhost:8081/VehAddInfo/ws/mdlChs?mainModel=AVENGER&chassisNo=234568
-
+    return this.http.get(this.ServerUrl + `/VehAddInfo/ws/mdlChs?mainModel=${mdl}&chassisNo=${chas}`,{ headers: this.headers });
+    
   }
 
 
 
 
   getWsVehRegDetails(mRegNumber): Observable<any> {
-    // alert("MS:>> " +mRegNumber );
-    return this.http.get(this.ServerUrl + `/VehAddInfo/ws/RegNo/${mRegNumber}`);
+   
+    return this.http.get(this.ServerUrl + `/VehAddInfo/ws/RegNo/${mRegNumber}`,{ headers: this.headers });
   }
 
   getVehVinDetails(mVin): Observable<any> {
-    // alert("master >> " +mVin );
-    return this.http.get(this.ServerUrl + `/VehAddInfo/VinInfo/${mVin}`);
+   
+    return this.http.get(this.ServerUrl + `/VehAddInfo/VinInfo/${mVin}`,{ headers: this.headers });
   }
 
 
   getEWCustomerSearch(): Observable<any> {
-    return this.http.get(this.ServerUrl + `/ewmaster`);
+    return this.http.get(this.ServerUrl + `/ewmaster`,{ headers: this.headers });
   }
 
   getEWCustomerSearchByEWNo(mEWNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/ewmaster/${mEWNo}`);
+    return this.http.get(this.ServerUrl + `/ewmaster/${mEWNo}`,{ headers: this.headers });
   }
 
   getVehicleOrderDetails(mOrderNumber): Observable<any> {
-    // alert("ms order number>>"+mOrderNumber);
-    return this.http.get(this.ServerUrl + `/SsMcpEnqMst/Sales/${mOrderNumber}`);
-    // http://localhost:8081/SsMcpEnqMst/Sales/2111242168
-
+   
+    return this.http.get(this.ServerUrl + `/SsMcpEnqMst/Sales/${mOrderNumber}`,{ headers: this.headers });
+   
   }
 
   getVehicleOrderDetailsNew(mOrderNumber): Observable<any> {
-    // alert("ms order number>>"+mOrderNumber);
-    return this.http.get(this.ServerUrl + `/SsMcpEnqMst/SalesEW/${mOrderNumber}`);
-    //   http://localhost:8081/SsMcpEnqMst/SalesEW/21221014600015
+   
+    return this.http.get(this.ServerUrl + `/SsMcpEnqMst/SalesEW/${mOrderNumber}`,{ headers: this.headers });
+   
   }
 
 
   getEWStatusVehcile(mRegno): Observable<any> {
-    // alert("ms>>"+mRegno);
-    return this.http.get(this.ServerUrl + `/ewmaster/ewvehicle/${mRegno}`);
+    
+    return this.http.get(this.ServerUrl + `/ewmaster/ewvehicle/${mRegno}`,{ headers: this.headers });
   }
 
   getLastRunKms(mRegno): Observable<any> {
-    // alert("ms>>"+mRegno);
-    return this.http.get(this.ServerUrl + `/jobCard/lastKms?regNo=${mRegno}`);
+    
+    return this.http.get(this.ServerUrl + `/jobCard/lastKms?regNo=${mRegno}`,{ headers: this.headers });
 
   }
 
-  // EwClaimedCheck(mRegno): Observable<any> {
-  //   alert("ms>>"+mRegno);
-  //   return this.http.get(this.ServerUrl + `/jobCard/ewjobNo?regNo=${mRegno}&billableTyName=Extended Warranty`);
-  //    // http://localhost:8081/jobCard/ewjobNo?regNo=MH12EM6011&billableTyName=Extended Warranty
 
-  // }
   EwClaimedCheck(mRegno): Observable<any> {
-    // alert("ms>>"+mRegno);
-    return this.http.get(this.ServerUrl + `/jobCard/ewjobNo?regNo=${mRegno}&billableTyName=Extended Warranty`);
+    
+    return this.http.get(this.ServerUrl + `/jobCard/ewjobNo?regNo=${mRegno}&billableTyName=Extended Warranty`,{ headers: this.headers });
 
   }
 
@@ -3417,13 +3165,13 @@ public shortLandedClaimSave(rtvRecord) {
 
 
   UpdateWsVehicleMaster(wsVehMasterRecord) {
-    // alert ("in update...")
+   
     const options = {
       headers: this.headers
     };
     const url = (this.ServerUrl + `/VehAddInfo/ws`);
     return this.http.put(url, wsVehMasterRecord, options);
-    // const url = (this.ServerUrl + `/AccountTrf/ArSaveUpdate?docTrfNo=${docTrfNum}`);
+   
   }
 
 
@@ -3447,10 +3195,8 @@ public shortLandedClaimSave(rtvRecord) {
   ///////////////////////////// MCP /////////////////////////////////
 
   getMcpstatusVehcile(mRegno): Observable<any> {
-    // alert("ms>>MCP status checking"+mRegno);
-    return this.http.get(this.ServerUrl + `/SsMcpEnqMst/McpRegCheck/${mRegno}`);
 
-    // http://localhost:8081/SsMcpEnqMst/McpRegCheck/MH12EM6011
+    return this.http.get(this.ServerUrl + `/SsMcpEnqMst/McpRegCheck/${mRegno}`,{ headers: this.headers });
 
   }
 
@@ -3474,37 +3220,37 @@ public shortLandedClaimSave(rtvRecord) {
 
 
   getMcpItemSearch(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/McpItemMst');
+    return this.http.get(this.ServerUrl + '/McpItemMst',{ headers: this.headers });
   }
 
   getMcpPackageSearch(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/PackageMst');
+    return this.http.get(this.ServerUrl + '/PackageMst',{ headers: this.headers });
   }
 
   getMcpPackageSearchNew1(mPkgType, mFuelType, mOuId): Observable<any> {
-    // alert("MS>>RCPT NO -getArReceiptSearchByRcptNo: RcptNo ,CustNo,RcptDate :" +rcptNumber +','+custActNo +','+rcptDate  );
-    return this.http.get(this.ServerUrl + `/PackageMst/PkgTypeAndFuelType?packageType=${mPkgType}&fuelType=${mFuelType}&ouId=${mOuId}`);
+    
+    return this.http.get(this.ServerUrl + `/PackageMst/PkgTypeAndFuelType?packageType=${mPkgType}&fuelType=${mFuelType}&ouId=${mOuId}`,{ headers: this.headers });
 
   }
 
   getMcpPackageSearchNew2(mPkgNo, mFuelType, mOuId): Observable<any> {
-    //  alert("MS>> " + mPkgNo +","+mFuelType+","+mOuId);
-    return this.http.get(this.ServerUrl + `/PackageMst/PkgNoFuelOuId?packageNumber=${mPkgNo}&fuelType=${mFuelType}&ouId=${mOuId}`);
-    //  http://localhost:8081//PackageMst/PkgNoFuelOuId?packageNumber=PKG00018&fuelType=Petrol&ouId=81
+    
+    return this.http.get(this.ServerUrl + `/PackageMst/PkgNoFuelOuId?packageNumber=${mPkgNo}&fuelType=${mFuelType}&ouId=${mOuId}`,{ headers: this.headers });
+   
   }
 
   getMcpPackageSearchByPkgId(mPkgId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/PackageMst/${mPkgId}`);
+    return this.http.get(this.ServerUrl + `/PackageMst/${mPkgId}`,{ headers: this.headers });
   }
 
   getMcpPackagePriceDetails(mPkgNo, mFuelType, mPtype, mOuId, mVariant, mCustSite, mLocId): Observable<any> {
-    // alert(mPkgNo +","+mFuelType+","+mPtype+","+mOuId+","+mVariant+","+mCustSite+","+mLocId);
-    return this.http.get(this.ServerUrl + `/SsMcpEnqMst/McpPrcDetails?packageNumber=${mPkgNo}&fuelType=${mFuelType}&packageType=${mPtype}&ouId=${mOuId}&variantCode=${mVariant}&customerSiteId=${mCustSite}&locId=${mLocId} `);
+    
+    return this.http.get(this.ServerUrl + `/SsMcpEnqMst/McpPrcDetails?packageNumber=${mPkgNo}&fuelType=${mFuelType}&packageType=${mPtype}&ouId=${mOuId}&variantCode=${mVariant}&customerSiteId=${mCustSite}&locId=${mLocId}`,{ headers: this.headers });
   }
 
   getMcpPackageLineDetails(mPkgNo, mFuelType, mOuId, mVariant, mCustSite, mLocId): Observable<any> {
-    // alert(mPkgNo +","+mFuelType+","+mOuId+","+mVariant+","+mCustSite+","+mLocId);
-    return this.http.get(this.ServerUrl + `/SsMcpEnqMst/PkgLineDtls?packageNumber=${mPkgNo}&fuelType=${mFuelType}&ouId=${mOuId}&variantCode=${mVariant}&customerSiteId=${mCustSite}&locId=${mLocId} `);
+    
+    return this.http.get(this.ServerUrl + `/SsMcpEnqMst/PkgLineDtls?packageNumber=${mPkgNo}&fuelType=${mFuelType}&ouId=${mOuId}&variantCode=${mVariant}&customerSiteId=${mCustSite}&locId=${mLocId}`,{ headers: this.headers });
   }
 
 
@@ -3516,27 +3262,21 @@ public shortLandedClaimSave(rtvRecord) {
     return this.http.post(url, McpPkgMasterRecord, options);
   }
 
-  // UpdatePriceListByIdMCP(PriceListMasterRecord,priceListHeaderId) {
-  //   const options = {
-  //     headers: this.headers
-  //   };
-  //   const url = (this.ServerUrl + `/pricelist`);
-  //   return this.http.put(url, PriceListMasterRecord, options);
-  // }
+ 
 
   UpdateMcpPackageMaster(McpPkgMasterRecord) {
     const options = {
       headers: this.headers
     };
-    // const url = (this.ServerUrl + `/PackageMst/${mcpPkgId}`);
+   
     const url = (this.ServerUrl + `/PackageMst`);
     return this.http.put(url, McpPkgMasterRecord, options);
   }
 
 
   mcpSchemeList(mRegNo, mKms): Observable<any> {
-    // http://localhost:8081/SsMcpEnqMst/validPkgDtls?regNo=MH12EM6011
-    return this.http.get(this.ServerUrl + `/SsMcpEnqMst/validPkgDtls?regNo=${mRegNo}&currKms=${mKms}`);
+    
+    return this.http.get(this.ServerUrl + `/SsMcpEnqMst/validPkgDtls?regNo=${mRegNo}&currKms=${mKms}`,{ headers: this.headers });
   }
 
   public McpEnquiryMasterSubmit(McpEnquiryMasterRecord) {
@@ -3552,24 +3292,21 @@ public shortLandedClaimSave(rtvRecord) {
 
 
   getsearchByEnqNo(mEnqNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/SsMcpEnqMst/enqNo/${mEnqNo}`);
+    return this.http.get(this.ServerUrl + `/SsMcpEnqMst/enqNo/${mEnqNo}`,{ headers: this.headers });
   }
 
   getsearchMcpEnqByRegNo(mRegNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/SsMcpEnqMst/enqRegNo/${mRegNo}`);
+    return this.http.get(this.ServerUrl + `/SsMcpEnqMst/enqRegNo/${mRegNo}`,{ headers: this.headers });
   }
 
   getValidMcpEnqList(mRegno): Observable<any> {
-    // alert("ms>>MCP Enq No"+mEnqNo);
-    return this.http.get(this.ServerUrl + `/McpEnrollMst/McpEnqList/${mRegno}`);
-    // /McpEnrollMst/McpEnqList/MH12EM6011
-
+    
+    return this.http.get(this.ServerUrl + `/McpEnrollMst/McpEnqList/${mRegno}`,{ headers: this.headers });
   }
   getEnrolledMcpEnqList(mEnqNo): Observable<any> {
-    // alert("ms>>MCP Enq No"+mEnqNo);
-    return this.http.get(this.ServerUrl + `/McpEnrollMst/McpEnqDtls/${mEnqNo}`);
-    // /McpEnrollMst/McpEnqList/MH12EM6011
-
+   
+    return this.http.get(this.ServerUrl + `/McpEnrollMst/McpEnqDtls/${mEnqNo}`,{ headers: this.headers });
+   
   }
 
 
@@ -3583,20 +3320,20 @@ public shortLandedClaimSave(rtvRecord) {
   }
 
   getMcpEnrollmentSearch(mEnrollNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/McpEnrollMst/enrollmentNo//${mEnrollNo}`);
+    return this.http.get(this.ServerUrl + `/McpEnrollMst/enrollmentNo//${mEnrollNo}`,{ headers: this.headers });
   }
 
   getMcpSearchByEnrollNo(mEnrollNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/McpEnrollMst/enrollmentNo/${mEnrollNo}`);
+    return this.http.get(this.ServerUrl + `/McpEnrollMst/enrollmentNo/${mEnrollNo}`,{ headers: this.headers });
   }
 
   getMcpSearchByRegNo(mRegNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/McpEnrollMst/enrollSearchBy/${mRegNo}`);
+    return this.http.get(this.ServerUrl + `/McpEnrollMst/enrollSearchBy/${mRegNo}`,{ headers: this.headers });
   }
 
   ////////////////////////MCP ITEM MAPPING////////////////////////
   mcpItemMappingSearch1(mItemNum, mFtype, mSrvModel, mOuId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/SsErpItemMst/ItemSearch?itemNumber=${mItemNum}&serviceModel=${mSrvModel}&fuelType=${mFtype}&ouId=${mOuId}`);
+    return this.http.get(this.ServerUrl + `/SsErpItemMst/ItemSearch?itemNumber=${mItemNum}&serviceModel=${mSrvModel}&fuelType=${mFtype}&ouId=${mOuId}`,{ headers: this.headers });
   }
 
   public McpItemMappingSubmitLbr(McpItemMappingrRecord) {
@@ -3619,23 +3356,22 @@ public shortLandedClaimSave(rtvRecord) {
   //  ------------------------MCP TERMINATION--------------------------
 
   mcpRegSearch(mRegNo, mEnrollNo): Observable<any> {
-    // alert ("MS>> Registration No :"+mRegNo +"\nEnrollment No :"+mEnrollNo);
     if ((mEnrollNo == undefined || mEnrollNo == null) && (mRegNo != null)) {
-      return this.http.get(this.ServerUrl + `/McpEnrollMst/mcpCancel?regNo=${mRegNo}`);
+      return this.http.get(this.ServerUrl + `/McpEnrollMst/mcpCancel?regNo=${mRegNo}`,{ headers: this.headers });
     }
 
     if ((mRegNo == undefined || mRegNo == null) && (mEnrollNo != null)) {
-      return this.http.get(this.ServerUrl + `/McpEnrollMst/mcpCancel?enrollmentNo=${mEnrollNo}`);
+      return this.http.get(this.ServerUrl + `/McpEnrollMst/mcpCancel?enrollmentNo=${mEnrollNo}`,{ headers: this.headers });
     }
 
     if ((mRegNo != null) && (mEnrollNo != null)) {
-      return this.http.get(this.ServerUrl + `/McpEnrollMst/mcpCancel?regNo=${mRegNo}&enrollmentNo=${mEnrollNo}`);
+      return this.http.get(this.ServerUrl + `/McpEnrollMst/mcpCancel?regNo=${mRegNo}&enrollmentNo=${mEnrollNo}`,{ headers: this.headers });
     }
   }
 
 
   mcpRegSearchByEnrollNo(mEnrollNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/McpEnrollMst/mcpCancel?enrollmentNo=${mEnrollNo}`);
+    return this.http.get(this.ServerUrl + `/McpEnrollMst/mcpCancel?enrollmentNo=${mEnrollNo}`,{ headers: this.headers });
   }
 
 
@@ -3646,8 +3382,6 @@ public shortLandedClaimSave(rtvRecord) {
 
     const url = (this.ServerUrl + `/McpEnrollMst/mcpCancByEnroll`);
     return this.http.put(url, McpCancelrRecord, options);
-
-    // http://localhost:8081/McpEnrollMst/mcpCancByEnroll?enrollmentNo=ENR201-2&cancRsnId=461&refundAmt=6500
   }
 
   //////////////////////VARIANT MASTER////////////////////////////
@@ -3676,7 +3410,7 @@ public shortLandedClaimSave(rtvRecord) {
   }
 
   mcpItemList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/McpItemMst');
+    return this.http.get(this.ServerUrl + '/McpItemMst',{ headers: this.headers });
   }
 
   //////////////////////// TAX THRESHOLD SETUP //////////////////
@@ -3690,71 +3424,69 @@ public shortLandedClaimSave(rtvRecord) {
   }
 
   getThresholdSetup(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/jaiApTdsHdr');
+    return this.http.get(this.ServerUrl + '/jaiApTdsHdr',{ headers: this.headers });
 
   }
 // //////////////////   PAINT Miscell Transaction //////////////////////////
 
 TransactionTypemiscpPaint(): Observable<any> {
-  return this.http.get(this.ServerUrl + `/mtlTrxTypes/stockAdj/9`);
+  return this.http.get(this.ServerUrl + `/mtlTrxTypes/stockAdj/9`,{ headers: this.headers });
 }
 
   // //////////////////   Miscell Transaction //////////////////////////
 
   TransactionType(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/mtlTrxTypes/9');
+    return this.http.get(this.ServerUrl + '/mtlTrxTypes/9',{ headers: this.headers });
   }
   TransactionTypemisc(): Observable<any> {
-    return this.http.get(this.ServerUrl + `/mtlTrxTypes/stockAdj/9`);
+    return this.http.get(this.ServerUrl + `/mtlTrxTypes/stockAdj/9`,{ headers: this.headers });
   }
   TransactionTypeIC(): Observable<any> {
-    return this.http.get(this.ServerUrl + `/mtlTrxTypes/IC/9`);
+    return this.http.get(this.ServerUrl + `/mtlTrxTypes/IC/9`,{ headers: this.headers });
   }
 
   ReasonList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/mtlTransReasons');
+    return this.http.get(this.ServerUrl + '/mtlTransReasons',{ headers: this.headers });
   }
 
   PaintReasonList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/mtlTransReasons/paint');
+    return this.http.get(this.ServerUrl + '/mtlTransReasons/paint',{ headers: this.headers });
   }
 
   reasonaccCode(locId, reason, costCode): Observable<any> {
-    return this.http.get(this.ServerUrl + `/mtlTransReasons/reason?locId=${locId}&reasonName=${reason}&costCode=${costCode}`)
+    return this.http.get(this.ServerUrl + `/mtlTransReasons/reason?locId=${locId}&reasonName=${reason}&costCode=${costCode}`,{ headers: this.headers })
   }
   TypeList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/type/StockAdjType');
+    return this.http.get(this.ServerUrl + '/cmnLookup/type/StockAdjType',{ headers: this.headers });
   }
 
 
   WorkShopIcIssue(locId, type): Observable<any> {
-    return this.http.get(this.ServerUrl + `/jobCard/icTypeJobList?locId=${locId}&icType=${type}`);
+    return this.http.get(this.ServerUrl + `/jobCard/icTypeJobList?locId=${locId}&icType=${type}`,{ headers: this.headers });
   }
 
   ItemIdList1(locationId, subInv): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemMst/OnHandItemLst?locId= ${locationId}&subInvCode=${subInv}`)
+    return this.http.get(this.ServerUrl + `/itemMst/OnHandItemLst?locId= ${locationId}&subInvCode=${subInv}`,{ headers: this.headers })
   }
   getItemDetail11(locId, itemId, subInvCode): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemMst/OnHandItemDtls?locId=${locId}&subInvCode=${subInvCode}&itemId=${itemId}`)
+    return this.http.get(this.ServerUrl + `/itemMst/OnHandItemDtls?locId=${locId}&subInvCode=${subInvCode}&itemId=${itemId}`,{ headers: this.headers })
   }
   LocatorNameList(LocName, LocId, subinventoryId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/lctrmst/nameandloc?segmentName=${LocName}&locId=${LocId}&subinventoryId=${subinventoryId}`)
+    return this.http.get(this.ServerUrl + `/lctrmst/nameandloc?segmentName=${LocName}&locId=${LocId}&subinventoryId=${subinventoryId}`,{ headers: this.headers })
   }
   getCostDetail(locId, ItemId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/averageCost/avgLocItem?locationId=${locId}&itemId=${ItemId}`)
+    return this.http.get(this.ServerUrl + `/averageCost/avgLocItem?locationId=${locId}&itemId=${ItemId}`,{ headers: this.headers })
   }
 
   getCostDetailforWarranty(locId, ItemId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/averageCost/item/mrp?locationId=${locId}&itemId=${ItemId}`)
+    return this.http.get(this.ServerUrl + `/averageCost/item/mrp?locationId=${locId}&itemId=${ItemId}`,{ headers: this.headers })
   }
 
 
   viewMiscnote(stkAdjustNumber) {
-    // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/rcvShipment/StkTransferNote/${shipmentNumber}`;
-    // local
+   
     const REQUEST_URI = this.ServerUrl + `/stockadj/stockAdjustVoucher/${stkAdjustNumber}`;
     return this.http.get(REQUEST_URI, {
-      // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
       headers: this.headers,
     });
@@ -3762,21 +3494,14 @@ TransactionTypemiscpPaint(): Observable<any> {
 
 
   getonhandqtySubinvLoc(locId, subId, Itemid): Observable<any> {
-    return this.http.get(this.ServerUrl + `/onhandqty/onhandlocsubinv2?locId=${locId}&itemId=${Itemid}&subInventoryId=${subId}`)
-    // http://localhost:8081/onhandqty/onhandlocsubinv2?locId=121&itemId=544&subInventoryId=42
-
+    return this.http.get(this.ServerUrl + `/onhandqty/onhandlocsubinv2?locId=${locId}&itemId=${Itemid}&subInventoryId=${subId}`,{ headers: this.headers })
   }
 
   getonhandqty(locId, subId, locatorId, Itemid): Observable<any> {
-    // alert ("Locator Id :" +locatorId);
-    return this.http.get(this.ServerUrl + `/onhandqty/locator?locationId=${locId}&subInventoryId=${subId}&locatorId=${locatorId}&itemId=${Itemid}`)
+    return this.http.get(this.ServerUrl + `/onhandqty/locator?locationId=${locId}&subInventoryId=${subId}&locatorId=${locatorId}&itemId=${Itemid}`,{ headers: this.headers })
   }
 
 
-  // getonhandqty(locatorId):Observable<any>
-  // {
-  //   return this.http.get(this.ServerUrl+`/onhandqty/locator?id=${locatorId}`)
-  // }
   miscellaneousSubmit(miscRecord): Observable<any> {
     const options = {
       headers: this.headers
@@ -3822,19 +3547,19 @@ TransactionTypemiscpPaint(): Observable<any> {
   }
 
   getSearchByNo(compNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/stockadj/compileNo/${compNo}`);
+    return this.http.get(this.ServerUrl + `/stockadj/compileNo/${compNo}`,{ headers: this.headers });
   }
   getSearchViewBycompNo(compNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/stockadj/compileall/${compNo}`)
+    return this.http.get(this.ServerUrl + `/stockadj/compileall/${compNo}`,{ headers: this.headers })
   }
   getSearchViewByIc(compNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/stockadj/IC/${compNo}`)
+    return this.http.get(this.ServerUrl + `/stockadj/IC/${compNo}`,{ headers: this.headers })
   }
   getSearchBycompNo(compNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/stockadj/compileadj/${compNo}`);
+    return this.http.get(this.ServerUrl + `/stockadj/compileadj/${compNo}`,{ headers: this.headers });
   }
   getsearchByCompId(compileId, itemId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/cycleline?compileId=${compileId}&invItemId=${itemId}`);
+    return this.http.get(this.ServerUrl + `/cycleline?compileId=${compileId}&invItemId=${itemId}`,{ headers: this.headers });
   }
   miscellaneousUpdate(comId, cyclelinerecord) {
     const options = {
@@ -3847,13 +3572,10 @@ TransactionTypemiscpPaint(): Observable<any> {
 
   /////////////////////////////// PO INVOICE -TDS LINE /////////////////////////
   getTdsDetails(mInvoiceId): Observable<any> {
-    // alert("MS>> "+mInvoiceId);
-    return this.http.get(this.ServerUrl + `/apInv/apTdsDis?invId=${mInvoiceId}`);
-    // http://localhost:8081/apInv/apTdsDis?invId=27
+    return this.http.get(this.ServerUrl + `/apInv/apTdsDis?invId=${mInvoiceId}`,{ headers: this.headers });
   }
 
   cancelApInvoice(mInvoiceId, mEmplId): Observable<any> {
-    // return this.http.get(this.ServerUrl+`/apInv/apInvCancel?invNum=${mInvoiceId}&emplId=${mEmplId}`);
     const options = {
       headers: this.headers
     };
@@ -3882,197 +3604,74 @@ TransactionTypemiscpPaint(): Observable<any> {
   }
 
   getTdsTaxDetails(mItemId, mBaseAmt, mTaxCatId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/poHdr/potaxcal?itemId=${mItemId}&baseAmt=${mBaseAmt}&taxCateId=${mTaxCatId}`);
-    // http://localhost:8081/poHdr/potaxcal?itemId=1&baseAmt=1000&taxCateId=14071
+    return this.http.get(this.ServerUrl + `/poHdr/potaxcal?itemId=${mItemId}&baseAmt=${mBaseAmt}&taxCateId=${mTaxCatId}`,{ headers: this.headers });
   }
 
   getPOReceiptSearchByRcptNo(mReceiptNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/rcvShipment/receiptNoWise/${mReceiptNo}`)
-    // return this.http.get(this.ServerUrl+`/rcvShipment/findByReceiptNum/${mReceiptNo}`)
-    // http://localhost:8081/rcvShipment/findByReceiptNum/1000155
+    return this.http.get(this.ServerUrl + `/rcvShipment/receiptNoWise/${mReceiptNo}`,{ headers: this.headers })
+   
   }
 
   getPOReceiptSearchByPONo(mPoNumber): Observable<any> {
-    return this.http.get(this.ServerUrl + `/rcvShipment/findByPONumber/${mPoNumber}`)
+    return this.http.get(this.ServerUrl + `/rcvShipment/findByPONumber/${mPoNumber}`,{ headers: this.headers })
   }
 
 
-
-
-
-  //////////////////////////EXTENDED WARRANTY/////////////////////////////
-
-
-  // EwSourceList(): Observable<any> {
-  //   return this.http.get(this.ServerUrl +'/cmnLookup/type/EWSource');
-  // }
-
-  // EwTypeList(): Observable<any> {
-  //   return this.http.get(this.ServerUrl +'/cmnLookup/type/EWType');
-  // }
-
-  // ModelVariantList(): Observable<any> {
-  //   return this.http.get(this.ServerUrl +'/cmnLookup/type/Variant');
-  // }
-
-  // PremiumPeriodList(): Observable<any> {
-  //   return this.http.get(this.ServerUrl +'/cmnLookup/type/EWPeriod');
-  // }
-
-  // getEWSchemeSearch(): Observable<any> {
-  //    return this.http.get(this.ServerUrl + '/EwScheme');
-  // }
-
-  // public SaiEwSchemeSubmit(EwSchemeMasterRecord) {
-  //   const options = {
-  //     headers: this.headers
-  //   };
-  //   const url = this.ServerUrl + '/EwScheme/newscheme';
-  //   return this.http.post(url, EwSchemeMasterRecord, options);
-  // }
-
-  // UpdateSaiEwScheme(EwSchemeMasterRecord) {
-  //   const options = {
-  //     headers: this.headers
-  //   };
-  //   const url = (this.ServerUrl + `/EwScheme`);
-  //   return this.http.put(url, EwSchemeMasterRecord, options);
-  // }
-
-
-  // PaymentModeList(): Observable<any> {
-  //   return this.http.get(this.ServerUrl +'/fndAcctLookup/lookupTypeWise/PayType');
-  // }
-
-  // ReceiptStatusList(): Observable<any> {
-  //   return this.http.get(this.ServerUrl +'/cmnLookup/type/ReceiptStatus');
-  //   // cmnLookup/type/ReceiptStatus
-  // }
-
-  // ReceiptTypeArList(): Observable<any> {
-  //   return this.http.get(this.ServerUrl +'/cmnLookup/type/arReceiptType');
-  //   // cmnLookup/type/ReceiptStatus
-  // }
-
-  // ReverseReasonList(): Observable<any> {
-  //   return this.http.get(this.ServerUrl +'/cmnLookup/type/RvslReson');
-  // }
-
-
-  // getArReceiptSearchByRcptNo(rcptNumber,custActNo,rcptDate): Observable<any>
-  // {
-  //   // alert("MS>>RCPT NO -getArReceiptSearchByRcptNo: RcptNo ,CustNo,RcptDate :" +rcptNumber +','+custActNo +','+rcptDate  );
-  //   if(rcptDate===undefined)
-  //   {
-  //     return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptNumber=${rcptNumber}&accountNo=${custActNo}`);
-  //   }else
-  //   {
-  //   return this.http.get(this.ServerUrl + `/arCashReceipts/Search?receiptNumber=${rcptNumber}&accountNo=${custActNo}&receiptDate='${rcptDate}'`);
-  //   }
-  // }
-
-  // getArReceiptSearchByInvoiceNo(custAccountNo,billToSiteId,rcptNo): Observable<any> {
-  //   // alert("MS>>RCPT NO -getArReceiptSearchByRcptNo: CustActNo " +custAccountNo +'billToSiteId:'+billToSiteId );
-  //   return this.http.get(this.ServerUrl + `/arCashReceipts/apply/inv?recepitNo=${rcptNo}&custAccountNo=${custAccountNo}&billToSiteId=${billToSiteId}`);
-
-
-  // }
-
-
-  // CustomerList(): Observable<any> {
-  //   return this.http.get(this.ServerUrl +'/Customer');
-  // }
-
-
-  // custAccountNoSearch(accountNo,ouId): Observable<any> {
-  //   alert("ms >>account no:"+accountNo+","+ouId);
-  //   // return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
-  //   return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}`);
-  // }
-
-  // public ArReceipApplySubmit(ArReceiptApplyRecord) {
-  //   const options = {
-  //     headers: this.headers
-  //   };
-  //   const url = this.ServerUrl + '/arCashReceipts/apply/inv';
-  //   return this.http.post(url, ArReceiptApplyRecord, options);
-  // }
-
-
-  // public ArReceiptSubmit(ArReceiptRecord) {
-  //   const options = {
-  //     headers: this.headers
-  //   };
-  //   const url = this.ServerUrl + '/arCashReceipts/ArReceipt';
-  //   return this.http.post(url, ArReceiptRecord, options);
-  // }
-
-  // ReceiptMethodList(mPaytype ,mLocId,mStatus): Observable<any> {
-  //   // alert("Master Service :"+ mPaytype+" "+mLocId+" " +mStatus);
-  //   return this.http.get(this.ServerUrl + `/receiptMethod?methodType=${mPaytype}&locId=${mLocId}&status=${mStatus}`);
-  // }
-
+  
   ///////////////////////// CASH BANK TRANSFER //////////////////////
 
   TransferTypeLst(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/TranType');
-    // http://localhost:8081/fndAcctLookup/lookupTypeWise/TranType
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/TranType',{ headers: this.headers });
   }
 
   PeriodLst(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/AccountTrf/glPayablePeriod');
-    // http://localhost:8081/AccountTrf/glPayablePeriod
+    return this.http.get(this.ServerUrl + '/AccountTrf/glPayablePeriod',{ headers: this.headers });
+   
   }
 
 
   fromAcctLst(mLocId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/AccountTrf/fromAcctList?locId=${mLocId}`);
-    // http://localhost:8081/AccountTrf/fromAcctList?locId=124
+    return this.http.get(this.ServerUrl + `/AccountTrf/fromAcctList?locId=${mLocId}`,{ headers: this.headers });
+    
   }
 
   toAcctLst(mLocId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/AccountTrf/toAcctList/${mLocId}`);
-    // http://localhost:8081/AccountTrf/toAcctList/124
+    return this.http.get(this.ServerUrl + `/AccountTrf/toAcctList/${mLocId}`,{ headers: this.headers });
+    
   }
 
   bnkHeaderList(mLocId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/cmnLookup/CmnType/BankTrfHeader`);
-    // http://localhost:8081/cmnLookup/CmnType/BankTrfHeader
+    return this.http.get(this.ServerUrl + `/cmnLookup/CmnType/BankTrfHeader`,{ headers: this.headers });
+   
   }
 
 
   getFromAcList(trfType, ouId): Observable<any> {
-    //  return this.http.get(this.ServerUrl +`/AccountTrf/AcctList/${trfType}`);
-    return this.http.get(this.ServerUrl + `/AccountTrf/AcctListNew?tranType=${trfType}&ouId=${ouId}`);
-
-    //  http://localhost:8081/AccountTrf/AcctList/CT
-
-    // http://localhost:8081/AccountTrf/AcctListNew?tranType=BT&ouId=21
+   
+    return this.http.get(this.ServerUrl + `/AccountTrf/AcctListNew?tranType=${trfType}&ouId=${ouId}`,{ headers: this.headers });
   }
 
   getPayRecAccountCode(methodId, ouId, divId, locId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/AccountTrf/AcctCodeList?receiptMethodId=${methodId}&ouId=${ouId}&divisionId=${divId}&locId=${locId}`);
-    //  http://localhost:8081/AccountTrf/AcctCodeList/?receiptMethodId=41&ouId=110&divisionId=2&locId=121
+    return this.http.get(this.ServerUrl + `/AccountTrf/AcctCodeList?receiptMethodId=${methodId}&ouId=${ouId}&divisionId=${divId}&locId=${locId}`,{ headers: this.headers });
+   
 
   }
 
   xxxgetGlAccountBalance(glCode, prdName): Observable<any> {
-    return this.http.get(this.ServerUrl + `/glHeader/accGlBalances?segmentNameFrm=${glCode}&periodName=${prdName}`);
-    // http://localhost:8081/glHeader/accGlBalances?segmentNameFrm=12MU.2102.21.21701.0000&periodName=Jan-21-22
+    return this.http.get(this.ServerUrl + `/glHeader/accGlBalances?segmentNameFrm=${glCode}&periodName=${prdName}`,{ headers: this.headers });
   }
 
   public getGlAccountBalance(glCode, prdName) {
     const options = {
       headers: this.headers
     };
-    const url = this.ServerUrl + `/glHeader/accGlBalances?segmentNameFrm=${glCode}&periodName=${prdName}`;
+    const url = (this.ServerUrl + `/glHeader/accGlBalances?segmentNameFrm=${glCode}&periodName=${prdName}`);
     return this.http.post(url, options);
-    // http://localhost:8081/AccountTrf/AcctTrfPost?emplId=216
+    
   }
 
   getGlAccountBalanceNew(glCode, prdName): Observable<any> {
-    return this.http.get(this.ServerUrl + `/glHeader/accGlBalances?segmentNameFrm=${glCode}&periodName=${prdName}`);
-    // http://localhost:8081/glHeader/accGlBalances?segmentNameFrm=12MU.2103.00.21751.0000&periodName=Jan-21-22
+    return this.http.get(this.ServerUrl + `/glHeader/accGlBalances?segmentNameFrm=${glCode}&periodName=${prdName}`,{ headers: this.headers });
   }
 
 
@@ -4092,9 +3691,6 @@ TransactionTypemiscpPaint(): Observable<any> {
     };
     const url = (this.ServerUrl + `/AccountTrf/CounterListUpd?docTrfNo=${docNum}`);
     return this.http.put(url, CashBankTrfRecord, options);
-
-    // http://localhost:8081/AccountTrf/CounterListUpd?docTrfNo=2125210510009
-
   }
 
 
@@ -4104,10 +3700,6 @@ TransactionTypemiscpPaint(): Observable<any> {
     };
     const url = (this.ServerUrl + `/AccountTrf/ArSaveUpdate?docTrfNo=${docTrfNum}`);
     return this.http.put(url, ArRcptUpdateRecord, options);
-
-    // new - http://localhost:8081/AccountTrf/ArSaveUpdate?docTrfNo=2125210510003
-
-    // http://localhost:8081/AccountTrf/ArSaveUpdate  Parameter <Your Rcptline Array> , String docTrfNo
   }
 
 
@@ -4118,32 +3710,7 @@ TransactionTypemiscpPaint(): Observable<any> {
     const url = this.ServerUrl + `/AccountTrf/AcctTrfPost?emplId=${mEmplId}`;
     return this.http.post(url, CashBankTrfRecord, options);
 
-    // http://localhost:8081/AccountTrf/AcctTrfPost?emplId=216
-
   }
-
-
-
-
-
-  // public CashBankTrfReversalSubmit(CashBankTrfRecord, mEmplId, docTrfNo) {
-  //   const options = {
-  //     headers: this.headers
-  //   };
-  //   const url = this.ServerUrl + `/AccountTrf/Reversed?docTrfNo=${docTrfNo}&emplId=${mEmplId}`;
-  //   return this.http.post(url, CashBankTrfRecord, options);
-
-  // }
-
-
-  // CashBankTrfReversalSubmit(formData, docTrfNo, mEmplId,reversalPeriod,reversalDate) {
-  //   let headers1 = new HttpHeaders();
-  //   formData.append('docTrfNo', docTrfNo);
-  //   formData.append('mEmplId', mEmplId);
-  //   formData.append('reversalPeriod', reversalPeriod);
-  //   formData.append('reversalDate', reversalDate);
-  //   return this.http.post(this.ServerUrl + `/AccountTrf/Reversed?`, formData)
-  // }
 
 
   public CashBankTrfReversalSubmit(docTrfNo, mEmplId,reversalPeriod,reversalDate,reversalLocId) {
@@ -4152,74 +3719,67 @@ TransactionTypemiscpPaint(): Observable<any> {
     };
     const url = this.ServerUrl + `/AccountTrf/Reversed?docTrfNo=${docTrfNo}&emplId=${mEmplId}&reversalPeriod=${reversalPeriod}&reversalDate=${reversalDate}&reversalLocId=${reversalLocId}`;
     return this.http.post(url, options);
-
-    // http://localhost:8081/DedStock?ouId=21&months=10
   }
 
   getBnkTrfSearchByDocNum(docNo, ouId): Observable<any> {
-    // return this.http.get(this.ServerUrl+`/AccountTrf/trfDocSearch/${docNo}`);
-    return this.http.get(this.ServerUrl + `/AccountTrf/trfDocSearch?docTrfNo=${docNo}&ouId=${ouId}`);
-
-    // http://localhost:8081/AccountTrf/trfDocSearch/2125210210009
-    // http://localhost:8081/AccountTrf/trfDocSearch?docTrfNo=22221027000064&ouId=21
+   
+    return this.http.get(this.ServerUrl + `/AccountTrf/trfDocSearch?docTrfNo=${docNo}&ouId=${ouId}`,{ headers: this.headers });
   }
 
   getBnkTrfSearchByDate(fDate, tDate, ouId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/AccountTrf/TrfDtList?frmDate=${fDate}&toDate=${tDate}&ouId=${ouId}`);
-    // http://localhost:8081/AccountTrf/TrfDtList?frmDate=2021-10-25&toDate=2021-10-25
-    // http://localhost:8081/AccountTrf/TrfDtList?frmDate=2022-04-01&toDate=2022-06-10&ouId=21
-
+    return this.http.get(this.ServerUrl + `/AccountTrf/TrfDtList?frmDate=${fDate}&toDate=${tDate}&ouId=${ouId}`,{ headers: this.headers });
+   
   }
 
   getBnkChqListPosted(docNumber): Observable<any> {
-    return this.http.get(this.ServerUrl + `/AccountTrf/trfRcptSearch/${docNumber}`);
-    // http://localhost:8081/AccountTrf/trfRcptSearch/2125210210010
+    return this.http.get(this.ServerUrl + `/AccountTrf/trfRcptSearch/${docNumber}`,{ headers: this.headers });
+   
   }
 
   getBnkChqList(bankId, rcptMthId, locId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/AccountTrf/CounterList?bankId=${bankId}&receiptMethodId=${rcptMthId}&locId=${locId}`);
-    // http://localhost:8081/AccountTrf/CounterList?bankId=902&receiptMethodId=58&locId=2102
+    return this.http.get(this.ServerUrl + `/AccountTrf/CounterList?bankId=${bankId}&receiptMethodId=${rcptMthId}&locId=${locId}`,{ headers: this.headers });
+   
   }
 
   getBnkChqListDocNum(locId, rcptMthId, docTrf): Observable<any> {
-    return this.http.get(this.ServerUrl + `/AccountTrf/trfRcptUpdate?locId=${locId}&receiptMethodId=${rcptMthId}&docTrfNo=${docTrf}`);
-    // http://localhost:8081/AccountTrf/trfRcptUpdate?locId=2102&receiptMethodId=58&docTrfNo=2125210210010
+    return this.http.get(this.ServerUrl + `/AccountTrf/trfRcptUpdate?locId=${locId}&receiptMethodId=${rcptMthId}&docTrfNo=${docTrf}`,{ headers: this.headers });
+   
   }
 
   viewAccountingBankTransfer(trfNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/glHeader/AccountTrf/${trfNo}`);
-    // http://localhost:8081/glHeader/AccountTrf/2125210510008
+    return this.http.get(this.ServerUrl + `/glHeader/AccountTrf/${trfNo}`,{ headers: this.headers });
+   
   }
 
 
   ////////////////////////// Pending Shipment Lis///////////
 
   getShipmentList(locId, deptId, divisionId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/rcvShipment/shipmentList?billToLoc=${locId}&deptId=${deptId}&divisionId=${divisionId}`);
+    return this.http.get(this.ServerUrl + `/rcvShipment/shipmentList?billToLoc=${locId}&deptId=${deptId}&divisionId=${divisionId}`,{ headers: this.headers });
   }
 
   /////////////////////////RECEIVABLE TRANSACTION TYPE MASTER ///////////////////////
 
   recTypeClass() {
-    return this.http.get(this.ServerUrl + '/cmnLookup/type/RcvClass');
+    return this.http.get(this.ServerUrl + '/cmnLookup/type/RcvClass',{ headers: this.headers });
   }
 
   recCategoryBase() {
-    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/AccountingBase');
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/AccountingBase',{ headers: this.headers });
   }
 
   recRecAcList() {
-    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/NaturalAccount');
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/NaturalAccount',{ headers: this.headers });
   }
 
   recRevAcList() {
-    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/NaturalAccount');
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/NaturalAccount',{ headers: this.headers });
   }
 
 
   recCreditMemoType(classType) {
-    return this.http.get(this.ServerUrl + `/rcvType/typeWise/${classType}`);
-    // http://localhost:8081/rcvType/typeWise/Credit%20Memo
+    return this.http.get(this.ServerUrl + `/rcvType/typeWise/${classType}`,{ headers: this.headers });
+   
   }
 
   public RecTransTypeMasterSubmit(RecTransTypeMasterRecord) {
@@ -4234,55 +3794,52 @@ TransactionTypemiscpPaint(): Observable<any> {
   //////////////////////bank recon/////////////////////
 
   bankList(methodType, mouId): Observable<any> {
-    // alert ("OU Id :"+mouId);
-    // return this.http.get(this.ServerUrl+`/ceBankAccounts/BankList/${mouId}`);
-    return this.http.get(this.ServerUrl + `/ceBankAccounts/BankList?methodType=${methodType}&ouId=${mouId}`);
-    // http://localhost:8081/ceBankAccounts/BankList/101
-    // http://localhost:8081/ceBankAccounts/BankList?methodType=RTGS/NEFT&ouId=21
+   
+    return this.http.get(this.ServerUrl + `/ceBankAccounts/BankList?methodType=${methodType}&ouId=${mouId}`,{ headers: this.headers });
   }
 
 
 
   getBankReconStatement1(bnkId, ouId): Observable<any> {
-    // alert("ms >>account no:"+bnkId+","+ouId );
-    return this.http.get(this.ServerUrl + `/ceStateHdr/accoutWiseHdrList?bankAccountId=${bnkId}&orgId=${ouId}`);
+   
+    return this.http.get(this.ServerUrl + `/ceStateHdr/accoutWiseHdrList?bankAccountId=${bnkId}&orgId=${ouId}`,{ headers: this.headers });
   }
 
   getAvlBankReconLines(bnkNo, vchNo, dt1, dt2, amt1, amt2, refType, bnkId): Observable<any> {
-    // alert("ms >>refType  :" + refType );
+   
     if (refType === 'PAYMENT') {
-      return this.http.get(this.ServerUrl + `/apInvPayment/apPaymentDetails?bankAccNo=${bnkNo}&vouNo=${vchNo}&frmDt=${dt1}&toDate1=${dt2}&frmAmt=${amt1}&toAmt=${amt2}`);
+      return this.http.get(this.ServerUrl + `/apInvPayment/apPaymentDetails?bankAccNo=${bnkNo}&vouNo=${vchNo}&frmDt=${dt1}&toDate1=${dt2}&frmAmt=${amt1}&toAmt=${amt2}`,{ headers: this.headers });
     }
 
     if (refType === 'RECEIPT') {
-      return this.http.get(this.ServerUrl + `/arCashReceipts/arReceiptDetails?bankAccNo=${bnkNo}&vouNo=${vchNo}&frmDt=${dt1}&toDate1=${dt2}&frmAmt=${amt1}&toAmt=${amt2}`);
+      return this.http.get(this.ServerUrl + `/arCashReceipts/arReceiptDetails?bankAccNo=${bnkNo}&vouNo=${vchNo}&frmDt=${dt1}&toDate1=${dt2}&frmAmt=${amt1}&toAmt=${amt2}`,{ headers: this.headers });
     }
 
     if (refType === 'CASHFLOW') {
-      return this.http.get(this.ServerUrl + `/AccountTrf/cashBankTrf?bankAccountId=${bnkId}&frmDt=${dt1}&toDate1=${dt2}&frmAmt=${amt1}&toAmt=${amt2}`);
+      return this.http.get(this.ServerUrl + `/AccountTrf/cashBankTrf?bankAccountId=${bnkId}&frmDt=${dt1}&toDate1=${dt2}&frmAmt=${amt1}&toAmt=${amt2}`,{ headers: this.headers });
     }
 
   }
 
 
   getReconciledDetails(sLineId): Observable<any> {
-    // alert("ms >>account no:"+bnkId+","+ouId );
-    return this.http.get(this.ServerUrl + `/ceStateHdr/recoDetails/${sLineId}`);
-    // http://localhost:8081/ceStateHdr/recoDetails/103772
+   
+    return this.http.get(this.ServerUrl + `/ceStateHdr/recoDetails/${sLineId}`,{ headers: this.headers });
+    
   }
 
   getBankStatementDetails(sHeaderId): Observable<any> {
-    // alert("ms >>account no:"+bnkId+","+ouId );
-    return this.http.get(this.ServerUrl + `/ceStateHdr/${sHeaderId}`);
-    // http://localhost:8081/ceStateHdr/161273
+   
+    return this.http.get(this.ServerUrl + `/ceStateHdr/${sHeaderId}`,{ headers: this.headers });
+    
   }
 
   viewAccountingApReceipt(paymentNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/glHeader/docSequenceValue/${paymentNo}`);
+    return this.http.get(this.ServerUrl + `/glHeader/docSequenceValue/${paymentNo}`,{ headers: this.headers });
 
   }
   viewAccountingbyApReceipt(paymentNo, invoiceId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/glHeader/docSequenceValue?receiptNo=${paymentNo}&invoiceId=${invoiceId}`);
+    return this.http.get(this.ServerUrl + `/glHeader/docSequenceValue?receiptNo=${paymentNo}&invoiceId=${invoiceId}`,{ headers: this.headers });
 
   }
 
@@ -4298,7 +3855,7 @@ TransactionTypemiscpPaint(): Observable<any> {
 
   ///////////////////Back order File upload/////////////////////
   UploadExcelBankStatement(formData: FormData, docType: string, mouId, bnkAcccountId, stNumber, glDt) {
-    // alert ("Org Id :"+mouId + "  BankAccountId :"+bnkAcccountId);
+ 
     let headers1 = new HttpHeaders();
     var userId1 = sessionStorage.getItem('userId');
     console.log(docType);
@@ -4306,46 +3863,46 @@ TransactionTypemiscpPaint(): Observable<any> {
     formData.append('orgId', mouId);
     formData.append('bankAccountId', bnkAcccountId);
     formData.append('statementNumber', stNumber);
-    // formData.append('glDate', glDt);
+    
     return this.http.post(this.ServerUrl + `/fileImport/uploadBankStmt`, formData)
-    // http://localhost:8081/fileImport/uploadBankStmt/
+    
   }
 
   /////////////////////////////////GL TRIAL BALANCE //////////////
   getGLTrialBalanceList(ou, prdName): Observable<any> {
-    return this.http.get(this.ServerUrl + `/glHeader/drillDownHeader?segment1=${ou}&periodName=${prdName}`);
+    return this.http.get(this.ServerUrl + `/glHeader/drillDownHeader?segment1=${ou}&periodName=${prdName}`,{ headers: this.headers });
   }
 
   getGLTrialBalanceActSelect(ou, prdName, natAc): Observable<any> {
-    return this.http.get(this.ServerUrl + `/glHeader/drillDownGLWise?segment1=${ou}&naturalAccount=${natAc}&periodName=${prdName}`);
+    return this.http.get(this.ServerUrl + `/glHeader/drillDownGLWise?segment1=${ou}&naturalAccount=${natAc}&periodName=${prdName}`,{ headers: this.headers });
   }
 
   getGLTrialBalanceActSelect1(seg, docNum, refNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/glHeader/drillDownTypeWise?segment1=${seg}&docSeqValue=${docNum}&docSequenceValue=${refNo}`);
-    // http://localhost:8081/glHeader/drillDownTypeWise?segment1=Receipts Reversal&docSeqValue=2222205700070&docSequenceValue=222210210901133
+    return this.http.get(this.ServerUrl + `/glHeader/drillDownTypeWise?segment1=${seg}&docSeqValue=${docNum}&docSequenceValue=${refNo}`,{ headers: this.headers });
+    
   }
 
 
 
   ////////////////////customer relation manager master //////////////////////
   employeeLst(locId, divId, deptId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/empMst/EmpLocDept?locId=${locId}&divisionId=${divId}&deptId=${deptId}`);
-    // http://localhost:8081/empMst/EmpLocDept?locId=2103&divisionId=2&deptId=5
+    return this.http.get(this.ServerUrl + `/empMst/EmpLocDept?locId=${locId}&divisionId=${divId}&deptId=${deptId}`,{ headers: this.headers });
+   
   }
 
   getCustomerEmpMapList(empId, p1, s1): Observable<any> {
-    return this.http.get(this.ServerUrl + `/empCust?emplId=${empId}&page=${p1}&size=${s1}`);
-    // http://localhost:8081/empCust?emplId=334&page=0&size=1
+    return this.http.get(this.ServerUrl + `/empCust?emplId=${empId}&page=${p1}&size=${s1}`,{ headers: this.headers });
+   
   }
 
   customerEmpMapSearch(custNo, locId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/empCust/exeDtls?accountNo=${custNo}&locId=${locId}`);
-    // http://localhost:8081/empCust/exeDtls?accountNo=1931&locId=2102
+    return this.http.get(this.ServerUrl + `/empCust/exeDtls?accountNo=${custNo}&locId=${locId}`,{ headers: this.headers });
+   
   }
 
   customerEmpMapSearchNew(custNo, locId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/empCust/custDtls?custAccountNo=${custNo}&locId=${locId}`);
-    // http://localhost:8081/empCust/custDtls?custAccountNo=1833&locId=2102
+    return this.http.get(this.ServerUrl + `/empCust/custDtls?custAccountNo=${custNo}&locId=${locId}`,{ headers: this.headers });
+    
   }
 
 
@@ -4367,15 +3924,15 @@ TransactionTypemiscpPaint(): Observable<any> {
     };
     const url = this.ServerUrl + '/empCust';
     return this.http.put(url, custRelationRecord, options);
-    // http://localhost:8081/empCust
+   
   }
 
 
   //////////////////////////// ORDER GENERATION /
 
   priceListData(ouId, divId, deptId, plType): Observable<any> {
-    return this.http.get(this.ServerUrl + `/pricelist/priceHdrOu?ouId=${ouId}&divisionId=${divId}&deptId=${deptId}&priceSubType=${plType}`);
-    // http://localhost:8081/pricelist/priceHdrOu?ouId=22&divisionId=2&deptId=5&priceSubType=MRP
+    return this.http.get(this.ServerUrl + `/pricelist/priceHdrOu?ouId=${ouId}&divisionId=${divId}&deptId=${deptId}&priceSubType=${plType}`,{ headers: this.headers });
+   
   }
 
 
@@ -4389,26 +3946,26 @@ TransactionTypemiscpPaint(): Observable<any> {
 
 
   getBackOrderStatusBajaj(locId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/SparesBackOrder/location?locId=${locId}`);
-    // http://localhost:8081/SparesBackOrder/location?locId=2102
+    return this.http.get(this.ServerUrl + `/SparesBackOrder/location?locId=${locId}`,{ headers: this.headers });
+   
   }
 
 
   ///////////////////////////shipping network /////////////////////
 
   getShipNetFromDetails(locId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/shippingNetwork/shipfrom/${locId}`);
-    // http://localhost:8081/shippingNetwork/shipfrom/2102
+    return this.http.get(this.ServerUrl + `/shippingNetwork/shipfrom/${locId}`,{ headers: this.headers });
+   
   }
 
   getShipNetToDetails(locId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/shippingNetwork/shipto/${locId}`);
-    // http://localhost:8081/shippingNetwork/shipto/2102
+    return this.http.get(this.ServerUrl + `/shippingNetwork/shipto/${locId}`,{ headers: this.headers });
+    
   }
 
   /////////////////////////DEAD STOCK /////////////////////
   getDeadStockList(mOuId, mFlag): Observable<any> {
-    return this.http.get(this.ServerUrl + `/DedStock/listProcess?ouId=${mOuId}`);
+    return this.http.get(this.ServerUrl + `/DedStock/listProcess?ouId=${mOuId}`,{ headers: this.headers });
   }
 
 
@@ -4419,7 +3976,6 @@ TransactionTypemiscpPaint(): Observable<any> {
     const url = this.ServerUrl + `/DedStock?ouId=${mOu}&days=${dDays}`;
     return this.http.post(url, options);
 
-    // http://localhost:8081/DedStock?ouId=21&months=10
   }
 
   public deadLineAddUpdate(deadLineRecord) {
@@ -4428,32 +3984,32 @@ TransactionTypemiscpPaint(): Observable<any> {
     };
     const url = (this.ServerUrl + `/DedStock/addLine`);
     return this.http.post(url, deadLineRecord, options);
-    // http://localhost:8081/DedStock/addLine
+  
   }
 
   // //////////////AR Invoice////////////////////
   viewInvnote(trxNumber) {
     const REQUEST_URI = this.ServerUrl + `/arInv/ManualInvPrint/${trxNumber}`;
     return this.http.get(REQUEST_URI, {
-      // params: REQUEST_PARAMS,
+    
       responseType: 'arraybuffer',
       headers: this.headers,
     });
   }
 
   getJonCardNoSearch(jonCardNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/jobCard/jobDtls/${jonCardNo}`);
+    return this.http.get(this.ServerUrl + `/jobCard/jobDtls/${jonCardNo}`,{ headers: this.headers });
   }
 
 
   printAmcDoc(amcNum) {
-    // const REQUEST_URI = this.ServerUrl +`/SRGatepass/print/${jcNumber}`;  
+    
     const REQUEST_URI = this.ServerUrl + `/McpEnrollMst/amcInvoicePrint/${amcNum}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
     });
-    // http://localhost:8081/McpEnrollMst/amcInvoicePrint/AMC2202-8
+   
   }
 
   //////////////////////////////////////////RELATED ITEM MASTER /////////////////
@@ -4463,8 +4019,7 @@ TransactionTypemiscpPaint(): Observable<any> {
     };
     const url = this.ServerUrl + '/relateditems/relatedItemInsert';
     return this.http.post(url, RelMasterRecord, options);
-    // http://localhost:8081/relateditems/relatedItemInsert
-
+   
   }
 
   public DeleteItemRelation(relationId) {
@@ -4473,32 +4028,29 @@ TransactionTypemiscpPaint(): Observable<any> {
     };
     const url = (this.ServerUrl + `/relateditems/removeSingle?relationId=${relationId}`);
     return this.http.delete(url, options);
-
-    // http://localhost:8081/relateditems/removeSingle?relationId=2
   }
 
   getRelatedItem(itemCode): Observable<any> {
-    return this.http.get(this.ServerUrl + `/relateditems/${itemCode}`);
-    // http://localhost:8081/relateditems/6950 
+    return this.http.get(this.ServerUrl + `/relateditems/${itemCode}`,{ headers: this.headers });
+   
   }
 
 
   //////////////////// RECEIPT WRITE OFF///////////////////////////////////////////////////////////
 
   getEmpWriteOffLimit(ouId, tktNum): Observable<any> {
-    return this.http.get(this.ServerUrl + `/empMst/EmpWriteOfDtls?ticketNo=${tktNum}&ouId=${ouId}`);
-    // http://localhost:8081/empMst/EmpWriteOfDtls?ticketNo=M28152&ouId=21
-
+    return this.http.get(this.ServerUrl + `/empMst/EmpWriteOfDtls?ticketNo=${tktNum}&ouId=${ouId}`,{ headers: this.headers });
+   
   }
 
   getWriteOffListReceipt(locId, frmDate, tDate, wAmt): Observable<any> {
-    return this.http.get(this.ServerUrl + `/arCashReceipts/receiptWriteOff?locId=${locId}&frmDt=${frmDate}&toDate1=${tDate}&toAmt=${wAmt}`);
-    //http://localhost:8081/arCashReceipts/receiptWriteOff?locId=2101&frmDt=01-MAY-2022&toDate1=31-MAY-2022&toAmt=10
+    return this.http.get(this.ServerUrl + `/arCashReceipts/receiptWriteOff?locId=${locId}&frmDt=${frmDate}&toDate1=${tDate}&toAmt=${wAmt}`,{ headers: this.headers });
+    
   }
 
   getWriteOffListInvoice(locId, frmDate, tDate, wAmt): Observable<any> {
-    return this.http.get(this.ServerUrl + `/arInv/invoiceWriteOff?locId=${locId}&fromDate=${frmDate}&toDate=${tDate}&toAmt=${wAmt}`);
-    // http://localhost:8081/arInv/invoiceWriteOff?locId=2209&fromDate=01-APR-2022&toDate=26-NOV-2022&toAmt=5
+    return this.http.get(this.ServerUrl + `/arInv/invoiceWriteOff?locId=${locId}&fromDate=${frmDate}&toDate=${tDate}&toAmt=${wAmt}`,{ headers: this.headers });
+    
   }
 
 
@@ -4508,8 +4060,7 @@ TransactionTypemiscpPaint(): Observable<any> {
     };
     const url = this.ServerUrl + `/arCashReceipts/arReceiptWriteOff?locId=${locId}&frmDt=${frmDt}&toDate1=${toDt}&toAmt=${wAmt}&ticketNo=${tktNum}`;
     return this.http.post(url, options);
-    // http://localhost:8081/arCashReceipts/arReceiptWriteOff?locId=2101&frmDt=01-MAY-2022&toDate1=05-MAY-2022&toAmt=5&ticketNo=M28152
-
+   
   }
 
   public InvoiceWriteOffSubmit(locId, frmDt, toDt, wAmt, tktNum) {
@@ -4518,8 +4069,7 @@ TransactionTypemiscpPaint(): Observable<any> {
     };
     const url = this.ServerUrl + `/arInv/raInvoiceWriteOff?locId=${locId}&fromDate=${frmDt}&toDate=${toDt}&toAmt=${wAmt}&ticketNo=${tktNum}`;
     return this.http.post(url, options);
-    // http://localhost:8081/arInv/raInvoiceWriteOff?locId=2209&fromDate=26-MAY-2022&toDate=26-MAY-2022&toAmt=5&ticketNo=P06659
-
+   
   }
 
    ////////////////////////////////////////Petrol Pump//////////////////////////////////////////////////
@@ -4536,21 +4086,19 @@ TransactionTypemiscpPaint(): Observable<any> {
   }
 
   NozzleListShift(shiftTp,dt1,dt2): Observable<any> {
-    // alert("SHIFT TYPE = "+shiftTp+" ,DATE1= "+dt1+" ,DATE2= "+dt2);
-    // return this.http.get(this.ServerUrl + '/NozzelMaster');
+   
     return this.http.get(this.ServerUrl + `/NozzelMaster/NozleLov?shiftType=${shiftTp}&shiftDate=${dt1}&shiftDate1=${dt2}`);
-  // http://localhost:8081/NozzelMaster/NozleLov?shiftType=I&shiftDate=01-Feb-2024&shiftDate1=02-Feb-2024
-
+  
   }
 
 
   FuelTypeList(fueltype,divId): Observable<any> {
-    // alert ("Ftype:"+fueltype + " , div :"+divId);
+   
     return this.http.get(this.ServerUrl + `/itemMst/ByItemCategory?itemCatType=${fueltype}&divId=${divId}`);
   }
 
   ShiftList(): Observable<any> {
-    // return this.http.get(this.ServerUrl + `/itemMst/ByItemCategory?itemCatType=${fueltype}&divId=${divId}`);
+   
     return this.http.get(this.ServerUrl + '/cmnLookup/CmnType/ShiftType');
 
   }
@@ -4558,18 +4106,17 @@ TransactionTypemiscpPaint(): Observable<any> {
   PPEmplIdList(locId, divisionId): Observable<any> {
     return this.http.get(this.ServerUrl + `/empMst/EmpLocDiv?locId=${locId}&divisionId=${divisionId}`)
   
-    // http://localhost:8081/empMst/EmpLocDiv?locId=2501&divisionId=3
   }
 
 
 
   NozzleIslandPick(mNozzle): Observable<any> {
-    // alert(mNozzle );
+
     return this.http.get(this.ServerUrl + `/ppIslandMaster/ByNozleId/${mNozzle}`);
   }
 
   NozzleFuelTypePick(mNozzleCd): Observable<any> {
-    // http://localhost:8081/NozzelMaster/NZ01
+ 
     return this.http.get(this.ServerUrl + `/NozzelMaster/${mNozzleCd}`);
   }
 
@@ -4583,33 +4130,28 @@ TransactionTypemiscpPaint(): Observable<any> {
     };
     const url = this.ServerUrl + '/ShiftEntry';
     return this.http.post(url, PumpSaleRecord, options);
-    // http://localhost:8081/ShiftEntry
+   
   }
 
 
   getTankList(): Observable<any> {
     return this.http.get(this.ServerUrl + `/TankMaster`);
 
-    // http://localhost:8081/TankMaster
   }
 
   getIslandList(): Observable<any> {
     return this.http.get(this.ServerUrl + `/ppIslandMaster`);
 
-    // http://localhost:8081/TankMaster
   }
 
   getNozzleList(): Observable<any> {
     return this.http.get(this.ServerUrl + `/NozzelMaster`);
 
-    // http://localhost:8081/TankMaster
   }
 
 
   getDipEntryDetails(dipEmtryNum): Observable<any> {
     return this.http.get(this.ServerUrl + `/DipEntry/DipNumber/${dipEmtryNum}`);
-
-    // http://localhost:8081/DipEntry/DipNumber/12PP.2501-2325001  
   }
 
 
@@ -4651,12 +4193,13 @@ TransactionTypemiscpPaint(): Observable<any> {
     const options = {
       headers: this.headers
     };
-    // http://localhost:8081/relateditems/relatedItemUpd
     const url = (this.ServerUrl + `/relateditems/relatedItemUpd`);
     return this.http.put(url, PaintMixMasterRecord, options);
   }
 
-
+  suppInvDetailFn(suppInvNo): Observable<any> {
+    return this.http.get(this.ServerUrl + `/poHdr/suppInvDet/${suppInvNo}`,{ headers: this.headers });
+  }
 
 }
 

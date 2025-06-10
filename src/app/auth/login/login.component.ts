@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { LoginService } from '../login.service';
 
 
+
+
 export interface IItem {
   username: string;
   password: string;
@@ -31,26 +33,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  // login() {
-  //   this.loginService.login(this.username, this.password).subscribe((res: any) => {
-  //     console.log('Res', res);
-  //     if (res.code === 200) {
-  //       this.router.navigate(['/admin']);
-  //       var users=res.obj;
-  //         sessionStorage.setItem('emplId',users.emplId);
-  //         sessionStorage.setItem('name',users.name);
-  //         sessionStorage.setItem('divisionName',users.divisionId.divisionName);
-  //         console.log(users.divisionId.divisionName);
-  //         sessionStorage.setItem('ticketNo',users.ticketNo);
-  //         console.log(users.ticketNo);
-
-
-  //      }
-  //      else if (res.code === 400) {
-  //       alert('Incorrect username or password');
-  //     }
-  //   });
-  // }
+  
   forgetPassword(){
     this.router.navigate(['/forgetPasswordWindow']);   
     // this.router.navigate(['/forgetPasswordWindow', this.username]); 
@@ -69,27 +52,17 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.loginService.login(this.username, this.password).subscribe((res: any) => {
-      console.log('Res', res);
       if (res.code === 200) {
-       
-        // if (this.password=='newyear' || this.password=='welcome'){
-         
-        //   this.router.navigate(['/forgetPasswordWindow']);
-        
-        // }
-        // else{
-          this.router.navigate(['/admin']);
+          this.router.navigate(['/admin'],{ skipLocationChange: true });
           var users = res.obj;
           var divisionName = users.divisionName.split(" - ", 3);
           divisionName = divisionName[1];
-  
+          sessionStorage.setItem('logRes', JSON.stringify(res.obj));
           sessionStorage.setItem('CompName', users.divisionName);
           sessionStorage.setItem('divisionName', divisionName);
           sessionStorage.setItem('divisionId', users.divisionId);
           sessionStorage.setItem('roleId', users.roleId);
-          console.log(users.divisionName);
           sessionStorage.setItem('ticketNo', users.ticketNo);
-          console.log(users.ticketNo);
           sessionStorage.setItem('emplId', users.emplId);
           sessionStorage.setItem('dept', users.deptId);
           sessionStorage.setItem('deptName', users.deptName);
@@ -104,11 +77,7 @@ export class LoginComponent implements OnInit {
           sessionStorage.setItem('locName', users.locName);
           sessionStorage.setItem('roleId', users.roleId);
   
-          console.log(users.ouId);
-          console.log(users.locId);
-          console.log(users.ouName);
-          console.log(users.locCode);
-        // }
+        
       } 
       else if (res.code === 400) {
         alert('Incorrect Username or Password');
@@ -122,8 +91,4 @@ export class LoginComponent implements OnInit {
 
 
 
-  // login(){
-  //   // alert();
-  //   this.router.navigate(['/admin']);
-  //   }
 }

@@ -124,6 +124,8 @@ export class AdminComponent implements OnInit {
   isVisiblePaintPurchase:boolean=true;
   isVisiblePaintReport:boolean=true;
   isVisiblePaintReportAuditor:boolean=true;
+  isVisibileToolsSystem:boolean=true;
+  isVisibleToolsMaster:boolean=true;
 
 
   fullName: string;
@@ -179,7 +181,7 @@ export class AdminComponent implements OnInit {
     private router: Router,
     private service: MasterService
   ) {
-    // constructor(private router: Router ) {
+    
     this.todaysDataTime = formatDate(
       this.today,
       'dd-MM-yyyy hh:mm:ss a',
@@ -219,7 +221,7 @@ export class AdminComponent implements OnInit {
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    console.log(event);
+    // console.log(event);
 
     if (event.keyCode === KEY_CODE.F9_KEY) {
       this.f9Key();
@@ -228,7 +230,7 @@ export class AdminComponent implements OnInit {
 
   @HostListener('window:unload', ['$event'])
   keyEvent1(event: KeyboardEvent) {
-    console.log(event);
+    // console.log(event);
   }
 
   get f() {
@@ -393,6 +395,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisiblePaintPurchase=true;
       this.isVisiblePaintReport=true;
       this.isVisiblePaintReportAuditor=false;
+      this.isVisibleToolsMaster=false;
       // this.isVisibleShellReport=false;
 
     }
@@ -439,6 +442,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
         this.isVisiblePaintPurchase=false;
         this.isVisiblePaintReport=false;
         this.isVisiblePaintReportAuditor=true;
+        this.isVisibleToolsMaster=false;
       }
 
     // && sessionStorage.getItem('ticketNo') ==='P5678'
@@ -482,7 +486,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibleAccessories=false;
       this.isVisibilePaintSystem=false
       this.isVisibleSearchPaint=false;
-
+      this.isVisibleToolsMaster=false;
       // this.isVisibilePetrolPumpSystem=true;
       // this.isVisibleShellReport=false;
     }
@@ -521,7 +525,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibilePaintSystem=false;
       this.isVisibleShellReport=false;
       this.isVisibleSearchPaint=false;
-
+      this.isVisibleToolsMaster=false;
       // if (sessionStorage.getItem('deptName')==='Account'){
 
       // }
@@ -564,6 +568,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibilePaintSystem=false;
       this.isVisibleShellReport=false;
       this.isVisibleSearchPaint=false;
+      this.isVisibleToolsMaster=false;
 
     }
     if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId'))===2 && sessionStorage.getItem('deptName')==='Service'){
@@ -600,6 +605,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibilePaintSystem=false;
       this.isVisibleShellReport=false;
       this.isVisibleSearchPaint=false;
+      this.isVisibleToolsMaster=false;
 
     }
 
@@ -650,6 +656,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
         this.isVisibleAccessories=false;
         this.isVisibleServerReport=false;
       }
+      this.isVisibleToolsMaster=false;
     }
 
     if (Number(sessionStorage.getItem('divisionId')) === 2 && sessionStorage.getItem('deptName')==='Spares' && Number(sessionStorage.getItem('roleId'))===4){
@@ -687,6 +694,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibilePaintSystem=false;
       this.isVisibleShellReport=false;
       this.isVisibleSearchPaint=false;
+      this.isVisibleToolsMaster=false;
 
     }
 
@@ -726,6 +734,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibilePaintSystem=false;
       this.isVisibleShellReport=false;
       this.isVisibleSearchPaint=false;
+      this.isVisibleToolsMaster=false;
 
     }
 
@@ -766,7 +775,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibilePaintSystem=false;
       this.isVisibleShellReport=false;
       this.isVisibleSearchPaint=false;
-
+      this.isVisibleToolsMaster=false;
     }
     if (Number(sessionStorage.getItem('deptId'))===4){
       this.isVisibleAccountsRepor=true;
@@ -812,9 +821,50 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       // this.isVisibleShellReport=false;
         this.isVisibleShellReport=true;
         this.isVisibleSearchPaint=false;
-
+        this.isVisibleToolsMaster=false;
     }
 
+    if (Number(sessionStorage.getItem('divisionId')) === 1 && Number(sessionStorage.getItem('deptId'))===5){
+      this.isVisible11=false;
+      this.isVisible12=false;
+      this.isVisible13=false
+      this.isVisibleWsVehicleMaster=false;
+      this.isVisible14=true;
+      this.isVisible15=false;
+      this.isVisible16=false;
+      this.isVisible17=false;
+      this.isVisible18=false;
+      this.isVisible19=false;
+      this.isVisible20=false;
+      this.isVisibleMaster=false;
+      this.isVisible21=false;
+      this.isVisible22=false;
+      this.isVisible23=false;
+      this.isVisible24=true;
+      this.isVisible25=true;
+      this.isVisible26=true;
+      this.isVisibleSubInventoryTransfer=false;
+      this.isVisible27=false;
+      this.isVisible28=false;
+      this.isVisible29=true;
+      this.isVisibleToolsMaster=true;
+      this.isVisibleSparesReport=true;
+      this.isVisible31=false;
+      this.isVisible32=false;
+      this.isVisibleServiceReport=false;
+      this.isVisibleSalesReport=false;
+      this.isVisible37=false;
+      this.isVisibleSaleStockAdju=true;
+      this.isVisibleAccountsRepor=false;
+      this.isVisibleAccessories=false;
+      this.isVisibilePaintSystem=false;
+      this.isVisibleShellReport=false;
+      this.isVisibleSearchPaint=false;
+      this.isVisibleCustMaster=false;
+      // if (sessionStorage.getItem('deptName')==='Account'){
+
+      // }
+    }
 
 
 
@@ -839,7 +889,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
     this.service.subInvCode2(this.deptId, this.divisionId).subscribe(
       data => {
         this.subInvCode = data;
-        console.log(data);
+        // console.log(data);
         this.subInventory = this.subInvCode.subInventoryCode;
       });
    
@@ -1000,7 +1050,7 @@ getF9DataPaint(itemId){
   )
   .subscribe((data) => {
     this.lstcomments = data;
-    console.log(data);
+    // console.log(data);
     if (this.lstcomments.length > 0) {
       this.segment = this.lstcomments[0].SEGMENT;
       this.desc = this.lstcomments[0].DESCRIPTION;
@@ -1051,7 +1101,7 @@ getF9DataPaint(itemId){
           .searchByItemf9(data1.itemId, this.locId, this.ouId, this.divisionId,sessionStorage.getItem('deptId'))
           .subscribe((data) => {
             this.lstcomments = data;
-            console.log(data);
+            // console.log(data);
             if (this.lstcomments.length > 0) {
               this.segment = this.lstcomments[0].SEGMENT;
               this.desc = this.lstcomments[0].DESCRIPTION;
@@ -1087,7 +1137,7 @@ getF9DataPaint(itemId){
       .searchByItemDescf9(this.divisionId, itemDesc)
       .subscribe((data) => {
         this.lstcomments1 = data;
-        console.log(data);
+        // console.log(data);
       });
   }
 
@@ -1096,7 +1146,7 @@ getF9DataPaint(itemId){
 
     let selectedValue = this.ItemIdList.find((v) => v.SEGMENT == mItem);
     if (selectedValue != undefined) {
-      console.log(selectedValue);
+      // console.log(selectedValue);
       this.searchItemId = selectedValue.itemId;
       this.searchItemName = selectedValue.DESCRIPTION;
       this.searchItemCode = selectedValue.SEGMENT;
@@ -1142,7 +1192,7 @@ getF9DataPaint(itemId){
       .searchByItemf9(itemNumber, this.locId, this.ouId, this.divisionId,sessionStorage.getItem('deptId'))
       .subscribe((data) => {
         this.lstcomments = data;
-        console.log(data);
+        // console.log(data);
         // alert("Length :"+this.lstcomments.length);
         if (this.lstcomments.length > 0) {
           this.segment = this.lstcomments[0].SEGMENT;
@@ -1286,7 +1336,7 @@ getF9DataPaint(itemId){
 
       if (itemCode.length === 8 ) {
         // alert('in len if' + itemCode.toUpperCase());
-        console.log(this.ItemIdList);
+        // console.log(this.ItemIdList);
         let select1 = this.ItemIdList.find((d) => d.segment === itemCode.toUpperCase());
         // alert(select1.itemId + 'In len');
         if (select1 != undefined) {
@@ -1305,7 +1355,7 @@ getF9DataPaint(itemId){
       else {
 
       if (itemCode.length >= 4 ) {
-        console.log(this.ItemIdList);
+        // console.log(this.ItemIdList);
         let select1 = this.ItemIdList.find((d) => d.segment === itemCode.toUpperCase());
         if (select1 != undefined) {
           this.getF9Data(select1.itemId);
@@ -1336,7 +1386,7 @@ getF9DataPaint(itemId){
     )
     .subscribe((data) => {
       this.lstcomments = data;
-      console.log(data);
+      // console.log(data);
       if (this.lstcomments.length > 0) {
         this.segment = this.lstcomments[0].SEGMENT;
         this.desc = this.lstcomments[0].DESCRIPTION;
@@ -1376,4 +1426,557 @@ getF9DataPaint(itemId){
       }
     }
   }
+
+  /************ Sales Order************************ */
+
+  vehiclePriceUpload(){
+    this.router.navigate(['/admin/OrderManagement/VehicleAndAddonPriceUpload'],{ skipLocationChange: true });
+  }
+
+  modelWisePriceList(){
+    this.router.navigate(['/admin/OrderManagement/modelWisePrice'],{ skipLocationChange: true });
+  }
+
+  proformaInv(){
+    this.router.navigate(['/admin/OrderManagement/SalesProforma'],{ skipLocationChange: true });
+  }
+
+  closingStock(){
+    this.router.navigate(['/admin/OrderManagement/ClosingStock'],{ skipLocationChange: true });
+  }
+
+  allotment(){
+    this.router.navigate(['/admin/OrderManagement/allotment'],{ skipLocationChange: true });
+  }
+
+  deAllotment(){
+    this.router.navigate(['/admin/OrderManagement/Deallotment'],{ skipLocationChange: true });
+  }
+
+  salesOrderList(){
+    this.router.navigate(['/admin/OrderManagement/SalesOrderList'],{ skipLocationChange: true });
+  }
+
+  salesOrder(){
+    this.router.navigate(['/admin/OrderManagement/SalesOrderForm'],{ skipLocationChange: true });
+  }
+
+  orderCancel(){
+    this.router.navigate(['/admin/OrderManagement/orderCancellationUpload'],{ skipLocationChange: true });
+  }
+
+  reversalOrder(){
+    this.router.navigate(['/admin/OrderManagement/ReversalOrder'],{ skipLocationChange: true });
+  }
+
+  salesGatePass(){
+    this.router.navigate(['/admin/OrderManagement/GatePass'],{ skipLocationChange: true });
+  }
+
+  rtoReport(){
+    this.router.navigate(['/admin/OrderManagement/rtoLineItemReport'],{ skipLocationChange: true });
+  }
+
+  proformaChetak(){
+    this.router.navigate(['/admin/OrderManagement/SalesOrderProformaChetak'],{ skipLocationChange: true });
+  }
+
+  vehicleBookingUploadCSV(){
+    this.router.navigate(['/admin/transaction/VehicleBookUpload'],{ skipLocationChange: true });
+  }
+
+  orderDetailUpdation(){
+    this.router.navigate(['/admin/OrderManagement/OrderDetailsUpdation'],{ skipLocationChange: true });
+  }
+
+/************************Purchase******************** */
+
+poList(){
+    this.router.navigate(['/admin/transaction/pendingPoList'],{ skipLocationChange: true });
+  }
+  purchaseOrder(){
+    this.router.navigate(['/admin/master/OPMasterDto'],{ skipLocationChange: true });
+  }
+  bulkUploadPO(){
+    this.router.navigate(['/admin/transaction/BulkUploadWithCsv'],{ skipLocationChange: true });
+  }
+  poReceipt(){
+    this.router.navigate(['/admin/master/PoReceiptForm'],{ skipLocationChange: true });
+  }
+  returnToVendor(){
+    this.router.navigate(['/admin/transaction/ReturnToVendor'],{ skipLocationChange: true });
+  }
+  shortLandedGrrClaim(){
+    this.router.navigate(['/admin/transaction/ShortLandedGrr'],{ skipLocationChange: true });
+  }
+
+
+/********************** Payable Invoice************************* */
+
+
+apInvoiceList(){
+  this.router.navigate(['/admin/transaction/poInvList'],{ skipLocationChange: true });
+}
+
+apInvoice(){
+  this.router.navigate(['/admin/transaction/payableInvoice'],{ skipLocationChange: true });
+}
+
+payment(){
+  this.router.navigate(['/admin/transaction/Payment'],{ skipLocationChange: true });
+}
+
+/***********************Receivable ***************** */
+
+arInvoice(){
+  this.router.navigate(['/admin/transaction/ARInvoice'],{ skipLocationChange: true });
+}
+
+
+arPayment(){
+  this.router.navigate(['/admin/transaction/PaymentAr'],{ skipLocationChange: true });
+}
+
+omPaymentReceipt(){
+  this.router.navigate(['/admin/transaction/PaymentReceipt'],{ skipLocationChange: true });
+}
+
+/*********************General Ledger */
+journalVoucer(){
+  this.router.navigate(['/admin/transaction/JournalVoucher'],{ skipLocationChange: true });
+}
+
+accountEnquiry(){
+  this.router.navigate(['/admin/transaction/AccountEnquiry'],{ skipLocationChange: true });
+}
+
+casBankTransfer(){
+  this.router.navigate(['/admin/transaction/CashBankTransfer'],{ skipLocationChange: true });
+}
+
+bankReconcillation(){
+  this.router.navigate(['/admin/transaction/BankReconcillation'],{ skipLocationChange: true });
+}
+
+glTrailBalance(){
+  this.router.navigate(['/admin/transaction/glTrialBalance'],{ skipLocationChange: true });
+}
+
+jvupload(){
+  this.router.navigate(['/admin/transaction/JvUpload'],{ skipLocationChange: true });
+}
+
+writeOff(){
+  this.router.navigate(['/admin/transaction/ReceiptWriteoff'],{ skipLocationChange: true });
+}
+
+/******************Workshop */
+
+jobCard(){
+  this.router.navigate(['/admin/service/JobCard'],{ skipLocationChange: true });
+}
+
+gatePass(){
+  this.router.navigate(['/admin/service/ServiceGatepass'],{ skipLocationChange: true });
+}
+
+vehicleMasterWs(){
+  this.router.navigate(['/admin/master/WsVehicleMaster'],{ skipLocationChange: true });
+}
+
+laborList(){
+  this.router.navigate(['/admin/service/laborList'],{ skipLocationChange: true });
+}
+/******************Inventory Transactions */
+
+averageCostUpdate(){
+  this.router.navigate(['/admin/transaction/AvgCostUpadte'],{ skipLocationChange: true });
+}
+
+stockTaking(){
+  this.router.navigate(['/admin/transaction/StockTaking'],{ skipLocationChange: true });
+}
+
+stockDetails(){
+  this.router.navigate(['/admin/transaction/OnHandDetails'],{ skipLocationChange: true });
+}
+
+workshopIssue(){
+  this.router.navigate(['/admin/transaction/MoveOrder'],{ skipLocationChange: true });
+}
+
+workshopReturn(){
+  this.router.navigate(['/admin/transaction/WorkshopReturn'],{ skipLocationChange: true });
+}
+
+stockAdjustment(){
+  this.router.navigate(['/admin/transaction/miscTransaction'],{ skipLocationChange: true });
+}
+
+interstateAdjustment(){
+  this.router.navigate(['/admin/transaction/InterState'],{ skipLocationChange: true });
+}
+
+internalConsuptiop(){
+  this.router.navigate(['/admin/transaction/InternalConsumption'],{ skipLocationChange: true });
+}
+
+subInventoryTransfer(){
+  this.router.navigate(['/admin/transaction/SubInventoryTransfer'],{ skipLocationChange: true });
+}
+
+deadStockDetails(){
+  this.router.navigate(['/admin/transaction/DeadStock'],{ skipLocationChange: true });
+}
+
+stockTransfer1(){
+  this.router.navigate(['/admin/transaction/stockTransfer'],{ skipLocationChange: true });
+}
+
+stockAdjustment1(){
+  this.router.navigate(['/admin/transaction/miscTransaction'],{ skipLocationChange: true });
+}
+
+amcSchemeMaster(){
+  this.router.navigate(['/admin/transaction/AmcSchemeMaster'],{ skipLocationChange: true });
+}
+amcEntrollment(){
+  this.router.navigate(['/admin/transaction/AmcEnrollment'],{ skipLocationChange: true });
+}
+
+mcpItemMaster(){
+  this.router.navigate(['/admin/transaction/McpItemMaster'],{ skipLocationChange: true });
+}
+
+mcpItemMapping(){
+  this.router.navigate(['/admin/transaction/McpItemMapping'],{ skipLocationChange: true });
+}
+
+mcpPackageMaster(){
+  this.router.navigate(['/admin/transaction/McpPackageMaster'],{ skipLocationChange: true });
+}
+
+mcpEnquiryGeneration(){
+  this.router.navigate(['/admin/transaction/McpEnquiry'],{ skipLocationChange: true });
+}
+
+mcpEnrollmentForm(){
+  this.router.navigate(['/admin/transaction/McpEnrollment'],{ skipLocationChange: true });
+}
+
+mcpTermination(){
+  this.router.navigate(['/admin/transaction/McpCancellation'],{ skipLocationChange: true });
+}
+
+saiEWSchemeMaster(){
+  this.router.navigate(['/admin/transaction/SaiEwSchemeMaster'],{ skipLocationChange: true });
+}
+
+saiEWEnrollment(){
+  this.router.navigate(['/admin/transaction/SaiExtendedWarranty'],{ skipLocationChange: true });
+}
+
+warrantyClaimForm(){
+  this.router.navigate(['/admin/transaction/WarrantyClaim'],{ skipLocationChange: true });
+}
+
+
+itemCategoryMaster(){
+  this.router.navigate(['/admin/master/ItemCategory'],{ skipLocationChange: true });
+}
+
+locatorMaster(){
+  this.router.navigate(['/admin/master/LocatorMaster'],{ skipLocationChange: true });
+}
+
+itemMasterLocator(){
+  this.router.navigate(['/admin/master/ItemMasterLocator'],{ skipLocationChange: true });
+}
+
+itemMaster(){
+  this.router.navigate(['/admin/master/itemMasterNew'],{ skipLocationChange: true });
+}
+
+relatedItemMaster(){
+  this.router.navigate(['/admin/master/ItemRelatedMaster'],{ skipLocationChange: true });
+}
+
+bulkUploadItem(){
+  this.router.navigate(['/admin/transaction/BulkItemUploadCSV'],{ skipLocationChange: true });
+}
+
+priceListMaster(){
+  this.router.navigate(['/admin/master/pricelistMaster'],{ skipLocationChange: true });
+}
+
+builUploadPriceList(){
+  this.router.navigate(['/admin/transaction/BulkUploadPricelist'],{ skipLocationChange: true });
+}
+
+pendingShipmentList1(){
+  this.router.navigate(['/admin/master/PendingShipmentList'],{ skipLocationChange: true });
+}
+
+subInventoryTransfer1(){
+  this.router.navigate(['/admin/transaction/SubInventoryTransfer'],{ skipLocationChange: true });
+}
+
+customerMaster(){
+  this.router.navigate(['/admin/master/customerMaster'],{ skipLocationChange: true });
+}
+
+vehicleMasterWSIns(){
+  this.router.navigate(['/admin/master/WsVehicleMaster'],{ skipLocationChange: true });
+}
+
+/************************8Counter Sale Order */
+
+orderList1(){
+  this.router.navigate(['/admin/OrderManagement/orderList'],{ skipLocationChange: true });
+}
+
+counterSaleOrder(){
+  this.router.navigate(['/admin/OrderManagement/CounterSaleOrder'],{ skipLocationChange: true });
+}
+
+counterSaleWithCSV(){
+  this.router.navigate(['/admin/OrderManagement/CounterSaleWithCSV'],{ skipLocationChange: true });
+}
+
+counterSaleReturn(){
+  this.router.navigate(['/admin/OrderManagement/CounterSaleReturn'],{ skipLocationChange: true });
+}
+
+orderGeneration(){
+  this.router.navigate(['/admin/OrderManagement/OrderGeneration'],{ skipLocationChange: true });
+}
+
+backOrderImport(){
+  this.router.navigate(['/admin/OrderManagement/BackorderSparesImportBajaj'],{ skipLocationChange: true });
+}
+
+csProformaInv(){
+  this.router.navigate(['/admin/OrderManagement/CSPerformaINV'],{ skipLocationChange: true });
+}
+
+shippingNetwork(){
+  this.router.navigate(['/admin/OrderManagement/ShippingNetwork'],{ skipLocationChange: true });
+}
+
+priceUpdation(){
+  this.router.navigate(['/admin/OrderManagement/priceUpdation'],{ skipLocationChange: true });
+}
+
+ewayBillInvoiceData(){
+  this.router.navigate(['/admin/OrderManagement/EwayBillInvoiceData'],{ skipLocationChange: true });
+}
+
+ewayBillList(){
+  this.router.navigate(['/admin/OrderManagement/EwayBillCustomerNoWise'],{ skipLocationChange: true });
+}
+
+reserveQtyClear(){
+  this.router.navigate(['/admin/OrderManagement/ReserveQtyClear'],{ skipLocationChange: true });
+}
+
+
+sparesReport(){
+  this.router.navigate(['/admin/Report/SparesReportsNew'],{ skipLocationChange: true });
+}
+
+serviceReport(){
+  this.router.navigate(['/admin/Report/ServiceReport'],{ skipLocationChange: true });
+}
+
+salesReport(){
+  this.router.navigate(['/admin/Report/SalesReports'],{ skipLocationChange: true });
+}
+
+accountReport(){
+  this.router.navigate(['/admin/Report/AccountsRepor'],{ skipLocationChange: true });
+}
+
+accessoryReport(){
+  this.router.navigate(['/admin/Report/AccessoriesReport'],{ skipLocationChange: true });
+}
+
+serverReport(){
+  this.router.navigate(['/admin/Report/ServerReport'],{ skipLocationChange: true });
+}
+
+templateDownload(){
+  this.router.navigate(['/admin/Report/templateDownload'],{ skipLocationChange: true });
+}
+
+
+shellReport(){
+  this.router.navigate(['/admin/Report/ShellReport'],{ skipLocationChange: true });
+}
+
+
+
+divisionMaster(){
+  this.router.navigate(['/admin/master/division'],{ skipLocationChange: true });
+}
+
+operatingUnitMaster(){
+  this.router.navigate(['/admin/master/orgMaster'],{ skipLocationChange: true });
+}
+
+locationMaster(){
+  this.router.navigate(['/admin/master/locatioMaster'],{ skipLocationChange: true });
+}
+
+compnayMaster(){
+  this.router.navigate(['/admin/master/companyMaster'],{ skipLocationChange: true });
+}
+
+commonLookupMaster(){
+  this.router.navigate(['/admin/master/CommonMaster'],{ skipLocationChange: true });
+}
+
+hsnSacMaster(){
+  this.router.navigate(['/admin/master/HsnSacMaster'],{ skipLocationChange: true });
+}
+
+flexfiledMaster(){
+  this.router.navigate(['/admin/master/FlexField'],{ skipLocationChange: true });
+}
+
+documentSequenceMaster(){
+  this.router.navigate(['/admin/master/DocumentSequenceMaster'],{ skipLocationChange: true });
+}
+
+employeeMaster(){
+  this.router.navigate(['/admin/master/EmployeesMaster'],{ skipLocationChange: true });
+}
+
+orderTypeMaster(){
+  this.router.navigate(['/admin/master/orderType'],{ skipLocationChange: true });
+}
+
+vehicleMasterWorkshop(){
+  this.router.navigate(['/admin/master/WsVehicleMaster'],{ skipLocationChange: true });
+}
+
+variantMaster(){
+  this.router.navigate(['/admin/master/VariantMaster'],{ skipLocationChange: true });
+}
+
+receivableTransTypeMaster(){
+  this.router.navigate(['/admin/master/ReceivableTranstypeMaster'],{ skipLocationChange: true });
+}
+
+customerRelationMaster(){
+  this.router.navigate(['/admin/master/CustomerRelationMaster'],{ skipLocationChange: true });
+}
+
+supplierEntry(){
+  this.router.navigate(['/admin/master/SupplierMaster'],{ skipLocationChange: true });
+}
+
+glCodeCombination(){
+  this.router.navigate(['/admin/master/GlCodeCombination'],{ skipLocationChange: true });
+}
+
+groupMaster(){
+  this.router.navigate(['/admin/master/OMGRP'],{ skipLocationChange: true });
+}
+
+bankAccountCreation(){
+  this.router.navigate(['/admin/bank/newBank'],{ skipLocationChange: true });
+}
+
+bankBranchCreation(){
+  this.router.navigate(['/admin/bank/bankBranch'],{ skipLocationChange: true });
+}
+
+createBankAccountUse(){
+  this.router.navigate(['/admin/bank/BankAccUses'],{ skipLocationChange: true });
+}
+
+taxRegimeMaster(){
+  this.router.navigate(['/admin/master/JaiRegimeMaster'],{ skipLocationChange: true });
+}
+
+taxCategoryMaster(){
+  this.router.navigate(['/admin/master/taxCategoryMaster'],{ skipLocationChange: true });
+}
+
+taxTypeMaster(){
+  this.router.navigate(['/admin/master/JaiTaxType'],{ skipLocationChange: true });
+}
+
+taxRatesMaster(){
+  this.router.navigate(['/admin/master/jaiTaxRatesMaster'],{ skipLocationChange: true });
+}
+
+taxThresholdSetup(){
+  this.router.navigate(['/admin/master/TaxThresholdSetup'],{ skipLocationChange: true });
+}
+
+
+paintItemMaster(){
+  this.router.navigate(['/admin/paint/PaintItemMaster'],{ skipLocationChange: true });
+}
+
+paintMixingMaster(){
+  this.router.navigate(['/admin/paint/PaintMixingMaster'],{ skipLocationChange: true });
+}
+
+paintPanelMaster(){
+  this.router.navigate(['/admin/paint/PaintPanelMaster'],{ skipLocationChange: true });
+}
+
+paintEmployeeMaster(){
+  this.router.navigate(['/admin/paint/PaintEmpMaster'],{ skipLocationChange: true });
+}
+
+paintMixingIssue(){
+  this.router.navigate(['/admin/paint/PaintCreationNew'],{ skipLocationChange: true });
+}
+
+bodyshopIssue(){
+  this.router.navigate(['/admin/paint/PaintIssueDp'],{ skipLocationChange: true });
+}
+
+internalConsuption(){
+  this.router.navigate(['/admin/transaction/InternalConsumption'],{ skipLocationChange: true });
+}
+
+poList1(){
+  this.router.navigate(['/admin/paint/PaintPoList'],{ skipLocationChange: true });
+}
+
+purchaseOrder1(){
+  this.router.navigate(['/admin/paint/PaintPurchaseOrder'],{ skipLocationChange: true });
+}
+
+poStockTransferReceipt(){
+  this.router.navigate(['/admin/paint/PaintPoReceipt'],{ skipLocationChange: true });
+}
+
+paintStockTransfer(){
+  this.router.navigate(['/admin/paint/PaintStockTransfer'],{ skipLocationChange: true });
+}
+
+stockAdjustment2(){
+  this.router.navigate(['/admin/paint/PaintMiscTransaction'],{ skipLocationChange: true });
+}
+
+vaverageCost(){
+  this.router.navigate(['/admin/paint/PaintAvgCost'],{ skipLocationChange: true });
+}
+
+bjReport(){
+  this.router.navigate(['/admin/Report/PaintReports'],{ skipLocationChange: true });
+}
+
+paintReport(){
+  this.router.navigate(['/admin/Report/PaintReportsNew'],{ skipLocationChange: true });
+}
+
+variantMasterNew(){
+  this.router.navigate(['/admin/master/VariantMst'],{ skipLocationChange: true });
+}
 }

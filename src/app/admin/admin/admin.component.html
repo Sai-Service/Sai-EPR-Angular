@@ -22,19 +22,18 @@
     <div [style.display]="isVisibleCustMaster ? 'block' : 'none'">
      <li class="nav-item dropdown">
       <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-        aria-haspopup="true"  [routerLink]="['/admin/master/customerMaster']" aria-expanded="false">
+        aria-haspopup="true"  (click)="customerMaster()" aria-expanded="false">
         Customer Master
       </a>
     </li> 
     </div>
     <li class="nav-item dropdown" [style.display]="isVisibleWsVehicleMaster ? 'block' : 'none'">
       <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-        aria-haspopup="true"  [routerLink]="['/admin/master/WsVehicleMaster']" aria-expanded="false">
+        aria-haspopup="true" (click)="vehicleMasterWSIns()"  aria-expanded="false">
         Vehicle Master WS-INS
       </a>
     </li> 
-    <!-- <li><a class="dropdown-item" [routerLink]="['/admin/master/WsVehicleMaster']">Vehicle Master WS</a></li> -->
-
+   
     <div [style.display]="isVisible31 ? 'block' : 'none'">
      <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -45,41 +44,39 @@
         <div [style.display]="isVisible11 ? 'block' : 'none'">
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Counter Sale Order</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/orderList']">Order List</a></li> 
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/CounterSaleOrder']">Counter Sale Order</a></li>  
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/CounterSaleWithCSV']">Counter Sale With CSV</a></li>     
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/CounterSaleReturn']">Counter Sale Return</a></li>    
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/OrderGeneration']">Order Generation</a></li>  
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/BackorderSparesImportBajaj']">Back Order Import</a></li>      
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/CSPerformaINV']">CS Proforma INV</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/ShippingNetwork']">Shipping Netwotk</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/priceUpdation']">Price Updation</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/EwayBillInvoiceData']">Eway Bill Invoice Data</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/EwayBillCustomerNoWise']">Eway Bill List</a></li>
-            <!-- <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/OrderBookingChetak']">Order Booking-Chetak</a></li> -->
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/ReserveQtyClear']">Reserve Qty Clear</a></li>
-              
+            <li><a class="dropdown-item" (click)="orderList1()">Order List</a></li> 
+            <li><a class="dropdown-item" (click)="counterSaleOrder()">Counter Sale Order</a></li>  
+            <li><a class="dropdown-item" (click)="counterSaleWithCSV()">Counter Sale With CSV</a></li>     
+            <li><a class="dropdown-item" (click)="counterSaleReturn()">Counter Sale Return</a></li>    
+            <li><a class="dropdown-item" (click)="orderGeneration()">Order Generation</a></li>  
+            <li><a class="dropdown-item" (click)="backOrderImport()">Back Order Import</a></li>      
+            <li><a class="dropdown-item" (click)="csProformaInv()">CS Proforma INV</a></li>
+            <li><a class="dropdown-item" (click)="shippingNetwork()">Shipping Netwotk</a></li>
+            <li><a class="dropdown-item" (click)="priceUpdation()">Price Updation</a></li>
+            <li><a class="dropdown-item" (click)="ewayBillInvoiceData()">Eway Bill Invoice Data</a></li>
+            <li><a class="dropdown-item" (click)="ewayBillList()">Eway Bill List</a></li>
+            <li><a class="dropdown-item" (click)="reserveQtyClear()">Reserve Qty Clear</a></li>   
           </ul>
         </li>
         </div>
         <div [style.display]="isVisible12 ? 'block' : 'none'">
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Sales Order</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/VehicleAndAddonPriceUpload']">Vehicle & Addon Price Ulpoad</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/modelWisePrice']">Model Wise Price List</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/SalesProforma']">Proforma INV</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/ClosingStock']">Closing Stock</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/allotment']">Allotment</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/Deallotment']">De Allotment</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/SalesOrderList']">Sales Order List</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/SalesOrderForm']">Sales Order</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/orderCancellationUpload']">Order Cancellation</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/ReversalOrder']">Reversal Order</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/GatePass']">Sales Gate Pass</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/rtoLineItemReport']">RTO Report</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/SalesOrderProformaChetak']">Proforma-Chetak</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/VehicleBookUpload']">Vehicle Booking Upload CSV</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/OrderDetailsUpdation']">Order Detail Updation</a></li>
+            <li><a class="dropdown-item" (click)="vehiclePriceUpload()">Vehicle & Addon Price Ulpoad</a></li>
+            <li><a class="dropdown-item" (click)="modelWisePriceList()">Model Wise Price List</a></li>
+            <li><a class="dropdown-item" (click)="proformaInv()">Proforma INV</a></li>
+            <li><a class="dropdown-item" (click)="closingStock()">Closing Stock</a></li>
+            <li><a class="dropdown-item" (click)="allotment()">Allotment</a></li>
+            <li><a class="dropdown-item" (click)="deAllotment()">De Allotment</a></li>
+            <li><a class="dropdown-item" (click)="salesOrderList()">Sales Order List</a></li>
+            <li><a class="dropdown-item" (click)="salesOrder()">Sales Order</a></li>
+            <li><a class="dropdown-item" (click)="orderCancel()">Order Cancellation</a></li>
+            <li><a class="dropdown-item" (click)="reversalOrder()">Reversal Order</a></li>
+            <li><a class="dropdown-item" (click)="salesGatePass()">Sales Gate Pass</a></li>
+            <li><a class="dropdown-item" (click)="rtoReport()">RTO Report</a></li>
+            <li><a class="dropdown-item" (click)="proformaChetak()">Proforma-Chetak</a></li>
+            <li><a class="dropdown-item" (click)="vehicleBookingUploadCSV()">Vehicle Booking Upload CSV</a></li>
+            <li><a class="dropdown-item" (click)="orderDetailUpdation()">Order Detail Updation</a></li>
           </ul>
         </li>
       </div>
@@ -96,12 +93,12 @@
         <div [style.display]="isVisible14 ? 'block' : 'none'">
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Purchase</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/pendingPoList']">PO List</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/master/OPMasterDto']">Purchase Order</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/BulkUploadWithCsv']">Bulk Upload PO</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/master/PoReceiptForm']">PO Receipt</a></li>
-            <li [style.display]="isVisibleReturnToVendor ? 'block' : 'none'"><a class="dropdown-item" [routerLink]="['/admin/transaction/ReturnToVendor']">Return To Vendor</a></li>
-            <li [style.display]="isVisibleShortLanded ? 'block' : 'none'"><a class="dropdown-item" [routerLink]="['/admin/transaction/ShortLandedGrr']">Short Landed Grr Claim</a></li>
+            <li><a class="dropdown-item" (click)="poList()">PO List</a></li>
+            <li><a class="dropdown-item" (click)="purchaseOrder()">Purchase Order</a></li>
+            <li><a class="dropdown-item" (click)="bulkUploadPO()">Bulk Upload PO</a></li>
+            <li><a class="dropdown-item" (click)="poReceipt()">PO Receipt</a></li>
+            <li [style.display]="isVisibleReturnToVendor ? 'block' : 'none'"><a class="dropdown-item" (click)="returnToVendor()">Return To Vendor</a></li>
+            <li [style.display]="isVisibleShortLanded ? 'block' : 'none'"><a class="dropdown-item" (click)="shortLandedGrrClaim()">Short Landed Grr Claim</a></li>
 
           </ul>
         </li>
@@ -109,25 +106,24 @@
         <div [style.display]="isVisible15 ? 'block' : 'none'">
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Payable</a>
           <ul class="dropdown-menu">
-            <!-- <li><a class="dropdown-item" [routerLink]="['/admin/transaction/PoInvoice']">AP Invlisoice</a></li> -->
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/poInvList']">AP Invoice List</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/payableInvoice']">AP Invoice-NEW</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/Payment']">Payment</a></li>
+            <li><a class="dropdown-item" (click)="apInvoiceList()">AP Invoice List</a></li>
+            <li><a class="dropdown-item" (click)="apInvoice()">AP Invoice</a></li>
+            <li><a class="dropdown-item" (click)="payment()">Payment</a></li>
           </ul>
         </li>
         </div>
         <div [style.display]="isVisible16 ? 'block' : 'none'">
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Receivable</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/ARInvoice']">AR Invoice</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/PaymentAr']">AR Payment</a></li>
+            <li><a class="dropdown-item" (click)="arInvoice()">AR Invoice</a></li>
+            <li><a class="dropdown-item" (click)="arPayment()">AR Payment</a></li>
           </ul>
         </li>
         </div>
         <div [style.display]="isVisible17 ? 'block' : 'none'">
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Receipts</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/PaymentReceipt']">OM-Payment Receipt</a>
+            <li><a class="dropdown-item" (click)="omPaymentReceipt()">OM-Payment Receipt</a>
             </li>
             <!-- <li><a class="dropdown-item" [routerLink]="['/admin/transaction/PaymentAr']">AR-Payment Receipt</a></li> -->
           </ul>
@@ -136,13 +132,13 @@
         <div [style.display]="isVisible18 ? 'block' : 'none'">
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">General Ledger</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/JournalVoucher']">Journal Voucher</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/AccountEnquiry']">Account Enquiry</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/CashBankTransfer']">Cash Bank Transfer</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/BankReconcillation']">Bank Reconcillation</a> </li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/glTrialBalance']">GL Trial Balance</a> </li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/JvUpload']">JV Upload</a> </li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/ReceiptWriteoff']">Write-Off</a> </li>
+            <li><a class="dropdown-item" (click)="journalVoucer()">Journal Voucher</a></li>
+            <li><a class="dropdown-item" (click)="accountEnquiry()">Account Enquiry</a></li>
+            <li><a class="dropdown-item" (click)="casBankTransfer()">Cash Bank Transfer</a></li>
+            <li><a class="dropdown-item" (click)="bankReconcillation()">Bank Reconcillation</a> </li>
+            <li><a class="dropdown-item" (click)="glTrailBalance()">GL Trial Balance</a> </li>
+            <li><a class="dropdown-item" (click)="jvupload()">JV Upload</a> </li>
+            <li><a class="dropdown-item" (click)="writeOff()">Write-Off</a> </li>
           </ul>
         </li>
         </div>
@@ -157,10 +153,10 @@
       </a>
         <ul class="dropdown-menu">
           <!-- <li><a class="dropdown-item" [routerLink]="['/admin/service/JobcardOpening']">JobCard Opening</a></li> -->
-          <li><a class="dropdown-item" [routerLink]="['/admin/service/JobCard']">JobCard</a></li>
-          <li><a class="dropdown-item" [routerLink]="['/admin/service/ServiceGatepass']">Gate Pass</a></li>
-          <li><a class="dropdown-item" [routerLink]="['/admin/master/WsVehicleMaster']">Vehicle Master WS</a></li>
-          <li><a class="dropdown-item" [routerLink]="['/admin/service/laborList']">Labor List</a></li>
+          <li><a class="dropdown-item" (click)="jobCard()">JobCard</a></li>
+          <li><a class="dropdown-item" (click)="gatePass()">Gate Pass</a></li>
+          <li><a class="dropdown-item" (click)="vehicleMasterWs()">Vehicle Master WS</a></li>
+          <li><a class="dropdown-item" (click)="laborList()">Labor List</a></li>
         </ul>
       </li>
     </div>
@@ -177,39 +173,35 @@
       <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Inventory</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/AvgCostUpadte']">Average Cost Update</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/StockTaking']">Stock Taking</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/OnHandDetails']">Stock Details</a></li>
+            <li><a class="dropdown-item" (click)="averageCostUpdate()">Average Cost Update</a></li>
+            <li><a class="dropdown-item" (click)="stockTaking()">Stock Taking</a></li>
+            <li><a class="dropdown-item" (click)="stockDetails()">Stock Details</a></li>
             <li class="dropdown-submnu"><a class="dropdown-item dropdown-toggle" href="#">Stock Consumption</a>
               <ul class="dropdown-menu">
                 <div [style.display]="isVisible20 ? 'block' : 'none'">
-                <li><a class="dropdown-item" [routerLink]="['/admin/transaction/MoveOrder']">Workshop Issue</a></li>
-                <li><a class="dropdown-item" [routerLink]="['/admin/transaction/WorkshopReturn']">Workshop Return</a>
+                <li><a class="dropdown-item" (click)="workshopIssue()">Workshop Issue</a></li>
+                <li><a class="dropdown-item" (click)="workshopReturn()" >Workshop Return</a>
                 </li>
                 </div>
-                <li><a class="dropdown-item" [routerLink]="['/admin/transaction/miscTransaction']">Stock Adjustment</a> </li>
-                <li><a class="dropdown-item" [routerLink]="['/admin/transaction/InterState']">InterState Adjustment</a>
+                <li><a class="dropdown-item" (click)="stockAdjustment()">Stock Adjustment</a> </li>
+                <li><a class="dropdown-item" (click)="interstateAdjustment()">InterState Adjustment</a>
                 </li>
-                <li><a class="dropdown-item" [routerLink]="['/admin/transaction/InternalConsumption']">Internal Consumption</a></li>
-                <li> <a class="dropdown-item"
-                    [routerLink]="['/admin/transaction/SubInventoryTransfer']">SubinventoryTransfer</a></li>
+                <li><a class="dropdown-item" (click)="internalConsuptiop()" >Internal Consumption</a></li>
+                <li> <a class="dropdown-item"(click)="subInventoryTransfer()" >SubinventoryTransfer</a></li>
               </ul>
             </li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/DeadStock']">Dead Stock Details</a></li>
+            <li><a class="dropdown-item" (click)="deadStockDetails()">Dead Stock Details</a></li>
          
           </ul>
         </li>
       </ul>
     </li>
     </div>
-    <!-- <div [style.display]="isVisible37 ? 'block' : 'none'"> -->
-      <!-- <ul class="dropdown-menu">
-      <li><a class="dropdown-item" [routerLink]="['/admin/transaction/stockTransfer']">Stock Transfer</a></li>
-      </ul>  -->
+    
       <div [style.display]="isVisible37 ? 'block' : 'none'">
       <li class="nav-item dropdown">
         <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-          aria-haspopup="true"  [routerLink]="['/admin/transaction/stockTransfer']" aria-expanded="false">
+          aria-haspopup="true" (click)="stockTransfer1()"  aria-expanded="false">
           Stock Transfer
         </a>
       </li> 
@@ -218,7 +210,7 @@
     <div [style.display]="isVisibleSaleStockAdju ? 'block' : 'none'">
     <li class="nav-item dropdown">
       <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-      aria-haspopup="true" [routerLink]="['/admin/transaction/miscTransaction']" aria-expanded="false">Stock Adjustment</a> 
+      aria-haspopup="true" (click)="stockAdjustment1()" aria-expanded="false">Stock Adjustment</a> 
     </li>
     </div>
     <div [style.display]="isVisible32 ? 'block' : 'none'">
@@ -231,36 +223,36 @@
         <div [style.display]="isVisible21 ? 'block' : 'none'">
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Amc</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/AmcSchemeMaster']">Amc Scheme Master</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/AmcEnrollment']">Amc Enrollment</a></li>
-           
+            <li><a class="dropdown-item" (click)="amcSchemeMaster()">Amc Scheme Master</a></li>
+            <li><a class="dropdown-item" (click)="amcEntrollment()">Amc Enrollment</a></li>
+            
           </ul>
         </li>
         </div>
         <div [style.display]="isVisible22 ? 'block' : 'none'">
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">MCP</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/McpItemMaster']">MCP Item Master</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/McpItemMapping']">MCP Item Mapping</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/McpPackageMaster']">MCP Package Master</a>
+            <li><a class="dropdown-item" (click)="mcpItemMaster()">MCP Item Master</a></li>
+            <li><a class="dropdown-item" (click)="mcpItemMapping()">MCP Item Mapping</a></li>
+            <li><a class="dropdown-item" (click)="mcpPackageMaster()">MCP Package Master</a>
             </li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/McpEnquiry']">MCP Enquiry Generation</a>
+            <li><a class="dropdown-item" (click)="mcpEnquiryGeneration()">MCP Enquiry Generation</a>
             </li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/McpEnrollment']">MCP Enrollment Form</a>
+            <li><a class="dropdown-item" (click)="mcpEnrollmentForm()">MCP Enrollment Form</a>
             </li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/McpCancellation']">MCP Termination</a></li>
+            <li><a class="dropdown-item" (click)="mcpTermination()">MCP Termination</a></li>
           </ul>
         </li>
         </div>
         <div [style.display]="isVisible23 ? 'block' : 'none'"></div>
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Extended Warranty</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/SaiEwSchemeMaster']">Sai EW Scheme Master</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/SaiExtendedWarranty']">Sai EW Enrollment</a></li>
+            <li><a class="dropdown-item" (click)="saiEWSchemeMaster()">Sai EW Scheme Master</a></li>
+            <li><a class="dropdown-item" (click)="saiEWEnrollment()">Sai EW Enrollment</a></li>
           </ul>
         </li>
 
-        <li><a class="dropdown-item" [routerLink]="['/admin/transaction/WarrantyClaim']">Warranty Claim Form</a></li>
+        <li><a class="dropdown-item" (click)="warrantyClaimForm()">Warranty Claim Form</a></li>
         
       </ul>
     </li>
@@ -272,16 +264,16 @@
         aria-haspopup="true" aria-expanded="false"> Items Master </a>
       <ul class="dropdown-menu">
         <div [style.display]="isVisible25 ? 'block' : 'none'">
-        <li> <a class="dropdown-item" [routerLink]="['/admin/master/ItemCategory']">Item Category master</a> </li>
-        <li> <a class="dropdown-item" [routerLink]="['/admin/master/LocatorMaster']">Locator Master</a> </li>
-        <!-- <li> <a class="dropdown-item" [routerLink]="['/admin/master/SubinventoryMaster']">Subinventory</a> </li> -->
-        <li> <a class="dropdown-item" [routerLink]="['/admin/master/ItemMasterLocator']">Item Master Locator</a> </li>
+        <li> <a class="dropdown-item" (click)="itemCategoryMaster()">Item Category master</a> </li>
+        <li> <a class="dropdown-item" (click)="locatorMaster()">Locator Master</a> </li>
+        
+        <li> <a class="dropdown-item" (click)="itemMasterLocator()">Item Master Locator</a> </li>
       </div>
       <div [style.display]="isVisible26 ? 'block' : 'none'">
-        <!-- <li> <a class="dropdown-item" [routerLink]="['/admin/master/ItemMaster']">Item Master</a> </li> -->
-        <li> <a class="dropdown-item" [routerLink]="['/admin/master/itemMasterNew']">Item Master</a> </li> 
-        <li> <a class="dropdown-item" [routerLink]="['/admin/master/ItemRelatedMaster']">Related Item Master</a> </li> 
-        <li><a class="dropdown-item" [routerLink]="['/admin/transaction/BulkItemUploadCSV']">Bulk Upload Item</a></li>
+    
+        <li> <a class="dropdown-item" (click)="itemMaster()">Item Master</a> </li> 
+        <li> <a class="dropdown-item" (click)="relatedItemMaster()">Related Item Master</a> </li> 
+        <li><a class="dropdown-item" (click)="bulkUploadItem()">Bulk Upload Item</a></li>
       </div>
       </ul>
     </li>
@@ -292,15 +284,29 @@
        Price Master
       </a>
       <ul class="dropdown-menu">
-        <li> <a class="dropdown-item" [routerLink]="['/admin/master/pricelistMaster']">Price List Master</a></li>
-        <li><a class="dropdown-item" [routerLink]="['/admin/transaction/BulkUploadPricelist']">Bulk Upload PriceList</a></li>
+        <li> <a class="dropdown-item" (click)="priceListMaster()" >Price List Master</a></li>
+        <li><a class="dropdown-item" (click)="builUploadPriceList()">Bulk Upload PriceList</a></li>
       </ul>
     </li>
   </div>
+ <div [style.display]="isVisibleToolsMaster ? 'block' : 'none'">
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle " id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+       Tools Transaction
+      </a>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" (click)="stockAdjustment()">Stock Adjustment</a> </li>
+        <li><a class="dropdown-item" (click)="internalConsuptiop()" >Internal Consumption</a></li>
+        <li> <a class="dropdown-item" (click)="supplierEntry()">Supplier Entry</a> </li>
+       <li><a class="dropdown-item" (click)="priceUpdation()">Price Updation</a></li>
+      </ul>
+    </li>
+  </div>
+
   <div [style.display]="isVisible28 ? 'block' : 'none'">
     <li class="nav-item dropdown">
       <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-        aria-haspopup="true"  [routerLink]="['/admin/master/PendingShipmentList']" aria-expanded="false">
+        aria-haspopup="true"  (click)="pendingShipmentList1()" aria-expanded="false">
         Pending Shipment List
       </a>
     </li>
@@ -308,17 +314,13 @@
   <div [style.display]="isVisibleSubInventoryTransfer ? 'block' : 'none'">
   <li class="nav-item dropdown">
    <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-        aria-haspopup="true"  [routerLink]="['/admin/transaction/SubInventoryTransfer']" aria-expanded="false">
+        aria-haspopup="true"   (click)="subInventoryTransfer1()" aria-expanded="false">
         SubinventoryTransfer
       </a>
   </li>
-  <!-- <li class="nav-item dropdown">
-    <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-         aria-haspopup="true"  [routerLink]="['/admin/transaction/SubInventoryTransferNew']" aria-expanded="false">
-         SubinventoryTransfer New
-       </a>
-   </li> -->
+ 
   </div>
+
   <div [style.display]="isVisible29 ? 'block' : 'none'">
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -328,29 +330,28 @@
      
       <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <div [style.display]="isVisibleSparesReport ? 'block' : 'none'">
-            <!-- <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/SparesReports']">Spares Reports</a></li> -->
-            <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/SparesReportsNew']">Spares Reports</a></li>
+            <li><a class="dropdown-submenu" (click)="sparesReport()">Spares Reports</a></li>
           </div>
           <div [style.display]="isVisibleServiceReport ? 'block' : 'none'">
-          <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/ServiceReport']">Service Reports</a></li>
+          <li><a class="dropdown-submenu" (click)="serviceReport()">Service Reports</a></li>
         </div>
         <div [style.display]="isVisibleSalesReport ? 'block' : 'none'">
-        <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/SalesReports']">Sales Reports</a></li>
+        <li><a class="dropdown-submenu" (click)="salesReport()">Sales Reports</a></li>
         </div> 
         <div [style.display]="isVisibleAccountsRepor ? 'block' : 'none'">
-        <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/AccountsRepor']">Accounts Reports</a></li>
+        <li><a class="dropdown-submenu" (click)="accountReport()">Accounts Reports</a></li>
         </div>
         <div [style.display]="isVisibleAccessories ? 'block' : 'none'">
-          <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/AccessoriesReport']">Accessories Reports</a></li>
+          <li><a class="dropdown-submenu" (click)="accessoryReport()">Accessories Reports</a></li>
           </div>
 
           <div [style.display]="isVisibleServerReport ? 'block' : 'none'">
-            <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/ServerReport']">Server Report</a></li>
+            <li><a class="dropdown-submenu" (click)="serverReport()">Server Report</a></li>
             </div>
             <!-- <div [style.display]="isVisibleTemplateDownload ? 'block' : 'none'"> -->
-              <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/templateDownload']">Template Download</a></li>
+              <li><a class="dropdown-submenu" (click)="templateDownload()">Template Download</a></li>
               <div [style.display]="isVisibleShellReport ? 'block' : 'none'">
-                <li><a class="dropdown-submenu" [routerLink]="['/admin/Report/ShellReport']">Shell Reports</a></li>
+                <li><a class="dropdown-submenu" (click)="shellReport()">Shell Reports</a></li>
                 </div>
               
         
@@ -362,7 +363,7 @@
 
   <div [style.display]="isVisibleGL ? 'block' : 'none'">
     <!-- <li class="nav-item dropdown"> -->
-  <li><a class="dropdown-item" [routerLink]="['/admin/transaction/glTrialBalance']">GL Trial Balance</a> </li>
+  <li><a class="dropdown-item" (click)="glTrailBalance()">GL Trial Balance</a> </li>
     <!-- </li> -->
   </div>
 
@@ -379,66 +380,62 @@
           <ul class="dropdown-menu">
             <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Common Master</a>
               <ul class="dropdown-menu">
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/division']">Division Master</a></li>
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/orgMaster']">Operating Unit Master</a> </li>
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/locatioMaster']">Location Master</a></li>
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/companyMaster']">Company Master</a></li>
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/CommonMaster']">Common Lookup Master</a></li>
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/HsnSacMaster']">Hsn/Sac Master</a> </li>
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/FlexField']">FlexField Master</a> </li>
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/DocumentSequenceMaster']">Document Sequence Master</a></li>
-                <!-- <li> <a class="dropdown-item" [routerLink]="['/admin/master/EmployeeMaster']">Employee Master</a> </li> -->
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/EmployeesMaster']">Employee Master </a> </li>
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/orderType']">Order Type Master</a> </li>
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/WsVehicleMaster']">Vehicle Master-Workshop</a> </li>
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/VariantMaster']">Variant Master</a> </li>
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/ReceivableTranstypeMaster']">Receivable Trans Type Master</a> </li>
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/CustomerRelationMaster']">Customer Relation Master</a> </li>
+                <li> <a class="dropdown-item" (click)="divisionMaster()">Division Master</a></li>
+                <li> <a class="dropdown-item" (click)="operatingUnitMaster()">Operating Unit Master</a> </li>
+                <li> <a class="dropdown-item" (click)="locationMaster()">Location Master</a></li>
+                <li> <a class="dropdown-item" (click)="compnayMaster()">Company Master</a></li>
+                <li> <a class="dropdown-item" (click)="commonLookupMaster()">Common Lookup Master</a></li>
+                <li> <a class="dropdown-item" (click)="hsnSacMaster()">Hsn/Sac Master</a> </li>
+                <li> <a class="dropdown-item" (click)="flexfiledMaster()">FlexField Master</a> </li>
+                <li> <a class="dropdown-item" (click)="documentSequenceMaster()">Document Sequence Master</a></li>
+                <li> <a class="dropdown-item" (click)="employeeMaster()">Employee Master </a> </li>
+                <li> <a class="dropdown-item" (click)="orderTypeMaster()">Order Type Master</a> </li>
+                <li> <a class="dropdown-item" (click)="vehicleMasterWorkshop()">Vehicle Master-Workshop</a> </li>
+                <li> <a class="dropdown-item" (click)="variantMaster()">Variant Master</a> </li>
+                <li> <a class="dropdown-item" (click)="receivableTransTypeMaster()">Receivable Trans Type Master</a> </li>
+                <li> <a class="dropdown-item" (click)="customerRelationMaster()">Customer Relation Master</a> </li>
+                <li> <a class="dropdown-item" (click)="variantMasterNew()">Variant Master New</a> </li>
+                
               </ul>
             </li>
             <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Supplier Master</a>
               <ul class="dropdown-menu">
                 <li>
-                  <a class="dropdown-item" [routerLink]="['/admin/master/SupplierMaster']">Supplier Entry</a>
+                  <a class="dropdown-item" (click)="supplierEntry()">Supplier Entry</a>
                 </li>
 
               </ul>
             </li>
             <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">GlCodeCombination</a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" [routerLink]="['/admin/master/GlCodeCombination']">GlCodeCombination
+                <li><a class="dropdown-item" (click)="glCodeCombination()">GlCodeCombination
                     Master</a></li>
               </ul>
             </li>
-            <!-- <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Customer Master</a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" [routerLink]="['/admin/master/customerMaster']">Customer Master</a></li>
-              </ul>
-            </li> -->
             <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">OM Master</a>
               <ul class="dropdown-menu">
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/OMGRP']">Group Master</a> </li>
+                <li> <a class="dropdown-item" (click)="groupMaster()">Group Master</a> </li>
               </ul>
             </li>
             <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Bank</a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" [routerLink]="['/admin/bank/newBank']">Bank Account creation</a></li>
-                <li><a class="dropdown-item" [routerLink]="['/admin/bank/bankBranch']">Bank Branch creation</a></li>
-                <li><a class="dropdown-item" [routerLink]="['/admin/bank/BankAccUses']">Create Bank Account Use</a></li>
+                <li><a class="dropdown-item" (click)="bankAccountCreation()">Bank Account creation</a></li>
+                <li><a class="dropdown-item" (click)="bankBranchCreation()">Bank Branch creation</a></li>
+                <li><a class="dropdown-item" (click)="createBankAccountUse()">Create Bank Account Use</a></li>
               </ul>
             </li>
             <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Tax Master</a>
               <ul class="dropdown-menu">
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/JaiRegimeMaster']">Tax Regime Master</a>
+                <li> <a class="dropdown-item" (click)="taxRegimeMaster()">Tax Regime Master</a>
                 </li>
-                <!-- <li> <a class="dropdown-item" [routerLink]="['/admin/master/TaxAccounts']">Tax Accounts Master</a>  </li> -->
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/taxCategoryMaster']">Tax Category Master</a>
+                
+                <li> <a class="dropdown-item" (click)="taxCategoryMaster()">Tax Category Master</a>
                 </li>
-                <!-- <li> <a class="dropdown-item" [routerLink]="['/admin/master/JaiTaxCategoryLine']">Tax Category Line Master</a> </li> -->
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/JaiTaxType']">Tax Type Master</a> </li>
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/jaiTaxRatesMaster']">Tax Rates Master</a>
+               
+                <li> <a class="dropdown-item" (click)="taxTypeMaster()">Tax Type Master</a> </li>
+                <li> <a class="dropdown-item" (click)="taxRatesMaster()">Tax Rates Master</a>
                 </li>
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/TaxThresholdSetup']">Tax Threshold Setup</a>
+                <li> <a class="dropdown-item" (click)="taxThresholdSetup()">Tax Threshold Setup</a>
                 </li>
               </ul>
             </li>
@@ -458,16 +455,13 @@
 
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Master</a>
                 <ul class="dropdown-menu">
-                <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintItemMaster']">Paint Item Master</a></li>
-                <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintMixingMaster']">Paint Mixing Master</a></li>
-                <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintPanelMaster']">Paint Panel Master</a></li>
-                <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/priceUpdation']">Price Updation</a></li>
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/pricelistMaster']">Price List Master</a></li>
-                <li><a class="dropdown-item" [routerLink]="['/admin/transaction/BulkItemUploadCSV']">Bulk Upload Item</a></li>
-                <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintEmpMaster']">Paint Employee Master</a></li>
-
-                <!-- <li> <a class="dropdown-item" [routerLink]="['/admin/master/EmployeesMaster']">Employee Master </a> </li> -->
-
+                <li><a class="dropdown-item" (click)="paintItemMaster()">Paint Item Master</a></li>
+                <li><a class="dropdown-item" (click)="paintMixingMaster()">Paint Mixing Master</a></li>
+                <li><a class="dropdown-item" (click)="paintPanelMaster()">Paint Panel Master</a></li>
+                <li><a class="dropdown-item" (click)="priceUpdation()">Price Updation</a></li>
+                <li> <a class="dropdown-item" (click)="priceListMaster()">Price List Master</a></li>
+                <li><a class="dropdown-item" (click)="bulkUploadItem()">Bulk Upload Item</a></li>
+                <li><a class="dropdown-item" (click)="paintEmployeeMaster()">Paint Employee Master</a></li>
               </ul>
         </li>
         </div>
@@ -476,11 +470,11 @@
 
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Transactions</a>
           <ul class="dropdown-menu">
-            <!-- <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintCreation']">Paint Mixing Issue old</a></li> -->
-            <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintCreationNew']">Paint Mixing Issue</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintIssueDp']">BodyShop Issue</a></li>
-            <li><a class="dropdown-item"  [routerLink]="['/admin/transaction/InternalConsumption']">Internal Consumption</a></li>
-            <!-- <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintCreationNew']">Paint Creation Test</a></li> -->
+          
+            <li><a class="dropdown-item" (click)="paintMixingIssue()">Paint Mixing Issue</a></li>
+            <li><a class="dropdown-item" (click)="bodyshopIssue()">BodyShop Issue</a></li>
+            <li><a class="dropdown-item" (click)="internalConsuption()" >Internal Consumption</a></li>
+         
         </ul>
         </li>
         </div>
@@ -489,17 +483,14 @@
 
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Purchase</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintPoList']">PO List</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintPurchaseOrder']">Purchase Order</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintPoReceipt']">PO | Stock Transfer Receipt</a></li>
-            <!-- <li><a class="dropdown-item" [routerLink]="['/admin/transaction/stockTransfer']">Stock Transfer</a></li> -->
-            <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintStockTransfer']">Paint Stock Transfer</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/ReturnToVendor']">Return To Vendor</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintMiscTransaction']">Stock Adjustment</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/StockTaking']">Stock Taking</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintAvgCost']">Average Cost </a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintSubinventoryTransfer']">SubInvenotry Transfer </a></li>
-
+            <li><a class="dropdown-item" (click)="poList1()">PO List</a></li>
+            <li><a class="dropdown-item" (click)="purchaseOrder1()">Purchase Order</a></li>
+            <li><a class="dropdown-item" (click)="poStockTransferReceipt()">PO | Stock Transfer Receipt</a></li>
+            <li><a class="dropdown-item" (click)="paintStockTransfer()">Paint Stock Transfer</a></li>
+            <li><a class="dropdown-item" (click)="returnToVendor()">Return To Vendor</a></li>
+            <li><a class="dropdown-item" (click)="stockAdjustment2()">Stock Adjustment</a></li>
+            <li><a class="dropdown-item" (click)="stockTaking()" >Stock Taking</a></li>
+            <li><a class="dropdown-item" (click)="vaverageCost()">Average Cost </a></li>
           </ul>
        </li>
 
@@ -507,13 +498,13 @@
        </div>
 
        <div [style.display]="isVisiblePaintReport ? 'block' : 'none'">
-         <li><a class="dropdown-submenu" style="padding-left: 28px ;" [routerLink]="['/admin/Report/PaintReports']">Reports</a></li>
-         <!-- <li><a class="dropdown-submenu" style="padding-left: 28px ;" [routerLink]="['/admin/Report/PaintReportsNew']">Reports New</a></li> -->
+         <li><a class="dropdown-submenu" style="padding-left: 28px ;" (click)="bjReport()">Reports</a></li>
+      
        </div>
 
        <div [style.display]="isVisiblePaintReportAuditor ? 'block' : 'none'">
-        <!-- <li><a class="dropdown-submenu" style="padding-left: 28px ;" [routerLink]="['/admin/Report/PaintReports']">Reports</a></li> -->
-        <li><a class="dropdown-submenu" style="padding-left: 28px ;" [routerLink]="['/admin/Report/PaintReportsNew']">Paint Reports</a></li>
+        
+        <li><a class="dropdown-submenu" style="padding-left: 28px ;" (click)="paintReport()">Paint Reports</a></li>
       </div>
 
        
@@ -538,14 +529,6 @@
             <li><a class="dropdown-item" [routerLink]="['/admin/pump/testing']">Shift Sale Entry</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/pump/DipScaleEntry']">DIP Entry Form</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpCounterSale']">Counter Sale</a></li>
-            <!-- <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpPurchaseOrder']">Purchase Order</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpPoReceipt']">PO Receipt</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpPoList']">PO List</a></li> -->
-
-
-            <!-- <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/CounterSaleReturn']">Counter Sale Return</a></li>  -->
-            <!-- <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpShiftSale']">Shift Sale Entry..Test</a></li> -->
-
           </ul>
         </li>
 
@@ -561,7 +544,7 @@
 
        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Accounts Module</a>
         <ul class="dropdown-menu">
-          <!-- <li><a class="dropdown-item" [routerLink]="['/admin/transaction/ARInvoice']">AR Invoice</a></li> -->
+          
           <li><a class="dropdown-item" [routerLink]="['/admin/pump/ARInvoice']">AR Invoice</a></li>
          <li><a class="dropdown-item" [routerLink]="['/admin/transaction/PaymentAr']">AR Payment</a></li>
          <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpMiscTransaction']">Stock Adjustment</a></li>
@@ -573,13 +556,7 @@
 
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Master</a>
           <ul class="dropdown-menu">
-            <!-- <li class="nav-item dropdown">
-              <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true"  [routerLink]="['/admin/master/customerMaster']" aria-expanded="false">
-                Customer Master
-              </a>
-            </li>  -->
-
+           
           <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpTankMaster']"    >Pump Tank Master</a></li>
           <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpIslandMaster']">Pump Island Master</a></li>
           <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpNozzleMaster']">Pump Nozzle Master</a></li>
@@ -596,42 +573,7 @@
       </ul>
     </li>
   </div>
-  <!-- PETROL PUMP SYSTEM -->
-
-
-
-
   
-
-  
-
-    <!-- <li class="nav-item-dropdown">
-      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-        aria-haspopup="true" aria-expanded="false">
-        FA
-      </a>
-      <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Master</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" [routerLink]="['/admin/FixedAsset/FACommonMaster']">FA Common Master</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/FixedAsset/FiscalYear']">Fiscal Year</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/FixedAsset/FACalender']">Calender</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/FixedAsset/ProrateConvention']">Prorate Convention</a>
-            </li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/FixedAsset/DepriciationMethod']">Depriciation Method</a>
-            </li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/FixedAsset/BookControl']">Book Control</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/FixedAsset/AssetCategories']">AssetCategories</a></li>
-          </ul>
-        </li>
-        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Transaction</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" [routerLink]="['/admin/FixedAsset/AssetAddition']">Asset Addition</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/FixedAsset/AssetRetirement']">Asset Retirement</a></li>
-          </ul>
-        </li>
-      </ul>
-    </li> -->
 
 
 
@@ -640,13 +582,7 @@
     </div>
 
 
-    <!-- ------------------------------ F9 SEARCH -->
-    <!-- <li class="nav-item dropdown">
-      <a class="list-group-item list-group-item-action bg-light" (click)="LoadModal()" data-toggle="modal" data-target="#partSearch">
-         &nbsp;&nbsp;Search&nbsp;&nbsp;</a>
-    </li> -->
-    <!-- ------------------------------ F9 SEARCH -->
-
+  
 
   </div>
   <div id="page-content-wrapper" style="background-color: white;">
@@ -700,37 +636,14 @@
                       <td style="font-size: 10px;color: black; font-weight: bold;">User&nbsp;Name&nbsp;&nbsp;:
                       </td>
                       <td style="font-size: 11px;color: blue;font-weight: bold;">{{fullName}}</td>&nbsp;&nbsp;
-                 <!--     <td style="font-size: 10px;color: blue;">
-                        Department&nbsp;&nbsp;:
-                      </td>
-                      <td style="font-size: 10px;color: black;font-weight: bold;">{{deptName}}</td>&nbsp;&nbsp;
-                       <td style="font-size: 11px;color: blue;">
-                        Location&nbsp;&nbsp;:
-                      </td>
-                      <td style="font-size: 10px;color: black;font-weight: bold;">{{locName}}</td>&nbsp;&nbsp; -->
+               
                     </tr>
                   </table>
                 </td>
 
          </tr>
         </table>
-        <!-- <li class="nav-item dropdown">
-
-           <div >
-            <table style="width: 100%;">
-
-            <tr>
-
-            </tr>
-            </table>
-           </div>
-          </li> -->
-
-          <!-- -------------------------------Item Search Modal--------------------- -->
-
-
-          <!-- --------------------------------------------------- -->
-
+       
       </div>
     </nav>
     <router-outlet></router-outlet>

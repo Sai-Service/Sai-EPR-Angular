@@ -426,7 +426,7 @@ search(shiftNo){
 
 onSelectShiftTypeId(event){
   var shftName=event.target.value;
-  // alert('----'+shftName+'----');
+  alert('----'+shftName+'----');
   var selectShiftList = this.shiftList.find((shiftList: any) => shiftList.codeDesc == shftName);
   console.log(selectShiftList);
   this.pumpShiftSalesForm.patchValue({shifttype:selectShiftList.cmnId,shifttypCode:selectShiftList.code})
@@ -438,7 +438,7 @@ onSelectShiftTypeId(event){
 }
 
 LoadNozzleList() {
-
+  debugger;
   var shifttp = this.pumpShiftSalesForm.get('shifttypCode').value
   var dt0=this.pumpShiftSalesForm.get('shiftentrydate').value
    var dt1;
@@ -644,6 +644,7 @@ validateShiftDate(shftDate) {
 }
 
 checkHeaderValidations()  {
+  debugger;
   const formValue: IPumpShiftSale = this.pumpShiftSalesForm.value
 
   if (formValue.shiftentrydate===undefined || formValue.shiftentrydate===null )
@@ -674,11 +675,12 @@ ShiftHeaderCheck(){
   var fnlConfirm = this.pumpShiftSalesForm.get('finalconfirm').value;
   // alert ("header validation ---"+this.headerValidation +" fnlConfirm : " +fnlConfirm);
 // if (fnlConfirm ===undefined || fnlConfirm===null || fnlConfirm==='') {}
+alert(fnlConfirm)
 if(fnlConfirm != 'YES') {
   this.NZLineDelButtonDisabled=false;
   this.NZHLineAddDetButtonDisabled=false;
   this.vchAddDelButtondisabled=false;
-
+alert(this.headerValidation)
 if(this.headerValidation==false) {
   this.checkHeaderValidations();
   if (this.headerValidation ==false) {

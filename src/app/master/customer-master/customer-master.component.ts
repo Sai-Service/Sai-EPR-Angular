@@ -1576,7 +1576,7 @@ export class CustomerMasterComponent implements OnInit {
 
     if (this.msgType.includes("Close")) {
       // this.closeItemCatMast();
-      this.router.navigate(['admin']);
+      this.router.navigate(['admin'],{ skipLocationChange: true });
     }
 
     if (this.msgType.includes("NewSite")) {

@@ -43,6 +43,7 @@ import { ReceivableTranstypeMasterComponent } from './receivable-transtype-maste
 import { CustomerRelationMasterComponent } from './customer-relation-master/customer-relation-master.component';
 import { ItemMasterNewComponent } from './item-master-new/item-master-new.component';
 import { ItemRelatedMasterComponent } from './item-related-master/item-related-master.component';
+import { VariantMasterNewComponent } from './variant-master-new/variant-master-new.component';
 
 
 // import { DashboardComponent } from './dashboard/dashboard.component';
@@ -85,7 +86,8 @@ import { ItemRelatedMasterComponent } from './item-related-master/item-related-m
     ReceivableTranstypeMasterComponent,
     CustomerRelationMasterComponent,
     ItemMasterNewComponent,
-    ItemRelatedMasterComponent,  ],
+    ItemRelatedMasterComponent,
+    VariantMasterNewComponent,  ],
     
   // declarations: [DivisionMasterComponent, OrganizationMasterComponent, LocationMasterComponent, CompanyMasterComponent, FNDCommonLookupComponent, ItemCategortComponent, SupplierMasterComponent, LocatorMasterComponent, ItemMasterComponent, CommonMasterComponent, DocumentSequenceMasterComponent, EpmloyeeMasterComponent, CustomerMasterComponent, GlCodeCombinationComponent, HsnSacMasterComponent, OPMasterDtoComponent, JaiRegimeMasterComponent, TaxAccountsComponent, TaxCategoryMasterComponent, JaiTaxCategoryLineComponent, JaiTaxRatesMasterComponent, JaiTaxTypeComponent,FlexFieldComponent, PricelistMasterComponent, OmGruopMasterComponent, OrderTypeMasterComponent,SubinventoryMasterComponent,SaiEwSchemeComponent],
   
@@ -93,7 +95,7 @@ import { ItemRelatedMasterComponent } from './item-related-master/item-related-m
     CommonModule,
     MasterRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
   ]
 })
 

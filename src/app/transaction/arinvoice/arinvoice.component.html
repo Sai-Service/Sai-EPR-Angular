@@ -43,10 +43,7 @@
                         </td>
                         <td>
                             <input type="text" class="form-control">
-                            <!-- <input formControlName="segment1" [(ngModel)]='segment1' value={{segment1}}
-                            class="form-control"
-                            [ngClass]="{ 'is-invalid': submitted && f.poNumber.errors }"
-                            placeholder="Enter PO number" (keydown.tab)="poFind(segment1)"> -->
+                           
 </td>
 <td style="width: 15%" class="LabelFontStyle">
     &nbsp;Order&nbsp;Date&nbsp;:&nbsp;
@@ -1148,15 +1145,7 @@
 
                         <ng-template #elseBlock1>
                             <td> <button disabled type="button" class="btn btn-primary" (click)="Save()" style="width: 8rem;">Save</button></td>
-                            <!-- <td> <button   type="butt on" class="btn btn-primary" (click)="creditMemoApply()" style="width: 8rem;">Apply</button></td> -->
-
-                            <!-- <td>
-                                <button  type="button"  class="btn btn-primary"
-                                data-toggle="modal" data-target="#exampleModal2"  (click)="SearchInvoices()" style="width: 8rem;">
-                                &nbsp;Apply</button>
-                            </td> -->
-
-
+                           
                         </ng-template>
 
                         <div *ngIf="showApplyButton ; then showApplyButtonYes; else showApplyButtonNo"></div>
@@ -1196,7 +1185,7 @@
                         <ng-template #elseBlockViewAccounting>
 
                           </ng-template>
-                        <!-- <td><button type="button" class="btn btn-primary"  style="width: 8rem;" (click)="AllDistribution()">All Distribution</button></td> -->
+                        <!-- <td><button type="button" class="btn btn-primary"  style="width: 8rem;" (click)="viewInvPrint()">View Invoice Print</button></td> -->
                         <td>
                             <button type="button" class="btn btn-primary" (click)="clearFormArray()"
                             style="width: 8rem;">Reset</button>

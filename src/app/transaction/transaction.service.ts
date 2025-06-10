@@ -12,10 +12,13 @@ export class TransactionService {
   headers: any;
   receiptNumber: number;
   ServerUrl: string;
+  lstcommentsUserSm = JSON.parse(sessionStorage.getItem('logRes'));
+  token = this.lstcommentsUserSm.token;
 
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders();
     this.headers = this.headers.set('Content-Type', 'application/json; charset=utf-8');
+    this.headers = this.headers.append("Authorization", "Bearer " + this.token);
     this.ServerUrl = AppConstants.ServerUrl;
   }
 
@@ -30,15 +33,9 @@ export class TransactionService {
   }
 
   getsearchByApDoc(docNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/apInv/SearchDocNoWise?documentNo=${docNo}`);
+    return this.http.get(this.ServerUrl + `/apInv/SearchDocNoWise?documentNo=${docNo}`, { headers: this.headers });
   }
-  // public getsearchByPayment(content) {
-  //   const options = {
-  //     headers: this.headers
-  //   };
-  //   const url = this.ServerUrl + '/apInvPayment/paymentSupp';
-  //   return this.http.post(url, content, options);
-  // }
+  
   //////////////////poInvoice////////////////
   UpdateValidate(invoiceNum) {
     const options = {
@@ -63,31 +60,27 @@ export class TransactionService {
     return this.http.put(url, invoiceNum, options);
   }
 
-  // getApInvLineDetails(invoiceNum): Observable<any> {
-  //   return this.http.get(this.ServerUrl + `/apInv/invDtls?invNum=${invoiceNum}`);
-  // }
+  
   getApInvLineDetails(invoiceNum,partyId,suppId): Observable<any> {
-      return this.http.get(this.ServerUrl + `/apInv/invDtls?invNum=${invoiceNum}&partyId=${partyId}&suppId=${suppId}`);
+      return this.http.get(this.ServerUrl + `/apInv/invDtls?invNum=${invoiceNum}&partyId=${partyId}&suppId=${suppId}`, { headers: this.headers });
     }
 
   
   getApPaymentDetails(suppNo, invoiceNum): Observable<any> {
-    return this.http.get(this.ServerUrl + `/apInv/payDetailInvNowise?suppNo=${suppNo}&invoiceNum=${invoiceNum}`);
+    return this.http.get(this.ServerUrl + `/apInv/payDetailInvNowise?suppNo=${suppNo}&invoiceNum=${invoiceNum}`, { headers: this.headers });
   }
   getApInvLineDetailsSupwise(invoiceNum, suppNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/apInv/invDtlsBySuppNo?invNum=${invoiceNum}&suppNo=${suppNo}`);
+    return this.http.get(this.ServerUrl + `/apInv/invDtlsBySuppNo?invNum=${invoiceNum}&suppNo=${suppNo}`, { headers: this.headers });
   }
-  // getApInvLnStatusDetailsSupwise(invoiceNum,suppNo,status): Observable<any> {
-  //   return this.http.get(this.ServerUrl + `/apInv/invDtlsBySuppNo?invNum=${invoiceNum}&suppNo=${suppNo}&invoiceStatus=${status}`);
-  // }
+ 
   getApInvLnStatusDetailsSupwise(invoiceNum, suppNo, status): Observable<any> {
     return this.http.get(this.ServerUrl + `/apInv/linesBySuppNo?invNum=${invoiceNum}&suppNo=${suppNo}&invoiceStatus=${status}`
-    );
-    // alert(status);
+    , { headers: this.headers });
+  
   }
 
   distLinesDeatailsfa(invoiceId, lineNumber): Observable<any> {
-    return this.http.get(this.ServerUrl + `/apInv/apinvDisLinewise?invoiceId=${invoiceId}&distLineNumber=${lineNumber}`);
+    return this.http.get(this.ServerUrl + `/apInv/apinvDisLinewise?invoiceId=${invoiceId}&distLineNumber=${lineNumber}`, { headers: this.headers });
   }
 
   roundOffAPManu(invoiceNum, suppNo, amt) {
@@ -99,7 +92,7 @@ export class TransactionService {
   }
 
   getprepay(supId, supsiteId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/apInv/apSuppDtls/?suppId=${supId}&suppSiteId=${supsiteId}`)
+    return this.http.get(this.ServerUrl + `/apInv/apSuppDtls/?suppId=${supId}&suppSiteId=${supsiteId}`, { headers: this.headers })
   }
 
   roundOffAP(invoiceNum, suppNo) {
@@ -111,20 +104,20 @@ export class TransactionService {
   }
 
   paymentMethodList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/locationMst');
+    return this.http.get(this.ServerUrl + '/locationMst', { headers: this.headers });
   }
 
   searchByinvoiceNumFn(suppNo, invoiceNum): Observable<any> {
-    return this.http.get(this.ServerUrl + `/apInv/check?suppNo=${suppNo}&invoiceNum=${invoiceNum}`);
+    return this.http.get(this.ServerUrl + `/apInv/check?suppNo=${suppNo}&invoiceNum=${invoiceNum}`, { headers: this.headers });
   }
 
 
   DistributionDataList(distributionSet, amount): Observable<any> {
-    // return this.http.get(this.ServerUrl +`/ApDistSetAll/distSetAmount?distributionSetName=${distributionSet}&distributionAmt=${amount}`);
-    return this.http.get(this.ServerUrl + `/apInv/get/apinvDisLinewise?invAmount=${amount}&distSetName=${distributionSet}`);
+   
+    return this.http.get(this.ServerUrl + `/apInv/get/apinvDisLinewise?invAmount=${amount}&distSetName=${distributionSet}`, { headers: this.headers });
   }
   prepayTypeList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/locationMst');
+    return this.http.get(this.ServerUrl + '/locationMst', { headers: this.headers });
   }
 
   public apInvSaveSubmit(poRecord) {
@@ -136,19 +129,19 @@ export class TransactionService {
   }
 
   distributionSetNameList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/ApDistSetAll');
+    return this.http.get(this.ServerUrl + '/ApDistSetAll', { headers: this.headers });
   }
 
   inventoryItemList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/itemMst');
+    return this.http.get(this.ServerUrl + '/itemMst', { headers: this.headers });
   }
 
   getTaxDetails(taxCategoryId, invItemId, disAm, amount): Observable<any> {
-    return this.http.get(this.ServerUrl + `/apInv/Aptaxcal?invId=${invItemId}&baseAmt=${amount}&taxCateId=${taxCategoryId}&disAmt=${disAm}`);
+    return this.http.get(this.ServerUrl + `/apInv/Aptaxcal?invId=${invItemId}&baseAmt=${amount}&taxCateId=${taxCategoryId}&disAmt=${disAm}`, { headers: this.headers });
   }
 
   getTaxDetailsNew(taxCategoryId, invItemId, disAm, amount, invoiceLineNum): Observable<any> {
-    return this.http.get(this.ServerUrl + `/apInv/Aptaxcal?invId=${invItemId}&baseAmt=${amount}&taxCateId=${taxCategoryId}&disAmt=${disAm}&invLineNum=${invoiceLineNum}`);
+    return this.http.get(this.ServerUrl + `/apInv/Aptaxcal?invId=${invItemId}&baseAmt=${amount}&taxCateId=${taxCategoryId}&disAmt=${disAm}&invLineNum=${invoiceLineNum}`, { headers: this.headers });
   }
 
   // ============================ PO INVOICE  TDS SAVE=======================
@@ -161,46 +154,45 @@ export class TransactionService {
   }
   //=======================================Payment Componanat==============================
   getsearchByPayment(suppNo, ouId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/apInvPayment/paymentSupp?suppNo=${suppNo}&ouId=${ouId}`);
+    return this.http.get(this.ServerUrl + `/apInvPayment/paymentSupp?suppNo=${suppNo}&ouId=${ouId}`, { headers: this.headers });
   }
 
   getsearchByInvDtls(suppNo, ouId, partyId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/apInvPayment/paymentSupp?suppId=${suppNo}&ouId=${ouId}&partyId=${partyId}`);
+    return this.http.get(this.ServerUrl + `/apInvPayment/paymentSupp?suppId=${suppNo}&ouId=${ouId}&partyId=${partyId}`, { headers: this.headers });
   }
 
 
   bankAccountNumList(ouId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/ceBankAccounts/BankList/${ouId}`);
+    return this.http.get(this.ServerUrl + `/ceBankAccounts/BankList/${ouId}`, { headers: this.headers });
   }
   statusLookupCodeList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/PayStatus');
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/PayStatus', { headers: this.headers });
   }
   paymentIdListList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/PayType');
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/PayType', { headers: this.headers });
   }
   docCategoryCodeList(bankAccountId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/cePaymentDoc/PayDoc/${bankAccountId}`);
+    return this.http.get(this.ServerUrl + `/cePaymentDoc/PayDoc/${bankAccountId}`, { headers: this.headers });
   }
 
   paymentMethodName(ouId, methodTyp): Observable<any> {
-    return this.http.get(this.ServerUrl + `/ceBankAccounts/BankList?ouId=${ouId}&methodType=${methodTyp}`);
+    return this.http.get(this.ServerUrl + `/ceBankAccounts/BankList?ouId=${ouId}&methodType=${methodTyp}`, { headers: this.headers });
   }
 
   paymentDocNameList(docCategoryCode): Observable<any> {
-    return this.http.get(this.ServerUrl + `/cePaymentDoc/DocName/${docCategoryCode}`);
+    return this.http.get(this.ServerUrl + `/cePaymentDoc/DocName/${docCategoryCode}`, { headers: this.headers });
   }
   SuppBalPayment(suppId, ouId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/apInv/BalanceAmt?suppId=${suppId}&ouId=${ouId}`);
+    return this.http.get(this.ServerUrl + `/apInv/BalanceAmt?suppId=${suppId}&ouId=${ouId}`, { headers: this.headers });
   }
   SuppBalData(suppId, ouId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/apInv/BalancePayment?suppId=${suppId}&ouId=${ouId}`);
+    return this.http.get(this.ServerUrl + `/apInv/BalancePayment?suppId=${suppId}&ouId=${ouId}`, { headers: this.headers });
   }
   viewPaymentAdvice(docSeq, docCat, ouId): Observable<any> {
-    // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/rcvShipment/StkTransferNote/${shipmentNumber}`;
-    // local
+   
     const REQUEST_URI = this.ServerUrl + `/AccountsReports/PaymentAdvice?docSeqId=${docSeq}&docCatCode=${docCat}&ouId=${ouId}`;
     return this.http.get(REQUEST_URI, {
-      // params: REQUEST_PARAMS,
+     
       responseType: 'arraybuffer',
       headers: this.headers,
     });
@@ -231,15 +223,15 @@ export class TransactionService {
   }
 
   paymentSearch(suppNo, fromDate, toDate, divId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/apInvPayment/apPaymentDetail?suppNo=${suppNo}&frmDt=${fromDate}&toDate1=${toDate}&divisionId=${divId}`)
+    return this.http.get(this.ServerUrl + `/apInvPayment/apPaymentDetail?suppNo=${suppNo}&frmDt=${fromDate}&toDate1=${toDate}&divisionId=${divId}`, { headers: this.headers })
   }
 
   paymentSearchBydocNo(paymentNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/apInvPayment/apPaymentDocumentwise/${paymentNo}`)
+    return this.http.get(this.ServerUrl + `/apInvPayment/apPaymentDocumentwise/${paymentNo}`, { headers: this.headers })
   }
 
   paymentDocSearch(docNo): Observable<any> {
-    return this.http.get(this.ServerUrl + `/apInvPayment/documentNo/${docNo}`);
+    return this.http.get(this.ServerUrl + `/apInvPayment/documentNo/${docNo}`, { headers: this.headers });
   }
   //////////Move Order//////////////
   public moveOrderSubmit(MoveOrderRecord) {
@@ -250,62 +242,63 @@ export class TransactionService {
     return this.http.post(url, MoveOrderRecord, options);
   }
   transType(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/mtlTrxTypes/IPO');
+    return this.http.get(this.ServerUrl + '/mtlTrxTypes/IPO', { headers: this.headers });
   }
   subInvCode(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/subInvMst')
+    return this.http.get(this.ServerUrl + '/subInvMst', { headers: this.headers })
   }
   issueByList(locId, deptId, divisionId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/empMst/EmpLocDept?locId=${locId}&divisionId=${divisionId}&deptId=${deptId}`)
+    return this.http.get(this.ServerUrl + `/empMst/EmpLocDept?locId=${locId}&divisionId=${divisionId}&deptId=${deptId}`, { headers: this.headers })
   }
   ItemIdList(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/itemMst/category');
+    return this.http.get(this.ServerUrl + '/itemMst/category', { headers: this.headers });
   }
   getfrmSubLoc(locId, invItemId, subInventoryId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/onhandqty/onhandlocsubinv?locId=${locId}&itemId=${invItemId}&subInventoryId=${subInventoryId}`)
+    return this.http.get(this.ServerUrl + `/onhandqty/onhandlocsubinv?locId=${locId}&itemId=${invItemId}&subInventoryId=${subInventoryId}`, { headers: this.headers })
   }
   getSearchByTrans(reqNo): Observable<any> {
 
-    return this.http.get(this.ServerUrl + `/mtrlIssue/reqNum/${reqNo}`)
+    return this.http.get(this.ServerUrl + `/mtrlIssue/reqNum/${reqNo}`, { headers: this.headers })
 
   }
   getItemDetail(itemid): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemMst/${itemid}`)
+    return this.http.get(this.ServerUrl + `/itemMst/${itemid}`, { headers: this.headers })
   }
 
 
   ////////////AR Invoice ///////////////
   searchByInvoiceNoAR(trxNumber1): Observable<any> {
-    return this.http.get(this.ServerUrl + `/arInv/invDtls/${trxNumber1}`)
+    return this.http.get(this.ServerUrl + `/arInv/invDtls/${trxNumber1}`, { headers: this.headers })
 
   }
 
   searchByInvoiceNoAROu(trxNumber1, ouId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/arInv/invDtls?invNum=${trxNumber1}&ouId=${ouId}`)
-    // http://localhost:8081/arInv/invDtls?invNum=222220222000002&ouId=22
+    return this.http.get(this.ServerUrl + `/arInv/invDtls?invNum=${trxNumber1}&ouId=${ouId}`, { headers: this.headers })
+    
+    
   }
 
   DistributionCal(amount, taxableAmt, custTrxTypeId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/arInv/invLnDis?custTrxTypeId=${custTrxTypeId}&invAmount=${amount}&taxableAmt=${taxableAmt}`)
+    return this.http.get(this.ServerUrl + `/arInv/invLnDis?custTrxTypeId=${custTrxTypeId}&invAmount=${amount}&taxableAmt=${taxableAmt}`, { headers: this.headers })
   }
 
   sourceListFn(): Observable<any> {
-    return this.http.get(this.ServerUrl + `/cmnLookup/type/RcvSource`)
+    return this.http.get(this.ServerUrl + `/cmnLookup/type/RcvSource`, { headers: this.headers })
   }
   classListFN(): Observable<any> {
-    return this.http.get(this.ServerUrl + `/cmnLookup/type/RcvClass`)
+    return this.http.get(this.ServerUrl + `/cmnLookup/type/RcvClass`, { headers: this.headers })
   }
   paymentTermListFn(): Observable<any> {
-    return this.http.get(this.ServerUrl + `/fndAcctLookup/lookupTypeWise/PaymentTerms`)
+    return this.http.get(this.ServerUrl + `/fndAcctLookup/lookupTypeWise/PaymentTerms`, { headers: this.headers })
   }
   invTypeListFN(): Observable<any> {
-    return this.http.get(this.ServerUrl + `/rcvType/status`)
+    return this.http.get(this.ServerUrl + `/rcvType/status`, { headers: this.headers })
   }
   invItemList(): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemMst`)
+    return this.http.get(this.ServerUrl + `/itemMst`, { headers: this.headers })
   }
   invItemList1(divId): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemMst/nonInvList/${divId}`)
+    return this.http.get(this.ServerUrl + `/itemMst/nonInvList/${divId}`, { headers: this.headers })
   }
 
   public ARInvoiceSubmit(Record) {
@@ -322,7 +315,7 @@ export class TransactionService {
 
   avgCurrentCost(mitemId, mLocId): Observable<any> {
     // alert("Master Service :"+ mitemId+" ,"+mLocId);
-    return this.http.get(this.ServerUrl + `/averageCost/avgLocItem?locationId=${mLocId}&itemId=${mitemId}`);
+    return this.http.get(this.ServerUrl + `/averageCost/avgLocItem?locationId=${mLocId}&itemId=${mitemId}`, { headers: this.headers });
   }
 
   public AvgCostUpdateSubmit(AvgCostUpdateRecord) {
@@ -333,20 +326,20 @@ export class TransactionService {
     return this.http.post(url, AvgCostUpdateRecord, options);
   }
 
-  // getAvgHistoryList
+
   getAvgHistoryList(mLocId, mitemId, frmDate, toDate): Observable<any> {
 
-    return this.http.get(this.ServerUrl + `/averageCost/avghistory?locationId=${mLocId}&itemId=${mitemId}&startDate=${frmDate}&endDate=${toDate}`);
+    return this.http.get(this.ServerUrl + `/averageCost/avghistory?locationId=${mLocId}&itemId=${mitemId}&startDate=${frmDate}&endDate=${toDate}`, { headers: this.headers });
   }
 
   ///////////////////////////////////////////////////// warranty claim /////////////////////
 
   lineStatusLst(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/CmnType/WARRANTY_STATUS');
+    return this.http.get(this.ServerUrl + '/cmnLookup/CmnType/WARRANTY_STATUS', { headers: this.headers });
   }
 
   itemTypeLst(): Observable<any> {
-    return this.http.get(this.ServerUrl + '/cmnLookup/CmnType/ITEM_TYPE');
+    return this.http.get(this.ServerUrl + '/cmnLookup/CmnType/ITEM_TYPE', { headers: this.headers });
   }
 
 
@@ -359,6 +352,7 @@ export class TransactionService {
     const REQUEST_URI = this.ServerUrl + '/oemWarranty/warrantyData';
     return this.http.get(REQUEST_URI, {
       params: REQUEST_PARAMS,
+      headers: this.headers,
     });
   }
 
@@ -369,7 +363,7 @@ export class TransactionService {
     };
     const url = (this.ServerUrl + `/oemWarranty`);
     return this.http.put(url, warrClaimRecord, options);
-    // http://localhost:8081/oemWarranty
+    
   }
 
 
@@ -383,5 +377,11 @@ export class TransactionService {
     });
   }
 
-
+  arInvoicePrint(invNumber) {
+    const REQUEST_URI = this.ServerUrl + `/arInv/ManualInvPrint/${invNumber}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+  }
 }
