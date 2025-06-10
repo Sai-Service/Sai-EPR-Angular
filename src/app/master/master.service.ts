@@ -1515,6 +1515,11 @@ export class MasterService {
     return this.http.get(this.ServerUrl + `/mmtTrx/subInvTrf?shipmentNumber=${subtrfNo}&transferOrgId=${locId}`)
   }
 
+   getsearchBySubInvTrfNoForPaint(subtrfNo, locId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/mmtTrx/subInvTrfPN?shipmentNumber=${subtrfNo}&transferOrgId=${locId}`)
+  // http://localhost:8081/mmtTrx/subInvTrfPN?shipmentNumber=11MU.1206-2512062600001&transferOrgId=1206
+  }
+
   getPhysicalLoc(locId): Observable<any> {
     return this.http.get(this.ServerUrl + `/cmnLookup/physicalLoc/${locId}`)
   }
