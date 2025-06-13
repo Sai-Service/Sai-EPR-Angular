@@ -1161,7 +1161,7 @@ export class SupplierMasterComponent implements OnInit {
           data => {
             // this.taxCategoryNameList = data;
             this.taxCategoryName = data.taxCategoryName;
-            // console.log(this.taxCategoryNameList);
+            console.log(this.taxCategoryName);
 
           }
         );
