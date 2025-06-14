@@ -1082,13 +1082,15 @@ export class PaintSubinvTransferComponent implements OnInit {
       trxLnArr1.controls[i].patchValue({ primaryQty: '' });
       qty1.focus();
     }
-    if (uomCode === 'NO') {
-      // alert(Number.isInteger(qty)+'Status');
-      if (!Number.isInteger(qty)) {
-        alert('Please enter correct No');
-        trxLnArr1.controls[i].patchValue({ primaryQty: '' });
-      }
-    }
+
+    // if (uomCode === 'NO') {
+    //   // alert(Number.isInteger(qty)+'Status');
+    //   if (!Number.isInteger(qty)) {
+    //     alert('Please enter correct No');
+    //     trxLnArr1.controls[i].patchValue({ primaryQty: '' });
+    //   }
+    // }
+
     // var trxLnArr = this.SubinventoryTransferForm.get('trfLinesList').value;
     var locId = trxLnArr[i].locatorId;
     var tolocator = trxLnArr[i].transferLocatorId;
