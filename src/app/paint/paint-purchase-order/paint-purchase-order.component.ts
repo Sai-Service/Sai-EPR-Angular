@@ -1923,6 +1923,12 @@ export class PaintPurchaseOrderComponent implements OnInit {
  
  onOptioninvItemIdSelected(itemId, index) {
 
+   var loginDeptId= Number(sessionStorage.getItem('deptId'));
+   var loginOuId= Number(sessionStorage.getItem('ouId'));
+
+    // alert("login dept Id ,itemId ="+loginDeptId +","+itemId);
+
+
   if (itemId != null) {
     let selectedValue = this.invItemList.find(v => v.segment == itemId);
     console.log(selectedValue);
@@ -1943,11 +1949,18 @@ export class PaintPurchaseOrderComponent implements OnInit {
       if (this.itemType === "GOODS") {
         this.service.ItemDetailsList(this.invItemId, this.selSuppTaxCatNm, this.billToLoc).subscribe((res: any) => {
           if (res.code === 200) {
-                if(res.obj.invCategory=="PN.MAIN")
-                  {
-                    alert("You are Not Allowed to select this Item...");
-                    return;
-                  }
+           
+              if(loginDeptId==5)  {
+                if(res.obj.invCategory !="PN.BASE") { alert("You are  Allowed to select only [PN.BASE] items...");return;} 
+              }
+
+              if(res.obj.invCategory=="PN.MAIN"){alert("You are Not Allowed to select this Item...");return;}
+
+               if(loginDeptId==3 && loginOuId==11) {
+                if(res.obj.invCategory !="PN.OTHER") { alert("You are  Allowed to select only [PN.OTHER] items here...");return;} 
+              }
+               
+
             if (res.obj.itemId === null) {
               alert('Item Or PO Charge Account Not Found in Master !')
               var patch = this.paintPoForm.get('poLines') as FormArray;
@@ -2794,6 +2807,9 @@ export class PaintPurchaseOrderComponent implements OnInit {
    var itemType = e.target.value;
 
   //  alert ("item type : "+itemType);
+   var loginDeptId= Number(sessionStorage.getItem('deptId'));
+   var loginOuId= Number(sessionStorage.getItem('ouId'));
+
 
    if (this.itemMap.has(itemType)) {
      this.invItemList = this.itemMap.get(itemType);
@@ -2823,7 +2839,9 @@ export class PaintPurchaseOrderComponent implements OnInit {
        this.lineDetailsArray.controls[lineNum].patchValue({ baseAmtLineWise: 0 })
        // this.service.invItemList2New(itemType, (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), '36DH1601')
 
-       this.service.invItemList2New(itemType, (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), '')
+       if(loginDeptId==5) {
+
+          this.service.invItemList2NewPN(itemType, (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), '')
          .subscribe(
            data => {
              this.lineDetailsArray.controls[lineNum].get('segment').disable();
@@ -2833,6 +2851,38 @@ export class PaintPurchaseOrderComponent implements OnInit {
              this.lineDetailsArray.controls[lineNum].get('segment').enable();
            }
          );
+
+       } 
+       
+      if(loginDeptId==3 ) {
+        
+        if(loginOuId==11) { 
+          this.service.invItemList2NewPNOTH(itemType, (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), '')
+         .subscribe(
+           data => {
+             this.lineDetailsArray.controls[lineNum].get('segment').disable();
+             this.invItemList = data;
+             this.itemMap.set(itemType, data);
+             console.log(this.invItemList);
+             this.lineDetailsArray.controls[lineNum].get('segment').enable();
+           }
+         );
+        } else {
+
+           this.service.invItemList2New(itemType, (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), '')
+         .subscribe(
+           data => {
+             this.lineDetailsArray.controls[lineNum].get('segment').disable();
+             this.invItemList = data;
+             this.itemMap.set(itemType, data);
+             console.log(this.invItemList);
+             this.lineDetailsArray.controls[lineNum].get('segment').enable();
+           }
+         );
+
+        }
+
+    }
 
        this.lineDetailsArray.controls[lineNum].get('invDescription').disable();
        this.lineDetailsArray.controls[lineNum].get('hsnSacCode').disable();
@@ -3049,7 +3099,6 @@ export class PaintPurchaseOrderComponent implements OnInit {
    let select = this.invItemList.find(d => d.invItemId === this.invItemId);
 
    if (select) {
-
 
      // this.ouId= select.taxCategoryLinesCollection
      var index = 0;

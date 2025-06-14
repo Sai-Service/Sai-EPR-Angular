@@ -47,6 +47,11 @@ interface IsubinventoryTransfer {
   onHandQty: number;
   LocatorSegment: string;
   attribute3:string;
+  attribute17:string;
+  attribute18:string;
+
+    pendingrec:any;
+
 
 }
 
@@ -133,6 +138,11 @@ export class PaintSubinvTransferComponent implements OnInit {
   attribute3:string;
   isVisiblenewSubtrf:boolean=false;
   isVisibledownloadSubGatePass:boolean=false;
+  isVisibleReceiveButton:boolean=false;
+
+  pendingrec:any;
+  attribute17:string;
+  attribute18:string;
 
   @ViewChild('myinput') myInputField: ElementRef;
   @ViewChild('suppCode1') suppCode1: ElementRef;
@@ -173,6 +183,9 @@ export class PaintSubinvTransferComponent implements OnInit {
       issueTo: [],
       SubNo: [],
       attribute3:[],
+      attribute17:[],
+      attribute18:[],
+
       trfLinesList: this.fb.array([]),
     });
   }
@@ -287,6 +300,14 @@ export class PaintSubinvTransferComponent implements OnInit {
 
     });
 
+      this.service.PendingPNInWip(this.locId,this.divisionId,this.deptId).subscribe(
+      data=>{
+        this.pendingrec=data;
+       console.log(this.pendingrec);
+        //  this.displayremakdata=true;
+        }
+    )
+
     // this.service
     //   .getsubTrfSubinventory(this.deptId, this.divisionId)
     //   .subscribe((data) => {
@@ -325,6 +346,17 @@ export class PaintSubinvTransferComponent implements OnInit {
     
     // this.SubNo="12PU";
   }
+
+  PendingtoReceive(){
+   this.service.PendingPNInWip(this.locId,this.divisionId,this.deptId).subscribe(
+      data=>{
+        this.pendingrec=data;
+       console.log(this.pendingrec);
+        //  this.displayremakdata=true;
+        }
+    )
+  }
+
 
 
   onOptionSubInv(event:any){
@@ -413,12 +445,16 @@ export class PaintSubinvTransferComponent implements OnInit {
 
   search(SubNo) {
     this.isVisiblenewSubtrf=false;
+
+    var loginDeptId= Number(sessionStorage.getItem('deptId'));
+    // alert("login dept Id ="+loginDeptId +","+SubNo);
     // alert(SubNo+'1st');
     if (SubNo != undefined) {
       this.currentOp = 'SEARCH';
       this.dispsearLocator = true;
       this.service
-        .getsearchBySubInvTrfNo(SubNo, this.locId)
+        // .getsearchBySubInvTrfNo(SubNo, this.locId)
+        .getsearchBySubInvTrfNoForPaint(SubNo, this.locId)
         .subscribe((data) => {
           this.lstcomment = data;
           let control = this.PaintSubinventoryTransferForm.get(
@@ -430,10 +466,23 @@ export class PaintSubinvTransferComponent implements OnInit {
             this.trfLinesList().push(trxlist);
           }
           this.dispsearLocator = false;
+
+          // alert ("this.lstcomment[0].transferSubInv" + this.lstcomment[0].attribute16+","+Number(this.lstcomment[0].attribute16))
+
+          // if(this.lstcomment[0].transferSubInv=='WIP'){this.isVisibleReceiveButton=true;} 
+          // else {this.isVisibleReceiveButton=false;}
+
+          if (loginDeptId ==3) {
+            if(Number(this.lstcomment[0].attribute16)>=1){this.isVisibleReceiveButton=true;} 
+            else {this.isVisibleReceiveButton=false;}
+          } 
+          else { this.isVisibleReceiveButton=false}
+
+
           this.PaintSubinventoryTransferForm.patchValue(this.lstcomment[0]);
-          this.PaintSubinventoryTransferForm.get('trfLinesList').patchValue(
-            this.lstcomment
-          );
+          this.PaintSubinventoryTransferForm.patchValue({ attribute18: this.lstcomment[0].shipmentNumber })
+
+          this.PaintSubinventoryTransferForm.get('trfLinesList').patchValue(this.lstcomment);
           var patch = this.PaintSubinventoryTransferForm.get(
             'trfLinesList'
           ) as FormArray;
@@ -733,9 +782,13 @@ export class PaintSubinvTransferComponent implements OnInit {
 
   newSubtrf() {
     // if (this.PaintSubinventoryTransferForm.valid) {
-      const formValue: IsubinventoryTransfer =
-        this.PaintSubinventoryTransferForm.value;
+
+ 
+      // const formValue: IsubinventoryTransfer =this.PaintSubinventoryTransferForm.value;
+      const formValue: IsubinventoryTransfer =this.PaintSubinventoryTransferForm.value;
+
       let variants = <FormArray>this.trfLinesList();
+    
       var tranda = this.PaintSubinventoryTransferForm.get('transDate').value;
       var frmcode = this.PaintSubinventoryTransferForm.get('subInventoryCode').value;
       var tocode = this.PaintSubinventoryTransferForm.get('transferSubInv').value;
@@ -744,6 +797,7 @@ export class PaintSubinvTransferComponent implements OnInit {
       var rmks = this.PaintSubinventoryTransferForm.get('remarks').value;
       var locId1 = this.PaintSubinventoryTransferForm.get('locId').value;
       var phyLoc=this.PaintSubinventoryTransferForm.get('attribute3').value;
+
 
       for (let i = 0; i < this.trfLinesList().length; i++) {
         let VariantFormGroup = <FormGroup>variants.controls[i];
@@ -787,6 +841,7 @@ export class PaintSubinvTransferComponent implements OnInit {
 
       this.service
         .subInvTransferSubmit(variants.value)
+
         .subscribe((res: any) => {
           //  var obj=res;
           // sessionStorage.setItem('shipmentNumber',obj[0].shipmentNumber);
@@ -800,7 +855,136 @@ export class PaintSubinvTransferComponent implements OnInit {
               { shipmentNumber: res.obj[0].shipmentNumber }
             );
             this.PaintSubinventoryTransferForm.disable();
+            this.PendingtoReceive();
 
+            // // 'transReference':res.obj[0].transReference}
+            // );
+            //  var trxLnArr2 = this.SubinventoryTransferForm.get('trfLinesList') as FormArray;
+            //  for(let i=0; i<res.obj.length; i++){
+            //   // trxLnArr2.controls[i].patchValue(res.obj[i]);
+
+            // trxLnArr2.controls[i].patchValue({'segment':res.obj[i].segment});
+            // trxLnArr2.controls[i].patchValue({'locator':res.obj[i].locator});
+            // trxLnArr2.controls[i].patchValue({'avlqty':res.obj[i].avlqty});
+            // trxLnArr2.controls[i].patchValue({'primaryQty':res.obj[i].primaryQty});
+            // }
+
+            // this.display = false;
+            // this.displayButton = false;
+          } else {
+            if (res.code === 400) {
+              alert(res.message);
+              // this.SubinventoryTransferForm.reset();
+            }
+          }
+        });
+
+    // } else { this.HeaderValidation();  }
+  }
+
+   newSubtrfforWIPtoPN() {
+
+       var  resp=confirm("Do You Want to Save this Transaction ???");
+       if(resp==false) { return;}
+
+       this.isVisibleReceiveButton=false;
+
+    // if (this.PaintSubinventoryTransferForm.valid) {
+      const formValue: IsubinventoryTransfer =this.PaintSubinventoryTransferForm.getRawValue();
+      let variants = <FormArray>this.trfLinesList();
+
+      // var tranda = this.PaintSubinventoryTransferForm.get('transDate').value;
+      // var frmcode = this.PaintSubinventoryTransferForm.get('subInventoryCode').value;
+      // var tocode = this.PaintSubinventoryTransferForm.get('transferSubInv').value;
+      var issby = this.PaintSubinventoryTransferForm.get('issueBy').value;
+      var issto = this.PaintSubinventoryTransferForm.get('issueTo').value;
+      var rmks = this.PaintSubinventoryTransferForm.get('remarks').value;
+      var locId1 = this.PaintSubinventoryTransferForm.get('locId').value;
+      var phyLoc=this.PaintSubinventoryTransferForm.get('attribute3').value;
+      var att18=this.PaintSubinventoryTransferForm.get('attribute18').value;
+
+
+       var frmcode = 'WIP';
+       var tocode = 'PN'
+       var tranda = this.pipe.transform(this.now, 'dd-MM-yyyy');
+
+
+       var patch = this.PaintSubinventoryTransferForm.get('trfLinesList') as FormArray;
+        
+      for (let i = 0; i < this.trfLinesList().length; i++) {
+
+         (patch.controls[i]).patchValue({LocatorSegment: 'P.N.01.G.01',});
+         (patch.controls[i]).patchValue({transferLocatorId: 95234,});
+
+         (patch.controls[i]).patchValue({locator: 'W.I.01.P.01',});
+         (patch.controls[i]).patchValue({locatorId: 148327,});
+
+
+        let VariantFormGroup = <FormGroup>variants.controls[i];
+
+        VariantFormGroup.addControl(
+          'transDate',
+          new FormControl(tranda, Validators.required)
+        );
+        VariantFormGroup.addControl(
+          'subInventoryCode',
+          new FormControl(frmcode, Validators.required)
+        );
+        VariantFormGroup.addControl(
+          'transferSubInv',
+          new FormControl(tocode, Validators.required)
+        );
+        VariantFormGroup.addControl(
+          'issueBy',
+          new FormControl(issby, Validators.required)
+        );
+        VariantFormGroup.addControl(
+          'remarks',
+          new FormControl(rmks, Validators.required)
+        );
+        VariantFormGroup.addControl(
+          'orgId',
+          new FormControl(locId1, Validators.required)
+        );
+        VariantFormGroup.addControl(
+          'transferOrgId',
+          new FormControl(locId1, Validators.required)
+        );
+        VariantFormGroup.addControl(
+          'issueTo',
+          new FormControl(issto, Validators.required)
+        );
+
+        VariantFormGroup.addControl(
+          'attribute3',
+          new FormControl(phyLoc, Validators.required)
+        );
+        
+         VariantFormGroup.addControl(
+          'attribute18',
+          new FormControl(att18, Validators.required)
+        );
+      }
+
+      this.service
+        // .subInvTransferSubmit(variants.value)
+          .subInvTransferSubmit(variants.getRawValue())
+
+        .subscribe((res: any) => {
+          //  var obj=res;
+          // sessionStorage.setItem('shipmentNumber',obj[0].shipmentNumber);
+          if (res.code === 200) {
+            alert(res.message);
+            this.isVisiblenewSubtrf=false;
+            this.isVisibleReceiveButton=false;
+            this.isVisibledownloadSubGatePass=true;
+            // this.shipmentNumber =res.obj.shipmentNumber;
+            this.PaintSubinventoryTransferForm.patchValue(
+              // //  'issueBy':res.obj[0].issueTo,
+              { shipmentNumber: res.obj[0].shipmentNumber }
+            );
+            this.PaintSubinventoryTransferForm.disable();
+            this.PendingtoReceive();
             // // 'transReference':res.obj[0].transReference}
             // );
             //  var trxLnArr2 = this.SubinventoryTransferForm.get('trfLinesList') as FormArray;

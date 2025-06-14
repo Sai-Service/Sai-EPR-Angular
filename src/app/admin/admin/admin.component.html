@@ -465,6 +465,8 @@
                 <li> <a class="dropdown-item" [routerLink]="['/admin/master/pricelistMaster']">Price List Master</a></li>
                 <li><a class="dropdown-item" [routerLink]="['/admin/transaction/BulkItemUploadCSV']">Bulk Upload Item</a></li>
                 <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintEmpMaster']">Paint Employee Master</a></li>
+                <li><a class="dropdown-item" [routerLink]="['/admin/master/SupplierMaster']">Supplier Master</a></li>
+                <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintAvgCost']">Average Cost </a></li>
 
                 <!-- <li> <a class="dropdown-item" [routerLink]="['/admin/master/EmployeesMaster']">Employee Master </a> </li> -->
 
@@ -476,14 +478,14 @@
 
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Transactions</a>
           <ul class="dropdown-menu">
-            <!-- <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintCreation']">Paint Mixing Issue old</a></li> -->
             <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintCreationNew']">Paint Mixing Issue</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintIssueDp']">BodyShop Issue</a></li>
             <li><a class="dropdown-item"  [routerLink]="['/admin/transaction/InternalConsumption']">Internal Consumption</a></li>
-            <!-- <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintCreationNew']">Paint Creation Test</a></li> -->
-        </ul>
+             </ul>
         </li>
         </div>
+
+       
 
         <div [style.display]="isVisiblePaintPurchase ? 'block' : 'none'">
 
@@ -491,20 +493,28 @@
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintPoList']">PO List</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintPurchaseOrder']">Purchase Order</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintPoReceipt']">PO | Stock Transfer Receipt</a></li>
-            <!-- <li><a class="dropdown-item" [routerLink]="['/admin/transaction/stockTransfer']">Stock Transfer</a></li> -->
-            <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintStockTransfer']">Paint Stock Transfer</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintPoReceipt']">PO Receipt</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/ReturnToVendor']">Return To Vendor</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintMiscTransaction']">Stock Adjustment</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/StockTaking']">Stock Taking</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintAvgCost']">Average Cost </a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintSubinventoryTransfer']">SubInvenotry Transfer </a></li>
+            <!-- <li><a class="dropdown-item" [routerLink]="['/admin/transaction/stockTransfer']">Stock Transfer</a></li> -->
+          
 
           </ul>
        </li>
-
-       
+      
        </div>
+
+         <div [style.display]="isVisiblePaintStock ? 'block' : 'none'">
+
+        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Stock</a>
+          <ul class="dropdown-menu">
+              <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintStockTransfer']">Stock Transfer Issue</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintPoReceipt']">Stock Transfer Receipt</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/paint/PaintMiscTransaction']">Stock Adjustment</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/StockTaking']">Stock Taking</a></li>
+          </ul>
+        </li>
+        </div>
 
        <div [style.display]="isVisiblePaintReport ? 'block' : 'none'">
          <li><a class="dropdown-submenu" style="padding-left: 28px ;" [routerLink]="['/admin/Report/PaintReports']">Reports</a></li>

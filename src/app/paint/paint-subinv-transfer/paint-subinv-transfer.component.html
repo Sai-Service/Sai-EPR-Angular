@@ -23,10 +23,10 @@
           <tr>
             <td style="width: 15%" class="LabelFontStyle">
                Trf&nbsp;No:
-            </td>
-             <td>
-              <input disabled type="text" class="form-control"formControlName="shipmentNumber">
-            </td>
+           
+             </td><td><input disabled type="text" class="form-control"formControlName="shipmentNumber"  [(ngModel)]="shipmentNumber"></td>
+              <input hidden type="text" class="form-control"formControlName="attribute18" [(ngModel)]="attribute18" style="width: 100%;">
+
             <td class="LabelFontStyle">
                 Date:
               </td>
@@ -50,43 +50,49 @@
             </td>
 
 
-            <td  class="LabelFontStyle">
-              To&nbsp;SubInv:
-            </td>
+            <td  class="LabelFontStyle"> To&nbsp;SubInv: </td>
+
+             <div *ngIf="isVisiblenewSubtrf; then thenBlock1; else elseBlock1"></div>
+            <ng-template #thenBlock1>
             <td>
-                  <select class="form-control"  formControlName="transferSubInv"  (ngModelChange)="onOptionSubInv($event)" #myinput >
-                          <option>--Select--</option>
-
-          <option *ngFor="let subinv of tosubInvCode">{{subinv.subInventoryCode}}</option>
-                  </select>
-                  <span
-                  *ngIf="getGroupControl('transferSubInv').touched && getGroupControl('transferSubInv').invalid" class="error">Valid Item
-                 </span>
+            <select class="form-control"  formControlName="transferSubInv"  (ngModelChange)="onOptionSubInv($event)" #myinput >
+                      <option>--Select--</option>
+                      <option *ngFor="let subinv of tosubInvCode">{{subinv.subInventoryCode}}</option>
+            </select>
+            <span *ngIf="getGroupControl('transferSubInv').touched && getGroupControl('transferSubInv').invalid" class="error">Valid Item </span>
             </td>
+            </ng-template>
+            <ng-template #elseBlock1>
+              <td> <input disabled type="text" class="form-control" formControlName="transferSubInv" [(ngModel)]="transferSubInv"></td>
+            </ng-template>
          
-
-       
-          
+           
             <td style="width: 15%" class="LabelFontStyle">  Issue&nbsp;To: </td>
-            <!-- <td> <input disabled type="text" class="form-control" formControlName="issueTo" [(ngModel)]="issueTo"></td> -->
-
-                             
+               
+            <div *ngIf="isVisiblenewSubtrf; then A1; else A2"></div>
+            <ng-template #A1> 
              <td>
                   <select type="text" class="form-control" formControlName="issueTo">
                     <option>--Select--</option>
                     <option *ngFor="let ib of issueByList">{{ib.FULLNAME}}</option>
                     </select>
               </td>
+            </ng-template>
+             <ng-template #A2>
+                <td> <input disabled type="text" class="form-control" formControlName="issueTo" [(ngModel)]="issueTo"></td>
+             </ng-template>
 
-            <input hidden formControlName=locId [(ngModel)]='locId'>
+
+               <input hidden formControlName=locId [(ngModel)]='locId'>
              </tr>
             
             <tr>
 
+
             <td style="width: 15%" class="LabelFontStyle"> Remark:</td>
-             <td colspan="3" >
-               <input  type="text" class="form-control"formControlName="remarks"  style="width: 100%;">
-             </td>
+            <td><input disabled type="text" class="form-control"formControlName="attribute17"  [(ngModel)]="attribute17"></td>
+
+
              <div *ngIf="dispPhyLoc; then thenEnPhyLoc; else elseDisPhyLoc">
             </div>
             <ng-template #thenEnPhyLoc>
@@ -102,6 +108,14 @@
                   </select>
               </td>
             </ng-template>
+          <!-- </tr>
+             <td style="width: 15%" class="LabelFontStyle"> Att18:</td>
+
+             <td >
+               <input  type="text" class="form-control"formControlName="attribute18" [(ngModel)]="attribute18" style="width: 100%;">
+             </td>
+          <tr> -->
+
           </tr>
       </table>
       <br>
@@ -249,6 +263,11 @@
               <td>
                 <button type="button" class="btn btn-primary" (click)="resetsubTrf()" >Reset</button>
               </td>
+
+               <td>
+                <button type="button" class="btn btn-primary" (click)="newSubtrfforWIPtoPN()" [style.display]="isVisibleReceiveButton ? 'block':'none'  ">Receive</button>
+              </td>
+
                </tr>
             </table>
 
@@ -322,6 +341,83 @@
                 </div>
               </div>
             </div>
+
+
+
+ <div class="card chart-card">
+      <!-- Card content -->
+    <div class="card-body pb-0">
+        <!-- Title -->
+      <h4 class="card-title font-weight-bold" style="background-color: #FFE4B5;width: 100%;">Pending List</h4>
+      </div>
+  
+    <!-- Classic tabs -->
+    <div class="classic-tabs">
+  
+      <!-- Nav tabs -->
+      <ul class="nav tabs-white nav-fill" role="tablist">
+        <!-- <li class="nav-item ml-0">
+           <a class="nav-link waves-light active" data-toggle="tab" href="#panel1001" role="tab">Pending to Receive at this Location</a>
+  
+        </li> -->
+        <!-- <li class="nav-item">
+          <a class="nav-link waves-light" data-toggle="tab" href="#panel1002" role="tab">Pending to Receive at Other Location</a>
+        </li> -->
+      </ul>
+  
+      <div class="tab-content rounded-bottom">
+        <!--Panel 1-->
+        <div class="tab-pane fade in show active" id="panel1001" role="tabpanel">
+            <div class="Container1">
+                <div class="grid_scroll">
+                <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+                    <tbody>
+                        <tr class="GridHeader">
+                          <!-- <th scope="col">SubInventory Trf Number</th> -->
+                          <th  style="width: 200px;text-align: left"  scope="col">SubInventory Trf Number</th>
+                          <!-- <th scope="col">From Subv</th>
+                          <th scope="col">To Subv</th> -->
+                          <!-- <th scope="col">Transcation Date</th> -->
+                          <th  style="width: 100px;text-align: left"  scope="col">Transcation Date</th>
+                          <!-- <th scope="col">Aging</th> -->
+                          <!-- <th scope="col">remark</th> -->
+                          <!-- <th scope="col">Select</th> -->
+                          <th  style="width: 100px;text-align: left;padding-left: 10px"  scope="col">Select</th>
+
+                        </tr>
+                        </tbody>
+                        <tr *ngFor="let com of pendingrec" style="background-color:#E3EAEB;">
+                          <!-- <td>{{com.shipmentNumber}}</td> -->
+                          <td style="width: 200px;text-align: left;">{{com.shipmentNumber}}</td>
+                          <!-- <td>{{com.subInventoryCode}}</td>
+                          <td>{{com.transferSubInv}}</td> -->
+                          <!-- <td>{{com.creationDate}}</td> -->
+                          <td style="width: 100px;text-align: left;">{{com.creationDate}}</td>
+
+                          <!-- <td style="text-align: right;">{{com.aging}}</td> -->
+                          <!-- <td>{{com.remarks}}</td> -->
+                          <button type="submit" class="btn btn-primary" (click)="search(com.shipmentNumber)">Select</button>
+                        </tr>
+                </table>
+                </div>
+              </div>
+  
+        </div>
+     
+        <div class="tab-pane fade" id="panel1003" role="tabpanel">
+          <img class="img-fluid z-depth-1 rounded mb-3" alt="sample image" src="https://mdbootstrap.com/img/Photos/Others/intro1.jpg">
+          <p align="justify" class="font-small text-muted mx-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima at ipsum sit amet.</p>
+        </div>
+        <!--/.Panel 3-->
+      </div>
+  
+    </div>
+    <!-- Classic tabs -->
+  
+  </div>
+
+
+
   </form>
 </div>
 

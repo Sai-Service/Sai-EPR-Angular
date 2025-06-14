@@ -121,6 +121,7 @@ export class AdminComponent implements OnInit {
 
   isVisiblePaintMaster:boolean=true;
   isVisiblePaintTrans:boolean=true;
+  isVisiblePaintStock:boolean=true;
   isVisiblePaintPurchase:boolean=true;
   isVisiblePaintReport:boolean=true;
   isVisiblePaintReportAuditor:boolean=true;
@@ -339,10 +340,11 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibleAccessories=false;
       this.isVisibilePetrolPumpSystem=false;
       this.isVisibilePaintSystem=true;
-      this.isVisiblePaintMaster=true;
-      this.isVisiblePaintTrans=true;
+      this.isVisiblePaintMaster=false;
+      this.isVisiblePaintTrans=false;
       this.isVisiblePaintPurchase=true;
-      this.isVisiblePaintReport=true;
+      this.isVisiblePaintStock=false;
+      this.isVisiblePaintReport=false;
       this.isVisiblePaintReportAuditor=false;
     }
 
@@ -393,6 +395,8 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisiblePaintPurchase=true;
       this.isVisiblePaintReport=true;
       this.isVisiblePaintReportAuditor=false;
+      this.isVisiblePaintStock=true;
+
       // this.isVisibleShellReport=false;
 
     }
@@ -439,6 +443,8 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
         this.isVisiblePaintPurchase=false;
         this.isVisiblePaintReport=false;
         this.isVisiblePaintReportAuditor=true;
+        this.isVisiblePaintStock=false;
+
       }
 
     // && sessionStorage.getItem('ticketNo') ==='P5678'

@@ -207,6 +207,31 @@ export class MasterService {
   }
 
 
+   invItemList2NewPN(itemType, deptName, divisionId, segment): Observable<any> {
+    const REQUEST_PARAMS = new HttpParams().set('itemType', itemType)
+      .set('dept', deptName)
+      .set('divisionId', divisionId)
+      .set('segment', segment)
+    const REQUEST_URI = this.ServerUrl + '/itemMst/ItemTypePN';
+    return this.http.get(REQUEST_URI, {
+      params: REQUEST_PARAMS,
+    });
+  }
+
+   invItemList2NewPNOTH(itemType, deptName, divisionId, segment): Observable<any> {
+    const REQUEST_PARAMS = new HttpParams().set('itemType', itemType)
+      .set('dept', deptName)
+      .set('divisionId', divisionId)
+      .set('segment', segment)
+    const REQUEST_URI = this.ServerUrl + '/itemMst/ItemTypeOth';
+    return this.http.get(REQUEST_URI, {
+      params: REQUEST_PARAMS,
+    });
+  }
+
+
+
+
   invItemList2New(itemType, deptName, divisionId, segment): Observable<any> {
     const REQUEST_PARAMS = new HttpParams().set('itemType', itemType)
       .set('dept', deptName)
@@ -217,9 +242,16 @@ export class MasterService {
       params: REQUEST_PARAMS,
     });
   }
+
+
+
+  
   supplierCodeList(): Observable<any> {
     return this.http.get(this.ServerUrl + '/supp');
   }
+
+  
+
 
 
   supplierCodeListNew(): Observable<any> {
@@ -1515,6 +1547,11 @@ export class MasterService {
     return this.http.get(this.ServerUrl + `/mmtTrx/subInvTrf?shipmentNumber=${subtrfNo}&transferOrgId=${locId}`)
   }
 
+    getsearchBySubInvTrfNoForPaint(subtrfNo, locId): Observable<any> {
+      return this.http.get(this.ServerUrl + `/mmtTrx/subInvTrfPN?shipmentNumber=${subtrfNo}&transferOrgId=${locId}`)
+    // http://localhost:8081/mmtTrx/subInvTrfPN?shipmentNumber=11MU.1206-2512062600001&transferOrgId=1206
+    }
+
   getPhysicalLoc(locId): Observable<any> {
     return this.http.get(this.ServerUrl + `/cmnLookup/physicalLoc/${locId}`)
   }
@@ -1758,6 +1795,12 @@ export class MasterService {
   BillableType(): Observable<any> {
     return this.http.get(this.ServerUrl + `/billableTy`);
   }
+
+  PendingPNInWip(locId, divId, deptId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/mmtTrx/PendingRecWIP?locationId=${locId}&divisionId=${divId}`);
+    // http://localhost:8081/mmtTrx/PendingRecWIP?locationId=1206&divisionId=1
+  }
+
   searchall(locId, divId, deptId): Observable<any> {
     return this.http.get(this.ServerUrl + `/mmtTrx/PendingRecMyloc?locationId=${locId}&divisionId=${divId}&deptId=${deptId}`);
   }
