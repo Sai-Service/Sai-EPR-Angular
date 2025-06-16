@@ -344,7 +344,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisiblePaintTrans=false;
       this.isVisiblePaintPurchase=true;
       this.isVisiblePaintStock=false;
-      this.isVisiblePaintReport=false;
+      this.isVisiblePaintReport=true;
       this.isVisiblePaintReportAuditor=false;
     }
 
