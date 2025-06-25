@@ -89,8 +89,9 @@
             <tr>
 
 
-            <td style="width: 15%" class="LabelFontStyle"> Remark:</td>
-            <td><input disabled type="text" class="form-control"formControlName="attribute17"  [(ngModel)]="attribute17"></td>
+            <td style="width: 15%" class="LabelFontStyle"> IPO Number:</td>
+            <!-- <td><input  type="text" class="form-control"formControlName="attribute17"  [(ngModel)]="attribute17"></td> -->
+            <td><input  type="text" class="form-control"formControlName="remarks"  [(ngModel)]="remarks"></td>
 
 
              <div *ngIf="dispPhyLoc; then thenEnPhyLoc; else elseDisPhyLoc">
@@ -133,10 +134,16 @@
                               <th scope="col">Item Code</th>
                               <th scope="col">Item Description</th>
                               <th scope="col">UOM</th>
+                              <th scope="col">Density</th>
                               <th scope="col">From Locator</th>
-                              <th scope="col">Available Qty</th>
+
+                              <th scope="col">Avl Qty(gms)</th>
+                              <th scope="col">Avl Qty(Ltr)</th>
+
                               <th scope="col">To Locator</th>
-                              <th scope="col">Quantity</th>
+                              <th scope="col">Issue Qty(Ltr)</th>
+
+                              <th scope="col">Issue Qty(gms)</th>
                               <th scope="col">Add</th>
                               <th scope="col">Delete</th>
                           </tr>
@@ -163,6 +170,11 @@
                            <td>
                                <input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="uom" >
                            </td>
+
+                            <td>
+                               <input disabled type="text" class="form-control" style="height: 20px;width: 70px;" formControlName="attribute10" >
+                           </td>
+
                            <div *ngIf="dispsearLocator; then thenBlockop; else elseBlockse">
                           </div>
                           <ng-template #thenBlockop>
@@ -184,9 +196,20 @@
                             <input disabled type="text" class=" form-control" style="height: 20px; width: 110px;" formControlName="locator">
                             </td>
                            </ng-template>
-                           <td>
-                                <input disabled type="number" class="form-control" style="height: 20px;width: 100px;"formControlName="onHandQty">
-                           </td>
+
+                           <td> <input disabled type="number" class="form-control" style="height: 20px;width: 100px;"formControlName="onHandQty"> </td>
+                           <td> <input disabled type="number" class="form-control" style="height: 20px;width: 100px;"formControlName="onHandQtyInLtr"> </td>
+                           <!-- <td> <input  type="number" class="form-control" style="height: 20px;width: 100px;"formControlName="primaryQtyInLtr"> </td> -->
+                           <!-- (change)="validateLtr(trfLineIndex)" -->
+
+                              <!-- <td>
+                                <input type="number" class="form-control" style="height: 20px;width: 70px;" formControlName="primaryQtyInLtr" (change)="validate(trfLineIndex,qty1)" #qty1>
+                                <span
+                                *ngIf="getGroupControllinewise(trfLineIndex,'primaryQty').touched && getGroupControllinewise(trfLineIndex,'primaryQtyInLtr').invalid" class="error">Valid Item
+                               </span>
+                            </td> -->
+
+
                            <div *ngIf="displayLocator; then thenBlock; else elseBlock">
                           </div>
                           <ng-template #thenBlock>
@@ -213,12 +236,17 @@
                                </span>
                            </td>
                           </ng-template>
-                           <td>
-                                <input type="number" class="form-control" style="height: 20px;width: 70px;" formControlName="primaryQty" (change)="validate(trfLineIndex,qty)" #qty>
+
+                            <td> <input type="number" class="form-control" style="height: 20px;width: 90px;background-color: yellow;" formControlName="primaryQtyInLtr" (change)="validateLtr(trfLineIndex)" ></td>   
+
+                          
+                          <td>
+                                <input disabled type="number" class="form-control" style="height: 20px;width: 90px;" formControlName="primaryQty" (change)="validate(trfLineIndex,qty)" #qty>
                                 <span
                                 *ngIf="getGroupControllinewise(trfLineIndex,'primaryQty').touched && getGroupControllinewise(trfLineIndex,'primaryQty').invalid" class="error">Valid Item
                                </span>
                            </td>
+
                            <div *ngIf="displayaddButton; then thenBlockopen; else elseBlockfreeze">
                           </div>
                           <ng-template #thenBlockopen>

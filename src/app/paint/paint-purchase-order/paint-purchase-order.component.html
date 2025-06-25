@@ -952,12 +952,12 @@
                                                                     (ngModelChange)="onOptioninvItemIdSelected($event,i)" />
                                                                 <datalist id="dynmicUserIds1">
                                                                     <option *ngFor="let item of invItemList"
-                                                                        [ngValue]="item.itemId">{{item.segment}}
+                                                                        [ngValue]="item.itemId">{{item.segment}}  
                                                                     </option>
                                                                 </datalist>
 
                                                                
-
+                                                                <!-- //:{{item.description}}: -->
                                                                 <!-- </div> -->
                                                                 <!-- </ng-template>
                                                                 <ng-template #elsesegmentList>

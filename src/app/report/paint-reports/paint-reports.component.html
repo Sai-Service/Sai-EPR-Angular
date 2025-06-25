@@ -21,7 +21,7 @@
                     <ul class="dropdown-menu">
                         <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab"
-                                (click)="reportDetails('gstPurRegister')">Purchase&nbsp;Register&nbsp;Details</a>
+                                (click)="reportDetails('gstPurRegister')">Purchase&nbsp;Register&nbsp;Details..</a>
                         </li>
                         <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab"
@@ -63,6 +63,15 @@
                         <li>
                             <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab"
                               (click)="reportDetails('billHandedoverToActReport')">Account Bill Handover Report</a>
+                        </li>
+
+                         <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelfromtosubinventory" role="tab"
+                                (click)="reportDetails('sparesSubinvTransReceived')">Sub Inventory Transfer Received Report</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelfromtosubinventory" role="tab"
+                                (click)="reportDetails('sparesSubinvTransMade')">Sub Inventory Transfer Made Report</a>
                         </li>
 
                     </ul>
@@ -778,16 +787,17 @@ style="margin-left: 10%;" id="panelsparesInventoryAging">
                 <td><input  disabled  type="text" class="form-control" formControlName="subInventory"></td>
             </tr>
             <tr>
-
+                <div *ngIf="isVisibileIssueCategory; then IssCatg1; else IssCatg2"></div>
+                <ng-template #IssCatg1> 
                  <td style="width: 15%" class="LabelFontStyle">&nbsp;Issue Category&nbsp;:&nbsp; </td>
-                <!-- <td><input  disabled  type="text" class="form-control" formControlName="issCatg"></td> -->
-
                 <td> 
                     <select formControlName="issCatg" [ngModel]="issCatg" class="form-control" >
                         <option value="PN002">PN002</option>
                         <option value="PN001">PN001</option>
                     </select>
                 </td>
+                </ng-template>
+                <ng-template #IssCatg2> </ng-template>
               </tr>
         </table>
 

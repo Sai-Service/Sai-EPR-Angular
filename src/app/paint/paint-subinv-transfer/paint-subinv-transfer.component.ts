@@ -39,6 +39,7 @@ interface IsubinventoryTransfer {
   segment: string;
   description: string;
   uom: string;
+  attribute10 :string;
   issueTo: string;
   locatorId: number;
   transferLocatorId: number;
@@ -51,6 +52,11 @@ interface IsubinventoryTransfer {
   attribute18:string;
 
     pendingrec:any;
+
+    onHandQtyInLtr: number;
+    primaryQtyInLtr: number;
+
+
 
 
 }
@@ -117,10 +123,15 @@ export class PaintSubinvTransferComponent implements OnInit {
   onHandId: number;
   description: string;
   uom: string;
+  attribute10:string;
   locatorId: number;
   transferLocatorId: number;
   primaryQty: number;
   onHandQty: number;
+
+   onHandQtyInLtr: number;
+   primaryQtyInLtr: number;
+
   LocatorSegment: string;
   lineNumber: number;
   displayaddButton: boolean = false;
@@ -139,6 +150,8 @@ export class PaintSubinvTransferComponent implements OnInit {
   isVisiblenewSubtrf:boolean=false;
   isVisibledownloadSubGatePass:boolean=false;
   isVisibleReceiveButton:boolean=false;
+  headerValidation1:boolean=false;
+  lineValidation1=false;
 
   pendingrec:any;
   attribute17:string;
@@ -200,10 +213,15 @@ export class PaintSubinvTransferComponent implements OnInit {
       segment: ['', Validators.required],
       description: [],
       uom: [],
+      attribute10:[],
       locatorId: [],
       transferLocatorId: ['', Validators.required],
       primaryQty: ['', Validators.required],
       onHandQty: [],
+
+       onHandQtyInLtr: [],
+       primaryQtyInLtr: [],
+
       LocatorSegment: ['', Validators.required],
       lineNumber: [],
       onHandId: [],
@@ -213,18 +231,19 @@ export class PaintSubinvTransferComponent implements OnInit {
   }
 
   addnewtrfLinesList(i) {
-    if (i > 0) {
+    // alert ("index ="+i)
+    this.checkLineValidation(i);
+    if (i >= 0) {
       var trxLnArr1 = this.PaintSubinventoryTransferForm.get('trfLinesList').value;
       var itemqty = trxLnArr1[i].primaryQty;
-      var item1 = trxLnArr1[i].segment;
+       var item1 = trxLnArr1[i].segment;  
+      // '--Select--'
       // alert(item1);
       if (item1 === '' || itemqty === '') {
-        alert('Please enter Blank Data');
+        alert( "Line - " +i+1+ " : Please add line details..");
         return;
       }
-      var trxLnArr = this.PaintSubinventoryTransferForm.get(
-        'trfLinesList'
-      ) as FormArray;
+      var trxLnArr = this.PaintSubinventoryTransferForm.get('trfLinesList') as FormArray;
       var locId = trxLnArr1[i].locatorId;
       var tolocator = trxLnArr1[i].transferLocatorId;
       var tosub = this.PaintSubinventoryTransferForm.get('transferSubInv').value;
@@ -242,13 +261,14 @@ export class PaintSubinvTransferComponent implements OnInit {
         }
       }
     }
+if (this.lineValidation1) {
     this.trfLinesList().push(this.newtrfLinesList());
     var len = this.trfLinesList().length;
     var patch = this.PaintSubinventoryTransferForm.get('trfLinesList') as FormArray;
     patch.controls[len - 1].patchValue({
       lineNumber: len,
     });
-
+  }
     // this.trfLinesList().controls[len - 1].get('physicalQty').disable();
     // this.trfLinesList().controls[len - 1].get('LocatorSegment').disable();
   }
@@ -337,7 +357,8 @@ export class PaintSubinvTransferComponent implements OnInit {
     //     console.log(this.ItemIdList);
     //     // console.log(this.invItemId);
     //   });
-    this.addnewtrfLinesList(0);
+    // this.addnewtrfLinesList(0);
+     this.trfLinesList().push(this.newtrfLinesList());
     var patch = this.PaintSubinventoryTransferForm.get('trfLinesList') as FormArray;
     patch.controls[0].patchValue({
       lineNumber: 1,
@@ -493,11 +514,11 @@ export class PaintSubinvTransferComponent implements OnInit {
             //                 segmentName:this.lstcomment[i].locator,
             //                 onHandQty:this.lstcomment[i].primaryQty,
             //                 id:this.lstcomment[i].locatorId}
-            patch.controls[i].patchValue({
-              lineNumber: i + 1,
-              // locatorId:this.lstcomment[i].locatorId,
-              LocatorSegment: this.lstcomment[i].transferLocator,
-            });
+            patch.controls[i].patchValue({ lineNumber: i + 1,LocatorSegment: this.lstcomment[i].transferLocator,});
+            patch.controls[i].patchValue({ primaryQtyInLtr: Number(this.lstcomment[i].primaryQty)/Number(this.lstcomment[i].attribute10),});
+
+            // locatorId:this.lstcomment[i].locatorId,
+
           }
           this.PaintSubinventoryTransferForm.disable();
           this.isVisibledownloadSubGatePass=true;
@@ -529,24 +550,20 @@ export class PaintSubinvTransferComponent implements OnInit {
       this.service.getItemDetail(select1.itemId).subscribe((data) => {
         this.getItemDetail = data;
         if (this.getItemDetail.description != undefined) {
-          trxLnArr1.controls[i].patchValue({
-            description: this.getItemDetail.description,
-          });
+          trxLnArr1.controls[i].patchValue({ description: this.getItemDetail.description,});
           trxLnArr1.controls[i].patchValue({ uom: this.getItemDetail.uom });
-          trxLnArr1.controls[i].patchValue({
-            locId: Number(sessionStorage.getItem('locId')),
+          trxLnArr1.controls[i].patchValue({ attribute10: this.getItemDetail.attribute10 });
+
+          trxLnArr1.controls[i].patchValue({ locId: Number(sessionStorage.getItem('locId')),
           });
+
           // this.trfLinesList().controls[i].get('physicalQty').disable();
           // this.trfLinesList().controls[i].get('LocatorSegment').disable();
         }
       });
 
       this.service
-        .getfrmSubLoc(
-          this.locId,
-          select1.itemId,
-          this.subInvCode.subInventoryId
-        )
+        .getfrmSubLoc(this.locId,select1.itemId,this.subInvCode.subInventoryId )
         .subscribe((data) => {
           this.getfrmSubLoc = data;
           console.log(data);
@@ -556,23 +573,24 @@ export class PaintSubinvTransferComponent implements OnInit {
           this.locData[i] = data;
           if (getfrmSubLoc.length == 1) {
             // this.displayLocator[i]=false;
-            trxLnArr1.controls[i].patchValue({
-              locatorId: getfrmSubLoc[0].segmentName,
-            });
+            trxLnArr1.controls[i].patchValue({locatorId: getfrmSubLoc[0].segmentName, });
             // trxLnArr1.controls[i].patchValue({locatorId:getfrmSubLoc[0].locatorId});
-            trxLnArr1.controls[i].patchValue({
-              onHandQty: getfrmSubLoc[0].onHandQty,
-            });
+            trxLnArr1.controls[i].patchValue({onHandQty: getfrmSubLoc[0].onHandQty, });
             trxLnArr1.controls[i].patchValue({ onHandId: getfrmSubLoc[0].id });
+          
+            var avlqtyInLtr =getfrmSubLoc[0].onHandQty/Number(this.getItemDetail.attribute10)
+            avlqtyInLtr=parseFloat(avlqtyInLtr.toFixed(3))
+            trxLnArr1.controls[i].patchValue({onHandQtyInLtr: avlqtyInLtr, });
+
           } else {
             // this.getfrmSubLoc=data;
-            trxLnArr1.controls[i].patchValue({
-              locatorId: getfrmSubLoc[0].segmentName,
-            });
-            trxLnArr1.controls[i].patchValue({
-              onHandQty: getfrmSubLoc[0].onHandQty,
-            });
+            trxLnArr1.controls[i].patchValue({ locatorId: getfrmSubLoc[0].segmentName, });
+            trxLnArr1.controls[i].patchValue({ onHandQty: getfrmSubLoc[0].onHandQty, });
             trxLnArr1.controls[i].patchValue({ onHandId: getfrmSubLoc[0].id });
+           
+            var avlqtyInLtr =getfrmSubLoc[0].onHandQty/Number(this.getItemDetail.attribute10)
+            avlqtyInLtr=parseFloat(avlqtyInLtr.toFixed(3))
+            trxLnArr1.controls[i].patchValue({onHandQtyInLtr: avlqtyInLtr, });
           }
           // }
           // else{
@@ -749,6 +767,8 @@ export class PaintSubinvTransferComponent implements OnInit {
           this.onhand = data;
           console.log(this.onhand);
           trxLnArr1.controls[i].patchValue({ onHandQty: data.obj });
+          trxLnArr1.controls[i].patchValue({ onHandQty: parseFloat(data.obj.toFixed(3)) });
+          
           // trxLnArr1.controls[i].patchValue({onHandId:data.obj.id});
 
           let onHand = data.obj;
@@ -769,6 +789,9 @@ export class PaintSubinvTransferComponent implements OnInit {
           }
           // var trxLnArr1=this.stockTranferForm.get('trxLinesList')as FormArray;
           trxLnArr1.controls[i].patchValue({ onHandQty: avlqty1 });
+          trxLnArr1.controls[i].patchValue({ onHandQty: parseFloat(avlqty1.toFixed(3)) });
+
+
           if(avlqty1<0)
           {
             alert("Transfer is not allowed,Item has Reserve quantity - "+reserve);
@@ -781,9 +804,32 @@ export class PaintSubinvTransferComponent implements OnInit {
   }
 
   newSubtrf() {
+
+
+     this.lineValidation1=false; 
+    //  var trxLnArr1 = this.paintMiscellaneousForm.get('cycleLinesList').value;
+    //  var len1=trxLnArr1.length;
+      this.checkHeaderValidation();
+    if (this.headerValidation1==false ) { alert("Header Validation Failed... Please Check");  return; }
+   
+      var patch = this.PaintSubinventoryTransferForm.get('trfLinesList') as FormArray;
+      var trxLnArr1 = this.PaintSubinventoryTransferForm.get('trfLinesList').value;
+    var len1=trxLnArr1.length;
+
+    // alert ("len1 :" +len1);
+
+    for (let i = 0; i < len1 ; i++)
+      {
+        this.checkLineValidation(i);
+      }
+
+      if(this.lineValidation1===false ) {alert("Line Validation Failed... Please Check.");return; }
+     
     // if (this.PaintSubinventoryTransferForm.valid) {
 
- 
+       var  resp=confirm("Do You Want to Save this Transaction ???");
+       if(resp==false) { return;}
+
       // const formValue: IsubinventoryTransfer =this.PaintSubinventoryTransferForm.value;
       const formValue: IsubinventoryTransfer =this.PaintSubinventoryTransferForm.value;
 
@@ -883,7 +929,7 @@ export class PaintSubinvTransferComponent implements OnInit {
   }
 
    newSubtrfforWIPtoPN() {
-
+     
        var  resp=confirm("Do You Want to Save this Transaction ???");
        if(resp==false) { return;}
 
@@ -910,7 +956,7 @@ export class PaintSubinvTransferComponent implements OnInit {
 
 
        var patch = this.PaintSubinventoryTransferForm.get('trfLinesList') as FormArray;
-        
+       
       for (let i = 0; i < this.trfLinesList().length; i++) {
 
          (patch.controls[i]).patchValue({LocatorSegment: 'P.N.01.G.01',});
@@ -1108,6 +1154,52 @@ export class PaintSubinvTransferComponent implements OnInit {
       }
     }
   }
+
+
+   validateLtr(i: number) {
+    // alert("Validate");
+    // alert(qtyLtr);
+    // if(qtyLtr)
+    var trxLnArr = this.PaintSubinventoryTransferForm.get('trfLinesList').value;
+    var trxLnArr1 = this.PaintSubinventoryTransferForm.get( 'trfLinesList' ) as FormArray;
+    let avalqty = trxLnArr[i].onHandQtyInLtr;
+    let qty = trxLnArr[i].primaryQtyInLtr;
+    let uomCode = trxLnArr[i].uom;
+    //  alert(avalqty+'avalqty');
+    //  alert(trxLnArr[i].primaryQty +' qty');
+    if (qty > avalqty) {
+      alert('You can not enter more than available quantity');
+      trxLnArr1.controls[i].patchValue({ primaryQtyInLtr: '' });
+      // qty1.focus();
+    }
+    if (qty <= 0) {
+      alert('Please enter quantity more than zero');
+      trxLnArr1.controls[i].patchValue({ primaryQtyInLtr: '' });
+      // qty1.focus();
+    }
+
+    if(qty<=avalqty)  {
+      trxLnArr1.controls[i].patchValue({ primaryQty: (qty*Number(trxLnArr[i].attribute10)) });
+    }
+
+    var locId = trxLnArr[i].locatorId;
+    var tolocator = trxLnArr[i].transferLocatorId;
+    var tosub = this.PaintSubinventoryTransferForm.get('transferSubInv').value;
+    var subcode = this.PaintSubinventoryTransferForm.get('subInventoryCode').value;
+
+    // this.displayaddButton=false;
+    if (subcode === tosub) {
+      // alert('In If')
+      if (locId === tolocator) {
+        // alert('In 2IF');
+        alert('Please select correct locator');
+        trxLnArr1.controls[i].patchValue({ LocatorSegment: '' });
+        return;
+      }
+    }
+  }
+
+
   ValLocator(i: number, loc) {
     alert("Validate");
     // if(qty1)
@@ -1156,6 +1248,117 @@ export class PaintSubinvTransferComponent implements OnInit {
         });
       } 
       }
+
+
+  checkHeaderValidation() {
+
+    const formValue: IsubinventoryTransfer = this.PaintSubinventoryTransferForm.getRawValue();
+    var msg1;
+
+    if(formValue.subInventoryCode==formValue.transferSubInv) {
+
+      this.headerValidation1 = false;
+      msg1 = "[From SubInv]  and [To SubIv]  should not be same.." ;
+      alert(msg1);
+      return;
+    }
+    
+       
+
+    if (formValue.transferSubInv === undefined || formValue.transferSubInv === null  || formValue.transferSubInv.trim()=='' || formValue.transferSubInv=='--Select--') {
+
+      this.headerValidation1 = false;
+      msg1 = "Please Select [To SubInv]....";
+      alert(msg1);
+      return;
+    }
+
+    if (formValue.issueTo === undefined || formValue.issueTo === null  || formValue.issueTo.trim()=='' || formValue.issueTo=='--Select--') {
+      this.headerValidation1 = false;
+      msg1 = "Please Select [Issue To]....";
+      alert(msg1);
+      return;
+    }
+
+    if (formValue.remarks === undefined || formValue.remarks === null  || formValue.remarks.trim()=='' ) {
+      this.headerValidation1 = false;
+      msg1 = "Please Enter IPO Number...";
+      alert(msg1);
+      return;
+    }
+      
+    this.headerValidation1 = true;
+  }
+
+  checkLineValidation(i) {
+  
+      // alert('addrow index '+i);
+  
+      // var patch = this.paintMiscellaneousForm.get('cycleLinesList') as FormArray;
+      // var trxLnArr1 = this.paintMiscellaneousForm.get('cycleLinesList').value;
+
+       var patch = this.PaintSubinventoryTransferForm.get('trfLinesList') as FormArray;
+       var trxLnArr1 = this.PaintSubinventoryTransferForm.get('trfLinesList').value;
+  
+  
+      var lineValue1=trxLnArr1[i].segment;
+      var lineValue2=trxLnArr1[i].locatorId;  // FROM LOCATOR
+      var lineValue3=trxLnArr1[i].LocatorSegment;   // TO LOCATOR ; transferLocatorId
+      var lineValue4=trxLnArr1[i].transferLocatorId;
+
+      var lineValue5=trxLnArr1[i].primaryQtyInLtr;
+      var lineValue6=trxLnArr1[i].primaryQty;
+
+      // alert (lineValue1+","+lineValue2+","+lineValue3+","+lineValue4 );
+  
+       var j=i+1;
+
+      if(lineValue1===undefined || lineValue1===null || lineValue1.trim()=='' ){
+        alert("Line-"+j+ " ITEM CODE:  Should not be null value.");
+        this.lineValidation1=false;
+        return;
+      }
+  
+      // if(lineValue2===undefined || lineValue2===null || lineValue2==='' || lineValue2=='--Select--'  ){
+      //   alert("Line-"+j+ " FROM LOCATOR :  Invalid locator");
+      //   this.lineValidation1=false;
+      //   return;
+      // }
+
+      if (lineValue2 != 148326 ) {
+         alert("Line-"+j+ " FROM LOCATOR :  Invalid locator");
+        this.lineValidation1=false;
+        return;
+       }
+
+      // if(lineValue3===undefined || lineValue3===null || lineValue3==='' ){
+      //   alert("Line-"+j+ " TO  LOCATOR :  Should not be null value");
+      //   this.lineValidation1=false;
+      //   return;
+      // }
+
+      if(lineValue3 !="W.I.01.P.01" || lineValue4 != 148327){
+        alert("Line-"+j+ " TO  LOCATOR :  Invalid Locator");
+        this.lineValidation1=false;
+        return;
+      }
+  
+      if(lineValue5===undefined || lineValue5===null || lineValue5<=0){
+        alert("Line-"+j+ " ISSUE QUANTITY(LTR) :  Please Enter  Valid Data");
+        this.lineValidation1=false;
+        return;
+      }
+
+        if(lineValue6===undefined || lineValue6===null || lineValue6<=0){
+        alert("Line-"+j+ " ISSUE QUANTITY(GMS) :  Please Enter  Valid Data");
+        this.lineValidation1=false;
+        return;
+      }
+  
+         this.lineValidation1=true;
+  
+      }
+  
 
 }
 
