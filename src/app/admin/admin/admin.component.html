@@ -202,10 +202,7 @@
       </ul>
     </li>
     </div>
-    <!-- <div [style.display]="isVisible37 ? 'block' : 'none'"> -->
-      <!-- <ul class="dropdown-menu">
-      <li><a class="dropdown-item" [routerLink]="['/admin/transaction/stockTransfer']">Stock Transfer</a></li>
-      </ul>  -->
+   
       <div [style.display]="isVisible37 ? 'block' : 'none'">
       <li class="nav-item dropdown">
         <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -391,7 +388,8 @@
                 <li> <a class="dropdown-item" [routerLink]="['/admin/master/EmployeesMaster']">Employee Master </a> </li>
                 <li> <a class="dropdown-item" [routerLink]="['/admin/master/orderType']">Order Type Master</a> </li>
                 <li> <a class="dropdown-item" [routerLink]="['/admin/master/WsVehicleMaster']">Vehicle Master-Workshop</a> </li>
-                <li> <a class="dropdown-item" [routerLink]="['/admin/master/VariantMaster']">Variant Master</a> </li>
+                <!-- <li> <a class="dropdown-item" [routerLink]="['/admin/master/VariantMaster']">Variant Master</a> </li> -->
+               <li> <a class="dropdown-item" [routerLink]="['/admin/master/VariantMst']">Variant Master New</a> </li>
                 <li> <a class="dropdown-item" [routerLink]="['/admin/master/ReceivableTranstypeMaster']">Receivable Trans Type Master</a> </li>
                 <li> <a class="dropdown-item" [routerLink]="['/admin/master/CustomerRelationMaster']">Customer Relation Master</a> </li>
               </ul>
@@ -608,9 +606,21 @@
   </div>
   <!-- PETROL PUMP SYSTEM -->
 
+    <!-- Tools System -->
 
-
-
+ <div [style.display]="isVisibleToolsMaster ? 'block' : 'none'">
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle " id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+       Tools Transaction
+      </a>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" [routerLink]="['/admin/transaction/miscTransaction']">Stock Adjustment</a> </li>
+        <li><a class="dropdown-item" [routerLink]="['/admin/transaction/InternalConsumption']" >Internal Consumption</a></li>
+        <li> <a class="dropdown-item" [routerLink]="['/admin/master/SupplierMaster']">Supplier Entry</a> </li>
+       <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/priceUpdation']">Price Updation</a></li>
+      </ul>
+    </li>
+  </div>
   
 
   

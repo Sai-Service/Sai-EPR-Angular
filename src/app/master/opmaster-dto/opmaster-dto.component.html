@@ -255,24 +255,13 @@
                                 <tr>
                                     <td style="width: 15%" class="LabelFontStyle1">
                                         Supp&nbsp;Inv&nbsp;No:&nbsp;</td>
-                                    <td colspan="">
+                                      <td colspan="">
                                         <input type="text" formControlName="suppInvNo" class="form-control"
-                                            [(ngModel)]="suppInvNo" style="width: 100%;"
+                                            [(ngModel)]="suppInvNo" style="width: 100%;" 
+                                            (keydown.tab)="suppInvDetail(suppInvNo)" 
                                             [ngClass]="{ 'is-invalid': submitted && f.suppInvNo.errors }"
                                             placeholder="Please enter supplier invoice number">
-                                        <!-- <div *ngIf="submitted && f.suppInvNo.errors" class="invalid-feedback">
-                                            <div *ngIf="f.suppInvNo.errors?.maxLength">Maximum 8
-                                                characters characters valid</div>
-                                            <div *ngIf="f.suppInvNo.errors?.minLength">Minimum 6
-                                                characters valid</div>
-                                        </div>
-                                        <span
-                                            *ngIf="!poMasterDtoForm.get('suppInvNo').valid && poMasterDtoForm.get('suppInvNo').touched">
-                                            Supplier invoice no valid for minimum 3 digit and
-                                            maximum 30
-                                            digit
-                                        </span> -->
-
+                                        
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle1">Supp&nbsp;Inv&nbsp;Date:</td>
                                     <td>
@@ -308,6 +297,13 @@
                                             data-target="#exampleModalScrollable" style="width: 8rem;">
                                             Additional Information
                                         </button> -->
+                                    </td>
+                                </tr>
+                                 <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">Supp&nbsp;Inv&nbsp;Mes:</td>
+                                    <td colspan="3">
+                                        <input type="text" disabled formControlName="poInvMes" class="form-control" style="width: 100%;">
+                                        
                                     </td>
                                 </tr>
                             </ng-template>
@@ -1715,6 +1711,7 @@
             </td> -->
             <td class="center">
                 <button type="button" class="btn btn-primary" id="saveBtn" data-toggle="modal"
+                   [disabled]="isDisabledSave"
                     data-target="#confirmAlert" (click)="getMessage('Save')">Save</button>
                 <!-- [disabled]="!itemCategoryMasterForm.valid"  -->
 

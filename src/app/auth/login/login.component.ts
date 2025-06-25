@@ -72,12 +72,6 @@ export class LoginComponent implements OnInit {
       console.log('Res', res);
       if (res.code === 200) {
        
-        // if (this.password=='newyear' || this.password=='welcome'){
-         
-        //   this.router.navigate(['/forgetPasswordWindow']);
-        
-        // }
-        // else{
           this.router.navigate(['/admin']);
           var users = res.obj;
           var divisionName = users.divisionName.split(" - ", 3);
