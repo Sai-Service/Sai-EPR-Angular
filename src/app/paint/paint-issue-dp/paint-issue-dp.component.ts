@@ -231,6 +231,7 @@ export class PaintIssueDpComponent implements OnInit {
   panelButtonDisabled =false;
   saveDone=false;
   lineItemRepeated = false;
+  mainColorAdded =false;
 
 
   jobData:any=[];
@@ -1365,6 +1366,10 @@ export class PaintIssueDpComponent implements OnInit {
     var lineValue1=trxLnArr1[i].segment;
     var lineValue2=trxLnArr1[i].LocatorSegment;
     var lineValue3=trxLnArr1[i].physicalQty;
+    var itmCatg=trxLnArr1[i].category;
+
+    if (itmCatg==='MAIN') { this.mainColorAdded=true;} 
+    else { this.mainColorAdded=false}
 
 
     // alert("Line Value :"+lineValue1);
@@ -1471,9 +1476,17 @@ export class PaintIssueDpComponent implements OnInit {
         this.checkLineValidation(i);
       }
 
+      if (this.mainColorAdded===false   ){
+        var  resp1=confirm("Main Color Not Added.Want to Continue???");
+        if(resp1==false) { return;}
+      }
+
+
       if(this.lineValidation1===false ) {alert("Line Validation Failed... Please Check.");return; }
 
 
+
+       
 
       if (this.headerValidation1  && this.lineValidation1 ){
       var  resp=confirm("Do You Want to Save this Transaction ???");
