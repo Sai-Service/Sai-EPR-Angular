@@ -354,6 +354,9 @@ export class OPMasterDtoComponent implements OnInit {
   // @ViewChild("poCancel1") myInputField1: ElementRef;
   @ViewChild("hsnSacCode1") hsnSacCode1: ElementRef;
   displaypoCancel = true;
+;
+  isDisabledSave = false;
+  poInvMes:string;
 
   constructor(private fb: FormBuilder, private router1: ActivatedRoute, private router: Router, private service: MasterService) {
     this.poMasterDtoForm = this.fb.group({
@@ -434,6 +437,7 @@ export class OPMasterDtoComponent implements OnInit {
       lookupValueDesc2: [],
       lookupValueDesc3: [],
       lookupValueDesc5: [],
+      poInvMes:[],
       poLines: this.fb.array([this.lineDetailsGroup()]),
 
     });
@@ -2508,7 +2512,18 @@ export class OPMasterDtoComponent implements OnInit {
         this.lineDetailsArray.controls[lineNum].patchValue({ discLineAmt: 0 })
         this.lineDetailsArray.controls[lineNum].patchValue({ baseAmtLineWise: 0 })
         
-        this.service.invItemList2New(itemType, (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), '36DH1601')
+        // this.service.invItemList2New(itemType, (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), '36DH1601')
+        //   .subscribe(
+        //     data => {
+        //       this.lineDetailsArray.controls[lineNum].get('segment').disable();
+        //       this.invItemList = data;
+        //       this.itemMap.set(itemType, data);
+        //       console.log(this.invItemList);
+        //       this.lineDetailsArray.controls[lineNum].get('segment').enable();
+        //     }
+        //   );
+          if (Number(sessionStorage.getItem('deptId'))===5 && Number(sessionStorage.getItem('divisionId')) === 1){
+          this.service.invItemList2New(itemType, (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), 'AB-GUN-TOOL')
           .subscribe(
             data => {
               this.lineDetailsArray.controls[lineNum].get('segment').disable();
@@ -2518,6 +2533,19 @@ export class OPMasterDtoComponent implements OnInit {
               this.lineDetailsArray.controls[lineNum].get('segment').enable();
             }
           );
+        }
+        else{
+           this.service.invItemList2New(itemType, (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), '36DH1601')
+          .subscribe(
+            data => {
+              this.lineDetailsArray.controls[lineNum].get('segment').disable();
+              this.invItemList = data;
+              this.itemMap.set(itemType, data);
+              console.log(this.invItemList);
+              this.lineDetailsArray.controls[lineNum].get('segment').enable();
+            }
+          );
+        }
 
         this.lineDetailsArray.controls[lineNum].get('invDescription').disable();
         this.lineDetailsArray.controls[lineNum].get('hsnSacCode').disable();
@@ -3208,6 +3236,35 @@ export class OPMasterDtoComponent implements OnInit {
   }
 
 
-
+ suppInvDetail(suppNo){
+    // alert(suppNo);
+    var supp=this.poMasterDtoForm.get('supplierCode').value;
+      var value = supp.substr(supp.indexOf('@') + 1, supp.length);
+      // alert(value)
+       let selectedValue = this.supplierCodeList.find(v => v.suppNo == value);
+     console.log(selectedValue);
+     
+    this.service.suppInvDetailFn(suppNo,selectedValue.suppId).subscribe((res: any) => {
+            if (res.code === 200) {
+              if (res.obj.mes != undefined){
+              alert(res.obj.mes);
+              }
+              if (res.obj.cnt <=1){
+                this.poMasterDtoForm.patchValue({poInvMes:res.obj.mes});
+                this.isDisabledSave=true;
+              }
+              else{
+                this.isDisabledSave=false;
+               if (this.poMasterDtoForm.get('poInvMes').value != null){
+                this.poMasterDtoForm.get('poInvMes').reset();
+               }
+              }
+            } else {
+              if (res.code === 400) {
+                alert('Error In File : \n' + res.obj);
+              }
+            }
+          });
+  }
 
 }

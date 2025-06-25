@@ -118,7 +118,7 @@ export class AdminComponent implements OnInit {
   isVisibleReturnToVendor:boolean=true;
   isVisibleShortLanded:boolean=true;
   isVisibleSearchPaint:boolean=false;
-
+  isVisibleToolsMaster :boolean=false;
   isVisiblePaintMaster:boolean=true;
   isVisiblePaintTrans:boolean=true;
   isVisiblePaintStock:boolean=true;
@@ -325,6 +325,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisible24=false;
       this.isVisible25=false;
       this.isVisible26=false;
+      this.isVisibleToolsMaster=false;
       this.isVisibleSubInventoryTransfer=false;
       this.isVisible27=false;
       this.isVisible28=false;
@@ -364,6 +365,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibleCustMaster=false;
       this.isVisible14=false;
       this.isVisible15=false;
+       this.isVisibleToolsMaster=false;
       this.isVisible16=false;
       this.isVisible17=false;
       this.isVisible18=false;
@@ -408,6 +410,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
         this.isVisible11=false;
         this.isVisible12=false;
         this.isVisible13=false
+         this.isVisibleToolsMaster=false;
         this.isVisibleWsVehicleMaster=false;
         this.isVisibleCustMaster=false;
         this.isVisible14=false;
@@ -455,6 +458,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibleCustMaster=false;
       this.isVisible12=false;
       this.isVisibleMaster=false;
+       this.isVisibleToolsMaster=false;
       this.isVisibleReturnToVendor=false;
       this.isVisibleShortLanded=false;
       this.isVisibilePetrolPumpSystem=true;
@@ -499,6 +503,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisible13=false
       this.isVisibleWsVehicleMaster=true;
       this.isVisible14=true;
+       this.isVisibleToolsMaster=false;
       this.isVisible15=true;
       this.isVisible16=true;
       this.isVisible17=true;
@@ -541,6 +546,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisible14=false;
       this.isVisible15=false;
       this.isVisible16=false;
+       this.isVisibleToolsMaster=false;
       this.isVisible17=false;
       this.isVisible18=false;
       this.isVisible19=false;
@@ -579,6 +585,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisible13=true; 
       this.isVisible14=false;
       this.isVisible37=false;
+       this.isVisibleToolsMaster=false;
       this.isVisibleSaleStockAdju=false;
       this.isVisible15=false;
       this.isVisible16=true;
@@ -615,6 +622,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisible11=true;
       this.isVisible12=false;
       this.isVisible37=true;
+       this.isVisibleToolsMaster=false;
       this.isVisibleSaleStockAdju=false;
       this.isVisibleSubInventoryTransfer=false;
       this.isVisible13=false;
@@ -669,6 +677,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisible15=true;
       this.isVisible16=true;
       this.isVisible17=true;
+       this.isVisibleToolsMaster=false;
       this.isVisible18=true;
       this.isVisible19=true;
       this.isVisible20=false;
@@ -706,6 +715,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisible13=false;
       this.isVisible14=true;
       this.isVisible15=true;
+       this.isVisibleToolsMaster=false;
       this.isVisible16=true;
       this.isVisible17=true;
       this.isVisible18=true;
@@ -741,6 +751,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       // alert('roleId  1' + this.isVisible20)
       this.isVisible11=true;
       this.isVisible12=false;
+       this.isVisibleToolsMaster=false;
       this.isVisible37=true;
       this.isVisibleSaleStockAdju=false;
       this.isVisibleWsVehicleMaster=false;
@@ -786,6 +797,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisible11=true;
       this.isVisible12=false;
       this.isVisible37=true;
+       this.isVisibleToolsMaster=false;
       this.isVisibleSaleStockAdju=false;
       this.isVisibleSubInventoryTransfer=false;
       this.isVisible13=false;
@@ -822,7 +834,44 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
     }
 
 
-
+ if (Number(sessionStorage.getItem('divisionId')) === 1 && Number(sessionStorage.getItem('deptId'))===5){
+    this.isVisible11=false;
+      this.isVisible12=false;
+      this.isVisible13=false
+      this.isVisibleWsVehicleMaster=false;
+      this.isVisible14=true;
+      this.isVisible15=false;
+      this.isVisible16=false;
+      this.isVisible17=false;
+      this.isVisible18=false;
+      this.isVisible19=false;
+      this.isVisible20=false;
+      this.isVisibleMaster=false;
+      this.isVisible21=false;
+      this.isVisible22=false;
+      this.isVisible23=false;
+      this.isVisible24=true;
+      this.isVisible25=true;
+      this.isVisible26=true;
+      this.isVisibleSubInventoryTransfer=false;
+      this.isVisible27=false;
+      this.isVisible28=false;
+      this.isVisible29=true;
+      this.isVisibleToolsMaster=true;
+      this.isVisibleSparesReport=true;
+      this.isVisible31=false;
+      this.isVisible32=false;
+      this.isVisibleServiceReport=false;
+      this.isVisibleSalesReport=false;
+      this.isVisible37=false;
+      this.isVisibleSaleStockAdju=true;
+      this.isVisibleAccountsRepor=false;
+      this.isVisibleAccessories=false;
+      this.isVisibilePaintSystem=false;
+      this.isVisibleShellReport=false;
+      this.isVisibleSearchPaint=false;
+      this.isVisibleCustMaster=false;
+ }
 
     if (
       sessionStorage.getItem('ticketNo') === undefined ||

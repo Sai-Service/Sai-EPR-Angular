@@ -786,6 +786,10 @@ export class MasterService {
     return this.http.get(this.ServerUrl + '/cmnLookup/MulModel');
   }
 
+    mainModelList1(): Observable<any> {
+    return this.http.get(this.ServerUrl + `/cmnLookup/MulModel1/${sessionStorage.getItem('divisionId')}`);
+  }
+
   mainModelListByDivisionId(): Observable<any> {
 
     //http://localhost:8081/cmnLookup/Catgtype?cmnType=Model&divisionId=2
@@ -4695,7 +4699,34 @@ TransactionTypemiscpPaint(): Observable<any> {
   }
 
 
+public saveVariantMstFn(variantMaster) {
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + '/VariantMst/AddVariant ';
+    return this.http.post(url, variantMaster, options);
+  }
 
+
+    findByvariantAndColorFn(varCode,ouId,ColoCd): Observable<any> {
+    return this.http.get(this.ServerUrl + `/VariantMst/Variant?variant=${varCode}&ouId=${ouId}&code=${ColoCd}`,{ headers: this.headers });
+  }
+
+    varianListFn(id:number): Observable<any> {
+    return this.http.get(this.ServerUrl + `/cmnLookup/mainModelWiseVariant?mainModel=${id}`,{ headers: this.headers });
+  }
+
+  colorList(): Observable<any> {
+ return this.http.get(this.ServerUrl + `/cmnLookup/CmnType/MulColour`,{ headers: this.headers });
+}
+
+  colorListFn(id:number): Observable<any> {
+    return this.http.get(this.ServerUrl + `/cmnLookup/variantWiseColor?variantid=${id}`,{ headers: this.headers });
+  }
+
+    suppInvDetailFn(suppInvNo,suppId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/poHdr/suppInvDet?suppInvNo=${suppInvNo}&suppId=${suppId}`,{ headers: this.headers });
+  }
 }
 
 

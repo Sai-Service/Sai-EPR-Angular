@@ -39,7 +39,7 @@ import { ReceivableTranstypeMasterComponent } from './receivable-transtype-maste
 import { CustomerRelationMasterComponent } from './customer-relation-master/customer-relation-master.component';
 import { ItemMasterNewComponent } from './item-master-new/item-master-new.component';
 import { ItemRelatedMasterComponent } from './item-related-master/item-related-master.component';
-
+import { VariantMasterNewComponent } from './variant-master-new/variant-master-new.component';
 // import { SubinventoryTransferComponent } from '../transaction/subinventory-transfer/subinventory-transfer.component';
 
 
@@ -95,6 +95,7 @@ const routes: Routes = [
   {path:'ReceivableTranstypeMaster',component:ReceivableTranstypeMasterComponent},
   {path:'CustomerRelationMaster',component:CustomerRelationMasterComponent},
   {path:'ItemRelatedMaster',component:ItemRelatedMasterComponent},
+  {path:'VariantMst',component:VariantMasterNewComponent},
   // {path:'SubinventoryTransfer',component:SubinventoryTransferComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
