@@ -1351,6 +1351,20 @@ soaLineWiseInvoiceWise(fromDate,toDate,ouId,locId,deptId,parameter){
   }); 
 }
 
+apInvHeadCSFn(fromDate,toDate,ouId){
+  const REQUEST_URI = this.ServerUrl +`/AccountsReports/APInvHeader?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  }); 
+}
 
+apInvLinCSFn(fromDate,toDate,ouId){
+  const REQUEST_URI = this.ServerUrl +`/AccountsReports/APInvLines?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  }); 
+}
 }
 
