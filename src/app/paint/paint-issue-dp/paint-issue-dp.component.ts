@@ -1483,10 +1483,7 @@ export class PaintIssueDpComponent implements OnInit {
 
 
       if(this.lineValidation1===false ) {alert("Line Validation Failed... Please Check.");return; }
-
-
-
-       
+      
 
       if (this.headerValidation1  && this.lineValidation1 ){
       var  resp=confirm("Do You Want to Save this Transaction ???");

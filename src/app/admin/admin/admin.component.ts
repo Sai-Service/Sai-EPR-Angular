@@ -302,7 +302,7 @@ export class AdminComponent implements OnInit {
     // if (Number(sessionStorage.getItem('divisionId')) === 1 && Number(sessionStorage.getItem('roleId'))===1 && sessionStorage.getItem('deptName')==='DP' && sessionStorage.getItem('ticketNo') ==='P5678')
     // if (Number(sessionStorage.getItem('divisionId')) === 1 && Number(sessionStorage.getItem('roleId'))===1  && sessionStorage.getItem('ticketNo') ==='P5678')
    
-if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem('deptName')==='Spares' && (sessionStorage.getItem('roleId')) == 'PAINT' ) 
+if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem('deptName')==='Spares' && (sessionStorage.getItem('roleId')) === 'PAINT' ) 
    
     {
       this.isVisibleSearchPaint=true;
@@ -834,7 +834,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
     }
 
 
- if (Number(sessionStorage.getItem('divisionId')) === 1 && Number(sessionStorage.getItem('deptId'))===5){
+ if (Number(sessionStorage.getItem('divisionId')) === 1 && Number(sessionStorage.getItem('deptId'))===5 && (sessionStorage.getItem('roleId')) !== 'PAINT') {
     this.isVisible11=false;
       this.isVisible12=false;
       this.isVisible13=false
