@@ -82,6 +82,7 @@ export class PaintReportsComponent implements OnInit {
   isVisibleSparesBackOrderQty: boolean = false;
   isVisiblesparesMiscIssueReceipt: boolean = false;
   isVisiblesparesPaintPanelReport: boolean = false;
+  isVisiblePaintPanelDetailReport:boolean=false;
   isVisiblesparesInventoryAging: boolean = false;
   isVisibleSparesDebtorsExecutiveWise: boolean = false;
   isVisibleDepartmentList: boolean = false;
@@ -272,7 +273,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
-              this.isVisiblefromtosubinventory=false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblePaintPanelDetailReport=false;
 
 
     }
@@ -299,7 +301,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
-              this.isVisiblefromtosubinventory=false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblePaintPanelDetailReport=false;
+
 
     }
     else if (reportName === 'consumptionSummary') {
@@ -327,7 +331,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
-              this.isVisiblefromtosubinventory=false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblePaintPanelDetailReport=false;
 
 
     }
@@ -353,7 +358,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
-              this.isVisiblefromtosubinventory=false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblePaintPanelDetailReport=false;
+
 
 
     }
@@ -378,6 +385,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
               this.isVisiblefromtosubinventory=false;
+                    this.isVisiblePaintPanelDetailReport=false;
+
 
 
     }
@@ -403,6 +412,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
+            this.isVisiblePaintPanelDetailReport=false;
+
 
     }
 
@@ -427,6 +438,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
               this.isVisiblefromtosubinventory=false;
+                    this.isVisiblePaintPanelDetailReport=false;
+
 
     }
 
@@ -452,6 +465,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisibileIssueCategory=true;
+            this.isVisiblePaintPanelDetailReport=false;
+
 
     }
     else if (reportName === 'gstsparesMiscIssueReceipt') {
@@ -474,7 +489,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
-              this.isVisiblefromtosubinventory=false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblePaintPanelDetailReport=false;
+
 
     }
 
@@ -498,7 +515,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblesparesPaintPanelReport=true;
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
-              this.isVisiblefromtosubinventory=false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblePaintPanelDetailReport=false;
+
 
     }
     else if (reportName === 'gstsparesPaintPanelDtlRpt') {
@@ -521,7 +540,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblesparesPaintPanelReport=true;
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
-              this.isVisiblefromtosubinventory=false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblePaintPanelDetailReport=false;
+
 
     }
 
@@ -545,7 +566,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
-              this.isVisiblefromtosubinventory=false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblePaintPanelDetailReport=false;
+
 
     }
 
@@ -569,7 +592,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
-              this.isVisiblefromtosubinventory=false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblePaintPanelDetailReport=false;
+
 
     }
 
@@ -593,7 +618,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
-              this.isVisiblefromtosubinventory=false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblePaintPanelDetailReport=false;
+
 
     }
 
@@ -617,7 +644,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
-              this.isVisiblefromtosubinventory=false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblePaintPanelDetailReport=false;
+
 
     }
 
@@ -641,7 +670,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
-              this.isVisiblefromtosubinventory=false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblePaintPanelDetailReport=false;
+
 
     }
 
@@ -671,7 +702,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
-              this.isVisiblefromtosubinventory=false;
+      this.isVisiblefromtosubinventory=false;
 
     }
 
@@ -696,7 +727,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
-              this.isVisiblefromtosubinventory=false;
+      this.isVisiblefromtosubinventory=false;
 
     }
 
@@ -1191,7 +1222,7 @@ export class PaintReportsComponent implements OnInit {
       const fileName = 'Paint Panel Summary Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.paintPanelReportSummary(fromDate, toDate, locId)
+        this.reportService.paintPanelReportSummary(fromDate, toDate, locId,sessionStorage.getItem('ouId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1200,7 +1231,7 @@ export class PaintReportsComponent implements OnInit {
           })
       }
       if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.paintPanelReportSummary(fromDate, toDate, sessionStorage.getItem('locId'))
+        this.reportService.paintPanelReportSummary(fromDate, toDate, locId,sessionStorage.getItem('ouId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;

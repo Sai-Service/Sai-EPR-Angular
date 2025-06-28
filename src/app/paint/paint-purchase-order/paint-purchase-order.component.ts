@@ -1928,8 +1928,15 @@ export class PaintPurchaseOrderComponent implements OnInit {
 
     // alert("login dept Id ,itemId ="+loginDeptId +","+itemId);
 
+  //    if (itemId != null) {
+  //           itemId = itemId.substr(0,itemId.indexOf(':'));
+  //           var patch = this.paintPoForm.get('poLines') as FormArray;
+  //           patch.controls[index].patchValue({ segment: itemId })
+  //  }
 
+    
   if (itemId != null) {
+    // itemId = itemId.substr(0,itemId.indexOf(':'));
     let selectedValue = this.invItemList.find(v => v.segment == itemId);
     console.log(selectedValue);
 
@@ -1938,14 +1945,17 @@ export class PaintPurchaseOrderComponent implements OnInit {
       this.selectedInvItem.push(selectedValue);
       // var arrayControl = this.poMasterDtoForm.get('poLines').value;
       var arrayControlNew = this.paintPoForm.get('poLines') as FormArray;
+
       var arrayControl = arrayControlNew.getRawValue()
       var patch = this.paintPoForm.get('poLines') as FormArray;
+    
       this.itemType = arrayControl[index].itemType;
       this.invItemId = selectedValue.itemId;
       console.log(this.invItemId, this.taxCat);
       this.lineDetailsArray.controls[index].get('taxCategoryName').enable();
       this.lineDetailsArray.controls[index].get('invoiceQty').enable();
       this.lineDetailsArray.controls[index].get('invoiceRate').enable();
+
       if (this.itemType === "GOODS") {
         this.service.ItemDetailsList(this.invItemId, this.selSuppTaxCatNm, this.billToLoc).subscribe((res: any) => {
           if (res.code === 200) {

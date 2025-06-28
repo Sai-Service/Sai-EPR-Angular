@@ -50,6 +50,7 @@ export class ReportServiceService {
   }
 
   stockMadeDetailsReport(fromDate, toDate,locId,tolocId,subInvCode,deptId){
+  //  http://localhost:8081/PaintReports/PnStkTrfMade?fromDate=01-MAR-2025&toDate=25-JUN-2025&ouId=16&fromLoc=1605&toLoc=1623&subInvCode=PN
     const REQUEST_URI = this.ServerUrl +`/SparesReports/SprStkTrfMade?fromDate=${fromDate}&toDate=${toDate}&fromLoc=${locId}&toLoc=${tolocId}&subInvCode=${subInvCode}&deptId=${deptId}`;
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
@@ -144,12 +145,15 @@ export class ReportServiceService {
   // PANEL REPORT
   //http://localhost:8081/PaintReports/PanelEntryRep?fromDate=01-MAR-2023&toDate=19-MAR-2024&locId=1602
 
-  paintPanelReportSummary(frmdt,todt,locId){
-    const REQUEST_URI = this.ServerUrl +`/PaintReports/PanelEntryRep?fromDate=${frmdt}&toDate=${todt}&locId=${locId}`;
+  paintPanelReportSummary(frmdt,todt,locId,ouId){
+    // const REQUEST_URI = this.ServerUrl +`/PaintReports/PanelEntryRep?fromDate=${frmdt}&toDate=${todt}&locId=${locId}`;
+    const REQUEST_URI = this.ServerUrl +`/PaintReports/PanelEntryRep?fromDate=${frmdt}&toDate=${todt}&ouId=${ouId}&locId=${locId}`;
+
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
     });
+
   }
 
   paintPanelReportDetail(frmdt,todt,locId){
@@ -180,6 +184,8 @@ export class ReportServiceService {
       headers: this.headers,
     });
   }
+
+  // http://localhost:8081/PaintReports/PnStkAdjRep?fromDate=01-Jun-2025&toDate=10-Jun-2025&ouId=16&locId=1606
 
   spslReturnRegisterReport(invcDt1,invcDt4,ouId,locId){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/SprSalesReturn?fromDate=${invcDt1}&toDate=${invcDt4}&ouId=${ouId}&locId=${locId}`;

@@ -212,8 +212,6 @@
                         </tr>
                         <tr>
                             <td style="width: 15%" class="LabelFontStyle"> &nbsp;Location&nbsp;Code&nbsp;:&nbsp; </td>
-                            
-
                             <td>
                                 <select formControlName="locId" id="locId" [(ngModel)]="locId" class="form-control"
                                   (ngModelChange)='onOptionsLocation($event)'>
@@ -929,12 +927,12 @@ style="margin-left: 20%;" id="panelsparesMiscIssueReceipt">
 <table class="center" [style.display]="isVisiblesparesPaintPanelReport ? 'block' : 'none'" class="collapse"
 style="margin-left: 20%;" id="paintPanelReport">
 
-<table class="center">
-    <tr>
-      <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;" >{{reportName}}</td>
-    </tr>
-</table>
-<br>
+        <table class="center">
+            <tr>
+            <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;" >{{reportName}}</td>
+            </tr>
+        </table>
+        <br>
 
         <table class="center">
             <tr>
@@ -958,13 +956,12 @@ style="margin-left: 20%;" id="paintPanelReport">
                 </td>
             </tr>
             <tr>
-                <td style="width: 15%" class="LabelFontStyle">
-                    &nbsp;Location&nbsp;&nbsp;:&nbsp;
-                </td>
-                <td [style.display]="isVisiblelocationInput ? 'block' : 'none'">
-                    <input type="text" disabled class="form-control" formControlName="locCode">
-                </td>
-                <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
+                <td style="width: 15%" class="LabelFontStyle">&nbsp;Location&nbsp;&nbsp;:&nbsp;</td>
+               
+                <!-- <td [style.display]="isVisiblelocationInput ? 'block' : 'none'">
+                    <input type="text" disabled class="form-control" formControlName="locCode"></td> -->
+               
+                    <!-- <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
                     <select formControlName="locCode" id="locCode" class="form-control"
                         (ngModelChange)='onOptionsLocation($event)'>
                         <option></option>
@@ -973,8 +970,21 @@ style="margin-left: 20%;" id="paintPanelReport">
                         </option>
                     </select>
                     <input  disabled hidden type="number" class="form-control" formControlName="locId">
-                </td>
+                </td> -->
+
+                          <td>
+                                <select formControlName="locId" id="locId" [(ngModel)]="locId" class="form-control"
+                                  (ngModelChange)='onOptionsLocation($event)'>
+                                  <option></option>
+                                  <option *ngFor="let sc of  BillShipToList" [ngValue]="sc.locId">
+                                    {{sc.locCode}}-{{sc.locName}}
+                                  </option>
+                                </select>
+                                <input hidden disabled type="number" class="form-control" formControlName="locId" [(ngModel)]="locId">
+                              </td>
             </tr>
+
+
         </table>
                             <table class="center">
                                 <tr>
@@ -1003,6 +1013,7 @@ style="margin-left: 20%;" id="paintPanelReport">
                               </tr>
                           </table>
           </table>
+
 
           <table class="center" [style.display]="isVisiblestockTransfer ? 'block' : 'none'" class="collapse"
           style="margin-left: 10%;" id="panelstockTransfer">
