@@ -996,6 +996,49 @@ reportName:string;
     this.isVisiblepanelfromtolocation=false;
     this.panelTodateAndOU=false;
   }
+   else if (reportName=='apInvHeadCSV'){
+    this.reportName='AP Invoice Header CSV Report';
+    this.isVisibleGSTPurchaseRegister=false;
+    this.isVisibleSparesdebtors=false;
+    this.isVisibleLocation=false;
+    this.isVisibleLocation1=false;
+    this.isVisibleGSTSaleRegister=true;
+    this.isVisiblepanelaccountName=false;
+    this.isVisiblepanelcashName=false;
+    this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
+    this.ispanelTolocationOu=false;
+    this.isVisibleVendorLedgerReport=false;
+    this.isVisiblecustomerLedger=false;
+    this.isVisiblegstsaiDebtors=false;
+    this.isVisiblepanelfromtolocation=false;
+    this.panelTodateAndOU=false;
+  }
+    else if (reportName=='apInvLineCSV'){
+    this.reportName='AP Invoice Lines CSV Report';
+    this.isVisibleGSTPurchaseRegister=false;
+    this.isVisibleSparesdebtors=false;
+    this.isVisibleLocation=false;
+    this.isVisibleLocation1=false;
+    this.isVisibleGSTSaleRegister=true;
+    this.isVisiblepanelaccountName=false;
+    this.isVisiblepanelcashName=false;
+    this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
+    this.ispanelTolocationOu=false;
+    this.isVisibleVendorLedgerReport=false;
+    this.isVisiblecustomerLedger=false;
+    this.isVisiblegstsaiDebtors=false;
+    this.isVisiblepanelfromtolocation=false;
+    this.panelTodateAndOU=false;
+    }
+  
   }
 
 
@@ -1483,7 +1526,8 @@ reportName:string;
           this.dataDisplay = ''
           this.isDisabled1=false;
         })     
-     }
+      }
+     
      else if (reportName ==='Spares Debtor Report'){
      
       var custAccNo1 = this.reportForm.get('custAccNo').value;
@@ -1645,8 +1689,34 @@ reportName:string;
             });
         }
       }
-  }
+  
+   
 
+ else if (reportName ==='AP Invoice Header CSV Report'){
+      const fileName = 'AP Invoice Header CSV Report-' +  '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      this.reportService.apInvHeadCSFn(fromDate,toDate,sessionStorage.getItem('ouId'))
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+          this.isDisabled1=false;
+        })     
+     }
+      else if (reportName ==='AP Invoice Lines CSV Report'){
+      const fileName = 'AP Invoice Lines CSV Report-' +  '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      this.reportService.apInvLinCSFn(fromDate,toDate,sessionStorage.getItem('ouId'))
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+          this.isDisabled1=false;
+        })     
+     }
+    
+
+    }
 
 
   toDateValidation(tDate) {
