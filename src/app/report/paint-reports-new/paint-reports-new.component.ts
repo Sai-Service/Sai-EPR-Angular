@@ -1183,7 +1183,7 @@ export class PaintReportsNewComponent implements OnInit {
       const fileName = 'Paint Panel Summary Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.paintPanelReportSummary(fromDate, toDate, locId)
+        this.reportService.paintPanelReportSummary(fromDate, toDate, locId,operatingUnitId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1192,7 +1192,7 @@ export class PaintReportsNewComponent implements OnInit {
           })
       }
       if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.paintPanelReportSummary(fromDate, toDate, sessionStorage.getItem('locId'))
+        this.reportService.paintPanelReportSummary(fromDate, toDate, sessionStorage.getItem('locId'),operatingUnitId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;

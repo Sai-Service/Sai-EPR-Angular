@@ -579,7 +579,7 @@ if (this.lineValidation1) {
             trxLnArr1.controls[i].patchValue({ onHandId: getfrmSubLoc[0].id });
           
             var avlqtyInLtr =getfrmSubLoc[0].onHandQty/Number(this.getItemDetail.attribute10)
-            avlqtyInLtr=parseFloat(avlqtyInLtr.toFixed(3))
+            avlqtyInLtr=parseFloat(avlqtyInLtr.toFixed(4))
             trxLnArr1.controls[i].patchValue({onHandQtyInLtr: avlqtyInLtr, });
 
           } else {
@@ -589,7 +589,7 @@ if (this.lineValidation1) {
             trxLnArr1.controls[i].patchValue({ onHandId: getfrmSubLoc[0].id });
            
             var avlqtyInLtr =getfrmSubLoc[0].onHandQty/Number(this.getItemDetail.attribute10)
-            avlqtyInLtr=parseFloat(avlqtyInLtr.toFixed(3))
+            avlqtyInLtr=parseFloat(avlqtyInLtr.toFixed(4))
             trxLnArr1.controls[i].patchValue({onHandQtyInLtr: avlqtyInLtr, });
           }
           // }
