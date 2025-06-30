@@ -2122,7 +2122,7 @@ export class SparesReportsComponent implements OnInit {
       const fileName = 'Stock Transfer Made Detail Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.stockMadeDetailsReport(fromDate, toDate, fromLocationId, toLocationId, subInventory,sessionStorage.getItem('deptId'))
+        this.reportService.stockMadeDetailsReport(fromDate, toDate,sessionStorage.getItem('ouId') ,fromLocationId, toLocationId, subInventory,sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2132,7 +2132,7 @@ export class SparesReportsComponent implements OnInit {
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
         // alert(tolocId)
-        this.reportService.stockMadeDetailsReport(fromDate, toDate, sessionStorage.getItem('locId'), toLocationId, subInventory,sessionStorage.getItem('deptId'))
+        this.reportService.stockMadeDetailsReport(fromDate, toDate,sessionStorage.getItem('ouId') ,sessionStorage.getItem('locId'), toLocationId, subInventory,sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2200,7 +2200,7 @@ export class SparesReportsComponent implements OnInit {
       const fileName = 'Stock Transfer Received Detail Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate, tolocationId, fromLocationId, subInventory,sessionStorage.getItem('deptId'))
+        this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate,sessionStorage.getItem('ouId') ,tolocationId, fromLocationId, subInventory,sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2209,7 +2209,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate,sessionStorage.getItem('locId'), fromLocationId, subInventory,sessionStorage.getItem('deptId'))
+        this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate,sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'), fromLocationId, subInventory,sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;

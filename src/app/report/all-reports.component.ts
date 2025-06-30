@@ -598,7 +598,7 @@ export class AllReportsComponent implements OnInit {
     //  alert(toLicId)
     const fileName = 'Stock-Made-Details-' +  fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.stockMadeDetailsReport(fromDate, toDate, sessionStorage.getItem('locId'), toLicId, this.subInvCode.subInventoryCode,sessionStorage.getItem('deptId'))
+    this.reportService.stockMadeDetailsReport(fromDate, toDate, sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'), toLicId, this.subInvCode.subInventoryCode,sessionStorage.getItem('deptId'))
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.isDisabled11 = false;
@@ -645,7 +645,7 @@ export class AllReportsComponent implements OnInit {
     var fromlocId = this.reportForm.get('SprStkTrfRecdDtlsFromLoc').value;
     const fileName = 'Stock-Received-Detail-' +  fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.SprStkTrfRecdDtlsReport(fromDate, invcDt4, sessionStorage.getItem('locId'), fromlocId, this.subInvCode.subInventoryCode,sessionStorage.getItem('deptId'))
+    this.reportService.SprStkTrfRecdDtlsReport(fromDate, invcDt4,sessionStorage.getItem('ouId') ,sessionStorage.getItem('locId'), fromlocId, this.subInvCode.subInventoryCode,sessionStorage.getItem('deptId'))
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.isDisabled13 = false;

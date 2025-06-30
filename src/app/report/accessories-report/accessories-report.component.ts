@@ -1807,7 +1807,7 @@ reportParameter(reportName) {
     const fileName = 'Stock Transfer Made Detail Report-' +  fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     if (Number(sessionStorage.getItem('deptId')) === 4) {
-      this.reportService.stockMadeDetailsReport(fromDate, toDate, locId, tolocId, subInventory,sessionStorage.getItem('deptId'))
+      this.reportService.stockMadeDetailsReport(fromDate, toDate, sessionStorage.getItem('ouId'),locId, tolocId, subInventory,sessionStorage.getItem('deptId'))
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.isDisabled1 = false;
@@ -1816,7 +1816,7 @@ reportParameter(reportName) {
         })
     }
     else if (Number(sessionStorage.getItem('deptId')) != 4) {
-      this.reportService.stockMadeDetailsReport(fromDate, toDate, sessionStorage.getItem('locId'), tolocId, subInventory,sessionStorage.getItem('deptId'))
+      this.reportService.stockMadeDetailsReport(fromDate, toDate, sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'), tolocId, subInventory,sessionStorage.getItem('deptId'))
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.isDisabled1 = false;
@@ -1857,7 +1857,7 @@ reportParameter(reportName) {
     const fileName = 'Stock Transfer Received Detail Report-' +  fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     if (Number(sessionStorage.getItem('deptId')) === 4) {
-      this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate, locId, tolocId, subInventory,sessionStorage.getItem('deptId'))
+      this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate, sessionStorage.getItem('ouId'),locId, tolocId, subInventory,sessionStorage.getItem('deptId'))
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.isDisabled1 = false;
@@ -1866,7 +1866,7 @@ reportParameter(reportName) {
         })
     }
     else if (Number(sessionStorage.getItem('deptId')) != 4) {
-      this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate, sessionStorage.getItem('locId'), tolocId, subInventory,sessionStorage.getItem('deptId'))
+      this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate,sessionStorage.getItem('ouId') ,sessionStorage.getItem('locId'), tolocId, subInventory,sessionStorage.getItem('deptId'))
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.isDisabled1 = false;
