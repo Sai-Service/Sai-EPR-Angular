@@ -1704,6 +1704,7 @@ reportName:string;
         })     
      }
       else if (reportName ==='AP Invoice Lines CSV Report'){
+        // alert('ghhhhh')
       const fileName = 'AP Invoice Lines CSV Report-' +  '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       this.reportService.apInvLinCSFn(fromDate,toDate,sessionStorage.getItem('ouId'))
