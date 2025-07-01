@@ -293,7 +293,7 @@
               </td>
 
                <td>
-                <button type="button" class="btn btn-primary" (click)="newSubtrfforWIPtoPN()" [style.display]="isVisibleReceiveButton ? 'block':'none'  ">Receive</button>
+                <button type="button" class="btn btn-primary" (click)="Wip2PnOrMp()" [style.display]="isVisibleReceiveButton ? 'block':'none'  ">Receive</button>
               </td>
 
                </tr>
@@ -412,10 +412,10 @@
                         </tbody>
                         <tr *ngFor="let com of pendingrec" style="background-color:#E3EAEB;">
                           <!-- <td>{{com.shipmentNumber}}</td> -->
-                          <td style="width: 200px;text-align: center;">{{com.shipmentNumber}}</td>
-                          <td style="width: 200px;text-align: center;">{{com.fromSubInv}}</td>
-                          <td style="width: 200px;text-align: center;">{{com.toSubInv}}</td>
-                           <td style="width: 200px;text-align: center;">{{com.creationDate}}</td>
+                          <td style="width: 200px;text-align: center;font-size: medium;">{{com.shipmentNumber}}</td>
+                          <td style="width: 200px;text-align: center;font-size: medium;">{{com.fromSubInv}}</td>
+                          <td style="width: 200px;text-align: center;font-size: medium;">{{com.toSubInv}}</td>
+                           <td style="width: 200px;text-align: center;font-size: medium;">{{com.creationDate}}</td>
                           <!-- <td style="width: 100px;text-align: left;">{{com.creationDate}}</td> -->
 
                           <!-- <td style="text-align: right;">{{com.aging}}</td> -->

@@ -495,14 +495,17 @@ if (this.lineValidation1) {
 
           // alert ("this.lstcomment[0].transferSubInv" + this.lstcomment[0].attribute16+","+Number(this.lstcomment[0].attribute16))
 
-          // if(this.lstcomment[0].transferSubInv=='WIP'){this.isVisibleReceiveButton=true;} 
-          // else {this.isVisibleReceiveButton=false;}
+         this.isVisibleReceiveButton=false
+          if(this.lstcomment[0].subInventoryCode =='PN'  && this.lstcomment[0].transferSubInv=='WIP' && loginDeptId ==5 ){this.isVisibleReceiveButton=true;} 
+          if(this.lstcomment[0].subInventoryCode =='MP'  && this.lstcomment[0].transferSubInv=='WIP' && loginDeptId ==3 ){this.isVisibleReceiveButton=true;} 
 
-          if (loginDeptId ==3) {
-            if(Number(this.lstcomment[0].attribute16)>=1){this.isVisibleReceiveButton=true;} 
-            else {this.isVisibleReceiveButton=false;}
-          } 
-          else { this.isVisibleReceiveButton=false}
+          // if (loginDeptId ==3) {
+          //   if(Number(this.lstcomment[0].attribute16)>=1){this.isVisibleReceiveButton=true;} 
+          //   else {this.isVisibleReceiveButton=false;}
+          // } 
+          // else { this.isVisibleReceiveButton=false}
+
+
 
 
           this.PaintSubinventoryTransferForm.patchValue(this.lstcomment[0]);
@@ -744,9 +747,7 @@ if (this.lineValidation1) {
       return;
     }
     // alert(event+'Loca');
-    var trxLnArr1 = this.PaintSubinventoryTransferForm.get(
-      'trfLinesList'
-    ) as FormArray;
+    var trxLnArr1 = this.PaintSubinventoryTransferForm.get('trfLinesList') as FormArray;
     var trxLnArr = this.PaintSubinventoryTransferForm.get('trfLinesList').value;
     var itemid = trxLnArr[i].itemId;
     var locId = trxLnArr[i].locatorId;
@@ -762,24 +763,26 @@ if (this.lineValidation1) {
     // alert(select2.subInventoryId+'Id')
     if (locId != undefined) {
       this.service
-        .getonhandqty(
-          Number(sessionStorage.getItem('locId')),
-          this.subInvCode.subInventoryId,
-          locId,
-          itemid
-        )
+        .getonhandqty(Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId,locId,itemid)
         .subscribe((data) => {
           this.onhand = data;
           console.log(this.onhand);
           trxLnArr1.controls[i].patchValue({ onHandQty: data.obj });
-          trxLnArr1.controls[i].patchValue({ onHandQty: parseFloat(data.obj.toFixed(3)) });
+          trxLnArr1.controls[i].patchValue({ onHandQty: parseFloat(data.obj.toFixed(4)) });
           
+           
           // trxLnArr1.controls[i].patchValue({onHandId:data.obj.id});
 
           let onHand = data.obj;
           let reserve = trxLnArr[i].resveQty;
-          //alert(onHand+'OnHand');
+          // alert(onHand+' << OnHand');
           // alert(reserve+'reserve');
+
+            var avlqtyInLtr =onHand/Number(this.getItemDetail.attribute10)
+            avlqtyInLtr=parseFloat(avlqtyInLtr.toFixed(4))
+            trxLnArr1.controls[i].patchValue({onHandQtyInLtr: avlqtyInLtr, });
+            //  alert(avlqtyInLtr+' << onHandQtyInLtr');
+
 
           let avlqty1 = 0;
           avlqty1 = onHand - reserve;
@@ -792,10 +795,12 @@ if (this.lineValidation1) {
               trxLnArr1.controls[i].patchValue({ onHandQty: '' });
             }
           }
-          // var trxLnArr1=this.stockTranferForm.get('trxLinesList')as FormArray;
-          trxLnArr1.controls[i].patchValue({ onHandQty: avlqty1 });
-          trxLnArr1.controls[i].patchValue({ onHandQty: parseFloat(avlqty1.toFixed(3)) });
 
+            trxLnArr1.controls[i].patchValue({ onHandQty: avlqty1 });
+            trxLnArr1.controls[i].patchValue({ onHandQty: parseFloat(avlqty1.toFixed(4)) });
+            avlqtyInLtr =avlqty1/Number(this.getItemDetail.attribute10)
+            avlqtyInLtr=parseFloat(avlqtyInLtr.toFixed(4))
+            trxLnArr1.controls[i].patchValue({onHandQtyInLtr: avlqtyInLtr, });
 
           if(avlqty1<0)
           {
@@ -832,7 +837,7 @@ if (this.lineValidation1) {
      
     // if (this.PaintSubinventoryTransferForm.valid) {
 
-       var  resp=confirm("Do You Want to Save this Transaction ???");
+       var  resp=confirm("Do You Want to Save this Transaction(Trf to WIP) ???");
        if(resp==false) { return;}
 
       // const formValue: IsubinventoryTransfer =this.PaintSubinventoryTransferForm.value;
@@ -933,9 +938,18 @@ if (this.lineValidation1) {
     // } else { this.HeaderValidation();  }
   }
 
+    Wip2PnOrMp(){
+      
+      // alert ("Wip2PnOrMp")
+      var loginDeptId= Number(sessionStorage.getItem('deptId'));
+      if(loginDeptId===3) {this.newSubtrfforWIPtoPN();}
+    
+      if(loginDeptId===5) {this.newSubtrfforWIPtoMP();}
+    }
+
    newSubtrfforWIPtoPN() {
      
-       var  resp=confirm("Do You Want to Save this Transaction ???");
+       var  resp=confirm("Do You Want to Save this Transaction(WIP TO PN) ???");
        if(resp==false) { return;}
 
        this.isVisibleReceiveButton=false;
@@ -1061,9 +1075,11 @@ if (this.lineValidation1) {
     // } else { this.HeaderValidation();  }
   }
 
+  
+
    newSubtrfforWIPtoMP() {
      
-       var  resp=confirm("Do You Want to Save this Transaction ???");
+       var  resp=confirm("Do You Want to Save this Transaction (WIP TO MP) ???");
        if(resp==false) { return;}
 
        this.isVisibleReceiveButton=false;
@@ -1415,7 +1431,7 @@ if (this.lineValidation1) {
 
        var patch = this.PaintSubinventoryTransferForm.get('trfLinesList') as FormArray;
        var trxLnArr1 = this.PaintSubinventoryTransferForm.get('trfLinesList').value;
-  
+      var loginDeptId= Number(sessionStorage.getItem('deptId'));
   
       var lineValue1=trxLnArr1[i].segment;
       var lineValue2=trxLnArr1[i].locatorId;  // FROM LOCATOR
@@ -1425,8 +1441,7 @@ if (this.lineValidation1) {
       var lineValue5=trxLnArr1[i].primaryQtyInLtr;
       var lineValue6=trxLnArr1[i].primaryQty;
 
-      // alert (lineValue1+","+lineValue2+","+lineValue3+","+lineValue4 );
-  
+ 
        var j=i+1;
 
       if(lineValue1===undefined || lineValue1===null || lineValue1.trim()=='' ){
@@ -1434,30 +1449,30 @@ if (this.lineValidation1) {
         this.lineValidation1=false;
         return;
       }
-  
-      // if(lineValue2===undefined || lineValue2===null || lineValue2==='' || lineValue2=='--Select--'  ){
-      //   alert("Line-"+j+ " FROM LOCATOR :  Invalid locator");
-      //   this.lineValidation1=false;
-      //   return;
-      // }
 
+      
+      if(loginDeptId==5){
       if (lineValue2 != 148326 ) {
          alert("Line-"+j+ " FROM LOCATOR :  Invalid locator");
         this.lineValidation1=false;
         return;
        }
+      }
 
-      // if(lineValue3===undefined || lineValue3===null || lineValue3==='' ){
-      //   alert("Line-"+j+ " TO  LOCATOR :  Should not be null value");
-      //   this.lineValidation1=false;
-      //   return;
-      // }
-
+      if(loginDeptId==3){
+      if (lineValue2 != 95234 ) {
+         alert("Line-"+j+ " FROM LOCATOR :  Invalid locator");
+        this.lineValidation1=false;
+        return;
+       }
+      }
+    
       if(lineValue3 !="W.I.01.P.01" || lineValue4 != 148327){
         alert("Line-"+j+ " TO  LOCATOR :  Invalid Locator");
         this.lineValidation1=false;
         return;
       }
+
   
       if(lineValue5===undefined || lineValue5===null || lineValue5<=0){
         alert("Line-"+j+ " ISSUE QUANTITY(LTR) :  Please Enter  Valid Data");
