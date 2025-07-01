@@ -382,6 +382,8 @@ if (this.lineValidation1) {
 
   onOptionSubInv(event:any){
     var seltoSubInv = this.tosubInvCode.find(d =>d.subInventoryCode ===event);
+     var loginDeptId= Number(sessionStorage.getItem('deptId'));
+     var empDeptId=3;
     // this.service
     // .issueByList(this.locId, seltoSubInv.deptId, this.divisionId)
     // .subscribe((data) => {
@@ -391,10 +393,13 @@ if (this.lineValidation1) {
     // var designation='Sales Manager';
     // this.service.issueByListNew(seltoSubInv.deptId,this.locId).subscribe((data) => {
 
-    this.service.issueByListNew(3,this.locId).subscribe((data) => {
+    if(loginDeptId===3) { empDeptId=5} else { empDeptId=3}
+
+    this.service.issueByListNew(empDeptId,this.locId).subscribe((data) => {
       this.issueByList = data.obj;
       console.log(this.issueByList);
     });
+
     if(this.subInventoryCode=='VH')
     {
       this.dispPhyLoc=false;
@@ -1056,6 +1061,117 @@ if (this.lineValidation1) {
     // } else { this.HeaderValidation();  }
   }
 
+   newSubtrfforWIPtoMP() {
+     
+       var  resp=confirm("Do You Want to Save this Transaction ???");
+       if(resp==false) { return;}
+
+       this.isVisibleReceiveButton=false;
+
+    // if (this.PaintSubinventoryTransferForm.valid) {
+      const formValue: IsubinventoryTransfer =this.PaintSubinventoryTransferForm.getRawValue();
+      let variants = <FormArray>this.trfLinesList();
+
+      // var tranda = this.PaintSubinventoryTransferForm.get('transDate').value;
+      // var frmcode = this.PaintSubinventoryTransferForm.get('subInventoryCode').value;
+      // var tocode = this.PaintSubinventoryTransferForm.get('transferSubInv').value;
+      var issby = this.PaintSubinventoryTransferForm.get('issueBy').value;
+      var issto = this.PaintSubinventoryTransferForm.get('issueTo').value;
+      var rmks = this.PaintSubinventoryTransferForm.get('remarks').value;
+      var locId1 = this.PaintSubinventoryTransferForm.get('locId').value;
+      var phyLoc=this.PaintSubinventoryTransferForm.get('attribute3').value;
+      var att18=this.PaintSubinventoryTransferForm.get('attribute18').value;
+
+
+       var frmcode = 'WIP';
+       var tocode = 'MP'
+       var tranda = this.pipe.transform(this.now, 'dd-MM-yyyy');
+
+
+       var patch = this.PaintSubinventoryTransferForm.get('trfLinesList') as FormArray;
+       
+      for (let i = 0; i < this.trfLinesList().length; i++) {
+
+         (patch.controls[i]).patchValue({LocatorSegment: 'M.P.01.P.01',});
+         (patch.controls[i]).patchValue({transferLocatorId: 148326,});
+
+         (patch.controls[i]).patchValue({locator: 'W.I.01.P.01',});
+         (patch.controls[i]).patchValue({locatorId: 148327,});
+
+
+        let VariantFormGroup = <FormGroup>variants.controls[i];
+
+        VariantFormGroup.addControl(
+          'transDate',
+          new FormControl(tranda, Validators.required)
+        );
+        VariantFormGroup.addControl(
+          'subInventoryCode',
+          new FormControl(frmcode, Validators.required)
+        );
+        VariantFormGroup.addControl(
+          'transferSubInv',
+          new FormControl(tocode, Validators.required)
+        );
+        VariantFormGroup.addControl(
+          'issueBy',
+          new FormControl(issby, Validators.required)
+        );
+        VariantFormGroup.addControl(
+          'remarks',
+          new FormControl(rmks, Validators.required)
+        );
+        VariantFormGroup.addControl(
+          'orgId',
+          new FormControl(locId1, Validators.required)
+        );
+        VariantFormGroup.addControl(
+          'transferOrgId',
+          new FormControl(locId1, Validators.required)
+        );
+        VariantFormGroup.addControl(
+          'issueTo',
+          new FormControl(issto, Validators.required)
+        );
+
+        VariantFormGroup.addControl(
+          'attribute3',
+          new FormControl(phyLoc, Validators.required)
+        );
+        
+         VariantFormGroup.addControl(
+          'attribute18',
+          new FormControl(att18, Validators.required)
+        );
+      }
+
+      this.service
+        // .subInvTransferSubmit(variants.value)
+          .subInvTransferSubmit(variants.getRawValue())
+
+        .subscribe((res: any) => {
+          //  var obj=res;
+          // sessionStorage.setItem('shipmentNumber',obj[0].shipmentNumber);
+          if (res.code === 200) {
+            alert(res.message);
+            this.isVisiblenewSubtrf=false;
+            this.isVisibleReceiveButton=false;
+            this.isVisibledownloadSubGatePass=true;
+            // this.shipmentNumber =res.obj.shipmentNumber;
+            this.PaintSubinventoryTransferForm.patchValue(
+              // //  'issueBy':res.obj[0].issueTo,
+              { shipmentNumber: res.obj[0].shipmentNumber }
+            );
+            this.PaintSubinventoryTransferForm.disable();
+            this.PendingtoReceive();
+          
+          } else {
+            if (res.code === 400) {
+              alert(res.message);
+            }
+          }
+        });
+  }
 
   HeaderValidation() {
     var isValid: boolean = false;
@@ -1263,7 +1379,7 @@ if (this.lineValidation1) {
       return;
     }
     
-       
+     
 
     if (formValue.transferSubInv === undefined || formValue.transferSubInv === null  || formValue.transferSubInv.trim()=='' || formValue.transferSubInv=='--Select--') {
 
