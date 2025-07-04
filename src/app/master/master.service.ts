@@ -1595,6 +1595,16 @@ export class MasterService {
     });
   }
 
+   downloadSubInvTrfNotePaint(shipNo) {
+    const REQUEST_URI = this.ServerUrl + `/PaintReports/PaintSubInvTrf?shipNo=${shipNo}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+
+
   ////////////Stock Transfer////////
   public stockTransferSubmit(stockTransferRecord) {
     const option = {

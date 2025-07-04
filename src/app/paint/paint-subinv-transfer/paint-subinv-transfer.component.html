@@ -293,7 +293,7 @@
               </td>
 
                <td>
-                <button type="button" class="btn btn-primary" (click)="newSubtrfforWIPtoPN()" [style.display]="isVisibleReceiveButton ? 'block':'none'  ">Receive</button>
+                <button type="button" class="btn btn-primary" (click)="Wip2PnOrMp()" [style.display]="isVisibleReceiveButton ? 'block':'none'  ">Receive</button>
               </td>
 
                </tr>
@@ -376,7 +376,7 @@
       <!-- Card content -->
     <div class="card-body pb-0">
         <!-- Title -->
-      <h4 class="card-title font-weight-bold" style="background-color: #FFE4B5;width: 100%;text-align: center;">Pending List (WIP to PN)</h4>
+      <h4 class="card-title font-weight-bold" style="background-color: #FFE4B5;width: 100%;text-align: center;">Pending List </h4>
       </div>
   
     <!-- Classic tabs -->
@@ -402,25 +402,21 @@
                     <tbody>
                         <tr class="GridHeader">
                           <!-- <th scope="col">SubInventory Trf Number</th> -->
-                          <th  style="width: 200px;text-align: left"  scope="col">SubInventory Trf Number</th>
-                          <!-- <th scope="col">From Subv</th>
-                          <th scope="col">To Subv</th> -->
-                          <!-- <th scope="col">Transcation Date</th> -->
-                          <th  style="width: 100px;text-align: left"  scope="col">Transcation Date</th>
-                          <!-- <th scope="col">Aging</th> -->
-                          <!-- <th scope="col">remark</th> -->
-                          <!-- <th scope="col">Select</th> -->
+                          <th style="width: 100px;text-align: center">SubInventory Trf Number</th>
+                          <th style="width: 100px;text-align: center">From SubInventory</th>
+                          <th style="width: 100px;text-align: center">To SubInventory</th> 
+                          <th  style="width: 100px;text-align: center"  scope="col">Transaction Date</th>
                           <th  style="width: 100px;text-align: left;padding-left: 10px"  scope="col">Select</th>
 
                         </tr>
                         </tbody>
                         <tr *ngFor="let com of pendingrec" style="background-color:#E3EAEB;">
                           <!-- <td>{{com.shipmentNumber}}</td> -->
-                          <td style="width: 200px;text-align: left;">{{com.shipmentNumber}}</td>
-                          <!-- <td>{{com.subInventoryCode}}</td>
-                          <td>{{com.transferSubInv}}</td> -->
-                          <!-- <td>{{com.creationDate}}</td> -->
-                          <td style="width: 100px;text-align: left;">{{com.creationDate}}</td>
+                          <td style="width: 200px;text-align: center;font-size: medium;">{{com.shipmentNumber}}</td>
+                          <td style="width: 200px;text-align: center;font-size: medium;">{{com.fromSubInv}}</td>
+                          <td style="width: 200px;text-align: center;font-size: medium;">{{com.toSubInv}}</td>
+                           <td style="width: 200px;text-align: center;font-size: medium;">{{com.creationDate}}</td>
+                          <!-- <td style="width: 100px;text-align: left;">{{com.creationDate}}</td> -->
 
                           <!-- <td style="text-align: right;">{{com.aging}}</td> -->
                           <!-- <td>{{com.remarks}}</td> -->
