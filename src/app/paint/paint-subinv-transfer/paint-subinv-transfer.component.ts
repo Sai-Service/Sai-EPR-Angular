@@ -1371,7 +1371,7 @@ if (this.lineValidation1) {
         });
       }
       else{
-        this.service.downloadSubGatePassFn(shipmentNumber)
+        this.service.downloadSubInvTrfNotePaint(shipmentNumber)
         .subscribe(data => {
           var blob = new Blob([data], { type: 'application/pdf' });
           var url = URL.createObjectURL(blob);
