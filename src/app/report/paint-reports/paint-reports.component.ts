@@ -1587,13 +1587,16 @@ export class PaintReportsComponent implements OnInit {
       } 
     }
 
-      else if (reportName==='Sub Inventory Transfer Received Report'){
+   
+    else if (reportName==='Sub Inventory Transfer Received Report'){
               this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
         
               const fileName = 'Sub Inventory Transfer Received Report-' +  fromDate + '.xls';
               const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
               if ((Number(sessionStorage.getItem('deptId'))===4)){
-                this.reportService.spInvTransRecFuc(fromDate,toDate, locId, subInventory)
+                // this.reportService.spInvTransRecFuc(fromDate,toDate, locId, subInventory)
+                this.reportService.spInvTransMadeFuc(fromDate,toDate, locId, 'WIP')
+
                 .subscribe(data => {
                   saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
                   this.isDisabled1 = false;
@@ -1602,7 +1605,9 @@ export class PaintReportsComponent implements OnInit {
                 })
               }
               else if ((Number(sessionStorage.getItem('deptId')))!=4){
-                this.reportService.spInvTransRecFuc(fromDate,toDate, sessionStorage.getItem('locId'), subInventory)
+                // this.reportService.spInvTransRecFuc(fromDate,toDate, sessionStorage.getItem('locId'), subInventory)
+                this.reportService.spInvTransMadeFuc(fromDate,toDate, sessionStorage.getItem('locId'), 'WIP')
+
                 .subscribe(data => {
                   saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
                   this.isDisabled1 = false;
@@ -1611,6 +1616,7 @@ export class PaintReportsComponent implements OnInit {
                 })
               }
             }
+
         
             else if (reportName==='Sub Inventory Transfer Made Report'){
               this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
