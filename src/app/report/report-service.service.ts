@@ -49,9 +49,9 @@ export class ReportServiceService {
     });
   }
 
-  stockMadeDetailsReport(fromDate, toDate,locId,tolocId,subInvCode,deptId){
+  stockMadeDetailsReport(fromDate, toDate,ouId,locId,tolocId,subInvCode,deptId){
   //  http://localhost:8081/PaintReports/PnStkTrfMade?fromDate=01-MAR-2025&toDate=25-JUN-2025&ouId=16&fromLoc=1605&toLoc=1623&subInvCode=PN
-    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprStkTrfMade?fromDate=${fromDate}&toDate=${toDate}&fromLoc=${locId}&toLoc=${tolocId}&subInvCode=${subInvCode}&deptId=${deptId}`;
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprStkTrfMade?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&fromLoc=${locId}&toLoc=${tolocId}&subInvCode=${subInvCode}&deptId=${deptId}`;
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -88,8 +88,8 @@ export class ReportServiceService {
   
 
 
-  SprStkTrfRecdDtlsReport(invcDt1,invcDt4,tolocId,fromlocId,subInvCode,deptId){
-    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprStkTrfRecdDtls?fromDate=${invcDt1}&toDate=${invcDt4}&shipToLoc=${tolocId}&shipFromLoc=${fromlocId}&subInvCode=${subInvCode}&deptId=${deptId}`;
+  SprStkTrfRecdDtlsReport(invcDt1,invcDt4,ouId,tolocId,fromlocId,subInvCode,deptId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprStkTrfRecdDtls?fromDate=${invcDt1}&toDate=${invcDt4}&ouId=${ouId}&shipToLoc=${tolocId}&shipFromLoc=${fromlocId}&subInvCode=${subInvCode}&deptId=${deptId}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
