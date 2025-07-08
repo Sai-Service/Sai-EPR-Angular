@@ -47,9 +47,13 @@ interface IsubinventoryTransfer {
   primaryQty: number;
   onHandQty: number;
   LocatorSegment: string;
+  fromLocatorSegment:string
   attribute3:string;
   attribute17:string;
   attribute18:string;
+
+  att14:number;
+  att15 :string;
 
     pendingrec:any;
 
@@ -133,6 +137,7 @@ export class PaintSubinvTransferComponent implements OnInit {
    primaryQtyInLtr: number;
 
   LocatorSegment: string;
+  fromLocatorSegment:string
   lineNumber: number;
   displayaddButton: boolean = false;
   userList2: any[] = [];
@@ -156,6 +161,9 @@ export class PaintSubinvTransferComponent implements OnInit {
   pendingrec:any;
   attribute17:string;
   attribute18:string;
+
+  att14:number;
+  att15 :string;
 
   @ViewChild('myinput') myInputField: ElementRef;
   @ViewChild('suppCode1') suppCode1: ElementRef;
@@ -199,6 +207,9 @@ export class PaintSubinvTransferComponent implements OnInit {
       attribute17:[],
       attribute18:[],
 
+      att14:[],
+      att15 :[],
+
       trfLinesList: this.fb.array([]),
     });
   }
@@ -218,15 +229,16 @@ export class PaintSubinvTransferComponent implements OnInit {
       transferLocatorId: ['', Validators.required],
       primaryQty: ['', Validators.required],
       onHandQty: [],
-
-       onHandQtyInLtr: [],
-       primaryQtyInLtr: [],
-
+      onHandQtyInLtr: [],
+      primaryQtyInLtr: [],
       LocatorSegment: ['', Validators.required],
+
       lineNumber: [],
       onHandId: [],
       resveQty: [''],
       locator: [],
+      fromLocatorSegment: ['', Validators.required],
+     
     });
   }
 
@@ -511,6 +523,9 @@ if (this.lineValidation1) {
           this.PaintSubinventoryTransferForm.patchValue(this.lstcomment[0]);
           this.PaintSubinventoryTransferForm.patchValue({ attribute18: this.lstcomment[0].shipmentNumber })
 
+          this.PaintSubinventoryTransferForm.patchValue({ att14: Number(this.lstcomment[0].attribute14) })
+          this.PaintSubinventoryTransferForm.patchValue({ att15: this.lstcomment[0].transferLocatorId })
+
           this.PaintSubinventoryTransferForm.get('trfLinesList').patchValue(this.lstcomment);
           var patch = this.PaintSubinventoryTransferForm.get(
             'trfLinesList'
@@ -525,6 +540,9 @@ if (this.lineValidation1) {
             patch.controls[i].patchValue({ lineNumber: i + 1,LocatorSegment: this.lstcomment[i].transferLocator,});
             patch.controls[i].patchValue({ primaryQtyInLtr: Number(this.lstcomment[i].primaryQty)/Number(this.lstcomment[i].attribute10),});
 
+            // patch.controls[i].patchValue({ att14: Number(this.lstcomment[i].attribute14),});
+            // patch.controls[i].patchValue({ att15: this.lstcomment[i].attribute15,});
+            
             // locatorId:this.lstcomment[i].locatorId,
 
           }
@@ -758,6 +776,16 @@ if (this.lineValidation1) {
     // alert(locId+'locatorID'+onhandid);
     var subcode = this.PaintSubinventoryTransferForm.get('subInventoryCode').value;
 
+    // ===================================================================================
+
+    let select1 = this.getfrmSubLoc.find((d) => d.locatorId == locId);
+    if (select1 != undefined) {
+      // alert(select1.segmentName)
+      trxLnArr1.controls[i].patchValue({fromLocatorSegment: select1.segmentName, });
+    }
+
+    // ======================================================================================
+
     // alert(subcode);
     // let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
     // alert(select2.subInventoryId+'Id')
@@ -979,10 +1007,10 @@ if (this.lineValidation1) {
       for (let i = 0; i < this.trfLinesList().length; i++) {
 
          (patch.controls[i]).patchValue({LocatorSegment: 'P.N.01.G.01',});
-         (patch.controls[i]).patchValue({transferLocatorId: 95234,});
+         (patch.controls[i]).patchValue({transferLocatorId: this.att14,});
 
          (patch.controls[i]).patchValue({locator: 'W.I.01.P.01',});
-         (patch.controls[i]).patchValue({locatorId: 148327,});
+         (patch.controls[i]).patchValue({locatorId: this.att15,});
 
 
         let VariantFormGroup = <FormGroup>variants.controls[i];
@@ -1109,10 +1137,11 @@ if (this.lineValidation1) {
       for (let i = 0; i < this.trfLinesList().length; i++) {
 
          (patch.controls[i]).patchValue({LocatorSegment: 'M.P.01.P.01',});
-         (patch.controls[i]).patchValue({transferLocatorId: 148326,});
+         (patch.controls[i]).patchValue({transferLocatorId: this.att14,});
 
          (patch.controls[i]).patchValue({locator: 'W.I.01.P.01',});
-         (patch.controls[i]).patchValue({locatorId: 148327,});
+         (patch.controls[i]).patchValue({locatorId: this.att15,});
+
 
 
         let VariantFormGroup = <FormGroup>variants.controls[i];
@@ -1434,25 +1463,36 @@ if (this.lineValidation1) {
       var loginDeptId= Number(sessionStorage.getItem('deptId'));
   
       var lineValue1=trxLnArr1[i].segment;
-      var lineValue2=trxLnArr1[i].locatorId;  // FROM LOCATOR
+      var lineValue2=trxLnArr1[i].fromLocatorSegment;  // FROM LOCATOR
       var lineValue3=trxLnArr1[i].LocatorSegment;   // TO LOCATOR ; transferLocatorId
       var lineValue4=trxLnArr1[i].transferLocatorId;
 
       var lineValue5=trxLnArr1[i].primaryQtyInLtr;
       var lineValue6=trxLnArr1[i].primaryQty;
 
+
+      // alert("Line:"+trxLnArr1[i].locatorId+","+trxLnArr1[i].transferLocatorId+","+trxLnArr1[i].LocatorSegment)
  
        var j=i+1;
 
+    
+
+     
       if(lineValue1===undefined || lineValue1===null || lineValue1.trim()=='' ){
         alert("Line-"+j+ " ITEM CODE:  Should not be null value.");
         this.lineValidation1=false;
         return;
       }
 
+        if(trxLnArr1[i].locatorId=='--Select--') {
+        alert("Line-"+j+ " FROM LOCATOR :  Invalid locator");
+        this.lineValidation1=false;
+        return;
+      }
+
       
       if(loginDeptId==5){
-      if (lineValue2 != 148326 ) {
+      if (lineValue2 != "M.P.01.P.01" ) {
          alert("Line-"+j+ " FROM LOCATOR :  Invalid locator");
         this.lineValidation1=false;
         return;
@@ -1460,14 +1500,14 @@ if (this.lineValidation1) {
       }
 
       if(loginDeptId==3){
-      if (lineValue2 != 95234 ) {
+      if (lineValue2 != 'P.N.01.G.01' ) {
          alert("Line-"+j+ " FROM LOCATOR :  Invalid locator");
         this.lineValidation1=false;
         return;
        }
       }
     
-      if(lineValue3 !="W.I.01.P.01" || lineValue4 != 148327){
+      if(lineValue3 !="W.I.01.P.01"){
         alert("Line-"+j+ " TO  LOCATOR :  Invalid Locator");
         this.lineValidation1=false;
         return;
