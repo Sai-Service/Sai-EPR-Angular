@@ -1929,13 +1929,13 @@ export class PaintPurchaseOrderComponent implements OnInit {
     // alert("login dept Id ,itemId ="+loginDeptId +","+itemId);
             var patch = this.paintPoForm.get('poLines') as FormArray;
 
-     if (itemId != null) {
-            itemId = itemId.substr(0,itemId.indexOf(':'));
-   }
+  //    if (itemId != null) {
+  //           itemId = itemId.substr(0,itemId.indexOf(':'));
+  //  }
 
   //  alert("login dept Id ,itemId NEW ="+loginDeptId +","+itemId);
 
-  patch.controls[index].patchValue({ segment: itemId })
+  // patch.controls[index].patchValue({ segment: itemId })
 
   if (itemId != null) {
     // itemId = itemId.substr(0,itemId.indexOf(':'));
