@@ -674,6 +674,8 @@ export class PaintIssueDpComponent implements OnInit {
     return matches;
   };
 
+  
+
   close() {
     this.router.navigate(['admin']);
   }
