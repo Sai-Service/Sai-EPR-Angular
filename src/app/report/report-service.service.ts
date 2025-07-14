@@ -230,6 +230,7 @@ export class ReportServiceService {
     });
   }
 
+  
   gstSparesClosingStockAsOnDateFN(toDate,locId,subInvcd){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/SprClsAsonDt?toDate=${toDate}&locId=${locId}&subInvCode=${subInvcd}`;
     return this.http.get(REQUEST_URI, {
@@ -237,6 +238,8 @@ export class ReportServiceService {
       headers: this.headers,
     });
   }
+
+   
 
 
   sspInvAgingReport(spInvAging1,spInvAging2,spInvAging3,ouId,locId,subInv,userNam){
@@ -746,6 +749,16 @@ export class ReportServiceService {
       responseType: 'arraybuffer',
       headers: this.headers,
     });
+  }
+
+   PaintClosingStockReport(locId,subInvCode){
+    const REQUEST_URI = this.ServerUrl +`/PaintReports/PnClosingStk?locId=${locId}&subInvCode=${subInvCode}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+
+    // http://localhost:8081/PaintReports/PnClosingStk?locId=1201&subInvCode=PN
   }
 
   paintclosingstockSummary(ouId,subInvCode){

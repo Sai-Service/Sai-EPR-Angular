@@ -1927,18 +1927,23 @@ export class PaintPurchaseOrderComponent implements OnInit {
    var loginOuId= Number(sessionStorage.getItem('ouId'));
 
     // alert("login dept Id ,itemId ="+loginDeptId +","+itemId);
+            var patch = this.paintPoForm.get('poLines') as FormArray;
 
   //    if (itemId != null) {
   //           itemId = itemId.substr(0,itemId.indexOf(':'));
-  //           var patch = this.paintPoForm.get('poLines') as FormArray;
-  //           patch.controls[index].patchValue({ segment: itemId })
   //  }
 
-    
+  //  alert("login dept Id ,itemId NEW ="+loginDeptId +","+itemId);
+
+  // patch.controls[index].patchValue({ segment: itemId })
+
   if (itemId != null) {
     // itemId = itemId.substr(0,itemId.indexOf(':'));
     let selectedValue = this.invItemList.find(v => v.segment == itemId);
     console.log(selectedValue);
+
+      //  alert("selectedValue ="+selectedValue );
+
 
     if (selectedValue != undefined) {
       console.log(selectedValue);
@@ -2946,7 +2951,10 @@ export class PaintPurchaseOrderComponent implements OnInit {
 
 
  filterRecord(event, i) {
+
    var itemCode = event.target.value;
+        //  alert ("one..."+itemCode)
+
    if (event.keyCode == 13) {
      if (itemCode.length === 8) {
        this.service.invItemList2New('GOODS', (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), itemCode.toUpperCase())
@@ -2961,6 +2969,7 @@ export class PaintPurchaseOrderComponent implements OnInit {
            }
          }); 
      }
+
      if (itemCode.length === 4) {
        // if (event.keyCode == 13) {
        this.service.invItemList2New('GOODS', (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), itemCode.toUpperCase())
@@ -3001,52 +3010,80 @@ export class PaintPurchaseOrderComponent implements OnInit {
  }
 
 
- // filterRecord(event, i) {
- //   var itemCode1 = event.target.value;
- //   alert(itemCode1);
- //   if (event.keyCode == 13) {
- //     var itemCode = '';
- //     if (itemCode1.includes('--')) {
- //       var itemCode2 = itemCode1.split('--');
- //       itemCode = itemCode2[0];
- //       // alert(itemCode + 'item in if');
- //     } else {
- //       itemCode = itemCode1;
- //       // alert(itemCode + 'item in else');
- //     }
- //     alert(itemCode.length + 'length'+this.invItemList.length);
- //     if (itemCode.length >= 4 && this.invItemList.length <= 1) {
- //       this.service.invItemList2New('GOODS', (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), itemCode.toUpperCase())
- //         .subscribe((data) => {
- //           if (data.length === 0) {
- //             alert('Item Not Present in Master');
- //             return;
- //           }
- //           else {
- //             this.invItemList = data;
- //           }
- //         });
- //     } else {
- //       if (this.invItemList.length <= 1) {
- //         alert('Please Enter 4 characters of item number!!');
- //         return;
- //       }
- //     }
- //     if (itemCode.length === 8) {
- //       console.log(this.invItemList);
- //       this.service.invItemList2New('GOODS', (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), itemCode.toUpperCase())
- //         .subscribe((data) => {
- //           if (data.length === 0) {
- //             alert('Item Not Present in Master');
- //             return;
- //           }
- //           else {
- //             this.invItemList = data;
- //           }
- //         });
- //     }
- //   }
- // }
+  
+
+ filterRecord_Test2(event, i) {   
+  
+     var itemCode1 = event.target.value;
+     var itemCode = '';
+     if (itemCode1.includes(':')) {
+       var itemCode2 = itemCode1.split(':');
+       itemCode = itemCode2[0];
+     } else {
+       itemCode = itemCode1;
+     }
+
+            var patch = this.paintPoForm.get('poLines') as FormArray;
+            patch.controls[i].patchValue({ segment: itemCode })
+
+}
+
+
+ filterRecord_Test(event, i) {
+   var itemCode1 = event.target.value;
+  //  alert(itemCode1);
+  //  if (event.keyCode == 13) {
+     var itemCode = '';
+     if (itemCode1.includes(':')) {
+       var itemCode2 = itemCode1.split(':');
+       itemCode = itemCode2[0];
+       // alert(itemCode + 'item in if');
+     } else {
+       itemCode = itemCode1;
+      //  alert(itemCode + 'item in else');
+     }
+
+    //  alert(itemCode.length + ' length '+this.invItemList.length + "-->"+ itemCode);
+
+           var patch = this.paintPoForm.get('poLines') as FormArray;
+            patch.controls[i].patchValue({ segment: itemCode })
+
+
+    //  if (itemCode.length >= 4 && this.invItemList.length <= 1) {
+      if (itemCode.length >= 4 ) {
+
+
+       this.service.invItemList2New('GOODS', (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), itemCode.toUpperCase())
+         .subscribe((data) => {
+           if (data.length === 0) {
+             alert('Item Not Present in Master...>>4');
+             return;
+           }
+           else {
+             this.invItemList = data;
+           }
+         });
+     } else {
+       if (this.invItemList.length <= 1) {
+         alert('Please Enter 4 characters of item number!!');
+         return;
+       }
+     }
+     if (itemCode.length === 8) {
+       console.log(this.invItemList);
+       this.service.invItemList2New('GOODS', (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), itemCode.toUpperCase())
+         .subscribe((data) => {
+           if (data.length === 0) {
+             alert('Item Not Present in Master-----8');
+             return;
+           }
+           else {
+             this.invItemList = data;
+           }
+         });
+     }
+  //  }
+ }
 
 
 
@@ -3192,6 +3229,9 @@ export class PaintPurchaseOrderComponent implements OnInit {
  };
 
  getInvItemId($event, i) {
+
+ 
+  
    let userId = (<HTMLInputElement>document.getElementById('invItemIdFirstWay')).value;
    this.userList2 = [];
 
