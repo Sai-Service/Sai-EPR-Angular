@@ -495,9 +495,9 @@ if (this.lineValidation1) {
         .getsearchBySubInvTrfNoForPaint(SubNo, this.locId)
         .subscribe((data) => {
           this.lstcomment = data;
-          let control = this.PaintSubinventoryTransferForm.get(
-            'trfLinesList'
-          ) as FormArray;
+          let control = this.PaintSubinventoryTransferForm.get('trfLinesList' ) as FormArray;
+              this.trfLinesList().clear();
+
           var len = this.trfLinesList().length;
           for (let i = 0; i < data.length - len; i++) {
             var trxlist: FormGroup = this.newtrfLinesList();
@@ -509,6 +509,7 @@ if (this.lineValidation1) {
 
          this.isVisibleReceiveButton=false
           if(this.lstcomment[0].subInventoryCode =='PN'  && this.lstcomment[0].transferSubInv=='WIP' && loginDeptId ==5 ){this.isVisibleReceiveButton=true;} 
+         
           if(this.lstcomment[0].subInventoryCode =='MP'  && this.lstcomment[0].transferSubInv=='WIP' && loginDeptId ==3 ){this.isVisibleReceiveButton=true;} 
 
           // if (loginDeptId ==3) {
