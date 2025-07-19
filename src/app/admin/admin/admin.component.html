@@ -15,6 +15,8 @@
     <ng-template #bajajSearch>
         <li class="nav-item dropdown">
           <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-expanded="false" aria-haspopup="true"  data-toggle="dropdown" (click)="LoadModal()" data-toggle="modal" data-target="#partSearch">Search</a>
+          <!-- <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-expanded="false" aria-haspopup="true"  data-toggle="dropdown" (click)="LoadModalpnt()" data-toggle="modal" data-target="#partSearchPnt">Search Item</a> -->
+
         </li>
     </ng-template>
 
@@ -618,7 +620,12 @@
         <li><a class="dropdown-item" [routerLink]="['/admin/transaction/miscTransaction']">Stock Adjustment</a> </li>
         <li><a class="dropdown-item" [routerLink]="['/admin/transaction/InternalConsumption']" >Internal Consumption</a></li>
         <li> <a class="dropdown-item" [routerLink]="['/admin/master/SupplierMaster']">Supplier Entry</a> </li>
-       <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/priceUpdation']">Price Updation</a></li>
+       <li><a class="dropdown-item" [routerLink]="['/admin/transaction/stockTransfer']">Stock Transfer</a></li>
+        <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/priceUpdation']">Price Updation</a></li>
+ 
+       <li> <a class="dropdown-item" [routerLink]="['/admin/master/pricelistMaster']">Price List Master</a></li>
+
+        
       </ul>
     </li>
   </div>
@@ -869,8 +876,6 @@
                            style="width: 300px; background-color: rgb(240, 240, 166); text-transform: uppercase;"  >
                </td>
 
-
-
             </ng-template>
             <ng-template #descYes>
               <td style="width: 15%" class="LabelFontStyle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Item&nbsp;Description&nbsp;:</td>
@@ -1011,7 +1016,6 @@
 
                      <tbody>
                         <tr class="GridHeader">
-
 
                         <th style="width:10rem" scope="col">Item&nbsp;Number</th>
                         <th style="width:20rem" scope="col"> Item&nbsp;Descreption</th>

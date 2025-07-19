@@ -512,6 +512,8 @@ export class MasterService {
   }
 
 
+
+
   getDipScaleSearchByTankId(tankId): Observable<any> {
     return this.http.get(this.ServerUrl + `/DipMaster/tankId/${tankId}`);
     // http://localhost:8081/DipMaster/tankId/1
@@ -4736,6 +4738,15 @@ public saveVariantMstFn(variantMaster) {
 
     suppInvDetailFn(suppInvNo,suppId): Observable<any> {
     return this.http.get(this.ServerUrl + `/poHdr/suppInvDet?suppInvNo=${suppInvNo}&suppId=${suppId}`,{ headers: this.headers });
+  }
+
+   public PaintAvgCostUpdate(locid,itemid,avgcostnew) {
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + `/averageCost/InsAvgCalc?locationId=${locid}&itemId=${itemid}&newPrice=${avgcostnew}`;
+    return this.http.post(url, options);
+    // http://localhost:8081/averageCost/InsAvgCalc?locationId=1602&itemId=100899&newPrice=9.00
   }
 }
 

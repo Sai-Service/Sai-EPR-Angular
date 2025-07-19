@@ -24,7 +24,7 @@ interface IAvgCostUpdate {
   reasonCode:string;
   transSourceTypeId:number;
   sItemCode : string;
-
+  newAvgCost:number;
 
 }
 
@@ -80,7 +80,7 @@ export class PaintAvgCostComponent implements OnInit {
   // toDate= this.pipe.transform(this.now, 'dd-MM-yyyy');
   searchItemId:number;
   sItemCode : string;
-
+  newAvgCost:number;
 
   showOu=false;
   showItemSearch=false;
@@ -119,6 +119,8 @@ export class PaintAvgCostComponent implements OnInit {
   display1 = true;
   displayButton = true;
   plsearch=false;
+  isDisableUpdateButton: boolean = false;
+
 
   userList2: any[] = [];
   lastkeydown1: number = 0;
@@ -171,7 +173,7 @@ export class PaintAvgCostComponent implements OnInit {
       searchItemId:[],
       itemName:[],
       sItemCode :[],
-
+      newAvgCost:[],
 
         // priceListHeaderId: [],
         // priceListType:[],
@@ -239,7 +241,7 @@ export class PaintAvgCostComponent implements OnInit {
       this.locId=Number(sessionStorage.getItem('locId'));
       // this.locName=(sessionStorage.getItem('locName'));
       this.deptId=Number(sessionStorage.getItem('dept'));
-      // this.emplId= Number(sessionStorage.getItem('emplId'));
+      this.emplId= Number(sessionStorage.getItem('emplId'));
 
       this.orgId=this.ouId;
       console.log(this.loginArray);
@@ -846,6 +848,47 @@ export class PaintAvgCostComponent implements OnInit {
         // this.saveButton=true;
       })
     }
+
+    
+    UpdateAverageCost() {
+
+      if (this.emplId ===2142 ){ this.updAvgCost1();}
+      else { alert ("You are Not Authorised to Update Cost...");}
+    }
+
+       updAvgCost1(){
+
+            var newAvgCostPrice = this.pntAvgCostForm.get('newAvgCost').value
+            var locId1 = this.pntAvgCostForm.get('locId').value
+            var itemid1 = this.pntAvgCostForm.get('searchItemId').value
+
+            // alert ("Post>>price,itmid,locid : "+ newAvgCostPrice + ","+itemid1 +","+ locId1)
+      
+              if (newAvgCostPrice === null || newAvgCostPrice === undefined || newAvgCostPrice <= 0) {
+                alert("AVERAGE COST  :  Should be above Zero. Please try again");
+                return;
+              }
+
+                 var  resp=confirm("Do You Want to Save this Transaction ???");
+                  if(resp==false) { return;}
+                  
+              this.isDisableUpdateButton=true
+              this.service.PaintAvgCostUpdate(locId1,itemid1,newAvgCostPrice).subscribe((res: any) => {
+              if (res.code === 200) {
+                alert('Average Cost Updated.. '+res.message);
+            
+              } else {
+                if (res.code === 400) {
+                  alert('Error While Inserting Record.');
+                  alert(res.message);
+                  this.isDisableUpdateButton=false
+
+                }
+                else { alert("Code : " +res.code + "-"+res.message); }
+
+              }});
+          }
+
 }
 
 
