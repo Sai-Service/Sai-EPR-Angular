@@ -326,6 +326,7 @@ export class PaintCreationNewComponent implements OnInit {
       divisionId: [''],
       entryStatusCode: [''],
       LocatorSegment: ['', Validators.required],
+      locatorSegmemtName:[''],
       resveQty: [''],
       locId: [''],
       itemId: [''],
@@ -338,23 +339,34 @@ export class PaintCreationNewComponent implements OnInit {
   addnewcycleLinesList(i: number) {
     if (i > -1) {
       var trxLnArr1 = this.paintCreationNewForm.get('cycleLinesList').value;
+
+      var  avalqty = trxLnArr1[i].avlqty;
       var itemqty = trxLnArr1[i].physicalQty;
       var item1 = trxLnArr1[i].segment;
-      // alert(item1 +","+itemqty +",index:"+i);
+      var stkLctr = trxLnArr1[i].locatorSegmemtName;
 
+      // alert('stkLctr ... '+stkLctr )
       // if (item1.trim()   === '' || item1==undefined ) {alert('Incomplete Line Details...ItemCode');return;}
       // if (itemqty<=0 || itemqty==undefined) {alert('Incomplete Line Details...ItemQty');return;}
-
-
       if (item1 === '' || item1===undefined)  {
         alert('Please enter Valid [Item Code]');
         return;
       }
 
-       if (itemqty === null || itemqty===undefined || itemqty <=0)  {
+       if (itemqty === null || itemqty===undefined || itemqty <=0  || itemqty > avalqty)  {
         alert('Please enter Valid [Transaction Quantity]');
         return;
       }
+    
+
+    if(trxLnArr1[i].LocatorSegment !='P.N.01.G.01') {
+        if (stkLctr !='P.N.01.G.01') {
+          alert("Line- "+(i+1)+ " LOCATOR :  Wrong Locator Selected.");
+          return;
+        }
+      }
+
+
       // alert ("testing..."+this.cycleLinesList().length)
 
       // =======================RESERVE================================
@@ -634,6 +646,10 @@ export class PaintCreationNewComponent implements OnInit {
       var subcode = this.paintCreationNewForm.get('subInventory').value;
       this.displayheader = false;
 
+      trxLnArr1.controls[i].patchValue({ LocatorSegment: '' });
+      trxLnArr1.controls[i].patchValue({ locatorSegmemtName: '' });
+      
+
       this.duplicateLineCheck(i, select1.itemId,select1.SEGMENT);
 
       if( this.lineItemRepeated) { return;}
@@ -784,6 +800,50 @@ export class PaintCreationNewComponent implements OnInit {
 
   }
 
+  // ================================================================
+
+   AvailQtyNew(event: any, i: number) {
+    
+    var trxLnArr1 = this.paintCreationNewForm.get('cycleLinesList') as FormArray;
+     var trxLnArr = this.paintCreationNewForm.get('cycleLinesList').value;
+
+    var x=event;
+  
+    trxLnArr1.controls[i].patchValue({locatorId:x});
+
+    var itemid = trxLnArr[i].invItemId;
+    // var locId = trxLnArr[i].locatorId;
+    var onhandid = trxLnArr[i].onHandId;
+    var pntlocatorId = trxLnArr[i].locatorId;
+
+     // ===================================================================================
+
+    let select1 = this.getfrmSubLoc.find((d) => d.locatorId == x);
+    if (select1 != undefined) {
+      // alert(select1.segmentName)
+      trxLnArr1.controls[i].patchValue({locatorSegmemtName: select1.segmentName, });
+    }
+// ===================================================================================
+   
+    var locId=x;
+
+  
+    if (locId != undefined) {
+      this.service
+        .getonhandqty(Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId,locId,itemid)
+        .subscribe((data) => {
+          this.onhand = data;
+          console.log(this.onhand);
+          trxLnArr1.controls[i].patchValue({ avlqty: data.obj });
+          trxLnArr1.controls[i].patchValue({ avlqty: parseFloat(data.obj.toFixed(4)) });
+          trxLnArr1.controls[i].patchValue({locatorSegmemtName: select1.segmentName, });
+
+                 
+        });
+    }
+
+  }
+
 
   AvailQty(event: any, i) {
 
@@ -791,7 +851,6 @@ export class PaintCreationNewComponent implements OnInit {
     var trxLnArr1 = this.paintCreationNewForm.get('cycleLinesList') as FormArray;
     var trxLnArr = this.paintCreationNewForm.get('cycleLinesList').value;
     var itemid = trxLnArr[i].invItemId;
-
     var locId = trxLnArr[i].LocatorSegment;
     var pntlocatorId = trxLnArr[i].locatorId;
     // alert ("pntlocatorId :"+ pntlocatorId);
@@ -1263,9 +1322,16 @@ export class PaintCreationNewComponent implements OnInit {
     var lineValue1=trxLnArr1[i].segment;
     var lineValue2=trxLnArr1[i].LocatorSegment;
     var lineValue3=trxLnArr1[i].physicalQty;
+    var lineValue9=trxLnArr1[i].locatorSegmemtName;
+    var  avalqty = trxLnArr1[i].avlqty;
 
 
-    // alert("Line Value :"+lineValue1);
+    // alert('lineValue2,lineValue9 >> '+lineValue2+","+lineValue9);
+
+   
+
+    
+
      var j=i+1;
     if(lineValue1===undefined || lineValue1===null || lineValue1.trim()=='' ){
       alert("Line-"+j+ " ITEM CODE:  Should not be null value.");
@@ -1279,8 +1345,18 @@ export class PaintCreationNewComponent implements OnInit {
       return;
     }
 
-    if(lineValue3===undefined || lineValue3===null || lineValue3<=0){
-      alert("Line-"+j+ " ISSUE QUANTITY :  Should  be grater than Zero");
+
+     if (lineValue2 !='P.N.01.G.01') {
+      if (lineValue9 !='P.N.01.G.01') {
+      alert("Line- "+j+ " LOCATOR :  Wrong Locator Selected.");
+      this.lineValidation1=false;
+      return;
+    }
+    }
+
+
+   if(lineValue3===undefined || lineValue3===null || lineValue3<=0 || lineValue3>avalqty){
+      alert("Line-"+j+ " ISSUE QUANTITY :  Enter Valid Issue Qty");
       this.lineValidation1=false;
       return;
     }
@@ -1389,6 +1465,7 @@ export class PaintCreationNewComponent implements OnInit {
       if(resp==false) { return;}
       }
 
+      
          
 
       // alert ("Rsep :"+resp);

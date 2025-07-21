@@ -512,6 +512,8 @@ export class MasterService {
   }
 
 
+
+
   getDipScaleSearchByTankId(tankId): Observable<any> {
     return this.http.get(this.ServerUrl + `/DipMaster/tankId/${tankId}`);
     // http://localhost:8081/DipMaster/tankId/1
@@ -3051,6 +3053,14 @@ public shortLandedClaimSave(rtvRecord) {
     return this.http.get(this.ServerUrl + `/averageCost/avghistory?locationId=${mLocId}&itemId=${mitemId}&startDate=${frmDate}&endDate=${toDate}`);
   }
 
+  getAvgHistoryListNew(mLocId, mitemId, frmDate, toDate): Observable<any> {
+    // alert("Master Service :"+ mLocId+","+mitemId+" ,"+frmDate+","+toDate);
+    return this.http.get(this.ServerUrl + `/averageCost/newAvgHistory?locationId=${mLocId}&itemId=${mitemId}&startDate=${frmDate}&endDate=${toDate}`);
+  }
+
+  // http://localhost:8081/averageCost/newAvgHistory?locationId=1605&itemId=100953&startDate=01/07/2025&endDate=18/07/2025
+
+
   ///////////////////Price list File upload/////////////////////
   UploadExcel(formData: FormData, docType: string, uploadPlName: string) {
     let headers1 = new HttpHeaders();
@@ -4736,6 +4746,15 @@ public saveVariantMstFn(variantMaster) {
 
     suppInvDetailFn(suppInvNo,suppId): Observable<any> {
     return this.http.get(this.ServerUrl + `/poHdr/suppInvDet?suppInvNo=${suppInvNo}&suppId=${suppId}`,{ headers: this.headers });
+  }
+
+   public PaintAvgCostUpdate(locid,itemid,avgcostnew) {
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + `/averageCost/InsAvgCalc?locationId=${locid}&itemId=${itemid}&newPrice=${avgcostnew}`;
+    return this.http.post(url, options);
+    // http://localhost:8081/averageCost/InsAvgCalc?locationId=1602&itemId=100899&newPrice=9.00
   }
 }
 

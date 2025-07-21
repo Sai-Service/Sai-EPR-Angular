@@ -19,22 +19,17 @@
                             
                                  
                     <tr>
+                                  
+                        <input  hidden type="number" formControlName="emplId"   [(ngModel)]="emplId">
+                        <input  hidden type="number" formControlName="locId"    [(ngModel)]="locId">
+                        <input  hidden type="number" formControlName="searchItemId"   [(ngModel)]="searchItemId">
+
+
                         <td style="width: 15%" class="LabelFontStyle">Item&nbsp;Code:&nbsp;</td>
                        
                         <td><input type="text" class="form-control" formControlName="sItemCode" [(ngModel)]="sItemCode" (change)="Validateitem1(sItemCode)"></td>
 
-                        <!-- <td>
-                            
-                            <input type="text" formControlName="searchItemId"
-                            (keyup)="getInvItemId($event)" id="invItemIdFirstWay"
-                            list="dynmicUserIds1" class="form-control"
-                            (ngModelChange)="onOptioninvItemIdSelectedSingle($event)" >
-                            <datalist id="dynmicUserIds1">
-                                <option *ngFor="let item of invItemList"
-                                    [ngValue]="item.itemId"> 
-                                </option>
-                            </datalist>
-                        </td>  -->
+                      
 
                         <td style="width: 15%" class="LabelFontStyle">Description&nbsp;:&nbsp;</td>
                         <td>
@@ -64,9 +59,20 @@
                                     </td> -->
     
                     </tr>
-    
-                    
-                 </table>
+
+                     <tr>
+                        <td style="width: 15%" class="LabelFontStyle">New&nbsp;Price:&nbsp;</td>
+                        <td><input type="number"  style="text-align: right;" class="form-control" formControlName="newAvgCost" [(ngModel)]="newAvgCost" ></td>
+                    </tr>
+            </table>
+                <table class="center">
+                        <tr>
+                            <td><button [disabled]="isDisableUpdateButton" type="button" class="btn btn-primary"  style="width: fit-content" (click)="UpdateAverageCost()">Update Cost </button></td>
+
+                            <td><button type="button" class="btn btn-primary"  (click)="refresh()">Reset </button></td>
+                            <td><button type="button" class="btn btn-primary" (click)="close()">Close</button></td>
+                        </tr>
+                </table>
                 
 
                 </form>
@@ -74,9 +80,6 @@
         </div>
     </div>
 </div>
-
-                        
-
 
 
 <br>
@@ -106,16 +109,17 @@
                 <td style="width: fit-content;">{{com.creationDate |date:'dd-MM-y'}}</td>
                 <td style="width: fit-content;">{{com.itemId}}/{{segment}}</td>
                 <td style="width: fit-content;">{{itemName}}</td> 
-                <td style="width: fit-content;text-align: right;padding-right: 10px;">{{com.rate | number:'1.2-2'}}</td> 
-                <td style="width: fit-content;text-align: right;padding-right: 10px;">{{com.oldRate | number:'1.2-2'}}</td>
+                <td style="width: fit-content;text-align: right;padding-right: 10px;">{{com.rate | number:'1.2-4'}}</td> 
+                <td style="width: fit-content;text-align: right;padding-right: 10px;">{{com.oldRate | number:'1.2-4'}}</td>
                 <td style="width: fit-content;">{{com.locationId}}</td>  
                 <td style="width: fit-content;">{{com.transSourceTypeId}}</td>
                
                 <!-- <td><button class="btn btn-secondary" (click)="Select(com.avgCostId)">Select</button></td>    -->
             </tr>
     </table>
-    <table class="center">
-        <tr>
+    <br><br><br>
+    <!-- <table class="center">
+       <tr>
             <td>
                 <button type="submit" class="btn btn-primary" id="register" (click)="refresh()">
                     Clear
@@ -125,7 +129,7 @@
                 <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
             </td>
         </tr>
-    </table>
+    </table> -->
 </div>
 
 </div>

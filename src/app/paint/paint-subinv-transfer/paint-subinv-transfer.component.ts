@@ -507,10 +507,13 @@ if (this.lineValidation1) {
 
           // alert ("this.lstcomment[0].transferSubInv" + this.lstcomment[0].attribute16+","+Number(this.lstcomment[0].attribute16))
 
-         this.isVisibleReceiveButton=false
-          if(this.lstcomment[0].subInventoryCode =='PN'  && this.lstcomment[0].transferSubInv=='WIP' && loginDeptId ==5 ){this.isVisibleReceiveButton=true;} 
+          this.isVisibleReceiveButton=false
+
+          var att16=Number(this.lstcomment[0].attribute16);
+
+          if(this.lstcomment[0].subInventoryCode =='PN'  && this.lstcomment[0].transferSubInv=='WIP' && att16>0 && loginDeptId ==5 ){this.isVisibleReceiveButton=true;} 
          
-          if(this.lstcomment[0].subInventoryCode =='MP'  && this.lstcomment[0].transferSubInv=='WIP' && loginDeptId ==3 ){this.isVisibleReceiveButton=true;} 
+          if(this.lstcomment[0].subInventoryCode =='MP'  && this.lstcomment[0].transferSubInv=='WIP' && att16>0 && loginDeptId ==3 ){this.isVisibleReceiveButton=true;} 
 
           // if (loginDeptId ==3) {
           //   if(Number(this.lstcomment[0].attribute16)>=1){this.isVisibleReceiveButton=true;} 

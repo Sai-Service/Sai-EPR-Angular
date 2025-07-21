@@ -386,6 +386,7 @@ export class PaintIssueDpComponent implements OnInit {
       divisionId: [''],
       entryStatusCode: [''],
       LocatorSegment: ['', Validators.required],
+      locatorSegmemtName:[''],
       resveQty: [''],
       locId: [''],
       itemId: [''],
@@ -398,17 +399,31 @@ export class PaintIssueDpComponent implements OnInit {
   addnewcycleLinesList(i: number) {
     if (i > -1) {
       var trxLnArr1 = this.paintIssueForm.get('cycleLinesList').value;
+      // var trxLnArr = this.paintIssueForm.get('cycleLinesList') as FormArray;
+  
+      var  avalqty = trxLnArr1[i].avlqty;
       var itemqty = trxLnArr1[i].physicalQty;
       var item1 = trxLnArr1[i].segment;
       // alert(item1);
+      var stkLctr = trxLnArr1[i].locatorSegmemtName;
+
+      // alert('stkLctr ... '+stkLctr +"," + trxLnArr1[i].LocatorSegment)
+
       if (item1 === '' || item1===undefined)  {
         alert('Please enter Valid [Item Code]');
         return;
       }
 
-       if (itemqty === null || itemqty===undefined || itemqty <=0)  {
+     if (itemqty === null || itemqty===undefined || itemqty <=0  || itemqty > avalqty)  {
         alert('Please enter Valid [Transaction Quantity]');
         return;
+      }
+
+    if(trxLnArr1[i].LocatorSegment !='P.N.01.G.01') {
+        if (stkLctr !='P.N.01.G.01') {
+          alert("Line- "+(i+1)+ " LOCATOR :  Wrong Locator Selected.");
+          return;
+        }
       }
 
 
@@ -686,6 +701,7 @@ export class PaintIssueDpComponent implements OnInit {
     }
     // alert ("event :"+event)
 
+
     if (event1 != null) {
       // var event = event1.substr(event1.indexOf(':') + 1, event1.length);
       var event = event1.substr(0,event1.indexOf(':'));
@@ -700,6 +716,10 @@ export class PaintIssueDpComponent implements OnInit {
       var compId = this.paintIssueForm.get('compileId').value;
       var compileType1 = this.paintIssueForm.get('compileType').value;
       var subcode = this.paintIssueForm.get('subInventory').value;
+
+      trxLnArr1.controls[i].patchValue({ LocatorSegment: '' });
+      trxLnArr1.controls[i].patchValue({ locatorSegmemtName: '' });
+
 
       this.displayheader = false;
 
@@ -824,6 +844,48 @@ export class PaintIssueDpComponent implements OnInit {
     }
 
   }
+
+  AvailQtyNew(event: any, i: number) {
+    
+    var trxLnArr1 = this.paintIssueForm.get('cycleLinesList') as FormArray;
+     var trxLnArr = this.paintIssueForm.get('cycleLinesList').value;
+
+    var x=event;
+  
+    trxLnArr1.controls[i].patchValue({locatorId:x});
+
+    var itemid = trxLnArr[i].invItemId;
+    // var locId = trxLnArr[i].locatorId;
+    var onhandid = trxLnArr[i].onHandId;
+    var pntlocatorId = trxLnArr[i].locatorId;
+
+    // ===================================================================================
+
+    let select1 = this.getfrmSubLoc.find((d) => d.locatorId == x);
+    if (select1 != undefined) {
+     
+      trxLnArr1.controls[i].patchValue({locatorSegmemtName: select1.segmentName, });
+    }
+// ===================================================================================
+
+   
+    var locId=x;
+    // alert ("locid ,x,itemid: "+ locId +","+x +","+itemid +","+trxLnArr[i].LocatorSegment)
+
+    if (locId != undefined) {
+      this.service
+        .getonhandqty(Number(sessionStorage.getItem('locId')),this.subInvCode.subInventoryId,locId,itemid)
+        .subscribe((data) => {
+          this.onhand = data;
+          console.log(this.onhand);
+          trxLnArr1.controls[i].patchValue({ avlqty: data.obj });
+          trxLnArr1.controls[i].patchValue({ avlqty: parseFloat(data.obj.toFixed(4)) });
+          trxLnArr1.controls[i].patchValue({locatorSegmemtName: select1.segmentName, });
+        });
+    }
+  }
+
+  
 
   AvailQty(event: any, i) {
 
@@ -1369,6 +1431,11 @@ export class PaintIssueDpComponent implements OnInit {
     var lineValue2=trxLnArr1[i].LocatorSegment;
     var lineValue3=trxLnArr1[i].physicalQty;
     var itmCatg=trxLnArr1[i].category;
+    var lineValue9=trxLnArr1[i].locatorSegmemtName;
+     var  avalqty = trxLnArr1[i].avlqty;
+
+    // alert('avalqty ,lineValue3>> '+avalqty+","+lineValue3);
+
 
     if (itmCatg==='MAIN') { this.mainColorAdded=true;} 
     else { this.mainColorAdded=false}
@@ -1388,8 +1455,16 @@ export class PaintIssueDpComponent implements OnInit {
       return;
     }
 
-    if(lineValue3===undefined || lineValue3===null || lineValue3<=0){
-      alert("Line-"+j+ " ISSUE QUANTITY :  Should  be grater than Zero");
+     if (lineValue2 !='P.N.01.G.01') {
+      if (lineValue9 !='P.N.01.G.01') {
+      alert("Line- "+j+ " LOCATOR :  Wrong Locator Selected.");
+      this.lineValidation1=false;
+      return;
+    }
+    }
+
+    if(lineValue3===undefined || lineValue3===null || lineValue3<=0 || lineValue3>avalqty){
+      alert("Line-"+j+ " ISSUE QUANTITY :  Enter Valid Issue Qty");
       this.lineValidation1=false;
       return;
     }
@@ -1478,14 +1553,15 @@ export class PaintIssueDpComponent implements OnInit {
         this.checkLineValidation(i);
       }
 
-      if (this.mainColorAdded===false   ){
-        var  resp1=confirm("Main Color Not Added.Want to Continue???");
-        if(resp1==false) { return;}
-      }
+     
 
 
       if(this.lineValidation1===false ) {alert("Line Validation Failed... Please Check.");return; }
-      
+
+       if (this.mainColorAdded===false   ){
+        var  resp1=confirm("Main Color Not Added.Want to Continue???");
+        if(resp1==false) { return;}
+      }
 
       if (this.headerValidation1  && this.lineValidation1 ){
       var  resp=confirm("Do You Want to Save this Transaction ???");
