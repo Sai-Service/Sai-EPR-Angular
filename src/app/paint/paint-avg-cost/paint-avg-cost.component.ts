@@ -26,6 +26,8 @@ interface IAvgCostUpdate {
   sItemCode : string;
   newAvgCost:number;
 
+   attribute1:number;
+   opUnitId:number;
 }
 
 @Component({
@@ -69,7 +71,8 @@ export class PaintAvgCostComponent implements OnInit {
 
   startDate:Date;
   endDate:Date;
-
+   attribute1:number;
+   opUnitId:number;
 
   fromDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   toDate = this.pipe.transform(Date.now(), 'y-MM-dd');
@@ -103,6 +106,9 @@ export class PaintAvgCostComponent implements OnInit {
   public DivisionIDList : Array<string>=[];
   public itemIdList : Array<string>=[];
   public subinventoryIdList: Array<string> = [];
+
+  public OuLocationList: Array<string> = [];
+  public OpUnitList: Array<string> = [];
 
   // public subInvCode:any[];
   public itemNameList: any;
@@ -198,6 +204,9 @@ export class PaintAvgCostComponent implements OnInit {
         createdBy :[],
         lastUpdatedBy:[],
 
+         attribute1:[],
+         opUnitId:[],
+
         priceListDetailList: this.fb.array([this.lineDetailsGroup()])
       });
     }
@@ -269,6 +278,17 @@ export class PaintAvgCostComponent implements OnInit {
     //       console.log(this.invItemList);
     //     }
     //   );
+
+      this.service.OUIdListDiv(Number(sessionStorage.getItem('divisionId')))
+      .subscribe(
+        data => {
+          this.OpUnitList = data;
+          console.log(this.OpUnitList);
+        });
+
+
+   
+
 
       this.service.ItemIdDivisionList(this.divisionId).subscribe(
         data =>{ this.invItemList = data;
@@ -544,6 +564,13 @@ export class PaintAvgCostComponent implements OnInit {
 
 
   searchMast(locId:any,itemId:any,frmDate:any,toDate:any) {
+    var pntLoc=this.pntAvgCostForm.get('attribute1').value;
+
+       if (pntLoc === null || pntLoc === undefined || pntLoc <= 0) {
+          alert("LOCATION  :  Please select Correct location");
+          return;
+          }
+
     frmDate=this.pipe.transform(frmDate, 'dd/MM/yyyy');
     toDate=this.pipe.transform(toDate, 'dd/MM/yyyy');
     // var endDtSt = this.pntAvgCostForm.get('toDate').value;
@@ -551,7 +578,9 @@ export class PaintAvgCostComponent implements OnInit {
     // endDt1.setDate(endDt1.getDate() + 1);
     // this.toDate = this.pipe.transform(endDt1, 'dd/MM/yyyy');
 
-    this.service.getAvgHistoryListNew(locId,itemId,frmDate,toDate)
+    alert("Paint Location Selected : "+pntLoc)
+
+    this.service.getAvgHistoryList(pntLoc,itemId,frmDate,toDate)
       .subscribe(
         data => {
           this.lstcomments = data;
@@ -859,13 +888,19 @@ export class PaintAvgCostComponent implements OnInit {
        updAvgCost1(){
 
             var newAvgCostPrice = this.pntAvgCostForm.get('newAvgCost').value
-            var locId1 = this.pntAvgCostForm.get('locId').value
+            var locId1 = this.pntAvgCostForm.get('attribute1').value
             var itemid1 = this.pntAvgCostForm.get('searchItemId').value
 
-            // alert ("Post>>price,itmid,locid : "+ newAvgCostPrice + ","+itemid1 +","+ locId1)
+
+               alert ("Paint Location Selected : "+ locId1 )
       
               if (newAvgCostPrice === null || newAvgCostPrice === undefined || newAvgCostPrice <= 0) {
                 alert("AVERAGE COST  :  Should be above Zero. Please try again");
+                return;
+              }
+
+                if (locId1 === null || locId1 === undefined || locId1 <= 0) {
+                alert("LOCATION  :  Please select Correct location");
                 return;
               }
 
@@ -888,6 +923,16 @@ export class PaintAvgCostComponent implements OnInit {
 
               }});
           }
+
+          onOUSelect(event){
+  // alert("ou id : " +event)
+      this.service.LocationListOu(event).subscribe
+      (data => {
+        this.OuLocationList = data;
+        console.log(this.OuLocationList);
+      });
+}
+
 
 }
 
