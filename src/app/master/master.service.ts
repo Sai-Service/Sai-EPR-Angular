@@ -3053,6 +3053,14 @@ public shortLandedClaimSave(rtvRecord) {
     return this.http.get(this.ServerUrl + `/averageCost/avghistory?locationId=${mLocId}&itemId=${mitemId}&startDate=${frmDate}&endDate=${toDate}`);
   }
 
+  getAvgHistoryListNew(mLocId, mitemId, frmDate, toDate): Observable<any> {
+    // alert("Master Service :"+ mLocId+","+mitemId+" ,"+frmDate+","+toDate);
+    return this.http.get(this.ServerUrl + `/averageCost/newAvgHistory?locationId=${mLocId}&itemId=${mitemId}&startDate=${frmDate}&endDate=${toDate}`);
+  }
+
+  // http://localhost:8081/averageCost/newAvgHistory?locationId=1605&itemId=100953&startDate=01/07/2025&endDate=18/07/2025
+
+
   ///////////////////Price list File upload/////////////////////
   UploadExcel(formData: FormData, docType: string, uploadPlName: string) {
     let headers1 = new HttpHeaders();

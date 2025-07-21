@@ -274,8 +274,8 @@
                       <th scope="col">UOM</th>
                       <th scope="col">Average Rate</th>
                       <th scope="col">Subinventory</th>
-                      <!-- <th scope="col">LocatorId</th> -->
                       <th scope="col">Locator</th>
+                      <!-- <th scope="col">StkLocator</th> -->
                       <th scope="col" rowspan="2">Avl Qty</th>
                       <th scope="col">Issue Qty</th>
                       <th scope="col">Add</th>
@@ -325,7 +325,7 @@
               </div>
               <ng-template #thenBlock>
                 <td>
-              <select class="form-control" style="height: 20px; width: 110px;" formControlName="LocatorSegment">
+              <select class="form-control" style="height: 20px; width: 110px;" formControlName="LocatorSegment" (ngModelChange)='AvailQtyNew($event,trxLineIndex)'>
 
               <!-- <select class="form-control" style="height: 20px; width: 110px;" formControlName="LocatorSegment"  (ngModelChange)='AvailQty($event,trxLineIndex)'#event> -->
                 <!-- <option>--Select--</option> -->
@@ -334,6 +334,8 @@
   
                 <input hidden formControlName="locatorId">
                 <input hidden formControlName="id">
+                <input hidden formControlName="locatorSegmemtName">
+
                 
               </select>
               <span
@@ -355,6 +357,9 @@
                <!-- </td> -->
 
                <input hidden type="number" formControlName="onHandQty">
+
+              <!-- <input hidden formControlName="locatorSegmemtName"> -->
+              <input disabled hidden type="text" class="form-control" style="height: 20px;width: 100px;" formControlName="locatorSegmemtName" >
               <td><input disabled type="number" class="form-control" style="height: 20px;width: 100px;" formControlName="avlqty" ></td>
               <input hidden  type="number"  formControlName="resveQty">
               <!-- <td><input type="number" min="0"  class="form-control" style="height: 20px;width: 100%;" formControlName="physicalQty"(change)="validate(trxLineIndex,qty)" #qty> -->

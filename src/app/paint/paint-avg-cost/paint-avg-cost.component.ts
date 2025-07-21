@@ -544,14 +544,14 @@ export class PaintAvgCostComponent implements OnInit {
 
 
   searchMast(locId:any,itemId:any,frmDate:any,toDate:any) {
-    frmDate=this.pipe.transform(frmDate, 'dd/MM/y');
-    toDate=this.pipe.transform(toDate, 'dd/MM/y');
+    frmDate=this.pipe.transform(frmDate, 'dd/MM/yyyy');
+    toDate=this.pipe.transform(toDate, 'dd/MM/yyyy');
     // var endDtSt = this.pntAvgCostForm.get('toDate').value;
     // var endDt1 = new Date(endDtSt);
     // endDt1.setDate(endDt1.getDate() + 1);
     // this.toDate = this.pipe.transform(endDt1, 'dd/MM/yyyy');
 
-    this.service.getAvgHistoryList(locId,itemId,frmDate,toDate)
+    this.service.getAvgHistoryListNew(locId,itemId,frmDate,toDate)
       .subscribe(
         data => {
           this.lstcomments = data;
