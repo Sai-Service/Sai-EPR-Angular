@@ -1675,6 +1675,7 @@ export class JobCardComponent implements OnInit {
           // let mToday =this.pipe.transform(new Date(), 'yyyy-MM-dd');
           // let jobDate=this.pipe.transform(this.jobCardDate, 'yyyy-MM-dd');
           // this.printAddonInvButton=false;
+          // alert(data.obj.invoiceNumber)
           if(data.obj.cwiInvoiceNumber>0) { this.printCwiInvButton=true;} else {this.printCwiInvButton=false;}
           if(data.obj.addonInvoiceNumber>0) { this.printAddonInvButton=true;} else {this.printAddonInvButton=false;}
           if(data.obj.invoiceNumber>0)      { this.printInvoiceButton=true;} else { this.printInvoiceButton=false;}
