@@ -2087,6 +2087,7 @@ indexNo:[],
               .subscribe(
                 data => {
                   if (data.code === 200) {
+                    debugger;
                     this.addonDescList = data.obj;
                     for (let i = 0; i < data.obj.length; i++) {
                       var itemtaxCatNm: string = data.obj[i].taxCategoryName;
@@ -2119,10 +2120,11 @@ indexNo:[],
                     if (select.itemId != null) {
                       let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
                       var invTp = controlinv.controls[k].get('invType').value;
-                     
+                      
                       this.service.getfrmSubLocPrice(this.locId, select.itemId, this.subInventoryId).subscribe(
                         data => {
                           console.log(data);
+                          debugger;
                           if (data.length === 0) {
                             this.isVisibleBackOrderSaveBtn=true;
                             alert(('Item Not Found In Stock !.\n' + 'Item Description :- ' + select.description + ".!\n") + "And MRP :- " + mrp);
@@ -2222,7 +2224,7 @@ indexNo:[],
 
                       }
                     }
-                    // debugger;
+                    debugger;
                     if (select.itemId != null) {
                       let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
                       var invTp = controlinv.controls[k].get('invType').value;
@@ -2240,7 +2242,7 @@ indexNo:[],
                       this.service.getfrmSubLocPrice(this.locId, select.itemId, this.subInventoryId).subscribe(
                         data => {
                           console.log(data);
-                          // debugger;
+                          debugger;
                           if (data.length === 0) {
                             this.isVisibleBackOrderSaveBtn=true;
                             alert(('Item Not Found In Stock !.\n' + 'Item Description :- ' + select.description + ".!\n") + "And MRP :- " + mrp);
