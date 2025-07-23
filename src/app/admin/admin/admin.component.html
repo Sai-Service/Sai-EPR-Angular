@@ -220,6 +220,7 @@
       aria-haspopup="true" [routerLink]="['/admin/transaction/miscTransaction']" aria-expanded="false">Stock Adjustment</a> 
     </li>
     </div>
+
     <div [style.display]="isVisible32 ? 'block' : 'none'">
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -450,6 +451,7 @@
 
 
   <div [style.display]="isVisibilePaintSystem ? 'block' : 'none'">
+
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle " id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="false">Paint Management </a>
       <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -591,7 +593,7 @@
               </a>
             </li>  -->
 
-          <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpTankMaster']"    >Pump Tank Master</a></li>
+          <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpTankMaster']"  >Pump Tank Master</a></li>
           <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpIslandMaster']">Pump Island Master</a></li>
           <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpNozzleMaster']">Pump Nozzle Master</a></li>
           <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpDipMasterNew']">Pump Dip Master</a></li>
@@ -611,24 +613,77 @@
 
     <!-- Tools System -->
 
+
+<div [style.display]="isVisibleToolsMaster ? 'block' : 'none'">
+    
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle " id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="false">Tools Master</a>
+      <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+
+      <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Transaction</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" [routerLink]="['/admin/transaction/miscTransaction']">Stock Adjustment</a> </li>
+              <li><a class="dropdown-item" [routerLink]="['/admin/transaction/InternalConsumption']" >Internal Consumption</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/admin/transaction/stockTransfer']">Stock Transfer</a></li>
+              <!-- <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/priceUpdation']">Price Updation</a></li> -->
+              <!-- <li> <a class="dropdown-item" [routerLink]="['/admin/master/pricelistMaster']">Price List Master</a></li> -->
+              <!-- <li> <a class="dropdown-item" [routerLink]="['/admin/tools/ToolsPurchaseOrder']">Tools Purchase Order</a></li> -->
+              <!-- <li> <a class="dropdown-item" [routerLink]="['/admin/master/SupplierMaster']">Supplier Entry</a> </li> -->
+
+            </ul>
+      </li>
+
+       <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Purchase</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/pendingPoList']">PO List</a></li>
+            <!-- <li><a class="dropdown-item" [routerLink]="['/admin/master/OPMasterDto']">Purchase Order</a></li> -->
+            <li> <a class="dropdown-item" [routerLink]="['/admin/tools/ToolsPurchaseOrder']">Purchase Order</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/master/PoReceiptForm']">PO Receipt</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/transaction/BulkUploadWithCsv']">Bulk Upload PO</a></li>
+            <li [style.display]="isVisibleReturnToVendor ? 'block' : 'none'"><a class="dropdown-item" [routerLink]="['/admin/transaction/ReturnToVendor']">Return To Vendor</a></li>
+            <li [style.display]="isVisibleShortLanded ? 'block' : 'none'"><a class="dropdown-item" [routerLink]="['/admin/transaction/ShortLandedGrr']">Short Landed Grr Claim</a></li>
+
+          </ul>
+          </li>
+
+           <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Master</a>
+          <ul class="dropdown-menu">
+          
+              <li> <a class="dropdown-item" [routerLink]="['/admin/master/pricelistMaster']">Price List Master</a></li>
+              <li> <a class="dropdown-item" [routerLink]="['/admin/master/SupplierMaster']">Supplier Entry</a> </li>
+
+
+          </ul>
+          </li>
+
+
+
+
+      </ul>
+    </li>
+</div>
+
+<!-- 
  <div [style.display]="isVisibleToolsMaster ? 'block' : 'none'">
+
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle " id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
        Tools Transaction
       </a>
+
       <ul class="dropdown-menu">
         <li><a class="dropdown-item" [routerLink]="['/admin/transaction/miscTransaction']">Stock Adjustment</a> </li>
         <li><a class="dropdown-item" [routerLink]="['/admin/transaction/InternalConsumption']" >Internal Consumption</a></li>
         <li> <a class="dropdown-item" [routerLink]="['/admin/master/SupplierMaster']">Supplier Entry</a> </li>
        <li><a class="dropdown-item" [routerLink]="['/admin/transaction/stockTransfer']">Stock Transfer</a></li>
-        <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/priceUpdation']">Price Updation</a></li>
- 
-       <li> <a class="dropdown-item" [routerLink]="['/admin/master/pricelistMaster']">Price List Master</a></li>
-
-        
+        <li> <a class="dropdown-item" [routerLink]="['/admin/master/pricelistMaster']">Price List Master</a></li>
+       <li> <a class="dropdown-item" [routerLink]="['/admin/tools/ToolsPurchaseOrder']">Tools Purchase Order</a></li>
+      
       </ul>
-    </li>
-  </div>
+    
+
+      </li>
+  </div> -->
   
 
   

@@ -1410,6 +1410,12 @@ export class MasterService {
     return this.http.get(this.ServerUrl + `/JaiTaxCatg/taxCateDtls?taxCatType=PURCHASE&suppTaxCate=${taxCategoryName}&hsnTaxPer=${hsnTaxPer}`);
   }
 
+   getItemOldPrice(invItemId,plName): Observable<any> {
+    return this.http.get(this.ServerUrl + `/pricelist/itemPrcList?priceListName=${plName}&itemId=${invItemId}`);
+    // http://localhost:8081/pricelist/itemPrcList?priceListName=Maruti Tools 11MU - NDP&itemId=127541
+  }
+
+
   expenceItemDetailsList(invItemId): Observable<any> {
     return this.http.get(this.ServerUrl + `/itemMst/ItemDetailsExp/${invItemId}`);
   }

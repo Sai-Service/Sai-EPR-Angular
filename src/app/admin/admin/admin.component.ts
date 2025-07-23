@@ -839,7 +839,17 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisible12=false;
       this.isVisible13=false
       this.isVisibleWsVehicleMaster=false;
-      this.isVisible14=true;
+          if(sessionStorage.getItem('roleId') == 'TOOLS') {
+              this.isVisible14=false;
+              this.isVisibleSaleStockAdju=false;
+              this.isVisibleSearchPaint=true;
+
+          } else  
+            { this.isVisible14=true;
+              this.isVisibleSaleStockAdju=true; 
+              this.isVisibleSearchPaint=false;
+}
+
       this.isVisible15=false;
       this.isVisible16=false;
       this.isVisible17=false;
@@ -864,12 +874,11 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibleServiceReport=false;
       this.isVisibleSalesReport=false;
       this.isVisible37=false;
-      this.isVisibleSaleStockAdju=true;
       this.isVisibleAccountsRepor=false;
       this.isVisibleAccessories=false;
       this.isVisibilePaintSystem=false;
       this.isVisibleShellReport=false;
-      this.isVisibleSearchPaint=false;
+      // this.isVisibleSearchPaint=false;
       this.isVisibleCustMaster=false;
  }
 

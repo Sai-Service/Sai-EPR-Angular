@@ -46,6 +46,11 @@ const routes: Routes = [
         loadChildren: () => import('../pump/pump.module').then(mod => mod.PumpModule)
       },
 
+       {
+        path: 'tools',
+        loadChildren: () => import('../tools/tools.module').then(mod => mod.ToolsModule)
+      },
+
       
       { path : '' ,redirectTo: 'master', pathMatch: 'full' }
     ]}
