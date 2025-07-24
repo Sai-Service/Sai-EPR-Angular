@@ -932,7 +932,21 @@
                                                                 <!-- <div  *ngIf="displaysegmentList[i]; then thensegmentList; else elsesegmentList"> </div>
                                                                 <ng-template #thensegmentList> -->
                                                                 <!-- <div *ngIf ="compileType==13"> -->
-                                                                <input type="text" formControlName="segment"
+
+                                                                    <input type="text" formControlName="segment"
+                                                                    list="dynmicUserIds1" class="form-control"
+                                                                    (keyup)="filterRecord_Test2( $event,i)"
+                                                                    (ngModelChange)="onOptioninvItemIdSelected($event,i)" />
+                                                                <datalist id="dynmicUserIds1">
+                                                                    <option *ngFor="let item of invItemList"
+                                                                       [ngValue]="item.itemId">{{item.segment}}:{{item.description}}
+
+                                                                    </option>
+                                                                </datalist>
+
+
+
+                                                                <!-- <input type="text" formControlName="segment"
                                                                     list="dynmicUserIds1" class="form-control"
                                                                     (keyup)="filterRecord( $event,i)"
                                                                     (ngModelChange)="onOptioninvItemIdSelected($event,i)" />
@@ -940,7 +954,9 @@
                                                                     <option *ngFor="let item of invItemList"
                                                                         [ngValue]="item.itemId">{{item.segment}}
                                                                     </option>
-                                                                </datalist>
+                                                                </datalist> -->
+
+
                                                                 <!-- </div> -->
                                                                 <!-- </ng-template>
                                                                 <ng-template #elsesegmentList>
