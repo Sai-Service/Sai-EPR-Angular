@@ -2392,8 +2392,8 @@ export class JobCardComponent implements OnInit {
   }
 
   saveArInvoice() {
-
-   
+// alert('Job card Save')
+  //  debugger;
     const formValue: IjobCard = this.tranceFun(this.jobcardForm.value);
     this.CheckJobHraderValidation()
 
