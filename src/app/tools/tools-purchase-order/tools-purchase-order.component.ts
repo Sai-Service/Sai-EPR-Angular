@@ -2656,7 +2656,7 @@ interface IpostPO {
         //     }
         //   );
           if (Number(sessionStorage.getItem('deptId'))===5 && Number(sessionStorage.getItem('divisionId')) === 1){
-          this.service.invItemList2New(itemType, (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), 'AB-GUN-TOOL')
+          this.service.invItemList2New(itemType, (sessionStorage.getItem('deptName')), (sessionStorage.getItem('divisionId')), '')
           .subscribe(
             data => {
               this.lineDetailsArray.controls[lineNum].get('segment').disable();
@@ -2728,6 +2728,23 @@ interface IpostPO {
           );
       }
     }
+  }
+
+
+  filterRecord_Test2(event, i) {   
+    
+       var itemCode1 = event.target.value;
+       var itemCode = '';
+       if (itemCode1.includes(':')) {
+         var itemCode2 = itemCode1.split(':');
+         itemCode = itemCode2[0];
+       } else {
+         itemCode = itemCode1;
+       }
+  
+              var patch = this.ToolsMasterPOForm.get('poLines') as FormArray;
+              patch.controls[i].patchValue({ segment: itemCode })
+  
   }
 
 
