@@ -250,7 +250,10 @@
                             <a class="dropdown-item" data-toggle="collapse" href="#panelGSTPurchaseRegister" role="tab"
                               (click)="reportDetails('billHandedoverToActReport')">Account Bill Handover Report</a>
                           </li>
-                         
+                          <li>
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelItemMaster" role="tab"
+                              (click)="reportDetails('itemMasterReport')">Item Master Report</a>
+                          </li>
                     </ul>
                 </li>
                 
@@ -2091,9 +2094,10 @@ id="panelfromtosubinventory">
   </table>
 
 
+  <!--  **************** item master panel start here **************** -->
 
-  <table class="center" [style.display]="isVisibletoDateLoc ? 'block' : 'none'" class="collapse"
-  style="margin-left: 20%;" id="paneltoDateLoc">
+  <table class="center" [style.display]="isVisibleItemMaster ? 'block' : 'none'" class="collapse"
+  style="margin-left: 20%;" id="panelItemMaster">
   
   <table class="center">
       <tr>
@@ -2105,27 +2109,14 @@ id="panelfromtosubinventory">
   <table class="center">
       <tr>
           <td style="width: 15%" class="LabelFontStyle">
-              &nbsp;To&nbsp;Date&nbsp;:&nbsp;
-          </td>
-          <td>
-              <input type="date" class="form-control" formControlName="toDate" [(ngModel)]="toDate"
-                  max="{{minDate | date:'yyyy-MM-dd'}}">
+              &nbsp;Type&nbsp;:&nbsp;
           </td>
           <td style="width: 15%" class="LabelFontStyle">
-              &nbsp;Location&nbsp;Code&nbsp;:&nbsp;
-          </td>
-          <td [style.display]="isVisiblelocationInput ? 'block' : 'none'">
-              <input type="text" disabled class="form-control" formControlName="locCode">
-          </td>
-          <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
-              <select formControlName="locCode" id="locCode" class="form-control"
-                  (ngModelChange)='onOptionsLocation($event)'>
-                  <option>--Select--</option>
-                  <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
-                      {{sc.locCode}}
-                  </option>
-              </select>
-              <input disabled hidden type="number" class="form-control" formControlName="locId">
+           <select formControlName="subType" id="subType" class="form-control" style="height: 20px;">
+                          <!-- <option></option> -->
+                          <option value="LABOUR"> Labour </option>
+                          <option value="MATERIAL"> Material </option>
+            </select>
           </td>
       </tr>
      

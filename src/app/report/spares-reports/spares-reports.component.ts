@@ -26,6 +26,7 @@ export class SparesReportsComponent implements OnInit {
   fromDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   toDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   OUCode: string;
+  subType:string;
   locCode: string;
   locId: number;
   tolocName:string;
@@ -90,6 +91,7 @@ export class SparesReportsComponent implements OnInit {
   isVisibleEwayBill:boolean=false;
   isVisiblepanelStockTaking=false;
   isVisibletoDateLoc:boolean=false;
+  isVisibleItemMaster:boolean=false;
   panelspDebtAgByExicutiveSummary=false;
   isDisabled1 = false;
   userName1:string;
@@ -135,6 +137,7 @@ export class SparesReportsComponent implements OnInit {
       spDbAging4:[],
 
       compileCode:[''],
+      subType:[]
     })
   }
 
@@ -280,6 +283,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleStockTransferReceivedSummary=false;
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName === 'gstpurRegSumm') {
       this.reportName = 'Spares Purchase Register - Summary';
@@ -309,6 +313,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibletoDateLoc=false;
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName === 'gstIssueDetails') {
       this.reportName = 'Spares Issue Details Report';
@@ -335,6 +340,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibletoDateLoc=false;
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName === 'gstIssueSummary') {
       this.reportName = 'Spares Issue Summary';
@@ -362,6 +368,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibletoDateLoc=false;
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName === 'gstReceiptRegister') {
       this.reportName = 'Spares Receipt Register';
@@ -391,6 +398,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
 
     else if (reportName === 'gstClosingReport') {
@@ -418,6 +426,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
 
     else if (reportName === 'gstsaiDebtors') {
@@ -448,6 +457,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName === 'gstSprAgingSummary') {
       this.reportName = 'Spares Debtors Aging Report Summary';
@@ -477,6 +487,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName === 'gstStockLedger') {
       this.reportName = 'Stock Ledger';
@@ -503,6 +514,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
     // else if (reportName === 'gststockTransfer') {
     //   this.reportName = 'Stock Transfer Made Detail Report';
@@ -562,6 +574,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibletoDateLoc=false;
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
       if (Number(sessionStorage.getItem('deptId'))===4){
         this.displayLocationList=false;
       }
@@ -594,6 +607,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibletoDateLoc=false;
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
       if (Number(sessionStorage.getItem('deptId'))===4){
         this.displayLocationList=false;
       }
@@ -626,6 +640,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
       if (Number(sessionStorage.getItem('deptId'))===4){
         this.displayToLocationList=false
       }
@@ -659,6 +674,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibletoDateLoc=false;
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
       if (Number(sessionStorage.getItem('deptId'))===4){
         this.displayToLocationList=false
       }
@@ -691,6 +707,7 @@ export class SparesReportsComponent implements OnInit {
        this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
        this.isVisibleStocMadeSummary=false;
        this.isVisibleStockMissMatch=false;
+       this.isVisibleItemMaster=false;
     }
     else if (reportName === 'gstSparesBackOrderQty') {
       this.reportName = 'Spares Back Order Qty Report';
@@ -718,6 +735,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName === 'gstsparesMiscIssueReceipt') {
       this.reportName = 'Spares Misc Issue Receipt Report';
@@ -744,6 +762,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName === 'gstSaleReturnRegister') {
       this.reportName = 'Spares Sales Return Register';
@@ -770,6 +789,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName === 'gstIncomeStatement') {
       this.reportName = 'Income Statement';
@@ -796,6 +816,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName === 'gstSparesClosingStockAsOnDate') {
       this.reportName = 'Spares Closing Stock As On Date';
@@ -822,6 +843,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName === 'gstSpresProformaDetailsReports') {
       this.reportName = 'Spares Proforma Details Report';
@@ -848,6 +870,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName === 'gstChequeBounceReport') {
       this.reportName = 'Cheque Bounce Report';
@@ -874,6 +897,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName === 'gstsparesInventoryAging') {
       this.reportName = 'Spares Inventory Aging Report';
@@ -900,6 +924,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName === 'gstSparesDebtorsExecutiveWise') {
       this.reportName = 'Spares Debtors Executive Wise report';
@@ -929,6 +954,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName === 'sparesSubinvTransReceived') {
       this.reportName = 'Sub Inventory Transfer Received Report';
@@ -955,6 +981,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName === 'sparesSubinvTransMade') {
       this.reportName = 'Sub Inventory Transfer Made Report';
@@ -981,6 +1008,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName === 'internalConsumptionReport') {
       this.reportName = 'Internal Consumption Report';
@@ -1007,6 +1035,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName === 'customerLedger') {
       this.reportName = 'Customer Ledger Report';
@@ -1037,6 +1066,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockTransferMadeSummary=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName === 'creditNoteReg') {
       this.reportName = 'Credit Note Register';
@@ -1063,6 +1093,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName === 'EwayBill') {
       this.reportName = 'Eway Bill Report';
@@ -1089,6 +1120,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName === 'IrnGenerationReport') {
       this.reportName = 'IRN Generation Report';
@@ -1119,6 +1151,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
 
     else if (reportName === 'sparesIssSummaryTransWise') {
@@ -1149,8 +1182,8 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibletoDateLoc=false;
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
-
     else if (reportName === 'sparesZeroStkReport') {
       this.reportName = 'Spares Zero Stock Report';
       this.isVisibleGSTPurchaseRegister = false;
@@ -1176,6 +1209,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName === 'sparesIssSummaryAvgCost') {
       this.reportName = 'Spares Issue Summary-Average Cost';
@@ -1205,8 +1239,8 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
-
     else if (reportName === 'stkTakingBlankFormat') {
       this.reportName = 'Stock Taking Report - Blank Format';
       this.isVisibleGSTPurchaseRegister = false;
@@ -1233,6 +1267,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockTransferMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName === 'stkTakingQtyDet') {
       this.reportName = 'Stock Taking Report - Qty Details';
@@ -1259,6 +1294,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockTransferMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName === 'stkTakingPhyStk') {
       this.reportName = 'Stock Taking - Physical Stock Upload';
@@ -1285,6 +1321,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockTransferMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName === 'sparesDbAgingExicutiveSum') {
       this.reportName = 'Spares Debtors Aging Report - Executive summary';
@@ -1311,6 +1348,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockTransferMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName === 'spConsumptionReport') {
       this.reportName = 'Spares Item Consumption Report';
@@ -1337,6 +1375,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockTransferMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName==='gstsaiDebtorsAsOf'){
       this.reportName = 'Spares Debtor Report As Of';
@@ -1363,6 +1402,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockTransferMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName==='receiptOtherDetails'){
       this.reportName = 'Receipt-Other Details Report';
@@ -1389,6 +1429,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockTransferMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName==='billHandedoverToActReport'){
       this.reportName = 'Account Bill Handover Report';
@@ -1415,6 +1456,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockTransferMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName==='spDebtorOSLetter'){
       this.reportName = 'Spares Debtor O/S Letter';
@@ -1441,6 +1483,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockTransferMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName==='shortLandedClaim'){
       this.reportName = 'Short Landed Claim Report';
@@ -1467,6 +1510,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockTransferMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName==='sparesAgingReportAsOfDate'){
       this.reportName = 'Spares Aging Report As of Date';
@@ -1493,6 +1537,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName==='spareDailyReport'){
       this.reportName = 'Spares Daily Report';
@@ -1519,6 +1564,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName==='spDeadStockNoConsuptionDaywise'){
       this.reportName = 'Spares Dead Stock-No Consumption-Daywise';
@@ -1545,6 +1591,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=true;
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=false;
     }
     else if (reportName==='StockMissMatch'){
       this.reportName = 'Spares Stock Mismatch Report';
@@ -1571,6 +1618,34 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
       this.isVisibleStocMadeSummary=false;
       this.isVisibleStockMissMatch=true;
+      this.isVisibleItemMaster=false;
+    }
+     else if (reportName==='itemMasterReport'){
+      this.reportName = 'Item Master Report';
+      this.isVisiblegstsaiDebtors=false;
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisibleStockLedger = false;
+      this.displayCustAccountNo=false;
+      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisibleStockTransferReceivedSummary=false;
+      this.isVisiblestockTransfer = false;
+      this.isVisibleStockTransferMadeSummary=false;
+      this.isVisiblestockTransferRecd=false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleEwayBill=false;
+      this.isVisiblepanelStockTaking=false;
+      this.panelspDebtAgByExicutiveSummary=false;
+      this.isVisibletoDateLoc=false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
+      this.isVisibleStocMadeSummary=false;
+      this.isVisibleStockMissMatch=false;
+      this.isVisibleItemMaster=true;
     }
   }
 
@@ -1869,7 +1944,6 @@ export class SparesReportsComponent implements OnInit {
           })
       }
     }
-
     else if (reportName === 'Spares Closing Stock Report') {
       const fileName = 'SP-Closing-Stock-' + sessionStorage.getItem('locName').trim() + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
@@ -1891,8 +1965,7 @@ export class SparesReportsComponent implements OnInit {
             this.dataDisplay = ''
           })
       }
-    }
-    
+    }   
     else if (reportName === 'Spares Debtor Report') {
 
       this.isDisabled1=false;
@@ -1999,7 +2072,6 @@ export class SparesReportsComponent implements OnInit {
       this.isDisabled1=true;
       const fileName = 'SP-Debtors-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-     
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.gstsaiDebtorsAsOf1(tDate1, sessionStorage.getItem('ouId'), locId,custAccNo,deptId,spDbAg1,spDbAg2,spDbAg3,spDbAg4)
           .subscribe(data => {
@@ -2073,8 +2145,6 @@ export class SparesReportsComponent implements OnInit {
           })
       }
     }
-
-
     else if (reportName === 'Stock Ledger') {
      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -2102,8 +2172,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
     }
-
-    else if (reportName === 'Stock Transfer Made Detail Report') {
+ else if (reportName === 'Stock Transfer Made Detail Report') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
       var fromLocationId = this.sparesReportForm.get('fromLocationId').value;
       var toLocationId = this.sparesReportForm.get('tolocationId').value;
@@ -2115,7 +2184,6 @@ export class SparesReportsComponent implements OnInit {
        this.dataDisplay = 'Please Select From Location.!'
        return;
     }
-
       if (toLocationId===null){
         toLocationId=''
       }
@@ -2582,9 +2650,7 @@ export class SparesReportsComponent implements OnInit {
           this.dataDisplay = ''
         })
       } 
-    }
-
-    
+    } 
     else if (reportName==='Internal Consumption Report'){
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
@@ -2697,7 +2763,6 @@ export class SparesReportsComponent implements OnInit {
         })
       }
     }
-
     else if (reportName ==='Spares Issue Summary-Transaction Wise'){
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
@@ -2723,7 +2788,6 @@ export class SparesReportsComponent implements OnInit {
         })
       }
     }
-
     else if (reportName==='Spares Zero Stock Report'){
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
@@ -2748,7 +2812,6 @@ export class SparesReportsComponent implements OnInit {
         })
       }
     }
-
     else if (reportName ==='Spares Issue Summary-Average Cost'){
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
@@ -2774,7 +2837,6 @@ export class SparesReportsComponent implements OnInit {
       }
      
     }
-
     else if (reportName ==='Stock Taking Report - Blank Format'){
       // this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
@@ -2828,7 +2890,6 @@ export class SparesReportsComponent implements OnInit {
       }
      
     }
-
     else if (reportName ==='Stock Taking - Physical Stock Upload'){
       // this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
@@ -2855,7 +2916,6 @@ export class SparesReportsComponent implements OnInit {
       }
      
     }
-
     else if (reportName ==='Spares Item Consumption Report'){
       const fileName = 'Spares Item Consumption Report-' +  '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
@@ -2923,7 +2983,6 @@ export class SparesReportsComponent implements OnInit {
     })
   }
   }
-  
   else if (reportName==='Spares Stock Mismatch Report'){
     const fileName = 'Spares Stock Mismatch Report-' +  '-TO-' + '.pdf';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
@@ -2946,7 +3005,6 @@ export class SparesReportsComponent implements OnInit {
     })
   }
   }
-
   else if (reportName === 'Spares Debtor O/S Letter') {
 
     this.isDisabled1=false;
@@ -3095,7 +3153,24 @@ export class SparesReportsComponent implements OnInit {
       })  
     }
   }
+  else if (reportName=='Item Master Report'){
+     const fileName = 'Item Master Report' +  '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    var suP= (sessionStorage.getItem('ouName'));
+    var subTP = suP.substr(0, 2);
+    // alert(subTP)
+    var p_subType=  this.sparesReportForm.get('subType').value;
+    // alert(subTP);
+      this.reportService.itemMasterFn(subTP,p_subType,sessionStorage.getItem('ouId'))
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+        this.isDisabled1=false;
+      })  
   }
+  }
+
 
 
   spPurRegDownLoad() {

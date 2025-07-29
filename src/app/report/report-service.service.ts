@@ -1385,5 +1385,21 @@ apInvLinCSFn(fromDate,toDate,ouId){
     headers: this.headers,
   }); 
 }
+
+itemMasterFn(p_mainType,p_subType,ouId){
+  const REQUEST_URI = this.ServerUrl +`/SparesReports/ItemMasterList?p_mainType=${p_mainType}&p_subType=${p_subType}&ouId=${ouId}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  }); 
+}
+
+itemMasterPaintFn(p_mainType,p_subType,ouId){
+  const REQUEST_URI = this.ServerUrl +`/SparesReports/ItemMasterList?p_mainType=${p_mainType}&p_subType=${p_subType}&ouId=${ouId}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  }); 
+}
 }
 
