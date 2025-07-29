@@ -159,6 +159,7 @@ export class MasterService {
   empIdListFn(): Observable<any> {
     return this.http.get(this.ServerUrl + '/empMst/All');
   }
+
   DepartmentListById(dept): Observable<any> {
     return this.http.get(this.ServerUrl + `/divMst/${dept}`);
   }
@@ -171,6 +172,12 @@ export class MasterService {
   recvTypeIdList(): Observable<any> {
     return this.http.get(this.ServerUrl + '/cmnLookup/DeptList');
   }
+
+   ItemSubTypeLst(mainTp): Observable<any> {
+    return this.http.get(this.ServerUrl + `/itemCategory/subType/${mainTp}`);
+    // http://localhost:8081/itemCategory/subType/BJ
+  }
+
 
   invItemList(itemType, deptName, divisionId): Observable<any> {
     const REQUEST_PARAMS = new HttpParams().set('itemType', itemType)
