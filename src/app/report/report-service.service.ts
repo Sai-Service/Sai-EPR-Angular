@@ -771,6 +771,19 @@ export class ReportServiceService {
     });
   }
 
+   itemMasterListReport(ouId,mainTp,subTp){
+        // alert ("in report api")
+
+    // http://localhost:8081/SparesReports/ItemMasterList?p_mainType=BJ&p_subType=LABOUR&ouId=21
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/ItemMasterList?p_mainType=${mainTp}&p_subType=${subTp}&ouId=${ouId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+
+
 
 
   spstktrfRecivedReport(fromDate,toDate,shipFromLocId,shipToLocId){

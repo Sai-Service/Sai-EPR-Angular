@@ -34,6 +34,8 @@ export class SparesReportsComponent implements OnInit {
   trxNumber:number;
   public BillShipToList: Array<string> = [];
   public BillShipFromList: Array<string> = [];
+  public ItemSubTypeList: Array<string> = [];
+
   periodNameList: any = [];
   BillShipFromList1:any=[];
   public DepartmentList: any = [];
@@ -93,6 +95,8 @@ export class SparesReportsComponent implements OnInit {
   isVisibletoDateLoc:boolean=false;
   isVisibleItemMaster:boolean=false;
   panelspDebtAgByExicutiveSummary=false;
+  isVisibleonlyOuCodeSubInv : boolean = false;
+
   isDisabled1 = false;
   userName1:string;
   dispLocation:boolean=true;
@@ -230,6 +234,14 @@ export class SparesReportsComponent implements OnInit {
           this.subInventory = this.subInvCode.subInventoryCode;
           this.sparesReportForm.patchValue({ subInventory: this.subInvCode.subInventoryCode })
         }
+
+                    this.service.ItemSubTypeLst(this.subInventory)
+                    .subscribe(
+                    data => {
+                      this.ItemSubTypeList = data;
+                    }
+                  );
+
       });
 
     this.service.invItemList2New('GOODS', 'Spares', (sessionStorage.getItem('divisionId')), '36DH1601')

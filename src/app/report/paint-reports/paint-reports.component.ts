@@ -39,6 +39,8 @@ export class PaintReportsComponent implements OnInit {
   public BillShipFromList: Array<string> = [];
   periodNameList: any = [];
 
+  public ItemSubTypeList: Array<string> = [];
+
   public DepartmentList: any = [];
   
   closeResetButton = true;
@@ -50,6 +52,8 @@ export class PaintReportsComponent implements OnInit {
   issCatg:string='PN002';
 
   subInvCode: any;
+  subTp :string;
+
   segment: string;
   fromlocCode:string;
   fromLocId:number;
@@ -75,6 +79,7 @@ export class PaintReportsComponent implements OnInit {
   isVisiblespPurRegDownLoad: boolean = false;
   isVisibleonlyLocationCode: boolean = false;
   isVisibleonlyOuCode: boolean = false;
+  isVisibleonlyOuCodeSubInv : boolean = false;
   isVisiblegstsaiDebtors: boolean = false;
   isVisibleStockLedger: boolean = false;
   isVisiblestockTransfer: boolean = false;
@@ -130,6 +135,7 @@ export class PaintReportsComponent implements OnInit {
       spDbAging2:[],
       spDbAging3:[],
       spDbAging4:[],
+      subTp :[],
 
 
 
@@ -167,6 +173,7 @@ export class PaintReportsComponent implements OnInit {
         })
       });
     }
+
 
     this.service.OUIdListDiv(Number(sessionStorage.getItem('divisionId')))
     .subscribe(
@@ -227,10 +234,24 @@ export class PaintReportsComponent implements OnInit {
           this.subInventory = this.subInvCode.subInventoryCode;
           this.paintReportForm.patchValue({ subInventory: this.subInvCode.subInventoryCode })
         }
+
+           this.service.ItemSubTypeLst(this.subInventory)
+          .subscribe(
+          data => {
+            this.ItemSubTypeList = data;
+          }
+        );
+
+
       });
 
 
-  this.paintReportForm.patchValue({ userName: sessionStorage.getItem('ticketNo') })
+      
+     
+
+
+
+         this.paintReportForm.patchValue({ userName: sessionStorage.getItem('ticketNo') })
 
   }
 
@@ -275,6 +296,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
       this.isVisiblePaintPanelDetailReport=false;
+      this.isVisibleonlyOuCodeSubInv=false;
 
 
     }
@@ -303,6 +325,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
       this.isVisiblePaintPanelDetailReport=false;
+      this.isVisibleonlyOuCodeSubInv=false;
 
 
     }
@@ -333,6 +356,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
       this.isVisiblePaintPanelDetailReport=false;
+      this.isVisibleonlyOuCodeSubInv=false;
 
 
     }
@@ -360,6 +384,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
       this.isVisiblePaintPanelDetailReport=false;
+      this.isVisibleonlyOuCodeSubInv=false;
 
 
 
@@ -384,8 +409,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
-              this.isVisiblefromtosubinventory=false;
-                    this.isVisiblePaintPanelDetailReport=false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblePaintPanelDetailReport=false;
+      this.isVisibleonlyOuCodeSubInv=false;
 
 
 
@@ -412,7 +438,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
-            this.isVisiblePaintPanelDetailReport=false;
+      this.isVisiblePaintPanelDetailReport=false;
+      this.isVisibleonlyOuCodeSubInv=false;
 
 
     }
@@ -437,10 +464,35 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblepanelStockTaking=false;
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
-              this.isVisiblefromtosubinventory=false;
-                    this.isVisiblePaintPanelDetailReport=false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblePaintPanelDetailReport=false;
+      this.isVisibleonlyOuCodeSubInv=false;
 
+    }
 
+     else if (reportName === 'itemMasterList') {
+      this.reportName = 'Item Master List';
+      this.isVisibleonlyOuCodeSubInv=true;
+      this.isVisibleonlyOuCode = false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisiblestockTransferRecd=false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleEwayBill=false;
+      this.isVisiblepanelStockTaking=false;
+      this.isVisiblesparesPaintPanelReport=false;
+      this.isVisiblePanelOUFromDateToDateSubInv=false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblePaintPanelDetailReport=false;
     }
 
 
@@ -465,7 +517,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisibileIssueCategory=true;
-            this.isVisiblePaintPanelDetailReport=false;
+      this.isVisiblePaintPanelDetailReport=false;
+      this.isVisibleonlyOuCodeSubInv=false;
+
 
 
     }
@@ -491,6 +545,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
       this.isVisiblePaintPanelDetailReport=false;
+      this.isVisibleonlyOuCodeSubInv=false;
 
 
     }
@@ -517,6 +572,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
       this.isVisiblePaintPanelDetailReport=false;
+      this.isVisibleonlyOuCodeSubInv=false;
 
 
     }
@@ -542,6 +598,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
       this.isVisiblePaintPanelDetailReport=false;
+      this.isVisibleonlyOuCodeSubInv=false;
 
 
     }
@@ -568,6 +625,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
       this.isVisiblePaintPanelDetailReport=false;
+      this.isVisibleonlyOuCodeSubInv=false;
 
 
     }
@@ -594,6 +652,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
       this.isVisiblePaintPanelDetailReport=false;
+      this.isVisibleonlyOuCodeSubInv=false;
 
 
     }
@@ -620,6 +679,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
       this.isVisiblePaintPanelDetailReport=false;
+      this.isVisibleonlyOuCodeSubInv=false;
 
 
     }
@@ -646,6 +706,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
       this.isVisiblePaintPanelDetailReport=false;
+      this.isVisibleonlyOuCodeSubInv=false;
 
 
     }
@@ -672,6 +733,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
       this.isVisiblePaintPanelDetailReport=false;
+      this.isVisibleonlyOuCodeSubInv=false;
 
 
     }
@@ -703,6 +765,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
+      this.isVisibleonlyOuCodeSubInv=false;
 
     }
 
@@ -728,6 +791,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
+      this.isVisibleonlyOuCodeSubInv=false;
 
     }
 
@@ -752,7 +816,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
-              this.isVisiblefromtosubinventory=false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisibleonlyOuCodeSubInv=false;
 
     }
 
@@ -777,7 +842,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
-              this.isVisiblefromtosubinventory=false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisibleonlyOuCodeSubInv=false;
 
     }
 
@@ -802,7 +868,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
-              this.isVisiblefromtosubinventory=false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisibleonlyOuCodeSubInv=false;
 
     }
     else if (reportName === 'icConsumptionReport') {
@@ -825,7 +892,9 @@ export class PaintReportsComponent implements OnInit {
         this.isVisiblesparesPaintPanelReport=true;
         this.isVisibleonlyOuCode = false;
         this.isVisiblePanelOUFromDateToDateSubInv=false;
-                this.isVisiblefromtosubinventory=false;
+        this.isVisiblefromtosubinventory=false;
+        this.isVisibleonlyOuCodeSubInv=false;
+
 
       }
       else if (reportName === 'paintDailyReport') {
@@ -848,7 +917,9 @@ export class PaintReportsComponent implements OnInit {
           this.isVisiblesparesPaintPanelReport=false;
           this.isVisibleonlyOuCode = false;
           this.isVisiblePanelOUFromDateToDateSubInv=true;
-                  this.isVisiblefromtosubinventory=false;
+          this.isVisiblefromtosubinventory=false;
+          this.isVisibleonlyOuCodeSubInv=false;
+
 
         }
         else if (reportName === 'panelConsuptionRe') {
@@ -872,6 +943,7 @@ export class PaintReportsComponent implements OnInit {
         this.isVisibleonlyOuCode = false;
         this.isVisiblePanelOUFromDateToDateSubInv=false;
         this.isVisiblefromtosubinventory=false;
+      this.isVisibleonlyOuCodeSubInv=false;
 
 
         }
@@ -898,6 +970,7 @@ export class PaintReportsComponent implements OnInit {
         this.isVisiblePanelOUFromDateToDateSubInv=false;
         this.isVisiblefromtosubinventory=true;
         this.isVisibileIssueCategory=false;
+      this.isVisibleonlyOuCodeSubInv=false;
 
     }
     else if (reportName === 'sparesSubinvTransMade') {
@@ -922,6 +995,7 @@ export class PaintReportsComponent implements OnInit {
         this.isVisiblePanelOUFromDateToDateSubInv=false;
         this.isVisiblefromtosubinventory=true;
         this.isVisibileIssueCategory=false;
+      this.isVisibleonlyOuCodeSubInv=false;
 
     }
   }
@@ -1441,6 +1515,36 @@ export class PaintReportsComponent implements OnInit {
           })
       }
     }
+
+      else if (reportName === 'Item Master List') {
+      // alert ('reportName---'+reportName)
+      //itemMasterList
+      var subtp =this.paintReportForm.get('subTp').value;
+
+      const fileName = 'Item Master List-' + sessionStorage.getItem('ouName').trim() + '.xls';
+      // alert (fileName)
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.itemMasterListReport(sessionStorage.getItem('ouId'),subInventory,subtp)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.itemMasterListReport(sessionStorage.getItem('ouId'),subInventory,subtp)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
+
+    // ==============================================
 
     else if (reportName === 'Stock Taking - Blank Format') {
       const fileName = 'PAINT-Stock Taking-Blank Format-' + sessionStorage.getItem('locName').trim() + '.xls';
