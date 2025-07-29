@@ -68,6 +68,7 @@ export class LoginComponent implements OnInit {
       alert('Please enter valid Password !');
       return;
     }
+    //  const encodedPassword = btoa(this.password);
     this.loginService.login(this.username, this.password).subscribe((res: any) => {
       console.log('Res', res);
       if (res.code === 200) {
