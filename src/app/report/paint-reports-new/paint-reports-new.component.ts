@@ -99,6 +99,7 @@ export class PaintReportsNewComponent implements OnInit {
   dispLocation:boolean=true;
   rptValidation=true;
   isVisiblePanelOUFromDateToDateSubInv:boolean=false;
+  isVisibleItemMaster:boolean=false;
   opUnitId:number;
   
 
@@ -279,7 +280,7 @@ export class PaintReportsNewComponent implements OnInit {
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
             this.isVisiblefromtosubinventory=false;
-
+      this.isVisibleItemMaster=false;
 
     }
     else if (reportName === 'gstpurRegSumm') {
@@ -306,7 +307,7 @@ export class PaintReportsNewComponent implements OnInit {
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
             this.isVisiblefromtosubinventory=false;
-
+ this.isVisibleItemMaster=false;
     }
     else if (reportName === 'consumptionSummary') {
       this.reportName = 'Paint Consumption Summary(Labour Based)';
@@ -334,7 +335,7 @@ export class PaintReportsNewComponent implements OnInit {
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
             this.isVisiblefromtosubinventory=false;
-
+ this.isVisibleItemMaster=false;
 
     }
 
@@ -360,7 +361,7 @@ export class PaintReportsNewComponent implements OnInit {
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
             this.isVisiblefromtosubinventory=false;
-
+ this.isVisibleItemMaster=false;
 
     }
     else if (reportName === 'gstsparesInventoryAging') {
@@ -384,8 +385,7 @@ export class PaintReportsNewComponent implements OnInit {
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
             this.isVisiblefromtosubinventory=false;
-
-
+ this.isVisibleItemMaster=false;
     }
    
     else if (reportName === 'gstClosingReport') {
@@ -409,7 +409,7 @@ export class PaintReportsNewComponent implements OnInit {
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
             this.isVisiblefromtosubinventory=false;
-
+ this.isVisibleItemMaster=false;
     }
 
     else if (reportName === 'gstClosingStocksummary') {
@@ -433,7 +433,7 @@ export class PaintReportsNewComponent implements OnInit {
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
             this.isVisiblefromtosubinventory=false;
-
+ this.isVisibleItemMaster=false;
     }
 
 
@@ -458,7 +458,7 @@ export class PaintReportsNewComponent implements OnInit {
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
             this.isVisiblefromtosubinventory=false;
-
+ this.isVisibleItemMaster=false;
 
     }
     else if (reportName === 'gstsparesMiscIssueReceipt') {
@@ -482,7 +482,7 @@ export class PaintReportsNewComponent implements OnInit {
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
             this.isVisiblefromtosubinventory=false;
-
+ this.isVisibleItemMaster=false;
     }
 
     else if (reportName === 'gstsparesPaintPanel') {
@@ -506,7 +506,7 @@ export class PaintReportsNewComponent implements OnInit {
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
-
+ this.isVisibleItemMaster=false;
     }
     else if (reportName === 'gstsparesPaintPanelDtlRpt') {
       this.reportName = 'Paint Panel Detail Report';
@@ -529,6 +529,7 @@ export class PaintReportsNewComponent implements OnInit {
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
+       this.isVisibleItemMaster=false;
     }
 
     else if (reportName === 'gststockTransfer') {
@@ -552,6 +553,7 @@ export class PaintReportsNewComponent implements OnInit {
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
+       this.isVisibleItemMaster=false;
     }
 
     else if (reportName === 'gststockTransferSummary') {
@@ -575,6 +577,7 @@ export class PaintReportsNewComponent implements OnInit {
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
+       this.isVisibleItemMaster=false;
     }
 
     else if (reportName === 'gststockTransferReceivedDetails') {
@@ -598,6 +601,7 @@ export class PaintReportsNewComponent implements OnInit {
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
+       this.isVisibleItemMaster=false;
     }
 
     else if (reportName === 'gststockTransferReceivedSummary') {
@@ -621,6 +625,7 @@ export class PaintReportsNewComponent implements OnInit {
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
+       this.isVisibleItemMaster=false;
     }
 
     else if (reportName === 'gstSparesClosingStockAsOnDate') {
@@ -644,6 +649,7 @@ export class PaintReportsNewComponent implements OnInit {
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
+       this.isVisibleItemMaster=false;
     }
 
     else if (reportName === 'billHandedoverToActReport') {
@@ -673,6 +679,7 @@ export class PaintReportsNewComponent implements OnInit {
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
+       this.isVisibleItemMaster=false;
     }
 
     else if (reportName === 'paintStockTakingBlankFormat') {
@@ -697,6 +704,7 @@ export class PaintReportsNewComponent implements OnInit {
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
+       this.isVisibleItemMaster=false;
     }
 
     else if (reportName === 'paintStockTakingDetailFormat') {
@@ -721,6 +729,7 @@ export class PaintReportsNewComponent implements OnInit {
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
+       this.isVisibleItemMaster=false;
     }
 
     else if (reportName === 'paintStockTakinUploadFormat') {
@@ -745,6 +754,7 @@ export class PaintReportsNewComponent implements OnInit {
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
+       this.isVisibleItemMaster=false;
     }
 
     else if (reportName === 'paintStockTakingQtyDetails') {
@@ -769,6 +779,7 @@ export class PaintReportsNewComponent implements OnInit {
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
+       this.isVisibleItemMaster=false;
     }
     else if (reportName === 'icConsumptionReport') {
       this.reportName = 'Internal Consumption Report';
@@ -791,6 +802,7 @@ export class PaintReportsNewComponent implements OnInit {
         this.isVisibleonlyOuCode = false;
         this.isVisiblePanelOUFromDateToDateSubInv=false;
         this.isVisiblefromtosubinventory=false;
+         this.isVisibleItemMaster=false;
       }
       else if (reportName === 'paintDailyReport') {
         this.reportName = 'Paint Daily Report';
@@ -813,7 +825,7 @@ export class PaintReportsNewComponent implements OnInit {
           this.isVisibleonlyOuCode = false;
           this.isVisiblePanelOUFromDateToDateSubInv=true;
           this.isVisiblefromtosubinventory=false;
-
+ this.isVisibleItemMaster=false;
         }
         else if (reportName === 'panelConsuptionRe') {
         this.reportName = 'Paint Daily Report';
@@ -836,7 +848,7 @@ export class PaintReportsNewComponent implements OnInit {
         this.isVisibleonlyOuCode = false;
         this.isVisiblePanelOUFromDateToDateSubInv=false;
         this.isVisiblefromtosubinventory=false;
-
+           this.isVisibleItemMaster=false;
         }
 
       else if (reportName === 'sparesSubinvTransReceived') {
@@ -860,6 +872,7 @@ export class PaintReportsNewComponent implements OnInit {
         this.isVisibleonlyOuCode = false;
         this.isVisiblePanelOUFromDateToDateSubInv=false;
         this.isVisiblefromtosubinventory=true;
+         this.isVisibleItemMaster=false;
     }
     else if (reportName === 'sparesSubinvTransMade') {
       this.reportName = 'Sub Inventory Transfer Made Report';
@@ -882,6 +895,7 @@ export class PaintReportsNewComponent implements OnInit {
         this.isVisibleonlyOuCode = false;
         this.isVisiblePanelOUFromDateToDateSubInv=false;
         this.isVisiblefromtosubinventory=true;
+         this.isVisibleItemMaster=false;
     }
   }
 
@@ -918,18 +932,9 @@ export class PaintReportsNewComponent implements OnInit {
     var tolocId = this.paintReportFormNew.get('tolocId').value;
     var locId = this.paintReportFormNew.get('locId').value;
 
-    // alert (locId)
-
-    // return;
-    // if (locId === null  ) {
-    //   alert('Please Select location Code.!');
-    //   return;
-    // }
     var fDate =this.paintReportFormNew.get('fromDate').value;
     var tDate =this.paintReportFormNew.get('toDate').value;
     var operatingUnitId=this.paintReportFormNew.get('opUnitId').value;
-
-      // alert ("OU ID, LOCID:" +operatingUnitId + " , "+locId );
 
 
     if (reportName === 'Paint Purchase Register Details') {
@@ -1597,6 +1602,22 @@ export class PaintReportsNewComponent implements OnInit {
             })
           } 
         }
+        else if (reportName=='Item Master Report'){
+     const fileName = 'Item Master Report' +  '.xls';
+    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    var suP= (sessionStorage.getItem('ouName'));
+    var subTP = suP.substr(0, 2);
+    // alert(subTP)
+    var p_subType=  this.paintReportFormNew.get('subType').value;
+    // alert(subTP);
+      this.reportService.itemMasterPaintFn(subTP,p_subType,sessionStorage.getItem('ouId'))
+      .subscribe(data => {
+        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+        this.closeResetButton = true;
+        this.dataDisplay = ''
+        this.isDisabled1=false;
+      })  
+  }
 
   }
 

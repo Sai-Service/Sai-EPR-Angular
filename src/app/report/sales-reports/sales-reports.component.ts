@@ -1266,7 +1266,7 @@ export class SalesReportsComponent implements OnInit {
       const fileName = 'Sales Invoiced Not Delivered-' +  '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.salesINDReport(toDate, locId)
+        this.reportService.salesINDReport(toDate, sessionStorage.getItem('ouId'),locId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''
@@ -1275,7 +1275,7 @@ export class SalesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.salesINDReport(toDate, sessionStorage.getItem('locId'))
+        this.reportService.salesINDReport(toDate, sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''
@@ -1310,7 +1310,7 @@ export class SalesReportsComponent implements OnInit {
       const fileName = 'Sales Alloted Not Invoiced Report-' +  '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.salesAltnotInvReport(toDate, locId)
+        this.reportService.salesAltnotInvReport(toDate, sessionStorage.get('ouId'),locId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''
@@ -1319,7 +1319,7 @@ export class SalesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.salesAltnotInvReport(toDate, sessionStorage.getItem('locId'))
+        this.reportService.salesAltnotInvReport(toDate, sessionStorage.get('ouId'),sessionStorage.getItem('locId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''
@@ -2283,7 +2283,7 @@ export class SalesReportsComponent implements OnInit {
     const fileName = 'Sales Invoiced Not Delivered-' +  '-TO-' + toDate + '.xls';
 
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.salesINDReport(toDate, sessionStorage.getItem('locId'))
+    this.reportService.salesINDReport(toDate,sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.dataDisplay = ''
@@ -2328,7 +2328,7 @@ export class SalesReportsComponent implements OnInit {
     var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
     const fileName = 'Sales Alloted Not Invoiced Report-' +  '-TO-' + toDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.salesAltnotInvReport(toDate, sessionStorage.getItem('locId'))
+    this.reportService.salesAltnotInvReport(toDate,sessionStorage.get('ouId') ,sessionStorage.getItem('locId'))
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.dataDisplay = ''

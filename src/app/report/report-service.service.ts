@@ -1160,8 +1160,8 @@ salesAddonReconciliation(fromDate,toDate,segment1,segment2,segment3,segment4,seg
   });
 }
 
-salesINDReport(toDate,locId){
-  const REQUEST_URI = this.ServerUrl +`/SalesReports/VehIndReg?toDate=${toDate}&locId=${locId}`;
+salesINDReport(toDate,ouId,locId){
+  const REQUEST_URI = this.ServerUrl +`/SalesReports/VehIndReg?toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
   return this.http.get(REQUEST_URI, {
     // params: REQUEST_PARAMS,
     responseType: 'arraybuffer',
@@ -1169,8 +1169,8 @@ salesINDReport(toDate,locId){
   });
 }
 
-salesAltnotInvReport(toDate,locId){
-  const REQUEST_URI = this.ServerUrl +`/SalesReports/VehAnIReg?toDate=${toDate}&locId=${locId}`;
+salesAltnotInvReport(toDate,ouId,locId){
+  const REQUEST_URI = this.ServerUrl +`/SalesReports/VehAnIReg?toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
   return this.http.get(REQUEST_URI, {
     // params: REQUEST_PARAMS,
     responseType: 'arraybuffer',
@@ -1393,6 +1393,22 @@ apInvHeadCSFn(fromDate,toDate,ouId){
 
 apInvLinCSFn(fromDate,toDate,ouId){
   const REQUEST_URI = this.ServerUrl +`/AccountsReports/APInvLines?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  }); 
+}
+
+itemMasterFn(p_mainType,p_subType,ouId){
+  const REQUEST_URI = this.ServerUrl +`/SparesReports/ItemMasterList?p_mainType=${p_mainType}&p_subType=${p_subType}&ouId=${ouId}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  }); 
+}
+
+itemMasterPaintFn(p_mainType,p_subType,ouId){
+  const REQUEST_URI = this.ServerUrl +`/SparesReports/ItemMasterList?p_mainType=${p_mainType}&p_subType=${p_subType}&ouId=${ouId}`;
   return this.http.get(REQUEST_URI, {
     responseType: 'arraybuffer',
     headers: this.headers,
