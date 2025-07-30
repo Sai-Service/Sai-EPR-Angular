@@ -33,6 +33,8 @@ export class SparesReportsComponent implements OnInit {
   trxNumber:number;
   public BillShipToList: Array<string> = [];
   public BillShipFromList: Array<string> = [];
+
+  public ItemMainTypeList: Array<string> = [];
   public ItemSubTypeList: Array<string> = [];
 
   periodNameList: any = [];
@@ -63,6 +65,9 @@ export class SparesReportsComponent implements OnInit {
   spDbAging2: number=30;
   spDbAging3: number=45;
   spDbAging4: number=60;
+
+  subTp :string;
+  mainTp :string;
 
   invItemList = new Array();
   isVisibleGSTPurchaseRegister: boolean = false;
@@ -137,6 +142,9 @@ export class SparesReportsComponent implements OnInit {
       spDbAging2:[],
       spDbAging3:[],
       spDbAging4:[],
+
+       subTp :[],
+       mainTp :[],
 
       compileCode:[''],
     })
@@ -248,6 +256,13 @@ export class SparesReportsComponent implements OnInit {
           console.log(this.invItemList);
         }
       );
+
+        this.service.ItemMainTypeLst(sessionStorage.getItem('divisionId'))
+          .subscribe(
+          data => {
+            this.ItemMainTypeList = data;
+          }
+        );
   }
 
   refresh() {
@@ -3233,13 +3248,20 @@ export class SparesReportsComponent implements OnInit {
     else if (reportName === 'Item Master List') {
         // alert ('reportName---'+reportName)
         //itemMasterList
-        var subtp =this.sparesReportForm.get('subTp').value;
-  
+          var subtp =this.sparesReportForm.get('subTp').value;
+          var maintp =this.sparesReportForm.get('mainTp').value;
+
+           if(maintp==null || maintp == undefined || maintp.trim() == ''){
+            alert ("Please Select [ITEM CATEGORY]");
+            this.closeResetButton = true;
+            this.dataDisplay = ''; return;
+          }
+          
         const fileName = 'Item Master List-' + sessionStorage.getItem('ouName').trim() + '.xls';
         // alert (fileName)
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
         if (Number(sessionStorage.getItem('deptId')) === 4) {
-          this.reportService.itemMasterListReport(sessionStorage.getItem('ouId'),subInventory,subtp)
+          this.reportService.itemMasterListReport(sessionStorage.getItem('ouId'),maintp,subtp)
             .subscribe(data => {
               saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
               this.isDisabled1 = false;
@@ -3248,7 +3270,7 @@ export class SparesReportsComponent implements OnInit {
             })
         }
         else if (Number(sessionStorage.getItem('deptId')) != 4) {
-          this.reportService.itemMasterListReport(sessionStorage.getItem('ouId'),subInventory,subtp)
+          this.reportService.itemMasterListReport(sessionStorage.getItem('ouId'),maintp,subtp)
             .subscribe(data => {
               saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
               this.isDisabled1 = false;
@@ -3334,4 +3356,14 @@ export class SparesReportsComponent implements OnInit {
   diffDays(dt1,dt2) {
     return Math.floor((Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) - Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate())) / (800 * 60 * 60 * 24));
   }
+
+   onOptionsSubType(event){
+    // alert("event :"+event);
+        this.service.ItemSubTypeLst(event)
+        .subscribe(
+        data => {
+        this.ItemSubTypeList = data;
+        console.log(this.ItemSubTypeList);
+      });
+    }
 }

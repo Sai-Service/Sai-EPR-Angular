@@ -39,7 +39,9 @@ export class PaintReportsComponent implements OnInit {
   public BillShipFromList: Array<string> = [];
   periodNameList: any = [];
 
+  public ItemMainTypeList: Array<string> = [];
   public ItemSubTypeList: Array<string> = [];
+  
 
   public DepartmentList: any = [];
   
@@ -53,6 +55,8 @@ export class PaintReportsComponent implements OnInit {
 
   subInvCode: any;
   subTp :string;
+  mainTp :string;
+
 
   segment: string;
   fromlocCode:string;
@@ -136,7 +140,7 @@ export class PaintReportsComponent implements OnInit {
       spDbAging3:[],
       spDbAging4:[],
       subTp :[],
-
+      mainTp:[],
 
 
       compileCode:[''],
@@ -154,6 +158,9 @@ export class PaintReportsComponent implements OnInit {
     this.paintReportForm.patchValue({ locCode: sessionStorage.getItem('locId') + '-' + sessionStorage.getItem('locName') })
     this.paintReportForm.patchValue({ department: 'DP' });
     this.paintReportForm.patchValue({ deptId: 3 })
+    // this.paintReportForm.patchValue({ divisionId: sessionStorage.getItem('divisionId') })
+
+    
     // this.paintReportForm.patchValue({ locId: Number(sessionStorage.getItem('locId')) })
 
     // Prevent closing from click inside dropdown
@@ -234,22 +241,18 @@ export class PaintReportsComponent implements OnInit {
           this.subInventory = this.subInvCode.subInventoryCode;
           this.paintReportForm.patchValue({ subInventory: this.subInvCode.subInventoryCode })
         }
-
-           this.service.ItemSubTypeLst(this.subInventory)
-          .subscribe(
-          data => {
-            this.ItemSubTypeList = data;
-          }
-        );
-
-
+      
       });
 
 
       
-     
 
-
+        this.service.ItemMainTypeLst(sessionStorage.getItem('divisionId'))
+          .subscribe(
+          data => {
+            this.ItemMainTypeList = data;
+          }
+        );
 
          this.paintReportForm.patchValue({ userName: sessionStorage.getItem('ticketNo') })
 
@@ -1520,12 +1523,20 @@ export class PaintReportsComponent implements OnInit {
       // alert ('reportName---'+reportName)
       //itemMasterList
       var subtp =this.paintReportForm.get('subTp').value;
+      var maintp =this.paintReportForm.get('mainTp').value;
+
+         if(maintp==null || maintp == undefined || maintp.trim() == ''){
+            alert ("Please Select [ITEM CATEGORY]");
+            this.closeResetButton = true;
+            this.dataDisplay = ''; return;
+          }
+
 
       const fileName = 'Item Master List-' + sessionStorage.getItem('ouName').trim() + '.xls';
       // alert (fileName)
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.itemMasterListReport(sessionStorage.getItem('ouId'),subInventory,subtp)
+        this.reportService.itemMasterListReport(sessionStorage.getItem('ouId'),maintp,subtp)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1534,7 +1545,7 @@ export class PaintReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.itemMasterListReport(sessionStorage.getItem('ouId'),subInventory,subtp)
+        this.reportService.itemMasterListReport(sessionStorage.getItem('ouId'),maintp,subtp)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1789,9 +1800,7 @@ export class PaintReportsComponent implements OnInit {
        this.paintReportForm.get('locCode').reset();
       return;
     }}
-  
-
-  }
+    }
 
   onOptionsToLocation(event) {
     // alert("To Location : "+ event);
@@ -1842,5 +1851,17 @@ export class PaintReportsComponent implements OnInit {
       return;
     }
   }
+
+  onOptionsSubType(event){
+    // alert("event :"+event);
+        this.service.ItemSubTypeLst(event)
+        .subscribe(
+        data => {
+        this.ItemSubTypeList = data;
+        console.log(this.ItemSubTypeList);
+      });
+    }
+
+   
 
 }

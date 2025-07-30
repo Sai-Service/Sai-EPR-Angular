@@ -173,9 +173,15 @@ export class MasterService {
     return this.http.get(this.ServerUrl + '/cmnLookup/DeptList');
   }
 
-   ItemSubTypeLst(mainTp): Observable<any> {
-    return this.http.get(this.ServerUrl + `/itemCategory/subType/${mainTp}`);
+   ItemSubTypeLst(subTp): Observable<any> {
+    return this.http.get(this.ServerUrl + `/itemCategory/subType/${subTp}`);
     // http://localhost:8081/itemCategory/subType/BJ
+  }
+
+  ItemMainTypeLst(divId): Observable<any> {
+    // alert ("in api")
+    return this.http.get(this.ServerUrl + `/itemCategory/maintype/${divId}`);
+    // http://localhost:8081/itemCategory/maintype/2
   }
 
 

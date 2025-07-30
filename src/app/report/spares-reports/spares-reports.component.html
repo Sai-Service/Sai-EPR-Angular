@@ -2357,18 +2357,27 @@ id="panelStockMissMatch">
                                         <td style="width: 15%" class="LabelFontStyle"> &nbsp;SubInventory&nbsp;:&nbsp; </td>
                                         <td><input  disabled  type="text" class="form-control" formControlName="subInventory"></td>
                                  
+                                        </tr>
+                                        <tr>
+                                      <td style="width: 15%" class="LabelFontStyle">&nbsp;Item&nbsp;Category&nbsp;:&nbsp;</td>
+                                                                    
+                                        <select formControlName="mainTp" id="mainTp" [(ngModel)]="mainTp" class="form-control"
+                                            (change)='onOptionsSubType(mainTp)'>
+                                            <!-- <option></option> -->
+                                            <option *ngFor="let sc of  ItemMainTypeList" [value]="sc.mainType">
+                                                {{sc.mainType}}
+                                            </option>
+                                        </select>
                                    
-                                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Item&nbsp;SubType&nbsp;:&nbsp;</td>
-                                  
-                                   
+                                        <td style="width: 15%" class="LabelFontStyle">&nbsp;Item&nbsp;SubType&nbsp;:&nbsp;</td>
+                                                                    
                                         <select formControlName="subTp" id="subTp" class="form-control">
-                                            <!-- (ngModelChange)='onOptionsLocation($event)'> -->
                                             <option></option>
                                             <option *ngFor="let sc of  ItemSubTypeList" [value]="sc.subType">
                                                 {{sc.subType}}
                                             </option>
                                         </select>
-                                      </tr>
+                                       </tr>
                                     
 
                                 </table>
