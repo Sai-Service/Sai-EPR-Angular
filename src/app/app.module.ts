@@ -27,6 +27,7 @@ import { PoReceiptFormComponent } from './master/po-receipt-form/po-receipt-form
 //import { DeActivateGuard } from './de-activate.guard';
 import { FaCommanMasterComponent } from './fixed-asset/fa-master/fa-comman-master/fa-comman-master.component';
 import { AllReportsComponent } from './report/all-reports.component';
+
 // import { ToolsPurchaseOrderComponent } from './tools/tools-purchase-order/tools-purchase-order.component';
 
 // import { NgxSpinnerModule } from "ngx-spinner"; 

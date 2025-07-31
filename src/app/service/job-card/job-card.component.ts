@@ -12,8 +12,7 @@ interface IjobCard {
   disTypeLab:string;
   labDiscountPer:number;
   labDiscount:number;
-  
-
+  dmsJcNo:string;
   disTypeMat:string;
   matDiscountPer:number;
   matDiscout:number;
@@ -2384,6 +2383,8 @@ export class JobCardComponent implements OnInit {
     if(formValue.promiseDate===null || formValue.promiseDate===undefined) {this.jobHeaderValidation = false;
       msg1="PROMISED DATE : Enter Promised Date....";alert(msg1);return;}
       
+       if(formValue.dmsJcNo===null || formValue.dmsJcNo===undefined) {this.jobHeaderValidation = false;
+      msg1="DMS Job Card : Enter The DMS Job Card No....";alert(msg1);return;}
        
     
     

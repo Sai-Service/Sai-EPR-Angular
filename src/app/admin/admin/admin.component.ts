@@ -125,7 +125,7 @@ export class AdminComponent implements OnInit {
   isVisiblePaintPurchase:boolean=true;
   isVisiblePaintReport:boolean=true;
   isVisiblePaintReportAuditor:boolean=true;
-
+  isVisibleReinsurance:boolean=false;
 
   fullName: string;
   deptName: string;
@@ -347,14 +347,11 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisiblePaintStock=false;
       this.isVisiblePaintReport=true;
       this.isVisiblePaintReportAuditor=false;
+      this.isVisibleReinsurance=false;
     }
 
 
-    if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem('deptName')==='DP' && (sessionStorage.getItem('roleId')) !== 'AUDITOR' ) 
-    // && sessionStorage.getItem('ticketNo') ==='GM01733')
-    // Paint Login -----
-    // alert("role Id :" + (sessionStorage.getItem('roleId')))
-
+    if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem('deptName')==='DP' && (sessionStorage.getItem('roleId')) !== 'AUDITOR' )  
     {
       this.isVisibleSearchPaint=true;
       this.isVisibleMaster=false;
@@ -398,7 +395,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisiblePaintReport=true;
       this.isVisiblePaintReportAuditor=false;
       this.isVisiblePaintStock=true;
-
+      this.isVisibleReinsurance=false;
       // this.isVisibleShellReport=false;
 
     }
@@ -447,7 +444,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
         this.isVisiblePaintReport=false;
         this.isVisiblePaintReportAuditor=true;
         this.isVisiblePaintStock=false;
-
+        this.isVisibleReinsurance=false;
       }
 
     // && sessionStorage.getItem('ticketNo') ==='P5678'
@@ -492,7 +489,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibleAccessories=false;
       this.isVisibilePaintSystem=false
       this.isVisibleSearchPaint=false;
-
+      this.isVisibleReinsurance=false;
       // this.isVisibilePetrolPumpSystem=true;
       // this.isVisibleShellReport=false;
     }
@@ -532,7 +529,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibilePaintSystem=false;
       this.isVisibleShellReport=false;
       this.isVisibleSearchPaint=false;
-
+      this.isVisibleReinsurance=false;
       // if (sessionStorage.getItem('deptName')==='Account'){
 
       // }
@@ -576,7 +573,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibilePaintSystem=false;
       this.isVisibleShellReport=false;
       this.isVisibleSearchPaint=false;
-
+      this.isVisibleReinsurance=false;
     }
     if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId'))===2 && sessionStorage.getItem('deptName')==='Service'){
       this.isVisible11=false;
@@ -613,7 +610,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibilePaintSystem=false;
       this.isVisibleShellReport=false;
       this.isVisibleSearchPaint=false;
-
+      this.isVisibleReinsurance=false;
     }
 
 
@@ -652,7 +649,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibleAccessories=true;
       this.isVisibilePaintSystem=false;
       this.isVisibleSearchPaint=false;
-
+      this.isVisibleReinsurance=false;
       // this.isVisibleShellReport=false;
       // alert((sessionStorage.getItem('deptName')))
       if ((sessionStorage.getItem('deptName'))==='Shell'){
@@ -702,7 +699,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibilePaintSystem=false;
       this.isVisibleShellReport=false;
       this.isVisibleSearchPaint=false;
-
+      this.isVisibleReinsurance=false;
     }
 
     if (Number(sessionStorage.getItem('divisionId')) === 2 && sessionStorage.getItem('deptName')==='Accessories' && Number(sessionStorage.getItem('roleId'))===4){
@@ -742,7 +739,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibilePaintSystem=false;
       this.isVisibleShellReport=false;
       this.isVisibleSearchPaint=false;
-
+      this.isVisibleReinsurance=false;
     }
 
 
@@ -783,7 +780,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibilePaintSystem=false;
       this.isVisibleShellReport=false;
       this.isVisibleSearchPaint=false;
-
+      this.isVisibleReinsurance=false;
     }
     if (Number(sessionStorage.getItem('deptId'))===4){
       this.isVisibleAccountsRepor=true;
@@ -830,9 +827,49 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       // this.isVisibleShellReport=false;
         this.isVisibleShellReport=true;
         this.isVisibleSearchPaint=false;
-
+        this.isVisibleReinsurance=false;
     }
 
+    if ((sessionStorage.getItem('roleId')) === 'REINS'  ){
+      this.isVisibleReinsurance=true;
+       this.isVisible11=false;
+      this.isVisible12=false;
+      this.isVisible37=false;
+       this.isVisibleToolsMaster=false;
+      this.isVisibleSaleStockAdju=false;
+      this.isVisibleSubInventoryTransfer=false;
+      this.isVisible13=false;
+      this.isVisibleWsVehicleMaster=false;
+      this.isVisible14=false;
+      this.isVisible15=false;
+      this.isVisible16=false;
+      this.isVisible17=false;
+      this.isVisible18=false;
+      this.isVisible19=false;
+      this.isVisible20=false;
+      this.isVisible21=false;
+      this.isVisible22=false;
+      this.isVisible23=false;
+      this.isVisible24=false;
+      this.isVisible25=false;
+      this.isVisible26=false;
+      this.isVisible27=false;
+      this.isVisible28=false;
+      this.isVisible29=false;
+      this.isVisibleSparesReport=false;
+      this.isVisible31=false;
+      this.isVisible32=false;
+      this.isVisibleServiceReport=false;
+      this.isVisibleSalesReport=false;
+      this.isVisibleAccountsRepor=false;
+      this.isVisibleServerReport=false;
+      this.isVisibleAccessories=false;
+      this.isVisibilePaintSystem=false;
+      this.isVisibleMaster=false;
+      // this.isVisibleShellReport=false;
+        this.isVisibleShellReport=false;
+        this.isVisibleSearchPaint=false;
+    }
 
  if (Number(sessionStorage.getItem('divisionId')) === 1 && Number(sessionStorage.getItem('deptId'))===5 && (sessionStorage.getItem('roleId')) !== 'PAINT') {
     this.isVisible11=false;
@@ -880,6 +917,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibleShellReport=false;
       // this.isVisibleSearchPaint=false;
       this.isVisibleCustMaster=false;
+      this.isVisibleReinsurance=false;
  }
 
     if (

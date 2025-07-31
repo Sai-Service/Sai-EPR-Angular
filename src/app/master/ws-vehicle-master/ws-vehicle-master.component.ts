@@ -737,7 +737,7 @@ export class WsVehicleMasterComponent implements OnInit {
         mReg=mReg.trim();
         this.regNo=mReg;
          //  ---------------------------------------------------
-      if(mReg.length<9 || mReg.length>10) { alert (mReg+ " :Registration No should have minimum 9 & maximum 10 characters. " ) ; this.wsVehicleMasterForm.patchValue({regNo :''});return;}
+      if(mReg.length<8 || mReg.length>10) { alert (mReg+ " :Registration No should have minimum 9 & maximum 10 characters. " ) ; this.wsVehicleMasterForm.patchValue({regNo :''});return;}
    
     this.service.getVehRegDetailsNew(mReg)
     .subscribe(
