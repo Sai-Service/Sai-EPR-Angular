@@ -119,12 +119,16 @@ export class AdminComponent implements OnInit {
   isVisibleShortLanded:boolean=true;
   isVisibleSearchPaint:boolean=false;
   isVisibleToolsMaster :boolean=false;
+
   isVisiblePaintMaster:boolean=true;
   isVisiblePaintTrans:boolean=true;
   isVisiblePaintStock:boolean=true;
   isVisiblePaintPurchase:boolean=true;
   isVisiblePaintReport:boolean=true;
   isVisiblePaintReportAuditor:boolean=true;
+  isVisibleToolReport:boolean=true;
+
+
   isVisibleReinsurance:boolean=false;
 
   fullName: string;
@@ -348,6 +352,8 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisiblePaintReport=true;
       this.isVisiblePaintReportAuditor=false;
       this.isVisibleReinsurance=false;
+      this.isVisibleToolReport=false;
+
     }
 
 
@@ -396,6 +402,8 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisiblePaintReportAuditor=false;
       this.isVisiblePaintStock=true;
       this.isVisibleReinsurance=false;
+            this.isVisibleToolReport=false;
+
       // this.isVisibleShellReport=false;
 
     }
@@ -445,6 +453,8 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
         this.isVisiblePaintReportAuditor=true;
         this.isVisiblePaintStock=false;
         this.isVisibleReinsurance=false;
+              this.isVisibleToolReport=false;
+
       }
 
     // && sessionStorage.getItem('ticketNo') ==='P5678'
@@ -490,6 +500,8 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibilePaintSystem=false
       this.isVisibleSearchPaint=false;
       this.isVisibleReinsurance=false;
+            this.isVisibleToolReport=false;
+
       // this.isVisibilePetrolPumpSystem=true;
       // this.isVisibleShellReport=false;
     }
@@ -530,6 +542,8 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibleShellReport=false;
       this.isVisibleSearchPaint=false;
       this.isVisibleReinsurance=false;
+            this.isVisibleToolReport=false;
+
       // if (sessionStorage.getItem('deptName')==='Account'){
 
       // }
@@ -574,6 +588,8 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibleShellReport=false;
       this.isVisibleSearchPaint=false;
       this.isVisibleReinsurance=false;
+            this.isVisibleToolReport=false;
+
     }
     if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId'))===2 && sessionStorage.getItem('deptName')==='Service'){
       this.isVisible11=false;
@@ -611,6 +627,8 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibleShellReport=false;
       this.isVisibleSearchPaint=false;
       this.isVisibleReinsurance=false;
+            this.isVisibleToolReport=false;
+
     }
 
 
@@ -650,6 +668,8 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibilePaintSystem=false;
       this.isVisibleSearchPaint=false;
       this.isVisibleReinsurance=false;
+            this.isVisibleToolReport=false;
+
       // this.isVisibleShellReport=false;
       // alert((sessionStorage.getItem('deptName')))
       if ((sessionStorage.getItem('deptName'))==='Shell'){
@@ -700,6 +720,8 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibleShellReport=false;
       this.isVisibleSearchPaint=false;
       this.isVisibleReinsurance=false;
+            this.isVisibleToolReport=false;
+
     }
 
     if (Number(sessionStorage.getItem('divisionId')) === 2 && sessionStorage.getItem('deptName')==='Accessories' && Number(sessionStorage.getItem('roleId'))===4){
@@ -740,6 +762,8 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibleShellReport=false;
       this.isVisibleSearchPaint=false;
       this.isVisibleReinsurance=false;
+            this.isVisibleToolReport=false;
+
     }
 
 
@@ -781,6 +805,8 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibleShellReport=false;
       this.isVisibleSearchPaint=false;
       this.isVisibleReinsurance=false;
+            this.isVisibleToolReport=false;
+
     }
     if (Number(sessionStorage.getItem('deptId'))===4){
       this.isVisibleAccountsRepor=true;
@@ -825,9 +851,11 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibleAccessories=false;
       this.isVisibilePaintSystem=false;
       // this.isVisibleShellReport=false;
-        this.isVisibleShellReport=true;
-        this.isVisibleSearchPaint=false;
-        this.isVisibleReinsurance=false;
+      this.isVisibleShellReport=true;
+      this.isVisibleSearchPaint=false;
+      this.isVisibleReinsurance=false;
+      this.isVisibleToolReport=false;
+
     }
 
     if ((sessionStorage.getItem('roleId')) === 'REINS'  ){
@@ -867,8 +895,10 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibilePaintSystem=false;
       this.isVisibleMaster=false;
       // this.isVisibleShellReport=false;
-        this.isVisibleShellReport=false;
-        this.isVisibleSearchPaint=false;
+      this.isVisibleShellReport=false;
+      this.isVisibleSearchPaint=false;
+      this.isVisibleToolReport=false;
+
     }
 
  if (Number(sessionStorage.getItem('divisionId')) === 1 && Number(sessionStorage.getItem('deptId'))===5 && (sessionStorage.getItem('roleId')) !== 'PAINT') {
@@ -879,13 +909,16 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
           if(sessionStorage.getItem('roleId') == 'TOOLS') {
               this.isVisible14=false;
               this.isVisibleSaleStockAdju=false;
-              this.isVisibleSearchPaint=true;
-
+              this.isVisibleSearchPaint=false;
+              this.isVisibleToolReport=true;
+              this.isVisible29=false;
           } else  
             { this.isVisible14=true;
               this.isVisibleSaleStockAdju=true; 
-              this.isVisibleSearchPaint=false;
-}
+              this.isVisible29=true;
+              this.isVisibleToolReport=false;
+
+            }
 
       this.isVisible15=false;
       this.isVisible16=false;
@@ -903,7 +936,6 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibleSubInventoryTransfer=false;
       this.isVisible27=false;
       this.isVisible28=false;
-      this.isVisible29=true;
       this.isVisibleToolsMaster=true;
       this.isVisibleSparesReport=true;
       this.isVisible31=false;
@@ -915,7 +947,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibleAccessories=false;
       this.isVisibilePaintSystem=false;
       this.isVisibleShellReport=false;
-      // this.isVisibleSearchPaint=false;
+      this.isVisibleSearchPaint=false;
       this.isVisibleCustMaster=false;
       this.isVisibleReinsurance=false;
  }
