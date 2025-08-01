@@ -8,11 +8,7 @@ import { TransactionService } from '../transaction.service';
 import { ManualARInvoiceObj } from './manual-arinvoice-obj';
 import { DatePipe, Location } from '@angular/common';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-// import { stringify } from '@angular/compiler/src/util';
-// import { event } from 'jquery';
-// import { log } from 'util';
-// import { ManualInvoiceObj } from '../po-invoice/manual-invoice-obglDatej';
-// import { ManualARInvoiceObj } from '../manual-arinvoice-obj';
+
 
 
 interface IArInvoice {
