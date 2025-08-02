@@ -12,6 +12,7 @@ import { TemplateDownloadComponent } from './template-download/template-download
 import { ShellReportComponent } from './shell-report/shell-report.component';
 import { PetrolPumpReportComponent } from './petrol-pump-report/petrol-pump-report.component';
 import { PaintReportsNewComponent } from './paint-reports-new/paint-reports-new.component';
+import { ToolsReportsComponent } from './tools-reports/tools-reports.component';
 
 
 
@@ -28,6 +29,7 @@ const routes: Routes = [
   {path:'ShellReport',component:ShellReportComponent},
   {path:'petrolPumpReport',component:PetrolPumpReportComponent},
   {path:'PaintReportsNew',component:PaintReportsNewComponent},
+  {path:'ToolsReports',component:ToolsReportsComponent},
 
 
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }];
