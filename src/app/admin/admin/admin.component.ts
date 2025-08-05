@@ -909,7 +909,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
           if(sessionStorage.getItem('roleId') == 'TOOLS') {
               this.isVisible14=false;
               this.isVisibleSaleStockAdju=false;
-              this.isVisibleSearchPaint=false;
+              this.isVisibleSearchPaint=true;
               this.isVisibleToolReport=true;
               this.isVisible29=false;
           } else  
@@ -917,6 +917,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
               this.isVisibleSaleStockAdju=true; 
               this.isVisible29=true;
               this.isVisibleToolReport=false;
+              this.isVisibleSearchPaint=false;
 
             }
 
@@ -947,7 +948,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisibleAccessories=false;
       this.isVisibilePaintSystem=false;
       this.isVisibleShellReport=false;
-      this.isVisibleSearchPaint=false;
+      // this.isVisibleSearchPaint=false;
       this.isVisibleCustMaster=false;
       this.isVisibleReinsurance=false;
  }
