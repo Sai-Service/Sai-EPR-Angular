@@ -94,7 +94,7 @@
                                     <td style="width: 15%" class="LabelFontStyle">Location&nbsp;:&nbsp;</td>
 
                                     <td>
-                                        <select disabled  formControlName="locId" id="locId" [(ngModel)]="locId"  class="form-control" style="width: 300px;background-color:lightgreen;"   >
+                                        <select disabled  formControlName="locId" id="locId" [(ngModel)]="locId"  class="form-control" style="width: 300px;background-color:lightgray;"   >
                                             <option disabled>--Select--</option>
                                             <option *ngFor="let sc of locIdList"  [ngValue]="sc.locId">
                                             {{sc.locCode}}-{{sc.locName}}
@@ -105,7 +105,7 @@
                                     <td style="width: 15%" class="LabelFontStyle">Dept&nbsp;:</td>
 
                                 <td>  
-                                    <select disabled   formControlName="deptId" id="deptId" [(ngModel)]="deptId" class="form-control"  style="background-color: lightgreen;">
+                                    <select    formControlName="deptId" id="deptId" [(ngModel)]="deptId" class="form-control"  style="background-color: yellow;">
                                         <option disabled>--Select--</option>
                                         <option *ngFor="let sc of  DepartmentList" [ngValue]="sc.cmnTypeId">
                                             {{sc.cmnTypeId}}-{{sc.code}}

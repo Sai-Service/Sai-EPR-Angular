@@ -1995,7 +1995,9 @@ export class SalesReportsComponent implements OnInit {
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) == 4) {
         // this.reportService.salesPendingPymntReport(fromDate,toDate,locId,sessionStorage.getItem('ouId'))
-        this.reportService.salesPendingPymntReport(toDate, locId, sessionStorage.getItem('ouId'))
+        // this.reportService.salesPendingPymntReport(toDate, locId, sessionStorage.getItem('ouId'))
+       
+        this.reportService.salesPendingPaymentDtlsFn(toDate,  sessionStorage.getItem('ouId'),locId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2004,7 +2006,7 @@ export class SalesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.salesPendingPymntReport(toDate, sessionStorage.getItem('locId'), sessionStorage.getItem('ouId'))
+        this.reportService.salesPendingPymntReport(toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;

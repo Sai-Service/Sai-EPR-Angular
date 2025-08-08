@@ -1014,12 +1014,15 @@ export class ReportServiceService {
     });
   }
 
+
   salesPendingPymntReport(toDate,locId,ouId){
     const REQUEST_URI = this.ServerUrl +`/SalesReports/SlPendingPymtRep?toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
     });
+     
+    // http://saihorizon.com:8051/ErpReplica/SalesReports/SlPendingPymtDtlsRep?toDate=06-Aug-2025&ouId=22&locId=2203
 
   }
 
