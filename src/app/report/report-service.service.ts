@@ -843,8 +843,8 @@ export class ReportServiceService {
   }
 
 
-  serPendingVehicleReport(toDate,locId){
-    const REQUEST_URI = this.ServerUrl +`/ServiceReports/ServPendingVeh?toDate=${toDate}&locId=${locId}`;
+  serPendingVehicleReport(toDate,ouId,locId){
+    const REQUEST_URI = this.ServerUrl +`/ServiceReports/ServPendingVeh?toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -852,8 +852,8 @@ export class ReportServiceService {
     });
   }
 
-  servindToDtReport(toDate,locId){
-    const REQUEST_URI = this.ServerUrl +`/ServiceReports/ServiceIndRep?toDate=${toDate}&locId=${locId}`;
+  servindToDtReport(toDate,ouId,locId){
+    const REQUEST_URI = this.ServerUrl +`/ServiceReports/ServiceIndRep?toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -1414,5 +1414,14 @@ itemMasterPaintFn(p_mainType,p_subType,ouId){
     headers: this.headers,
   }); 
 }
+
+sparesDeadStockCalSOPFn(fromdate,toDate,ouId){
+  const REQUEST_URI = this.ServerUrl +`/SparesReports/SprDeadStkCalSOP?fromDate=${fromdate}&toDate=${toDate}&ouId=${ouId}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  }); 
+}
+
 }
 

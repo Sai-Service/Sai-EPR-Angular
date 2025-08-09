@@ -4775,6 +4775,11 @@ public saveVariantMstFn(variantMaster) {
     return this.http.post(url, options);
     // http://localhost:8081/averageCost/InsAvgCalc?locationId=1602&itemId=100899&newPrice=9.00
   }
+
+  bulkpouploadwarrantyClaim(formData: FormData) {
+    return this.http.post(this.ServerUrl + `/WarrantyClaim/upload-warranty?createdBy=${sessionStorage.getItem('ticketNo') }`, formData)
+  }
+
 }
 
 

@@ -1960,7 +1960,7 @@ export class PaintPurchaseOrderComponent implements OnInit {
       this.lineDetailsArray.controls[index].get('taxCategoryName').enable();
       this.lineDetailsArray.controls[index].get('invoiceQty').enable();
       this.lineDetailsArray.controls[index].get('invoiceRate').enable();
-
+debugger;
       if (this.itemType === "GOODS") {
         this.service.ItemDetailsList(this.invItemId, this.selSuppTaxCatNm, this.billToLoc).subscribe((res: any) => {
           if (res.code === 200) {

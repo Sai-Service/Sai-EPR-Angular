@@ -1,0 +1,41 @@
+<form [formGroup]="bulkUploadCSVForm" (ngSubmit)="bulkUploadCSV(bulkUploadCSVForm.value)">
+<div class="center">
+    <table style="width: 100%;background-color: white;">
+    <tr>
+        <td class="PageHeader">
+            &nbsp;&nbsp;Warranty&nbsp;JobCard&nbsp;CSV&nbsp;Upload&nbsp; 
+        </td>
+    </tr>
+    </table>
+  <fieldset class="RFS">
+ <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;"> <b>File&nbsp;Upload&nbsp;</b> </legend>
+    <table class="center">
+            <tr>
+                <td class="LabelFontStyle">
+                    &nbsp;&nbsp;User&nbsp;Name&nbsp;:&nbsp;
+                </td>
+                <td>
+                    <input disabled type="text" class="form-control"  formControlName="userName"  >
+                </td>
+            </tr>
+            <tr>
+                 <div class="progress form-group" *ngIf="progress > 0">
+            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width.%]="progress"> </div>
+                </div>
+            </tr>
+      
+        <tr>
+            <td class="LabelFontStyle">
+                &nbsp;&nbsp;Select&nbsp;CSV&nbsp;:&nbsp;
+            </td>
+            <td colspan="3">
+                <input class="form-control" type="file" #fileInput  accept=".csv" formControlName="files"[(ngModel)]="files" style="vertical-align: middle;margin-top: 22px;width: 350px;">&nbsp;&nbsp;  
+            </td>
+            <td>
+                <button  class="btn btn-primary" (click)="uploadFile($event)" style="width: 100%;font-size: 11px;">Upload</button>    
+            </td>
+            </tr>
+    </table>
+  </fieldset>
+</div>
+</form>

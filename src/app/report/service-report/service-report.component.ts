@@ -490,7 +490,7 @@ export class ServiceReportComponent implements OnInit {
       const fileName = 'Invoice-Not-Delivery-' +  fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.servindToDtReport(toDate, locId)
+        this.reportService.servindToDtReport(toDate, sessionStorage.getItem('ouId'),locId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''
@@ -499,7 +499,7 @@ export class ServiceReportComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.servindToDtReport(toDate, sessionStorage.getItem('locId'))
+        this.reportService.servindToDtReport(toDate, sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''
@@ -512,7 +512,7 @@ export class ServiceReportComponent implements OnInit {
       const fileName = 'Service Pending Vehicle Report-' +  fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.serPendingVehicleReport(toDate, locId)
+        this.reportService.serPendingVehicleReport(toDate, sessionStorage.getItem('ouId'),locId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''
@@ -521,7 +521,7 @@ export class ServiceReportComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.serPendingVehicleReport(toDate, sessionStorage.getItem('locId'))
+        this.reportService.serPendingVehicleReport(toDate, sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''
