@@ -1426,5 +1426,14 @@ sparesDeadStockCalSOPFn(fromdate,toDate,ouId){
   }); 
 }
 
+bajajWarrantyClaimDetFn(fromdate,toDate,ouId,dealerCode){
+  const REQUEST_URI = this.ServerUrl +`/ServiceReports/BjWarrantClaimDtls?fromDate=${fromdate}&toDate=${toDate}&ouId=${ouId}&dealerCode=${dealerCode}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  }); 
+}
+
+
 }
 

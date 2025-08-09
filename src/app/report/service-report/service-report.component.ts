@@ -60,6 +60,7 @@ export class ServiceReportComponent implements OnInit {
   isVisibleGSTSaleRegister: boolean = false;
   panelamcHistrory: boolean = false;
   isVisiblepanelserviceagingReport: boolean = false;
+  isVisibleWarrantyClaimDet:boolean=false;
   regNo: string;
   isVisiblepanelfromtoOuId: boolean = false;
   age1: number = 20;
@@ -67,6 +68,7 @@ export class ServiceReportComponent implements OnInit {
   age3: number = 45;
   age4: number = 60;
   rptValidation = true;
+  dealerCode:string;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.serviceReportForm = this.fb.group({
@@ -90,6 +92,7 @@ export class ServiceReportComponent implements OnInit {
       department: [''],
       deptId: [''],
       custAccNo: [''],
+      dealerCode:[],
     })
   }
 
@@ -178,6 +181,7 @@ export class ServiceReportComponent implements OnInit {
       this.panelamcHistrory = false;
       this.isVisiblepanelfromtoOuId = false;
       this.isVisiblepanelserviceagingReport = false;
+      this.isVisibleWarrantyClaimDet=false;
     }
     else if (reportName === 'serviceInvNotDelivery') {
       this.reportName = 'Service Invoice Not Delivered';
@@ -190,6 +194,7 @@ export class ServiceReportComponent implements OnInit {
       this.panelamcHistrory = false;
       this.isVisiblepanelfromtoOuId = false;
       this.isVisiblepanelserviceagingReport = false;
+      this.isVisibleWarrantyClaimDet=false;
     }
     else if (reportName === 'servicePendingVehicle') {
       this.reportName = 'Service Pending Vehicle Report';
@@ -202,6 +207,7 @@ export class ServiceReportComponent implements OnInit {
       this.panelamcHistrory = false;
       this.isVisiblepanelfromtoOuId = false;
       this.isVisiblepanelserviceagingReport = false;
+      this.isVisibleWarrantyClaimDet=false;
     }
     else if (reportName === 'serviceDeliverySummary') {
       this.reportName = 'Service Delivery Summary';
@@ -214,6 +220,7 @@ export class ServiceReportComponent implements OnInit {
       this.panelamcHistrory = false;
       this.isVisiblepanelfromtoOuId = false;
       this.isVisiblepanelserviceagingReport = false;
+      this.isVisibleWarrantyClaimDet=false;
     }
     else if (reportName === 'gstReceiptRegister') {
       this.reportName = 'Receipt Register';
@@ -229,6 +236,7 @@ export class ServiceReportComponent implements OnInit {
       this.panelamcHistrory = false;
       this.isVisiblepanelfromtoOuId = false;
       this.isVisiblepanelserviceagingReport = false;
+      this.isVisibleWarrantyClaimDet=false;
     }
     else if (reportName === 'gstsaiDebtors') {
       this.reportName = 'Sai Debtors';
@@ -244,6 +252,7 @@ export class ServiceReportComponent implements OnInit {
       this.panelamcHistrory = false;
       this.isVisiblepanelfromtoOuId = false;
       this.isVisiblepanelserviceagingReport = false;
+      this.isVisibleWarrantyClaimDet=false;
     }
     else if (reportName === 'customerLedger') {
       this.reportName = 'Customer Ledger Report';
@@ -259,6 +268,7 @@ export class ServiceReportComponent implements OnInit {
       this.panelamcHistrory = false;
       this.isVisiblepanelfromtoOuId = false;
       this.isVisiblepanelserviceagingReport = false;
+      this.isVisibleWarrantyClaimDet=false;
     }
     else if (reportName === 'gSTSaleRegister') {
       this.reportName = 'GST Sales Register';
@@ -271,6 +281,7 @@ export class ServiceReportComponent implements OnInit {
       this.panelamcHistrory = false;
       this.isVisiblepanelfromtoOuId = false;
       this.isVisiblepanelserviceagingReport = false;
+      this.isVisibleWarrantyClaimDet=false;
     }
     else if (reportName === 'laborChargeSummary') {
       this.reportName = 'Labour Charge Summary Report';
@@ -283,6 +294,7 @@ export class ServiceReportComponent implements OnInit {
       this.panelamcHistrory = false;
       this.isVisiblepanelfromtoOuId = false;
       this.isVisiblepanelserviceagingReport = false;
+      this.isVisibleWarrantyClaimDet=false;
     }
     else if (reportName === 'technicianSummary') {
       this.reportName = 'Technician  Summary Report';
@@ -295,6 +307,7 @@ export class ServiceReportComponent implements OnInit {
       this.panelamcHistrory = false;
       this.isVisiblepanelfromtoOuId = false;
       this.isVisiblepanelserviceagingReport = false;
+      this.isVisibleWarrantyClaimDet=false;
     }
     else if (reportName === 'amcSaleRegister') {
       this.reportName = 'AMC Sales Register';
@@ -307,6 +320,7 @@ export class ServiceReportComponent implements OnInit {
       this.panelamcHistrory = false;
       this.isVisiblepanelfromtoOuId = false;
       this.isVisiblepanelserviceagingReport = false;
+      this.isVisibleWarrantyClaimDet=false;
     }
     else if (reportName === 'EWSaleRegister') {
       this.reportName = 'EW Sales Register';
@@ -319,6 +333,7 @@ export class ServiceReportComponent implements OnInit {
       this.panelamcHistrory = false;
       this.isVisiblepanelfromtoOuId = false;
       this.isVisiblepanelserviceagingReport = false;
+      this.isVisibleWarrantyClaimDet=false;
     }
     else if (reportName === 'creditNoteReg') {
       this.reportName = 'Credit Note Register';
@@ -331,6 +346,7 @@ export class ServiceReportComponent implements OnInit {
       this.panelamcHistrory = false;
       this.isVisiblepanelfromtoOuId = false;
       this.isVisiblepanelserviceagingReport = false;
+      this.isVisibleWarrantyClaimDet=false;
     }
     else if (reportName === 'jobIssueDetails') {
       this.reportName = 'Job Issue Details Report';
@@ -343,6 +359,7 @@ export class ServiceReportComponent implements OnInit {
       this.panelamcHistrory = false;
       this.isVisiblepanelfromtoOuId = false;
       this.isVisiblepanelserviceagingReport = false;
+      this.isVisibleWarrantyClaimDet=false;
     }
     else if (reportName === 'IrnGenerationReport') {
       this.reportName = 'IRN Generation Report';
@@ -358,6 +375,7 @@ export class ServiceReportComponent implements OnInit {
       this.panelamcHistrory = false;
       this.isVisiblepanelfromtoOuId = false;
       this.isVisiblepanelserviceagingReport = false;
+      this.isVisibleWarrantyClaimDet=false;
     }
     else if (reportName == 'invoiceSummary') {
       this.reportName = 'Invoice Summary Report';
@@ -370,6 +388,7 @@ export class ServiceReportComponent implements OnInit {
       this.panelamcHistrory = false;
       this.isVisiblepanelfromtoOuId = false;
       this.isVisiblepanelserviceagingReport = false;
+      this.isVisibleWarrantyClaimDet=false;
     }
     else if (reportName == 'amcHistrory') {
       this.reportName = 'AMC History Report';
@@ -382,6 +401,7 @@ export class ServiceReportComponent implements OnInit {
       this.panelamcHistrory = true;
       this.isVisiblepanelfromtoOuId = false;
       this.isVisiblepanelserviceagingReport = false;
+      this.isVisibleWarrantyClaimDet=false;
     }
     else if (reportName == 'amcUtilisation') {
       this.reportName = 'AMC Utilisation Report';
@@ -394,6 +414,7 @@ export class ServiceReportComponent implements OnInit {
       this.panelamcHistrory = false;
       this.isVisiblepanelfromtoOuId = true;
       this.isVisiblepanelserviceagingReport = false;
+      this.isVisibleWarrantyClaimDet=false;
     }
 
     else if (reportName == 'amcControlReport') {
@@ -407,6 +428,7 @@ export class ServiceReportComponent implements OnInit {
       this.panelamcHistrory = false;
       this.isVisiblepanelfromtoOuId = true;
       this.isVisiblepanelserviceagingReport = false;
+      this.isVisibleWarrantyClaimDet=false;
     }
     else if (reportName == 'fscCouponData') {
       this.reportName = 'FSC Coupon Data Report';
@@ -419,6 +441,7 @@ export class ServiceReportComponent implements OnInit {
       this.panelamcHistrory = false;
       this.isVisiblepanelfromtoOuId = false;
       this.isVisiblepanelserviceagingReport = false;
+      this.isVisibleWarrantyClaimDet=false;
     }
     else if (reportName == 'receiptOtherDetails') {
       this.reportName = '21. Receipt-Other Details Report';
@@ -431,6 +454,7 @@ export class ServiceReportComponent implements OnInit {
       this.panelamcHistrory = false;
       this.isVisiblepanelfromtoOuId = false;
       this.isVisiblepanelserviceagingReport = false;
+      this.isVisibleWarrantyClaimDet=false;
     }
     else if (reportName == 'gstsaiDebtorsAsOf') {
       this.reportName = '22. Service Debtor Report As Of';
@@ -443,6 +467,20 @@ export class ServiceReportComponent implements OnInit {
       this.panelamcHistrory = false;
       this.isVisiblepanelfromtoOuId = false;
       this.isVisiblepanelserviceagingReport = true;
+      this.isVisibleWarrantyClaimDet=false;
+    }
+     else if (reportName == 'bajajWarrantyClaimDet') {
+      this.reportName = '23. Bajaj Warranty Claim Details';
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisiblepanelfromtolocation = false;
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisiblepaneltolocation = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleGSTSaleRegister = false;
+      this.panelamcHistrory = false;
+      this.isVisiblepanelfromtoOuId = false;
+      this.isVisiblepanelserviceagingReport = false;
+      this.isVisibleWarrantyClaimDet=true;
     }
   }
 
@@ -998,6 +1036,34 @@ export class ServiceReportComponent implements OnInit {
             this.closeResetButton = true;
             this.dataDisplay = ''
           });
+      }
+    }
+      else if (reportName === '23. Bajaj Warranty Claim Details') {
+      var dealerCode = this.serviceReportForm.get('dealerCode').value;
+      // debugger;
+      if (dealerCode===undefined||dealerCode==null){
+        dealerCode=' ';
+      }
+      // alert(dealerCode)
+      const fileName = 'Bajaj Warranty Claim Details-' +  fromDate + '-TO-' + toDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.bajajWarrantyClaimDetFn(fromDate, toDate,sessionStorage.getItem('ouId'),dealerCode)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.dataDisplay = ''
+            this.closeResetButton = true;
+            this.isDisabled2 = false;
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.bajajWarrantyClaimDetFn(fromDate, toDate, sessionStorage.getItem('ouId'),dealerCode)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.dataDisplay = ''
+            this.closeResetButton = true;
+            this.isDisabled2 = false;
+          })
       }
     }
   }
