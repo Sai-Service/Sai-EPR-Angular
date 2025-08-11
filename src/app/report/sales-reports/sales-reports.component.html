@@ -744,15 +744,15 @@ style="margin-left: 20%;" id="panelSaleSOAParameter">
                                     &nbsp;Department&nbsp;:&nbsp;
                                 </td>
                                 <td>
-                                    <!-- <select formControlName="locCode" id="locCode" class="form-control"
+                                    <select formControlName="locCode" id="locCode" class="form-control"
                                             (ngModelChange)='onOptionsDepartmentList($event)'>
                                             <option>--Select--</option>
                                             <option *ngFor="let sc of  DepartmentList" [value]="sc.code">
                                               {{sc.code}}
                                             </option>
-                                          </select> -->
-                                    <input  type="text" disabled class="form-control" formControlName="department">
-                                    <input type="number" hidden disabled class="form-control" formControlName="deptId">
+                                          </select>
+                                    <!-- <input  type="text" disabled class="form-control" formControlName="department">
+                                    <input type="number" hidden disabled class="form-control" formControlName="deptId"> -->
                                 </td>
                             </tr>
                         </table>
@@ -1607,11 +1607,7 @@ style="margin-left: 20%;" id="panelSaleSOAParameter">
                     </td>
                 </tr>
             </table>
-            <!-- <tr>
-                            <td colspan="4">
-                                <table class="center">
-                                    <tr>
-                                        <td colspan="4"> -->
+          
             <table class="center" style="width: 100%;">
                 <tr>
                     <div *ngIf="closeResetButton; then hList1; else hList2"></div>
@@ -1627,12 +1623,7 @@ style="margin-left: 20%;" id="panelSaleSOAParameter">
                         &nbsp;{{dataDisplay}}&nbsp; </td>
                 </tr>
             </table>
-            <!-- </td>
-                                    </tr> -->
-            <!-- </table> -->
-
-            <!-- <tr>
-                                        <td colspan="4"> -->
+         
             <table class="center" style="width: 100%;margin-left: 50%;">
                 <tr>
                     <td>
