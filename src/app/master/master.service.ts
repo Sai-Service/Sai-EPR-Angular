@@ -4777,9 +4777,13 @@ public saveVariantMstFn(variantMaster) {
   }
 
   bulkpouploadwarrantyClaim(formData: FormData) {
-    return this.http.post(this.ServerUrl + `/WarrantyClaim/upload-warranty?createdBy=${sessionStorage.getItem('ticketNo') }`, formData)
+    return this.http.post(this.ServerUrl + `/WarrantyClaim/upload-warranty?createdBy=${sessionStorage.getItem('ticketNo') }&ouId=${sessionStorage.getItem('ouId') }`, formData)
   }
 
+
+  bulkpoUpdatewarrantyClaim(formData: FormData) {
+    return this.http.put(this.ServerUrl + `/WarrantyClaim/update-warranty?createdBy=${sessionStorage.getItem('ticketNo') }&ouId=${sessionStorage.getItem('ouId')} `, formData)
+  }
 }
 
 

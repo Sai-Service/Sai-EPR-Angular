@@ -34,6 +34,27 @@
             <td>
                 <button  class="btn btn-primary" (click)="uploadFile($event)" style="width: 100%;font-size: 11px;">Upload</button>    
             </td>
+             <td>
+                <button  class="btn btn-primary" (click)="updateFile($event)" style="width: 100%;font-size: 11px;">Update</button>    
+            </td>
+            </tr>
+            
+    </table>
+    <table class="center">
+         <tr>
+                <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                <ng-template #hList2> 
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border text-primary" role="status" >
+                              <span class="sr-only" id="loading"></span>
+                       
+                        </div>
+                    </div>
+              </ng-template>
+              <ng-template #hList1> </ng-template>
+
+              <!-- <h5 style="text-align: center;color:blue" > {{dataDisplay }}</h5> -->
+              <td class="LabelFontStyle" style="color: blue;">&nbsp;{{dataDisplay }}&nbsp; </td>
             </tr>
     </table>
   </fieldset>

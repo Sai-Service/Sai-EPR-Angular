@@ -80,4 +80,43 @@ export class WarrantyJobCardCSVComponent implements OnInit {
         event.target.disabled = false;
        }, 60000);
   }
+
+updateFile(event:any) {
+    var file =this.bulkUploadCSVForm.get('files').value;
+    if (file===undefined){
+      alert('First Select CSV & Then Click upload Button !..');
+      return;
+    }
+    this.closeResetButton=false;
+    this.progress = 0;
+    this.dataDisplay ='File Upload in progress....Do not refresh the Page'
+    event.target.disabled = true;
+    let formData = new FormData();
+    formData.append('file', this.fileInput.nativeElement.files[0])
+    // if ((sessionStorage.getItem('deptName'))=== 'Sales') {
+      this.service.bulkpoUpdatewarrantyClaim(formData).subscribe((res: any) => {
+        if (res.code === 200) {
+          alert(res.message);
+          this.itemUploadedList=res.obj;  
+          this.dataDisplay ='File Uploaded Sucessfully....'
+          this.closeResetButton=true;
+         this.bulkUploadCSVForm.get('files').reset();
+        }
+        else{
+          if (res.code===400){    
+            alert(res.message);
+            this.itemList = res.obj;
+            this.dataDisplay ='File Uploading Failed....'
+            this.closeResetButton=true;
+            this.bulkUploadCSVForm.get('files').reset();
+            this.itemButton1=false;
+          }
+        }
+      })
+
+      setTimeout(() => {
+        event.target.disabled = false;
+       }, 60000);
+  }
+
 }
