@@ -76,12 +76,19 @@ export class WarrantyJobCardCSVComponent implements OnInit {
     var mth=this.bulkUploadCSVForm.get('monthNam').value;
     var yr=this.bulkUploadCSVForm.get('mnthYear').value;
 
+     if (mth === undefined || mth === null  || mth.trim()=='') {
+     var msg1 = "MONTH: Should not be null....";
+      alert(msg1);
+      return;
+    }
 
     if (file===undefined){
       alert('First Select CSV & Then Click upload Button !..');
       return;
     }
-    this.closeResetButton=false;
+
+    var  resp=confirm("Do You Want to Continue ???"); if(resp==false) { return;}
+      this.closeResetButton=false;
     this.progress = 0;
     this.dataDisplay ='File Upload in progress....Do not refresh the Page'
     event.target.disabled = true;

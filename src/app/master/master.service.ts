@@ -4789,9 +4789,7 @@ public saveVariantMstFn(variantMaster) {
   }
 
   bulkpouploadwarrantyClaimNew(formData: FormData,mth,yr) {
-  alert (mth+","+yr +","+formData)
-    var  resp=confirm("Do You Want to Continue ???"); if(resp==false) { return;}
-      
+  // alert (mth+","+yr +","+formData)
 
   return this.http.post(this.ServerUrl + `/WarrantyClaim/upload-warranty?createdBy=${sessionStorage.getItem('ticketNo') }&ouId=${sessionStorage.getItem('ouId') }&year=${yr}&month=${mth} `, formData)
   // http://localhost:8081/WarrantyClaim/upload-warranty?createdBy=P08811&ouId=22&year=2025&month=APR   post
