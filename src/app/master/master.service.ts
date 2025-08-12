@@ -1268,7 +1268,13 @@ export class MasterService {
   crediteLimitFn(customerId, locId, customerSiteId): Observable<any> {
     return this.http.get(this.ServerUrl + `/Customer/getOutStandingDetails?billToCustId=${customerId}&locId=${locId}&customerSiteId=${customerSiteId}`);
   }
+
+    public MonthNameList(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/cmnLookup/CmnType/Month');
+    //http://localhost:8081/cmnLookup/CmnType/Month
+  }
   /////////AccountEnquiry////////////////////
+ 
   public FinancialPeriod(): Observable<any> {
     return this.http.get(this.ServerUrl + '/glPeriod/periodName');
   }
@@ -4776,8 +4782,19 @@ public saveVariantMstFn(variantMaster) {
     // http://localhost:8081/averageCost/InsAvgCalc?locationId=1602&itemId=100899&newPrice=9.00
   }
 
-  bulkpouploadwarrantyClaim(formData: FormData) {
-    return this.http.post(this.ServerUrl + `/WarrantyClaim/upload-warranty?createdBy=${sessionStorage.getItem('ticketNo') }&ouId=${sessionStorage.getItem('ouId') }`, formData)
+
+  bulkpouploadwarrantyClaim(formData: FormData,mth,yr) {
+    return this.http.post(this.ServerUrl + `/WarrantyClaim/upload-warranty?createdBy=${sessionStorage.getItem('ticketNo') }&ouId=${sessionStorage.getItem('ouId') } `, formData)
+   
+  }
+
+  bulkpouploadwarrantyClaimNew(formData: FormData,mth,yr) {
+  alert (mth+","+yr +","+formData)
+    var  resp=confirm("Do You Want to Continue ???"); if(resp==false) { return;}
+      
+
+  return this.http.post(this.ServerUrl + `/WarrantyClaim/upload-warranty?createdBy=${sessionStorage.getItem('ticketNo') }&ouId=${sessionStorage.getItem('ouId') }&year=${yr}&month=${mth} `, formData)
+  // http://localhost:8081/WarrantyClaim/upload-warranty?createdBy=P08811&ouId=22&year=2025&month=APR   post
   }
 
 

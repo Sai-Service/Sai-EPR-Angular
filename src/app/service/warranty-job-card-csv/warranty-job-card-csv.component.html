@@ -7,16 +7,41 @@
         </td>
     </tr>
     </table>
+
+            <fieldset class="RFS"> 
+                <table>
+                    <tr>
+                        <td style="font-weight:bold;"><input type="radio" id="fileupld"   name="optType"  [(ngModel)]="fileupld"   value="fileupld"  checked   (change)="radioEvent($event)"  >&nbsp;File&nbsp;Upload</td>
+                        <td style="font-weight:bold;"><input type="radio" id="fileupdt"   name="optType"  [(ngModel)]="fileupdt"   value="fileupdt"     (change)="radioEvent($event)"         >&nbsp;File&nbsp;Update</td>
+                    
+                    </tr>
+                </table>
+            </fieldset>
+
+
   <fieldset class="RFS">
- <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;"> <b>File&nbsp;Upload&nbsp;</b> </legend>
+ <!-- <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;"> <b>File&nbsp;Upload&nbsp;</b> </legend> -->
+  <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;"> <b>{{this.caption1}}</b> </legend>
+
     <table class="center">
             <tr>
-                <td class="LabelFontStyle">
-                    &nbsp;&nbsp;User&nbsp;Name&nbsp;:&nbsp;
-                </td>
-                <td>
-                    <input disabled type="text" class="form-control"  formControlName="userName"  >
-                </td>
+                <td class="LabelFontStyle">&nbsp;&nbsp;User&nbsp;Name&nbsp;:&nbsp;</td>
+                <td><input disabled type="text" class="form-control"  formControlName="userName"></td>
+
+                 <div *ngIf="showFileUpldWind; then upldYes; else updtYes"></div>
+                 <ng-template #upldYes> 
+                        <td class="LabelFontStyle">&nbsp;&nbsp;Month&nbsp;&nbsp;:&nbsp;</td>
+                        <td>
+                            <select class="form-control"  formControlName="monthNam" [(ngModel)]="monthNam" >
+                                <option></option>
+                                <option *ngFor="let mth of MonthList" [ngValue]="mth.code">{{mth.code}}</option>
+                            </select>
+                        </td>
+
+                        <td class="LabelFontStyle">&nbsp;&nbsp;Year&nbsp;&nbsp;:&nbsp;</td>
+                        <input  disabled   formControlName="mnthYear"  id="mnthYear" [(ngModel)]="mnthYear" class="form-control" style="background-color: lightgreen;" >
+                 </ng-template>
+                  <ng-template #updtYes></ng-template>
             </tr>
             <tr>
                  <div class="progress form-group" *ngIf="progress > 0">
@@ -31,12 +56,13 @@
             <td colspan="3">
                 <input class="form-control" type="file" #fileInput  accept=".csv" formControlName="files"[(ngModel)]="files" style="vertical-align: middle;margin-top: 22px;width: 350px;">&nbsp;&nbsp;  
             </td>
-            <td>
-                <button  class="btn btn-primary" (click)="uploadFile($event)" style="width: 100%;font-size: 11px;">Upload</button>    
-            </td>
-             <td>
-                <button  class="btn btn-primary" (click)="updateFile($event)" style="width: 100%;font-size: 11px;">Update</button>    
-            </td>
+                <div *ngIf="showFileUpldWind; then upldBtnYes; else upldtBtnYes"></div>
+                 <ng-template #upldBtnYes> 
+                     <td><button  class="btn btn-primary" (click)="uploadFile($event)" style="width: 100%;font-size: 11px;">Upload</button></td>
+                 </ng-template>
+                 <ng-template #upldtBtnYes>
+                    <td><button  class="btn btn-primary" (click)="updateFile($event)" style="width: 100%;font-size: 11px;">Update</button></td>
+                 </ng-template>
             </tr>
             
     </table>
