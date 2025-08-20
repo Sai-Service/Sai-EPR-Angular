@@ -72,9 +72,9 @@ export class WarrantyJobCardCSVComponent implements OnInit {
 
 
     uploadFile(event:any) {
-    var file =this.bulkUploadCSVForm.get('files').value;
-    var mth=this.bulkUploadCSVForm.get('monthNam').value;
-    var yr=this.bulkUploadCSVForm.get('mnthYear').value;
+    var file =this.bulkUploadCSVForm.get('files')?.value;
+    var mth=this.bulkUploadCSVForm.get('monthNam')?.value;
+    var yr=this.bulkUploadCSVForm.get('mnthYear')?.value;
 
      if (mth === undefined || mth === null  || mth.trim()=='') {
      var msg1 = "MONTH: Should not be null....";
@@ -99,17 +99,17 @@ export class WarrantyJobCardCSVComponent implements OnInit {
         if (res.code === 200) {
           alert(res.message);
           this.itemUploadedList=res.obj;  
-          this.dataDisplay ='File Uploaded Sucessfully....'
+          this.dataDisplay =res.message;
           this.closeResetButton=true;
-         this.bulkUploadCSVForm.get('files').reset();
+         this.bulkUploadCSVForm.get('files')?.reset();
         }
         else{
           if (res.code===400){    
             alert(res.message);
             this.itemList = res.obj;
-            this.dataDisplay ='File Uploading Failed....'
+            this.dataDisplay =res.message;
             this.closeResetButton=true;
-            this.bulkUploadCSVForm.get('files').reset();
+            this.bulkUploadCSVForm.get('files')?.reset();
             this.itemButton1=false;
           }
         }
@@ -179,5 +179,11 @@ updateFile(event:any) {
   //         this.dateOfDelv=this.pipe.transform(Date.now(), 'y-MM-dd');   }
   //  else {this.showPrintForm=true;this.showGenForm=false;}
   }
+  clearFormArray() {
+    window.location.reload();
+  }
 
+  closeMast() {
+    this.router.navigate(['admin']);
+  }
 }

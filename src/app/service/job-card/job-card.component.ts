@@ -1189,10 +1189,10 @@ export class JobCardComponent implements OnInit {
     (patch.controls[i]).patchValue({ qty: 0,unitPrice: 0,basicAmt: 0,taxAmt:0, laborAmt: 0, })
 
     
-    if(select.genericItem==='Y'){ this.lineDetailsArray.controls[i].get('description').enable();} else
-    {this.lineDetailsArray.controls[i].get('description').disable();} 
+    if(select.genericItem==='Y'){ this.lineDetailsArray.controls[i].get('description')?.enable();} else
+    {this.lineDetailsArray.controls[i].get('description')?.disable();} 
 
-    var labArr = this.jobcardForm.get('jobCardLabLines').value
+    var labArr = this.jobcardForm.get('jobCardLabLines')?.value
 
         // for(i=0;i< this.lineDetailsArray.length -1;i++) {
         //     if(labArr[i].genericItem==='Y') {
@@ -1202,12 +1202,16 @@ export class JobCardComponent implements OnInit {
         // }
 
         if(labArr[i].genericItem==='Y') {
-          this.lineDetailsArray.controls[i].get('description').enable();
-        } else {this.lineDetailsArray.controls[i].get('description').disable(); }
+          this.lineDetailsArray.controls[i].get('description')?.enable();
+        } else {this.lineDetailsArray.controls[i].get('description')?.disable(); }
 
     if(serModel===null)  {  serModel=''; }
-
-     this.serviceService.priceListDivisionFN( select.segment,serModel,(sessionStorage.getItem('locId')),(sessionStorage.getItem('ouId')))
+        var customerSiteId = this.jobcardForm.get('customerSiteId')?.value;
+        if (customerSiteId == null || customerSiteId==undefined || customerSiteId == ''){
+          alert('Customer Not Proper Please Contact To IT Team.!');
+          return;
+        }
+     this.serviceService.priceListDivisionFN( select.segment,serModel,(sessionStorage.getItem('locId')),(sessionStorage.getItem('ouId')),customerSiteId)
       .subscribe(
         data1 => {
           this.LaborPriceList = data1;

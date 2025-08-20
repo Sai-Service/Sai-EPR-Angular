@@ -130,8 +130,12 @@ TechnicianListFN(locId) : Observable<any> {
 priceListFN(locId,segment) : Observable<any> {
   return this.http.get(this.ServerUrl +`/jobCard/labPrice?labCode=${segment}&srvModel=RN&locId=${locId}`);
 } 
-priceListDivisionFN(segment,serModel,locId,ouId) : Observable<any> {
-  return this.http.get(this.ServerUrl +`/jobCard/labPrice?labCode=${segment}&srvModel=${serModel}&locId=${locId}&ouId=${ouId}`);
+// priceListDivisionFN(segment,serModel,locId,ouId) : Observable<any> {
+//   return this.http.get(this.ServerUrl +`/jobCard/labPrice?labCode=${segment}&srvModel=${serModel}&locId=${locId}&ouId=${ouId}`);
+// } 
+
+priceListDivisionFN(segment,serModel,locId,ouId,custSiteId) : Observable<any> {
+  return this.http.get(this.ServerUrl +`/jobCard/labPriceByCus?labCode=${segment}&srvModel=${serModel}&locId=${locId}&ouId=${ouId}&custSiteId=${custSiteId}`);
 } 
 jobCardCount(jobNum) : Observable<any> {
   return this.http.get(this.ServerUrl +`/jobCard//dpPreInvPrintStatus/${jobNum}`);
