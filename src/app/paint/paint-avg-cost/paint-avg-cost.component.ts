@@ -25,9 +25,10 @@ interface IAvgCostUpdate {
   transSourceTypeId:number;
   sItemCode : string;
   newAvgCost:number;
+  currAvgCost:number;
+  attribute1:number;
+  opUnitId:number;
 
-   attribute1:number;
-   opUnitId:number;
 }
 
 @Component({
@@ -47,6 +48,7 @@ export class PaintAvgCostComponent implements OnInit {
   
 
   abc : any;
+  abcCurr:any;
 
   priceListId :number;
   priceListName:string;
@@ -54,8 +56,6 @@ export class PaintAvgCostComponent implements OnInit {
   priceListType:string;
   // public minDate = new Date();
   priceListHeaderId : number;
-
-
 
   description : string;
 
@@ -84,6 +84,7 @@ export class PaintAvgCostComponent implements OnInit {
   searchItemId:number;
   sItemCode : string;
   newAvgCost:number;
+  currAvgCost:number;
 
   showOu=false;
   showItemSearch=false;
@@ -180,6 +181,7 @@ export class PaintAvgCostComponent implements OnInit {
       itemName:[],
       sItemCode :[],
       newAvgCost:[],
+      currAvgCost:[],
 
         // priceListHeaderId: [],
         // priceListType:[],
@@ -866,16 +868,23 @@ export class PaintAvgCostComponent implements OnInit {
     }
 
     Validateitem1(relItemCode){
-  
+    var locId1 = this.pntAvgCostForm.get('attribute1').value
+
       // alert ("relItemCode : " + relItemCode);
       this.service.getItemCodePach(relItemCode).subscribe(data =>{
-        this.abc = data;
-        console.log(this.abc)
-  
-        this.itemName=this.abc.description;
-        this.searchItemId =this.abc.itemId;
-        // this.saveButton=true;
-      })
+            this.abc = data;
+            console.log(this.abc);
+
+            this.itemName=this.abc.description;
+            this.searchItemId =this.abc.itemId;
+
+            this.service.avgCurrentCost(this.abc.itemId,locId1).subscribe(data =>{
+            this.abcCurr = data;
+            console.log(this.abcCurr)
+             this.currAvgCost=this.abcCurr.rate;
+           });
+      });
+
     }
 
     
