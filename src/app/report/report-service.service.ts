@@ -239,7 +239,46 @@ export class ReportServiceService {
     });
   }
 
-   
+   gstSparesPartyOutstandingReport(toDate,locId,ouId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprOSPartyWise?toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+
+    // http://localhost:8081//SparesReports/SprOSPartyWise?toDate=21-AUG-2025&ouId=22&locId=2209
+  }
+
+   gstSparesPartyAdvReport(toDate,locId,ouId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprADVPartyWise?toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+
+// http://localhost:8081//SparesReports/SprADVPartyWise?toDate=21-AUG-2025&ouId=22&locId=2209
+  }
+
+   gstSparesPartyReceivableReport(toDate,locId,ouId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprOSADVPartyWise?toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+
+// http://localhost:8081//SparesReports/SprOSADVPartyWise?toDate=21-AUG-2025&ouId=22&locId=2209  }
+  }
+
+   gstSparesPartyDetReceivableReport(toDate,locId,ouId){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprDbtPartyWiseDtls?toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+
+// http://localhost:8081//SparesReports/SprDbtPartyWiseDtls?toDate=21-AUG-2025&ouId=22&locId=2209
+  }
+
 
 
   sspInvAgingReport(spInvAging1,spInvAging2,spInvAging3,ouId,locId,subInv,userNam){
