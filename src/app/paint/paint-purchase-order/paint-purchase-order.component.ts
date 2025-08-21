@@ -119,6 +119,7 @@ export class PaintPurchaseOrderComponent implements OnInit {
 
  lastkeydown1: number = 0;
  subscription: any;
+  abcCurr:any;
 
 
  poHeaderId: number;
@@ -1063,6 +1064,7 @@ export class PaintPurchaseOrderComponent implements OnInit {
      diss1: [],
      itemType: [],
      unitPrice: ['', [Validators.required]],
+     currPrice:[],
      density:[],
      attribute3:[],
      invoiceQty:[], 
@@ -1784,6 +1786,10 @@ export class PaintPurchaseOrderComponent implements OnInit {
   // alert ("In PO Save.....");
 
   //  this.validatePOLine();
+   
+      var  resp=confirm("Make sure [Quantity] , [Unit Price] & [Density] is Correct.");
+      if(resp==false) { return;}
+     
   
    this.authorizationStatus = 'Inprogress';
    const formValue: IpostPO = this.transData(this.paintPoForm.getRawValue());
@@ -1960,8 +1966,16 @@ export class PaintPurchaseOrderComponent implements OnInit {
       this.lineDetailsArray.controls[index].get('taxCategoryName').enable();
       this.lineDetailsArray.controls[index].get('invoiceQty').enable();
       this.lineDetailsArray.controls[index].get('invoiceRate').enable();
-debugger;
+// debugger;
       if (this.itemType === "GOODS") {
+        // --------------------------------------------------------
+            this.service.avgCurrentCost(this.invItemId,sessionStorage.getItem('locId')).subscribe(data =>{
+            this.abcCurr = data;
+             console.log(this.abcCurr)
+            //  this.currAvgCost=this.abcCurr.rate;
+           });
+
+        // ---------------------------------------------------------
         this.service.ItemDetailsList(this.invItemId, this.selSuppTaxCatNm, this.billToLoc).subscribe((res: any) => {
           if (res.code === 200) {
            
@@ -2007,6 +2021,7 @@ debugger;
 
               patch.controls[index].patchValue( { density: itmDensity})
 
+              patch.controls[index].patchValue( { currPrice: this.abcCurr.rate})
 
               // alert(gstPercentage)
               // var supplierSiteId = this.poMasterDtoForm.get('supplierSiteId').value;
@@ -2432,10 +2447,8 @@ debugger;
    var invoiceQty = trxLnArr[index].invoiceQty;
    var invoicePrice = trxLnArr[index].invoiceRate;
    var density1 = trxLnArr[index].density;
-
-  
-
    var uomCode = trxLnArr[index].uom;
+   var OldPrice= trxLnArr[index].currPrice;
 
    (trxLnArrNew.controls[index]).patchValue({attribute1: invoiceQty ,attribute2: invoicePrice,attribute3: density1,});
   
@@ -2464,6 +2477,12 @@ debugger;
   var itemDensity = trxLnArr[index].density;
   var orderedQty1 =itemDensity*invoiceQty;
   var unitPrice1= (trxLnArr[index].baseAmtLineWise/orderedQty1).toFixed(5)
+
+  // if (unitPrice1 != OldPrice){
+  //       var  resp=confirm("Please check Qty & Unit Price...Proceed (Y/N) ???");
+  //       if(resp==false) { return;}
+     
+  // }
 
   // alert ( "Density, qtyggms, ratePerGm : "+itemDensity +","+orderedQty1+","+unitPrice1);
   
@@ -3522,6 +3541,9 @@ debugger;
    this.msgType = msgType;
    // alert("check");
    if (msgType.includes("Save")) {
+
+      
+
      this.submitted = true;
      (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
      if (this.paintPoForm.invalid) {
