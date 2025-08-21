@@ -706,7 +706,54 @@
                                 <td><input disabled  hidden type="text"  formControlName="soldByEmpId"  id="soldByEmpId" [(ngModel)]="soldByEmpId" class="form-control" style="width: 100%;"> </td>
 
                             </ng-template>
-         
+                            <td>
+                          
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" style="width: fit-content;" (click)="receiptDetailsNew()"  >
+Receipt&nbsp;Details
+</button>
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+       
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table  class="GridFont" cellspacing="0" cellpadding="4"   style="border-color:#959595;border-collapse:collapse;width: 100%;"> 
+                    <thead>
+                        <tr class="GridHeader"> 
+                            <th scope="col" style="border: 1px solid black;">Receipt Number</th>
+                            <th scope="col" style="border: 1px solid black;">Balance Amount</th>
+                            <th scope="col" style="border: 1px solid black;">Bank Name</th>
+                            <th scope="col" style="border: 1px solid black;">Branch Name</th>
+                            <th scope="col" style="border: 1px solid black;">Cheque No</th>
+                            <th scope="col" style="border: 1px solid black;">Cheque Date</th>
+                            <th scope="col" style="border: 1px solid black;">Status</th>
+
+                        </tr>
+                    </thead>
+                     <tbody>
+                        <tr *ngFor="let com of receiptDetailsList let i= index" class="ItemStyle" style="text-decoration:none;text-align: center;">
+                            <td style="border: 1px solid black;padding-left: 5px;">{{com.RECEIPTNUMBER}}</td>
+                            <td style="border: 1px solid black;padding-left: 5px;">{{com.BALANCEAMT}}</td>
+                            <td style="border: 1px solid black;padding-left: 5px;">{{com.BANKNAME}}</td>
+                            <td style="border: 1px solid black;padding-left: 5px;">{{com.BANKBRANCH}}</td>
+                            <td style="border: 1px solid black;padding-left: 5px;">{{com.CHECKNO}}</td>
+                            <td style="border: 1px solid black;padding-left: 5px;">{{com.CHECKDATE}}</td>
+                            <td style="border: 1px solid black;padding-left: 5px;">{{com.STATUS}}</td>
+                        </tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+                            </td>
                           </tr>
 
                         

@@ -4799,6 +4799,11 @@ public saveVariantMstFn(variantMaster) {
   bulkpoUpdatewarrantyClaim(formData: FormData) {
     return this.http.put(this.ServerUrl + `/WarrantyClaim/update-warranty?createdBy=${sessionStorage.getItem('ticketNo') }&ouId=${sessionStorage.getItem('ouId')} `, formData)
   }
+
+ receiptDetailsNewFn(orderNumber): Observable<any> {
+    return this.http.get(this.ServerUrl + `/arCashReceipts/balAmtReceiptOM?referenceno=${orderNumber}&locId=${sessionStorage.getItem('locId')}`);
+  }
+
 }
 
 
