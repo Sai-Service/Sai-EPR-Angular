@@ -4804,6 +4804,13 @@ public saveVariantMstFn(variantMaster) {
     return this.http.get(this.ServerUrl + `/arCashReceipts/balAmtReceiptOM?referenceno=${orderNumber}&locId=${sessionStorage.getItem('locId')}`);
   }
 
+methodWiseAmountCheckVal(customerId,locId,orgId,payType): Observable<any> {
+    return this.http.get(this.ServerUrl + `/arCashReceipts/checkMethodwiseAmount?customerId=${customerId}&locId=${locId}&orgId=${orgId}&paymentType=${payType}`);
+  }
+
+methodWiseAmountCheckRefVal(orderNumber,locId,orgId,payType): Observable<any> {
+    return this.http.get(this.ServerUrl + `/arCashReceipts/checkMethodwiseAmountRef?referenceNo=${orderNumber}&locId=${locId}&orgId=${orgId}&paymentType=${payType}`);
+  }
 }
 
 

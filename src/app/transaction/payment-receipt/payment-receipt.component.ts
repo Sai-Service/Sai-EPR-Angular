@@ -42,7 +42,7 @@ export class PaymentReceiptComponent implements OnInit {
   public OUIdList: Array<string> = [];
   public DepartmentList: Array<string> = [];
   public statusList: Array<string> = [];
-  showreceiptMethodName=true;
+  showreceiptMethodName = true;
   isDisabledSave = false;
   custGst: string;
   custPan: string;
@@ -278,12 +278,12 @@ export class PaymentReceiptComponent implements OnInit {
 
   onPayTypeSelected(payType: any, rmStatus: any) {
     var payType = payType.target.value;
-    alert(payType)
+    // alert(payType)
     if (payType === 'CASH') {
       var cashsum = 0;
-      var paymentAmt = this.paymentReceiptForm.get('paymentAmt').value;
+      var paymentAmt = this.paymentReceiptForm.get('paymentAmt')?.value;
       console.log(this.lstcomments);
-      var panNo = this.paymentReceiptForm.get('custPan').value;
+      var panNo = this.paymentReceiptForm.get('custPan')?.value;
       if (this.lstcomments.length != 0) {
         for (let k = 0; k < this.lstcomments.length; k++) {
           if (panNo != 'APPLIEDFOR') {
@@ -336,7 +336,46 @@ export class PaymentReceiptComponent implements OnInit {
             this.showBankDetails = true;
           });
     }
+      var frmRecAmt = Number(this.paymentReceiptForm.get('paymentAmt')?.value);
+      this.service.methodWiseAmountCheckRefVal(this.orderNumber, sessionStorage.getItem('locId'), sessionStorage.getItem('ouId'), payType)
+        .subscribe(
+          data => {
+            this.ReceiptMethodList = data.obj;
+           
+            if (payType === 'WALLET') {
 
+              var apiAmt = frmRecAmt + Number(data.obj);
+              if (apiAmt > 200000) {
+                alert("RECEIPT AMT: Should Be Less Than Rs.200000");
+                this.paymentReceiptForm.get('paymentAmt')?.reset();
+              }
+            }
+            if (payType === 'RTGS/NEFT') {
+
+              var apiAmt = frmRecAmt + Number(data.obj);
+              if (apiAmt > 2000000) {
+                alert("RECEIPT AMT: Should Be Less Than Rs.2000000");
+                this.paymentReceiptForm.get('paymentAmt')?.reset();
+              }
+            }
+            if (payType === 'CREDIT CARD') {
+
+              var apiAmt = frmRecAmt + Number(data.obj);
+              if (apiAmt > 500000) {
+                alert("RECEIPT AMT: Should Be Less Than Rs. 500000");
+                this.paymentReceiptForm.get('paymentAmt')?.reset();
+              }
+            }
+            if (payType === 'DEBIT CARD') {
+
+              var apiAmt = frmRecAmt + Number(data.obj);
+              if (apiAmt > 500000) {
+                alert("RECEIPT AMT: Should Be Less Than Rs.500000");
+                this.paymentReceiptForm.get('paymentAmt')?.reset();
+              }
+            }
+          }
+        )
   }
 
   searchMastNew(rcptNo: any, ordNo: any, custNo: any) {
@@ -395,7 +434,7 @@ export class PaymentReceiptComponent implements OnInit {
     if (select) {
       this.paymentReceiptForm.patchValue(select);
       this.receiptNumber = select.receiptNumber;
-      this.comments=select.comments;
+      this.comments = select.comments;
       // alert(select.receiptMethodName);
       // let recValue =this.ReceiptMethodList.find(d => d.methodName === select.receiptMethodName);
       // console.log(recValue);
@@ -403,7 +442,7 @@ export class PaymentReceiptComponent implements OnInit {
       this.displayButton = false;
       this.display = false;
       this.paymentReceiptForm.disable();
-      this.showreceiptMethodName=false;
+      this.showreceiptMethodName = false;
     }
   }
 
@@ -732,6 +771,62 @@ export class PaymentReceiptComponent implements OnInit {
         printWindow.open
       })
   }
+  validateAmt(rcptAmt: any) {
+    if (rcptAmt === null || rcptAmt === undefined || rcptAmt <= 0) {
+      alert("RECEIPT AMOUNT :  Should be above Zero.");
+      this.paymentAmt = null;
+      return;
+    }
 
+    if (rcptAmt > 3000000) {
+      alert("RECEIPT AMOUNT :  Should  not above 3000000.");
+      this.paymentReceiptForm.get('paymentAmt')?.reset();
+    }
+     if (this.paymentReceiptForm.get('payType')?.value == null || this.paymentReceiptForm.get('payType')?.value == undefined) {
+      var paytype = this.paymentReceiptForm.get('payType')?.value;
+      var customerId = this.paymentReceiptForm.get('customerId')?.value;
+      var frmRecAmt = Number(this.paymentReceiptForm.get('paymentAmt')?.value);
+      this.service.methodWiseAmountCheckVal(customerId, sessionStorage.getItem('locId'), sessionStorage.getItem('ouId'), paytype)
+        .subscribe(
+          data => {
+            this.ReceiptMethodList = data.obj;
+           
+            if (paytype === 'WALLET') {
+
+              var apiAmt = frmRecAmt + Number(data.obj);
+              if (apiAmt > 200000) {
+                alert("RECEIPT AMT: Should Be Less Than Rs.200000");
+                this.paymentReceiptForm.get('paymentAmt')?.reset();
+              }
+            }
+            if (paytype === 'RTGS/NEFT') {
+
+              var apiAmt = frmRecAmt + Number(data.obj);
+              if (apiAmt > 2000000) {
+                alert("RECEIPT AMT: Should Be Less Than Rs.2000000");
+                this.paymentReceiptForm.get('paymentAmt')?.reset();
+              }
+            }
+            if (paytype === 'CREDIT CARD') {
+
+              var apiAmt = frmRecAmt + Number(data.obj);
+              if (apiAmt > 500000) {
+                alert("RECEIPT AMT: Should Be Less Than Rs. 500000");
+                this.paymentReceiptForm.get('paymentAmt')?.reset();
+              }
+            }
+            if (paytype === 'DEBIT CARD') {
+
+              var apiAmt = frmRecAmt + Number(data.obj);
+              if (apiAmt > 500000) {
+                alert("RECEIPT AMT: Should Be Less Than Rs.500000");
+                this.paymentReceiptForm.get('paymentAmt')?.reset();
+              }
+            }
+          }
+        )
+    }
+
+  }
 }
 
