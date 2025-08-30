@@ -384,4 +384,7 @@ export class TransactionService {
   }
 
 
+    trxNoValidationFn(trnNumber,ouId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/arInv/InvoiceValidation?trxNumber=${trnNumber}`)
+  }
 }

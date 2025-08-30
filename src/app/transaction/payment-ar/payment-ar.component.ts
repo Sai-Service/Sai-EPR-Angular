@@ -14,7 +14,7 @@ import { ReturnStatement, ThrowStmt } from '@angular/compiler';
 
 interface IPaymentRcptAr {
   referenceNo: string;
-  referenceDate:string;
+  referenceDate: string;
   refType: string;
   ouId: number;
   locId: number;
@@ -43,7 +43,7 @@ interface IPaymentRcptAr {
   chqBounceCharge: number;
   tdsAmount: number;
   tdstrxNumber: string;
-  policyTerm:number;
+  policyTerm: number;
   customerSiteId: number;
 }
 
@@ -58,7 +58,7 @@ export class PaymentArComponent implements OnInit {
   pipe = new DatePipe('en-US');
   now = Date.now();
   public minDate = new Date();
-  isVisibleUnApplyReceipt:boolean=false;
+  isVisibleUnApplyReceipt: boolean = false;
   message: string = "PleaseFixtheErrors!";
   msgType: string = "Close";
   // public DivisionIDList : Array<string>=[];
@@ -100,7 +100,7 @@ export class PaymentArComponent implements OnInit {
   lstinvoices: any[];
   lstCustomer: any[];
   lstApplyHistory: any[];
-  lstRcptOtherDetails:any;
+  lstRcptOtherDetails: any;
 
 
 
@@ -124,7 +124,7 @@ export class PaymentArComponent implements OnInit {
   receiptStatus = 'Open';
   status = 'UNAPP';
 
-  cashReceiptId:number;
+  cashReceiptId: number;
   receiptMethodId: number;
   // paymentCollection: string;
   receiptMethodName: string;
@@ -142,7 +142,7 @@ export class PaymentArComponent implements OnInit {
   dmsCustNo: number;
   custName: string;
   customerSiteId: number;
-  custSiteName:string;
+  custSiteName: string;
   customerSiteAddress: string;
   custCity: string;
   custState: String;
@@ -249,13 +249,13 @@ export class PaymentArComponent implements OnInit {
   applySaveButton = false;
   validateStatus = false;
   showRefYellow = false;
-  applHistory=false;
-  chqBounceStatus=false;
-  printButton=true;
-  fromJc=false;
-  fromOrderChetak=false;
-  accountsLogin=false;
-  reInsurance=false;
+  applHistory = false;
+  chqBounceStatus = false;
+  printButton = true;
+  fromJc = false;
+  fromOrderChetak = false;
+  accountsLogin = false;
+  reInsurance = false;
 
   showInvoiceGrid = false;
   showRefundGrid = false;
@@ -264,9 +264,9 @@ export class PaymentArComponent implements OnInit {
   insuranceFlag: string;
   refType: string;
 
-  showOTHERModal=false;
-  othSaveButton=false;
-  othAddRemoveButton=false;
+  showOTHERModal = false;
+  othSaveButton = false;
+  othAddRemoveButton = false;
   // othDelButton=true;
 
 
@@ -301,15 +301,15 @@ export class PaymentArComponent implements OnInit {
   runningTotalDr: number;
   private sub: any;
 
-  policyTerm:number;
-  displayglDateDisabled=true;
+  policyTerm: number;
+  displayglDateDisabled = true;
   sub1: any;
 
   unApplyFlag: string;
-  isDisabled1=true;
-  isDisabled2=true ;
-  unAppAllFlag:string;
-  othLineValidation=false;
+  isDisabled1 = true;
+  isDisabled2 = true;
+  unAppAllFlag: string;
+  othLineValidation = false;
 
 
   // applyTo: string;
@@ -319,7 +319,7 @@ export class PaymentArComponent implements OnInit {
   paymentAr(paymentArForm: any) { }
 
 
-  constructor(private service: MasterService,private location: Location, private orderManagementService: OrderManagementService, private fb: FormBuilder, private router: Router, private router1: ActivatedRoute, private router2: ActivatedRoute,private router3:ActivatedRoute, private router4: ActivatedRoute) {
+  constructor(private service: MasterService, private location: Location, private orderManagementService: OrderManagementService, private fb: FormBuilder, private router: Router, private router1: ActivatedRoute, private router2: ActivatedRoute, private router3: ActivatedRoute, private router4: ActivatedRoute) {
 
 
     this.paymentArForm = fb.group({
@@ -339,7 +339,7 @@ export class PaymentArComponent implements OnInit {
       emplId: [],
       roleId: [],
 
-      cashReceiptId:[],
+      cashReceiptId: [],
       receiptNumber: [],
       receiptDate: [],
       glDate: [],
@@ -377,7 +377,7 @@ export class PaymentArComponent implements OnInit {
       dmsCustNo: [],
       custName: [],
       customerSiteId: [],
-      custSiteName:[],
+      custSiteName: [],
       customerSiteAddress: [],
       custCity: [],
       custState: [],
@@ -440,8 +440,8 @@ export class PaymentArComponent implements OnInit {
       runningTotalCr: [],
       runningTotalDr: [],
 
-      policyTerm:[],
-      unAppAllFlag:[],
+      policyTerm: [],
+      unAppAllFlag: [],
 
       // applyrcptFlag: ['', [Validators.required]],
 
@@ -452,15 +452,15 @@ export class PaymentArComponent implements OnInit {
   }
 
   othLineDetails() {
-    return this.fb.group({ 
-      rcptDtlsId:[],
+    return this.fb.group({
+      rcptDtlsId: [],
       // cashReceiptId:[],
-      othRcptNo:[],
-      othRefNo:[],
-      othRefDt:[],
-      othAmtReceived:[],
-      othBankName:[],
-      balanceAmt:[],
+      othRcptNo: [],
+      othRefNo: [],
+      othRefDt: [],
+      othAmtReceived: [],
+      othBankName: [],
+      balanceAmt: [],
     })
   }
 
@@ -494,9 +494,9 @@ export class PaymentArComponent implements OnInit {
 
   appliedinvLineDetails() {
     return this.fb.group({
-      applicationId:[],
+      applicationId: [],
       unApplyFlag: [],
-      applyTo:[],
+      applyTo: [],
       trxNumber: [],
       trxDate: [],
       invoiceAmount: [],
@@ -542,54 +542,59 @@ export class PaymentArComponent implements OnInit {
     console.log(this.loginArray);
     console.log(this.locId);
 
-    
-
-if (Number(sessionStorage.getItem('dept')) ===4)  {this.accountsLogin=true; 
-  this.displayglDateDisabled=false;
-}else {this.accountsLogin=false;
-  this.displayglDateDisabled=true;
-}
 
 
 
-// alert ("DeptId : " +this.deptId + " accountsLogin="+this.accountsLogin);
-
-if(this.deptId==1){
-  this.sub = this.router1.params.subscribe(params => {
-     var  ordNumChetak = params['orderNumber'];
-      // alert ("orderNumber  :"+ordNumChetak  +" Dept :"+this.deptId);
-    if (ordNumChetak != undefined){
-      this.fromOrderChetak=true;
-      this.refType='Sales-Order'
-    this.GetOrderDetails(ordNumChetak);
-  }
-});
-}
-
-if(this.deptId==2){
-    this.sub = this.router1.params.subscribe(params => {
-       var jcNum = params['jobCardNum'];
-      //  alert ("Jobcard Num  :"+jcNum  +" Dept :"+this.deptId);
-      if (jcNum != undefined){
-        this.fromJc=true;
-        this.refType='Service-Order'
-      this.GetJobCardDetails(jcNum);}
-  });
-  }
+    if (Number(sessionStorage.getItem('dept')) === 4) {
+      this.accountsLogin = true;
+      this.displayglDateDisabled = false;
+    } else {
+      this.accountsLogin = false;
+      this.displayglDateDisabled = true;
+      this.paymentArForm.get('deptId').disable();
+    }
 
 
-  if(this.deptId==4){
-    this.sub = this.router1.params.subscribe(params => {
-      this.checkNo = this.router1.snapshot.queryParamMap.get('invNumber');
-      // this.paymentArForm.get('checkNo').disable();
-      // this.searchByRcptNo= Number(this.router1.snapshot.queryParamMap.get('docSequenceValue'));
-      // alert(this.searchByRcptNo)
-     var methodId =   this.router1.snapshot.queryParamMap.get('methodId');
-     var Amt =this.router1.snapshot.queryParamMap.get('recAmt');
-     if ( this.checkNo != undefined){
-       this.payType='CONTROL ACCOUNT'
-          this.receiptMethodId=Number(methodId);
-          this.paymentAmt=Number(Amt);
+
+    // alert ("DeptId : " +this.deptId + " accountsLogin="+this.accountsLogin);
+
+    if (this.deptId == 1) {
+      this.sub = this.router1.params.subscribe(params => {
+        var ordNumChetak = params['orderNumber'];
+        // alert ("orderNumber  :"+ordNumChetak  +" Dept :"+this.deptId);
+        if (ordNumChetak != undefined) {
+          this.fromOrderChetak = true;
+          this.refType = 'Sales-Order'
+          this.GetOrderDetails(ordNumChetak);
+        }
+      });
+    }
+
+    if (this.deptId == 2) {
+      this.sub = this.router1.params.subscribe(params => {
+        var jcNum = params['jobCardNum'];
+        //  alert ("Jobcard Num  :"+jcNum  +" Dept :"+this.deptId);
+        if (jcNum != undefined) {
+          this.fromJc = true;
+          this.refType = 'Service-Order'
+          this.GetJobCardDetails(jcNum);
+        }
+      });
+    }
+
+
+    if (this.deptId == 4) {
+      this.sub = this.router1.params.subscribe(params => {
+        this.checkNo = this.router1.snapshot.queryParamMap.get('invNumber');
+        // this.paymentArForm.get('checkNo').disable();
+        // this.searchByRcptNo= Number(this.router1.snapshot.queryParamMap.get('docSequenceValue'));
+        // alert(this.searchByRcptNo)
+        var methodId = this.router1.snapshot.queryParamMap.get('methodId');
+        var Amt = this.router1.snapshot.queryParamMap.get('recAmt');
+        if (this.checkNo != undefined) {
+          this.payType = 'CONTROL ACCOUNT'
+          this.receiptMethodId = Number(methodId);
+          this.paymentAmt = Number(Amt);
           // alert(this.receiptMethodId);  
           // if(this.receiptMethodId===143)
           // {
@@ -624,15 +629,15 @@ if(this.deptId==2){
     this.sub1 = this.router3.params.subscribe(params => {
       var payNo = this.router3.snapshot.queryParamMap.get('trxNum');
       var categ = Number(this.router1.snapshot.queryParamMap.get('catg'));
-      if ( payNo != undefined){
-       
-         this.SearchByReciptNo(payNo);
-         this.SelectReceipt(payNo);
-        }
-      
-      });
-    
-   
+      if (payNo != undefined) {
+
+        this.SearchByReciptNo(payNo);
+        this.SelectReceipt(payNo);
+      }
+
+    });
+
+
     /////////////////////////////////////////////////////
 
     //  alert ("this.fromJc :" +this.fromJc);
@@ -760,24 +765,24 @@ if(this.deptId==2){
 
   }
 
-      GetOrderDetails(mOderNum){
-        // alert ("Order Number :"+mOderNum);
-        this.orderManagementService.proformaOrderSearchNew(sessionStorage.getItem('divisionId'), mOderNum)
-        .subscribe(
-          data => {
-            if (data.code === 200) {
-              this.custAccountNo=data.obj.custAccountNo;
-              this.custName=data.obj.custName;
-              this.customerId=data.obj.customerId;   // customerId null - need to  check api response
-              this.customerSiteId=data.obj.customerSiteId;
-              this.referenceNo=data.obj.orderNumber;
-              this.referenceDate=data.obj.orderedDate
-            }
-          }); 
-      }
+  GetOrderDetails(mOderNum) {
+    // alert ("Order Number :"+mOderNum);
+    this.orderManagementService.proformaOrderSearchNew(sessionStorage.getItem('divisionId'), mOderNum)
+      .subscribe(
+        data => {
+          if (data.code === 200) {
+            this.custAccountNo = data.obj.custAccountNo;
+            this.custName = data.obj.custName;
+            this.customerId = data.obj.customerId;   // customerId null - need to  check api response
+            this.customerSiteId = data.obj.customerSiteId;
+            this.referenceNo = data.obj.orderNumber;
+            this.referenceDate = data.obj.orderedDate
+          }
+        });
+  }
 
-      GetJobCardDetails(jcNum) {
-      this.service.getJonCardNoSearch(jcNum)
+  GetJobCardDetails(jcNum) {
+    this.service.getJonCardNoSearch(jcNum)
       .subscribe(
         data => {
           // this.lstcomments = data.obj;
@@ -817,11 +822,67 @@ if(this.deptId==2){
     //   this.paymentAmt = null;
     //   return;
     // }
-
+    // debugger;
     if (rcptAmt === null || rcptAmt === undefined || rcptAmt <= 0) {
       alert("RECEIPT AMOUNT :  Should be above Zero.");
       this.paymentAmt = null;
       return;
+    }
+
+    if (rcptAmt > 3000000) {
+      alert("RECEIPT AMOUNT :  Should  not above 3000000.");
+      this.paymentArForm.get('paymentAmt')?.reset();
+    }
+
+    if (this.paymentArForm.get('payType')?.value == null || this.paymentArForm.get('payType')?.value == undefined) {
+      var paytype = this.paymentArForm.get('payType')?.value;
+      var customerId = this.paymentArForm.get('customerId')?.value;
+      var frmRecAmt = Number(this.paymentArForm.get('paymentAmt')?.value);
+      this.service.methodWiseAmountCheckVal(customerId, sessionStorage.getItem('locId'), sessionStorage.getItem('ouId'), paytype)
+        .subscribe(
+          data => {
+            this.ReceiptMethodList = data.obj;
+            if (paytype === 'CASH') {
+              var apiAmt = frmRecAmt + Number(data.obj);
+              if (apiAmt > 150000) {
+                alert("RECEIPT AMT: Should Be Less Than Rs.150000 ");
+                this.paymentArForm.get('paymentAmt')?.reset();
+              }
+            }
+            if (paytype === 'WALLET') {
+
+              var apiAmt = frmRecAmt + Number(data.obj);
+              if (apiAmt > 200000) {
+                alert("RECEIPT AMT: Should Be Less Than Rs.200000");
+                this.paymentArForm.get('paymentAmt')?.reset();
+              }
+            }
+            if (paytype === 'RTGS/NEFT') {
+
+              var apiAmt = frmRecAmt + Number(data.obj);
+              if (apiAmt > 2000000) {
+                alert("RECEIPT AMT: Should Be Less Than Rs.2000000");
+                this.paymentArForm.get('paymentAmt')?.reset();
+              }
+            }
+            if (paytype === 'CREDIT CARD') {
+
+              var apiAmt = frmRecAmt + Number(data.obj);
+              if (apiAmt > 500000) {
+                alert("RECEIPT AMT: Should Be Less Than Rs. 500000");
+                this.paymentArForm.get('paymentAmt')?.reset();
+              }
+            }
+            if (paytype === 'DEBIT CARD') {
+
+              var apiAmt = frmRecAmt + Number(data.obj);
+              if (apiAmt > 500000) {
+                alert("RECEIPT AMT: Should Be Less Than Rs.500000");
+                this.paymentArForm.get('paymentAmt')?.reset();
+              }
+            }
+          }
+        )
     }
 
     this.getTdsAmount(this.custTdsPer);
@@ -862,13 +923,13 @@ if(this.deptId==2){
     var tDate = new Date(this.GLPeriodCheck.endDate);
     // alert("GlDate :"+glDt +" GL Period : "+this.GLPeriodCheck.startDate +" - "+ this.GLPeriodCheck.endDate);
     // alert("GlDate :"+tglDate +" GL Period : "+sDate +" - "+ tDate);
-    if (Number(sessionStorage.getItem('deptId'))!=4){
-    if (tglDate < sDate || tglDate > tDate) {
-      alert("GL date is not valid.. should be within GL period.\nGL Period : " + this.GLPeriodCheck.startDate + " - " + this.GLPeriodCheck.endDate);
-      this.glDate = this.pipe.transform(this.now, 'y-MM-dd');
-      return;
+    if (Number(sessionStorage.getItem('deptId')) != 4) {
+      if (tglDate < sDate || tglDate > tDate) {
+        alert("GL date is not valid.. should be within GL period.\nGL Period : " + this.GLPeriodCheck.startDate + " - " + this.GLPeriodCheck.endDate);
+        this.glDate = this.pipe.transform(this.now, 'y-MM-dd');
+        return;
+      }
     }
-  }
   }
 
   glPrdValidateLine(i: any) {
@@ -980,7 +1041,7 @@ if(this.deptId==2){
             // alert("Tds% :"+this.CustomerSiteDetails.customerId.tdsPer);
             this.paymentArForm.patchValue({
               customerSiteId: this.CustomerSiteDetails.customerSiteId,
-              custSiteName:this.CustomerSiteDetails.siteName,
+              custSiteName: this.CustomerSiteDetails.siteName,
               customerSiteAddress: this.CustomerSiteDetails.address1 + "," +
                 this.CustomerSiteDetails.address2 + "," +
                 this.CustomerSiteDetails.address3 + "," +
@@ -1003,54 +1064,62 @@ if(this.deptId==2){
 
   onRefTypeSelected(mRefType) {
     // alert ("Reference Type : "+ mRefType);
-    this.referenceNo='';
+    this.referenceNo = '';
     if (mRefType === 'Advance' || mRefType === undefined) { this.showRefYellow = false; }
     else { this.showRefYellow = true; }
 
-    if(mRefType==='ReIns-Renewal') { this.reInsurance=true;this.showRefYellow = true;} else{this.reInsurance=false;}
+    if (mRefType === 'ReIns-Renewal') { this.reInsurance = true; this.showRefYellow = true; } else { this.reInsurance = false; }
 
     // if(mRefType==='Sales-Order') {alert ("Sale order Selected..")}
 
   }
 
-  validateSaleOrder(soNumber){
+  validateSaleOrder(soNumber) {
 
     var refTp = this.paymentArForm.get('refType').value;
-    if(refTp==='Sales-Order') {
-      this.orderManagementService.getsearchByOrderNo(soNumber)
-      .subscribe(
-        data => {
+    var customerId = this.paymentArForm.get('customerId').value;
+    if (customerId === null || customerId === undefined) {
+      alert('Please Entered the Customer Account Number.!');
+      this.paymentArForm.get('referenceNo').reset();
+      return;
+    }
+    if (refTp === 'Sales-Order') {
+      this.orderManagementService.getsearchByOrderNo2(soNumber, customerId, sessionStorage.getItem('locId'))
+        .subscribe(
+          data => {
             if (data.code === 400) {
-            alert("Entered Order Number doesnot exist...");this.referenceNo=''; return;
-          }
-        });
+              alert("Entered Order Number doesnot exist..."); this.referenceNo = ''; return;
+            }
+          });
 
       this.service.gatePassStatusCheck(soNumber)
-      .subscribe(
-        data => {
+        .subscribe(
+          data => {
             if (data.code === 200) {
-            alert("Gate Pass Already Done for this Order...Cannot Proceed...")
-            this.resetMast()
-          }
+              alert("Gate Pass Already Done for this Order...Cannot Proceed...")
+              this.resetMast()
+            }
 
-          // if (data.code === 400) {
-          //   alert("Gate Pass Not Done for this Order... Proceed");
-          // }
-        });
-      }
+            // if (data.code === 400) {
+            //   alert("Gate Pass Not Done for this Order... Proceed");
+            // }
+          });
     }
+  };
 
+
+  ReceiptAmount: number = 0;
 
   onPayTypeSelected(payType: any, rmStatus: any) {
     // alert('paytype =' +payType  + " LocId :"+ this.locId + " Ou Id :"+this.ouId + " Deptid : "+ this.deptId + " Status :"+rmStatus);
-    this.ReceiptMethodList=null;
-    this.showOTHERModal=false;
+    this.ReceiptMethodList = null;
+    this.showOTHERModal = false;
     if (payType === 'OTHER') {
       // alert ("pytype OTHER selected..."+this.deptId );
-      this.showOTHERModal=true;
+      this.showOTHERModal = true;
       // this.showBankDetails=true;
     }
-    
+
     if (this.deptId != 4) {
       if (payType === 'CONTROL ACCOUNT') {
         this.paymentArForm.get('payType').reset();
@@ -1101,6 +1170,55 @@ if(this.deptId==2){
             }
           });
     }
+    var customerId = this.paymentArForm.get('customerId')?.value;
+    // this.ReceiptAmount=Number(this.ReceiptAmount)+Number(this.paymentArForm.get('paymentAmt').value);
+    var frmRecAmt = Number(this.paymentArForm.get('paymentAmt')?.value);
+    this.service.methodWiseAmountCheckVal(customerId, sessionStorage.getItem('locId'), sessionStorage.getItem('ouId'), payType)
+      .subscribe(
+        data => {
+          this.ReceiptMethodList = data.obj;
+          if (payType === 'CASH') {
+            var apiAmt = frmRecAmt + Number(data.obj);
+            if (apiAmt > 150000) {
+              alert("RECEIPT AMT: Should Be Less Than Rs.150000");
+              this.paymentArForm.get('paymentAmt')?.reset();
+            }
+          }
+          if (payType === 'WALLET') {
+            // this.ReceiptAmount=Number(this.ReceiptAmount)+Number(data.obj);
+            var apiAmt = frmRecAmt + Number(data.obj);
+            if (apiAmt > 200000) {
+              alert("RECEIPT AMT: Should Be Less Than Rs.200000");
+              this.paymentArForm.get('paymentAmt')?.reset();
+            }
+          }
+          if (payType === 'RTGS/NEFT') {
+            // this.ReceiptAmount=Number(this.ReceiptAmount)+Number(data.obj);
+            var apiAmt = frmRecAmt + Number(data.obj);
+            if (apiAmt > 2000000) {
+              alert("RECEIPT AMT: Should Be Less Than Rs.2000000");
+              this.paymentArForm.get('paymentAmt')?.reset();
+            }
+          }
+          if (payType === 'CREDIT CARD') {
+            // this.ReceiptAmount=Number(this.ReceiptAmount)+Number(data.obj);
+            var apiAmt = frmRecAmt + Number(data.obj);
+            if (apiAmt > 500000) {
+              alert("RECEIPT AMT: Should Be Less Than Rs.500000");
+              this.paymentArForm.get('paymentAmt')?.reset();
+            }
+          }
+          if (payType === 'DEBIT CARD') {
+            // this.ReceiptAmount=Number(this.ReceiptAmount)+Number(data.obj);
+            var apiAmt = frmRecAmt + Number(data.obj);
+            if (apiAmt > 500000) {
+              alert("RECEIPT AMT: Should Be Less Than Rs.500000");
+              this.paymentArForm.get('paymentAmt')?.reset();
+            }
+          }
+        }
+      )
+
   }
 
 
@@ -1170,7 +1288,7 @@ if(this.deptId==2){
     }
   }
 
-  
+
 
   SearchRcptByCustNo(custActNo: any) {
     // alert ("custActNo Num : " +custActNo);
@@ -1178,41 +1296,41 @@ if(this.deptId==2){
 
     this.status = null;
     // var mDate = this.pipe.transform(rcptdate, 'dd-MMM-y');
-    if (Number(sessionStorage.getItem('deptId'))!=4){
-    this.service.SearchRcptByCustNo(custActNo, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
-      .subscribe(
-        data => {
-          if (data.code==200){
-          this.lstcomments = data.obj;
-          console.log(this.lstcomments);
-          }
-          else if (data.code==400){
-            alert(data.message)
-          }
-          // if (data.message === "Record Not Found ") {
-          //   alert("No Receipt Found for this date...")
-          //   this.lstcomments = null;
-          // }
-        });
-      }
-      if (Number(sessionStorage.getItem('deptId'))==4){
-        // alert(this.locId)
-        this.service.SearchRcptByCustNo(custActNo, sessionStorage.getItem('ouId'), this.locId, sessionStorage.getItem('deptId'))
+    if (Number(sessionStorage.getItem('deptId')) != 4) {
+      this.service.SearchRcptByCustNo(custActNo, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
         .subscribe(
           data => {
-            if (data.code==200){
-            this.lstcomments = data.obj;
-            console.log(this.lstcomments);
-          }
-          else if (data.code==400){
-            alert(data.message);
-          }
+            if (data.code == 200) {
+              this.lstcomments = data.obj;
+              console.log(this.lstcomments);
+            }
+            else if (data.code == 400) {
+              alert(data.message)
+            }
             // if (data.message === "Record Not Found ") {
             //   alert("No Receipt Found for this date...")
             //   this.lstcomments = null;
             // }
           });
-      }
+    }
+    if (Number(sessionStorage.getItem('deptId')) == 4) {
+      // alert(this.locId)
+      this.service.SearchRcptByCustNo(custActNo, sessionStorage.getItem('ouId'), this.locId, sessionStorage.getItem('deptId'))
+        .subscribe(
+          data => {
+            if (data.code == 200) {
+              this.lstcomments = data.obj;
+              console.log(this.lstcomments);
+            }
+            else if (data.code == 400) {
+              alert(data.message);
+            }
+            // if (data.message === "Record Not Found ") {
+            //   alert("No Receipt Found for this date...")
+            //   this.lstcomments = null;
+            // }
+          });
+    }
   }
 
 
@@ -1376,31 +1494,31 @@ if(this.deptId==2){
     return revDays;
   }
 
-  unApplyReceipt(receiptNumber){
+  unApplyReceipt(receiptNumber) {
 
-    var  resp=confirm("Do You Want to Un-Apply This Receipt ???");
-    if(resp==true) {
-    // alert(receiptNumber)
-    this.service.unappliedReceipt(receiptNumber)
-    .subscribe(
-      data => {
-        if (data.code==200){
-          alert(data.message);
-          this.isVisibleUnApplyReceipt=false;
-        }
-        else if(data.code==400){
-          alert(data.message)
-        }
-      })
+    var resp = confirm("Do You Want to Un-Apply This Receipt ???");
+    if (resp == true) {
+      // alert(receiptNumber)
+      this.service.unappliedReceipt(receiptNumber)
+        .subscribe(
+          data => {
+            if (data.code == 200) {
+              alert(data.message);
+              this.isVisibleUnApplyReceipt = false;
+            }
+            else if (data.code == 400) {
+              alert(data.message)
+            }
+          })
     }
   }
-  
+
 
   SelectReceipt(receiptNumber: any) {
     // alert('selectReceiptMethod'+'---'+receiptNumber)
     this.displayButton = false;
     this.display = false;
-    this.othSaveButton=true;
+    this.othSaveButton = true;
     if (Number(sessionStorage.getItem('deptId')) != 4) {
       this.service.getArReceiptDetailsByRcptNoAndloc(receiptNumber)
         .subscribe(
@@ -1422,19 +1540,19 @@ if(this.deptId==2){
 
             // -------------------------------------------- Other Rcpt Details-----
             // this.othLineArray().clear();
-               this.othLineArray().reset();
+            this.othLineArray().reset();
 
-               console.log(this.lstRcptOtherDetails);
-               this.lstRcptOtherDetails=data.obj.oePayList[0].rcptOthDet;
+            console.log(this.lstRcptOtherDetails);
+            this.lstRcptOtherDetails = data.obj.oePayList[0].rcptOthDet;
 
-                  var len = this.othLineArray().length;
-                  for (let i = 0; i < this.lstRcptOtherDetails.length - len; i++) {
-                    var avlLnGrp: FormGroup = this.othLineDetails();
-                    this.othLineArray().push(avlLnGrp);
-                  }
+            var len = this.othLineArray().length;
+            for (let i = 0; i < this.lstRcptOtherDetails.length - len; i++) {
+              var avlLnGrp: FormGroup = this.othLineDetails();
+              this.othLineArray().push(avlLnGrp);
+            }
 
-                  this.paymentArForm.get('rcptOthDet').patchValue(this.lstRcptOtherDetails);
-            
+            this.paymentArForm.get('rcptOthDet').patchValue(this.lstRcptOtherDetails);
+
             // -----------------------------------------------------------------------
 
             this.paymentArForm.patchValue(this.receiptDetails);
@@ -1455,47 +1573,47 @@ if(this.deptId==2){
             if (data.obj.oePayList[0].status === 'REFUND') {
               this.showReasonDetails = false; this.enableCancelButton = false; this.enableApplyButton = false;
               this.showRefundHist = true;
-              this.othSaveButton=false;
+              this.othSaveButton = false;
               // this.paymentArForm.disable();
               return;
             }
 
             if (data.obj.oePayList[0].status === 'REVERSED') {
-              this.isVisibleUnApplyReceipt=false;
-              this.othSaveButton=false;
-              this.othAddRemoveButton=true;
+              this.isVisibleUnApplyReceipt = false;
+              this.othSaveButton = false;
+              this.othAddRemoveButton = true;
               this.paymentArForm.disable();
               // return;
-            // }
-           
-            if (data.obj.oePayList[0].reversalReasonCode != null) {
-              if (data.obj.oePayList[0].reversalReasonCode === 'ChqBounce') { this.chqBounceStatus = true; }
-              this.printButton = false;
-              this.showModalForm = false;
-              this.enableApplyButton = false;
-              this.enableCancelButton = false;
-              this.showReasonDetails = true;
-              this.reversalReasonCode = data.obj.oePayList[0].reversalReasonCode;
-              this.reversalComment = data.obj.oePayList[0].reversalComment;
-              this.reversalDate = data.obj.oePayList[0].reversalDate;
-              this.reversalCategory = data.obj.oePayList[0].reversalCategory;
-              this.paymentArForm.disable();
-              this.paymentArForm.get('searchByRcptNo').enable();
-              this.paymentArForm.get('searchByCustNo').enable();
-              this.paymentArForm.get('searchByDate').enable();
-              this.paymentArForm.get('applyTo').enable();
-              return;
+              // }
 
+              if (data.obj.oePayList[0].reversalReasonCode != null) {
+                if (data.obj.oePayList[0].reversalReasonCode === 'ChqBounce') { this.chqBounceStatus = true; }
+                this.printButton = false;
+                this.showModalForm = false;
+                this.enableApplyButton = false;
+                this.enableCancelButton = false;
+                this.showReasonDetails = true;
+                this.reversalReasonCode = data.obj.oePayList[0].reversalReasonCode;
+                this.reversalComment = data.obj.oePayList[0].reversalComment;
+                this.reversalDate = data.obj.oePayList[0].reversalDate;
+                this.reversalCategory = data.obj.oePayList[0].reversalCategory;
+                this.paymentArForm.disable();
+                this.paymentArForm.get('searchByRcptNo').enable();
+                this.paymentArForm.get('searchByCustNo').enable();
+                this.paymentArForm.get('searchByDate').enable();
+                this.paymentArForm.get('applyTo').enable();
+                return;
+
+              }
             }
-          }
             var rcptdt = data.obj.oePayList[0].receiptDate
             var tDate = this.pipe.transform(Date.now(), 'y-MM-dd');
             var mDays = this.diffDays(rcptdt);
             var reversalDays = this.getRevDays(data.obj.oePayList[0].payType)
-            
+
             if (data.obj.oePayList[0].payType === 'CHEQUE' && mDays <= reversalDays) {
-              this.showReasonDetails = true; 
-               this.enableCancelButton = true; 
+              this.showReasonDetails = true;
+              this.enableCancelButton = true;
               this.paymentArForm.get('reversalReasonCode').enable();
               this.paymentArForm.get('reversalCategory').enable();
               this.paymentArForm.get('reversalComment').enable();
@@ -1507,21 +1625,21 @@ if(this.deptId==2){
             }
 
             if (data.obj.oePayList[0].payType != 'CHEQUE' && mDays < reversalDays) {
-              this.showReasonDetails = true; 
+              this.showReasonDetails = true;
               //  this.enableCancelButton = true; 
               var currDate = this.pipe.transform(this.now, 'y-MM-dd');
               // alert(data.obj.oePayList[0].receiptDate)
               // alert('current date---'+ currDate)
-              if (Number(sessionStorage.getItem('deptId')) !=4){
-                if (data.obj.oePayList[0].receiptDate===currDate){
-                  this.enableCancelButton=true;
+              if (Number(sessionStorage.getItem('deptId')) != 4) {
+                if (data.obj.oePayList[0].receiptDate === currDate) {
+                  this.enableCancelButton = true;
                 }
-                else{
-                  this.enableCancelButton=false;
+                else {
+                  this.enableCancelButton = false;
                 }
               }
-              if (Number(sessionStorage.getItem('deptId')) ===4){
-                this.enableCancelButton=true;
+              if (Number(sessionStorage.getItem('deptId')) === 4) {
+                this.enableCancelButton = true;
               }
               this.paymentArForm.get('reversalReasonCode').enable();
               this.paymentArForm.get('reversalCategory').enable();
@@ -1538,7 +1656,7 @@ if(this.deptId==2){
 
 
           });
-         
+
     }
     else if (Number(sessionStorage.getItem('deptId')) === 4) {
       // alert(receiptNumber+'---'+this.locId)
@@ -1563,24 +1681,24 @@ if(this.deptId==2){
               this.applHistory = false;
             }
 
-               // -------------------------------------------- Other Rcpt Details-----
+            // -------------------------------------------- Other Rcpt Details-----
 
-              //  for (let i = 0; i < this.lineDetailsArray.length; i++) {
-              //   this.lineDetailsArray().removeAt(i);
-              // }
-              // this.othLineArray().clear();
-              this.othLineArray().reset();
+            //  for (let i = 0; i < this.lineDetailsArray.length; i++) {
+            //   this.lineDetailsArray().removeAt(i);
+            // }
+            // this.othLineArray().clear();
+            this.othLineArray().reset();
 
-               console.log(this.lstRcptOtherDetails);
-               this.lstRcptOtherDetails=data.obj.oePayList[0].rcptOthDet;
+            console.log(this.lstRcptOtherDetails);
+            this.lstRcptOtherDetails = data.obj.oePayList[0].rcptOthDet;
 
-                  var len = this.othLineArray().length;
-                  for (let i = 0; i < this.lstRcptOtherDetails.length - len; i++) {
-                    var avlLnGrp: FormGroup = this.othLineDetails();
-                    this.othLineArray().push(avlLnGrp);
-                  }
-                  this.paymentArForm.get('rcptOthDet').patchValue(this.lstRcptOtherDetails);
-             // -----------------------------------------------------------------------
+            var len = this.othLineArray().length;
+            for (let i = 0; i < this.lstRcptOtherDetails.length - len; i++) {
+              var avlLnGrp: FormGroup = this.othLineDetails();
+              this.othLineArray().push(avlLnGrp);
+            }
+            this.paymentArForm.get('rcptOthDet').patchValue(this.lstRcptOtherDetails);
+            // -----------------------------------------------------------------------
 
 
             // --------------------------------------------
@@ -1612,37 +1730,37 @@ if(this.deptId==2){
 
             // alert(data.obj.oePayList[0].status);
             // if (data.obj.oePayList[0].status=='APPLIED'){
-              if (data.obj.oePayList[0].totAppliedtAmount>0){
-              if (Number(sessionStorage.getItem('deptId'))==4){
-              this.isVisibleUnApplyReceipt=true;
-            }
+            if (data.obj.oePayList[0].totAppliedtAmount > 0) {
+              if (Number(sessionStorage.getItem('deptId')) == 4) {
+                this.isVisibleUnApplyReceipt = true;
+              }
             }
 
             if (data.obj.oePayList[0].status === 'REVERSED') {
-              this.isVisibleUnApplyReceipt=false;
-            //   return;
-            // }
+              this.isVisibleUnApplyReceipt = false;
+              //   return;
+              // }
 
-            if (data.obj.oePayList[0].reversalReasonCode != null) {
-              if (data.obj.oePayList[0].reversalReasonCode === 'ChqBounce') { this.chqBounceStatus = true; }
-              this.printButton = false;
-              this.showModalForm = false;
-              this.enableApplyButton = false;
-              this.enableCancelButton = false;
-              this.showReasonDetails = true;
-              this.reversalReasonCode = data.obj.oePayList[0].reversalReasonCode;
-              this.reversalComment = data.obj.oePayList[0].reversalComment;
-              this.reversalDate = data.obj.oePayList[0].reversalDate;
-              this.reversalCategory = data.obj.oePayList[0].reversalCategory;
-              this.paymentArForm.disable();
-              this.paymentArForm.get('searchByRcptNo').enable();
-              this.paymentArForm.get('searchByCustNo').enable();
-              this.paymentArForm.get('searchByDate').enable();
-              this.paymentArForm.get('applyTo').enable();
-              return;
+              if (data.obj.oePayList[0].reversalReasonCode != null) {
+                if (data.obj.oePayList[0].reversalReasonCode === 'ChqBounce') { this.chqBounceStatus = true; }
+                this.printButton = false;
+                this.showModalForm = false;
+                this.enableApplyButton = false;
+                this.enableCancelButton = false;
+                this.showReasonDetails = true;
+                this.reversalReasonCode = data.obj.oePayList[0].reversalReasonCode;
+                this.reversalComment = data.obj.oePayList[0].reversalComment;
+                this.reversalDate = data.obj.oePayList[0].reversalDate;
+                this.reversalCategory = data.obj.oePayList[0].reversalCategory;
+                this.paymentArForm.disable();
+                this.paymentArForm.get('searchByRcptNo').enable();
+                this.paymentArForm.get('searchByCustNo').enable();
+                this.paymentArForm.get('searchByDate').enable();
+                this.paymentArForm.get('applyTo').enable();
+                return;
 
+              }
             }
-          }
 
 
             var rcptdt = data.obj.oePayList[0].receiptDate
@@ -1656,8 +1774,8 @@ if(this.deptId==2){
 
 
             if (data.obj.oePayList[0].payType === 'CHEQUE' && mDays <= reversalDays) {
-              this.showReasonDetails = true; 
-              this.enableCancelButton = true; 
+              this.showReasonDetails = true;
+              this.enableCancelButton = true;
               this.paymentArForm.get('reversalReasonCode').enable();
               this.paymentArForm.get('reversalCategory').enable();
               this.paymentArForm.get('reversalComment').enable();
@@ -1669,8 +1787,8 @@ if(this.deptId==2){
             }
 
             if (data.obj.oePayList[0].payType != 'CHEQUE' && mDays < reversalDays) {
-              this.showReasonDetails = true; 
-              this.enableCancelButton = true; 
+              this.showReasonDetails = true;
+              this.enableCancelButton = true;
               this.paymentArForm.get('reversalReasonCode').enable();
               this.paymentArForm.get('reversalCategory').enable();
               this.paymentArForm.get('reversalComment').enable();
@@ -2115,7 +2233,7 @@ if(this.deptId==2){
               this.paymentArForm.get('selectAllflag1').disable();
             } else {
               this.paymentArForm.get('selectAllflag1').disable();
-              alert ("No Record(s) Found....");
+              alert("No Record(s) Found....");
               this.validateStatus = false; return;
             }
 
@@ -2124,7 +2242,7 @@ if(this.deptId==2){
               this.invLineArray().push(invLnGrp);
 
             }
-            
+
             this.paymentArForm.get('invLine').patchValue(this.lstinvoices);
 
             /////////////////////////////////////////////////////////
@@ -2251,9 +2369,9 @@ if(this.deptId==2){
 
   onOptionsSelectedcustSiteName(siteName) {
     let selSite = this.accountNoSearch.find(d => d.siteName === siteName);
-    this.paymentArForm.patchValue({ 
-      customerSiteId:selSite.billToLocId, 
-      })
+    this.paymentArForm.patchValue({
+      customerSiteId: selSite.billToLocId,
+    })
   }
 
 
@@ -2277,7 +2395,7 @@ if(this.deptId==2){
             else {
               this.paymentArForm.patchValue({ custAccountNo: data.obj[0].accountNo });
               console.log(this.accountNoSearch);
-              this.enableCustAccount=false;
+              this.enableCustAccount = false;
 
               this.paymentArForm.patchValue({
                 customerId: this.accountNoSearch[0].customerId,
@@ -2672,51 +2790,51 @@ if(this.deptId==2){
   }
 
 
-  UnapplySave(){
-    var  resp=confirm("Do You Want to Un-Apply this Transaction(s)???");
-    if(resp==true) {
-      this.isDisabled2=true;
-    var patch = this.paymentArForm.get('appliedInvLine') as FormArray;
-    var applLineArr = this.paymentArForm.get('appliedInvLine').value;
-    var len1 = applLineArr.length;
+  UnapplySave() {
+    var resp = confirm("Do You Want to Un-Apply this Transaction(s)???");
+    if (resp == true) {
+      this.isDisabled2 = true;
+      var patch = this.paymentArForm.get('appliedInvLine') as FormArray;
+      var applLineArr = this.paymentArForm.get('appliedInvLine').value;
+      var len1 = applLineArr.length;
 
-    // alert ("this.appliedInvLineArray().length  :" +len1);
+      // alert ("this.appliedInvLineArray().length  :" +len1);
 
-    
-    let variants = <FormArray>this.appliedInvLineArray();
-    var receiptNumber = this.paymentArForm.get('receiptNumber').value;
-    var receiptDate = this.paymentArForm.get('receiptDate').value;
-    var customerId = this.paymentArForm.get('customerId').value;
-    var custAccountNo = this.paymentArForm.get('custAccountNo').value;
-    var customerSiteId = this.paymentArForm.get('customerSiteId').value;
-    var custName = this.paymentArForm.get('custName').value;
 
-   
-    for (let i = 0; i < this.appliedInvLineArray().length; i++) {
-      let variantFormGroup = <FormGroup>variants.controls[i];
-      variantFormGroup.addControl('receiptNumber', new FormControl(receiptNumber, Validators.required));
-      variantFormGroup.addControl('receiptDate', new FormControl(receiptDate, Validators.required));
-      variantFormGroup.addControl('customerId', new FormControl(customerId, Validators.required));
-      variantFormGroup.addControl('custAccountNo', new FormControl(custAccountNo, Validators.required));
-      variantFormGroup.addControl('customerSiteId', new FormControl(customerSiteId, Validators.required));
-      variantFormGroup.addControl('custName', new FormControl(custName, Validators.required));
-    }
+      let variants = <FormArray>this.appliedInvLineArray();
+      var receiptNumber = this.paymentArForm.get('receiptNumber').value;
+      var receiptDate = this.paymentArForm.get('receiptDate').value;
+      var customerId = this.paymentArForm.get('customerId').value;
+      var custAccountNo = this.paymentArForm.get('custAccountNo').value;
+      var customerSiteId = this.paymentArForm.get('customerSiteId').value;
+      var custName = this.paymentArForm.get('custName').value;
 
-        console.log(variants.value);
 
-            this.service.UnApplyArReceiptSubmit(variants.value,receiptNumber).subscribe((res: any) => {
-              if (res.code === 200) {
-                this.isVisibleUnApplyReceipt=false;
-                alert('Record Unapplied Successfully -'+res.message);
-              } else {
-                if (res.code === 400) {
-                  this.isDisabled2=false;;
+      for (let i = 0; i < this.appliedInvLineArray().length; i++) {
+        let variantFormGroup = <FormGroup>variants.controls[i];
+        variantFormGroup.addControl('receiptNumber', new FormControl(receiptNumber, Validators.required));
+        variantFormGroup.addControl('receiptDate', new FormControl(receiptDate, Validators.required));
+        variantFormGroup.addControl('customerId', new FormControl(customerId, Validators.required));
+        variantFormGroup.addControl('custAccountNo', new FormControl(custAccountNo, Validators.required));
+        variantFormGroup.addControl('customerSiteId', new FormControl(customerSiteId, Validators.required));
+        variantFormGroup.addControl('custName', new FormControl(custName, Validators.required));
+      }
 
-                  alert('Error While Unapplying Record:-'+res.message );
-                }
-              }
-            });
+      console.log(variants.value);
+
+      this.service.UnApplyArReceiptSubmit(variants.value, receiptNumber).subscribe((res: any) => {
+        if (res.code === 200) {
+          this.isVisibleUnApplyReceipt = false;
+          alert('Record Unapplied Successfully -' + res.message);
+        } else {
+          if (res.code === 400) {
+            this.isDisabled2 = false;;
+
+            alert('Error While Unapplying Record:-' + res.message);
           }
+        }
+      });
+    }
   }
 
 
@@ -2804,32 +2922,32 @@ if(this.deptId==2){
 
     if (this.checkValidation === true) {
       // alert("Data Validation Sucessfull....\nPosting data  to AR PAYMENT TABLE");
-      var  resp=confirm("Do You Want to Save this Receipt ???");
-      if(resp==true) {
+      var resp = confirm("Do You Want to Save this Receipt ???");
+      if (resp == true) {
         this.displayButton = false;
-      const formValue: IPaymentRcptAr = this.transeData(this.paymentArForm.value);
+        const formValue: IPaymentRcptAr = this.transeData(this.paymentArForm.value);
 
-      this.service.ArReceiptSubmit(formValue).subscribe((res: any) => {
-        if (res.code === 200) {
-          alert('RECORD INSERTED SUCCESSFUILY');
-          this.receiptNumber = res.obj;
-          this.paymentArForm.disable();
-          this.paymentArForm.get('searchByRcptNo').enable();
-          this.paymentArForm.get('searchByCustNo').enable();
-          this.paymentArForm.get('searchByDate').enable();
-          this.totUnAppliedtAmount = this.paymentAmt;
-          this.totAppliedtAmount = 0;
-          this.balanceAmount == this.paymentAmt;
+        this.service.ArReceiptSubmit(formValue).subscribe((res: any) => {
+          if (res.code === 200) {
+            alert('RECORD INSERTED SUCCESSFUILY');
+            this.receiptNumber = res.obj;
+            this.paymentArForm.disable();
+            this.paymentArForm.get('searchByRcptNo').enable();
+            this.paymentArForm.get('searchByCustNo').enable();
+            this.paymentArForm.get('searchByDate').enable();
+            this.totUnAppliedtAmount = this.paymentAmt;
+            this.totAppliedtAmount = 0;
+            this.balanceAmount == this.paymentAmt;
 
-          // this.paymentArForm.reset();
-        } else {
-          if (res.code === 400) {
-            alert('Error While Saving Record:-' + res.obj);
-            this.displayButton = true;
+            // this.paymentArForm.reset();
+          } else {
+            if (res.code === 400) {
+              alert('Error While Saving Record:-' + res.obj);
+              this.displayButton = true;
+            }
           }
-        }
-      });
-    }
+        });
+      }
     }
     // else { alert("Data Validation Not Sucessfull....\nPosting Not Done...") }
 
@@ -2905,34 +3023,34 @@ if(this.deptId==2){
     this.CheckCancelValidation();
     if (this.cancelValidation) {
 
-      var  resp=confirm("Do You Want to Reverse this Receipt ???");
-      if(resp==true) {
+      var resp = confirm("Do You Want to Reverse this Receipt ???");
+      if (resp == true) {
 
-      this.enableCancelButton = false;
+        this.enableCancelButton = false;
 
-      // const formValue: IPaymentRcptAr =this.transeData(this.paymentArForm.value);
-      const formValue: IPaymentRcptAr = this.paymentArForm.value;
-      // debugger;
-      this.service.ReverseArReceiptSubmit(formValue).subscribe((res: any) => {
-        if (res.code === 200) {
-          alert('Receipt Reversal done Successfully');
-          this.paymentArForm.disable()
-          // this.paymentArForm.get('receiptNumber').disable();
+        // const formValue: IPaymentRcptAr =this.transeData(this.paymentArForm.value);
+        const formValue: IPaymentRcptAr = this.paymentArForm.value;
+        // debugger;
+        this.service.ReverseArReceiptSubmit(formValue).subscribe((res: any) => {
+          if (res.code === 200) {
+            alert('Receipt Reversal done Successfully');
+            this.paymentArForm.disable()
+            // this.paymentArForm.get('receiptNumber').disable();
 
-          this.paymentArForm.get('searchByRcptNo').enable();
-          this.paymentArForm.get('searchByCustNo').enable();
-          this.paymentArForm.get('searchByDate').enable();
-          // window.location.reload();
-        } else {
-          if (res.code === 400) {
-            // alert('ERROR OCCOURED IN PROCEESS');
-            alert(res.message + "\n" + res.obj);
-            this.enableCancelButton = true;
-            // this.paymentArForm.reset();
+            this.paymentArForm.get('searchByRcptNo').enable();
+            this.paymentArForm.get('searchByCustNo').enable();
+            this.paymentArForm.get('searchByDate').enable();
+            // window.location.reload();
+          } else {
+            if (res.code === 400) {
+              // alert('ERROR OCCOURED IN PROCEESS');
+              alert(res.message + "\n" + res.obj);
+              this.enableCancelButton = true;
+              // this.paymentArForm.reset();
+            }
           }
-        }
-      });
-    }
+        });
+      }
     } else { alert("Data Validation Not Sucessfull....\nCancellation not done...") }
   }
 
@@ -3070,7 +3188,7 @@ if(this.deptId==2){
       return;
     }
 
-    if (formValue.customerSiteId === undefined || formValue.customerSiteId === null || formValue.customerSiteId <=0) {
+    if (formValue.customerSiteId === undefined || formValue.customerSiteId === null || formValue.customerSiteId <= 0) {
       this.checkValidation = false;
       alert("CUSTOMER SITE : Should not be null....");
       return;
@@ -3089,14 +3207,14 @@ if(this.deptId==2){
     var tDate = new Date(this.GLPeriodCheck.endDate);
 
     // alert(tglDate+'----'+this.glDate +'-------'+ formValue.glDate);
-    if (Number(sessionStorage.getItem('deptId'))!=4){
-    if (formValue.glDate === undefined || formValue.glDate === null || tglDate < sDate || tglDate > tDate) {
-      this.checkValidation = false;
-      alert("GL DATE: " + this.pipe.transform(tglDate, 'y-MM-dd') + " Should not be null / Should be within GL period.\nGL Period : " + this.GLPeriodCheck.startDate + " - " + this.GLPeriodCheck.endDate);
-      this.glDate = this.pipe.transform(this.now, 'y-MM-dd');
-      return;
+    if (Number(sessionStorage.getItem('deptId')) != 4) {
+      if (formValue.glDate === undefined || formValue.glDate === null || tglDate < sDate || tglDate > tDate) {
+        this.checkValidation = false;
+        alert("GL DATE: " + this.pipe.transform(tglDate, 'y-MM-dd') + " Should not be null / Should be within GL period.\nGL Period : " + this.GLPeriodCheck.startDate + " - " + this.GLPeriodCheck.endDate);
+        this.glDate = this.pipe.transform(this.now, 'y-MM-dd');
+        return;
+      }
     }
-  }
 
 
     if (formValue.paymentAmt <= 0 || formValue.paymentAmt === undefined || formValue.paymentAmt === null) {
@@ -3111,25 +3229,25 @@ if(this.deptId==2){
       return;
     }
 
-    if (formValue.refType ==='ReIns-Renewal') {
+    if (formValue.refType === 'ReIns-Renewal') {
 
-          if(formValue.referenceNo == null || formValue.referenceNo == undefined || formValue.referenceNo.trim() == '') {
-            alert("POLICY NO : Should not be null.");
-            this.checkValidation = false;
-            return;
-          }
+      if (formValue.referenceNo == null || formValue.referenceNo == undefined || formValue.referenceNo.trim() == '') {
+        alert("POLICY NO : Should not be null.");
+        this.checkValidation = false;
+        return;
+      }
 
-        // alert ("Policy Date :" +formValue.referenceDate);
-        if (formValue.referenceDate == null || formValue.referenceDate==undefined || formValue.referenceDate.trim() == '') {
-          alert("POLICY DATE : Policy date shouldnot be null.");
-          this.checkValidation = false;
-          return;
-        }
-        if (formValue.policyTerm == null || formValue.policyTerm==undefined || formValue.policyTerm<=0) {
-          alert("POLICY TERM : Please enter valid Policy term (period))");
-          this.checkValidation = false;
-          return;
-        }
+      // alert ("Policy Date :" +formValue.referenceDate);
+      if (formValue.referenceDate == null || formValue.referenceDate == undefined || formValue.referenceDate.trim() == '') {
+        alert("POLICY DATE : Policy date shouldnot be null.");
+        this.checkValidation = false;
+        return;
+      }
+      if (formValue.policyTerm == null || formValue.policyTerm == undefined || formValue.policyTerm <= 0) {
+        alert("POLICY TERM : Please enter valid Policy term (period))");
+        this.checkValidation = false;
+        return;
+      }
     }
 
     if (formValue.refType != 'Advance' && (formValue.referenceNo == null || formValue.referenceNo.trim() == '')) {
@@ -3238,15 +3356,15 @@ if(this.deptId==2){
 
     var sDate = new Date(this.GLPeriodCheck.startDate);
     var tDate = new Date(this.GLPeriodCheck.endDate);
-    if (Number(sessionStorage.getItem('deptId'))!=4){
-    if (tglDate === undefined || tglDate === null || tglDate < sDate || tglDate > tDate) {
-      // this.checkValidation = false;
-      alert("GL DATE: Should not be null / Should be within GL period.\nGL Period : " + this.GLPeriodCheck.startDate + " - " + this.GLPeriodCheck.endDate);
-      this.glDate = this.pipe.transform(this.now, 'y-MM-dd');
-      this.applLineValidation = false;
-      return;
+    if (Number(sessionStorage.getItem('deptId')) != 4) {
+      if (tglDate === undefined || tglDate === null || tglDate < sDate || tglDate > tDate) {
+        // this.checkValidation = false;
+        alert("GL DATE: Should not be null / Should be within GL period.\nGL Period : " + this.GLPeriodCheck.startDate + " - " + this.GLPeriodCheck.endDate);
+        this.glDate = this.pipe.transform(this.now, 'y-MM-dd');
+        this.applLineValidation = false;
+        return;
+      }
     }
-  }
 
     // if (chkFlag === false || chkFlag === null || chkFlag === undefined) {
     //   alert("Line-" + j + " : Line not Selected.Pls Check Mark the Line");
@@ -3283,14 +3401,14 @@ if(this.deptId==2){
 
     var sDate = new Date(this.GLPeriodCheck.startDate);
     var tDate = new Date(this.GLPeriodCheck.endDate);
-    if (Number(sessionStorage.getItem('deptId'))!=4){
-    if (tglDate === undefined || tglDate === null || tglDate < sDate || tglDate > tDate) {
-      this.checkValidation = false;
-      alert("GL DATE: Should not be null / Should be within GL period.\nGL Period : " + this.GLPeriodCheck.startDate + " - " + this.GLPeriodCheck.endDate);
-      this.glDate = this.pipe.transform(this.now, 'y-MM-dd');
-      return;
+    if (Number(sessionStorage.getItem('deptId')) != 4) {
+      if (tglDate === undefined || tglDate === null || tglDate < sDate || tglDate > tDate) {
+        this.checkValidation = false;
+        alert("GL DATE: Should not be null / Should be within GL period.\nGL Period : " + this.GLPeriodCheck.startDate + " - " + this.GLPeriodCheck.endDate);
+        this.glDate = this.pipe.transform(this.now, 'y-MM-dd');
+        return;
+      }
     }
-  }
     if (chkFlag === false || chkFlag === null || chkFlag === undefined) {
       alert("Line-" + j + " : Line not Selected.Pls Check Mark the Line");
       this.applLineValidation = false;
@@ -3456,221 +3574,219 @@ if(this.deptId==2){
       });
   }
 
-  SearchByReciptNo(ReceiptNo){
-   // alert ('else if ----'+ this.locId)
-      this.service.getArReceiptDetailsByRcptNo(ReceiptNo)
-        .subscribe(
-          data => {
-            this.lstcomments = data.obj;
-            console.log(this.lstcomments);
-            if (data.code === 400) {
-              alert(data.obj)
-              this.lstcomments = null;
-            }
-          });
+  SearchByReciptNo(ReceiptNo) {
+    // alert ('else if ----'+ this.locId)
+    this.service.getArReceiptDetailsByRcptNo(ReceiptNo)
+      .subscribe(
+        data => {
+          this.lstcomments = data.obj;
+          console.log(this.lstcomments);
+          if (data.code === 400) {
+            alert(data.obj)
+            this.lstcomments = null;
+          }
+        });
+  }
+
+  unApplyFlag1(e, index) {
+    // alert ("Index : "+index  + " Doc No :"+  this.lstApplyHistory[index].trxNumber);
+
+
+    if (e.target.checked === true) {
+      this.unApplyFlag = 'Y'
+    }
+    if (e.target.checked === false) {
+      this.unApplyFlag = 'N'
+    }
+  }
+
+
+
+  LoadAppliedInvoices() {
+    this.isDisabled2 = true;
+    this.customerSiteId = this.billToSiteId;
+    this.custAddr = this.custSiteAddress;
+    this.receiptAmount = this.paymentAmt;
+    this.tApplAmt = this.totAppliedtAmount;
+    this.tUapplAmt = this.totUnAppliedtAmount;
+
+    this.appliedInvLineArray().reset();
+    var len = this.appliedInvLineArray().length;
+    var y = 0;
+    // alert("this.lsthist.length  >>" +this.lstApplyHistory.length);
+    for (let i = 0; i < this.lstApplyHistory.length - len; i++) {
+      var invLnGrp: FormGroup = this.appliedinvLineDetails();
+      this.appliedInvLineArray().push(invLnGrp);
+
+    }
+    this.paymentArForm.get('appliedInvLine').patchValue(this.lstApplyHistory);
+    /////////////////////////////////////////////////////////
+    if (this.lstApplyHistory.length > 0) { this.isDisabled1 = false; } else { this.isDisabled1 = true; }
+
+    for (let i = 0; i < this.lstApplyHistory.length; i++) {
+      this.appliedInvLineArray().controls[i].get('unApplyFlag').enable();
     }
 
-    unApplyFlag1(e,index) {
-      // alert ("Index : "+index  + " Doc No :"+  this.lstApplyHistory[index].trxNumber);
-     
-      
-      if (e.target.checked === true) {
-        this.unApplyFlag = 'Y'
-      }
-      if (e.target.checked === false) {
-        this.unApplyFlag = 'N'
+  }
+
+  validateUnapply() {
+
+    this.isDisabled1 = true;
+    var applLineArr = this.paymentArForm.get('appliedInvLine').value;
+    var len1 = applLineArr.length;
+
+    // alert("UnApply Validate ....wip "+this.isDisabled1);
+
+    // this.validateStatus = false;
+    // this.applySaveButton = false;
+
+    for (let i = len1 - 1; i >= 0; i--) {
+      if (this.appliedInvLineArray().controls[i].get('unApplyFlag').value != true) {
+        this.appliedInvLineArray().removeAt(i);
       }
     }
 
+    var applLineArr1 = this.paymentArForm.get('appliedInvLine').value;
+    //  var patch = this.paymentArForm.get('appliedInvLine') as FormArray;
+    for (let i = 0; i < applLineArr1.length; i++) {
+      this.appliedInvLineArray().controls[i].get('unApplyFlag').disable();
+    }
 
-    
-      LoadAppliedInvoices() {
-            this.isDisabled2=true;
-            this.customerSiteId = this.billToSiteId;
-            this.custAddr = this.custSiteAddress;
-            this.receiptAmount = this.paymentAmt;
-            this.tApplAmt = this.totAppliedtAmount;
-            this.tUapplAmt = this.totUnAppliedtAmount;
+    if (applLineArr1.length > 0) { this.isDisabled2 = false; } else { this.isDisabled2 = true; }
 
-            this.appliedInvLineArray().reset();
-            var len = this.appliedInvLineArray().length;
-            var y = 0;
-            // alert("this.lsthist.length  >>" +this.lstApplyHistory.length);
-            for (let i = 0; i < this.lstApplyHistory.length - len; i++) {
-              var invLnGrp: FormGroup = this.appliedinvLineDetails();
-              this.appliedInvLineArray().push(invLnGrp);
+  }
 
-            }
-            this.paymentArForm.get('appliedInvLine').patchValue(this.lstApplyHistory);
-            /////////////////////////////////////////////////////////
-            if(this.lstApplyHistory.length >0) {this.isDisabled1=false;} else {this.isDisabled1=true;}
 
-          for (let i = 0; i < this.lstApplyHistory.length; i++) {
-            this.appliedInvLineArray().controls[i].get('unApplyFlag').enable();
+  UnapplySelectAll() {
+
+    var patch = this.paymentArForm.get('appliedInvLine') as FormArray;
+    var applLineArr1 = this.paymentArForm.get('appliedInvLine').value;
+
+    for (let i = 0; i < applLineArr1.length; i++) {
+      if (applLineArr1[i].unApplyFlag === true) {
+        patch.controls[i].patchValue({ unApplyFlag: '' })
+      } else {
+        patch.controls[i].patchValue({ unApplyFlag: true })
+      }
+    }
+  }
+
+
+
+  addRow(index) {
+    this.CheckOthLineValidations(index);
+
+    if (this.othLineValidation) {
+
+      this.othLineArray().push(this.othLineDetails());
+    }
+  }
+
+
+
+  RemoveRow(index) {
+    if (index === 0) {
+
+    }
+    else {
+      this.othLineArray().removeAt(index);
+    }
+
+  }
+
+
+  CheckOthLineValidations(i) {
+
+    // alert('addrow index '+i);
+
+    var prcLineArr1 = this.paymentArForm.get('rcptOthDet').value;
+    var lineValue1 = prcLineArr1[i].othRefNo;
+    var lineValue2 = prcLineArr1[i].othRefDt;
+    var lineValue3 = prcLineArr1[i].othAmtReceived;
+    var lineValue4 = prcLineArr1[i].othBankName;
+
+
+    // alert("Line Value :"+lineValue1);
+    var j = i + 1;
+    if (lineValue1 === undefined || lineValue1 === null || lineValue1.trim() == '') {
+      alert("Line-" + j + " REFERENCE NO:  Should not be null value.");
+      this.othLineValidation = false;
+      return;
+    }
+
+    if (lineValue2 === undefined || lineValue2 === null || lineValue2 === '') {
+      alert("Line-" + j + " REFERENCE DATE :  Should not be null value");
+      this.othLineValidation = false;
+      return;
+    }
+
+    if (lineValue3 === undefined || lineValue3 === null || lineValue3 <= 0) {
+      alert("Line-" + j + " AMOUNT :  Should  be grater than Zero");
+      this.othLineValidation = false;
+      return;
+    }
+
+    if (lineValue4 === undefined || lineValue4 === null || lineValue4.trim() == '') {
+      alert("Line-" + j + " AMOUNT :  Should  be grater than Zero");
+      this.othLineValidation = false;
+      return;
+    }
+
+    this.othLineValidation = true;
+
+  }
+
+
+
+  othDetSave() {
+
+    this.othSaveButton = false;
+
+    var othLineArr = this.paymentArForm.get('rcptOthDet').value;
+    var len1 = othLineArr.length;
+
+    for (let i = 0; i < len1; i++) {
+      this.CheckOthLineValidations(i);
+    }
+
+    if (this.othLineValidation === false) {
+      alert("Line Validation Failed...\nPlease check all  line data fileds are updated properly..")
+      this.othSaveButton = true;
+      return;
+    }
+
+    if (this.othLineValidation) {
+
+      const formValue: IPaymentRcptAr = this.paymentArForm.value;
+      let variants = <FormArray>this.othLineArray();
+      var receiptNumber = this.paymentArForm.get('receiptNumber').value;
+      var cashReceiptId = this.paymentArForm.get('cashReceiptId').value;
+      // alert ("receipt Number : "+ receiptNumber);
+
+      for (let i = 0; i < this.othLineArray().length; i++) {
+        let variantFormGroup = <FormGroup>variants.controls[i];
+        variantFormGroup.addControl('receiptnumber', new FormControl(receiptNumber, Validators.required));
+        variantFormGroup.addControl('cashReceiptId', new FormControl(cashReceiptId, Validators.required));
+
+      }
+
+      console.log(variants.value);
+
+      this.service.ArPaymentOtherDetPost(variants.value).subscribe((res: any) => {
+        if (res.code === 200) {
+          alert(res.message);
+
+        } else {
+          if (res.code === 400) {
+            alert(res.message);
+            // this.displayTdsButton = true;
           }
-               
-          }
-      
-          validateUnapply(){
-             
-          this.isDisabled1=true;
-          var applLineArr = this.paymentArForm.get('appliedInvLine').value;
-          var len1 = applLineArr.length;
-
-          // alert("UnApply Validate ....wip "+this.isDisabled1);
-
-          // this.validateStatus = false;
-          // this.applySaveButton = false;
-    
-          for (let i = len1 - 1; i >= 0; i--) {
-            if (this.appliedInvLineArray().controls[i].get('unApplyFlag').value != true) {
-              this.appliedInvLineArray().removeAt(i);
-            } 
-          }
-
-           var applLineArr1 = this.paymentArForm.get('appliedInvLine').value;
-          //  var patch = this.paymentArForm.get('appliedInvLine') as FormArray;
-          for (let i = 0; i < applLineArr1.length; i++) {
-            this.appliedInvLineArray().controls[i].get('unApplyFlag').disable();
-          }
-
-          if(applLineArr1.length >0) {this.isDisabled2=false;} else {this.isDisabled2=true;}
-
         }
-        
-        
-        UnapplySelectAll (){
+      });
+    } else { alert("Line data Validation Not Sucessfull....\nData Not Saved..."); }
 
-          var patch = this.paymentArForm.get('appliedInvLine') as FormArray;
-          var applLineArr1 = this.paymentArForm.get('appliedInvLine').value;
-      
-            for (let i = 0; i < applLineArr1.length; i++) {
-              if (applLineArr1[i].unApplyFlag === true) {
-                patch.controls[i].patchValue({ unApplyFlag: '' })
-              } else {
-                patch.controls[i].patchValue({ unApplyFlag: true })
-              }
-            }
-        }
+  }
 
-
-
-        addRow(index) {
-          this.CheckOthLineValidations(index);
-
-         if (this.othLineValidation) {
-
-          this.othLineArray().push(this.othLineDetails());
-        }
-       }
-        
-        
-        
-        RemoveRow(index) {
-          if (index===0){
-        
-          }
-          else {
-            this.othLineArray().removeAt(index);
-          }
-        
-        }
-
-       
-        CheckOthLineValidations(i) {
-
-          // alert('addrow index '+i);
-  
-          var prcLineArr1 = this.paymentArForm.get('rcptOthDet').value;
-          var lineValue1=prcLineArr1[i].othRefNo;
-          var lineValue2=prcLineArr1[i].othRefDt;
-          var lineValue3=prcLineArr1[i].othAmtReceived;
-          var lineValue4=prcLineArr1[i].othBankName;
-
-  
-          // alert("Line Value :"+lineValue1);
-           var j=i+1;
-          if(lineValue1===undefined || lineValue1===null || lineValue1.trim()=='' ){
-            alert("Line-"+j+ " REFERENCE NO:  Should not be null value.");
-            this.othLineValidation=false;
-            return;
-          }
-  
-          if(lineValue2===undefined || lineValue2===null || lineValue2==='' ){
-            alert("Line-"+j+ " REFERENCE DATE :  Should not be null value");
-            this.othLineValidation=false;
-            return;
-          }
-  
-          if(lineValue3===undefined || lineValue3===null || lineValue3<=0){
-            alert("Line-"+j+ " AMOUNT :  Should  be grater than Zero");
-            this.othLineValidation=false;
-            return;
-          }
-
-          if(lineValue4===undefined || lineValue4===null || lineValue4.trim()==''){
-            alert("Line-"+j+ " AMOUNT :  Should  be grater than Zero");
-            this.othLineValidation=false;
-            return;
-          }
-  
-          this.othLineValidation=true;
-  
-          }
-
-          
-
-          othDetSave(){
-
-            this.othSaveButton=false;
-
-            var othLineArr = this.paymentArForm.get('rcptOthDet').value;
-            var len1 = othLineArr.length;
-  
-            for (let i = 0; i < len1 ; i++)
-              {
-                this.CheckOthLineValidations(i);
-              }
-  
-              if(this.othLineValidation===false) {
-                alert("Line Validation Failed...\nPlease check all  line data fileds are updated properly..")
-                this.othSaveButton=true;
-                return;
-              }
-
-              if (this.othLineValidation )
-              {
-             
-              const formValue: IPaymentRcptAr = this.paymentArForm.value;
-              let variants = <FormArray>this.othLineArray();
-              var receiptNumber = this.paymentArForm.get('receiptNumber').value;
-              var cashReceiptId= this.paymentArForm.get('cashReceiptId').value;
-              // alert ("receipt Number : "+ receiptNumber);
-
-              for (let i = 0; i < this.othLineArray().length; i++) {
-                let variantFormGroup = <FormGroup>variants.controls[i];
-                variantFormGroup.addControl('receiptnumber', new FormControl(receiptNumber, Validators.required));
-                variantFormGroup.addControl('cashReceiptId', new FormControl(cashReceiptId, Validators.required));
-
-              }
-
-              console.log(variants.value);
-             
-              this.service.ArPaymentOtherDetPost(variants.value).subscribe((res: any) => {
-                if (res.code === 200) {
-                  alert(res.message);
-                 
-                } else {
-                  if (res.code === 400) {
-                    alert(res.message);
-                    // this.displayTdsButton = true;
-                  }
-                }
-              });
-            } else { alert("Line data Validation Not Sucessfull....\nData Not Saved..."); }
-          
-        }
-  
 
 }
 

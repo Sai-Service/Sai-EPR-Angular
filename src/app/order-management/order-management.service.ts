@@ -22,7 +22,9 @@ export class OrderManagementService {
     return this.http.get(this.ServerUrl + `/orderHeader/${orderNumber}`);
   }
 
-
+getsearchByOrderNo2(orderNumber,customerId,locId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/orderHeader/getSaleOrderCustIdLocId?orderNumber=${orderNumber}&customerId=${customerId}&locationId=${locId}`);
+  }
 
   getsearchByOrderNo1(orderNumber,locId): Observable<any> {
     return this.http.get(this.ServerUrl + `/orderHeader/orderLocWise?orderNumber=${orderNumber}&locationId=${locId}`);
