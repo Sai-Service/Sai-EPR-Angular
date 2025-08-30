@@ -24,6 +24,8 @@
 
       <table class="center">
         <tr>
+        <input  hidden type="number" formControlName="emplId" value={{emplId}} class="form-control"  [(ngModel)]="emplId">
+
           <div *ngIf="displable; then thenIC1; else elsestock1"></div>
           <ng-template #thenIC1>
             <td style="width: 15%" class="LabelFontStyle">
