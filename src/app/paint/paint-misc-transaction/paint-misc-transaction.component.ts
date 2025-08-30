@@ -1595,10 +1595,10 @@ export class PaintMiscTransactionComponent implements OnInit {
 
   saveMisc() {
 
-        var opUnitId =Number(sessionStorage.getItem('ouId'));
-        if(opUnitId==16){
-            if (this.emplId !=2142 ){ alert ("You are Not Authorised to do this transaction...");return; }
-        }
+        // var opUnitId =Number(sessionStorage.getItem('ouId'));
+        // if(opUnitId==16){
+        //     if (this.emplId !=2142 ){ alert ("You are Not Authorised to do this transaction...");return; }
+        // }
   
     this.checkHeaderValidation();
     if (this.headerValidation1==false ) { alert("Header Validation Failed... Please Check");  return;   }

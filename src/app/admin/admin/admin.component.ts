@@ -402,7 +402,7 @@ if (Number(sessionStorage.getItem('divisionId')) === 1 && sessionStorage.getItem
       this.isVisiblePaintReportAuditor=false;
       this.isVisiblePaintStock=true;
       this.isVisibleReinsurance=false;
-            this.isVisibleToolReport=false;
+      this.isVisibleToolReport=false;
 
       // this.isVisibleShellReport=false;
 
