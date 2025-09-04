@@ -33,6 +33,7 @@ interface Imiscellaneous {
   itemUnitCost: number;
   uom: string;
   description: string;
+  emplId: number;
   locId: number;
   deptId: number;
   divisionId: number;
@@ -95,6 +96,7 @@ export class PaintMiscTransactionComponent implements OnInit {
   public ItemIdList: any[];
   public onHandItemList: any[];
   public subInvCode: any;
+
   compNo: string;
   onHandQty: number;
   id: number;
@@ -126,6 +128,7 @@ export class PaintMiscTransactionComponent implements OnInit {
   avlqty: number;
   description: string;
   locId: number;
+  emplId: number;
   deptId: number;
   divisionId: number;
   getItemDetail: any;
@@ -265,6 +268,7 @@ export class PaintMiscTransactionComponent implements OnInit {
       compileName: [''],
       compileId: [''],
       locId: [''],
+      emplId: [''],
       subInventory: ['', Validators.required],
       segmentName: ['', Validators.required],
       segment11: [''],
@@ -485,6 +489,7 @@ export class PaintMiscTransactionComponent implements OnInit {
       }
     });
 
+    this.emplId = Number(sessionStorage.getItem('emplId'));
     this.locId = Number(sessionStorage.getItem('locId'));
     this.deptId = Number(sessionStorage.getItem('dept'));
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
@@ -1590,6 +1595,11 @@ export class PaintMiscTransactionComponent implements OnInit {
 
   saveMisc() {
 
+        // var opUnitId =Number(sessionStorage.getItem('ouId'));
+        // if(opUnitId==16){
+        //     if (this.emplId !=2142 ){ alert ("You are Not Authorised to do this transaction...");return; }
+        // }
+  
     this.checkHeaderValidation();
     if (this.headerValidation1==false ) { alert("Header Validation Failed... Please Check");  return;   }
     //  return;
@@ -1614,6 +1624,7 @@ export class PaintMiscTransactionComponent implements OnInit {
             this.displayaddButton = true;this.displayButton = true;
             return;}
           }
+
 
     // var  resp=confirm("Do You Want to Save this Transaction ???");
     //  if(resp==false) { this.displayaddButton = true;this.displayButton = true;  return;} 
