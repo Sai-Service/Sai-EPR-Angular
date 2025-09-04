@@ -115,8 +115,9 @@ export class reserveLine {
 
 
 export class CounterSaleComponent implements OnInit, OnDestroy {
-  itemSeg: string = "";
+  
   CounterSaleOrderBookingForm: FormGroup;
+  itemSeg: string = "";
   lnflowStatusCode: 'BOOKED';
   refCustNo: string;
   isDisabledDisPer=false;
