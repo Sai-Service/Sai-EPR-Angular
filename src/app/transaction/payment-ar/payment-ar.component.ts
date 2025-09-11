@@ -28,7 +28,7 @@ interface IPaymentRcptAr {
   receiptDate: Date;
   receiptStatus: string;
   payType: string;
-  receiptMethodId: number;
+  receiptMethodId: string;
   paymentAmt: number;
   bankName: string;
   bankBranch: string;
@@ -61,6 +61,7 @@ export class PaymentArComponent implements OnInit {
   isVisibleUnApplyReceipt: boolean = false;
   message: string = "PleaseFixtheErrors!";
   msgType: string = "Close";
+  methodName:string;
   // public DivisionIDList : Array<string>=[];
   // public OUIdList: Array<string> = [];
 
@@ -70,7 +71,7 @@ export class PaymentArComponent implements OnInit {
   public locIdList: Array<string> = [];
   // public PaymentModeList: Array<string> = [];
   // public ReceiptMethodList: Array<string> = [];
-  ReceiptMethodList: any = [];
+  ReceiptMethodList: any=[] ;
   public ReceiptStatusList: Array<string> = [];
   public ReceiptStateList: Array<string> = [];
   public ReverseReasonList: Array<string> = [];
@@ -83,7 +84,7 @@ export class PaymentArComponent implements OnInit {
   viewAccountingArRcpt: Array<string> = [];
   viewAccountingLines: Array<string> = [];
 
-  receiptDetails: Array<string> = [];
+  receiptDetails: any=[];
   customerNameSearch: any;
   accountNoSearch: any;
   getVehRegDetails: any;
@@ -265,6 +266,7 @@ export class PaymentArComponent implements OnInit {
   refType: string;
 
   showOTHERModal = false;
+  showControlModal=false;
   othSaveButton = false;
   othAddRemoveButton = false;
   // othDelButton=true;
@@ -310,6 +312,7 @@ export class PaymentArComponent implements OnInit {
   isDisabled2 = true;
   unAppAllFlag: string;
   othLineValidation = false;
+  ReceiptMethodList1:any=[];
 
 
   // applyTo: string;
@@ -329,7 +332,7 @@ export class PaymentArComponent implements OnInit {
       orgId: [],
       ouId: [],
       deptId: [],
-
+      methodName:[],
       loginArray: [''],
       loginName: [''],
       ouName: [''],
@@ -1110,7 +1113,12 @@ export class PaymentArComponent implements OnInit {
 
   ReceiptAmount: number = 0;
 
-  onPayTypeSelected(payType: any, rmStatus: any) {
+  onPayTypeSelected(event: any, rmStatus: any) {
+  // alert(event.target.value);
+    var value=event.target.value;
+     var payType1 = value.substr(value.indexOf(':') + 1, value.length);
+     var payType=payType1.trim();
+    //  alert('-----'+payType+'------')
     // alert('paytype =' +payType  + " LocId :"+ this.locId + " Ou Id :"+this.ouId + " Deptid : "+ this.deptId + " Status :"+rmStatus);
     this.ReceiptMethodList = null;
     this.showOTHERModal = false;
@@ -1120,7 +1128,7 @@ export class PaymentArComponent implements OnInit {
       // this.showBankDetails=true;
     }
 
-    if (this.deptId != 4) {
+    if (Number(sessionStorage.getItem('deptId')) != 4) {
       if (payType === 'CONTROL ACCOUNT') {
         this.paymentArForm.get('payType').reset();
         this.receiptMethodId = null;
@@ -1150,7 +1158,7 @@ export class PaymentArComponent implements OnInit {
         .subscribe(
           data => {
             this.ReceiptMethodList = data.obj;
-            console.log(this.ReceiptMethodList);
+            console.log(this.ReceiptMethodList+'------');
             this.showBankDetails = true;
             if (this.displayButton == true) {
               this.checkDate = this.pipe.transform(Date.now(), 'y-MM-dd');
@@ -1218,8 +1226,10 @@ export class PaymentArComponent implements OnInit {
           }
         }
       )
-
+      console.log(this.ReceiptMethodList+'--------');
+      
   }
+
 
 
 
@@ -1515,17 +1525,19 @@ export class PaymentArComponent implements OnInit {
 
 
   SelectReceipt(receiptNumber: any) {
-    // alert('selectReceiptMethod'+'---'+receiptNumber)
+    alert('selectReceiptMethod'+'---'+receiptNumber)
     this.displayButton = false;
     this.display = false;
     this.othSaveButton = true;
     if (Number(sessionStorage.getItem('deptId')) != 4) {
+      debugger;
       this.service.getArReceiptDetailsByRcptNoAndloc(receiptNumber)
         .subscribe(
           data => {
             if (data.code === 400) { alert(data.message + data.obj); return; }
             this.receiptDetails = data.obj.oePayList[0];
             console.log(this.receiptDetails);
+           
             // ---------------------------Applied history
             this.lstApplyHistory = data.obj.invApplyLst;
             console.log(this.lstApplyHistory);
@@ -1653,7 +1665,7 @@ export class PaymentArComponent implements OnInit {
               this.enableApplyButton = true;
             } else { this.enableApplyButton = false; }
 
-
+           
 
           });
 
@@ -1666,6 +1678,19 @@ export class PaymentArComponent implements OnInit {
             if (data.code === 400) { alert(data.message + data.obj); return; }
             this.receiptDetails = data.obj.oePayList[0];
             console.log(this.receiptDetails);
+              var rmStatus = 'Active'
+            this.service.ReceiptMethodListNew(data.obj.oePayList[0].payType, rmStatus, data.obj.oePayList[0].deptId, data.obj.oePayList[0].orgId)
+              .subscribe(
+                data => {
+                  // debugger
+                  this.ReceiptMethodList1 = data.obj;
+                  console.log(data.obj);
+                  var selectReceiptMethodList1 = this.ReceiptMethodList1.find(d=>d.methodName === this.receiptDetails.receiptMethodName)
+                  // let selectReceiptmethodList = this.ReceiptMethodList1.find((d) => d.receiptMethodName === this.receiptDetails[0].receiptMethodName);
+                  console.log(selectReceiptMethodList1);
+                  this.paymentArForm.patchValue({receiptMethodId:selectReceiptMethodList1.receiptMethodId,methodName:selectReceiptMethodList1.methodName})
+                  // receiptMethodId:selectReceiptMethodList1.receiptMethodName
+                });
             this.enableCancelButton = false;
             this.enableApplyButton = false;
             this.printButton = false;
@@ -3787,6 +3812,26 @@ export class PaymentArComponent implements OnInit {
 
   }
 
-
+onReceiptMethodSelected(methodName){
+  var payType = this.paymentArForm.get('payType')?.value;
+  var rmStatus='Active';
+  var customerId = this.paymentArForm.get('customerId')?.value;
+     this.service.ReceiptMethodListNew(payType, rmStatus, this.deptId, this.ouId)
+        .subscribe(
+          data => {
+            this.ReceiptMethodList = data.obj;
+            // console.log(this.ReceiptMethodList);
+            let selectReceiptmethodList = this.ReceiptMethodList.find(d => d.methodName === methodName);
+              // console.log(selectReceiptmethodList);
+              this.paymentArForm.patchValue({receiptMethodId:selectReceiptmethodList.receiptMethodId})
+              if (selectReceiptmethodList.attribute1=='Y'){
+                this.showControlModal=true;
+              }
+              else{
+                this.showControlModal=false;
+              }
+          });
+      
+}
 }
 

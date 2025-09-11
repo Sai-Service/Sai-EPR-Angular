@@ -49,6 +49,7 @@ import { VehicleBookingUploadComponent } from './vehicle-booking-upload/vehicle-
 import { ReceiptWriteoffComponent } from './receipt-writeoff/receipt-writeoff.component';
 import { ShortLandedGrrComponent } from './short-landed-grr/short-landed-grr.component';
 // import { SubInventoryTransferNewComponent } from './sub-inventory-transfer-new/sub-inventory-transfer-new.component';
+import {ReceivableReceiptComponent} from './receivable-receipt/receivable-receipt.component'
 
 
 const routes: Routes = [
@@ -115,7 +116,7 @@ const routes: Routes = [
 {path:'VehicleBookUpload',component:VehicleBookingUploadComponent},
 {path:'ReceiptWriteoff',component:ReceiptWriteoffComponent},
 {path:'ShortLandedGrr',component:ShortLandedGrrComponent},
-
+{path:'ReceivableReceipt',component:ReceivableReceiptComponent},
 
 // {path :'ShippingNetwork',component:ShippingNetworkComponent},
 // {path:'CounterSaleReturn',component:CounterSaleReturnComponent},
