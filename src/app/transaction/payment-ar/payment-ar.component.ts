@@ -2950,7 +2950,7 @@ export class PaymentArComponent implements OnInit {
       var resp = confirm("Do You Want to Save this Receipt ???");
       if (resp == true) {
         this.displayButton = false;
-        const formValue: IPaymentRcptAr = this.transeData(this.paymentArForm.value);
+        const formValue: IPaymentRcptAr = this.transeData(this.paymentArForm.getRawValue());
 
         this.service.ArReceiptSubmit(formValue).subscribe((res: any) => {
           if (res.code === 200) {
