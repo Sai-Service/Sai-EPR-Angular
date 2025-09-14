@@ -933,20 +933,6 @@
                                     <button type="button" class="btn btn-info" (click)="newMast()"
                                         [disabled]="!paymentArForm">Save</button>
                                 </td>
-
-                                <!-- <td class="center">
-                                    <button type="button" id="saveBtn" data-toggle="modal" 
-                                    data-target="#confirmAlert" class="btn btn-info" (click)="getMessage('Save')" >Save</button>
-                                </td> -->
-
-
-
-                                <!-- <td>
-                                    <button type="button" class="btn btn-info" (click)="applyRcpt(searchValue)">Apply</button>
-                                </td> -->
-
-                                <!-- ====================Reset Dialog ======================== -->
-
                                 <td>
                                     <button type="button" class="btn btn-info" data-toggle="modal"
                                         data-target="#exampleModal">Reset</button>
@@ -1557,7 +1543,7 @@
                                                             (click)="validateSave(applyTo)">Validate</button>
                                                     </ng-template>
 
-                                                    <div *ngIf="applySaveButton ,then appSaveYes; else appSaveNo" )>
+                                                    <div *ngIf="applySaveButton ,then appSaveYes; else appSaveNo" >
                                                     </div>
                                                     <ng-template #appSaveYes>
                                                         <button style="width: 8em;" type="button" class="btn btn-info"

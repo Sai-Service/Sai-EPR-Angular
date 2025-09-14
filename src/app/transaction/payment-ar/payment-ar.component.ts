@@ -557,7 +557,11 @@ export class PaymentArComponent implements OnInit {
       this.paymentArForm.get('deptId').disable();
     }
 
-
+    if (Number(sessionStorage.getItem('roleId'))===10){
+      this.displayButton=false;
+      this.enableCancelButton=false;
+      this.enableApplyButton=false;
+    }
 
     // alert ("DeptId : " +this.deptId + " accountsLogin="+this.accountsLogin);
 
@@ -1267,11 +1271,12 @@ export class PaymentArComponent implements OnInit {
 
 
   SearchByRcptNo(rcptNo: any) {
-    // alert ("Receipt Num : " +rcptNo);
+    alert ("Receipt Num : " +rcptNo);
     // if(rcptNo ===undefined || rcptNo===null || rcptNo<=0 ) {return;}
 
     this.status = null;
-    if (Number(sessionStorage.getItem('deptId')) != 4) {
+    // debugger;
+    if ((Number(sessionStorage.getItem('deptId')) != 4) ) {
       this.service.getArReceiptSearchByRcptNoByloc(rcptNo, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
         .subscribe(
           data => {
@@ -1283,7 +1288,7 @@ export class PaymentArComponent implements OnInit {
             }
           });
     }
-    else if (Number(sessionStorage.getItem('deptId')) == 4) {
+    else if (Number(sessionStorage.getItem('deptId')) == 4 ) {
       // alert ('else if ----'+ this.locId)
       this.service.getArReceiptSearchByRcptNoByloc(rcptNo, sessionStorage.getItem('ouId'), this.locId, sessionStorage.getItem('deptId'))
         .subscribe(
@@ -1295,6 +1300,11 @@ export class PaymentArComponent implements OnInit {
               this.lstcomments = null;
             }
           });
+    }
+    if (Number(sessionStorage.getItem('roleId'))===10){
+      this.displayButton=false;
+      this.enableCancelButton=false;
+      this.enableApplyButton=false;
     }
   }
 

@@ -573,6 +573,13 @@ export class ARInvoiceComponent implements OnInit {
     this.compId = Number(sessionStorage.getItem('compId'));
     this.deptId = Number(sessionStorage.getItem('dept'));
     // this.displaytrxDate[0] = true;
+    // alert(Number(sessionStorage.getItem('roleId'))===10)
+    if (Number(sessionStorage.getItem('roleId'))===10){
+      this.displaySaveButton=false;
+     this.isDisabledSave = false;
+     this.showApplyButton=false;
+     this.disabledComplete=false;
+    }
     if (Number(sessionStorage.getItem('dept')) === 4) {
       this.displayDepartmentList = true;
       this.displayDeptLocation = true;
@@ -583,10 +590,6 @@ export class ARInvoiceComponent implements OnInit {
       this.arInvoiceForm.get('locId').disable();
       this.displayDeptLocation = false;
     }
-
-
-
-
 
     this.service.locationCodeList()
       .subscribe(
@@ -1078,7 +1081,13 @@ export class ARInvoiceComponent implements OnInit {
             else{
               this.showApplyButton = false;
             }
-            
+            // debugger;
+            if (Number(sessionStorage.getItem('roleId'))==10){
+            this.displaySaveButton=false;
+            this.isDisabledSave = false;
+            this.showApplyButton=false;
+            this.disabledComplete=false;
+    }
           }
           else {
             if (data.code === 400) {

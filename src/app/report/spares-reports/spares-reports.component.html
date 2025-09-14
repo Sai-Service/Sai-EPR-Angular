@@ -302,7 +302,7 @@
                         </li>
 
                         <li>
-                            <a class="dropdown-item" data-toggle="collapse" href="#panelspDebtorsReport" role="tab"
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelspDebtorsReport1" role="tab"
                                 (click)="reportDetails('detailedreceivableReport')">PartyWise Detailed Receivable Report</a>
                         </li>
 
@@ -843,8 +843,8 @@
 </tr> -->
         </table>
         <!-- ---------------------ebtors report------ -->  
-   <table class="center" [style.display]="isVisiblespDebtorsReport ? 'block' : 'none'" class="collapse"
-            style="margin-left: 20%;" id="panelspDebtorsReport">
+   <table class="center" [style.display]="isVisiblespDebtorsReport1 ? 'block' : 'none'" class="collapse"
+            style="margin-left: 20%;" id="panelspDebtorsReport1">
 
             <table class="center">
                 <tr>
@@ -858,20 +858,8 @@
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle"> &nbsp;Operating&nbsp;Unit&nbsp;:&nbsp;</td>
                     <td><input disabled type="text" class="form-control" formControlName="OUCode"></td>
-                </tr>
-                <tr>
-                    <td style="width: 15%" class="LabelFontStyle"> &nbsp;To&nbsp;Date&nbsp;:&nbsp; </td>
-                    <td>
-                        <input type="date" class="form-control" formControlName="toDate" [(ngModel)]="toDate"
-                            max="{{minDate | date:'yyyy-MM-dd'}}">
-                    </td>
+                     <td style="width: 15%" class="LabelFontStyle">&nbsp;Location&nbsp;Code&nbsp;:&nbsp; </td>
                    
-                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Location&nbsp;Code&nbsp;:&nbsp; </td>
-                   
-                    <!-- <td [style.display]="isVisiblelocationInput ? 'block' : 'none'">
-                        <input type="text" disabled class="form-control" formControlName="locCode">
-                    </td> -->
-
                     <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
                         <select formControlName="locId" id="locId" class="form-control" [(ngModel)]="locId"
                             (ngModelChange)='onOptionsLocation($event)'>
@@ -882,7 +870,19 @@
                         </select>
                         <input disabled hidden type="number" class="form-control" formControlName="locId">
                     </td>
-
+                </tr>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle"> &nbsp;To&nbsp;Date&nbsp;:&nbsp; </td>
+                    <td>
+                        <input type="date" class="form-control" formControlName="toDate" [(ngModel)]="toDate"
+                            max="{{minDate | date:'yyyy-MM-dd'}}">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle">
+                        &nbsp;Cust&nbsp;Account&nbsp;No&nbsp;:&nbsp;
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" formControlName="custAccNo" [(ngModel)]="custAccNo">
+                    </td>
                     <!-- <td style="width: 15%" class="LabelFontStyle"> &nbsp;SubInventory&nbsp;:&nbsp; </td>
                     <td><input disabled type="text" class="form-control" formControlName="subInventory"></td> -->
                 </tr>

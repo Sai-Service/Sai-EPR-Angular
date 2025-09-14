@@ -269,8 +269,8 @@ export class ReportServiceService {
 // http://localhost:8081//SparesReports/SprOSADVPartyWise?toDate=21-AUG-2025&ouId=22&locId=2209  }
   }
 
-   gstSparesPartyDetReceivableReport(toDate,locId,ouId){
-    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprDbtPartyWiseDtls?toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
+   gstSparesPartyDetReceivableReport(toDate,locId,ouId,custAccNo){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprDbtPartyWiseDtls?toDate=${toDate}&ouId=${ouId}&locId=${locId}&custAccNo=${custAccNo}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
@@ -1472,7 +1472,21 @@ bajajWarrantyClaimDetFn(fromdate,toDate,ouId,dealerCode){
     headers: this.headers,
   }); 
 }
+warrantyClaimInternalConsuFuc(fromdate,toDate,locId, subInventory){
+  const REQUEST_URI = this.ServerUrl +`/ServiceReports/WarrClaimInternalCons?fromDate=${fromdate}&toDate=${toDate}&ouId=${sessionStorage.getItem('ouId')}&locId=${locId}&subInvCode=${subInventory}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  }); 
+}
 
+challanReportPring(suppNo, siteName, dlrCode, challanNo){
+  const REQUEST_URI = this.ServerUrl +`/ServiceReports/EwayChallanPrint?locId=${sessionStorage.getItem('locId')}&suppCode=${suppNo}&siteName=${siteName}&dlrCode=${dlrCode}&challanNo=${challanNo}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  }); 
+}
 
 }
 

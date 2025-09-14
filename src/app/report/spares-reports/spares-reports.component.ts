@@ -6,7 +6,7 @@ import { DatePipe, Location } from '@angular/common';
 import { MasterService } from 'src/app/master/master.service';
 import { saveAs } from 'file-saver';
 
-const MIME_TYPES = { 
+const MIME_TYPES = {
   pdf: 'application/pdf',
   xls: 'application/vnd.ms-excel',
   xlsx: 'application/vnc.openxmlformats-officedocument.spreadsheetxml.sheet'
@@ -26,12 +26,12 @@ export class SparesReportsComponent implements OnInit {
   fromDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   toDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   OUCode: string;
-  subType:string;
+  subType: string;
   locCode: string;
   locId: number;
-  tolocName:string;
-  tolocationId:number;
-  trxNumber:number;
+  tolocName: string;
+  tolocationId: number;
+  trxNumber: number;
   public BillShipToList: Array<string> = [];
   public BillShipFromList: Array<string> = [];
 
@@ -39,9 +39,9 @@ export class SparesReportsComponent implements OnInit {
   public ItemSubTypeList: Array<string> = [];
 
   periodNameList: any = [];
-  BillShipFromList1:any=[];
+  BillShipFromList1: any = [];
   public DepartmentList: any = [];
-  
+
   closeResetButton = true;
   dataDisplay: any;
   progress = 0;
@@ -50,25 +50,25 @@ export class SparesReportsComponent implements OnInit {
   subInventory: string;
   subInvCode: any;
   segment: string;
-  fromlocCode:string;
-  fromLocId:number;
-  compileCode:string;
+  fromlocCode: string;
+  fromLocId: number;
+  compileCode: string;
 
   tolocCode: string;
   tolocId: number;
   orderNumber: number;
   custAccNo: number;
-  spInvAging1: number=30;
-  spInvAging2: number=60;
-  spInvAging3: number=90;
+  spInvAging1: number = 30;
+  spInvAging2: number = 60;
+  spInvAging3: number = 90;
 
-  spDbAging1: number=15;
-  spDbAging2: number=30;
-  spDbAging3: number=45;
-  spDbAging4: number=60;
+  spDbAging1: number = 15;
+  spDbAging2: number = 30;
+  spDbAging3: number = 45;
+  spDbAging4: number = 60;
 
-  subTp :string;
-  mainTp :string;
+  subTp: string;
+  mainTp: string;
 
   invItemList = new Array();
   isVisibleGSTPurchaseRegister: boolean = false;
@@ -80,57 +80,58 @@ export class SparesReportsComponent implements OnInit {
   isVisibleStockLedger: boolean = false;
   isVisiblestockTransfer: boolean = false;
   isVisiblestockTransferRecd: boolean = false;
-  isVisibleSparesIssueDetailsReport:boolean=false;
+  isVisibleSparesIssueDetailsReport: boolean = false;
   isVisibleSparesBackOrderQty: boolean = false;
   isVisiblesparesMiscIssueReceipt: boolean = false;
   isVisiblesparesInventoryAging: boolean = false;
-  isVisibleStockTransferReceivedSummary:boolean=false;
+  isVisibleStockTransferReceivedSummary: boolean = false;
   isVisibleSparesDebtorsExecutiveWise: boolean = false;
   isVisibleDepartmentList: boolean = false;
-  isVisiblefromtosubinventory:boolean=false;
-  displayLocationList=true;
-  isVisiblespClosingStockAsOndate:boolean=false;
-  isVisiblecustomerLedger:boolean=false;
-  isVisiblepanelspDeadStockNoConsuptionDaywise:boolean=false;
-  isVisibleStockTransferMadeSummary:boolean=false;
-  isVisibleStocMadeSummary:boolean=false;
-  isVisibleStockMissMatch:boolean=false;
-  isVisibleEwayBill:boolean=false;
-  isVisiblepanelStockTaking=false;
-  isVisibletoDateLoc:boolean=false;
-  isVisibleItemMaster:boolean=false;
-  panelspDebtAgByExicutiveSummary=false;
-  isVisibleonlyOuCodeSubInv : boolean = false;
-  isVisibleSparesDeadCalculationSop:boolean=false;
-  isVisiblespDebtorsReport:boolean=false;
+  isVisiblefromtosubinventory: boolean = false;
+  displayLocationList = true;
+  isVisiblespClosingStockAsOndate: boolean = false;
+  isVisiblecustomerLedger: boolean = false;
+  isVisiblepanelspDeadStockNoConsuptionDaywise: boolean = false;
+  isVisibleStockTransferMadeSummary: boolean = false;
+  isVisibleStocMadeSummary: boolean = false;
+  isVisibleStockMissMatch: boolean = false;
+  isVisibleEwayBill: boolean = false;
+  isVisiblepanelStockTaking = false;
+  isVisibletoDateLoc: boolean = false;
+  isVisibleItemMaster: boolean = false;
+  panelspDebtAgByExicutiveSummary = false;
+  isVisibleonlyOuCodeSubInv: boolean = false;
+  isVisibleSparesDeadCalculationSop: boolean = false;
+  isVisiblespDebtorsReport: boolean = false;
+  isVisiblespDebtorsReport1: boolean = false;
 
   isDisabled1 = false;
-  userName1:string;
-  dispLocation:boolean=true;
-  rptValidation=true;
-  displayCustAccountNo=false;
-  displayToLocationList=false;
+  userName1: string;
+  dispLocation: boolean = true;
+  rptValidation = true;
+  displayCustAccountNo = false;
+  displayToLocationList = false;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.sparesReportForm = this.fb.group({
       fromDate: [''],
       toDate: [],
       OUCode: [''],
-      locCode1:[],
-      locId1:[],
-      tolocationId:[],
-      tolocName:[],
-      noOfDays:[],
+      locCode1: [],
+      locId1: [],
+      tolocationId: [],
+      tolocName: [],
+      noOfDays: [],
       locCode: [''],
       locId: [''],
-      fromLocName:[],
-      fromLocationId:[],
+      fromLocName: [],
+      fromLocationId: [],
       deptId: [''],
       userName: [''],
       subInventory: [''],
       segment: [''],
-      fromlocCode:[],
-      fromLocId:[],
+      fromlocCode: [],
+      fromLocId: [],
       tolocCode: [''],
       tolocId: [''],
       custAccNo: [''],
@@ -139,19 +140,19 @@ export class SparesReportsComponent implements OnInit {
       spInvAging2: [''],
       spInvAging3: [''],
       department: [''],
-      userName1:[''], 
-      trxNumber:[''],
+      userName1: [''],
+      trxNumber: [''],
 
-      spDbAging1:[],
-      spDbAging2:[],
-      spDbAging3:[],
-      spDbAging4:[],
+      spDbAging1: [],
+      spDbAging2: [],
+      spDbAging3: [],
+      spDbAging4: [],
 
-       subTp :[],
-       mainTp :[],
+      subTp: [],
+      mainTp: [],
 
-      compileCode:[''],
-      subType:[]
+      compileCode: [''],
+      subType: []
     })
   }
 
@@ -162,11 +163,11 @@ export class SparesReportsComponent implements OnInit {
   ngOnInit(): void {
     this.locId = Number(sessionStorage.getItem('locId'));
     this.sparesReportForm.patchValue({ OUCode: sessionStorage.getItem('ouId') + '-' + sessionStorage.getItem('ouName') });
-    alert(sessionStorage.getItem('ouId') + '-' + sessionStorage.getItem('ouName') );
+    alert(sessionStorage.getItem('ouId') + '-' + sessionStorage.getItem('ouName'));
     this.sparesReportForm.patchValue({ locCode: sessionStorage.getItem('locId') + '-' + sessionStorage.getItem('locName') })
-    this.sparesReportForm.patchValue({ department: 'Spares' ,fromLocationId: sessionStorage.getItem('locId')});
+    this.sparesReportForm.patchValue({ department: 'Spares', fromLocationId: sessionStorage.getItem('locId') });
     this.sparesReportForm.patchValue({ deptId: 5 })
-    this.sparesReportForm.patchValue({ tolocCode: sessionStorage.getItem('locName'),tolocId: sessionStorage.getItem('locId')})
+    this.sparesReportForm.patchValue({ tolocCode: sessionStorage.getItem('locName'), tolocId: sessionStorage.getItem('locId') })
     // Prevent closing from click inside dropdown
     $(document).on('click', '.dropdown-menu', function (e) {
       e.stopPropagation();
@@ -192,14 +193,14 @@ export class SparesReportsComponent implements OnInit {
         }
       );
 
-      this.service.getLocationSearch1(sessionStorage.getItem('ouId'))
+    this.service.getLocationSearch1(sessionStorage.getItem('ouId'))
       .subscribe(
         data => {
           this.BillShipFromList = data;
         }
       );
 
-      this.service.TolocationIdList(sessionStorage.getItem('locId')).subscribe
+    this.service.TolocationIdList(sessionStorage.getItem('locId')).subscribe
       (data => {
         this.BillShipFromList1 = data;
         // console.log(this.locIdList);
@@ -220,23 +221,23 @@ export class SparesReportsComponent implements OnInit {
         }
       );
 
-        // alert(sessionStorage.getItem('ticketNo') )
+    // alert(sessionStorage.getItem('ticketNo') )
     this.sparesReportForm.patchValue({ userName: sessionStorage.getItem('ticketNo') });
-    this.userName=sessionStorage.getItem('ticketNo');
+    this.userName = sessionStorage.getItem('ticketNo');
 
     if (Number(sessionStorage.getItem('deptId')) === 4) {
       this.isVisiblelocationLOV = true;
       this.isVisiblelocationInput = false;
       this.sparesReportForm.patchValue({ subInventory: 'SP' })
-      this.dispLocation=true;
+      this.dispLocation = true;
     }
 
     else {
       this.isVisiblelocationLOV = false;
       this.isVisiblelocationInput = true;
-      this.dispLocation=false;
+      this.dispLocation = false;
     }
-    
+
 
     this.service.subInvCode2(sessionStorage.getItem('deptId'), sessionStorage.getItem('divisionId')).subscribe(
       data => {
@@ -247,12 +248,12 @@ export class SparesReportsComponent implements OnInit {
           this.sparesReportForm.patchValue({ subInventory: this.subInvCode.subInventoryCode })
         }
 
-                    this.service.ItemSubTypeLst(this.subInventory)
-                    .subscribe(
-                    data => {
-                      this.ItemSubTypeList = data;
-                    }
-                  );
+        this.service.ItemSubTypeLst(this.subInventory)
+          .subscribe(
+            data => {
+              this.ItemSubTypeList = data;
+            }
+          );
 
       });
 
@@ -264,12 +265,22 @@ export class SparesReportsComponent implements OnInit {
         }
       );
 
-        this.service.ItemMainTypeLst(sessionStorage.getItem('divisionId'))
-          .subscribe(
-          data => {
-            this.ItemMainTypeList = data;
-          }
-        );
+    this.service.ItemMainTypeLst(sessionStorage.getItem('divisionId'))
+      .subscribe(
+        data => {
+          this.ItemMainTypeList = data;
+        }
+      );
+
+    if (Number(sessionStorage.getItem('deptId')) === 2 && Number(sessionStorage.getItem('roleId')) === 10) {
+      this.isVisiblelocationLOV = true;
+      this.isVisiblelocationInput = false;
+      // this.salesReportForm.patchValue({ subInventory: 'SP' })
+    }
+    else {
+      this.isVisiblelocationLOV = false;
+      this.isVisiblelocationInput = true;
+    }
   }
 
   refresh() {
@@ -294,30 +305,31 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleGSTPurchaseRegister = true;
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
-      this.isVisibleStockTransferMadeSummary=false;
+      this.isVisibleStockTransferMadeSummary = false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
-      this.displayCustAccountNo=false;
+      this.displayCustAccountNo = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblespClosingStockAsOndate=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisibleStockTransferReceivedSummary=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-      this.isVisibleSparesDeadCalculationSop=false;
-        this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblespClosingStockAsOndate = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisibleStockTransferReceivedSummary = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'gstpurRegSumm') {
       this.reportName = 'Spares Purchase Register - Summary';
@@ -327,30 +339,31 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleGSTPurchaseRegister = true;
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
-      this.isVisibleStockTransferMadeSummary=false;
+      this.isVisibleStockTransferMadeSummary = false;
       this.isVisibleStockLedger = false;
-      this.displayCustAccountNo=false;
+      this.displayCustAccountNo = false;
       this.isVisiblestockTransfer = false;
-      this.isVisibleStockTransferReceivedSummary=false;
-      this.isVisiblestockTransferRecd=false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisibleStockTransferReceivedSummary = false;
+      this.isVisiblestockTransferRecd = false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
-      this.isVisibleStockMissMatch=false;
+      this.isVisibleStockMissMatch = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-      this.isVisibleSparesDeadCalculationSop=false;
-        this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'gstIssueDetails') {
       this.reportName = 'Spares Issue Details Report';
@@ -358,60 +371,62 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
       this.isVisibleStockLedger = false;
-      this.isVisibleStockTransferMadeSummary=false;
-       this.isVisiblespClosingStockAsOndate=false;
+      this.isVisibleStockTransferMadeSummary = false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
-      this.displayCustAccountNo=true;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.isVisiblestockTransferRecd = false;
+      this.displayCustAccountNo = true;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-      this.isVisibleSparesDeadCalculationSop=false;
-        this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'gstIssueSummary') {
       this.reportName = 'Spares Issue Summary';
       this.isVisibleGSTPurchaseRegister = true;
       // this.isVisibleSparesIssueDetailsReport=true;
       this.isVisibleonlyLocationCode = false;
-      this.displayCustAccountNo=true;
+      this.displayCustAccountNo = true;
       this.isVisiblegstsaiDebtors = false;
-      this.isVisibleStockTransferMadeSummary=false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisibleStockTransferMadeSummary = false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-      this.isVisibleSparesDeadCalculationSop=false;
-        this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'gstReceiptRegister') {
       this.reportName = 'Spares Receipt Register';
@@ -419,268 +434,276 @@ export class SparesReportsComponent implements OnInit {
         this.isVisibleDepartmentList = true;
       }
       this.isVisibleonlyLocationCode = false;
-      this.isVisibleStockTransferReceivedSummary=false;
-      this.isVisibleStockTransferMadeSummary=false;
+      this.isVisibleStockTransferReceivedSummary = false;
+      this.isVisibleStockTransferMadeSummary = false;
       this.isVisibleGSTPurchaseRegister = true;
       this.isVisiblegstsaiDebtors = false;
-       this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.displayCustAccountNo=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-      this.isVisibleSparesDeadCalculationSop=false;
-        this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.displayCustAccountNo = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
 
     else if (reportName === 'gstClosingReport') {
       this.reportName = 'Spares Closing Stock Report';
       this.isVisibleonlyLocationCode = true;
-      this.isVisibleStockTransferMadeSummary=false;
+      this.isVisibleStockTransferMadeSummary = false;
       this.isVisiblegstsaiDebtors = false;
-       this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleStockLedger = false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.displayCustAccountNo=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-      this.isVisibleSparesDeadCalculationSop=false;
-        this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.displayCustAccountNo = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
 
     else if (reportName === 'gstsaiDebtors') {
       this.reportName = 'Spares Debtor Report';
-      if (Number(sessionStorage.getItem('deptId'))===4){
-        this.isVisibleDepartmentList=true;
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.isVisibleDepartmentList = true;
       }
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = true;
       this.isVisibleGSTPurchaseRegister = false;
-      this.isVisibleStockTransferMadeSummary=false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.isVisibleStockTransferMadeSummary = false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblestockTransferRecd = false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisibleSparesBackOrderQty = false;
-      this.displayCustAccountNo=false;
+      this.displayCustAccountNo = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-      this.isVisibleSparesDeadCalculationSop=false;
-        this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'gstSprAgingSummary') {
       this.reportName = 'Spares Debtors Aging Report Summary';
-      if (Number(sessionStorage.getItem('deptId'))===4){
-        this.isVisibleDepartmentList=true;
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.isVisibleDepartmentList = true;
       }
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = true;
-      this.isVisibleStockTransferMadeSummary=false;
+      this.isVisibleStockTransferMadeSummary = false;
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
-      this.isVisibleStockTransferReceivedSummary=false;
-      this.isVisiblestockTransferRecd=false;
-      this.displayCustAccountNo=false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisibleStockTransferReceivedSummary = false;
+      this.isVisiblestockTransferRecd = false;
+      this.displayCustAccountNo = false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-      this.isVisibleSparesDeadCalculationSop=false;
-        this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'gstStockLedger') {
       this.reportName = 'Stock Ledger';
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
-      this.isVisibleStockTransferReceivedSummary=false;
-      this.displayCustAccountNo=false;
+      this.isVisibleStockTransferReceivedSummary = false;
+      this.displayCustAccountNo = false;
       this.isVisibleGSTPurchaseRegister = false;
-      this.isVisibleStockTransferMadeSummary=false;
+      this.isVisibleStockTransferMadeSummary = false;
       this.isVisibleStockLedger = true;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblestockTransferRecd = false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-      this.isVisibleSparesDeadCalculationSop=false;
-        this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'gststockTransfer') {
       this.reportName = 'Stock Transfer Made Detail Report';
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
-      this.displayCustAccountNo=false;
+      this.displayCustAccountNo = false;
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
-      this.isVisibleStockTransferReceivedSummary=false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisibleStockTransferReceivedSummary = false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockTransferMadeSummary=true;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-      this.isVisibleSparesDeadCalculationSop=false;
-      if (Number(sessionStorage.getItem('deptId'))===4){
-        this.displayLocationList=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockTransferMadeSummary = true;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.displayLocationList = false;
       }
-      else{
-        this.displayLocationList=true;
+      else {
+        this.displayLocationList = true;
       }
-        this.isVisiblespDebtorsReport=false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'gststockTransferSummary') {
       this.reportName = 'Stock Transfer Made Summary Report';
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
-      this.displayCustAccountNo=false;
+      this.displayCustAccountNo = false;
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
-      this.isVisibleStockTransferReceivedSummary=false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisibleStockTransferReceivedSummary = false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockTransferMadeSummary=true;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-      this.isVisibleSparesDeadCalculationSop=false;
-      if (Number(sessionStorage.getItem('deptId'))===4){
-        this.displayLocationList=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockTransferMadeSummary = true;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.displayLocationList = false;
       }
-      else{
-        this.displayLocationList=true;
+      else {
+        this.displayLocationList = true;
       }
-        this.isVisiblespDebtorsReport=false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'gststockTransferReceivedDetails') {
       this.reportName = 'Stock Transfer Received Detail Report';
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
-      this.displayCustAccountNo=false;
-      this.isVisibleStockTransferMadeSummary=false;
+      this.displayCustAccountNo = false;
+      this.isVisibleStockTransferMadeSummary = false;
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblespClosingStockAsOndate=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.isVisibleStockTransferReceivedSummary=true;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-        this.isVisibleSparesDeadCalculationSop=false;
-      if (Number(sessionStorage.getItem('deptId'))===4){
-        this.displayToLocationList=false
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblespClosingStockAsOndate = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.isVisibleStockTransferReceivedSummary = true;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.displayToLocationList = false
       }
-      else{
-        this.displayToLocationList=true;
+      else {
+        this.displayToLocationList = true;
       }
-        this.isVisiblespDebtorsReport=false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'gststockTransferReceivedSummary') {
       this.reportName = 'Stock Transfer Received Summary Report';
@@ -688,66 +711,68 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblegstsaiDebtors = false;
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleStockLedger = false;
-      this.isVisibleStockTransferMadeSummary=false;
-      this.displayCustAccountNo=false;
+      this.isVisibleStockTransferMadeSummary = false;
+      this.displayCustAccountNo = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
-      this.isVisibleStockTransferReceivedSummary=true;
+      this.isVisiblestockTransferRecd = false;
+      this.isVisibleStockTransferReceivedSummary = true;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblespClosingStockAsOndate=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.isVisibleStocMadeSummary=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblespClosingStockAsOndate = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.isVisibleStocMadeSummary = false;
       // this.dispLocation=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-        this.isVisibleSparesDeadCalculationSop=false;
-      if (Number(sessionStorage.getItem('deptId'))===4){
-        this.displayToLocationList=false
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.displayToLocationList = false
       }
-      else{
-        this.displayToLocationList=true;
+      else {
+        this.displayToLocationList = true;
       }
-        this.isVisiblespDebtorsReport=false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'gstsparesCustomerOffTakeStatment') {
       this.reportName = 'Spares Customer Off Take Statement';
       this.isVisibleGSTPurchaseRegister = true;
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
-      this.isVisibleStockTransferMadeSummary=false;
-      this.displayCustAccountNo=false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisibleStockTransferMadeSummary = false;
+      this.displayCustAccountNo = false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-       this.isVisiblespClosingStockAsOndate=false;
-       this.isVisiblecustomerLedger=false;
-       this.isVisibleEwayBill=false;
-       this.isVisiblepanelStockTaking=false;
-       this.panelspDebtAgByExicutiveSummary=false;
-       this.isVisibletoDateLoc=false;
-       this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-       this.isVisibleStocMadeSummary=false;
-       this.isVisibleStockMissMatch=false;
-       this.isVisibleItemMaster=false;
-       this.isVisibleonlyOuCodeSubInv=false;
-        this.isVisibleSparesDeadCalculationSop=false;
-          this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblespClosingStockAsOndate = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'gstSparesBackOrderQty') {
       this.reportName = 'Spares Back Order Qty Report';
@@ -757,238 +782,246 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = true;
-      this.displayCustAccountNo=false;
-      this.isVisibleStockTransferMadeSummary=false;
-      this.isVisibleStockTransferReceivedSummary=false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.displayCustAccountNo = false;
+      this.isVisibleStockTransferMadeSummary = false;
+      this.isVisibleStockTransferReceivedSummary = false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-        this.isVisibleSparesDeadCalculationSop=false;
-          this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'gstsparesMiscIssueReceipt') {
       this.reportName = 'Spares Misc Issue Receipt Report';
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisiblegstsaiDebtors = false;
       this.isVisibleStockLedger = false;
-      this.isVisibleStockTransferMadeSummary=false;
+      this.isVisibleStockTransferMadeSummary = false;
       this.isVisiblestockTransfer = false;
-      this.displayCustAccountNo=false;
-      this.isVisiblestockTransferRecd=false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.displayCustAccountNo = false;
+      this.isVisiblestockTransferRecd = false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = true;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-      this.isVisibleSparesDeadCalculationSop=false;
-        this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'gstSaleReturnRegister') {
       this.reportName = 'Spares Sales Return Register';
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
-      this.isVisiblespClosingStockAsOndate=false;
-      this.isVisibleStockTransferMadeSummary=false;
+      this.isVisiblespClosingStockAsOndate = false;
+      this.isVisibleStockTransferMadeSummary = false;
       this.isVisiblegstsaiDebtors = false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = true;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.displayCustAccountNo=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-        this.isVisibleSparesDeadCalculationSop=false;
-          this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.displayCustAccountNo = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'gstIncomeStatement') {
       this.reportName = 'Income Statement';
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisibleStockLedger = false;
-      this.isVisibleStockTransferMadeSummary=false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisibleStockTransferMadeSummary = false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
-      this.displayCustAccountNo=false;
+      this.displayCustAccountNo = false;
       this.isVisiblesparesMiscIssueReceipt = true;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-        this.isVisibleSparesDeadCalculationSop=false;
-          this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'gstSparesClosingStockAsOnDate') {
       this.reportName = 'Spares Closing Stock As On Date';
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
-      this.isVisiblespClosingStockAsOndate=true;
+      this.isVisiblespClosingStockAsOndate = true;
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleStockLedger = false;
-      this.displayCustAccountNo=false;
+      this.displayCustAccountNo = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.isVisiblestockTransferRecd = false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
-      this.isVisibleStockTransferMadeSummary=false;
+      this.isVisibleStockTransferMadeSummary = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-      this.isVisibleSparesDeadCalculationSop=false;
-        this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'gstSpresProformaDetailsReports') {
       this.reportName = 'Spares Proforma Details Report';
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
-      this.displayCustAccountNo=false;
-      this.isVisiblestockTransferRecd=false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.displayCustAccountNo = false;
+      this.isVisiblestockTransferRecd = false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisibleSparesBackOrderQty = false;
-      this.isVisibleStockTransferMadeSummary=false;
+      this.isVisibleStockTransferMadeSummary = false;
       this.isVisiblesparesMiscIssueReceipt = true;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-        this.isVisibleSparesDeadCalculationSop=false;
-          this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'gstChequeBounceReport') {
       this.reportName = 'Cheque Bounce Report';
       this.isVisibleGSTPurchaseRegister = false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
-      this.displayCustAccountNo=false;
+      this.displayCustAccountNo = false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
-      this.isVisibleStockTransferMadeSummary=false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.isVisiblestockTransferRecd = false;
+      this.isVisibleStockTransferMadeSummary = false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = true;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-        this.isVisibleSparesDeadCalculationSop=false;
-          this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'gstsparesInventoryAging') {
       this.reportName = 'Spares Inventory Aging Report';
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
-      this.isVisibleStockTransferMadeSummary=false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisibleStockTransferMadeSummary = false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisiblegstsaiDebtors = false;
       this.isVisibleStockLedger = false;
-      this.displayCustAccountNo=false;
+      this.displayCustAccountNo = false;
       this.isVisiblestockTransfer = false;
-      this.isVisibleStockTransferReceivedSummary=false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisibleStockTransferReceivedSummary = false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = true;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-        this.isVisibleSparesDeadCalculationSop=false;
-          this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'gstSparesDebtorsExecutiveWise') {
       this.reportName = 'Spares Debtors Executive Wise report';
@@ -996,186 +1029,192 @@ export class SparesReportsComponent implements OnInit {
         this.isVisibleDepartmentList = true;
       }
       this.isVisibleGSTPurchaseRegister = false;
-      this.isVisibleStockTransferMadeSummary=false;
+      this.isVisibleStockTransferMadeSummary = false;
       this.isVisibleonlyLocationCode = false;
-      this.isVisibleStockTransferReceivedSummary=false;
-      this.displayCustAccountNo=false;
+      this.isVisibleStockTransferReceivedSummary = false;
+      this.displayCustAccountNo = false;
       this.isVisiblegstsaiDebtors = false;
       this.isVisibleStockLedger = false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = true;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-        this.isVisibleSparesDeadCalculationSop=false;
-          this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'sparesSubinvTransReceived') {
       this.reportName = 'Sub Inventory Transfer Received Report';
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisiblegstsaiDebtors = false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
-      this.isVisibleStockTransferMadeSummary=false;
+      this.isVisiblestockTransferRecd = false;
+      this.isVisibleStockTransferMadeSummary = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=true;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.displayCustAccountNo=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-        this.isVisibleSparesDeadCalculationSop=false;
-          this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = true;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.displayCustAccountNo = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'sparesSubinvTransMade') {
       this.reportName = 'Sub Inventory Transfer Made Report';
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisiblegstsaiDebtors = false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
-      this.displayCustAccountNo=false;
-      this.isVisibleStockTransferReceivedSummary=false;
-      this.isVisiblestockTransferRecd=false;
-      this.isVisibleStockTransferMadeSummary=false;
+      this.displayCustAccountNo = false;
+      this.isVisibleStockTransferReceivedSummary = false;
+      this.isVisiblestockTransferRecd = false;
+      this.isVisibleStockTransferMadeSummary = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=true;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-        this.isVisibleSparesDeadCalculationSop=false;
-          this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = true;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'internalConsumptionReport') {
       this.reportName = 'Internal Consumption Report';
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisiblegstsaiDebtors = false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
-      this.isVisibleStockTransferMadeSummary=false;
-      this.displayCustAccountNo=false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.isVisibleStockTransferMadeSummary = false;
+      this.displayCustAccountNo = false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=true;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-        this.isVisibleSparesDeadCalculationSop=false;
-          this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = true;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'customerLedger') {
       this.reportName = 'Customer Ledger Report';
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisiblegstsaiDebtors = false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
-      this.isVisibleStockTransferMadeSummary=false;
-      this.isVisiblestockTransferRecd=false;
-      this.displayCustAccountNo=false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.isVisibleStockTransferMadeSummary = false;
+      this.isVisiblestockTransferRecd = false;
+      this.displayCustAccountNo = false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=true;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.isVisibleStockMissMatch=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = true;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.isVisibleStockMissMatch = false;
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.isVisibleDepartmentList = true;
       }
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockTransferMadeSummary=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-        this.isVisibleSparesDeadCalculationSop=false;
-          this.isVisiblespDebtorsReport=false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockTransferMadeSummary = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'creditNoteReg') {
       this.reportName = 'Credit Note Register';
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
-      this.isVisibleStockTransferMadeSummary=false;
-      this.displayCustAccountNo=false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.isVisibleStockTransferMadeSummary = false;
+      this.displayCustAccountNo = false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisibleStockLedger = false;
-       this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = true;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-       this.isVisibleonlyOuCodeSubInv=false;
-        this.isVisibleSparesDeadCalculationSop=false;
-          this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'EwayBill') {
       this.reportName = 'Eway Bill Report';
@@ -1183,63 +1222,65 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
       this.isVisibleStockLedger = false;
-       this.isVisiblespClosingStockAsOndate=false;
-       this.isVisibleStockTransferReceivedSummary=false;
+      this.isVisiblespClosingStockAsOndate = false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
-      this.displayCustAccountNo=false;
-      this.isVisibleStockTransferMadeSummary=false;
+      this.isVisiblestockTransferRecd = false;
+      this.displayCustAccountNo = false;
+      this.isVisibleStockTransferMadeSummary = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=true;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-                  this.isVisibleonlyOuCodeSubInv=false;
-        this.isVisibleSparesDeadCalculationSop=false;
-          this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = true;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'IrnGenerationReport') {
       this.reportName = 'IRN Generation Report';
       this.isVisibleGSTPurchaseRegister = true;
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
-      this.isVisibleStockTransferMadeSummary=false;
+      this.isVisibleStockTransferMadeSummary = false;
       this.isVisibleStockLedger = false;
-       this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
-      this.isVisibleStockTransferReceivedSummary=false;
-      this.displayCustAccountNo=false;
+      this.isVisiblestockTransferRecd = false;
+      this.isVisibleStockTransferReceivedSummary = false;
+      this.displayCustAccountNo = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
 
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.isVisibleDepartmentList = true;
       }
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-                  this.isVisibleonlyOuCodeSubInv=false;
-  this.isVisibleSparesDeadCalculationSop=false;
-    this.isVisiblespDebtorsReport=false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
 
     else if (reportName === 'sparesIssSummaryTransWise') {
@@ -1247,157 +1288,162 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleGSTPurchaseRegister = true;
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
-      this.isVisibleStockTransferMadeSummary=false;
-      this.isVisibleStockTransferReceivedSummary=false;
-      this.displayCustAccountNo=false;
+      this.isVisibleStockTransferMadeSummary = false;
+      this.isVisibleStockTransferReceivedSummary = false;
+      this.displayCustAccountNo = false;
       this.isVisibleStockLedger = false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.isVisibleStocMadeSummary=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.isVisibleStocMadeSummary = false;
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.isVisibleDepartmentList = true;
       }
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-                  this.isVisibleonlyOuCodeSubInv=false;
-  this.isVisibleSparesDeadCalculationSop=false;
-    this.isVisiblespDebtorsReport=false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'sparesZeroStkReport') {
       this.reportName = 'Spares Zero Stock Report';
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
-      this.isVisibleStockTransferReceivedSummary=false;
-      this.displayCustAccountNo=false;
-      this.isVisibleStockTransferMadeSummary=false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisibleStockTransferReceivedSummary = false;
+      this.displayCustAccountNo = false;
+      this.isVisibleStockTransferMadeSummary = false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisiblegstsaiDebtors = false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=true;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-                  this.isVisibleonlyOuCodeSubInv=false;
-  this.isVisibleSparesDeadCalculationSop=false;
-    this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = true;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'sparesIssSummaryAvgCost') {
       this.reportName = 'Spares Issue Summary-Average Cost';
       this.isVisibleGSTPurchaseRegister = true;
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisibleStockLedger = false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
-      this.displayCustAccountNo=false;
-      this.isVisibleStockTransferMadeSummary=false;
+      this.isVisiblestockTransferRecd = false;
+      this.displayCustAccountNo = false;
+      this.isVisibleStockTransferMadeSummary = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
       // if (Number(sessionStorage.getItem('deptId')) === 4) {
       //   this.isVisibleDepartmentList = true;
       // }
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-                  this.isVisibleonlyOuCodeSubInv=false;
-  this.isVisibleSparesDeadCalculationSop=false;
-    this.isVisiblespDebtorsReport=false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'stkTakingBlankFormat') {
       this.reportName = 'Stock Taking Report - Blank Format';
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
-      this.isVisibleStockTransferMadeSummary=false;
+      this.isVisibleStockTransferMadeSummary = false;
       this.isVisiblegstsaiDebtors = false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisibleStockLedger = false;
-      this.displayCustAccountNo=false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.displayCustAccountNo = false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=true;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockTransferMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-                  this.isVisibleonlyOuCodeSubInv=false;
-  this.isVisibleSparesDeadCalculationSop=false;
-    this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = true;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockTransferMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'stkTakingQtyDet') {
       this.reportName = 'Stock Taking Report - Qty Details';
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisibleStockLedger = false;
-      this.displayCustAccountNo=false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.displayCustAccountNo = false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=true;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockTransferMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-                  this.isVisibleonlyOuCodeSubInv=false;
-  this.isVisibleSparesDeadCalculationSop=false;
-    this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = true;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockTransferMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'stkTakingPhyStk') {
       this.reportName = 'Stock Taking - Physical Stock Upload';
@@ -1405,29 +1451,30 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
       this.isVisibleStockLedger = false;
-      this.isVisiblespClosingStockAsOndate=false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.isVisiblespClosingStockAsOndate = false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisiblestockTransfer = false;
-      this.displayCustAccountNo=false;
-      this.isVisiblestockTransferRecd=false;
+      this.displayCustAccountNo = false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=true;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockTransferMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-                  this.isVisibleonlyOuCodeSubInv=false;
-  this.isVisibleSparesDeadCalculationSop=false;
-    this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = true;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockTransferMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'sparesDbAgingExicutiveSum') {
       this.reportName = 'Spares Debtors Aging Report - Executive summary';
@@ -1435,29 +1482,30 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
       this.isVisibleStockLedger = false;
-      this.isVisibleStockTransferReceivedSummary=false;
-      this.displayCustAccountNo=false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisibleStockTransferReceivedSummary = false;
+      this.displayCustAccountNo = false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=true;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockTransferMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-                  this.isVisibleonlyOuCodeSubInv=false;
-  this.isVisibleSparesDeadCalculationSop=false;
-    this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = true;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockTransferMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'spConsumptionReport') {
       this.reportName = 'Spares Item Consumption Report';
@@ -1465,531 +1513,550 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
       this.isVisibleStockLedger = false;
-      this.displayCustAccountNo=false;
-      this.isVisibleStockTransferReceivedSummary=false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.displayCustAccountNo = false;
+      this.isVisibleStockTransferReceivedSummary = false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockTransferMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-                  this.isVisibleonlyOuCodeSubInv=false;
-  this.isVisibleSparesDeadCalculationSop=false;
-    this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockTransferMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
-    else if (reportName==='gstsaiDebtorsAsOf'){
+    else if (reportName === 'gstsaiDebtorsAsOf') {
       this.reportName = 'Spares Debtor Report As Of';
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = true;
-      this.displayCustAccountNo=false;
+      this.displayCustAccountNo = false;
       this.isVisibleStockLedger = false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisiblestockTransfer = false;
-      this.isVisibleStockTransferReceivedSummary=false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisibleStockTransferReceivedSummary = false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockTransferMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-                  this.isVisibleonlyOuCodeSubInv=false;
-  this.isVisibleSparesDeadCalculationSop=false;
-    this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockTransferMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
-    else if (reportName==='receiptOtherDetails'){
+    else if (reportName === 'receiptOtherDetails') {
       this.reportName = 'Receipt-Other Details Report';
       this.isVisibleGSTPurchaseRegister = true;
       this.isVisibleonlyLocationCode = false;
-      this.displayCustAccountNo=false;
+      this.displayCustAccountNo = false;
       this.isVisiblegstsaiDebtors = false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisibleStockLedger = false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockTransferMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-                  this.isVisibleonlyOuCodeSubInv=false;
-  this.isVisibleSparesDeadCalculationSop=false;
-    this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockTransferMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
-    else if (reportName==='billHandedoverToActReport'){
+    else if (reportName === 'billHandedoverToActReport') {
       this.reportName = 'Account Bill Handover Report';
       this.isVisibleGSTPurchaseRegister = true;
-      this.displayCustAccountNo=false;
+      this.displayCustAccountNo = false;
       this.isVisibleonlyLocationCode = false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisiblegstsaiDebtors = false;
       this.isVisibleStockLedger = false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockTransferMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-                  this.isVisibleonlyOuCodeSubInv=false;
-  this.isVisibleSparesDeadCalculationSop=false;
-    this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockTransferMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
-    else if (reportName==='spDebtorOSLetter'){
+    else if (reportName === 'spDebtorOSLetter') {
       this.reportName = 'Spares Debtor O/S Letter';
-      this.isVisiblegstsaiDebtors=true;
-      this.displayCustAccountNo=false;
+      this.isVisiblegstsaiDebtors = true;
+      this.displayCustAccountNo = false;
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
       this.isVisibleStockLedger = false;
-      this.isVisiblespClosingStockAsOndate=false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.isVisiblespClosingStockAsOndate = false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockTransferMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-                  this.isVisibleonlyOuCodeSubInv=false;
-  this.isVisibleSparesDeadCalculationSop=false;
-    this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockTransferMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
-    else if (reportName==='shortLandedClaim'){
+    else if (reportName === 'shortLandedClaim') {
       this.reportName = 'Short Landed Claim Report';
-      this.isVisiblegstsaiDebtors=false;
+      this.isVisiblegstsaiDebtors = false;
       this.isVisibleGSTPurchaseRegister = true;
       this.isVisibleonlyLocationCode = false;
       this.isVisibleStockLedger = false;
-      this.displayCustAccountNo=false;
-      this.isVisiblespClosingStockAsOndate=false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.displayCustAccountNo = false;
+      this.isVisiblespClosingStockAsOndate = false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockTransferMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-                  this.isVisibleonlyOuCodeSubInv=false;
-  this.isVisibleSparesDeadCalculationSop=false;
-    this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockTransferMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
-    else if (reportName==='sparesAgingReportAsOfDate'){
+    else if (reportName === 'sparesAgingReportAsOfDate') {
       this.reportName = 'Spares Aging Report As of Date';
-      this.isVisiblegstsaiDebtors=false;
+      this.isVisiblegstsaiDebtors = false;
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
       this.isVisibleStockLedger = false;
-      this.displayCustAccountNo=false;
-      this.isVisiblespClosingStockAsOndate=false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.displayCustAccountNo = false;
+      this.isVisiblespClosingStockAsOndate = false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
-      this.isVisibleStockTransferMadeSummary=false;
+      this.isVisibleStockTransferMadeSummary = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=true;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-     this.isVisibleonlyOuCodeSubInv=false;
-     this.isVisibleSparesDeadCalculationSop=false;
-       this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = true;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
-    else if (reportName==='spareDailyReport'){
+    else if (reportName === 'spareDailyReport') {
       this.reportName = 'Spares Daily Report';
-      this.isVisiblegstsaiDebtors=false;
+      this.isVisiblegstsaiDebtors = false;
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
       this.isVisibleStockLedger = false;
-      this.displayCustAccountNo=false;
-      this.isVisiblespClosingStockAsOndate=false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.displayCustAccountNo = false;
+      this.isVisiblespClosingStockAsOndate = false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
-      this.isVisibleStockTransferMadeSummary=false;
+      this.isVisibleStockTransferMadeSummary = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=true;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-      this.isVisibleSparesDeadCalculationSop=false;
-      this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = true;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
-    else if (reportName==='spDeadStockNoConsuptionDaywise'){
+    else if (reportName === 'spDeadStockNoConsuptionDaywise') {
       this.reportName = 'Spares Dead Stock-No Consumption-Daywise';
-      this.isVisiblegstsaiDebtors=false;
+      this.isVisiblegstsaiDebtors = false;
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
       this.isVisibleStockLedger = false;
-      this.displayCustAccountNo=false;
-      this.isVisiblespClosingStockAsOndate=false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.displayCustAccountNo = false;
+      this.isVisiblespClosingStockAsOndate = false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisiblestockTransfer = false;
-      this.isVisibleStockTransferMadeSummary=false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisibleStockTransferMadeSummary = false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=true;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-      this.isVisibleSparesDeadCalculationSop=false;
-      this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = true;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
-    else if (reportName==='StockMissMatch'){
+    else if (reportName === 'StockMissMatch') {
       this.reportName = 'Spares Stock Mismatch Report';
-      this.isVisiblegstsaiDebtors=false;
+      this.isVisiblegstsaiDebtors = false;
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
       this.isVisibleStockLedger = false;
-      this.displayCustAccountNo=false;
-      this.isVisiblespClosingStockAsOndate=false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.displayCustAccountNo = false;
+      this.isVisiblespClosingStockAsOndate = false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisiblestockTransfer = false;
-      this.isVisibleStockTransferMadeSummary=false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisibleStockTransferMadeSummary = false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=true;
-      this.isVisibleItemMaster=false;
-            this.isVisibleonlyOuCodeSubInv=false;
-  this.isVisibleSparesDeadCalculationSop=false;
-    this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = true;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
-      else if (reportName === 'itemMasterList') {
+    else if (reportName === 'itemMasterList') {
       this.reportName = 'Item Master List';
-      this.isVisiblegstsaiDebtors=false;
+      this.isVisiblegstsaiDebtors = false;
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
       this.isVisibleStockLedger = false;
-      this.displayCustAccountNo=false;
-      this.isVisiblespClosingStockAsOndate=false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.displayCustAccountNo = false;
+      this.isVisiblespClosingStockAsOndate = false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisiblestockTransfer = false;
-      this.isVisibleStockTransferMadeSummary=false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisibleStockTransferMadeSummary = false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=true;
-        this.isVisibleSparesDeadCalculationSop=false;
-          this.isVisiblespDebtorsReport=false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = true;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
-       else if (reportName === 'sparesDeadStockCalSOP') {
+    else if (reportName === 'sparesDeadStockCalSOP') {
       this.reportName = 'Spares Dead Stock Calculation -SOP';
-      this.isVisiblegstsaiDebtors=false;
+      this.isVisiblegstsaiDebtors = false;
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
       this.isVisibleStockLedger = false;
-      this.displayCustAccountNo=false;
-      this.isVisiblespClosingStockAsOndate=false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.displayCustAccountNo = false;
+      this.isVisiblespClosingStockAsOndate = false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisiblestockTransfer = false;
-      this.isVisibleStockTransferMadeSummary=false;
-      this.isVisiblestockTransferRecd=false;
+      this.isVisibleStockTransferMadeSummary = false;
+      this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-      this.isVisibleSparesDeadCalculationSop=true;
-      this.isVisiblespDebtorsReport=false;
-
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = true;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = false;
     }
 
     else if (reportName === 'dbtrOutstandingReport') {
       this.reportName = 'PartyWise Debtors Outstanding Report';
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleStockLedger = false;
-      this.displayCustAccountNo=false;
+      this.displayCustAccountNo = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.isVisiblestockTransferRecd = false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
-      this.isVisibleStockTransferMadeSummary=false;
+      this.isVisibleStockTransferMadeSummary = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-      this.isVisibleSparesDeadCalculationSop=false;
-      this.isVisiblelocationLOV=true;
-      this.isVisiblespDebtorsReport=true;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblelocationLOV = true;
+      this.isVisiblespDebtorsReport = true;
+      this.isVisiblespDebtorsReport1 = false;
     }
 
-      else if (reportName === 'dbtrsAdvanceReport') {
+    else if (reportName === 'dbtrsAdvanceReport') {
       this.reportName = 'PartyWise Debtors Advance Report';
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleStockLedger = false;
-      this.displayCustAccountNo=false;
+      this.displayCustAccountNo = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.isVisiblestockTransferRecd = false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
-      this.isVisibleStockTransferMadeSummary=false;
+      this.isVisibleStockTransferMadeSummary = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-      this.isVisibleSparesDeadCalculationSop=false;
-      this.isVisiblelocationLOV=true;
-      this.isVisiblespDebtorsReport=true;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblelocationLOV = true;
+      this.isVisiblespDebtorsReport = true;
+      this.isVisiblespDebtorsReport1 = false;
     }
-     else if (reportName === 'receivableConsolidatedReport') {
+    else if (reportName === 'receivableConsolidatedReport') {
       this.reportName = 'PartyWise Consolidated Receivable Report';
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleStockLedger = false;
-      this.displayCustAccountNo=false;
+      this.displayCustAccountNo = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.isVisiblestockTransferRecd = false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
-      this.isVisibleStockTransferMadeSummary=false;
+      this.isVisibleStockTransferMadeSummary = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-      this.isVisibleSparesDeadCalculationSop=false;
-      this.isVisiblelocationLOV=true;
-      this.isVisiblespDebtorsReport=true;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblelocationLOV = true;
+      this.isVisiblespDebtorsReport = true;
+      this.isVisiblespDebtorsReport1 = false;
     }
- else if (reportName === 'detailedreceivableReport') {
+    else if (reportName === 'detailedreceivableReport') {
       this.reportName = 'PartyWise Detailed Receivable Report';
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
-      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblespClosingStockAsOndate = false;
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleStockLedger = false;
-      this.displayCustAccountNo=false;
+      this.displayCustAccountNo = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd=false;
-      this.isVisibleStockTransferReceivedSummary=false;
+      this.isVisiblestockTransferRecd = false;
+      this.isVisibleStockTransferReceivedSummary = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
-      this.isVisibleStockTransferMadeSummary=false;
+      this.isVisibleStockTransferMadeSummary = false;
       this.isVisiblesparesInventoryAging = false;
       this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory=false;
-      this.isVisiblecustomerLedger=false;
-      this.isVisibleEwayBill=false;
-      this.isVisiblepanelStockTaking=false;
-      this.panelspDebtAgByExicutiveSummary=false;
-      this.isVisibletoDateLoc=false;
-      this.isVisiblepanelspDeadStockNoConsuptionDaywise=false;
-      this.isVisibleStocMadeSummary=false;
-      this.isVisibleStockMissMatch=false;
-      this.isVisibleItemMaster=false;
-      this.isVisibleonlyOuCodeSubInv=false;
-      this.isVisibleSparesDeadCalculationSop=false;
-      this.isVisiblelocationLOV=true;
-      this.isVisiblespDebtorsReport=true;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.panelspDebtAgByExicutiveSummary = false;
+      this.isVisibletoDateLoc = false;
+      this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
+      this.isVisibleStocMadeSummary = false;
+      this.isVisibleStockMissMatch = false;
+      this.isVisibleItemMaster = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisibleSparesDeadCalculationSop = false;
+      this.isVisiblelocationLOV = true;
+      this.isVisiblespDebtorsReport = false;
+      this.isVisiblespDebtorsReport1 = true;
     }
 
   }
 
   onOptionsLocation(event) {
     // alert("From Location : "+ event);
-    this.sparesReportForm.patchValue({ locId: event,tolocationId: event, locId1:event,fromLocationId:event})
+    this.sparesReportForm.patchValue({ locId: event, tolocationId: event, locId1: event, fromLocationId: event })
     // this.sparesReportForm.patchValue({ fromLocId: event })
 
-    if(event>0){
-      var x=this.sparesReportForm.get('locCode').value;
-      var y=this.sparesReportForm.get('tolocCode').value;
-      if(x===y) {alert ("From/To Locations Should not be Same...");
-       this.sparesReportForm.get('locCode').reset();
-      return;
-    }}
-  
+    if (event > 0) {
+      var x = this.sparesReportForm.get('locCode').value;
+      var y = this.sparesReportForm.get('tolocCode').value;
+      if (x === y) {
+        alert("From/To Locations Should not be Same...");
+        this.sparesReportForm.get('locCode').reset();
+        return;
+      }
+    }
+
 
   }
 
 
-  onSelectToLocCode(){
+  onSelectToLocCode() {
     // alert('new fn')
   }
 
-  onOptionsFromLocation(event){
+  onOptionsFromLocation(event) {
     // alert('from')
-    this.sparesReportForm.patchValue({ fromLocationId:event})  
+    this.sparesReportForm.patchValue({ fromLocationId: event })
   }
-  onOptionsToLocation1(event){
+  onOptionsToLocation1(event) {
     // alert(event)
-    this.sparesReportForm.patchValue({ tolocationId:event})  
+    this.sparesReportForm.patchValue({ tolocationId: event })
   }
 
 
   onOptionsToLocation(event) {
     // alert("To Location : "+ event);
     this.sparesReportForm.patchValue({ tolocId: event });
-    if(event>0){
-      var x=this.sparesReportForm.get('locCode').value;
-      var y=this.sparesReportForm.get('tolocCode').value;
-      if(x===y) {alert ("From/To Locations Should not be Same...");
-       this.sparesReportForm.get('tolocCode').reset();
-      return;
-    }}
+    if (event > 0) {
+      var x = this.sparesReportForm.get('locCode').value;
+      var y = this.sparesReportForm.get('tolocCode').value;
+      if (x === y) {
+        alert("From/To Locations Should not be Same...");
+        this.sparesReportForm.get('tolocCode').reset();
+        return;
+      }
+    }
   }
 
   onOptionsDepartmentList(event: string) {
@@ -2024,10 +2091,10 @@ export class SparesReportsComponent implements OnInit {
       alert('Please Select location Code.!');
       return;
     }
-    var fDate =this.sparesReportForm.get('fromDate').value;
-    var tDate =this.sparesReportForm.get('toDate').value;
+    var fDate = this.sparesReportForm.get('fromDate').value;
+    var tDate = this.sparesReportForm.get('toDate').value;
 
-    
+
     if (reportName === 'Stock Ledger') {
       if (userName === null || userName === undefined || userName === '' || segment === null || segment === undefined || segment === '') {
         alert('Please Enter userName.!');
@@ -2051,10 +2118,10 @@ export class SparesReportsComponent implements OnInit {
 
     if (reportName === 'Purchase Register Details') {
 
-      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+      this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
 
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        const fileName = 'Purchase Register Details-' +  fromDate + '-TO-' + toDate + '.xls';
+        const fileName = 'Purchase Register Details-' + fromDate + '-TO-' + toDate + '.xls';
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
         this.reportService.sppurRegidetailReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
           .subscribe(data => {
@@ -2065,7 +2132,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        const fileName = 'Purchase Register Details-' +  fromDate + '-TO-' + toDate + '.xls';
+        const fileName = 'Purchase Register Details-' + fromDate + '-TO-' + toDate + '.xls';
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
         this.reportService.sppurRegidetailReportSpares(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
           .subscribe(data => {
@@ -2077,7 +2144,7 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Spares Purchase Register - Summary') {
-      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+      this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
 
       const fileName = 'Spares Purchase Register - Summary-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
@@ -2102,34 +2169,34 @@ export class SparesReportsComponent implements OnInit {
     }
 
     else if (reportName === 'Spares Debtors Aging Report - Executive summary') {
-      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+      this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
       if (userName === null || userName === undefined || userName === '') {
-        userName='';
-        custAccNo='';
+        userName = '';
+        custAccNo = '';
       }
-      if (custAccNo === null || custAccNo === undefined || custAccNo === ''){
-        custAccNo='';
+      if (custAccNo === null || custAccNo === undefined || custAccNo === '') {
+        custAccNo = '';
       }
-      var age1= this.sparesReportForm.get('spDbAging1').value;
-      var age2= this.sparesReportForm.get('spDbAging2').value;
-      var age3= this.sparesReportForm.get('spDbAging3').value;
-      var age4= this.sparesReportForm.get('spDbAging4').value;
+      var age1 = this.sparesReportForm.get('spDbAging1').value;
+      var age2 = this.sparesReportForm.get('spDbAging2').value;
+      var age3 = this.sparesReportForm.get('spDbAging3').value;
+      var age4 = this.sparesReportForm.get('spDbAging4').value;
 
-      if(age1<0 || age1==null || age1==undefined) {this.rptValidation=false;}
-      if(age2<0 || age2==null || age2==undefined) {this.rptValidation=false;}
-      if(age3<0 || age3==null || age3==undefined) {this.rptValidation=false;}
-      if(age4<0 || age4==null || age4==undefined) {this.rptValidation=false;}
-      if (age1 > age2) {this.rptValidation=false;}
-      else if (age1 >age3){this.rptValidation=false;}
-      else if (age1 > age4){this.rptValidation=false;}
-      else if (age2 > age3){this.rptValidation=false;}
-      else if (age2 > age4){this.rptValidation=false;}
-      else if (age3 > age4){this.rptValidation=false;}
-    if(this.rptValidation ==false) {this.closeResetButton=true;this.dataDisplay = 'Please check Aging Values.';  return; }
+      if (age1 < 0 || age1 == null || age1 == undefined) { this.rptValidation = false; }
+      if (age2 < 0 || age2 == null || age2 == undefined) { this.rptValidation = false; }
+      if (age3 < 0 || age3 == null || age3 == undefined) { this.rptValidation = false; }
+      if (age4 < 0 || age4 == null || age4 == undefined) { this.rptValidation = false; }
+      if (age1 > age2) { this.rptValidation = false; }
+      else if (age1 > age3) { this.rptValidation = false; }
+      else if (age1 > age4) { this.rptValidation = false; }
+      else if (age2 > age3) { this.rptValidation = false; }
+      else if (age2 > age4) { this.rptValidation = false; }
+      else if (age3 > age4) { this.rptValidation = false; }
+      if (this.rptValidation == false) { this.closeResetButton = true; this.dataDisplay = 'Please check Aging Values.'; return; }
       const fileName = 'Spares Debtors Aging Report - Executive summary-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.sparesDbAgingExicutiveSum(toDate, sessionStorage.getItem('ouId'), locId, userName,custAccNo,deptId,age1,age2,age3,age4)
+        this.reportService.sparesDbAgingExicutiveSum(toDate, sessionStorage.getItem('ouId'), locId, userName, custAccNo, deptId, age1, age2, age3, age4)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2138,7 +2205,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
       else if ((Number(sessionStorage.getItem('deptId'))) != 4) {
-        this.reportService.sparesDbAgingExicutiveSum(toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), userName,custAccNo,deptId,age1,age2,age3,age4)
+        this.reportService.sparesDbAgingExicutiveSum(toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), userName, custAccNo, deptId, age1, age2, age3, age4)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2148,27 +2215,27 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Spares Issue Details Report') {
-     
-      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
-      var dt1=new Date(fDate)
-      var dt2= new Date(tDate)
-      if(dt1>dt2) {alert ("Please Enter Proper Start Date and End Date...");return;}
-      var mDays = this.diffDays(dt1,dt2);
-      if (mDays >7) { 
-        alert ("Date Range Cannot Exceed 7 Days...");
+
+      this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
+      var dt1 = new Date(fDate)
+      var dt2 = new Date(tDate)
+      if (dt1 > dt2) { alert("Please Enter Proper Start Date and End Date..."); return; }
+      var mDays = this.diffDays(dt1, dt2);
+      if (mDays > 7) {
+        alert("Date Range Cannot Exceed 7 Days...");
         this.dataDisplay = 'Date Range Cannot Exceed 7 Days...';
         this.isDisabled1 = false;
-      return;
-    }
-    var custAcctNo = this.sparesReportForm.get('custAccNo').value;
-    var ticketNo = this.sparesReportForm.get('userName1').value
-    if (custAcctNo === undefined || custAcctNo === null) {
-      custAcctNo = '';
-    }
+        return;
+      }
+      var custAcctNo = this.sparesReportForm.get('custAccNo').value;
+      var ticketNo = this.sparesReportForm.get('userName1').value
+      if (custAcctNo === undefined || custAcctNo === null) {
+        custAcctNo = '';
+      }
       const fileName = 'Spares Issue Details Report-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.spIssueDetailsReport(fromDate, toDate, locId,custAcctNo)
+        this.reportService.spIssueDetailsReport(fromDate, toDate, locId, custAcctNo)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2177,7 +2244,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.spIssueDetailsReport(fromDate, toDate, sessionStorage.getItem('locId'),custAcctNo)
+        this.reportService.spIssueDetailsReport(fromDate, toDate, sessionStorage.getItem('locId'), custAcctNo)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2188,15 +2255,15 @@ export class SparesReportsComponent implements OnInit {
     }
     else if (reportName === 'Spares Issue Summary') {
       // alert(custAccNo)
-      if (custAccNo === null || custAccNo === undefined || custAccNo === ''){
-        custAccNo='';
+      if (custAccNo === null || custAccNo === undefined || custAccNo === '') {
+        custAccNo = '';
       }
-      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+      this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
 
       const fileName = 'Spares Issue Summary Report-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.spIssueSummaryReport(fromDate, toDate, locId,custAccNo)
+        this.reportService.spIssueSummaryReport(fromDate, toDate, locId, custAccNo)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2205,7 +2272,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.spIssueSummaryReport(fromDate, toDate, sessionStorage.getItem('locId'),custAccNo)
+        this.reportService.spIssueSummaryReport(fromDate, toDate, sessionStorage.getItem('locId'), custAccNo)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2215,7 +2282,7 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Spares Receipt Register') {
-      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+      this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
 
       const fileName = 'Spares Receipt Register-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
@@ -2242,7 +2309,7 @@ export class SparesReportsComponent implements OnInit {
       const fileName = 'SP-Closing-Stock-' + sessionStorage.getItem('locName').trim() + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.spclosstrockReport(locId,subInventory)
+        this.reportService.spclosstrockReport(locId, subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2251,7 +2318,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.spclosstrockReport(sessionStorage.getItem('locId'),subInventory)
+        this.reportService.spclosstrockReport(sessionStorage.getItem('locId'), subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2259,12 +2326,12 @@ export class SparesReportsComponent implements OnInit {
             this.dataDisplay = ''
           })
       }
-    }   
+    }
     else if (reportName === 'Spares Debtor Report') {
 
-      this.isDisabled1=false;
+      this.isDisabled1 = false;
       // alert('Hello');
-      this.toDateValidation(tDate);if(this.rptValidation==false){return;}
+      this.toDateValidation(tDate); if (this.rptValidation == false) { return; }
       var custAccNo = this.sparesReportForm.get('custAccNo').value;
 
       // if (custAccNo<=0 || custAccNo==undefined || custAccNo==null ) {
@@ -2272,40 +2339,40 @@ export class SparesReportsComponent implements OnInit {
       //   // this.dataDisplay = 'Please check Customer No.'
       //   return; }comment by vinita
 
-      if (custAccNo<=0 || custAccNo==undefined || custAccNo==null ) {
-        custAccNo='';
-          }
+      if (custAccNo <= 0 || custAccNo == undefined || custAccNo == null) {
+        custAccNo = '';
+      }
 
 
-      var d1= this.sparesReportForm.get('toDate').value;   
+      var d1 = this.sparesReportForm.get('toDate').value;
       var tDate1 = this.pipe.transform(d1, 'dd-MMM-y');
-      var locId= this.sparesReportForm.get('locId').value;
-      
-      var spDbAg1= this.sparesReportForm.get('spDbAging1').value;
-      var spDbAg2= this.sparesReportForm.get('spDbAging2').value;
-      var spDbAg3= this.sparesReportForm.get('spDbAging3').value;
-      var spDbAg4= this.sparesReportForm.get('spDbAging4').value;
+      var locId = this.sparesReportForm.get('locId').value;
 
-      if(spDbAg1<0 || spDbAg1==null || spDbAg1==undefined) {this.rptValidation=false;}
-      if(spDbAg2<0 || spDbAg2==null || spDbAg2==undefined) {this.rptValidation=false;}
-      if(spDbAg3<0 || spDbAg3==null || spDbAg3==undefined) {this.rptValidation=false;}
-      if(spDbAg4<0 || spDbAg4==null || spDbAg4==undefined) {this.rptValidation=false;}
+      var spDbAg1 = this.sparesReportForm.get('spDbAging1').value;
+      var spDbAg2 = this.sparesReportForm.get('spDbAging2').value;
+      var spDbAg3 = this.sparesReportForm.get('spDbAging3').value;
+      var spDbAg4 = this.sparesReportForm.get('spDbAging4').value;
 
-      if (spDbAg1 > spDbAg2) {this.rptValidation=false;}
-      else if (spDbAg1 >spDbAg3){this.rptValidation=false;}
-      else if (spDbAg1 > spDbAg4){this.rptValidation=false;}
-      else if (spDbAg2 > spDbAg3){this.rptValidation=false;}
-      else if (spDbAg2 > spDbAg4){this.rptValidation=false;}
-      else if (spDbAg3 > spDbAg4){this.rptValidation=false;}
+      if (spDbAg1 < 0 || spDbAg1 == null || spDbAg1 == undefined) { this.rptValidation = false; }
+      if (spDbAg2 < 0 || spDbAg2 == null || spDbAg2 == undefined) { this.rptValidation = false; }
+      if (spDbAg3 < 0 || spDbAg3 == null || spDbAg3 == undefined) { this.rptValidation = false; }
+      if (spDbAg4 < 0 || spDbAg4 == null || spDbAg4 == undefined) { this.rptValidation = false; }
+
+      if (spDbAg1 > spDbAg2) { this.rptValidation = false; }
+      else if (spDbAg1 > spDbAg3) { this.rptValidation = false; }
+      else if (spDbAg1 > spDbAg4) { this.rptValidation = false; }
+      else if (spDbAg2 > spDbAg3) { this.rptValidation = false; }
+      else if (spDbAg2 > spDbAg4) { this.rptValidation = false; }
+      else if (spDbAg3 > spDbAg4) { this.rptValidation = false; }
 
 
-    if(this.rptValidation ==false) {this.closeResetButton=true;this.dataDisplay = 'Please check Aging Values.';  return; }
-      this.isDisabled1=true;
-      const fileName = 'SP-Debtors-' +  fromDate + '.xls';
+      if (this.rptValidation == false) { this.closeResetButton = true; this.dataDisplay = 'Please check Aging Values.'; return; }
+      this.isDisabled1 = true;
+      const fileName = 'SP-Debtors-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-     
+
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.SPDebtorReport(tDate1, sessionStorage.getItem('ouId'), locId,custAccNo,deptId,spDbAg1,spDbAg2,spDbAg3,spDbAg4)
+        this.reportService.SPDebtorReport(tDate1, sessionStorage.getItem('ouId'), locId, custAccNo, deptId, spDbAg1, spDbAg2, spDbAg3, spDbAg4)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2314,7 +2381,7 @@ export class SparesReportsComponent implements OnInit {
           });
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.SPDebtorReport(tDate1, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),custAccNo,deptId,spDbAg1,spDbAg2,spDbAg3,spDbAg4)
+        this.reportService.SPDebtorReport(tDate1, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), custAccNo, deptId, spDbAg1, spDbAg2, spDbAg3, spDbAg4)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2325,9 +2392,9 @@ export class SparesReportsComponent implements OnInit {
     }
     else if (reportName === 'Spares Debtor Report As Of') {
 
-      this.isDisabled1=false;
+      this.isDisabled1 = false;
       // alert('Hello');
-      this.toDateValidation(tDate);if(this.rptValidation==false){return;}
+      this.toDateValidation(tDate); if (this.rptValidation == false) { return; }
       var custAccNo = this.sparesReportForm.get('custAccNo').value;
 
       // if (custAccNo<=0 || custAccNo==undefined || custAccNo==null ) {
@@ -2335,39 +2402,39 @@ export class SparesReportsComponent implements OnInit {
       //   // this.dataDisplay = 'Please check Customer No.'
       //   return; }comment by vinita
 
-      if (custAccNo<=0 || custAccNo==undefined || custAccNo==null ) {
-        custAccNo='';
-          }
+      if (custAccNo <= 0 || custAccNo == undefined || custAccNo == null) {
+        custAccNo = '';
+      }
 
 
-      var d1= this.sparesReportForm.get('toDate').value;   
+      var d1 = this.sparesReportForm.get('toDate').value;
       var tDate1 = this.pipe.transform(d1, 'dd-MMM-y');
-      var locId= this.sparesReportForm.get('locId').value;
-      
-      var spDbAg1= this.sparesReportForm.get('spDbAging1').value;
-      var spDbAg2= this.sparesReportForm.get('spDbAging2').value;
-      var spDbAg3= this.sparesReportForm.get('spDbAging3').value;
-      var spDbAg4= this.sparesReportForm.get('spDbAging4').value;
+      var locId = this.sparesReportForm.get('locId').value;
 
-      if(spDbAg1<0 || spDbAg1==null || spDbAg1==undefined) {this.rptValidation=false;}
-      if(spDbAg2<0 || spDbAg2==null || spDbAg2==undefined) {this.rptValidation=false;}
-      if(spDbAg3<0 || spDbAg3==null || spDbAg3==undefined) {this.rptValidation=false;}
-      if(spDbAg4<0 || spDbAg4==null || spDbAg4==undefined) {this.rptValidation=false;}
+      var spDbAg1 = this.sparesReportForm.get('spDbAging1').value;
+      var spDbAg2 = this.sparesReportForm.get('spDbAging2').value;
+      var spDbAg3 = this.sparesReportForm.get('spDbAging3').value;
+      var spDbAg4 = this.sparesReportForm.get('spDbAging4').value;
 
-      if (spDbAg1 > spDbAg2) {this.rptValidation=false;}
-      else if (spDbAg1 >spDbAg3){this.rptValidation=false;}
-      else if (spDbAg1 > spDbAg4){this.rptValidation=false;}
-      else if (spDbAg2 > spDbAg3){this.rptValidation=false;}
-      else if (spDbAg2 > spDbAg4){this.rptValidation=false;}
-      else if (spDbAg3 > spDbAg4){this.rptValidation=false;}
+      if (spDbAg1 < 0 || spDbAg1 == null || spDbAg1 == undefined) { this.rptValidation = false; }
+      if (spDbAg2 < 0 || spDbAg2 == null || spDbAg2 == undefined) { this.rptValidation = false; }
+      if (spDbAg3 < 0 || spDbAg3 == null || spDbAg3 == undefined) { this.rptValidation = false; }
+      if (spDbAg4 < 0 || spDbAg4 == null || spDbAg4 == undefined) { this.rptValidation = false; }
+
+      if (spDbAg1 > spDbAg2) { this.rptValidation = false; }
+      else if (spDbAg1 > spDbAg3) { this.rptValidation = false; }
+      else if (spDbAg1 > spDbAg4) { this.rptValidation = false; }
+      else if (spDbAg2 > spDbAg3) { this.rptValidation = false; }
+      else if (spDbAg2 > spDbAg4) { this.rptValidation = false; }
+      else if (spDbAg3 > spDbAg4) { this.rptValidation = false; }
 
 
-    if(this.rptValidation ==false) {this.closeResetButton=true;this.dataDisplay = 'Please check Aging Values.';  return; }
-      this.isDisabled1=true;
-      const fileName = 'SP-Debtors-' +  fromDate + '.xls';
+      if (this.rptValidation == false) { this.closeResetButton = true; this.dataDisplay = 'Please check Aging Values.'; return; }
+      this.isDisabled1 = true;
+      const fileName = 'SP-Debtors-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.gstsaiDebtorsAsOf1(tDate1, sessionStorage.getItem('ouId'), locId,custAccNo,deptId,spDbAg1,spDbAg2,spDbAg3,spDbAg4)
+        this.reportService.gstsaiDebtorsAsOf1(tDate1, sessionStorage.getItem('ouId'), locId, custAccNo, deptId, spDbAg1, spDbAg2, spDbAg3, spDbAg4)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2376,7 +2443,7 @@ export class SparesReportsComponent implements OnInit {
           });
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.gstsaiDebtorsAsOf1(tDate1, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),custAccNo,deptId,spDbAg1,spDbAg2,spDbAg3,spDbAg4)
+        this.reportService.gstsaiDebtorsAsOf1(tDate1, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), custAccNo, deptId, spDbAg1, spDbAg2, spDbAg3, spDbAg4)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2387,41 +2454,41 @@ export class SparesReportsComponent implements OnInit {
     }
     else if (reportName === 'Spares Debtors Aging Report Summary') {
 
-      this.isDisabled1=false;
-      this.toDateValidation(tDate);if(this.rptValidation==false){return;}
+      this.isDisabled1 = false;
+      this.toDateValidation(tDate); if (this.rptValidation == false) { return; }
       var custAccNo = this.sparesReportForm.get('custAccNo').value;
-      if (custAccNo<=0 || custAccNo==undefined || custAccNo==null ) {custAccNo=''; }
+      if (custAccNo <= 0 || custAccNo == undefined || custAccNo == null) { custAccNo = ''; }
 
 
-      var d1= this.sparesReportForm.get('toDate').value;   
+      var d1 = this.sparesReportForm.get('toDate').value;
       var tDate1 = this.pipe.transform(d1, 'dd-MMM-y');
-      var locId= this.sparesReportForm.get('locId').value;
-      
-      var spDbAg1= this.sparesReportForm.get('spDbAging1').value;
-      var spDbAg2= this.sparesReportForm.get('spDbAging2').value;
-      var spDbAg3= this.sparesReportForm.get('spDbAging3').value;
-      var spDbAg4= this.sparesReportForm.get('spDbAging4').value;
+      var locId = this.sparesReportForm.get('locId').value;
 
-      if(spDbAg1<0 || spDbAg1==null || spDbAg1==undefined) {this.rptValidation=false;}
-      if(spDbAg2<0 || spDbAg2==null || spDbAg2==undefined) {this.rptValidation=false;}
-      if(spDbAg3<0 || spDbAg3==null || spDbAg3==undefined) {this.rptValidation=false;}
-      if(spDbAg4<0 || spDbAg4==null || spDbAg4==undefined) {this.rptValidation=false;}
+      var spDbAg1 = this.sparesReportForm.get('spDbAging1').value;
+      var spDbAg2 = this.sparesReportForm.get('spDbAging2').value;
+      var spDbAg3 = this.sparesReportForm.get('spDbAging3').value;
+      var spDbAg4 = this.sparesReportForm.get('spDbAging4').value;
 
-      if (spDbAg1 > spDbAg2) {this.rptValidation=false;}
-      else if (spDbAg1 >spDbAg3){this.rptValidation=false;}
-      else if (spDbAg1 > spDbAg4){this.rptValidation=false;}
-      else if (spDbAg2 > spDbAg3){this.rptValidation=false;}
-      else if (spDbAg2 > spDbAg4){this.rptValidation=false;}
-      else if (spDbAg3 > spDbAg4){this.rptValidation=false;}
+      if (spDbAg1 < 0 || spDbAg1 == null || spDbAg1 == undefined) { this.rptValidation = false; }
+      if (spDbAg2 < 0 || spDbAg2 == null || spDbAg2 == undefined) { this.rptValidation = false; }
+      if (spDbAg3 < 0 || spDbAg3 == null || spDbAg3 == undefined) { this.rptValidation = false; }
+      if (spDbAg4 < 0 || spDbAg4 == null || spDbAg4 == undefined) { this.rptValidation = false; }
+
+      if (spDbAg1 > spDbAg2) { this.rptValidation = false; }
+      else if (spDbAg1 > spDbAg3) { this.rptValidation = false; }
+      else if (spDbAg1 > spDbAg4) { this.rptValidation = false; }
+      else if (spDbAg2 > spDbAg3) { this.rptValidation = false; }
+      else if (spDbAg2 > spDbAg4) { this.rptValidation = false; }
+      else if (spDbAg3 > spDbAg4) { this.rptValidation = false; }
 
 
-    if(this.rptValidation ==false) {this.closeResetButton=true;this.dataDisplay = 'Please check Aging Values.';  return; }
-      this.isDisabled1=true;
-      const fileName = 'SP-Debtors-Aging-' +  fromDate + '.xls';
+      if (this.rptValidation == false) { this.closeResetButton = true; this.dataDisplay = 'Please check Aging Values.'; return; }
+      this.isDisabled1 = true;
+      const fileName = 'SP-Debtors-Aging-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-     
+
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.SPDebtorAgingSummary(tDate1, sessionStorage.getItem('ouId'), locId,custAccNo,deptId,spDbAg1,spDbAg2,spDbAg3,spDbAg4)
+        this.reportService.SPDebtorAgingSummary(tDate1, sessionStorage.getItem('ouId'), locId, custAccNo, deptId, spDbAg1, spDbAg2, spDbAg3, spDbAg4)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2430,7 +2497,7 @@ export class SparesReportsComponent implements OnInit {
           });
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.SPDebtorAgingSummary(tDate1, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),custAccNo,deptId,spDbAg1,spDbAg2,spDbAg3,spDbAg4)
+        this.reportService.SPDebtorAgingSummary(tDate1, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), custAccNo, deptId, spDbAg1, spDbAg2, spDbAg3, spDbAg4)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2440,7 +2507,7 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Stock Ledger') {
-     this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+      this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.stockLedgerReport(fromDate, toDate, subInventory, segment, locId, userName)
           .subscribe(data => {
@@ -2466,25 +2533,25 @@ export class SparesReportsComponent implements OnInit {
           })
       }
     }
- else if (reportName === 'Stock Transfer Made Detail Report') {
-      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+    else if (reportName === 'Stock Transfer Made Detail Report') {
+      this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
       var fromLocationId = this.sparesReportForm.get('fromLocationId').value;
       var toLocationId = this.sparesReportForm.get('tolocationId').value;
-      var fromLocationName=this.sparesReportForm.get('fromLocName').value;
+      var fromLocationName = this.sparesReportForm.get('fromLocName').value;
       // alert(fromLocationName);
-      if (fromLocationName===null && Number(sessionStorage.getItem('deptId'))===4){
-       alert('Please Select From Location.!') ;
-       this.isDisabled1 = false;
-       this.dataDisplay = 'Please Select From Location.!'
-       return;
-    }
-      if (toLocationId===null){
-        toLocationId=''
+      if (fromLocationName === null && Number(sessionStorage.getItem('deptId')) === 4) {
+        alert('Please Select From Location.!');
+        this.isDisabled1 = false;
+        this.dataDisplay = 'Please Select From Location.!'
+        return;
       }
-      const fileName = 'Stock Transfer Made Detail Report-' +  fromDate + '.xls';
+      if (toLocationId === null) {
+        toLocationId = ''
+      }
+      const fileName = 'Stock Transfer Made Detail Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.stockMadeDetailsReport(fromDate, toDate,sessionStorage.getItem('ouId') ,fromLocationId, toLocationId, subInventory,sessionStorage.getItem('deptId'))
+        this.reportService.stockMadeDetailsReport(fromDate, toDate, sessionStorage.getItem('ouId'), fromLocationId, toLocationId, subInventory, sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2494,7 +2561,7 @@ export class SparesReportsComponent implements OnInit {
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
         // alert(tolocId)
-        this.reportService.stockMadeDetailsReport(fromDate, toDate,sessionStorage.getItem('ouId') ,sessionStorage.getItem('locId'), toLocationId, subInventory,sessionStorage.getItem('deptId'))
+        this.reportService.stockMadeDetailsReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), toLocationId, subInventory, sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2505,26 +2572,26 @@ export class SparesReportsComponent implements OnInit {
     }
 
     else if (reportName === 'Stock Transfer Made Summary Report') {
-      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
-   
+      this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
+
       var fromLocationId = this.sparesReportForm.get('fromLocationId').value;
       var toLocationId = this.sparesReportForm.get('tolocationId').value;
-      var fromLocationName=this.sparesReportForm.get('fromLocName').value;
+      var fromLocationName = this.sparesReportForm.get('fromLocName').value;
       // alert(fromLocationName);
-      if (fromLocationName===null && Number(sessionStorage.getItem('deptId'))===4){
-       alert('Please Select From Location.!') ;
-       this.isDisabled1 = false;
-       this.dataDisplay = 'Please Select From Location.!'
-       return;
-    }
-
-      if (toLocationId===null){
-        toLocationId=''
+      if (fromLocationName === null && Number(sessionStorage.getItem('deptId')) === 4) {
+        alert('Please Select From Location.!');
+        this.isDisabled1 = false;
+        this.dataDisplay = 'Please Select From Location.!'
+        return;
       }
-      const fileName = 'Stock Transfer Made Summary Report-' +  fromDate + '.xls';
+
+      if (toLocationId === null) {
+        toLocationId = ''
+      }
+      const fileName = 'Stock Transfer Made Summary Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.spstktrfMdSummaryReport(fromDate, toDate,  fromLocationId,toLocationId, subInventory)
+        this.reportService.spstktrfMdSummaryReport(fromDate, toDate, fromLocationId, toLocationId, subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2533,7 +2600,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.spstktrfMdSummaryReport(fromDate, toDate,sessionStorage.getItem('locId'),toLocationId, subInventory)
+        this.reportService.spstktrfMdSummaryReport(fromDate, toDate, sessionStorage.getItem('locId'), toLocationId, subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2544,25 +2611,25 @@ export class SparesReportsComponent implements OnInit {
     }
 
     else if (reportName === 'Stock Transfer Received Detail Report') {
-      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
-      var tolocationId= this.sparesReportForm.get('tolocationId').value;
+      this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
+      var tolocationId = this.sparesReportForm.get('tolocationId').value;
       // alert(tolocationId)
-      var fromLocName= this.sparesReportForm.get('fromLocName').value;
-      var fromLocationId= this.sparesReportForm.get('fromLocationId').value;
-      if (fromLocName === null){
-        fromLocationId=''
+      var fromLocName = this.sparesReportForm.get('fromLocName').value;
+      var fromLocationId = this.sparesReportForm.get('fromLocationId').value;
+      if (fromLocName === null) {
+        fromLocationId = ''
       }
-      if (tolocationId===null && Number(sessionStorage.getItem('deptId'))===4){
+      if (tolocationId === null && Number(sessionStorage.getItem('deptId')) === 4) {
         alert('Please Select To Location.!');
         this.isDisabled1 = false;
-         this.dataDisplay = 'Please Select To Location.!'
+        this.dataDisplay = 'Please Select To Location.!'
         return;
       }
-      
-      const fileName = 'Stock Transfer Received Detail Report-' +  fromDate + '.xls';
+
+      const fileName = 'Stock Transfer Received Detail Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate,sessionStorage.getItem('ouId') ,tolocationId, fromLocationId, subInventory,sessionStorage.getItem('deptId'))
+        this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate, sessionStorage.getItem('ouId'), tolocationId, fromLocationId, subInventory, sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2571,7 +2638,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate,sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'), fromLocationId, subInventory,sessionStorage.getItem('deptId'))
+        this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), fromLocationId, subInventory, sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2581,23 +2648,23 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Stock Transfer Received Summary Report') {
-       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
-       var tolocationId= this.sparesReportForm.get('tolocationId').value;
+      this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
+      var tolocationId = this.sparesReportForm.get('tolocationId').value;
       //  alert(fromLocName)
-       var fromLocationId= this.sparesReportForm.get('fromLocationId').value;
-       var fromLocName = this.sparesReportForm.get('fromLocName').value;
-       if (tolocationId===null && Number(sessionStorage.getItem('deptId'))===4){
-         alert('Please Select To Location.!');
-         this.isDisabled1 = false;
-          this.dataDisplay = 'Please Select To Location.!'
-         return;
-       }
-       
-       if (fromLocName===null || fromLocName===undefined){
-        fromLocationId=''
+      var fromLocationId = this.sparesReportForm.get('fromLocationId').value;
+      var fromLocName = this.sparesReportForm.get('fromLocName').value;
+      if (tolocationId === null && Number(sessionStorage.getItem('deptId')) === 4) {
+        alert('Please Select To Location.!');
+        this.isDisabled1 = false;
+        this.dataDisplay = 'Please Select To Location.!'
+        return;
+      }
+
+      if (fromLocName === null || fromLocName === undefined) {
+        fromLocationId = ''
       }
       // alert(fromLocationId)
-      const fileName = 'Stock Transfer Received Summary Report-' +  fromDate + '.xls';
+      const fileName = 'Stock Transfer Received Summary Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate, tolocationId, fromLocationId, subInventory)
@@ -2609,7 +2676,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate,  sessionStorage.getItem('locId'), fromLocationId,subInventory)
+        this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate, sessionStorage.getItem('locId'), fromLocationId, subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2618,11 +2685,11 @@ export class SparesReportsComponent implements OnInit {
           })
       }
     }
-    
-    else if (reportName === 'Spares Customer Off Take Statement') {
-      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
-      const fileName = 'Spares-Customer-Off-Take-Statement-' +  fromDate + '.xls';
+    else if (reportName === 'Spares Customer Off Take Statement') {
+      this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
+
+      const fileName = 'Spares-Customer-Off-Take-Statement-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.SprcusttakestatReport(fromDate, toDate, locId)
@@ -2644,7 +2711,7 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Spares Back Order Qty Report') {
-      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+      this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
 
       var custAccNo = this.sparesReportForm.get('custAccNo').value;
       var orderNumber = this.sparesReportForm.get('orderNumber').value;
@@ -2654,7 +2721,7 @@ export class SparesReportsComponent implements OnInit {
       if (orderNumber === undefined || orderNumber === null) {
         orderNumber = ''
       }
-      const fileName = 'Spares Back Order Qty Report-' +  fromDate + '.xls';
+      const fileName = 'Spares Back Order Qty Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.spbackOrderQtyReport(fromDate, toDate, locId, custAccNo, orderNumber)
@@ -2675,14 +2742,14 @@ export class SparesReportsComponent implements OnInit {
           })
       }
     }
-    
-    else if (reportName === 'Spares Misc Issue Receipt Report') {
-      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
-      const fileName = 'Spares Misc Issue Receipt Report-' +  fromDate + '.xls';
+    else if (reportName === 'Spares Misc Issue Receipt Report') {
+      this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
+
+      const fileName = 'Spares Misc Issue Receipt Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.spSparesMiscIssueReceiptReport(fromDate, toDate, locId,sessionStorage.getItem('ouId'))
+        this.reportService.spSparesMiscIssueReceiptReport(fromDate, toDate, locId, sessionStorage.getItem('ouId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2691,7 +2758,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
       if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.spSparesMiscIssueReceiptReport(fromDate, toDate, sessionStorage.getItem('locId'),sessionStorage.getItem('ouId'))
+        this.reportService.spSparesMiscIssueReceiptReport(fromDate, toDate, sessionStorage.getItem('locId'), sessionStorage.getItem('ouId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2702,9 +2769,9 @@ export class SparesReportsComponent implements OnInit {
     }
 
     else if (reportName === 'Spares Sales Return Register') {
-      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+      this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
 
-      const fileName = 'Spares Sales Return Register-' +  fromDate + '.xls';
+      const fileName = 'Spares Sales Return Register-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.spslReturnRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
@@ -2726,9 +2793,9 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Income Statement') {
-      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+      this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
 
-      const fileName = 'Spares Income Statement-' +  fromDate + '.xls';
+      const fileName = 'Spares Income Statement-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.spIncomeStatement(fromDate, toDate, locId)
@@ -2750,12 +2817,12 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Spares Closing Stock As On Date') {
-      this.toDateValidation(tDate);if(this.rptValidation==false){return;}
+      this.toDateValidation(tDate); if (this.rptValidation == false) { return; }
 
-      const fileName = 'Spares Closing Stock As On Date-' +  toDate + '.xls';
+      const fileName = 'Spares Closing Stock As On Date-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.sprClsAsonDtReport(toDate, locId,subInventory)
+        this.reportService.sprClsAsonDtReport(toDate, locId, subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2764,20 +2831,20 @@ export class SparesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.sprClsAsonDtReport(toDate, sessionStorage.getItem('locId'),subInventory)
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.isDisabled1 = false;
-          this.closeResetButton = true;
-          this.dataDisplay = ''
-        })
-       }
+        this.reportService.sprClsAsonDtReport(toDate, sessionStorage.getItem('locId'), subInventory)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
     }
 
     else if (reportName === 'Spares Proforma Details Report') {
-      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+      this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
 
-      const fileName = 'Spares Proforma Details Report-' +  fromDate + '.xls';
+      const fileName = 'Spares Proforma Details Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.spProforDtReport(fromDate, toDate, locId)
@@ -2799,9 +2866,9 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Cheque Bounce Report') {
-      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+      this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
 
-      const fileName = 'Cheque Bounce Report-' +  fromDate + '.xls';
+      const fileName = 'Cheque Bounce Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.chequebounceReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
@@ -2823,30 +2890,30 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Spares Inventory Aging Report') {
-      this.isDisabled1=false;
-      this.rptValidation=true;
+      this.isDisabled1 = false;
+      this.rptValidation = true;
       var spInvAging1 = this.sparesReportForm.get('spInvAging1').value;
       var spInvAging2 = this.sparesReportForm.get('spInvAging2').value;
       var spInvAging3 = this.sparesReportForm.get('spInvAging3').value;
-      
 
-      if(spInvAging1<0 || spInvAging1==null || spInvAging1==undefined) {this.rptValidation=false;}
-      if(spInvAging2<0 || spInvAging2==null || spInvAging2==undefined) {this.rptValidation=false;}
-      if(spInvAging3<0 || spInvAging3==null || spInvAging3==undefined) {this.rptValidation=false;}
 
-      
-      if (spInvAging1 > spInvAging2) {this.rptValidation=false;}
-      else if (spInvAging1 >spInvAging3){this.rptValidation=false;}
-      else if (spInvAging2 > spInvAging3){this.rptValidation=false;}
+      if (spInvAging1 < 0 || spInvAging1 == null || spInvAging1 == undefined) { this.rptValidation = false; }
+      if (spInvAging2 < 0 || spInvAging2 == null || spInvAging2 == undefined) { this.rptValidation = false; }
+      if (spInvAging3 < 0 || spInvAging3 == null || spInvAging3 == undefined) { this.rptValidation = false; }
 
-      if(this.rptValidation ==false) {this.closeResetButton=true;this.dataDisplay = 'Please check Aging Values.';  return; }
-     
-      this.isDisabled1=true;
 
-      const fileName = 'Spares Inventory Aging Report-' +  '.xls';
+      if (spInvAging1 > spInvAging2) { this.rptValidation = false; }
+      else if (spInvAging1 > spInvAging3) { this.rptValidation = false; }
+      else if (spInvAging2 > spInvAging3) { this.rptValidation = false; }
+
+      if (this.rptValidation == false) { this.closeResetButton = true; this.dataDisplay = 'Please check Aging Values.'; return; }
+
+      this.isDisabled1 = true;
+
+      const fileName = 'Spares Inventory Aging Report-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.sspInvAgingReport(spInvAging1, spInvAging2, spInvAging3, sessionStorage.getItem('ouId'), locId ,subInventory,userName)
+        this.reportService.sspInvAgingReport(spInvAging1, spInvAging2, spInvAging3, sessionStorage.getItem('ouId'), locId, subInventory, userName)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2855,7 +2922,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.sspInvAgingReport(spInvAging1, spInvAging2, spInvAging3, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),subInventory,userName)
+        this.reportService.sspInvAgingReport(spInvAging1, spInvAging2, spInvAging3, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), subInventory, userName)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2865,7 +2932,7 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Spares Debtors Executive Wise report') {
-      this.toDateValidation(tDate);if(this.rptValidation==false){return;}
+      this.toDateValidation(tDate); if (this.rptValidation == false) { return; }
 
       var custAcctNo = this.sparesReportForm.get('custAccNo').value;
       var ticketNo = this.sparesReportForm.get('userName1').value
@@ -2875,7 +2942,7 @@ export class SparesReportsComponent implements OnInit {
       if (ticketNo === undefined || ticketNo === null) {
         ticketNo = '';
       }
-      const fileName = 'Spares Debtors Executive Wise report-' +  fromDate + '.xls';
+      const fileName = 'Spares Debtors Executive Wise report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.spDebtorExicutiveWise(toDate, sessionStorage.getItem('ouId'), locId, ticketNo, custAcctNo, deptId)
@@ -2897,81 +2964,81 @@ export class SparesReportsComponent implements OnInit {
       }
     }
 
-    else if (reportName==='Sub Inventory Transfer Received Report'){
-      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+    else if (reportName === 'Sub Inventory Transfer Received Report') {
+      this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
 
-      const fileName = 'Sub Inventory Transfer Received Report-' +  fromDate + '.xls';
+      const fileName = 'Sub Inventory Transfer Received Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if ((Number(sessionStorage.getItem('deptId'))===4)){
-        this.reportService.spInvTransRecFuc(fromDate,toDate, locId, subInventory)
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.isDisabled1 = false;
-          this.closeResetButton = true;
-          this.dataDisplay = ''
-        })
+      if ((Number(sessionStorage.getItem('deptId')) === 4)) {
+        this.reportService.spInvTransRecFuc(fromDate, toDate, locId, subInventory)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
       }
-      else if ((Number(sessionStorage.getItem('deptId')))!=4){
-        this.reportService.spInvTransRecFuc(fromDate,toDate, sessionStorage.getItem('locId'), subInventory)
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.isDisabled1 = false;
-          this.closeResetButton = true;
-          this.dataDisplay = ''
-        })
+      else if ((Number(sessionStorage.getItem('deptId'))) != 4) {
+        this.reportService.spInvTransRecFuc(fromDate, toDate, sessionStorage.getItem('locId'), subInventory)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
       }
     }
 
-    else if (reportName==='Sub Inventory Transfer Made Report'){
-      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+    else if (reportName === 'Sub Inventory Transfer Made Report') {
+      this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
 
-      const fileName = 'Sub Inventory Transfer Made Report-' +  fromDate + '.xls';
+      const fileName = 'Sub Inventory Transfer Made Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if ((Number(sessionStorage.getItem('deptId'))===4)){
-        this.reportService.spInvTransMadeFuc(fromDate,toDate, locId, subInventory)
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.isDisabled1 = false;
-          this.closeResetButton = true;
-          this.dataDisplay = ''
-        })
+      if ((Number(sessionStorage.getItem('deptId')) === 4)) {
+        this.reportService.spInvTransMadeFuc(fromDate, toDate, locId, subInventory)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
       }
-      else if ((Number(sessionStorage.getItem('deptId')))!=4){
-        this.reportService.spInvTransMadeFuc(fromDate,toDate, sessionStorage.getItem('locId'), subInventory)
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.isDisabled1 = false;
-          this.closeResetButton = true;
-          this.dataDisplay = ''
-        })
-      } 
-    } 
-    else if (reportName==='Internal Consumption Report'){
-      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+      else if ((Number(sessionStorage.getItem('deptId'))) != 4) {
+        this.reportService.spInvTransMadeFuc(fromDate, toDate, sessionStorage.getItem('locId'), subInventory)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
+    else if (reportName === 'Internal Consumption Report') {
+      this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
 
-      const fileName = 'Internal Consumption Report-' +  fromDate + '.xls';
+      const fileName = 'Internal Consumption Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if ((Number(sessionStorage.getItem('deptId'))===4)){
-        this.reportService.internalConsuptionReport(fromDate,toDate, locId, subInventory,sessionStorage.getItem('ouId'))
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.isDisabled1 = false;
-          this.closeResetButton = true;
-          this.dataDisplay = ''
-        })
+      if ((Number(sessionStorage.getItem('deptId')) === 4)) {
+        this.reportService.internalConsuptionReport(fromDate, toDate, locId, subInventory, sessionStorage.getItem('ouId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
       }
-      else if ((Number(sessionStorage.getItem('deptId')))!=4){
-        this.reportService.internalConsuptionReport(fromDate,toDate, sessionStorage.getItem('locId'), subInventory,sessionStorage.getItem('ouId'))
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.isDisabled1 = false;
-          this.closeResetButton = true;
-          this.dataDisplay = ''
-        })
-      } 
+      else if ((Number(sessionStorage.getItem('deptId'))) != 4) {
+        this.reportService.internalConsuptionReport(fromDate, toDate, sessionStorage.getItem('locId'), subInventory, sessionStorage.getItem('ouId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
     }
     else if (reportName === 'Customer Ledger Report') {
-      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+      this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
 
       var custAccNo = this.sparesReportForm.get('custAccNo').value;
       if (custAccNo === undefined || custAccNo === '' || custAccNo === null) {
@@ -2981,26 +3048,26 @@ export class SparesReportsComponent implements OnInit {
       }
       const fileName = 'Customer Ledger Report-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {     
-        this.reportService.customerLedger(fromDate,toDate,custAccNo,sessionStorage.getItem('ouId'),deptId)
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.customerLedger(fromDate, toDate, custAccNo, sessionStorage.getItem('ouId'), deptId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           });
       }
-      else if ((Number(sessionStorage.getItem('deptId'))!=4)){
-        this.reportService.customerLedger(fromDate,toDate,custAccNo,sessionStorage.getItem('ouId'),sessionStorage.getItem('deptId'))
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        });
+      else if ((Number(sessionStorage.getItem('deptId')) != 4)) {
+        this.reportService.customerLedger(fromDate, toDate, custAccNo, sessionStorage.getItem('ouId'), sessionStorage.getItem('deptId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          });
       }
     }
     else if (reportName === 'Credit Note Register') {
-      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+      this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
 
-      const fileName = 'Credit Note Register-' +  fromDate + '.xls';
+      const fileName = 'Credit Note Register-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.creditNoteReg(fromDate, toDate,sessionStorage.getItem('ouId'), locId)
+        this.reportService.creditNoteReg(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -3009,7 +3076,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.creditNoteReg(fromDate, toDate, sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'))
+        this.reportService.creditNoteReg(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -3019,28 +3086,28 @@ export class SparesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Eway Bill Report') {
-      var trxNumber= this.sparesReportForm.get('trxNumber').value;
-      if ( trxNumber == undefined || trxNumber ==null || trxNumber==''){
+      var trxNumber = this.sparesReportForm.get('trxNumber').value;
+      if (trxNumber == undefined || trxNumber == null || trxNumber == '') {
         alert('Please Enter Invoice Number.!')
       }
-      const fileName = 'Eway Bill Report-' +  fromDate + '.xls';
+      const fileName = 'Eway Bill Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       this.reportService.EwayBill(trxNumber)
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.isDisabled1 = false;
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-      })
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.isDisabled1 = false;
+          this.closeResetButton = true;
+          this.dataDisplay = ''
+        })
     }
-    else if (reportName ==='IRN Generation Report'){
-      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+    else if (reportName === 'IRN Generation Report') {
+      this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
 
-      const fileName = 'IRN Generation Report-' +  '.xls';
+      const fileName = 'IRN Generation Report-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        var deptId=this.sparesReportForm.get('deptId').value;
-        this.reportService.irnGenerationReport( fromDate,toDate,sessionStorage.getItem('ouId'),locId,deptId)
+        var deptId = this.sparesReportForm.get('deptId').value;
+        this.reportService.irnGenerationReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -3048,24 +3115,8 @@ export class SparesReportsComponent implements OnInit {
             this.dataDisplay = ''
           })
       }
-      else if (Number(sessionStorage.getItem('deptId')) != 4){
-        this.reportService.irnGenerationReport(fromDate,toDate,sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'),sessionStorage.getItem('deptId'))
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.isDisabled1 = false;
-          this.closeResetButton = true;
-          this.dataDisplay = ''
-        })
-      }
-    }
-    else if (reportName ==='Spares Issue Summary-Transaction Wise'){
-      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
-
-      const fileName = 'Spares Issue Summary-Transaction Wise-' +  '.xls';
-      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
-        var deptId=this.sparesReportForm.get('deptId').value;
-        this.reportService.sprIssSummaryReport( fromDate,toDate,sessionStorage.getItem('ouId'),locId,deptId)
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.irnGenerationReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -3073,446 +3124,413 @@ export class SparesReportsComponent implements OnInit {
             this.dataDisplay = ''
           })
       }
-      else if (Number(sessionStorage.getItem('deptId')) != 4){
-        this.reportService.sprIssSummaryReport(fromDate,toDate,sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'),sessionStorage.getItem('deptId'))
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.isDisabled1 = false;
-          this.closeResetButton = true;
-          this.dataDisplay = ''
-        })
-      }
     }
-    else if (reportName==='Spares Zero Stock Report'){
-      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+    else if (reportName === 'Spares Issue Summary-Transaction Wise') {
+      this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
 
-      const fileName = 'Spares Zero Stock Report-' +  fromDate + '.xls';
-      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if ((Number(sessionStorage.getItem('deptId'))===4)){
-        this.reportService.sprZeroStockReport(fromDate,toDate, locId, subInventory)
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.isDisabled1 = false;
-          this.closeResetButton = true;
-          this.dataDisplay = ''
-        })
-      }
-      else if ((Number(sessionStorage.getItem('deptId')))!=4){
-        this.reportService.sprZeroStockReport(fromDate,toDate, sessionStorage.getItem('locId'), subInventory)
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.isDisabled1 = false;
-          this.closeResetButton = true;
-          this.dataDisplay = ''
-        })
-      }
-    }
-    else if (reportName ==='Spares Issue Summary-Average Cost'){
-      this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
-
-      const fileName = 'Spares Issue Summary-Average Cost-' +  '.xls';
+      const fileName = 'Spares Issue Summary-Transaction Wise-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        var deptId=this.sparesReportForm.get('deptId').value;
-        this.reportService.sprIssSummaryAvgCostReport( fromDate,toDate,locId,sessionStorage.getItem('deptId'))
+        var deptId = this.sparesReportForm.get('deptId').value;
+        this.reportService.sprIssSummaryReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
             this.closeResetButton = true;
             this.dataDisplay = ''
           })
-      } else if ((Number(sessionStorage.getItem('deptId'))) !=4){
-        this.reportService.sprIssSummaryAvgCostReport( fromDate,toDate,sessionStorage.getItem('locId'),sessionStorage.getItem('deptId'))
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.isDisabled1 = false;
-          this.closeResetButton = true;
-          this.dataDisplay = ''
-        })
       }
-     
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.sprIssSummaryReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
     }
-    else if (reportName ==='Stock Taking Report - Blank Format'){
+    else if (reportName === 'Spares Zero Stock Report') {
+      this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
+
+      const fileName = 'Spares Zero Stock Report-' + fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if ((Number(sessionStorage.getItem('deptId')) === 4)) {
+        this.reportService.sprZeroStockReport(fromDate, toDate, locId, subInventory)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if ((Number(sessionStorage.getItem('deptId'))) != 4) {
+        this.reportService.sprZeroStockReport(fromDate, toDate, sessionStorage.getItem('locId'), subInventory)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
+    else if (reportName === 'Spares Issue Summary-Average Cost') {
+      this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
+
+      const fileName = 'Spares Issue Summary-Average Cost-' + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        var deptId = this.sparesReportForm.get('deptId').value;
+        this.reportService.sprIssSummaryAvgCostReport(fromDate, toDate, locId, sessionStorage.getItem('deptId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      } else if ((Number(sessionStorage.getItem('deptId'))) != 4) {
+        this.reportService.sprIssSummaryAvgCostReport(fromDate, toDate, sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+
+    }
+    else if (reportName === 'Stock Taking Report - Blank Format') {
       // this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
-      const fileName = 'Stock Taking Report-Blank Format-' +  '.xls';
+      const fileName = 'Stock Taking Report-Blank Format-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      var locId=this.sparesReportForm.get('locId').value;
-      var compileName=this.sparesReportForm.get('compileCode').value;
+      var locId = this.sparesReportForm.get('locId').value;
+      var compileName = this.sparesReportForm.get('compileCode').value;
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-       
-        this.reportService.stockTakingBlankFormatReport( locId,compileName)
+
+        this.reportService.stockTakingBlankFormatReport(locId, compileName)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
             this.closeResetButton = true;
             this.dataDisplay = ''
           })
-      } else if ((Number(sessionStorage.getItem('deptId'))) !=4){
-        this.reportService.stockTakingBlankFormatReport( sessionStorage.getItem('locId'),compileName)
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.isDisabled1 = false;
-          this.closeResetButton = true;
-          this.dataDisplay = ''
-        })
+      } else if ((Number(sessionStorage.getItem('deptId'))) != 4) {
+        this.reportService.stockTakingBlankFormatReport(sessionStorage.getItem('locId'), compileName)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
       }
-     
+
     }
-    else if (reportName ==='Stock Taking Report - Qty Details'){
+    else if (reportName === 'Stock Taking Report - Qty Details') {
       // this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
-      const fileName = 'Stock Taking Report - Qty Details-' +  '.xls';
+      const fileName = 'Stock Taking Report - Qty Details-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      var locId=this.sparesReportForm.get('locId').value;
-      var compileName=this.sparesReportForm.get('compileCode').value;
+      var locId = this.sparesReportForm.get('locId').value;
+      var compileName = this.sparesReportForm.get('compileCode').value;
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.stockTakingQtyReport( locId,compileName)
+        this.reportService.stockTakingQtyReport(locId, compileName)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
             this.closeResetButton = true;
             this.dataDisplay = ''
           })
-      } else if ((Number(sessionStorage.getItem('deptId'))) !=4){
-        this.reportService.stockTakingQtyReport( sessionStorage.getItem('locId'),compileName)
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.isDisabled1 = false;
-          this.closeResetButton = true;
-          this.dataDisplay = ''
-        })
+      } else if ((Number(sessionStorage.getItem('deptId'))) != 4) {
+        this.reportService.stockTakingQtyReport(sessionStorage.getItem('locId'), compileName)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
       }
-     
+
     }
-    else if (reportName ==='Stock Taking - Physical Stock Upload'){
+    else if (reportName === 'Stock Taking - Physical Stock Upload') {
       // this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
-      const fileName = 'SStock Taking - Physical Stock Upload-' +  '.xls';
+      const fileName = 'SStock Taking - Physical Stock Upload-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      var locId=this.sparesReportForm.get('locId').value;
-      var compileName=this.sparesReportForm.get('compileCode').value;
+      var locId = this.sparesReportForm.get('locId').value;
+      var compileName = this.sparesReportForm.get('compileCode').value;
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.stockTakingPhyStockUpldReport( locId,compileName)
+        this.reportService.stockTakingPhyStockUpldReport(locId, compileName)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
             this.closeResetButton = true;
             this.dataDisplay = ''
           })
-      } else if ((Number(sessionStorage.getItem('deptId'))) !=4){
-        this.reportService.stockTakingPhyStockUpldReport( sessionStorage.getItem('locId'),compileName)
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.isDisabled1 = false;
-          this.closeResetButton = true;
-          this.dataDisplay = ''
-        })
+      } else if ((Number(sessionStorage.getItem('deptId'))) != 4) {
+        this.reportService.stockTakingPhyStockUpldReport(sessionStorage.getItem('locId'), compileName)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
       }
-     
+
     }
-    else if (reportName ==='Spares Item Consumption Report'){
-      const fileName = 'Spares Item Consumption Report-' +  '.xls';
+    else if (reportName === 'Spares Item Consumption Report') {
+      const fileName = 'Spares Item Consumption Report-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      var locId=this.sparesReportForm.get('locId').value;
+      var locId = this.sparesReportForm.get('locId').value;
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.spConsumptionReport( fromDate,toDate, locId)
+        this.reportService.spConsumptionReport(fromDate, toDate, locId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
             this.closeResetButton = true;
             this.dataDisplay = ''
           })
-      } else if ((Number(sessionStorage.getItem('deptId'))) !=4){
-        this.reportService.spConsumptionReport(fromDate,toDate, sessionStorage.getItem('locId'))
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.isDisabled1 = false;
-          this.closeResetButton = true;
-          this.dataDisplay = ''
-        })
+      } else if ((Number(sessionStorage.getItem('deptId'))) != 4) {
+        this.reportService.spConsumptionReport(fromDate, toDate, sessionStorage.getItem('locId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
     }
-  }
 
-  else if (reportName==='Receipt-Other Details Report'){
-    const fileName = 'Receipt-Other Details Report-' +  '-TO-' + '.xls';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    if (Number(sessionStorage.getItem('deptId')) === 4) {
-      this.reportService.receiptOtherDetails(fromDate,toDate,sessionStorage.getItem('ouId'),locId)
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.dataDisplay = ''
-          this.closeResetButton = true;
-          this.isDisabled1 = false;
-        })
+    else if (reportName === 'Receipt-Other Details Report') {
+      const fileName = 'Receipt-Other Details Report-' + '-TO-' + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.receiptOtherDetails(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.dataDisplay = ''
+            this.closeResetButton = true;
+            this.isDisabled1 = false;
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.receiptOtherDetails(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.dataDisplay = ''
+            this.closeResetButton = true;
+            this.isDisabled1 = false;
+          })
+      }
     }
-    else if (Number(sessionStorage.getItem('deptId')) != 4) {
-      this.reportService.receiptOtherDetails(fromDate,toDate,sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'))
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.dataDisplay = ''
-          this.closeResetButton = true;
-          this.isDisabled1 = false;
-        })
+    else if (reportName === 'Account Bill Handover Report') {
+      const fileName = 'Receipt-Other Details Report-' + '-TO-' + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.actBillHandoverReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+            this.isDisabled1 = false;
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.actBillHandoverReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+            this.isDisabled1 = false;
+          })
+      }
     }
-  }
-  else if (reportName==='Account Bill Handover Report'){
-    const fileName = 'Receipt-Other Details Report-' +  '-TO-' + '.xls';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    if (Number(sessionStorage.getItem('deptId')) === 4) {
-    this.reportService.actBillHandoverReport(fromDate,toDate,sessionStorage.getItem('ouId'),locId,deptId)
-    .subscribe(data => {
-      saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-      this.closeResetButton = true;
-      this.dataDisplay = ''
-      this.isDisabled1=false;
-    })
-  }
-  else if (Number(sessionStorage.getItem('deptId')) != 4) {
-    this.reportService.actBillHandoverReport(fromDate,toDate,sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'),sessionStorage.getItem('deptId'))
-    .subscribe(data => {
-      saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-      this.closeResetButton = true;
-      this.dataDisplay = ''
-      this.isDisabled1=false;
-    })
-  }
-  }
-  else if (reportName==='Spares Stock Mismatch Report'){
-    const fileName = 'Spares Stock Mismatch Report-' +  '-TO-' + '.pdf';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    if (Number(sessionStorage.getItem('deptId')) === 4) {
-    this.reportService.StockMissMatchFN(fromDate,toDate,subInventory,locId,userName)
-    .subscribe(data => {
-      saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-      this.closeResetButton = true;
-      this.dataDisplay = ''
-      this.isDisabled1=false;
-    })
-  }
-  else if (Number(sessionStorage.getItem('deptId')) != 4) {
-    this.reportService.StockMissMatchFN(fromDate,toDate,subInventory,sessionStorage.getItem('locId'),sessionStorage.getItem('ticketNo'))
-    .subscribe(data => {
-      saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-      this.closeResetButton = true;
-      this.dataDisplay = ''
-      this.isDisabled1=false;
-    })
-  }
-  }
-  else if (reportName === 'Spares Debtor O/S Letter') {
+    else if (reportName === 'Spares Stock Mismatch Report') {
+      const fileName = 'Spares Stock Mismatch Report-' + '-TO-' + '.pdf';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.StockMissMatchFN(fromDate, toDate, subInventory, locId, userName)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+            this.isDisabled1 = false;
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.StockMissMatchFN(fromDate, toDate, subInventory, sessionStorage.getItem('locId'), sessionStorage.getItem('ticketNo'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+            this.isDisabled1 = false;
+          })
+      }
+    }
+    else if (reportName === 'Spares Debtor O/S Letter') {
 
-    this.isDisabled1=false;
-    this.toDateValidation(tDate);if(this.rptValidation==false){return;}
-    var custAccNo = this.sparesReportForm.get('custAccNo').value;
+      this.isDisabled1 = false;
+      this.toDateValidation(tDate); if (this.rptValidation == false) { return; }
+      var custAccNo = this.sparesReportForm.get('custAccNo').value;
 
-    if (custAccNo<=0 || custAccNo==undefined || custAccNo==null ) {
-      custAccNo='';
-        }
-
-
-    var d1= this.sparesReportForm.get('toDate').value;   
-    var tDate1 = this.pipe.transform(d1, 'dd-MMM-y');
-    var locId= this.sparesReportForm.get('locId').value;
-    
-    var spDbAg1= this.sparesReportForm.get('spDbAging1').value;
-    var spDbAg2= this.sparesReportForm.get('spDbAging2').value;
-    var spDbAg3= this.sparesReportForm.get('spDbAging3').value;
-    var spDbAg4= this.sparesReportForm.get('spDbAging4').value;
-
-    if(spDbAg1<0 || spDbAg1==null || spDbAg1==undefined) {this.rptValidation=false;}
-    if(spDbAg2<0 || spDbAg2==null || spDbAg2==undefined) {this.rptValidation=false;}
-    if(spDbAg3<0 || spDbAg3==null || spDbAg3==undefined) {this.rptValidation=false;}
-    if(spDbAg4<0 || spDbAg4==null || spDbAg4==undefined) {this.rptValidation=false;}
-
-    if (spDbAg1 > spDbAg2) {this.rptValidation=false;}
-    else if (spDbAg1 >spDbAg3){this.rptValidation=false;}
-    else if (spDbAg1 > spDbAg4){this.rptValidation=false;}
-    else if (spDbAg2 > spDbAg3){this.rptValidation=false;}
-    else if (spDbAg2 > spDbAg4){this.rptValidation=false;}
-    else if (spDbAg3 > spDbAg4){this.rptValidation=false;}
+      if (custAccNo <= 0 || custAccNo == undefined || custAccNo == null) {
+        custAccNo = '';
+      }
 
 
-  if(this.rptValidation ==false) {this.closeResetButton=true;this.dataDisplay = 'Please check Aging Values.';  return; }
-    this.isDisabled1=true;
-    const fileName = 'Spares Debtor O/S Letter' +  fromDate + '.pdf';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-   
-    if (Number(sessionStorage.getItem('deptId')) === 4) {
-      this.reportService.spDebtorOSLetterFn(tDate1, sessionStorage.getItem('ouId'), locId,custAccNo,deptId,spDbAg1,spDbAg2,spDbAg3,spDbAg4)
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.isDisabled1 = false;
-          this.closeResetButton = true;
-          this.dataDisplay = ''
-        });
+      var d1 = this.sparesReportForm.get('toDate').value;
+      var tDate1 = this.pipe.transform(d1, 'dd-MMM-y');
+      var locId = this.sparesReportForm.get('locId').value;
+
+      var spDbAg1 = this.sparesReportForm.get('spDbAging1').value;
+      var spDbAg2 = this.sparesReportForm.get('spDbAging2').value;
+      var spDbAg3 = this.sparesReportForm.get('spDbAging3').value;
+      var spDbAg4 = this.sparesReportForm.get('spDbAging4').value;
+
+      if (spDbAg1 < 0 || spDbAg1 == null || spDbAg1 == undefined) { this.rptValidation = false; }
+      if (spDbAg2 < 0 || spDbAg2 == null || spDbAg2 == undefined) { this.rptValidation = false; }
+      if (spDbAg3 < 0 || spDbAg3 == null || spDbAg3 == undefined) { this.rptValidation = false; }
+      if (spDbAg4 < 0 || spDbAg4 == null || spDbAg4 == undefined) { this.rptValidation = false; }
+
+      if (spDbAg1 > spDbAg2) { this.rptValidation = false; }
+      else if (spDbAg1 > spDbAg3) { this.rptValidation = false; }
+      else if (spDbAg1 > spDbAg4) { this.rptValidation = false; }
+      else if (spDbAg2 > spDbAg3) { this.rptValidation = false; }
+      else if (spDbAg2 > spDbAg4) { this.rptValidation = false; }
+      else if (spDbAg3 > spDbAg4) { this.rptValidation = false; }
+
+
+      if (this.rptValidation == false) { this.closeResetButton = true; this.dataDisplay = 'Please check Aging Values.'; return; }
+      this.isDisabled1 = true;
+      const fileName = 'Spares Debtor O/S Letter' + fromDate + '.pdf';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.spDebtorOSLetterFn(tDate1, sessionStorage.getItem('ouId'), locId, custAccNo, deptId, spDbAg1, spDbAg2, spDbAg3, spDbAg4)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          });
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.spDebtorOSLetterFn(tDate1, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), custAccNo, deptId, spDbAg1, spDbAg2, spDbAg3, spDbAg4)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
     }
-    else if (Number(sessionStorage.getItem('deptId')) != 4) {
-      this.reportService.spDebtorOSLetterFn(tDate1, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),custAccNo,deptId,spDbAg1,spDbAg2,spDbAg3,spDbAg4)
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.isDisabled1 = false;
-          this.closeResetButton = true;
-          this.dataDisplay = ''
-        })
+    else if (reportName === 'Short Landed Claim Report') {
+      const fileName = 'Short Landed Claim Report' + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.shortLandedClaimReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+            this.isDisabled1 = false;
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.shortLandedClaimReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+            this.isDisabled1 = false;
+          })
+      }
     }
-  }
-  else if (reportName ==='Short Landed Claim Report')
-  {
-   const fileName = 'Short Landed Claim Report' +  '.xls';
-   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-   if (Number(sessionStorage.getItem('deptId')) === 4) {
-   this.reportService.shortLandedClaimReport(fromDate,toDate,sessionStorage.getItem('ouId'),locId,deptId)
-     .subscribe(data => {
-       saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-       this.closeResetButton = true;
-       this.dataDisplay = ''
-       this.isDisabled1=false;
-     })  
-    }  
-    else if (Number(sessionStorage.getItem('deptId')) != 4) {
-      this.reportService.shortLandedClaimReport(fromDate,toDate,sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'),sessionStorage.getItem('deptId'))
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-        this.isDisabled1=false;
-      })  
-    } 
-  }
-  else if (reportName=='Spares Aging Report As of Date'){
-    const fileName = 'Spares Aging Report As of Date' +  '.xls';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    if (Number(sessionStorage.getItem('deptId')) === 4) {
-      this.reportService.sparesAgingReportAsOfDateFn(toDate,locId)
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-        this.isDisabled1=false;
-      })  
+    else if (reportName == 'Spares Aging Report As of Date') {
+      const fileName = 'Spares Aging Report As of Date' + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.sparesAgingReportAsOfDateFn(toDate, locId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+            this.isDisabled1 = false;
+          })
+      }
+      if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.sparesAgingReportAsOfDateFn(toDate, sessionStorage.getItem('locId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+            this.isDisabled1 = false;
+          })
+      }
     }
-    if (Number(sessionStorage.getItem('deptId')) != 4) {
-      this.reportService.sparesAgingReportAsOfDateFn(toDate,sessionStorage.getItem('locId'))
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-        this.isDisabled1=false;
-      })  
+    else if (reportName == 'Spares Daily Report') {
+      const fileName = 'Spares Daily Report' + '.pdf';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.spareDailyReportFn(toDate, locId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+            this.isDisabled1 = false;
+          })
+      }
+      if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.spareDailyReportFn(toDate, sessionStorage.getItem('locId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+            this.isDisabled1 = false;
+          })
+      }
     }
-  }
-  else if (reportName=='Spares Daily Report'){
-    const fileName = 'Spares Daily Report' +  '.pdf';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    if (Number(sessionStorage.getItem('deptId')) === 4) {
-      this.reportService.spareDailyReportFn(toDate,locId)
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-        this.isDisabled1=false;
-      })  
+    else if (reportName == 'Spares Dead Stock-No Consumption-Daywise') {
+      const fileName = 'Spares Dead Stock-No Consumption-Daywise' + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      var subInventory = this.sparesReportForm.get('subInventory').value;
+      var noOfDays = this.sparesReportForm.get('noOfDays').value;
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.spDeadStockNoConsuptionDaywiseFn(sessionStorage.getItem('ouId'), locId, noOfDays, subInventory)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+            this.isDisabled1 = false;
+          })
+      }
+      if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.spDeadStockNoConsuptionDaywiseFn(sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), noOfDays, subInventory)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+            this.isDisabled1 = false;
+          })
+      }
     }
-    if (Number(sessionStorage.getItem('deptId')) != 4) {
-      this.reportService.spareDailyReportFn(toDate,sessionStorage.getItem('locId'))
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-        this.isDisabled1=false;
-      })  
-    }
-  }
-  else if (reportName=='Spares Dead Stock-No Consumption-Daywise'){
-    const fileName = 'Spares Dead Stock-No Consumption-Daywise' +  '.xls';
-    const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    var subInventory = this.sparesReportForm.get('subInventory').value;
-    var noOfDays = this.sparesReportForm.get('noOfDays').value;
-    if (Number(sessionStorage.getItem('deptId')) === 4) {
-      this.reportService.spDeadStockNoConsuptionDaywiseFn(sessionStorage.getItem('ouId'),locId,noOfDays,subInventory)
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-        this.isDisabled1=false;
-      })  
-    }
-    if (Number(sessionStorage.getItem('deptId')) != 4) {
-      this.reportService.spDeadStockNoConsuptionDaywiseFn(sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'),noOfDays,subInventory)
-      .subscribe(data => {
-        saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-        this.closeResetButton = true;
-        this.dataDisplay = ''
-        this.isDisabled1=false;
-      })  
-    }
-  }
     else if (reportName === 'Item Master List') {
-        // alert ('reportName---'+reportName)
-        //itemMasterList
-          var subtp =this.sparesReportForm.get('subTp').value;
-          var maintp =this.sparesReportForm.get('mainTp').value;
+      // alert ('reportName---'+reportName)
+      //itemMasterList
+      var subtp = this.sparesReportForm.get('subTp').value;
+      var maintp = this.sparesReportForm.get('mainTp').value;
 
-           if(maintp==null || maintp == undefined || maintp.trim() == ''){
-            alert ("Please Select [ITEM CATEGORY]");
-            this.closeResetButton = true;
-            this.dataDisplay = ''; return;
-          }
-          
-        const fileName = 'Item Master List-' + sessionStorage.getItem('ouName').trim() + '.xls';
-        // alert (fileName)
-        const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-        if (Number(sessionStorage.getItem('deptId')) === 4) {
-          this.reportService.itemMasterListReport(sessionStorage.getItem('ouId'),maintp,subtp)
-            .subscribe(data => {
-              saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-              this.isDisabled1 = false;
-              this.closeResetButton = true;
-              this.dataDisplay = ''
-            })
-        }
-        else if (Number(sessionStorage.getItem('deptId')) != 4) {
-          this.reportService.itemMasterListReport(sessionStorage.getItem('ouId'),maintp,subtp)
-            .subscribe(data => {
-              saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-              this.isDisabled1 = false;
-              this.closeResetButton = true;
-              this.dataDisplay = ''
-            })
-        }
+      if (maintp == null || maintp == undefined || maintp.trim() == '') {
+        alert("Please Select [ITEM CATEGORY]");
+        this.closeResetButton = true;
+        this.dataDisplay = ''; return;
       }
-   else if (reportName === 'Spares Dead Stock Calculation -SOP') {
-          
-        const fileName = 'Spares Dead Stock Calculation -SOP-' + sessionStorage.getItem('ouName').trim() + '.xls';
-        // alert (fileName)
-        const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-        if (Number(sessionStorage.getItem('deptId')) === 4) {
-          this.reportService.sparesDeadStockCalSOPFn(fromDate,toDate,sessionStorage.getItem('ouId'))
-            .subscribe(data => {
-              saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-              this.isDisabled1 = false;
-              this.closeResetButton = true;
-              this.dataDisplay = ''
-            })
-        }
-        else if (Number(sessionStorage.getItem('deptId')) != 4) {
-          this.reportService.sparesDeadStockCalSOPFn(fromDate,toDate,sessionStorage.getItem('ouId'))
-            .subscribe(data => {
-              saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-              this.isDisabled1 = false;
-              this.closeResetButton = true;
-              this.dataDisplay = ''
-            })
-        }
-      }
-  else if (reportName === 'PartyWise Debtors Outstanding Report') {
-      this.toDateValidation(tDate);if(this.rptValidation==false){return;}
 
-      const fileName = 'PartyWise Debtors Outstanding Report-' +  toDate + '.xls';
+      const fileName = 'Item Master List-' + sessionStorage.getItem('ouName').trim() + '.xls';
+      // alert (fileName)
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.gstSparesPartyOutstandingReport(toDate, locId,sessionStorage.getItem('ouId'))
+        this.reportService.itemMasterListReport(sessionStorage.getItem('ouId'), maintp, subtp)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -3521,23 +3539,22 @@ export class SparesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.gstSparesPartyOutstandingReport(toDate, sessionStorage.getItem('locId'),sessionStorage.getItem('ouId'))
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.isDisabled1 = false;
-          this.closeResetButton = true;
-          this.dataDisplay = ''
-        })
-       }
+        this.reportService.itemMasterListReport(sessionStorage.getItem('ouId'), maintp, subtp)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
     }
+    else if (reportName === 'Spares Dead Stock Calculation -SOP') {
 
-      else if (reportName === 'PartyWise Debtors Advance Report') {
-      this.toDateValidation(tDate);if(this.rptValidation==false){return;}
-
-      const fileName = 'PartyWise Debtors Advance Report-' +  toDate + '.xls';
+      const fileName = 'Spares Dead Stock Calculation -SOP-' + sessionStorage.getItem('ouName').trim() + '.xls';
+      // alert (fileName)
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.gstSparesPartyAdvReport(toDate, locId,sessionStorage.getItem('ouId'))
+        this.reportService.sparesDeadStockCalSOPFn(fromDate, toDate, sessionStorage.getItem('ouId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -3546,23 +3563,22 @@ export class SparesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.gstSparesPartyAdvReport(toDate, sessionStorage.getItem('locId'),sessionStorage.getItem('ouId'))
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.isDisabled1 = false;
-          this.closeResetButton = true;
-          this.dataDisplay = ''
-        })
-       }
+        this.reportService.sparesDeadStockCalSOPFn(fromDate, toDate, sessionStorage.getItem('ouId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
     }
+    else if (reportName === 'PartyWise Debtors Outstanding Report') {
+      this.toDateValidation(tDate); if (this.rptValidation == false) { return; }
 
-     else if (reportName === 'PartyWise Consolidated Receivable Report') {
-      this.toDateValidation(tDate);if(this.rptValidation==false){return;}
-
-      const fileName = 'PartyWise Consolidated Receivable Report-' +  toDate + '.xls';
+      const fileName = 'PartyWise Debtors Outstanding Report-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.gstSparesPartyReceivableReport(toDate, locId,sessionStorage.getItem('ouId'))
+        this.reportService.gstSparesPartyOutstandingReport(toDate, locId, sessionStorage.getItem('ouId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -3571,23 +3587,23 @@ export class SparesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.gstSparesPartyReceivableReport(toDate, sessionStorage.getItem('locId'),sessionStorage.getItem('ouId'))
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.isDisabled1 = false;
-          this.closeResetButton = true;
-          this.dataDisplay = ''
-        })
-       }
+        this.reportService.gstSparesPartyOutstandingReport(toDate, sessionStorage.getItem('locId'), sessionStorage.getItem('ouId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
     }
 
-     else if (reportName === 'PartyWise Detailed Receivable Report') {
-      this.toDateValidation(tDate);if(this.rptValidation==false){return;}
+    else if (reportName === 'PartyWise Debtors Advance Report') {
+      this.toDateValidation(tDate); if (this.rptValidation == false) { return; }
 
-      const fileName = 'PartyWise Detailed Receivable Report-' +  toDate + '.xls';
+      const fileName = 'PartyWise Debtors Advance Report-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.gstSparesPartyDetReceivableReport(toDate, locId,sessionStorage.getItem('ouId'))
+        this.reportService.gstSparesPartyAdvReport(toDate, locId, sessionStorage.getItem('ouId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -3596,23 +3612,76 @@ export class SparesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.gstSparesPartyDetReceivableReport(toDate, sessionStorage.getItem('locId'),sessionStorage.getItem('ouId'))
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.isDisabled1 = false;
-          this.closeResetButton = true;
-          this.dataDisplay = ''
-        })
-       }
+        this.reportService.gstSparesPartyAdvReport(toDate, sessionStorage.getItem('locId'), sessionStorage.getItem('ouId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
+
+    else if (reportName === 'PartyWise Consolidated Receivable Report') {
+      this.toDateValidation(tDate); if (this.rptValidation == false) { return; }
+
+      const fileName = 'PartyWise Consolidated Receivable Report-' + toDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.gstSparesPartyReceivableReport(toDate, locId, sessionStorage.getItem('ouId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.gstSparesPartyReceivableReport(toDate, sessionStorage.getItem('locId'), sessionStorage.getItem('ouId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
+
+    else if (reportName === 'PartyWise Detailed Receivable Report') {
+      this.toDateValidation(tDate); if (this.rptValidation == false) { return; }
+
+      const fileName = 'PartyWise Detailed Receivable Report-' + toDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (custAccNo === null || custAccNo === undefined || custAccNo === '') {
+        custAccNo = '';
+      }
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.gstSparesPartyDetReceivableReport(toDate, locId, sessionStorage.getItem('ouId'), custAccNo)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.gstSparesPartyDetReceivableReport(toDate, sessionStorage.getItem('locId'), sessionStorage.getItem('ouId'), custAccNo)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
     }
 
 
-    }
+  }
 
 
 
   spPurRegDownLoad() {
-    const fileName = 'Purchase-Register-' +  '.xls';
+    const fileName = 'Purchase-Register-' + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.spPurRegDownLoadReport(sessionStorage.getItem('ouId'))
       .subscribe(data => {
@@ -3655,42 +3724,46 @@ export class SparesReportsComponent implements OnInit {
   }
 
 
-  fromToDateValidation(fDate,tDate){
-    this.rptValidation=true;
-   
-    if(fDate==null || fDate == undefined || fDate.trim() == ''){this.rptValidation=false;}
-    if(tDate==null || tDate == undefined || tDate.trim() == ''){this.rptValidation=false;}
+  fromToDateValidation(fDate, tDate) {
+    this.rptValidation = true;
 
-    if (fDate>tDate ) { this.rptValidation=false;}
-    if(this.rptValidation==false) {alert ("Please Check From date / To Date..");
-    this.closeResetButton=true;
-    this.dataDisplay='';
-    this.isDisabled1=false; }
+    if (fDate == null || fDate == undefined || fDate.trim() == '') { this.rptValidation = false; }
+    if (tDate == null || tDate == undefined || tDate.trim() == '') { this.rptValidation = false; }
+
+    if (fDate > tDate) { this.rptValidation = false; }
+    if (this.rptValidation == false) {
+      alert("Please Check From date / To Date..");
+      this.closeResetButton = true;
+      this.dataDisplay = '';
+      this.isDisabled1 = false;
+    }
   }
 
-  toDateValidation(tDate){
-    this.rptValidation=true;
-   
-    if(tDate==null || tDate == undefined || tDate.trim() == ''){this.rptValidation=false;}
+  toDateValidation(tDate) {
+    this.rptValidation = true;
 
-    if(this.rptValidation==false) {alert ("Please Check Date..");
-    this.closeResetButton=true;
-    this.dataDisplay='';
-    this.isDisabled1=false; }
+    if (tDate == null || tDate == undefined || tDate.trim() == '') { this.rptValidation = false; }
+
+    if (this.rptValidation == false) {
+      alert("Please Check Date..");
+      this.closeResetButton = true;
+      this.dataDisplay = '';
+      this.isDisabled1 = false;
+    }
   }
 
 
-  diffDays(dt1,dt2) {
+  diffDays(dt1, dt2) {
     return Math.floor((Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) - Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate())) / (800 * 60 * 60 * 24));
   }
 
-   onOptionsSubType(event){
+  onOptionsSubType(event) {
     // alert("event :"+event);
-        this.service.ItemSubTypeLst(event)
-        .subscribe(
+    this.service.ItemSubTypeLst(event)
+      .subscribe(
         data => {
-        this.ItemSubTypeList = data;
-        console.log(this.ItemSubTypeList);
-      });
-    }
+          this.ItemSubTypeList = data;
+          console.log(this.ItemSubTypeList);
+        });
+  }
 }
