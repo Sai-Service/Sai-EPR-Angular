@@ -101,7 +101,8 @@ export class PaintReportsNewComponent implements OnInit {
   isVisiblePanelOUFromDateToDateSubInv:boolean=false;
   isVisibleItemMaster:boolean=false;
   opUnitId:number;
-  
+  isVisibileIssueCategory :boolean=false;
+
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.paintReportFormNew = this.fb.group({
@@ -457,8 +458,9 @@ export class PaintReportsNewComponent implements OnInit {
       this.isVisiblesparesPaintPanelReport=false;
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv=false;
-            this.isVisiblefromtosubinventory=false;
- this.isVisibleItemMaster=false;
+      this.isVisibileIssueCategory=true;
+      // this.isVisiblefromtosubinventory=false;
+      this.isVisibleItemMaster=false;
 
     }
     else if (reportName === 'gstsparesMiscIssueReceipt') {
