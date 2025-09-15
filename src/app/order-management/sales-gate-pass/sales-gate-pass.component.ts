@@ -75,6 +75,7 @@ export class SalesGatePassComponent implements OnInit {
   regDate: Date;
   isVisiblegatePassDetails: boolean = false;
   isVisiblegatePassVehicleDetails:boolean=false;
+  isVisibleVehicleNumberUpdate:boolean=false;
   isVisibleInsDetails:boolean=false;
   downloadButton=false;
 
@@ -87,6 +88,7 @@ export class SalesGatePassComponent implements OnInit {
   insurerIdName:string;
   insurerSiteName:string;
   isDisabledIns=true;
+  regNo1:string;
 
 
   constructor(private fb: FormBuilder, private router: Router, private router1: ActivatedRoute, private service: MasterService, private orderManagementService: OrderManagementService) {
@@ -126,6 +128,7 @@ export class SalesGatePassComponent implements OnInit {
       insurerSiteId:[],
       insurerIdName:[],
       insurerSiteName:[],
+      regNo1:[],
     })
   }
   ngOnInit(): void {
@@ -211,7 +214,7 @@ export class SalesGatePassComponent implements OnInit {
             this.isVisiblegatePassVehicleDetails=false;
             this.isDisabled2=false;
             // this.isVisibleInsDetails=false;
-
+            
           }
           else if (this.lstcomments.gatePassNo === 0 && this.lstcomments.vehicleNo ==='NA'  ) {
             this.isVisiblegatePassDetails = false;
@@ -224,8 +227,14 @@ export class SalesGatePassComponent implements OnInit {
             this.isVisiblegatePassVehicleDetails=false;
             // this.isVisibleInsDetails=true;
             this.isDisabled2=true;
-
           }
+          // alert(this.lstcomments.vehicleNo +'------'+ data.obj.gatePassNo)
+          if (this.lstcomments.vehicleNo != 'NA' || this.lstcomments.gatePassNo === 0){
+              this.isVisibleVehicleNumberUpdate =true;
+            }
+            if (this.lstcomments.vehicleNo != 'NA' || this.lstcomments.gatePassNo != 0){
+              this.isVisibleVehicleNumberUpdate =false;
+            }
 
         if(this.lstcomments.gatePassNo === 0 && (this.lstcomments.policyNo==undefined || this.lstcomments.policyNo==null || this.lstcomments.policyNo.trim()=='')){ 
           this.isVisiblegatePassDetails = false;
@@ -528,4 +537,21 @@ export class SalesGatePassComponent implements OnInit {
         }
       });
     }
+
+
+exVehicleNoupdate(){
+var regNo =   this.SalesGatepassForm.get('vehicleNo')?.value;  
+var regNo1 =   this.SalesGatepassForm.get('regNo1')?.value;  
+var vin = this.SalesGatepassForm.get('vin')?.value;
+ this.orderManagementService.exVehicleNoUpdate(regNo,vin,regNo1).subscribe((res: any) => {
+        if (res.code === 200) {
+          alert(res.message)
+        }
+        else{
+          alert(res.message)
+        }
+ }
+)
 }
+
+  }

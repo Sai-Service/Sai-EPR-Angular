@@ -1056,7 +1056,14 @@ export class JobCardComponent implements OnInit {
 
       
 
-
+      if (Number(sessionStorage.getItem('roleId'))==10){
+        this.dispButtonStatus=false;
+        this.updateButton=false;
+        this.dispReadyInvoice=false;
+        this.showBodyshopCustomer=false;
+        this.preInvButton=false;
+        this.saveLabButton=false;
+      }
 
 
     this.matStatus = 'No Material';
@@ -1829,11 +1836,6 @@ export class JobCardComponent implements OnInit {
             this.updateButton=false;
             this.importMatButton=false;
           }
-
-
-        
-        
-          // debugger;
           this.jobcardForm.patchValue(this.lstcomments);
 
           this.addonLabDisCol=false;this.addonLabdisP=false;
@@ -1846,16 +1848,7 @@ export class JobCardComponent implements OnInit {
 
           this.jobcardForm.patchValue({disTypeLab :''});
           this.jobcardForm.patchValue({disTypeMat :''});
-
-          // this.jobcardForm.patchValue({disTypeLabAdn :''});
-          // this.jobcardForm.patchValue({disTypeMatAdn :''});
-          // this.jobcardForm.patchValue({disTypeLabCwi :''});
-          // this.jobcardForm.patchValue({disTypeMatCwi :''});
-
-         
           var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
-          // alert('jobCardLabLines length---'+data.jobCardLabLines.length)
-          
             var custLbr1=0;
             var custLbr2=0;
             var custLbr3=0;
@@ -1875,11 +1868,7 @@ export class JobCardComponent implements OnInit {
 
 
           for (let ln=0; ln < data.obj.jobCardLabLines.length; ln++) {
-            // alert('inside loop'+ln)
-            // let selectbilTy = this.billableTyIdList.find(d => d.billableTyId === data.jobCardLabLines[ln].billableTyId);
-          //  alert ("selectbilTy.billableTyId :"+data.jobCardLabLines[ln].billableTyId);
-            // patch.controls[ln].patchValue({ billableTyId: data.jobCardLabLines[ln].billableTyId });
-            
+         
             this.onOptionsplitRatioSelect(ln,data.obj.jobCardLabLines[ln].splitCateId);
             var lbrAmt=(data.obj.jobCardLabLines[ln].totAmt).toFixed(2);
             patch.controls[ln].patchValue({laborAmt:lbrAmt});
@@ -1992,12 +1981,6 @@ export class JobCardComponent implements OnInit {
           var gTotLabEstAmt1=this.lstcomments.labBasicAmt+this.lstcomments.insLabBasicAmt;
           var gTotMatEstAmt1=this.lstcomments.matBasicAmt+this.lstcomments.insMatBasicAmt;
           var gTotEstAmt1=this.lstcomments.totBasicAmt+this.lstcomments.insTotBasicAmt;
-
-
-        // alert ("addon disc %,amt : " + this.lstcomments.addonLabDiscountPer + ","+this.lstcomments.addonLabDiscount)
-
-          // this.addonLabDiscount=this.lstcomments.addonLabDiscount;
-
           this.jobcardForm.patchValue({
 
             gTotLabEstAmt:Math.round((gTotLabEstAmt1+Number.EPSILON)*100)/100, 
@@ -2061,45 +2044,15 @@ export class JobCardComponent implements OnInit {
             
             if(addonTotal >0) {this.addonBillable=true;} else {this.addonBillable=false;}
             if(cwiTotal >0) {this.cwiBillable=true;} else {this.cwiBillable=false;}
-         
-               
-          // var control = this.jobcardForm.get('jobCardLabLines').value;
-          // var totlabtaxamt = 0;
-          // var totlabDiscAmt=0
-          // for (var i = 0; i < control.length; i++) {
-          //     totlabtaxamt = totlabtaxamt + (control[i].basicAmt * control[i].taxPer) / 100;
-          //   }
-
-          // this.labTotAmt=this.labTaxableAmt + totlabtaxamt
-          // this.jobcardForm.patchValue({
-          //   labTotTaxAmt: Math.round((totlabtaxamt+Number.EPSILON)*100)/100,
-          //   labTotAmt: Math.round((this.labTotAmt+Number.EPSILON)*100)/100, 
-          // })
-
-        
-          // var control = this.jobcardForm.get('jobCardMatLines').value;
-          // var totmattaxamt = 0;var totMatDiscAmt=0
-          //  for (var i = 0; i < control.length; i++) {
-          //   totmattaxamt = totmattaxamt + (control[i].basicAmt * control[i].taxPer) / 100;
-          //     }
-
-          // this.matTotAmt= this.matTaxableAmt + totmattaxamt;
-          // this.jobcardForm.patchValue({
-          //   matTotTaxAmt: Math.round((this.matTotAmt+Number.EPSILON)*100)/100,
-          //   matTotAmt: Math.round((this.matTotAmt+Number.EPSILON)*100)/100
-          //  });
-
-
-          // var disTotal = Number(this.lstcomments.labDiscount)+Number(this.lstcomments.matDiscout);   
-          // var itotTxble=Number(this.lstcomments.matTaxableAmt)+Number(this.lstcomments.labTaxableAmt);
-          // var itotTaxAmt=Number(this.lstcomments.labTotTaxAmt)+Number(this.lstcomments.matTotTaxAmt)
-          // var totInvAmt=Number(this.lstcomments.labTotAmt)+Number(this.lstcomments.matTotAmt);
-
-          // this.jobcardForm.patchValue({totDis: Math.round((disTotal+Number.EPSILON)*100)/100}); 
-          // this.jobcardForm.patchValue({totTaxableAmt: Math.round((itotTxble+Number.EPSILON)*100)/100}); 
-          // this.jobcardForm.patchValue({totTaxAmt: Math.round((itotTaxAmt+Number.EPSILON)*100)/100});
-          // this.jobcardForm.patchValue({invTotAmt: Math.round((totInvAmt+Number.EPSILON)*100)/100}); 
-         
+            if (Number(sessionStorage.getItem('roleId'))==10){
+        this.dispButtonStatus=false;
+        this.updateButton=false;
+        this.dispReadyInvoice=false;
+        this.showBodyshopCustomer=false;
+        this.preInvButton=false;
+        this.saveLabButton=false;
+      }
+                 
                
         }
       );
@@ -3795,7 +3748,7 @@ getMessage(msgType:string){
         if(jRegNo==undefined || jRegNo==null || jRegNo.trim()=='') {jRegNo=null} else {jRegNo=jRegNo.toUpperCase();}
         if(jDate==undefined || jDate==null || jDate=='' ) {jDate=null}
         if(jStatus==undefined || jStatus==null || jStatus.trim()=='') {jStatus=null}
-
+        debugger;
 
         if (Number(sessionStorage.getItem('dept')) ===4)  {
           this.serviceService.getJonCardNoSearchOu(jcNum,jDate,jStatus,jRegNo,jOuId)
@@ -3817,7 +3770,7 @@ getMessage(msgType:string){
                 } else {  alert("No Jobcard found for the given criteria...")}
               });
           }
-        
+         
         }
 
         clearSearch() {

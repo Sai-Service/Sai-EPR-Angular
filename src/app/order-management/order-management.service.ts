@@ -284,6 +284,13 @@ getsearchByOrderNo2(orderNumber,customerId,locId): Observable<any> {
   }
 
 
+  exVehicleNoUpdate(regNo,vin,regNo1) {
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + `/VehAddInfo/updateVehicle?regNo=${regNo}&vin=${vin}&cRegNo=${regNo1}`;
+    return this.http.put(url, options);
+  }
 
 
   public countersaleInvFn(orderNumber) {

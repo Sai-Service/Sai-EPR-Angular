@@ -442,6 +442,7 @@ export class PaymentsComponent implements OnInit {
   selPayStatus: any;
   // sel
   paymentdispSearch(docNo, i) {
+    alert(i);
     var arr = this.paymentForm.get('obj1').value;
     var arraybaseNew = this.paymentForm.get('obj1') as FormArray;
     var arraybaseNew1 = arraybaseNew.getRawValue();
@@ -456,7 +457,7 @@ export class PaymentsComponent implements OnInit {
       if (res.code === 200) {
         alert(res.message);
         this.PaymentReturnArr = res.obj;
-        // alert(this.selstatus)
+        // alert(this.selstatus +'------'+arraybaseNew1[i].source)
         if (this.selstatus == 'Y') {
           this.isarPayment = false;
         }
@@ -1139,7 +1140,7 @@ export class PaymentsComponent implements OnInit {
   }
 
   searchByPaymentNo(paymentNo) {
-    // alert('searchPayment----'+paymentNo);
+    alert('searchPayment----'+paymentNo);
     this.displaysiteName = true;
     this.displaysiteAddress = true;
     this.displayname = true;
@@ -1152,7 +1153,7 @@ export class PaymentsComponent implements OnInit {
           this.paymentData = res.obj;
           this.displayDetail = false;
           this.displaystatus = true;
-          // alert(this.paymentData.length+'----this.paymentData.length')
+          // alert(this.paymentData.length+'----this.payment  Data.length')
           for (let i = 0; i < this.paymentData.length; i++) {
             var payLnGrp: FormGroup = this.payHeaderLineDtl();
             this.payHeaderLineDtlArray().push(payLnGrp);

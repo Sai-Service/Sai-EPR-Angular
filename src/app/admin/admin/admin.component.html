@@ -123,6 +123,7 @@
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/ARInvoice']">AR Invoice</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/PaymentAr']">AR Payment</a></li>
+             <!-- <li><a class="dropdown-item" [routerLink]="['/admin/transaction/ReceivableReceipt']">AR Payment New</a></li> -->
           </ul>
         </li>
         </div>
@@ -164,6 +165,20 @@
           <li><a class="dropdown-item" [routerLink]="['/admin/master/WsVehicleMaster']">Vehicle Master WS</a></li>
            <li><a class="dropdown-item" [routerLink]="['/admin/service/WarrantyJobCardCSV']">Warranty Job Card CSV Upload</a></li>
           
+          <li><a class="dropdown-item" [routerLink]="['/admin/service/laborList']">Labor List</a></li>
+        </ul>
+      </li>
+    </div>
+
+       <div [style.display]="isVisibleAdminService ? 'block' : 'none'">
+     <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        Workshop
+      </a>
+        <ul class="dropdown-menu">
+          <!-- <li><a class="dropdown-item" [routerLink]="['/admin/service/JobcardOpening']">JobCard Opening</a></li> -->
+          <li><a class="dropdown-item" [routerLink]="['/admin/service/JobCard']">JobCard</a></li>
           <li><a class="dropdown-item" [routerLink]="['/admin/service/laborList']">Labor List</a></li>
         </ul>
       </li>
@@ -581,6 +596,8 @@
           <!-- <li><a class="dropdown-item" [routerLink]="['/admin/transaction/ARInvoice']">AR Invoice</a></li> -->
           <li><a class="dropdown-item" [routerLink]="['/admin/pump/ARInvoice']">AR Invoice</a></li>
          <li><a class="dropdown-item" [routerLink]="['/admin/transaction/PaymentAr']">AR Payment</a></li>
+         <!-- <li><a class="dropdown-item" [routerLink]="['/admin/transaction/ReceivableReceipt']">AR Payment New</a></li> -->
+         
          <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpMiscTransaction']">Stock Adjustment</a></li>
          <li><a class="dropdown-item" [routerLink]="['/admin/pump/PumpSubinventoryTransfer']">SubInventory Transfer</a></li>
 
