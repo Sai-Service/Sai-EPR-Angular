@@ -585,7 +585,14 @@ export class ServiceReportComponent implements OnInit {
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.isVisiblelocationInput = false;
         this.isVisiblelocationLOV = true;
-        // this.salesReportForm.patchValue({ subInventory: 'SP' })
+      }
+      else {
+        this.isVisiblelocationLOV = false;
+        this.isVisiblelocationInput = true;
+      }
+       if (Number(sessionStorage.getItem('roleId')) === 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
       }
       else {
         this.isVisiblelocationLOV = false;
