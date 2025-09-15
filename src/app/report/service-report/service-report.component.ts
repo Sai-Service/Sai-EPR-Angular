@@ -1325,7 +1325,7 @@ export class ServiceReportComponent implements OnInit {
             this.dataDisplay = ''
         });
     }
-     else if (reportName === '25. Eway challan Print') {
+     else if (reportName === '26. Eway Excel Generation Report') {
       var suppNo = this.serviceReportForm.get('suppCode').value;
       var siteName = this.serviceReportForm.get('siteName').value;
       var dlrCode = this.serviceReportForm.get('dlrCode').value;
@@ -1352,7 +1352,7 @@ export class ServiceReportComponent implements OnInit {
         return;
       }
 
-       const fileName = 'Warranty Claim internal Consumption Report-' + fromDate + '.xls';
+       const fileName = 'Eway Excel Generation Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
      this.reportService.ewayBillChallanReportFuc(locId,suppNo, siteName, dlrCode, challanNo)
           .subscribe(data => {
