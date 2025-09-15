@@ -224,6 +224,22 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleWarrantyClaimDet = false;
       this.isVisiblefromtosubinventory = false;
       this.isVisibleEwayBillChalan = false;
+        if (Number(sessionStorage.getItem('deptId'))==4){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+      if (Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
+       if (Number(sessionStorage.getItem('roleId'))==10){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+     if (Number(sessionStorage.getItem('roleId')) !=10 && Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
     }
     else if (reportName === 'serviceInvNotDelivery') {
       this.reportName = 'Service Invoice Not Delivered';
@@ -239,6 +255,22 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleWarrantyClaimDet = false;
       this.isVisiblefromtosubinventory = false;
       this.isVisibleEwayBillChalan = false;
+        if (Number(sessionStorage.getItem('deptId'))==4){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+      if (Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
+       if (Number(sessionStorage.getItem('roleId'))==10){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+     if (Number(sessionStorage.getItem('roleId')) !=10 && Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
     }
     else if (reportName === 'servicePendingVehicle') {
       this.reportName = 'Service Pending Vehicle Report';
@@ -279,6 +311,21 @@ export class ServiceReportComponent implements OnInit {
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.isVisibleDepartmentList = true;
         this.isVisiblegstsaiDebtors = false;
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+       if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.isVisibleDepartmentList = false;
+        this.isVisiblegstsaiDebtors = true;
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+       }
+
+      if (Number(sessionStorage.getItem('roleId'))==10){
+        this.isVisibleDepartmentList = true;
+        this.isVisiblegstsaiDebtors = false;
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
       }
       this.isVisibleGSTSaleRegister = false;
       this.panelamcHistrory = false;
@@ -1258,7 +1305,9 @@ export class ServiceReportComponent implements OnInit {
           var blob = new Blob([data], { type: 'application/pdf' });
           var url = URL.createObjectURL(blob);
           var printWindow = window.open(url, '', 'width=800,height=500');
-          printWindow.open
+          printWindow.open;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
         });
     }
   }

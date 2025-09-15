@@ -493,6 +493,22 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
+      if (Number(sessionStorage.getItem('deptId'))==4){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+      else{
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=true;
+      }
+       if (Number(sessionStorage.getItem('roleId'))==10){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+      else{
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=true;
+      }
     }
 
     else if (reportName === 'gstsaiDebtors') {
@@ -1087,6 +1103,22 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
+        if (Number(sessionStorage.getItem('deptId'))==4){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+      if (Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
+       if (Number(sessionStorage.getItem('roleId'))==10){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+     if (Number(sessionStorage.getItem('roleId')) !=10 && Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
     }
     else if (reportName === 'sparesSubinvTransMade') {
       this.reportName = 'Sub Inventory Transfer Made Report';
@@ -1118,6 +1150,22 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
+       if (Number(sessionStorage.getItem('deptId'))==4){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+      if (Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
+       if (Number(sessionStorage.getItem('roleId'))==10){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+     if (Number(sessionStorage.getItem('roleId')) !=10 && Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
     }
     else if (reportName === 'internalConsumptionReport') {
       this.reportName = 'Internal Consumption Report';
@@ -1787,6 +1835,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'StockMissMatch') {
+      alert(reportName)
       this.reportName = 'Spares Stock Mismatch Report';
       this.isVisiblegstsaiDebtors = false;
       this.isVisibleGSTPurchaseRegister = false;
@@ -1816,6 +1865,23 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
+      // debugger;
+       if (Number(sessionStorage.getItem('deptId'))==4){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+      if (Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
+       if (Number(sessionStorage.getItem('roleId'))==10){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+     if (Number(sessionStorage.getItem('roleId')) !=10 && Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
     }
     else if (reportName === 'itemMasterList') {
       this.reportName = 'Item Master List';
