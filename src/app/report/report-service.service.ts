@@ -1488,5 +1488,15 @@ challanReportPring(locId,suppNo, siteName, dlrCode, challanNo){
   }); 
 }
 
+
+
+ewayBillChallanReportFuc(locId,suppNo, siteName, dlrCode, challanNo){
+  const REQUEST_URI = this.ServerUrl +`/ServiceReports/EwayExcelGen?locId=${locId}&suppCode=${suppNo}&siteName=${siteName}&dlrCode=${dlrCode}&challanNo=${challanNo}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  }); 
+}
+
 }
 

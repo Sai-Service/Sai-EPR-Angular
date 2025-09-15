@@ -1773,6 +1773,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblespDebtorsReport1 = false;
     }
     else if (reportName === 'spareDailyReport') {
+      // alert(reportName)
       this.reportName = 'Spares Daily Report';
       this.isVisiblegstsaiDebtors = false;
       this.isVisibleGSTPurchaseRegister = false;
@@ -1802,6 +1803,22 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
+       if (Number(sessionStorage.getItem('deptId'))==4){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+      if (Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
+       if (Number(sessionStorage.getItem('roleId'))==10){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+     if (Number(sessionStorage.getItem('roleId')) !=10 && Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
     }
     else if (reportName === 'spDeadStockNoConsuptionDaywise') {
       this.reportName = 'Spares Dead Stock-No Consumption-Daywise';

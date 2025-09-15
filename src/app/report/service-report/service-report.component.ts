@@ -662,6 +662,21 @@ export class ServiceReportComponent implements OnInit {
       this.isVisiblefromtosubinventory = false;
       this.isVisibleEwayBillChalan = true;
     }
+        else if (reportName == 'ewayBillChallanReport') {
+      this.reportName = '26. Eway Excel Generation Report';
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisiblepanelfromtolocation = false;
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisiblepaneltolocation = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleGSTSaleRegister = false;
+      this.panelamcHistrory = false;
+      this.isVisiblepanelfromtoOuId = false;
+      this.isVisiblepanelserviceagingReport = false;
+      this.isVisibleWarrantyClaimDet = false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisibleEwayBillChalan = true;
+    }
   }
 
 
@@ -1309,6 +1324,43 @@ export class ServiceReportComponent implements OnInit {
             this.closeResetButton = true;
             this.dataDisplay = ''
         });
+    }
+     else if (reportName === '25. Eway challan Print') {
+      var suppNo = this.serviceReportForm.get('suppCode').value;
+      var siteName = this.serviceReportForm.get('siteName').value;
+      var dlrCode = this.serviceReportForm.get('dlrCode').value;
+      var challanNo = this.serviceReportForm.get('challanNo').value;
+      var locId = this.serviceReportForm.get('locId').value;
+      if (suppNo == null || suppNo == undefined || suppNo == '') {
+        alert('Please Select Supplier Name.!');
+        return;
+      }
+      if (siteName == null || siteName == undefined || siteName == '') {
+        alert('Please Select Supplier Site Name.!');
+        return;
+      }
+      if (dlrCode == null || dlrCode == undefined || dlrCode == '') {
+        alert('Please Enter Dealer Code.!');
+        return;
+      }
+      if (challanNo == null || challanNo == undefined || challanNo == '') {
+        alert('Please Enter Challan No.!');
+        return;
+      }
+      if (locId == null || locId == undefined || locId == '') {
+        alert('Please Select Location.!');
+        return;
+      }
+
+       const fileName = 'Warranty Claim internal Consumption Report-' + fromDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+     this.reportService.ewayBillChallanReportFuc(locId,suppNo, siteName, dlrCode, challanNo)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
     }
   }
 
