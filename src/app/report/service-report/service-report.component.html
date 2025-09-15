@@ -105,7 +105,7 @@
               <a class="dropdown-item" data-toggle="collapse" href="#panelserviceagingReport" role="tab"
                 (click)="reportDetails('gstsaiDebtorsAsOf')">21. Service Debtor Report As Of</a>
             </li> -->
-             <li>
+            <li>
               <a class="dropdown-item" data-toggle="collapse" href="#panelFromDateToDateOuNameDealerCode" role="tab"
                 (click)="reportDetails('bajajWarrantyClaimDet')">22. Bajaj Warranty Claim Details</a>
             </li>
@@ -967,165 +967,178 @@
     </table>
 
 
-    
-   <table class="center" [style.display]="isVisibleWarrantyClaimDet ? 'block' : 'none'" class="collapse"
-            style="margin-left: 10%;" id="panelFromDateToDateOuNameDealerCode">
+
+    <table class="center" [style.display]="isVisibleWarrantyClaimDet ? 'block' : 'none'" class="collapse"
+      style="margin-left: 10%;" id="panelFromDateToDateOuNameDealerCode">
 
 
-            <table class="center">
-                <tr>
-                    <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;">{{reportName}}</td>
-                </tr>
-            </table>
-            <br>
-            <table class="center">
-                <tr>
-                    <td style="width: 15%" class="LabelFontStyle">&nbsp;From&nbsp;Date&nbsp;:&nbsp;</td>
-                    <td><input type="date" class="form-control" formControlName="fromDate" [(ngModel)]="fromDate"
-                            max="{{minDate | date:'yyyy-MM-dd'}}"></td>
-                    <td style="width: 15%" class="LabelFontStyle">&nbsp;To&nbsp;Date&nbsp;:&nbsp; </td>
-                    <td><input type="date" class="form-control" formControlName="toDate" [(ngModel)]="toDate"
-                            max="{{minDate | date:'yyyy-MM-dd'}}"></td>
-                </tr>
-                <tr>
-                   <td style="width: 15%" class="LabelFontStyle">&nbsp;Dealer&nbsp;Code&nbsp;:&nbsp;</td>
-                     <td><input type="text"  class="form-control" formControlName="dealerCode" ></td>
-                     <td style="width: 15%" class="LabelFontStyle">&nbsp;Orgnization&nbsp;Name&nbsp;:&nbsp;</td>
-                     <td><input type="text" disabled class="form-control" formControlName="OUCode" ></td>
-                </tr>
-            </table>
-            <table class="center">
-                <tr>
-                    <td>
-                        <div *ngIf="closeResetButton; then hList1; else hList2"></div>
-                        <ng-template #hList2>
-                            <div class="d-flex justify-content-center">
-                                <div class="spinner-border text-primary" role="status">
-                                    <span class="sr-only" id="loading"></span>
+      <table class="center">
+        <tr>
+          <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;">{{reportName}}</td>
+        </tr>
+      </table>
+      <br>
+      <table class="center">
+        <tr>
+          <td style="width: 15%" class="LabelFontStyle">&nbsp;From&nbsp;Date&nbsp;:&nbsp;</td>
+          <td><input type="date" class="form-control" formControlName="fromDate" [(ngModel)]="fromDate"
+              max="{{minDate | date:'yyyy-MM-dd'}}"></td>
+          <td style="width: 15%" class="LabelFontStyle">&nbsp;To&nbsp;Date&nbsp;:&nbsp; </td>
+          <td><input type="date" class="form-control" formControlName="toDate" [(ngModel)]="toDate"
+              max="{{minDate | date:'yyyy-MM-dd'}}"></td>
+        </tr>
+        <tr>
+          <td style="width: 15%" class="LabelFontStyle">&nbsp;Dealer&nbsp;Code&nbsp;:&nbsp;</td>
+          <td><input type="text" class="form-control" formControlName="dealerCode"></td>
+          <td style="width: 15%" class="LabelFontStyle">&nbsp;Orgnization&nbsp;Name&nbsp;:&nbsp;</td>
+          <td><input type="text" disabled class="form-control" formControlName="OUCode"></td>
+        </tr>
+      </table>
+      <table class="center">
+        <tr>
+          <td>
+            <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+            <ng-template #hList2>
+              <div class="d-flex justify-content-center">
+                <div class="spinner-border text-primary" role="status">
+                  <span class="sr-only" id="loading"></span>
 
-                                </div>
-                            </div>
-                        </ng-template>
-                        <ng-template #hList1> </ng-template>
-                    </td>
-                    <td class="LabelFontStyle" style="color: blue;">&nbsp;{{this.dataDisplay}}&nbsp; </td>
-                </tr>
-            </table>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template #hList1> </ng-template>
+          </td>
+          <td class="LabelFontStyle" style="color: blue;">&nbsp;{{this.dataDisplay}}&nbsp; </td>
+        </tr>
+      </table>
 
-            <table class="center" style="width: 100%;margin-left: 50%;">
-                <tr>
-                    <td>
-                        <button class="btn-primary" [disabled]="isDisabled1" (click)="reportParameter(reportName)">View
-                            Report</button>
-                    </td>
+      <table class="center" style="width: 100%;margin-left: 50%;">
+        <tr>
+          <td>
+            <button class="btn-primary" [disabled]="isDisabled1" (click)="reportParameter(reportName)">View
+              Report</button>
+          </td>
 
-                </tr>
-            </table>
-        </table>
-
-
-
-        <table class="center" style="margin-left: 10%;" [style.display]="isVisiblefromtosubinventory ? 'block' : 'none'"
-            class="collapse" id="panelfromtosubinventory">
-
-            <table class="center">
-                <tr>
-                    <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;">{{reportName}}</td>
-                </tr>
-            </table>
-            <br>
-
-            <table class="center">
-                <tr>
-                    <td style="width: 15%" class="LabelFontStyle">
-                        &nbsp;From&nbsp;Date&nbsp;:&nbsp;
-                    </td>
-                    <td>
-                        <input type="date" class="form-control" formControlName="fromDate" [(ngModel)]="fromDate"
-                            max="{{minDate | date:'yyyy-MM-dd'}}">
-                    </td>
-                    <td style="width: 15%" class="LabelFontStyle">
-                        &nbsp;To&nbsp;Date&nbsp;:&nbsp;
-                    </td>
-                    <td>
-                        <input type="date" class="form-control" formControlName="toDate" [(ngModel)]="toDate"
-                            max="{{minDate | date:'yyyy-MM-dd'}}">
-                    </td>
-                </tr>
-                <tr>
-                    <td style="width: 15%" class="LabelFontStyle">
-                        &nbsp;Location&nbsp;Code&nbsp;:&nbsp;
-                    </td>
-                    <td [style.display]="isVisiblelocationInput ? 'block' : 'none'">
-                        <input type="text" disabled class="form-control" formControlName="locCode">
-                    </td>
-                    <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
-                        <select formControlName="locCode" id="locCode" class="form-control"
-                            (ngModelChange)='onOptionsLocation($event)'>
-                            <option></option>
-                            <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
-                                {{sc.locCode}}
-                            </option>
-                        </select>
-                        <input disabled hidden type="number" class="form-control" formControlName="locId">
-                    </td>
+        </tr>
+      </table>
+    </table>
 
 
-                    <td style="width: 15%" class="LabelFontStyle">
-                        &nbsp;SubInventory&nbsp;:&nbsp;
-                    </td>
-                    <td>
-                        <input disabled type="text" class="form-control" formControlName="subInventory">
-                    </td>
-                </tr>
-            </table>
 
-            <table class="center">
-                <tr>
-                    <td>
-                        <div *ngIf="closeResetButton; then hList1; else hList2"></div>
-                        <ng-template #hList2>
-                            <div class="d-flex justify-content-center">
-                                <div class="spinner-border text-primary" role="status">
-                                    <span class="sr-only" id="loading"></span>
+    <table class="center" style="margin-left: 10%;" [style.display]="isVisiblefromtosubinventory ? 'block' : 'none'"
+      class="collapse" id="panelfromtosubinventory">
 
-                                </div>
-                            </div>
-                        </ng-template>
-                        <ng-template #hList1> </ng-template>
-                    </td>
-                    <td class="LabelFontStyle" style="color: blue;">&nbsp;{{this.dataDisplay}}&nbsp; </td>
-                </tr>
-            </table>
-            <table class="center">
-            
-                <tr>
-                    <td>
-                        <button class="btn-primary" [disabled]="isDisabled1" (click)="reportParameter(reportName)">View
-                            Report</button>
-                    </td>
-                    <td [style.display]="isVisiblespPurRegDownLoad ? 'block' : 'none'">
-                        <button class="btn-primary" [disabled]="isDisabled1"
-                            (click)="spPurRegDownLoad()">DownLoad</button>
-                    </td>
-                </tr>
-            </table>
-          
-        </table>
+      <table class="center">
+        <tr>
+          <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;">{{reportName}}</td>
+        </tr>
+      </table>
+      <br>
 
-   <table class="center" style="margin-left: 10%;" [style.display]="isVisibleEwayBillChalan ? 'block' : 'none'"
-            class="collapse" id="panelEwayBillChalan">
+      <table class="center">
+        <tr>
+          <td style="width: 15%" class="LabelFontStyle">
+            &nbsp;From&nbsp;Date&nbsp;:&nbsp;
+          </td>
+          <td>
+            <input type="date" class="form-control" formControlName="fromDate" [(ngModel)]="fromDate"
+              max="{{minDate | date:'yyyy-MM-dd'}}">
+          </td>
+          <td style="width: 15%" class="LabelFontStyle">
+            &nbsp;To&nbsp;Date&nbsp;:&nbsp;
+          </td>
+          <td>
+            <input type="date" class="form-control" formControlName="toDate" [(ngModel)]="toDate"
+              max="{{minDate | date:'yyyy-MM-dd'}}">
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 15%" class="LabelFontStyle">
+            &nbsp;Location&nbsp;Code&nbsp;:&nbsp;
+          </td>
+          <td [style.display]="isVisiblelocationInput ? 'block' : 'none'">
+            <input type="text" disabled class="form-control" formControlName="locCode">
+          </td>
+          <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
+            <select formControlName="locCode" id="locCode" class="form-control"
+              (ngModelChange)='onOptionsLocation($event)'>
+              <option></option>
+              <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
+                {{sc.locCode}}
+              </option>
+            </select>
+            <input disabled hidden type="number" class="form-control" formControlName="locId">
+          </td>
 
-            <table class="center">
-                <tr>
-                    <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;">{{reportName}}</td>
-                </tr>
-            </table>
-            <br>
 
-            <table class="center">
-                <tr>
-                    <td style="width: 15%" class="LabelFontStyle">
+          <td style="width: 15%" class="LabelFontStyle">
+            &nbsp;SubInventory&nbsp;:&nbsp;
+          </td>
+          <td>
+            <input disabled type="text" class="form-control" formControlName="subInventory">
+          </td>
+        </tr>
+      </table>
+
+      <table class="center">
+        <tr>
+          <td>
+            <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+            <ng-template #hList2>
+              <div class="d-flex justify-content-center">
+                <div class="spinner-border text-primary" role="status">
+                  <span class="sr-only" id="loading"></span>
+
+                </div>
+              </div>
+            </ng-template>
+            <ng-template #hList1> </ng-template>
+          </td>
+          <td class="LabelFontStyle" style="color: blue;">&nbsp;{{this.dataDisplay}}&nbsp; </td>
+        </tr>
+      </table>
+      <table class="center">
+
+        <tr>
+          <td>
+            <button class="btn-primary" [disabled]="isDisabled1" (click)="reportParameter(reportName)">View
+              Report</button>
+          </td>
+          <td [style.display]="isVisiblespPurRegDownLoad ? 'block' : 'none'">
+            <button class="btn-primary" [disabled]="isDisabled1" (click)="spPurRegDownLoad()">DownLoad</button>
+          </td>
+        </tr>
+      </table>
+
+    </table>
+
+    <table class="center" style="margin-left: 10%;" [style.display]="isVisibleEwayBillChalan ? 'block' : 'none'"
+      class="collapse" id="panelEwayBillChalan">
+
+      <table class="center">
+        <tr>
+          <td class="LabelFontStyle" style="font-size:large ;font-weight:bold ;">{{reportName}}</td>
+        </tr>
+      </table>
+      <br>
+
+      <table class="center">
+        <tr>
+          <td style="width: 15%" class="LabelFontStyle">
+            &nbsp;Location&nbsp;Code&nbsp;:&nbsp;
+          </td>
+          <td>
+            <select formControlName="locCode" id="locCode" class="form-control"
+              (ngModelChange)='onOptionsLocation($event)'>
+              <option></option>
+              <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
+                {{sc.locCode}}
+              </option>
+            </select>
+            <input disabled hidden type="number" class="form-control" formControlName="locId">
+          </td>
+
+          <td style="width: 15%" class="LabelFontStyle">
             &nbsp;Supplier&nbsp;name&nbsp;:&nbsp;
           </td>
 
@@ -1141,64 +1154,63 @@
             <input hidden disabled type="number" class="form-control" formControlName="suppCode">
           </td>
           <td>
-             &nbsp;Supplier&nbsp;Site&nbsp;Name&nbsp;:&nbsp;
+            &nbsp;Supplier&nbsp;Site&nbsp;Name&nbsp;:&nbsp;
           </td>
           <td>
-             <select formControlName="siteName" id="siteName" #myinput data-live-search="true"  class="form-control">
-            <option>--Select--</option>
-            <option *ngFor="let sc of  suppIdList" [ngValue]="sc.siteName"> {{sc.siteName}}</option>
-             </select>
+            <select formControlName="siteName" id="siteName" #myinput data-live-search="true" class="form-control">
+              <option>--Select--</option>
+              <option *ngFor="let sc of  suppIdList" [ngValue]="sc.siteName"> {{sc.siteName}}</option>
+            </select>
           </td>
-                </tr>
-                <tr>
-                    <td style="width: 15%" class="LabelFontStyle">
-                        &nbsp;Dealer&nbsp;Code&nbsp;:&nbsp;
-                    </td>
-                    <td>
-                        <input type="text"  class="form-control" formControlName="dlrCode">
-                    </td>
-                     <td style="width: 15%" class="LabelFontStyle">
-                        &nbsp;Challan&nbsp;No&nbsp;:&nbsp;
-                    </td>
-                    <td>
-                        <input type="text"  class="form-control" formControlName="challanNo">
-                    </td>
-                   
-                </tr>
-            </table>
+        </tr>
+        <tr>
+          <td style="width: 15%" class="LabelFontStyle">
+            &nbsp;Dealer&nbsp;Code&nbsp;:&nbsp;
+          </td>
+          <td>
+            <input type="text" class="form-control" formControlName="dlrCode">
+          </td>
+          <td style="width: 15%" class="LabelFontStyle">
+            &nbsp;Challan&nbsp;No&nbsp;:&nbsp;
+          </td>
+          <td>
+            <input type="text" class="form-control" formControlName="challanNo">
+          </td>
 
-            <table class="center">
-                <tr>
-                    <td>
-                        <div *ngIf="closeResetButton; then hList1; else hList2"></div>
-                        <ng-template #hList2>
-                            <div class="d-flex justify-content-center">
-                                <div class="spinner-border text-primary" role="status">
-                                    <span class="sr-only" id="loading"></span>
+        </tr>
+      </table>
 
-                                </div>
-                            </div>
-                        </ng-template>
-                        <ng-template #hList1> </ng-template>
-                    </td>
-                    <td class="LabelFontStyle" style="color: blue;">&nbsp;{{this.dataDisplay}}&nbsp; </td>
-                </tr>
-            </table>
-            <table class="center">
-            
-                <tr>
-                    <td>
-                        <button class="btn-primary" [disabled]="isDisabled1" (click)="reportParameter(reportName)">View
-                            Report</button>
-                    </td>
-                    <td [style.display]="isVisiblespPurRegDownLoad ? 'block' : 'none'">
-                        <button class="btn-primary" [disabled]="isDisabled1"
-                            (click)="spPurRegDownLoad()">DownLoad</button>
-                    </td>
-                </tr>
-            </table>
-          
-        </table>
+      <table class="center">
+        <tr>
+          <td>
+            <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+            <ng-template #hList2>
+              <div class="d-flex justify-content-center">
+                <div class="spinner-border text-primary" role="status">
+                  <span class="sr-only" id="loading"></span>
+
+                </div>
+              </div>
+            </ng-template>
+            <ng-template #hList1> </ng-template>
+          </td>
+          <td class="LabelFontStyle" style="color: blue;">&nbsp;{{this.dataDisplay}}&nbsp; </td>
+        </tr>
+      </table>
+      <table class="center">
+
+        <tr>
+          <td>
+            <button class="btn-primary" [disabled]="isDisabled1" (click)="reportParameter(reportName)">View
+              Report</button>
+          </td>
+          <td [style.display]="isVisiblespPurRegDownLoad ? 'block' : 'none'">
+            <button class="btn-primary" [disabled]="isDisabled1" (click)="spPurRegDownLoad()">DownLoad</button>
+          </td>
+        </tr>
+      </table>
+
+    </table>
 
   </fieldset>
   <table class="center">

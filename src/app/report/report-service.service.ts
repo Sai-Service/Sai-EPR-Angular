@@ -1480,8 +1480,8 @@ warrantyClaimInternalConsuFuc(fromdate,toDate,locId, subInventory){
   }); 
 }
 
-challanReportPring(suppNo, siteName, dlrCode, challanNo){
-  const REQUEST_URI = this.ServerUrl +`/ServiceReports/EwayChallanPrint?locId=${sessionStorage.getItem('locId')}&suppCode=${suppNo}&siteName=${siteName}&dlrCode=${dlrCode}&challanNo=${challanNo}`;
+challanReportPring(locId,suppNo, siteName, dlrCode, challanNo){
+  const REQUEST_URI = this.ServerUrl +`/ServiceReports/EwayChallanPrint?locId=${locId}&suppCode=${suppNo}&siteName=${siteName}&dlrCode=${dlrCode}&challanNo=${challanNo}`;
   return this.http.get(REQUEST_URI, {
     responseType: 'arraybuffer',
     headers: this.headers,

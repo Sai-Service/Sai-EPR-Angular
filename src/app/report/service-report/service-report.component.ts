@@ -1229,6 +1229,7 @@ export class ServiceReportComponent implements OnInit {
       var siteName = this.serviceReportForm.get('siteName').value;
       var dlrCode = this.serviceReportForm.get('dlrCode').value;
       var challanNo = this.serviceReportForm.get('challanNo').value;
+      var locId = this.serviceReportForm.get('locId').value;
       if (suppNo == null || suppNo == undefined || suppNo == '') {
         alert('Please Select Supplier Name.!');
         return;
@@ -1245,10 +1246,14 @@ export class ServiceReportComponent implements OnInit {
         alert('Please Enter Challan No.!');
         return;
       }
+      if (locId == null || locId == undefined || locId == '') {
+        alert('Please Select Location.!');
+        return;
+      }
 
       const fileName = 'download.pdf';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      this.reportService.challanReportPring(suppNo, siteName, dlrCode, challanNo)
+      this.reportService.challanReportPring(locId,suppNo, siteName, dlrCode, challanNo)
         .subscribe(data => {
           var blob = new Blob([data], { type: 'application/pdf' });
           var url = URL.createObjectURL(blob);
