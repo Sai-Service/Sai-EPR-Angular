@@ -1134,7 +1134,8 @@ style="margin-left: 20%;" id="paintPanelReport">
                           <td style="width: 15%" class="LabelFontStyle">
                               &nbsp;Ship&nbsp;From&nbsp;Location&nbsp;:&nbsp;
                           </td>
-                          <td [style.display]="isVisiblelocationInput ? 'block' : 'none'">
+
+                          <!-- <td [style.display]="isVisiblelocationInput ? 'block' : 'none'">
                               <input type="text" disabled class="form-control" formControlName="locCode">
                           </td>
                           <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
@@ -1148,7 +1149,21 @@ style="margin-left: 20%;" id="paintPanelReport">
                               </select> 
                               <input  disabled hidden type="number" class="form-control" formControlName="locId">
           
-                          </td>
+                          </td> -->
+
+
+                    <td>
+                        <select formControlName="locId" id="locId" [(ngModel)]="locId" class="form-control"
+                            (ngModelChange)='onOptionsLocation($event)'>
+                            <option></option>
+                            <option *ngFor="let sc of  BillShipToList" [ngValue]="sc.locId">
+                            {{sc.locCode}}-{{sc.locName}}
+                            </option>
+                        </select>
+                        <input hidden disabled type="number" class="form-control" formControlName="locId" [(ngModel)]="locId">
+                    </td>
+
+                         
           
                           <td style="width: 15%" class="LabelFontStyle">
                               &nbsp;Ship&nbsp;To&nbsp;Location&nbsp;:&nbsp;
@@ -1233,7 +1248,7 @@ style="margin-left: 20%;" id="paintPanelReport">
                       </tr>
                       <tr>
                           <td style="width: 15%" class="LabelFontStyle">&nbsp;Ship&nbsp;To&nbsp;Location&nbsp;:&nbsp;</td>
-                          <td [style.display]="isVisiblelocationInput ? 'block' : 'none'">
+                          <!-- <td [style.display]="isVisiblelocationInput ? 'block' : 'none'">
                               <input type="text" disabled class="form-control" formControlName="locCode">
                           </td>
                           <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
@@ -1247,7 +1262,18 @@ style="margin-left: 20%;" id="paintPanelReport">
                               </select> 
                               <input  disabled hidden type="number" class="form-control" formControlName="locId">
           
-                          </td>
+                          </td> -->
+
+                    <td>
+                        <select formControlName="locId" id="locId" [(ngModel)]="locId" class="form-control"
+                            (ngModelChange)='onOptionsLocation($event)'>
+                            <option></option>
+                            <option *ngFor="let sc of  BillShipToList" [ngValue]="sc.locId">
+                            {{sc.locCode}}-{{sc.locName}}
+                            </option>
+                        </select>
+                        <input hidden disabled type="number" class="form-control" formControlName="locId" [(ngModel)]="locId">
+                    </td>
           
                           <td style="width: 15%" class="LabelFontStyle">
                               &nbsp;Ship&nbsp;From&nbsp;Location&nbsp;:&nbsp;
