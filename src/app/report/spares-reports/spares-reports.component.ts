@@ -104,6 +104,7 @@ export class SparesReportsComponent implements OnInit {
   isVisibleSparesDeadCalculationSop: boolean = false;
   isVisiblespDebtorsReport: boolean = false;
   isVisiblespDebtorsReport1: boolean = false;
+  isVisibleMumbaiReport:boolean =false;
 
   isDisabled1 = false;
   userName1: string;
@@ -236,6 +237,13 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblelocationLOV = false;
       this.isVisiblelocationInput = true;
       this.dispLocation = false;
+    }
+
+    if( Number(sessionStorage.getItem('ouId')) ===21){
+      this.isVisibleMumbaiReport=true;
+    }
+    if( Number(sessionStorage.getItem('ouId')) !=21){
+     this.isVisibleMumbaiReport=false;  
     }
 
 
@@ -517,7 +525,12 @@ export class SparesReportsComponent implements OnInit {
         this.isVisibleDepartmentList = true;
       }
       this.isVisibleonlyLocationCode = false;
+      if( Number(sessionStorage.getItem('ouId')) ===21){
       this.isVisiblegstsaiDebtors = true;
+      }
+      else{
+        this.isVisiblegstsaiDebtors = false;
+      }
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleStockTransferMadeSummary = false;
       this.isVisibleStockTransferReceivedSummary = false;
@@ -551,7 +564,12 @@ export class SparesReportsComponent implements OnInit {
         this.isVisibleDepartmentList = true;
       }
       this.isVisibleonlyLocationCode = false;
+      if( Number(sessionStorage.getItem('ouId')) ===21){
       this.isVisiblegstsaiDebtors = true;
+      }
+      else{
+        this.isVisiblegstsaiDebtors = false;
+      }
       this.isVisibleStockTransferMadeSummary = false;
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleStockLedger = false;
@@ -1022,7 +1040,12 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
+     if( Number(sessionStorage.getItem('ouId')) ===21){
       this.isVisiblesparesInventoryAging = true;
+     }
+     else{
+        this.isVisiblesparesInventoryAging = false;
+     }
       this.isVisibleSparesDebtorsExecutiveWise = false;
       this.isVisiblefromtosubinventory = false;
       this.isVisiblecustomerLedger = false;
@@ -1543,7 +1566,12 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblecustomerLedger = false;
       this.isVisibleEwayBill = false;
       this.isVisiblepanelStockTaking = false;
+      if( Number(sessionStorage.getItem('ouId')) ===21){
       this.panelspDebtAgByExicutiveSummary = true;
+      }
+      else{
+        this.panelspDebtAgByExicutiveSummary = false;
+      }
       this.isVisibletoDateLoc = false;
       this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
       this.isVisibleStocMadeSummary = false;
@@ -1590,7 +1618,12 @@ export class SparesReportsComponent implements OnInit {
       this.reportName = 'Spares Debtor Report As Of';
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
+      if( Number(sessionStorage.getItem('ouId')) ===21){
       this.isVisiblegstsaiDebtors = true;
+      }
+      else{
+        this.isVisiblegstsaiDebtors = false;
+      }
       this.displayCustAccountNo = false;
       this.isVisibleStockLedger = false;
       this.isVisiblespClosingStockAsOndate = false;
@@ -1681,7 +1714,12 @@ export class SparesReportsComponent implements OnInit {
     }
     else if (reportName === 'spDebtorOSLetter') {
       this.reportName = 'Spares Debtor O/S Letter';
+      if( Number(sessionStorage.getItem('ouId')) ===21){
       this.isVisiblegstsaiDebtors = true;
+      }
+      else{
+        this.isVisiblegstsaiDebtors = false;
+      }
       this.displayCustAccountNo = false;
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
