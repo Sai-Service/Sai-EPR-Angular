@@ -1416,14 +1416,14 @@ export class PaintReportsComponent implements OnInit {
           })
       }
     }
-    else if (reportName === 'Paint Spares Stock Transfer Received Summary Report') {
+    else if (reportName === 'Paint Stock Transfer Received Summary Report') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
       if (tolocId === undefined || tolocId === null ){
         alert('Please Select To Location.!');
         return;
       }
      
-      const fileName = 'Spares Stock Transfer Received Summary Report-' +  fromDate + '.xls';
+      const fileName = 'Paint Stock Transfer Received Summary Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate, locId, tolocId, subInventory)
