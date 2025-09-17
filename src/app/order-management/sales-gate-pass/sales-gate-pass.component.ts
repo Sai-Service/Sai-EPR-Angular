@@ -229,10 +229,11 @@ export class SalesGatePassComponent implements OnInit {
             this.isDisabled2=true;
           }
           // alert(this.lstcomments.vehicleNo +'------'+ data.obj.gatePassNo)
-          if (this.lstcomments.vehicleNo != 'NA' || this.lstcomments.gatePassNo === 0){
+          // debugger;
+          if (this.lstcomments.vehicleNo != 'NA' && this.lstcomments.gatePassNo === 0){
               this.isVisibleVehicleNumberUpdate =true;
             }
-            if (this.lstcomments.vehicleNo != 'NA' || this.lstcomments.gatePassNo != 0){
+            if (this.lstcomments.vehicleNo != 'NA' && this.lstcomments.gatePassNo != 0){
               this.isVisibleVehicleNumberUpdate =false;
             }
 

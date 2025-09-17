@@ -836,10 +836,10 @@ export class PaymentArComponent implements OnInit {
       return;
     }
 
-    if (rcptAmt > 3000000) {
-      alert("RECEIPT AMOUNT :  Should  not above 3000000.");
-      this.paymentArForm.get('paymentAmt')?.reset();
-    }
+    // if (rcptAmt > 3000000) {
+    //   alert("RECEIPT AMOUNT :  Should  not above 3000000.");
+    //   this.paymentArForm.get('paymentAmt')?.reset();
+    // }
 
     if (this.paymentArForm.get('payType')?.value == null || this.paymentArForm.get('payType')?.value == undefined) {
       var paytype = this.paymentArForm.get('payType')?.value;
@@ -867,8 +867,8 @@ export class PaymentArComponent implements OnInit {
             if (paytype === 'RTGS/NEFT') {
 
               var apiAmt = frmRecAmt + Number(data.obj);
-              if (apiAmt > 2000000) {
-                alert("RECEIPT AMT: Should Be Less Than Rs.2000000");
+              if (apiAmt > 20000000) {
+                alert("RECEIPT AMT: Should Be Less Than Rs.20000000");
                 this.paymentArForm.get('paymentAmt')?.reset();
               }
             }
@@ -1099,18 +1099,18 @@ export class PaymentArComponent implements OnInit {
             }
           });
 
-      this.service.gatePassStatusCheck(soNumber)
-        .subscribe(
-          data => {
-            if (data.code === 200) {
-              alert("Gate Pass Already Done for this Order...Cannot Proceed...")
-              this.resetMast()
-            }
+      // this.service.gatePassStatusCheck(soNumber)
+      //   .subscribe(
+      //     data => {
+      //       if (data.code === 200) {
+      //         alert("Gate Pass Already Done for this Order...Cannot Proceed...")
+      //         this.resetMast()
+      //       }
 
-            // if (data.code === 400) {
-            //   alert("Gate Pass Not Done for this Order... Proceed");
-            // }
-          });
+      //       // if (data.code === 400) {
+      //       //   alert("Gate Pass Not Done for this Order... Proceed");
+      //       // }
+      //     });
     }
   };
 
