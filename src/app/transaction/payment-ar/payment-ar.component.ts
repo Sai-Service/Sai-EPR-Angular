@@ -1085,13 +1085,14 @@ export class PaymentArComponent implements OnInit {
 
     var refTp = this.paymentArForm.get('refType').value;
     var customerId = this.paymentArForm.get('customerId').value;
+    var locId = this.paymentArForm.get('locId').value;
     if (customerId === null || customerId === undefined) {
       alert('Please Entered the Customer Account Number.!');
       this.paymentArForm.get('referenceNo').reset();
       return;
     }
     if (refTp === 'Sales-Order') {
-      this.orderManagementService.getsearchByOrderNo2(soNumber, customerId, sessionStorage.getItem('locId'))
+      this.orderManagementService.getsearchByOrderNo2(soNumber, customerId, locId)
         .subscribe(
           data => {
             if (data.code === 400) {
