@@ -1037,6 +1037,7 @@ export class PaintReportsComponent implements OnInit {
     var subInventory = this.paintReportForm.get('subInventory').value;
     var tolocId = this.paintReportForm.get('tolocId').value;
 
+    // alert ("locid :"+ locId  +" ," + tolocId);
    
 
     // alert (locId)
@@ -1359,7 +1360,7 @@ export class PaintReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.stockMadeDetailsReport(fromDate, toDate, sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'), tolocId, subInventory,sessionStorage.getItem('deptId'))
+        this.reportService.stockMadeDetailsReport(fromDate, toDate, sessionStorage.getItem('ouId'),locId, tolocId, subInventory,sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1383,7 +1384,7 @@ export class PaintReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.spstktrfMdSummaryReport(fromDate, toDate, sessionStorage.getItem('locId'), tolocId, subInventory)
+        this.reportService.spstktrfMdSummaryReport(fromDate, toDate, locId, tolocId, subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1407,7 +1408,7 @@ export class PaintReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate, sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'), tolocId, subInventory,sessionStorage.getItem('deptId'))
+        this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate, sessionStorage.getItem('ouId'),locId, tolocId, subInventory,sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1416,14 +1417,14 @@ export class PaintReportsComponent implements OnInit {
           })
       }
     }
-    else if (reportName === 'Paint Spares Stock Transfer Received Summary Report') {
+    else if (reportName === 'Paint Stock Transfer Received Summary Report') {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
       if (tolocId === undefined || tolocId === null ){
         alert('Please Select To Location.!');
         return;
       }
      
-      const fileName = 'Spares Stock Transfer Received Summary Report-' +  fromDate + '.xls';
+      const fileName = 'Paint Stock Transfer Received Summary Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate, locId, tolocId, subInventory)
@@ -1435,7 +1436,7 @@ export class PaintReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate, sessionStorage.getItem('locId'), tolocId, subInventory)
+        this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate, locId, tolocId, subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1789,7 +1790,8 @@ export class PaintReportsComponent implements OnInit {
 
   
   onOptionsLocation(event) {
-    // alert("From Location : "+ event +","+this.paintReportForm.get('locCode').value);
+    // alert("From Location : "+ event );
+      // +","+this.paintReportForm.get('locCode').value)
     this.paintReportForm.patchValue({ locId: event })
     // this.paintReportForm.patchValue({ fromLocId: event })
 
