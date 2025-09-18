@@ -1,1 +1,134 @@
 /* You can add global styles to this file, and also import other style files */
+
+
+.PageHeader {
+  font-size:large;
+  font-weight: bold;
+  margin: 0;
+  height: 10px;
+  font-family: Verdana,Sans-serif, Arial, Helvetica;
+  vertical-align: middle;
+  text-align: center;
+  padding: 2px;
+  color: black;
+  background-image: linear-gradient(#503301, #d88d0b 60%, #e2af57);
+  width: 100%;
+}
+
+
+legend {
+  display: block;
+  padding-inline-start: 1px;
+  padding-inline-end: 1px;
+  border-width: initial;
+  border-style: none;
+  border-color: initial;
+  border-image: initial;
+  width: fit-content;
+}
+
+
+
+
+fieldset {
+  display: block;
+  margin-inline-start: 1px;
+  margin-inline-end: 1px;
+  padding-block-start: 0.35em;
+  padding-inline-start: 0.75em;
+  padding-inline-end: 0.75em;
+  padding-block-end: 0.625em;
+  min-inline-size: min-content;
+  border-width: 2px;
+  border-style: groove;
+  border-color: threedface;
+  border-image: initial;
+}
+
+.RFS legend {
+  font-size: 1em;
+  letter-spacing: 0.05em;
+  color: #000 !important;
+  
+  padding: 2px 5px;
+  background: #fefeff;
+  border-radius: 3px;
+  border: #608cb0 solid 1px;
+}
+
+.RFS {
+  margin: 1px auto;
+  border: 1px solid #608cb0;
+  /* padding-bottom: 10px; */
+  -moz-border-radius-bottomleft: 7px;
+  -moz-border-radius-bottomright: 7px;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 7px;
+  -webkit-border-radius: 7px;
+  border-radius: 3px;
+  min-height: 30px;
+}
+
+
+/* input[readonly]{
+  background-color:lightgreen;
+  color: #000000;
+  font-weight: 200;
+  border: 1px solid rgb(81, 81, 251);
+} */
+
+
+input[type="text"][readonly]{
+  background-color:lightgreen;
+  color: #000000;
+  font-weight: 200;
+  border: 1px solid rgb(81, 81, 251);
+}
+
+
+input[type="date"][readonly]{
+  background-color:lightgreen;
+  color: #000000;
+  font-weight: 200;
+  border: 1px solid rgb(81, 81, 251);
+}
+
+
+select[readonly]{
+  background-color:lightgreen;
+  color: #000000;
+  font-weight: 200;
+  border: 1px solid rgb(81, 81, 251);
+}
+
+.LabelFontStyle {
+  font-family: Verdana,Sans-serif, Arial, Helvetica;
+  font-weight: bolder;
+  color:black;
+  font-size: 12px;
+  text-align: right;
+  vertical-align: middle;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  border-color: Gray;
+  height: 15px;
+}
+
+.LabelFontStyle1:before{
+  content:"*";
+  color:rgb(252, 29, 29);
+}
+
+.LabelFontStyle1 {
+  font-family: Verdana,Sans-serif, Arial, Helvetica;
+  font-weight: bolder;
+  color:#373535;
+  font-size: 12px;
+  text-align: right;
+  vertical-align: middle;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  border-color: Gray;
+  height: 15px;
+  
+}

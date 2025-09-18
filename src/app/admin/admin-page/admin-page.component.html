@@ -1,0 +1,121 @@
+<div class="d-flex" id="wrapper" >
+  <div class="bg-light border-right" id="sidebar-wrapper" >
+    <li class="nav-item dropdown">
+
+      <a class="list-group-item list-group-item-action bg-light"
+        (click)="dashboard()">&nbsp;&nbsp;Dashboard&nbsp;&nbsp;</a>
+    </li>
+
+  
+        <li class="nav-item dropdown">
+          <a class="nav-link" href="#" id="navbarDropdown" role="button" aria-expanded="false" aria-haspopup="true"  data-toggle="dropdown"  data-toggle="modal" data-target="#partSearchPnt">Search Item</a>
+        </li>
+   
+<!-- (click)="vehicleMasterWSIns()" (click)="orderList1()" (click)="LoadModalpnt()"-->
+  
+    <li class="nav-item dropdown" >
+      <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+        aria-haspopup="true"  aria-expanded="false">
+        Vehicle Master WS-INS
+      </a>
+    </li> 
+   
+  
+     <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        Sales&nbsp;Order&nbsp;Transactions
+      </a>
+      <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+      
+     
+           <li>
+           <a class="dropdown-item" routerLink="/admin/salesTransaction/counterSale">Counter Sale Invoice</a>
+        </li>
+        
+       
+      </ul>
+    </li>
+ 
+  
+
+
+
+    <div class="list-group list-group-flush">
+      <!-- <a href="#" class="list-group-item list-group-item-action bg-light">Status</a> -->
+    </div>
+
+
+  
+
+  </div>
+  <div id="page-content-wrapper" style="background-color: white;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom" style="background-image: linear-gradient(to right, #00C9FF, #92FE9D)">
+      <button id="menu-toggle" style="background-image: linear-gradient(to right, #00C9FF, #92FE9D)">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+      </button>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent" >
+
+        <table class="center" style="width: 100%;">
+          <tr>
+            <td style="text-align:center" >
+              <!-- <img id="bajajlogo" src="assets\Saifinal.jpg" style="background-color: white;"> -->
+                <!-- <img id="Saifinal" src="assets/Saifinal.jpg"> -->
+            </td>
+            <td>
+              <table class="center" style="padding-top: 45px;">
+                <tr>
+                  <td>
+                    <table>
+                      <tr>
+                        <td style="font-size: 10px;color: blue;">
+                          User&nbsp;Details&nbsp;&nbsp;:
+                        </td>
+                        <td style="font-size: 10px;color: black;font-weight: bold;">{{ticketNo}}</td>
+                      </tr>
+                    </table>
+                  </td>
+
+                </tr>
+                <tr>
+                  <td colspan="2" style="font-size: 10px;width: 200px;font-weight: bold;"> {{todaysDataTime}}</td>
+                </tr>
+                <tr>
+                  <td><a class="dropdown-item" (click)="close()" style="color: blue;"><u>Logout</u></a></td>
+                </tr>
+
+              </table>
+              </td>
+          </tr>
+         <tr >
+
+                <td class="center" colspan="2">
+                  <table class="center" style="width: 100%;">
+                    <tr >
+                      <td  style="font-size: 11px;color: black;font-weight: bold;font-size:small;">&nbsp;{{loginArray}}</td>
+                      <td style="font-size: 11px;color: blue;font-weight: bold;font-size:small;text-transform: uppercase;">&nbsp;{{locName}}&nbsp;-&nbsp;{{deptName}} -[&nbsp;{{ouName}}&nbsp;]&nbsp;&nbsp;&nbsp;{{locCode}}</td>
+                      <td style="font-size: 10px;color: black; font-weight: bold;">User&nbsp;Name&nbsp;&nbsp;:
+                      </td>
+                      <td style="font-size: 11px;color: blue;font-weight: bold;">{{fullName}}</td>&nbsp;&nbsp;
+               
+                    </tr>
+                  </table>
+                </td>
+
+         </tr>
+        </table>
+       
+      </div>
+    </nav>
+    <router-outlet />
+
+  </div>
+</div>
+<!-- </div> -->
+
+
+

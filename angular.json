@@ -11,30 +11,24 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:application",
+            "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/erp-replica",
+            "outputPath": "dist/erpReplica",
             "index": "src/index.html",
-            "browser": "src/main.ts",
+             "main": "src/main.ts",
             "polyfills": [
               "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
+              "assets": [
+              "src/favicon.ico",
+              "src/assets"
             ],
             "styles": [
               "src/styles.css"
             ],
-            "scripts": [],
-            "server": "src/main.server.ts",
-            "prerender": true,
-            "ssr": {
-              "entry": "server.ts"
-            }
+            "scripts": []
+           
           },
           "configurations": {
             "production": {
@@ -73,7 +67,10 @@
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n"
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+            "options": {
+            "buildTarget": "erpReplica:build:development"
+          }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
@@ -83,11 +80,9 @@
               "zone.js/testing"
             ],
             "tsConfig": "tsconfig.spec.json",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
+             "assets": [
+              "src/favicon.ico",
+              "src/assets"
             ],
             "styles": [
               "src/styles.css"
@@ -97,5 +92,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "cb3a831c-6e33-42c7-a0c3-afbdd2ef0547"
   }
 }
