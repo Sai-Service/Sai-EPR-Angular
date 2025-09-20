@@ -1279,9 +1279,9 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         // window.location.reload();
       } else {
         if (res.code === 400) {
-          alert(res.message + 'res.message');
+          alert(res.message + '---'+res.obj);
           this.CounterSaleOrderBookingForm.reset();
-          this.dataDisplay = ''
+          this.dataDisplay = res.obj;
           this.closeResetButton = true;
         }
       }
