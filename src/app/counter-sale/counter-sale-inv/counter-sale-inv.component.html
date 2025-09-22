@@ -1,0 +1,154 @@
+<form [formGroup]="CounterSaleOrderBookingForm" (ngSubmit)="CounterSaleOrderBooking(CounterSaleOrderBookingForm.value)">
+     <input hidden type="number" class="form-control" formControlName="emplId"  style="width: 40px;">
+    <input hidden class="form-control" formControlName="locCode">
+    <input hidden class="form-control" formControlName="locId">
+    <input hidden class="form-control" formControlName="locationId">
+    <input hidden type="number" class="form-control" formControlName="ouId">
+    <input hidden class="form-control" formControlName="billLocName">
+    <input hidden class="form-control" formControlName="shipLocName">
+    <input hidden class="form-control" formControlName="customerId">
+    
+    <table style="width: 100%;background-color: white;"> 
+        <tr>
+            <td colspan="4" class="PageHeader" style="width: 100%;">
+                &nbsp;Counter&nbsp;Sale&nbsp;Booking&nbsp;
+            </td>
+            <td colspan="2" align="right" style="background-color: #FFE4B5;text-align: right;width: 100%;">
+                &nbsp;Order&nbsp;No&nbsp;&nbsp;
+            </td>
+            <td style="background-color: #FFE4B5;">
+                <input class="form-control" formControlName="orderNumber" style="width: 200px;">
+            </td>
+            <td style="background-color: #FFE4B5;" >
+                <button type="button" class="btn-primary"  [disabled]="isDisabled11" (click)="OrderFind()"><i class="fa fa-search"
+                       aria-hidden="true"></i></button>
+            </td>
+        </tr>
+    </table>
+     <fieldset class="RFS">
+         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Customer
+            Details&nbsp;/&nbsp;
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+                style="width: 10rem;color: white;">
+                Additional&nbsp;Information
+            </button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Additional&nbsp;Details</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="center" style="width: 100%;">
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        State&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input readonly type="text" class="form-control" formControlName="state" style="width: 150px;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        Email&nbsp;ID&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input readonly type="text" class="form-control" formControlName="emailId" style="width: 150px;">
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        Email&nbsp;ID&nbsp;1&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input readonly type="text" class="form-control" formControlName="emailId1" style="width: 150px;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        Date&nbsp;Of&nbsp;Birth&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input readonly type="date" class="form-control" formControlName="birthDate" style="width: 150px;">
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        Wedding&nbsp;Date1&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input readonly type="date" class="form-control" formControlName="weddingDate" style="width: 150px;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        GSTN&nbsp;No&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input readonly type="text" class="form-control" formControlName="gstNo" style="width: 150px;">
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        Pan&nbsp;No&nbsp;:&nbsp;
+                                    </td>
+                                    <td>
+                                        <input readonly type="text" class="form-control" formControlName="panNo" style="width: 150px;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">
+                                        Permanent&nbsp;Add&nbsp;:&nbsp;
+                                    </td>
+                                    <td colspan="4">
+                                        <input readonly type="text" class="form-control"  formControlName="perAdd" style="width: 100%;">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </legend>
+         <table class="center" style="width: 100%;">
+            <tr>
+                <td style="width: 15%" class="LabelFontStyle1">
+                    Customer&nbsp;No&nbsp;:&nbsp;
+                </td>
+                <td>
+                    <input type="number" style="width: 120px;" class="form-control" formControlName="custAccountNo"
+                        (keydown.tab)="accountNoSearch()" #myinput>
+                  
+                    <input type="number" hidden formControlName="creditAmt"  class="form-control" style="width: 120px;">
+                </td>
+                 <td style="width: 15%" class="LabelFontStyle">
+                    Customer&nbsp;Site&nbsp;:&nbsp;
+                </td>
+                   <!-- <div *ngIf="displayCustomerSite; then thenCustomerSite; else elseCustomerSite"></div>
+                <ng-template #thenCustomerSite>
+                    <td>
+                        <select formControlName="name" id="name" class="form-control" style="width: 200px;"
+                            (Change)='onOptionsSelectedcustSiteName($event)'>
+                          
+                            <option *ngFor="let custSite of custSiteList" [value]="custSite.siteName">
+                                {{custSite.siteName}}
+                            </option>
+                        </select>
+                      
+                        <input hidden readonly type="number" class="form-control" formControlName="customerSiteId"  style="width: 160px;">
+                        <input hidden  readonly type="text" class="form-control" formControlName="taxCategoryName" style="width: 160px;">
+                        <input hidden readonly type="text" class="form-control" formControlName="classCodeType" style="width: 160px;">
+                    </td>
+                </ng-template>
+                <ng-template #elseCustomerSite>
+                    <td>
+                        <input readonly type="text" class="form-control" formControlName="name"  style="width: 160px;">
+                        <input hidden readonly type="text" class="form-control" formControlName="taxCategoryName"  style="width: 160px;">
+                    </td>
+                </ng-template> -->
+            </tr>
+         </table>
+     </fieldset>
+     
+</form>

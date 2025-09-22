@@ -8,6 +8,10 @@ const routes: Routes = [{
         path: 'salesTransaction',
         loadChildren: () => import('../sales-transaction/sales-transaction.module').then(mod => mod.SalesTransactionModule)
       },
+      {
+        path: 'counterSale',
+        loadChildren: () => import('../counter-sale/counter-sale.module').then(mod => mod.CounterSaleModule)
+      },
    ]
 }
   

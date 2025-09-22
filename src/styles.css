@@ -132,3 +132,9 @@ select[readonly]{
   height: 15px;
   
 }
+
+
+.btn-primary{
+ background-image: linear-gradient(#503301, #d88d0b 60%, #e2af57);
+ border-color: linear-gradient(#503301, #d88d0b 60%, #e2af57);
+}
