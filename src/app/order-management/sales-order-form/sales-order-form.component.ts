@@ -3544,33 +3544,7 @@ if (Number(sessionStorage.getItem('deptId'))!=4){
           return;
         }
       }
-      // debugger;
-
-
-      // for (let n=0; n < orderLinesNew1.length; n++){
-      // if (orderLinesNew1[n].invType != 'SS_VEHICLE' || orderLinesNew1[n].flowStatusCode != 'INVOICED') {
-      //   alert('hiii')
-      //   alert(orderLinesNew1.length);
-      //     alert(orderLinesNew1[n].invType)
-      //     if (orderLines[k].invType.includes('SS_ADDON') && orderLines[k].flowStatusCode === 'READY FOR INVOICE') {
-      //       alert('First Create Vehicle Invoice!.');
-      //       this.dataDisplay = 'First Create Vehicle Invoice!.....Do not refresh the Page';
-      //       this.isDisabled11 = false;
-      //       this.OrderFind(this.orderNumber)
-      //       return;
-      //     }
-      //   }
-      // }
-
-      // if (orderLines[k].invType != 'SS_VEHICLE' && orderLines[k].invType.includes('SS_ADDON') && orderLines[k].flowStatusCode === 'READY FOR INVOICE') {
-      //   alert('First Create Vehicle Invoice!.');
-      //   this.dataDisplay = 'First Create Vehicle Invoice!.....Do not refresh the Page';
-      //   this.isDisabled11 = false;
-      //   this.OrderFind(this.orderNumber);
-      //   return;
-      // }
-      // || emi === null || emi === undefined || tenure===null || tenure === undefined ||
-      //       downPayment=== null || downPayment === undefined
+      
       if (orderLines[k].flowStatusCode === 'READY FOR INVOICE') {
         // alert(financeType+'---'+financerName)
         if (financeType != 'None') {
@@ -3639,9 +3613,9 @@ if (Number(sessionStorage.getItem('deptId'))!=4){
         this.closeResetButton = true;
       } else {
         if (res.code === 400) {
-          alert(res.message);
+          alert(res.message+'--'+res.obj);
           this.isDisabled11 = false;
-          this.dataDisplay = ''
+          this.dataDisplay = res.obj;
           this.closeResetButton = true;
           // this.SalesOrderBookingForm.reset();
         }

@@ -525,13 +525,14 @@ export class SparesReportsComponent implements OnInit {
         this.isVisibleDepartmentList = true;
       }
       this.isVisibleonlyLocationCode = false;
-      if( Number(sessionStorage.getItem('ouId')) ===21){
-      this.isVisiblegstsaiDebtors = true;
-      }
-      else{
-        this.isVisiblegstsaiDebtors = false;
-      }
+      // if( Number(sessionStorage.getItem('ouId')) ===21){
+      // this.isVisiblegstsaiDebtors = true;
+      // }
+      // else{
+      //   this.isVisiblegstsaiDebtors = false;
+      // }
       this.isVisibleGSTPurchaseRegister = false;
+      this.isVisiblegstsaiDebtors = true;
       this.isVisibleStockTransferMadeSummary = false;
       this.isVisibleStockTransferReceivedSummary = false;
       this.isVisibleStockLedger = false;
@@ -557,6 +558,22 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
+        if (Number(sessionStorage.getItem('deptId'))==4){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+      if (Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
+       if (Number(sessionStorage.getItem('roleId'))==10){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+     if (Number(sessionStorage.getItem('roleId')) !=10 && Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
     }
     else if (reportName === 'gstSprAgingSummary') {
       this.reportName = 'Spares Debtors Aging Report Summary';
@@ -564,13 +581,14 @@ export class SparesReportsComponent implements OnInit {
         this.isVisibleDepartmentList = true;
       }
       this.isVisibleonlyLocationCode = false;
-      if( Number(sessionStorage.getItem('ouId')) ===21){
-      this.isVisiblegstsaiDebtors = true;
-      }
-      else{
-        this.isVisiblegstsaiDebtors = false;
-      }
+      // if( Number(sessionStorage.getItem('ouId')) ===21){
+      // this.isVisiblegstsaiDebtors = true;
+      // }
+      // else{
+      //   this.isVisiblegstsaiDebtors = false;
+      // }
       this.isVisibleStockTransferMadeSummary = false;
+      this.isVisiblegstsaiDebtors = true;
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleStockLedger = false;
       this.isVisiblestockTransfer = false;
@@ -596,6 +614,22 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
+        if (Number(sessionStorage.getItem('deptId'))==4){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+      if (Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
+       if (Number(sessionStorage.getItem('roleId'))==10){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+     if (Number(sessionStorage.getItem('roleId')) !=10 && Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
     }
     else if (reportName === 'gstStockLedger') {
       this.reportName = 'Stock Ledger';
@@ -807,6 +841,22 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
+        if (Number(sessionStorage.getItem('deptId'))==4){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+      if (Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
+       if (Number(sessionStorage.getItem('roleId'))==10){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+     if (Number(sessionStorage.getItem('roleId')) !=10 && Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
     }
     else if (reportName === 'gstSparesBackOrderQty') {
       this.reportName = 'Spares Back Order Qty Report';
@@ -1220,6 +1270,22 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
+       if (Number(sessionStorage.getItem('deptId'))==4){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+      if (Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
+       if (Number(sessionStorage.getItem('roleId'))==10){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+     if (Number(sessionStorage.getItem('roleId')) !=10 && Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
     }
     else if (reportName === 'customerLedger') {
       this.reportName = 'Customer Ledger Report';
@@ -1418,6 +1484,22 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
+       if (Number(sessionStorage.getItem('deptId'))==4){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+      if (Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
+       if (Number(sessionStorage.getItem('roleId'))==10){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+     if (Number(sessionStorage.getItem('roleId')) !=10 && Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
     }
     else if (reportName === 'sparesIssSummaryAvgCost') {
       this.reportName = 'Spares Issue Summary-Average Cost';
@@ -1566,12 +1648,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblecustomerLedger = false;
       this.isVisibleEwayBill = false;
       this.isVisiblepanelStockTaking = false;
-      if( Number(sessionStorage.getItem('ouId')) ===21){
-      this.panelspDebtAgByExicutiveSummary = true;
-      }
-      else{
-        this.panelspDebtAgByExicutiveSummary = false;
-      }
+      this.panelspDebtAgByExicutiveSummary=true;
       this.isVisibletoDateLoc = false;
       this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
       this.isVisibleStocMadeSummary = false;
@@ -1582,6 +1659,22 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
+        if (Number(sessionStorage.getItem('deptId'))==4){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+      if (Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
+       if (Number(sessionStorage.getItem('roleId'))==10){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+     if (Number(sessionStorage.getItem('roleId')) !=10 && Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
     }
     else if (reportName === 'spConsumptionReport') {
       this.reportName = 'Spares Item Consumption Report';
@@ -1618,12 +1711,13 @@ export class SparesReportsComponent implements OnInit {
       this.reportName = 'Spares Debtor Report As Of';
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
-      if( Number(sessionStorage.getItem('ouId')) ===21){
+      // if( Number(sessionStorage.getItem('ouId')) ===21){
+      // this.isVisiblegstsaiDebtors = true;
+      // }
+      // else{
+      //   this.isVisiblegstsaiDebtors = false;
+      // }
       this.isVisiblegstsaiDebtors = true;
-      }
-      else{
-        this.isVisiblegstsaiDebtors = false;
-      }
       this.displayCustAccountNo = false;
       this.isVisibleStockLedger = false;
       this.isVisiblespClosingStockAsOndate = false;
@@ -1649,6 +1743,22 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
+        if (Number(sessionStorage.getItem('deptId'))==4){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+      if (Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
+       if (Number(sessionStorage.getItem('roleId'))==10){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+     if (Number(sessionStorage.getItem('roleId')) !=10 && Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
     }
     else if (reportName === 'receiptOtherDetails') {
       this.reportName = 'Receipt-Other Details Report';
@@ -1714,13 +1824,14 @@ export class SparesReportsComponent implements OnInit {
     }
     else if (reportName === 'spDebtorOSLetter') {
       this.reportName = 'Spares Debtor O/S Letter';
-      if( Number(sessionStorage.getItem('ouId')) ===21){
-      this.isVisiblegstsaiDebtors = true;
-      }
-      else{
-        this.isVisiblegstsaiDebtors = false;
-      }
+      // if( Number(sessionStorage.getItem('ouId')) ===21){
+      // this.isVisiblegstsaiDebtors = true;
+      // }
+      // else{
+      //   this.isVisiblegstsaiDebtors = false;
+      // }
       this.displayCustAccountNo = false;
+      this.isVisiblegstsaiDebtors = true;
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
       this.isVisibleStockLedger = false;
@@ -1747,6 +1858,22 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
+        if (Number(sessionStorage.getItem('deptId'))==4){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+      if (Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
+       if (Number(sessionStorage.getItem('roleId'))==10){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+     if (Number(sessionStorage.getItem('roleId')) !=10 && Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
     }
     else if (reportName === 'shortLandedClaim') {
       this.reportName = 'Short Landed Claim Report';
