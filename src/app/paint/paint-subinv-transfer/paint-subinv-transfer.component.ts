@@ -929,7 +929,6 @@ if (this.lineValidation1) {
 
       this.service
         .subInvTransferSubmit(variants.value)
-
         .subscribe((res: any) => {
           //  var obj=res;
           // sessionStorage.setItem('shipmentNumber',obj[0].shipmentNumber);

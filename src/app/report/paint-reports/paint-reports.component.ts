@@ -551,6 +551,7 @@ export class PaintReportsComponent implements OnInit {
 
      else if (reportName === 'paintReconcillationReport') {
       this.reportName = 'Paint Monthly Recon Report';
+      // this.paintReportForm.patchValue({ locId: '' })
       this.isVisibleGSTPurchaseRegister = false;
       this.isVisibleonlyLocationCode = false;
       this.isVisiblespClosingStockAsOndate=false;
@@ -1957,6 +1958,21 @@ export class PaintReportsComponent implements OnInit {
         console.log(this.ItemSubTypeList);
       });
     }
+
+     validatetoDate(todt) {
+   
+      var x=this.paintReportForm.get('toDate').value;
+      var dt1 = new Date(x);
+        // var date = new Date(), 
+        var  yr = dt1.getFullYear();
+        var mth = dt1.getMonth();
+        var firstDay = new Date(yr, mth, 1);
+        // var lastDay = new Date(yr, mth + 1, 0);
+        this.fromDate = this.pipe.transform(firstDay, 'y-MM-dd');
+        // alert("fromdate: "+this.fromDate);
+
+
+  }
 
    
 
