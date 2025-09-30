@@ -1943,7 +1943,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
           pricingQty = Avalqty;
         }
       }
-
+      // debugger;
       console.log(index);
       var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
       console.log(arrayControl);
@@ -1965,6 +1965,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       var baseAmt = arrayControl[index].unitSellingPrice * pricingQty;
       var disAmt1 = arrayControl[index].disAmt;
       var disPer = arrayControl[index].disPer;
+      alert(disPer)
       if (disPer > 0) {
         disAmt1 = (disPer / 100) * baseAmt;
         (patch.controls[index]).patchValue({
@@ -1982,6 +1983,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       var sum = 0;
       var lineTotAmt = 0;
       // alert(itemId+'---'+ taxCategoryId+'----'+disAmt1+'----'+baseAmt);
+
       this.service.taxCalforItem(itemId, taxCategoryId, disAmt1, baseAmt)
         .subscribe(
           (data: any[]) => {
@@ -2097,11 +2099,11 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               .subscribe(
                 data => {
                   if (data.code === 200) {
-                    debugger;
+                   
                     this.addonDescList = data.obj;
                     for (let i = 0; i < data.obj.length; i++) {
                       var itemtaxCatNm: string = data.obj[i].taxCategoryName;
-                      if (itemtaxCatNm.includes('Sale-I-GST')) {
+                      if (itemtaxCatNm.includes('Sale-Disc-I-GST')) {
                         var mrp = data.obj[0].mrp;
                         (controlinv.controls[k]).patchValue({
                           itemId: data.obj[i].itemId,
@@ -2205,12 +2207,13 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               .subscribe(
                 data => {
                   if (data.code === 200) {
+                    // debugger;
                     this.addonDescList = data.obj; //// item iformation
                     for (let i = 0; i < data.obj.length; i++) {
                       // alert(data.obj.length)
                       var taxCatNm: string = data.obj[i].taxCategoryName;
                       var mrp = data.obj[0].mrp;
-                      if (taxCatNm.includes('Sale-S&C') || taxCatNm.includes('Sales-S&C')) {
+                      if (taxCatNm.includes('Sale-Disc-S&C') ) {
                         (controlinv.controls[k]).patchValue({
                           itemId: data.obj[i].itemId,
                           orderedItem: data.obj[i].description,
@@ -2577,6 +2580,8 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     else {
       var orderLines1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
       var orderLines = orderLines1.getRawValue();
+      console.log(orderLines);
+      
       var custName = this.CounterSaleOrderBookingForm.get('custName').value;
       var walkCustName = this.CounterSaleOrderBookingForm.get('walkCustName').value;
       var walkCustPan = this.CounterSaleOrderBookingForm.get('walkCustPan').value;

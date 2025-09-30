@@ -553,12 +553,12 @@ export class InterStateComponent implements OnInit {
               console.log(data.obj);
               alert(data.obj.length)
               for (let i = 0; i < data.obj.length; i++) {
-                alert(data.obj[0].description)
+                // alert(data.obj[0].description)
                 var taxCatNm: string = data.obj[i].taxCategoryName;
                 // alert(taxCatNm.includes)
                 alert(taxCatNm)
-                if (taxCatNm.includes('S&C-GST')  || taxCatNm.includes('Sales-S&C')) {
-                  alert('in if'+taxCatNm);
+                if (taxCatNm.includes('Sale-Disc-S&C') ) {
+                  // alert('in if'+taxCatNm);
                   (controlinv.controls[k]).patchValue({
                     itemId: data.obj[i].itemId,
                     orderedItem: data.obj[i].description,
@@ -627,7 +627,7 @@ export class InterStateComponent implements OnInit {
                    this.AvailQty(k, select.itemId, 'Item');
                 });
             }
-            else  if (taxCatNm.includes('Sale-I-GST')) {
+            else  if (taxCatNm.includes('Sale-Disc-I-GST')) {
               (controlinv.controls[k]).patchValue({
                 itemId: data.obj[i].itemId,
                 orderedItem: data.obj[i].description,

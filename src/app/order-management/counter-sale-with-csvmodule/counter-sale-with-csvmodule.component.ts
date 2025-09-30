@@ -1673,7 +1673,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
                 this.addonDescList = data.obj;
                 for (let i = 0; i < data.obj.length; i++) {
                   var itemtaxCatNm: string = data.obj[i].taxCategoryName;
-                  if (itemtaxCatNm.includes('Sale-I-GST')) {
+                  if (itemtaxCatNm.includes('Sale-Disc-I-GST')) {
                     alert(itemtaxCatNm);
                     (controlinv.controls[k]).patchValue({
                       itemId: data.obj[i].itemId,
@@ -1753,7 +1753,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
               this.addonDescList = data; //// item iformation
               for (let i = 0; i < data.length; i++) {
                 var taxCatNm: string = data[i].taxCategoryName;
-                if (taxCatNm.includes('Sale-S&C')) {
+                if (taxCatNm.includes('Sale-Disc-S&C')) {
                   (controlinv.controls[k]).patchValue({
                     itemId: data[i].itemId,
                     orderedItem: data[i].description,
@@ -2658,7 +2658,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
                 this.addonDescList = data.obj;
                 for (let i = 0; i < data.obj.length; i++) {
                   var itemtaxCatNm: string = data.obj[i].taxCategoryName;
-                  if (itemtaxCatNm.includes('Sale-I-GST')) {
+                  if (itemtaxCatNm.includes('Sale-Disc-I-GST')) {
                     // alert(itemtaxCatNm);
                     (controlinv.controls[k]).patchValue({
                       itemId: data.obj[i].itemId,
@@ -2739,7 +2739,7 @@ export class CounterSaleWithCSVModuleComponent implements OnInit {
                 this.addonDescList = data.obj; //// item iformation
                 for (let i = 0; i < data.obj.length; i++) {
                   var taxCatNm: string = data.obj[i].taxCategoryName;
-                  if (taxCatNm.includes('Sale-S&C')) {
+                  if (taxCatNm.includes('Sale-Disc-S&C')) {
                     this.orderManagementService.getTaxCategoriesForSales(custtaxCategoryName, data.obj[i].taxPercentage)
                       .subscribe(
                         data1 => {

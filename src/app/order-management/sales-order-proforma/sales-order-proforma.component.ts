@@ -839,7 +839,7 @@ export class SalesOrderProformaComponent implements OnInit {
                   
                   var itemtaxCatNm: string = data.obj[i].taxCategoryName;
                   if(itemtaxCatNm != null){
-                  if (itemtaxCatNm.includes('Sale-I-GST')) {
+                  if (itemtaxCatNm.includes('Sale-Disc-I-GST')) {
                     (controlinv.controls[k]).patchValue({
                       itemId: data.obj[i].itemId,
                       orderedItem: data.obj[i].description,
@@ -900,7 +900,7 @@ export class SalesOrderProformaComponent implements OnInit {
                   // alert(taxCatNm);
                   if (itemType.includes('VEHICLE') === true) {
                     if (taxCatNm != '' && taxCatNm != null) {
-                      if (taxCatNm.includes('Sale-S&C')) {
+                      if (taxCatNm.includes('Sale-Disc-S&C')) {
                         (controlinv.controls[k]).patchValue({
                           itemId: data.obj[i].itemId,
                           orderedItem: data.obj[i].description,
@@ -931,7 +931,7 @@ export class SalesOrderProformaComponent implements OnInit {
                   }
                   else if (itemType.includes('VEHICLE') === false && data.obj[i].isTaxable === 'Y') {
                     // alert('h2')
-                    if (taxCatNm.includes('Sale-S&C')) {
+                    if (taxCatNm.includes('Sale-Disc-S&C')) {
                       (controlinv.controls[k]).patchValue({
                         itemId: data.obj[i].itemId,
                         orderedItem: data.obj[i].description,

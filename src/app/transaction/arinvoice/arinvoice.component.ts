@@ -574,11 +574,11 @@ export class ARInvoiceComponent implements OnInit {
     this.deptId = Number(sessionStorage.getItem('dept'));
     // this.displaytrxDate[0] = true;
     // alert(Number(sessionStorage.getItem('roleId'))===10)
-    if (Number(sessionStorage.getItem('roleId'))===10){
-      this.displaySaveButton=false;
-     this.isDisabledSave = false;
-     this.showApplyButton=false;
-     this.disabledComplete=false;
+    if (Number(sessionStorage.getItem('roleId')) === 10) {
+      this.displaySaveButton = false;
+      this.isDisabledSave = false;
+      this.showApplyButton = false;
+      this.disabledComplete = false;
     }
     if (Number(sessionStorage.getItem('dept')) === 4) {
       this.displayDepartmentList = true;
@@ -1074,20 +1074,20 @@ export class ARInvoiceComponent implements OnInit {
                   }
 
                 });
-                alert(data.obj.class)
+            alert(data.obj.class)
             if (data.obj.class === 'Credit Memo') {
               this.showApplyButton = true;
             }
-            else{
+            else {
               this.showApplyButton = false;
             }
             // debugger;
-            if (Number(sessionStorage.getItem('roleId'))==10){
-            this.displaySaveButton=false;
-            this.isDisabledSave = false;
-            this.showApplyButton=false;
-            this.disabledComplete=false;
-    }
+            if (Number(sessionStorage.getItem('roleId')) == 10) {
+              this.displaySaveButton = false;
+              this.isDisabledSave = false;
+              this.showApplyButton = false;
+              this.disabledComplete = false;
+            }
           }
           else {
             if (data.code === 400) {
@@ -1120,6 +1120,8 @@ export class ARInvoiceComponent implements OnInit {
   onOptionSelectInvoice(event: any) {
     //  alert("-1--"+event.target.value);
     var invtyp = event.target.value
+    alert(invtyp)
+    debugger;
     this.service.arInvoiceList(invtyp).subscribe(
       data => {
         this.invTypeList = data;
@@ -1133,14 +1135,14 @@ export class ARInvoiceComponent implements OnInit {
       alert('Please Select Source Filed.!');
       return;
     }
-    if (invtyp = 'Credit Memo') {
+    if (invtyp == 'Credit Memo') {
       this.displayrefereno = false;
       this.showApplyButton = false;
     }
     else {
       this.displayrefereno = true;
     }
-    
+
   }
 
   onOptionSelectTypClass() {
@@ -1221,7 +1223,7 @@ export class ARInvoiceComponent implements OnInit {
               this.addonDescList = data.obj;
               for (let i = 0; i < data.obj.length; i++) {
                 var itemtaxCatNm: string = data.obj[i].taxCategoryName;
-                if (itemtaxCatNm.includes('Sale-I-GST')) {
+                if (itemtaxCatNm.includes('Sale-Disc-I-GST')) {
                   // alert(itemtaxCatNm);
                   (patch.controls[index]).patchValue({
                     // itemId: data.obj[i].itemId,
@@ -1267,7 +1269,7 @@ export class ARInvoiceComponent implements OnInit {
               // for (let i = 0; i < data.obj.length; i++) {
               var itemtaxCatNm: string = data.obj[0].taxCategoryName;
               // alert(data.obj[0].taxCategoryName+'TAX IN FOR'+itemtaxCatNm+data.obj[0].taxPercentage)
-              if (itemtaxCatNm.includes('Sale-S&C-GST')) {
+              if (itemtaxCatNm.includes('Sale-Disc-S&C')) {
                 // alert(itemtaxCatNm+'--in If'+custaxTaxCatName);
                 (patch.controls[index]).patchValue({
                   // itemId: data.obj[i].itemId,
@@ -1736,8 +1738,8 @@ export class ARInvoiceComponent implements OnInit {
         this.arInvoiceForm.patchValue({ trxNumber: res.obj.trxNumber })
         this.disabledComplete = true;
         this.searchByInvoiceNo(res.obj.trxNumber)
-        if (this.arInvoiceForm.get('name')?.value==='Credit Memo'){
-          this.showApplyButton=false;
+        if (this.arInvoiceForm.get('name')?.value === 'Credit Memo') {
+          this.showApplyButton = false;
         }
         // if ((this.arInvoiceForm.get('class').value) == 'Credit Memo') {
         //   this.isVisibleApply = true;

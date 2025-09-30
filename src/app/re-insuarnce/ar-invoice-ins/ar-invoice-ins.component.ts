@@ -1085,7 +1085,7 @@ export class ArInvoiceInsComponent implements OnInit {
               this.addonDescList = data.obj;
               for (let i = 0; i < data.obj.length; i++) {
                 var itemtaxCatNm: string = data.obj[i].taxCategoryName;
-                if (itemtaxCatNm.includes('Sale-I-GST')) {
+                if (itemtaxCatNm.includes('Sale-Disc-I-GST')) {
                  
                   (patch.controls[index]).patchValue({
                 
@@ -1130,7 +1130,7 @@ export class ArInvoiceInsComponent implements OnInit {
             
               var itemtaxCatNm: string = data.obj[0].taxCategoryName;
              
-              if (itemtaxCatNm.includes('Sale-S&C-GST')) {
+              if (itemtaxCatNm.includes('Sale-Disc-S&C')) {
                
                 (patch.controls[index]).patchValue({
                 
