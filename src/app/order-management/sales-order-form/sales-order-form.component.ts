@@ -928,7 +928,7 @@ export class SalesOrderFormComponent implements OnInit {
                 var taxCatNm: string = data.obj[i].taxCategoryName;
                 if (itemType.includes('VEHICLE') === true) {
                   if (taxCatNm != '' && taxCatNm != null) {
-                    if (taxCatNm.includes('Sale-I-GST')) {
+                    if (taxCatNm.includes('Sale-Disc-I-GST')) {
                       (controlinv.controls[k]).patchValue({
                         itemId: data.obj[i].itemId,
                         orderedItem: data.obj[i].description,
@@ -955,7 +955,7 @@ export class SalesOrderFormComponent implements OnInit {
                 }
                 else if (itemType.includes('VEHICLE') === false && data.obj[i].isTaxable === 'Y') {
                   // alert('h2')
-                  if (taxCatNm.includes('Sale-I-GST')) {
+                  if (taxCatNm.includes('Sale-Disc-I-GST')) {
                     (controlinv.controls[k]).patchValue({
                       itemId: data.obj[i].itemId,
                       orderedItem: data.obj[i].description,
@@ -1003,7 +1003,7 @@ export class SalesOrderFormComponent implements OnInit {
                 var taxCatNm: string = data.obj[i].taxCategoryName;
                 if (itemType.includes('VEHICLE') === true) {
                   if (taxCatNm != '' && taxCatNm != null) {
-                    if (taxCatNm.includes('Sale-S&C')) {
+                    if (taxCatNm.includes('Sale-Disc-S&C')) {
                       (controlinv.controls[k]).patchValue({
                         itemId: data.obj[i].itemId,
                         orderedItem: data.obj[i].description,
@@ -1030,7 +1030,7 @@ export class SalesOrderFormComponent implements OnInit {
                 }
                 else if (itemType.includes('VEHICLE') === false && data.obj[i].isTaxable === 'Y') {
                   // alert('h2')
-                  if (taxCatNm.includes('Sale-S&C')) {
+                  if (taxCatNm.includes('Sale-Disc-S&C')) {
                     (controlinv.controls[k]).patchValue({
                       itemId: data.obj[i].itemId,
                       orderedItem: data.obj[i].description,
@@ -3577,14 +3577,14 @@ if (Number(sessionStorage.getItem('deptId'))!=4){
         if (orderLinesNew1[k].taxCategoryName != null) {
 
           // alert(orderLinesNew1[k].taxCategoryName)
-          if (custTaxCat.includes('S&CGST') && orderLinesNew1[k].taxCategoryName.includes('Sale-I-GST')) {
+          if (custTaxCat.includes('S&CGST') && orderLinesNew1[k].taxCategoryName.includes('Sale-Disc-I-GST')) {
             // alert('Tax Category Is Mismatch..Please Confirm.!');
             this.closeResetButton = true;
             this.progress = 0;
             this.dataDisplay = 'Tax Category Is Mismatch..Please Confirm.!'
             return;
           }
-          else if (custTaxCat.includes('IGST') && orderLinesNew1[k].taxCategoryName.includes('S&C-GST')) {
+          else if (custTaxCat.includes('IGST') && orderLinesNew1[k].taxCategoryName.includes('Sale-Disc-S&C')) {
             alert('Tax Category Is Mismatch..Please Confirm.!');
             this.closeResetButton = true;
             this.progress = 0;

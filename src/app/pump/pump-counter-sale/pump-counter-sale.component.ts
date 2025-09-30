@@ -2111,7 +2111,7 @@ export class PumpCounterSaleComponent implements OnInit {
                     this.addonDescList = data.obj;
                     for (let i = 0; i < data.obj.length; i++) {
                       var itemtaxCatNm: string = data.obj[i].taxCategoryName;
-                      if (itemtaxCatNm.includes('Sale-I-GST')) {
+                      if (itemtaxCatNm.includes('Sale-Disc-I-GST')) {
                         // alert(itemtaxCatNm);
                         var mrp = data.obj[0].mrp;
                         (controlinv.controls[k]).patchValue({
@@ -2214,7 +2214,7 @@ export class PumpCounterSaleComponent implements OnInit {
                       // alert(data.obj.length)
                       var taxCatNm: string = data.obj[i].taxCategoryName;
                       var mrp = data.obj[0].mrp;
-                      if (taxCatNm.includes('Sale-S&C') || taxCatNm.includes('Sales-S&C')) {
+                      if (taxCatNm.includes('Sale-Disc-S&C') ) {
                         (controlinv.controls[k]).patchValue({
                           itemId: data.obj[i].itemId,
                           orderedItem: data.obj[i].description,

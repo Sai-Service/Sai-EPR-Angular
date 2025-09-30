@@ -815,7 +815,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
                   for (let i = 0; i < data.obj.length; i++) {
                     var itemtaxCatNm: string = data.obj[i].taxCategoryName;
                     var mrp = Math.round(((data.obj[0].mrp) + Number.EPSILON) * 100) / 100;
-                    if (itemtaxCatNm.includes('Sale-I-GST')) {
+                    if (itemtaxCatNm.includes('Sale-Disc-I-GST')) {
                       // alert(itemtaxCatNm);
                       (controlinv.controls[k]).patchValue({
                         itemId: data.obj[i].itemId,
@@ -856,7 +856,7 @@ export class CounterSalePerformaInvComponent implements OnInit {
                   for (let i = 0; i < data.obj.length; i++) {
                     var taxCatNm: string = data.obj[i].taxCategoryName;
                     var mrp = Math.round(((data.obj[0].mrp) + Number.EPSILON) * 100) / 100;
-                    if (taxCatNm.includes('Sale-S&C')|| taxCatNm.includes('Sales-S&C')) {
+                    if (taxCatNm.includes('Sale-Disc-S&C')) {
                       (controlinv.controls[k]).patchValue({
                         itemId: data.obj[i].itemId,
                         orderedItem: data.obj[i].description,

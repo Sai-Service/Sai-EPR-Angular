@@ -1420,7 +1420,7 @@
                             <!-- <td> <button type="butt on" class="btn btn-primary" (click)="Save()" style="width: 8rem;">Save</button></td> -->
                             <div *ngIf="displaySaveButton; then thenBlock1; else elseBlock1"></div>
                             <ng-template #thenBlock1>
-                                
+
                                 <td> <button type="button" class="btn btn-primary" (click)="Save()"
                                         [disabled]="isDisabledSave" style="width: 8rem;">Save</button></td>
 
@@ -1917,7 +1917,7 @@
                                             (click)="validateSave()">Validate</button>
                                     </ng-template>
 
-                                    <div *ngIf="applySaveButton ,then appSaveYes; else appSaveNo" ></div>
+                                    <div *ngIf="applySaveButton ,then appSaveYes; else appSaveNo"></div>
                                     <ng-template #appSaveYes>
                                         <button style="width: 8em;" type="button" class="btn btn-info"
                                             (click)="SaveApplyCreditMemo()">Save</button>

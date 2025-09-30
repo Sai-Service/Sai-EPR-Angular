@@ -853,7 +853,7 @@ paymentType;
                 this.addonDescList = data.obj;
                 for (let i = 0; i < data.obj.length; i++) {
                   var itemtaxCatNm: string = data.obj[i].taxCategoryName;
-                  if (itemtaxCatNm.includes('Sale-I-GST')) {
+                  if (itemtaxCatNm.includes('Sale-Disc-I-GST')) {
                     (controlinv.controls[k]).patchValue({
                       itemId: data.obj[i].itemId,
                       orderedItem: data.obj[i].description,
@@ -895,7 +895,7 @@ paymentType;
                   // alert(taxCatNm);
                   if (itemType.includes('VEHICLE') === true) {
                     if (taxCatNm != '' && taxCatNm != null) {
-                      if (taxCatNm.includes('Sale-S&C')) {
+                      if (taxCatNm.includes('Sale-Disc-S&C')) {
                         (controlinv.controls[k]).patchValue({
                           itemId: data.obj[i].itemId,
                           orderedItem: data.obj[i].description,
@@ -926,7 +926,7 @@ paymentType;
                   }
                   else if (itemType.includes('VEHICLE') === false && data.obj[i].isTaxable === 'Y') {
                     // alert('h2')
-                    if (taxCatNm.includes('Sale-S&C')) {
+                    if (taxCatNm.includes('Sale-Disc-S&C')) {
                       (controlinv.controls[k]).patchValue({
                         itemId: data.obj[i].itemId,
                         orderedItem: data.obj[i].description,
