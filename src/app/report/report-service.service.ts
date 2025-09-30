@@ -68,6 +68,8 @@ export class ReportServiceService {
     });
   }
 
+ 
+
   panelConsuptionReFn(fromDate,toDate, locId){
     // alert(locId+'-----'+tolocId)
     const REQUEST_URI = this.ServerUrl +`/PaintReports/PanelConsRep?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
@@ -108,12 +110,34 @@ export class ReportServiceService {
     });
   }
 
+   spstktrfMdSummaryReportPaint(invcDt1,invcDt4,locId,tolocId,subInvCode,ouId){
+    // alert(locId+'-----'+tolocId)
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprStkTrfMadeSummary?fromDate=${invcDt1}&toDate=${invcDt4}&ouId=${ouId}&fromLoc=${locId}&toLoc=${tolocId}&subInvCode=${subInvCode}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+
+// http://localhost:8081/SparesReports/SprStkTrfMadeSummary?fromDate=01-Sep-2025&toDate=17-Sep-2025&ouId=16&fromLoc=&toLoc=&subInvCode=PN
+  }
+
+    SprStkTrfRecdSummaryReportPaint(invcDt1,invcDt4,tolocId,fromlocId,subInvCode,ouId){
+    // alert(locId+'-----'+fromlocId)
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprStkTrfRecdSummary?fromDate=${invcDt1}&toDate=${invcDt4}&ouId=${ouId}&shipToLoc=${tolocId}&shipFromLoc=${fromlocId}&subInvCode=${subInvCode}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+// http://localhost:8081/SparesReports/SprStkTrfRecdSummary?fromDate=01-Sep-2025&toDate=17-Sep-2025&ouId=16&shipToLoc=&shipFromLoc=&subInvCode=PN
+   }
+
   saleProformaSummary(fromDate, toDate, locId){
     const REQUEST_URI = this.ServerUrl +`/SalesReports/SaleProformaReg?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
     });
+
   }
 
   saleqtyChartForVh(fromDate, toDate, locId){
