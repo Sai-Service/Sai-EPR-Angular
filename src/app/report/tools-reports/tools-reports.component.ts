@@ -155,8 +155,8 @@ export class ToolsReportsComponent implements OnInit {
     this.toolsReportForm.patchValue({ locId: Number(sessionStorage.getItem('locId')) })
     this.toolsReportForm.patchValue({ OUCode: sessionStorage.getItem('ouId') + '-' + sessionStorage.getItem('ouName') })
     this.toolsReportForm.patchValue({ locCode: sessionStorage.getItem('locId') + '-' + sessionStorage.getItem('locName') })
-    this.toolsReportForm.patchValue({ department: 'DP' });
-    this.toolsReportForm.patchValue({ deptId: 3 })
+    this.toolsReportForm.patchValue({ department: 'Spares' });
+    this.toolsReportForm.patchValue({ deptId: 5 })
     // this.toolsReportForm.patchValue({ divisionId: sessionStorage.getItem('divisionId') })
 
     
