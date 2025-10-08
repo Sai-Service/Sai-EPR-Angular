@@ -131,6 +131,19 @@ export class ReportServiceService {
 // http://localhost:8081/SparesReports/SprStkTrfRecdSummary?fromDate=01-Sep-2025&toDate=17-Sep-2025&ouId=16&shipToLoc=&shipFromLoc=&subInvCode=PN
    }
 
+    ReconcillationReportPaint(dt1,dt2,locId,ouId){
+    // alert(locId+'-----'+fromlocId)
+    const REQUEST_URI = this.ServerUrl +`/PaintReports/PnMonthlyDtlsRep?fromDate=${dt1}&toDate=${dt2}&ouId=${ouId}&locId=${locId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+    // http://localhost:8081/PaintReports/PnMonthlyDtlsRep?fromDate=01-SEP-2025&toDate=30-SEP-2025&ouId=11&locId=
+   }
+
+
+
+
   saleProformaSummary(fromDate, toDate, locId){
     const REQUEST_URI = this.ServerUrl +`/SalesReports/SaleProformaReg?fromDate=${fromDate}&toDate=${toDate}&locId=${locId}`;
     return this.http.get(REQUEST_URI, {

@@ -26,6 +26,10 @@ export class PaintReportsComponent implements OnInit {
   public minDate = new Date();
   fromDate = this.pipe.transform(Date.now(), 'y-MM-dd');
   toDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+
+ 
+
+
   OUCode: string;
   locCode: string;
   locCode1: number;
@@ -100,6 +104,7 @@ export class PaintReportsComponent implements OnInit {
   isVisiblecustomerLedger:boolean=false;
   isVisibleEwayBill:boolean=false;
   isVisiblepanelStockTaking=false;
+  isVisiblePaintReconReport=false;
   isDisabled1 = false;
   userName1:string;
   dispLocation:boolean=true;
@@ -159,9 +164,18 @@ export class PaintReportsComponent implements OnInit {
     this.paintReportForm.patchValue({ department: 'DP' });
     this.paintReportForm.patchValue({ deptId: 3 })
     // this.paintReportForm.patchValue({ divisionId: sessionStorage.getItem('divisionId') })
-
-    
     // this.paintReportForm.patchValue({ locId: Number(sessionStorage.getItem('locId')) })
+
+
+     var  firstDayOfMonth = new Date(this.now.getFullYear(), this.now.getMonth(), 1);
+     var  lastDayOfMonth = new Date(this.now.getFullYear(), this.now.getMonth() + 1, 0);
+      this.fromDate=this.pipe.transform(firstDayOfMonth, 'y-MM-dd');
+
+    // var date = new Date(), yr = date.getFullYear(), mth = date.getMonth();
+    // var firstDay = new Date(yr, mth, 1);
+    // var lastDay = new Date(yr, mth + 1, 0);
+    // this.startDt = this.pipe.transform(firstDay, 'y-MM-dd');
+
 
     // Prevent closing from click inside dropdown
     $(document).on('click', '.dropdown-menu', function (e) {
@@ -300,6 +314,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory=false;
       this.isVisiblePaintPanelDetailReport=false;
       this.isVisibleonlyOuCodeSubInv=false;
+      this.isVisiblePaintReconReport=false;
 
 
     }
@@ -329,6 +344,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory=false;
       this.isVisiblePaintPanelDetailReport=false;
       this.isVisibleonlyOuCodeSubInv=false;
+      this.isVisiblePaintReconReport=false;
 
 
     }
@@ -360,6 +376,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory=false;
       this.isVisiblePaintPanelDetailReport=false;
       this.isVisibleonlyOuCodeSubInv=false;
+      this.isVisiblePaintReconReport=false;
 
 
     }
@@ -388,6 +405,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory=false;
       this.isVisiblePaintPanelDetailReport=false;
       this.isVisibleonlyOuCodeSubInv=false;
+      this.isVisiblePaintReconReport=false;
 
 
 
@@ -415,6 +433,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory=false;
       this.isVisiblePaintPanelDetailReport=false;
       this.isVisibleonlyOuCodeSubInv=false;
+      this.isVisiblePaintReconReport=false;
 
 
 
@@ -443,6 +462,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory=false;
       this.isVisiblePaintPanelDetailReport=false;
       this.isVisibleonlyOuCodeSubInv=false;
+      this.isVisiblePaintReconReport=false;
 
 
     }
@@ -470,6 +490,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory=false;
       this.isVisiblePaintPanelDetailReport=false;
       this.isVisibleonlyOuCodeSubInv=false;
+      this.isVisiblePaintReconReport=false;
 
     }
 
@@ -496,6 +517,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
       this.isVisiblePaintPanelDetailReport=false;
+      this.isVisiblePaintReconReport=false;
+
     }
 
 
@@ -522,10 +545,37 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibileIssueCategory=true;
       this.isVisiblePaintPanelDetailReport=false;
       this.isVisibleonlyOuCodeSubInv=false;
-
-
+            this.isVisiblePaintReconReport=false;
 
     }
+
+     else if (reportName === 'paintReconcillationReport') {
+      this.reportName = 'Paint Monthly Recon Report';
+      // this.paintReportForm.patchValue({ locId: '' })
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblespClosingStockAsOndate=false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisiblestockTransferRecd=false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblecustomerLedger=false;
+      this.isVisibleEwayBill=false;
+      this.isVisiblepanelStockTaking=false;
+      this.isVisiblesparesPaintPanelReport=false;
+      this.isVisibleonlyOuCode = false;
+      this.isVisiblePanelOUFromDateToDateSubInv=false;
+      this.isVisiblefromtosubinventory=false;
+      this.isVisiblePaintPanelDetailReport=false;
+      this.isVisibleonlyOuCodeSubInv=false;
+      this.isVisiblePaintReconReport=true;
+     }
+
     else if (reportName === 'gstsparesMiscIssueReceipt') {
       this.reportName = 'Paint Stock Adjustment Report';
       this.isVisibleGSTPurchaseRegister = false;
@@ -549,7 +599,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory=false;
       this.isVisiblePaintPanelDetailReport=false;
       this.isVisibleonlyOuCodeSubInv=false;
-
+            this.isVisiblePaintReconReport=false;
 
     }
 
@@ -576,6 +626,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory=false;
       this.isVisiblePaintPanelDetailReport=false;
       this.isVisibleonlyOuCodeSubInv=false;
+      this.isVisiblePaintReconReport=false;
 
 
     }
@@ -602,6 +653,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory=false;
       this.isVisiblePaintPanelDetailReport=false;
       this.isVisibleonlyOuCodeSubInv=false;
+      this.isVisiblePaintReconReport=false;
 
 
     }
@@ -629,6 +681,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory=false;
       this.isVisiblePaintPanelDetailReport=false;
       this.isVisibleonlyOuCodeSubInv=false;
+      this.isVisiblePaintReconReport=false;
 
 
     }
@@ -656,6 +709,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory=false;
       this.isVisiblePaintPanelDetailReport=false;
       this.isVisibleonlyOuCodeSubInv=false;
+      this.isVisiblePaintReconReport=false;
 
 
     }
@@ -683,6 +737,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory=false;
       this.isVisiblePaintPanelDetailReport=false;
       this.isVisibleonlyOuCodeSubInv=false;
+      this.isVisiblePaintReconReport=false;
 
 
     }
@@ -710,6 +765,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory=false;
       this.isVisiblePaintPanelDetailReport=false;
       this.isVisibleonlyOuCodeSubInv=false;
+      this.isVisiblePaintReconReport=false;
 
 
     }
@@ -737,6 +793,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory=false;
       this.isVisiblePaintPanelDetailReport=false;
       this.isVisibleonlyOuCodeSubInv=false;
+      this.isVisiblePaintReconReport=false;
 
 
     }
@@ -769,6 +826,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
       this.isVisibleonlyOuCodeSubInv=false;
+      this.isVisiblePaintReconReport=false;
 
     }
 
@@ -795,6 +853,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
       this.isVisibleonlyOuCodeSubInv=false;
+      this.isVisiblePaintReconReport=false;
 
     }
 
@@ -821,6 +880,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
       this.isVisibleonlyOuCodeSubInv=false;
+      this.isVisiblePaintReconReport=false;
 
     }
 
@@ -847,6 +907,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
       this.isVisibleonlyOuCodeSubInv=false;
+      this.isVisiblePaintReconReport=false;
 
     }
 
@@ -873,6 +934,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePanelOUFromDateToDateSubInv=false;
       this.isVisiblefromtosubinventory=false;
       this.isVisibleonlyOuCodeSubInv=false;
+      this.isVisiblePaintReconReport=false;
 
     }
     else if (reportName === 'icConsumptionReport') {
@@ -897,6 +959,7 @@ export class PaintReportsComponent implements OnInit {
         this.isVisiblePanelOUFromDateToDateSubInv=false;
         this.isVisiblefromtosubinventory=false;
         this.isVisibleonlyOuCodeSubInv=false;
+      this.isVisiblePaintReconReport=false;
 
 
       }
@@ -922,6 +985,7 @@ export class PaintReportsComponent implements OnInit {
           this.isVisiblePanelOUFromDateToDateSubInv=true;
           this.isVisiblefromtosubinventory=false;
           this.isVisibleonlyOuCodeSubInv=false;
+      this.isVisiblePaintReconReport=false;
 
 
         }
@@ -947,6 +1011,7 @@ export class PaintReportsComponent implements OnInit {
         this.isVisiblePanelOUFromDateToDateSubInv=false;
         this.isVisiblefromtosubinventory=false;
       this.isVisibleonlyOuCodeSubInv=false;
+      this.isVisiblePaintReconReport=false;
 
 
         }
@@ -974,6 +1039,7 @@ export class PaintReportsComponent implements OnInit {
         this.isVisiblefromtosubinventory=true;
         this.isVisibileIssueCategory=false;
       this.isVisibleonlyOuCodeSubInv=false;
+      this.isVisiblePaintReconReport=false;
 
     }
     else if (reportName === 'sparesSubinvTransMade') {
@@ -999,6 +1065,7 @@ export class PaintReportsComponent implements OnInit {
         this.isVisiblefromtosubinventory=true;
         this.isVisibileIssueCategory=false;
       this.isVisibleonlyOuCodeSubInv=false;
+      this.isVisiblePaintReconReport=false;
 
     }
   }
@@ -1762,6 +1829,34 @@ export class PaintReportsComponent implements OnInit {
               } 
             }
 
+             else if (reportName==='Paint Monthly Recon Report'){
+              this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
+        
+              const fileName = 'Paint Monthly Recon Report-' +  fromDate + '.xls';
+              const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+              if ((Number(sessionStorage.getItem('deptId'))===4)){
+                this.reportService.ReconcillationReportPaint(fromDate,toDate, locId, sessionStorage.getItem('ouId'))
+                .subscribe(data => {
+                  saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+                  this.isDisabled1 = false;
+                  this.closeResetButton = true;
+                  this.dataDisplay = ''
+                })
+              }
+              else if ((Number(sessionStorage.getItem('deptId')))!=4){
+                this.reportService.ReconcillationReportPaint(fromDate,toDate,locId, sessionStorage.getItem('ouId'))
+                .subscribe(data => {
+                  saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+                  this.isDisabled1 = false;
+                  this.closeResetButton = true;
+                  this.dataDisplay = ''
+                })
+              } 
+            }
+
+
+
+
   }
 
   fromToDateValidation(fDate,tDate){
@@ -1863,6 +1958,21 @@ export class PaintReportsComponent implements OnInit {
         console.log(this.ItemSubTypeList);
       });
     }
+
+     validatetoDate(todt) {
+   
+      var x=this.paintReportForm.get('toDate').value;
+      var dt1 = new Date(x);
+        // var date = new Date(), 
+        var  yr = dt1.getFullYear();
+        var mth = dt1.getMonth();
+        var firstDay = new Date(yr, mth, 1);
+        // var lastDay = new Date(yr, mth + 1, 0);
+        this.fromDate = this.pipe.transform(firstDay, 'y-MM-dd');
+        // alert("fromdate: "+this.fromDate);
+
+
+  }
 
    
 
