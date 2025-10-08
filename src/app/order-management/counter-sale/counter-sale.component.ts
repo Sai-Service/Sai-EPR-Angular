@@ -1965,7 +1965,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       var baseAmt = arrayControl[index].unitSellingPrice * pricingQty;
       var disAmt1 = arrayControl[index].disAmt;
       var disPer = arrayControl[index].disPer;
-      alert(disPer)
+      // alert(disPer)
       if (disPer > 0) {
         disAmt1 = (disPer / 100) * baseAmt;
         (patch.controls[index]).patchValue({

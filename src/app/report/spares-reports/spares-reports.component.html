@@ -149,25 +149,25 @@
                                 (click)="reportDetails('gstStockLedger')">Stock Ledger</a>
                         </li>
                         <li>
-                            <a class="dropdown-item" data-toggle="collapse" href="#isVisibleStockTransferMadeSummary"
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelstockTransferRecd"
                                 role="tab" (click)="reportDetails('gststockTransfer')">Stock Transfer Made Detail
                                 Report</a>
                         </li>
                         <li>
-                            <a class="dropdown-item" data-toggle="collapse" href="#isVisibleStockTransferMadeSummary"
+                            <a class="dropdown-item" data-toggle="collapse" href="#panelstockTransferRecd"
                                 role="tab" (click)="reportDetails('gststockTransferSummary')">Stock Transfer Made
                                 Summary Report</a>
                         </li>
 
                         <li>
                             <a class="dropdown-item" data-toggle="collapse"
-                                href="#isVisibleStockTransferReceivedSummary" role="tab"
+                                href="#panelstockTransferRecd1" role="tab"
                                 (click)="reportDetails('gststockTransferReceivedDetails')">Stock Transfer Received
                                 Detail Report</a>
                         </li>
                         <li>
                             <a class="dropdown-item" data-toggle="collapse"
-                                href="#isVisibleStockTransferReceivedSummary" role="tab"
+                                href="#panelstockTransferRecd1" role="tab"
                                 (click)="reportDetails('gststockTransferReceivedSummary')">Stock Transfer Received
                                 Summary Report</a>
                         </li>
@@ -365,14 +365,14 @@
                     </td>
                     <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
                         <select formControlName="locCode" id="locCode" class="form-control"
-                            (ngModelChange)='onOptionsLocation($event)'>
+                            (change)='onOptionsLocation1($event)'>
                             <!-- <option>--Select--</option> -->
                             <option></option>
                             <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
                                 {{sc.locCode}}
                             </option>
                         </select>
-                        <input disabled hidden type="number" class="form-control" formControlName="locId">
+                        <input disabled hidden type="number" class="form-control" formControlName="locId2">
 
                     </td>
 
@@ -1441,14 +1441,14 @@
                     <td>
                         <div *ngIf="displayLocationList; then thenLocationList; else elseLocationList"></div>
                         <ng-template #thenLocationList>
-                            <input type="text" disabled class="form-control" formControlName="locCode">
+                           <input type="text" disabled class="form-control" formControlName="locCode">
                         </ng-template>
                         <ng-template #elseLocationList>
-                            1 <select formControlName="fromLocName" id="fromLocName" class="form-control"
+                             <select formControlName="fromLocName" id="fromLocName" class="form-control"
                                 (ngModelChange)='onOptionsFromLocation($event)' style="background-color: yellow;">
                                 <option value="">--Select--</option>
                                 <option *ngFor="let sc of  BillShipFromList" [value]="sc.locId">
-                                    {{sc.toLocation}}-{{sc.locName}}
+                                    {{sc.locId}}-{{sc.locName}}
                                 </option>
                             </select>
                             <input disabled hidden type="number" class="form-control" formControlName="fromLocationId">
@@ -1531,13 +1531,13 @@
                         </ng-template>
                         <ng-template #elseToLocationList>
                             <select formControlName="tolocName" id="tolocName" class="form-control"
-                                (ngModelChange)='onOptionsToLocation1($event)' style="background-color: yellow;">
+                                (change)='onOptionsToLocation2($event)' style="background-color: yellow;">
                                 <option value="">--Select--</option>
                                 <option *ngFor="let sc of  BillShipFromList" [value]="sc.locId">
                                     {{sc.locCode}}-{{sc.locName}}
                                 </option>
                             </select>
-                            <input disabled hidden type="number" class="form-control" formControlName="tolocationId">
+                            <input disabled hidden type="number" class="form-control" formControlName="tolocationId2">
                         </ng-template>
 
                     </td>
@@ -1545,13 +1545,13 @@
 
                     <td>
                         <select formControlName="fromLocName" id="fromLocName" class="form-control"
-                            (ngModelChange)='onOptionsFromLocation($event)'>
+                            (change)='onOptionsFromLocation2($event)'>
                             <option value="">--Select--</option>
                             <option *ngFor="let sc of  BillShipFromList" [value]="sc.locId">
                                 {{sc.locCode}}-{{sc.locName}}
                             </option>
                         </select>
-                        <input disabled hidden type="number" class="form-control" formControlName="fromLocationId">
+                        <input disabled hidden type="number" class="form-control" formControlName="fromLocationId2">
 
                     </td>
                 </tr>
@@ -1609,10 +1609,10 @@
                     <td>
                         <div *ngIf="displayLocationList; then thenLocationList; else elseLocationList"></div>
                         <ng-template #thenLocationList>
-                            <input type="text" disabled class="form-control" formControlName="locCode">
+                         2   <input type="text" disabled class="form-control" formControlName="locCode">
                         </ng-template>
                         <ng-template #elseLocationList>
-                            <select formControlName="fromLocName" id="fromLocName" class="form-control"
+                           1 <select formControlName="fromLocName" id="fromLocName" class="form-control"
                                 (ngModelChange)='onOptionsFromLocation($event)'>
                                 <option value="">--Select--</option>
                                 <option *ngFor="let sc of  BillShipFromList" [value]="sc.locId">
@@ -2098,13 +2098,13 @@
                     </td>
                     <td [style.display]="isVisiblelocationLOV ? 'block' : 'none'">
                         <select formControlName="locCode" id="locCode" class="form-control"
-                            (ngModelChange)='onOptionsLocation($event)'>
+                            (change)='onOptionsLocation1($event)'>
                             <option></option>
                             <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
                                 {{sc.locCode}}
                             </option>
                         </select>
-                        <input disabled hidden type="number" class="form-control" formControlName="locId">
+                        <input disabled hidden type="number" class="form-control" formControlName="locId2">
                     </td>
 
 

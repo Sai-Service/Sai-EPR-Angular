@@ -1120,8 +1120,8 @@ export class ARInvoiceComponent implements OnInit {
   onOptionSelectInvoice(event: any) {
     //  alert("-1--"+event.target.value);
     var invtyp = event.target.value
-    alert(invtyp)
-    debugger;
+    // alert(invtyp)
+    // debugger;
     this.service.arInvoiceList(invtyp).subscribe(
       data => {
         this.invTypeList = data;

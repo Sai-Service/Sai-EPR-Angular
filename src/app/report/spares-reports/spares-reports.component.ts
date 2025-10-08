@@ -104,7 +104,7 @@ export class SparesReportsComponent implements OnInit {
   isVisibleSparesDeadCalculationSop: boolean = false;
   isVisiblespDebtorsReport: boolean = false;
   isVisiblespDebtorsReport1: boolean = false;
-  isVisibleMumbaiReport:boolean =false;
+  isVisibleMumbaiReport: boolean = false;
 
   isDisabled1 = false;
   userName1: string;
@@ -120,6 +120,9 @@ export class SparesReportsComponent implements OnInit {
       OUCode: [''],
       locCode1: [],
       locId1: [],
+      fromLocationId2: [],
+      tolocationId2: [],
+      locId2: [],
       tolocationId: [],
       tolocName: [],
       noOfDays: [],
@@ -198,6 +201,7 @@ export class SparesReportsComponent implements OnInit {
       .subscribe(
         data => {
           this.BillShipFromList = data;
+          console.log(this.BillShipFromList);
         }
       );
 
@@ -239,11 +243,11 @@ export class SparesReportsComponent implements OnInit {
       this.dispLocation = false;
     }
 
-    if( Number(sessionStorage.getItem('ouId')) ===21){
-      this.isVisibleMumbaiReport=true;
+    if (Number(sessionStorage.getItem('ouId')) === 21) {
+      this.isVisibleMumbaiReport = true;
     }
-    if( Number(sessionStorage.getItem('ouId')) !=21){
-     this.isVisibleMumbaiReport=false;  
+    if (Number(sessionStorage.getItem('ouId')) != 21) {
+      this.isVisibleMumbaiReport = false;
     }
 
 
@@ -338,6 +342,14 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
+      if (Number(sessionStorage.getItem('roleId')) == 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
+      }
+      else {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = true;
+      }
     }
     else if (reportName === 'gstpurRegSumm') {
       this.reportName = 'Spares Purchase Register - Summary';
@@ -372,6 +384,14 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
+      if (Number(sessionStorage.getItem('roleId')) == 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
+      }
+      else {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = true;
+      }
     }
     else if (reportName === 'gstIssueDetails') {
       this.reportName = 'Spares Issue Details Report';
@@ -403,6 +423,14 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
+      if (Number(sessionStorage.getItem('roleId')) == 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
+      }
+      else {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = true;
+      }
     }
     else if (reportName === 'gstIssueSummary') {
       this.reportName = 'Spares Issue Summary';
@@ -435,6 +463,14 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
+      if (Number(sessionStorage.getItem('roleId')) == 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
+      }
+      else {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = true;
+      }
     }
     else if (reportName === 'gstReceiptRegister') {
       this.reportName = 'Spares Receipt Register';
@@ -469,6 +505,14 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
+      if (Number(sessionStorage.getItem('roleId')) == 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
+      }
+      else {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = true;
+      }
     }
 
     else if (reportName === 'gstClosingReport') {
@@ -501,21 +545,21 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
-      if (Number(sessionStorage.getItem('deptId'))==4){
-        this.isVisiblelocationInput=false;
-        this.isVisiblelocationLOV=true;
+      if (Number(sessionStorage.getItem('deptId')) == 4) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
       }
-      else{
-        this.isVisiblelocationInput=true;
-        this.isVisiblelocationLOV=true;
+      else {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = true;
       }
-       if (Number(sessionStorage.getItem('roleId'))==10){
-        this.isVisiblelocationInput=false;
-        this.isVisiblelocationLOV=true;
+      if (Number(sessionStorage.getItem('roleId')) == 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
       }
-      else{
-        this.isVisiblelocationInput=true;
-        this.isVisiblelocationLOV=true;
+      else {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = true;
       }
     }
 
@@ -558,21 +602,21 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
-        if (Number(sessionStorage.getItem('deptId'))==4){
-        this.isVisiblelocationInput=false;
-        this.isVisiblelocationLOV=true;
+      if (Number(sessionStorage.getItem('deptId')) == 4) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
       }
-      if (Number(sessionStorage.getItem('deptId')) !=4){
-        this.isVisiblelocationInput=true;
-        this.isVisiblelocationLOV=false;
+      if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = false;
       }
-       if (Number(sessionStorage.getItem('roleId'))==10){
-        this.isVisiblelocationInput=false;
-        this.isVisiblelocationLOV=true;
+      if (Number(sessionStorage.getItem('roleId')) == 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
       }
-     if (Number(sessionStorage.getItem('roleId')) !=10 && Number(sessionStorage.getItem('deptId')) !=4){
-        this.isVisiblelocationInput=true;
-        this.isVisiblelocationLOV=false;
+      if (Number(sessionStorage.getItem('roleId')) != 10 && Number(sessionStorage.getItem('deptId')) != 4) {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = false;
       }
     }
     else if (reportName === 'gstSprAgingSummary') {
@@ -614,21 +658,21 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
-        if (Number(sessionStorage.getItem('deptId'))==4){
-        this.isVisiblelocationInput=false;
-        this.isVisiblelocationLOV=true;
+      if (Number(sessionStorage.getItem('deptId')) == 4) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
       }
-      if (Number(sessionStorage.getItem('deptId')) !=4){
-        this.isVisiblelocationInput=true;
-        this.isVisiblelocationLOV=false;
+      if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = false;
       }
-       if (Number(sessionStorage.getItem('roleId'))==10){
-        this.isVisiblelocationInput=false;
-        this.isVisiblelocationLOV=true;
+      if (Number(sessionStorage.getItem('roleId')) == 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
       }
-     if (Number(sessionStorage.getItem('roleId')) !=10 && Number(sessionStorage.getItem('deptId')) !=4){
-        this.isVisiblelocationInput=true;
-        this.isVisiblelocationLOV=false;
+      if (Number(sessionStorage.getItem('roleId')) != 10 && Number(sessionStorage.getItem('deptId')) != 4) {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = false;
       }
     }
     else if (reportName === 'gstStockLedger') {
@@ -690,7 +734,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleItemMaster = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisibleSparesDeadCalculationSop = false;
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.displayLocationList = false;
       }
       else {
@@ -727,7 +771,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleItemMaster = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisibleSparesDeadCalculationSop = false;
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.displayLocationList = false;
       }
       else {
@@ -764,7 +808,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleItemMaster = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisibleSparesDeadCalculationSop = false;
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) == 10) {
         this.displayToLocationList = false
       }
       else {
@@ -802,7 +846,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleItemMaster = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisibleSparesDeadCalculationSop = false;
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) == 10) {
         this.displayToLocationList = false
       }
       else {
@@ -841,21 +885,21 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
-        if (Number(sessionStorage.getItem('deptId'))==4){
-        this.isVisiblelocationInput=false;
-        this.isVisiblelocationLOV=true;
+      if (Number(sessionStorage.getItem('deptId')) == 4) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
       }
-      if (Number(sessionStorage.getItem('deptId')) !=4){
-        this.isVisiblelocationInput=true;
-        this.isVisiblelocationLOV=false;
+      if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = false;
       }
-       if (Number(sessionStorage.getItem('roleId'))==10){
-        this.isVisiblelocationInput=false;
-        this.isVisiblelocationLOV=true;
+      if (Number(sessionStorage.getItem('roleId')) == 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
       }
-     if (Number(sessionStorage.getItem('roleId')) !=10 && Number(sessionStorage.getItem('deptId')) !=4){
-        this.isVisiblelocationInput=true;
-        this.isVisiblelocationLOV=false;
+      if (Number(sessionStorage.getItem('roleId')) != 10 && Number(sessionStorage.getItem('deptId')) != 4) {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = false;
       }
     }
     else if (reportName === 'gstSparesBackOrderQty') {
@@ -1090,12 +1134,12 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblestockTransferRecd = false;
       this.isVisibleSparesBackOrderQty = false;
       this.isVisiblesparesMiscIssueReceipt = false;
-     if( Number(sessionStorage.getItem('ouId')) ===21){
-      this.isVisiblesparesInventoryAging = true;
-     }
-     else{
+      if (Number(sessionStorage.getItem('ouId')) === 21) {
+        this.isVisiblesparesInventoryAging = true;
+      }
+      else {
         this.isVisiblesparesInventoryAging = false;
-     }
+      }
       this.isVisibleSparesDebtorsExecutiveWise = false;
       this.isVisiblefromtosubinventory = false;
       this.isVisiblecustomerLedger = false;
@@ -1145,6 +1189,14 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
+      if (Number(sessionStorage.getItem('roleId')) == 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
+      }
+      if (Number(sessionStorage.getItem('roleId')) != 10 && Number(sessionStorage.getItem('deptId')) != 4) {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = false;
+      }
     }
     else if (reportName === 'sparesSubinvTransReceived') {
       this.reportName = 'Sub Inventory Transfer Received Report';
@@ -1176,21 +1228,21 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
-        if (Number(sessionStorage.getItem('deptId'))==4){
-        this.isVisiblelocationInput=false;
-        this.isVisiblelocationLOV=true;
+      if (Number(sessionStorage.getItem('deptId')) == 4) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
       }
-      if (Number(sessionStorage.getItem('deptId')) !=4){
-        this.isVisiblelocationInput=true;
-        this.isVisiblelocationLOV=false;
+      if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = false;
       }
-       if (Number(sessionStorage.getItem('roleId'))==10){
-        this.isVisiblelocationInput=false;
-        this.isVisiblelocationLOV=true;
+      if (Number(sessionStorage.getItem('roleId')) == 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
       }
-     if (Number(sessionStorage.getItem('roleId')) !=10 && Number(sessionStorage.getItem('deptId')) !=4){
-        this.isVisiblelocationInput=true;
-        this.isVisiblelocationLOV=false;
+      if (Number(sessionStorage.getItem('roleId')) != 10 && Number(sessionStorage.getItem('deptId')) != 4) {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = false;
       }
     }
     else if (reportName === 'sparesSubinvTransMade') {
@@ -1223,21 +1275,21 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
-       if (Number(sessionStorage.getItem('deptId'))==4){
-        this.isVisiblelocationInput=false;
-        this.isVisiblelocationLOV=true;
+      if (Number(sessionStorage.getItem('deptId')) == 4) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
       }
-      if (Number(sessionStorage.getItem('deptId')) !=4){
-        this.isVisiblelocationInput=true;
-        this.isVisiblelocationLOV=false;
+      if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = false;
       }
-       if (Number(sessionStorage.getItem('roleId'))==10){
-        this.isVisiblelocationInput=false;
-        this.isVisiblelocationLOV=true;
+      if (Number(sessionStorage.getItem('roleId')) == 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
       }
-     if (Number(sessionStorage.getItem('roleId')) !=10 && Number(sessionStorage.getItem('deptId')) !=4){
-        this.isVisiblelocationInput=true;
-        this.isVisiblelocationLOV=false;
+      if (Number(sessionStorage.getItem('roleId')) != 10 && Number(sessionStorage.getItem('deptId')) != 4) {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = false;
       }
     }
     else if (reportName === 'internalConsumptionReport') {
@@ -1270,21 +1322,21 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
-       if (Number(sessionStorage.getItem('deptId'))==4){
-        this.isVisiblelocationInput=false;
-        this.isVisiblelocationLOV=true;
+      if (Number(sessionStorage.getItem('deptId')) == 4) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
       }
-      if (Number(sessionStorage.getItem('deptId')) !=4){
-        this.isVisiblelocationInput=true;
-        this.isVisiblelocationLOV=false;
+      if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = false;
       }
-       if (Number(sessionStorage.getItem('roleId'))==10){
-        this.isVisiblelocationInput=false;
-        this.isVisiblelocationLOV=true;
+      if (Number(sessionStorage.getItem('roleId')) == 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
       }
-     if (Number(sessionStorage.getItem('roleId')) !=10 && Number(sessionStorage.getItem('deptId')) !=4){
-        this.isVisiblelocationInput=true;
-        this.isVisiblelocationLOV=false;
+      if (Number(sessionStorage.getItem('roleId')) != 10 && Number(sessionStorage.getItem('deptId')) != 4) {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = false;
       }
     }
     else if (reportName === 'customerLedger') {
@@ -1352,6 +1404,14 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
+      if (Number(sessionStorage.getItem('roleId')) == 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
+      }
+      else {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = true;
+      }
     }
     else if (reportName === 'EwayBill') {
       this.reportName = 'Eway Bill Report';
@@ -1418,6 +1478,14 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
+      if (Number(sessionStorage.getItem('roleId')) == 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
+      }
+      else {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = true;
+      }
     }
 
     else if (reportName === 'sparesIssSummaryTransWise') {
@@ -1453,6 +1521,14 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
+      if (Number(sessionStorage.getItem('roleId')) == 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
+      }
+      else {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = true;
+      }
     }
     else if (reportName === 'sparesZeroStkReport') {
       this.reportName = 'Spares Zero Stock Report';
@@ -1484,21 +1560,21 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
-       if (Number(sessionStorage.getItem('deptId'))==4){
-        this.isVisiblelocationInput=false;
-        this.isVisiblelocationLOV=true;
+      if (Number(sessionStorage.getItem('deptId')) == 4) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
       }
-      if (Number(sessionStorage.getItem('deptId')) !=4){
-        this.isVisiblelocationInput=true;
-        this.isVisiblelocationLOV=false;
+      if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = false;
       }
-       if (Number(sessionStorage.getItem('roleId'))==10){
-        this.isVisiblelocationInput=false;
-        this.isVisiblelocationLOV=true;
+      if (Number(sessionStorage.getItem('roleId')) == 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
       }
-     if (Number(sessionStorage.getItem('roleId')) !=10 && Number(sessionStorage.getItem('deptId')) !=4){
-        this.isVisiblelocationInput=true;
-        this.isVisiblelocationLOV=false;
+      if (Number(sessionStorage.getItem('roleId')) != 10 && Number(sessionStorage.getItem('deptId')) != 4) {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = false;
       }
     }
     else if (reportName === 'sparesIssSummaryAvgCost') {
@@ -1534,6 +1610,14 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
+      if (Number(sessionStorage.getItem('roleId')) == 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
+      }
+      else {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = true;
+      }
     }
     else if (reportName === 'stkTakingBlankFormat') {
       this.reportName = 'Stock Taking Report - Blank Format';
@@ -1648,7 +1732,7 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblecustomerLedger = false;
       this.isVisibleEwayBill = false;
       this.isVisiblepanelStockTaking = false;
-      this.panelspDebtAgByExicutiveSummary=true;
+      this.panelspDebtAgByExicutiveSummary = true;
       this.isVisibletoDateLoc = false;
       this.isVisiblepanelspDeadStockNoConsuptionDaywise = false;
       this.isVisibleStocMadeSummary = false;
@@ -1659,21 +1743,21 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
-        if (Number(sessionStorage.getItem('deptId'))==4){
-        this.isVisiblelocationInput=false;
-        this.isVisiblelocationLOV=true;
+      if (Number(sessionStorage.getItem('deptId')) == 4) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
       }
-      if (Number(sessionStorage.getItem('deptId')) !=4){
-        this.isVisiblelocationInput=true;
-        this.isVisiblelocationLOV=false;
+      if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = false;
       }
-       if (Number(sessionStorage.getItem('roleId'))==10){
-        this.isVisiblelocationInput=false;
-        this.isVisiblelocationLOV=true;
+      if (Number(sessionStorage.getItem('roleId')) == 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
       }
-     if (Number(sessionStorage.getItem('roleId')) !=10 && Number(sessionStorage.getItem('deptId')) !=4){
-        this.isVisiblelocationInput=true;
-        this.isVisiblelocationLOV=false;
+      if (Number(sessionStorage.getItem('roleId')) != 10 && Number(sessionStorage.getItem('deptId')) != 4) {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = false;
       }
     }
     else if (reportName === 'spConsumptionReport') {
@@ -1706,6 +1790,14 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
+      if (Number(sessionStorage.getItem('roleId')) == 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
+      }
+      else {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = true;
+      }
     }
     else if (reportName === 'gstsaiDebtorsAsOf') {
       this.reportName = 'Spares Debtor Report As Of';
@@ -1743,21 +1835,21 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
-        if (Number(sessionStorage.getItem('deptId'))==4){
-        this.isVisiblelocationInput=false;
-        this.isVisiblelocationLOV=true;
+      if (Number(sessionStorage.getItem('deptId')) == 4) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
       }
-      if (Number(sessionStorage.getItem('deptId')) !=4){
-        this.isVisiblelocationInput=true;
-        this.isVisiblelocationLOV=false;
+      if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = false;
       }
-       if (Number(sessionStorage.getItem('roleId'))==10){
-        this.isVisiblelocationInput=false;
-        this.isVisiblelocationLOV=true;
+      if (Number(sessionStorage.getItem('roleId')) == 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
       }
-     if (Number(sessionStorage.getItem('roleId')) !=10 && Number(sessionStorage.getItem('deptId')) !=4){
-        this.isVisiblelocationInput=true;
-        this.isVisiblelocationLOV=false;
+      if (Number(sessionStorage.getItem('roleId')) != 10 && Number(sessionStorage.getItem('deptId')) != 4) {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = false;
       }
     }
     else if (reportName === 'receiptOtherDetails') {
@@ -1790,6 +1882,14 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
+      if (Number(sessionStorage.getItem('roleId')) == 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
+      }
+      else {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = true;
+      }
     }
     else if (reportName === 'billHandedoverToActReport') {
       this.reportName = 'Account Bill Handover Report';
@@ -1821,6 +1921,14 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
+      if (Number(sessionStorage.getItem('roleId')) == 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
+      }
+      else {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = true;
+      }
     }
     else if (reportName === 'spDebtorOSLetter') {
       this.reportName = 'Spares Debtor O/S Letter';
@@ -1858,21 +1966,21 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
-        if (Number(sessionStorage.getItem('deptId'))==4){
-        this.isVisiblelocationInput=false;
-        this.isVisiblelocationLOV=true;
+      if (Number(sessionStorage.getItem('deptId')) == 4) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
       }
-      if (Number(sessionStorage.getItem('deptId')) !=4){
-        this.isVisiblelocationInput=true;
-        this.isVisiblelocationLOV=false;
+      if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = false;
       }
-       if (Number(sessionStorage.getItem('roleId'))==10){
-        this.isVisiblelocationInput=false;
-        this.isVisiblelocationLOV=true;
+      if (Number(sessionStorage.getItem('roleId')) == 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
       }
-     if (Number(sessionStorage.getItem('roleId')) !=10 && Number(sessionStorage.getItem('deptId')) !=4){
-        this.isVisiblelocationInput=true;
-        this.isVisiblelocationLOV=false;
+      if (Number(sessionStorage.getItem('roleId')) != 10 && Number(sessionStorage.getItem('deptId')) != 4) {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = false;
       }
     }
     else if (reportName === 'shortLandedClaim') {
@@ -1905,6 +2013,14 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
+      if (Number(sessionStorage.getItem('roleId')) == 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
+      }
+      else {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = true;
+      }
     }
     else if (reportName === 'sparesAgingReportAsOfDate') {
       this.reportName = 'Spares Aging Report As of Date';
@@ -1968,21 +2084,21 @@ export class SparesReportsComponent implements OnInit {
       this.isVisibleSparesDeadCalculationSop = false;
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
-       if (Number(sessionStorage.getItem('deptId'))==4){
-        this.isVisiblelocationInput=false;
-        this.isVisiblelocationLOV=true;
+      if (Number(sessionStorage.getItem('deptId')) == 4) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
       }
-      if (Number(sessionStorage.getItem('deptId')) !=4){
-        this.isVisiblelocationInput=true;
-        this.isVisiblelocationLOV=false;
+      if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = false;
       }
-       if (Number(sessionStorage.getItem('roleId'))==10){
-        this.isVisiblelocationInput=false;
-        this.isVisiblelocationLOV=true;
+      if (Number(sessionStorage.getItem('roleId')) == 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
       }
-     if (Number(sessionStorage.getItem('roleId')) !=10 && Number(sessionStorage.getItem('deptId')) !=4){
-        this.isVisiblelocationInput=true;
-        this.isVisiblelocationLOV=false;
+      if (Number(sessionStorage.getItem('roleId')) != 10 && Number(sessionStorage.getItem('deptId')) != 4) {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = false;
       }
     }
     else if (reportName === 'spDeadStockNoConsuptionDaywise') {
@@ -2048,21 +2164,21 @@ export class SparesReportsComponent implements OnInit {
       this.isVisiblespDebtorsReport = false;
       this.isVisiblespDebtorsReport1 = false;
       // debugger;
-       if (Number(sessionStorage.getItem('deptId'))==4){
-        this.isVisiblelocationInput=false;
-        this.isVisiblelocationLOV=true;
+      if (Number(sessionStorage.getItem('deptId')) == 4) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
       }
-      if (Number(sessionStorage.getItem('deptId')) !=4){
-        this.isVisiblelocationInput=true;
-        this.isVisiblelocationLOV=false;
+      if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = false;
       }
-       if (Number(sessionStorage.getItem('roleId'))==10){
-        this.isVisiblelocationInput=false;
-        this.isVisiblelocationLOV=true;
+      if (Number(sessionStorage.getItem('roleId')) == 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
       }
-     if (Number(sessionStorage.getItem('roleId')) !=10 && Number(sessionStorage.getItem('deptId')) !=4){
-        this.isVisiblelocationInput=true;
-        this.isVisiblelocationLOV=false;
+      if (Number(sessionStorage.getItem('roleId')) != 10 && Number(sessionStorage.getItem('deptId')) != 4) {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = false;
       }
     }
     else if (reportName === 'itemMasterList') {
@@ -2260,6 +2376,25 @@ export class SparesReportsComponent implements OnInit {
 
   }
 
+
+  onOptionsLocation1(event) {
+    // alert("From Location : "+ event.target.value);
+    this.sparesReportForm.patchValue({ locId: event.target.value, tolocationId: event.target.value, locId2: event.target.value, fromLocationId: event.target.value })
+    // this.sparesReportForm.patchValue({ fromLocId: event })
+
+    if (event > 0) {
+      var x = this.sparesReportForm.get('locCode').value;
+      var y = this.sparesReportForm.get('tolocCode').value;
+      if (x === y) {
+        alert("From/To Locations Should not be Same...");
+        this.sparesReportForm.get('locCode').reset();
+        return;
+      }
+    }
+
+
+  }
+
   onOptionsLocation(event) {
     // alert("From Location : "+ event);
     this.sparesReportForm.patchValue({ locId: event, tolocationId: event, locId1: event, fromLocationId: event })
@@ -2291,7 +2426,15 @@ export class SparesReportsComponent implements OnInit {
     // alert(event)
     this.sparesReportForm.patchValue({ tolocationId: event })
   }
+  onOptionsToLocation2(event) {
+    // alert(event)
+    this.sparesReportForm.patchValue({ tolocationId2: event.target.value })
+  }
 
+  onOptionsFromLocation2(event) {
+    // alert('from')
+    this.sparesReportForm.patchValue({ fromLocationId2: event.target.value })
+  }
 
   onOptionsToLocation(event) {
     // alert("To Location : "+ event);
@@ -2368,7 +2511,7 @@ export class SparesReportsComponent implements OnInit {
 
       this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
 
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         const fileName = 'Purchase Register Details-' + fromDate + '-TO-' + toDate + '.xls';
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
         this.reportService.sppurRegidetailReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
@@ -2396,7 +2539,7 @@ export class SparesReportsComponent implements OnInit {
 
       const fileName = 'Spares Purchase Register - Summary-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.sppurRegiSummReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -2443,7 +2586,7 @@ export class SparesReportsComponent implements OnInit {
       if (this.rptValidation == false) { this.closeResetButton = true; this.dataDisplay = 'Please check Aging Values.'; return; }
       const fileName = 'Spares Debtors Aging Report - Executive summary-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.sparesDbAgingExicutiveSum(toDate, sessionStorage.getItem('ouId'), locId, userName, custAccNo, deptId, age1, age2, age3, age4)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -2469,11 +2612,13 @@ export class SparesReportsComponent implements OnInit {
       var dt2 = new Date(tDate)
       if (dt1 > dt2) { alert("Please Enter Proper Start Date and End Date..."); return; }
       var mDays = this.diffDays(dt1, dt2);
-      if (mDays > 7) {
-        alert("Date Range Cannot Exceed 7 Days...");
-        this.dataDisplay = 'Date Range Cannot Exceed 7 Days...';
-        this.isDisabled1 = false;
-        return;
+      if (Number(sessionStorage.getItem('roleId')) != 10) {
+        if (mDays > 7) {
+          alert("Date Range Cannot Exceed 7 Days...");
+          this.dataDisplay = 'Date Range Cannot Exceed 7 Days...';
+          this.isDisabled1 = false;
+          return;
+        }
       }
       var custAcctNo = this.sparesReportForm.get('custAccNo').value;
       var ticketNo = this.sparesReportForm.get('userName1').value
@@ -2482,7 +2627,7 @@ export class SparesReportsComponent implements OnInit {
       }
       const fileName = 'Spares Issue Details Report-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.spIssueDetailsReport(fromDate, toDate, locId, custAcctNo)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -2510,7 +2655,7 @@ export class SparesReportsComponent implements OnInit {
 
       const fileName = 'Spares Issue Summary Report-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.spIssueSummaryReport(fromDate, toDate, locId, custAccNo)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -2531,10 +2676,10 @@ export class SparesReportsComponent implements OnInit {
     }
     else if (reportName === 'Spares Receipt Register') {
       this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
-
+      var locId = this.sparesReportForm.get('locId2')?.value;
       const fileName = 'Spares Receipt Register-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.spReceiptRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -2556,7 +2701,7 @@ export class SparesReportsComponent implements OnInit {
     else if (reportName === 'Spares Closing Stock Report') {
       const fileName = 'SP-Closing-Stock-' + sessionStorage.getItem('locName').trim() + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.spclosstrockReport(locId, subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -2619,7 +2764,7 @@ export class SparesReportsComponent implements OnInit {
       const fileName = 'SP-Debtors-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
 
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.SPDebtorReport(tDate1, sessionStorage.getItem('ouId'), locId, custAccNo, deptId, spDbAg1, spDbAg2, spDbAg3, spDbAg4)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -2681,7 +2826,7 @@ export class SparesReportsComponent implements OnInit {
       this.isDisabled1 = true;
       const fileName = 'SP-Debtors-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.gstsaiDebtorsAsOf1(tDate1, sessionStorage.getItem('ouId'), locId, custAccNo, deptId, spDbAg1, spDbAg2, spDbAg3, spDbAg4)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -2735,7 +2880,7 @@ export class SparesReportsComponent implements OnInit {
       const fileName = 'SP-Debtors-Aging-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
 
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.SPDebtorAgingSummary(tDate1, sessionStorage.getItem('ouId'), locId, custAccNo, deptId, spDbAg1, spDbAg2, spDbAg3, spDbAg4)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -2756,7 +2901,7 @@ export class SparesReportsComponent implements OnInit {
     }
     else if (reportName === 'Stock Ledger') {
       this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.stockLedgerReport(fromDate, toDate, subInventory, segment, locId, userName)
           .subscribe(data => {
             var blob = new Blob([data], { type: 'application/pdf' });
@@ -2793,12 +2938,18 @@ export class SparesReportsComponent implements OnInit {
         this.dataDisplay = 'Please Select From Location.!'
         return;
       }
+      if (fromLocationName === null && Number(sessionStorage.getItem('roleId')) === 10) {
+        alert('Please Select From Location.!');
+        this.isDisabled1 = false;
+        this.dataDisplay = 'Please Select From Location.!'
+        return;
+      }
       if (toLocationId === null) {
         toLocationId = ''
       }
       const fileName = 'Stock Transfer Made Detail Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.stockMadeDetailsReport(fromDate, toDate, sessionStorage.getItem('ouId'), fromLocationId, toLocationId, subInventory, sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -2832,14 +2983,20 @@ export class SparesReportsComponent implements OnInit {
         this.dataDisplay = 'Please Select From Location.!'
         return;
       }
+      if (fromLocationName === null && Number(sessionStorage.getItem('roleId')) === 10) {
+        alert('Please Select From Location.!');
+        this.isDisabled1 = false;
+        this.dataDisplay = 'Please Select From Location.!'
+        return;
+      }
 
       if (toLocationId === null) {
         toLocationId = ''
       }
       const fileName = 'Stock Transfer Made Summary Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.spstktrfMdSummaryReport(fromDate, toDate, fromLocationId, toLocationId, subInventory)
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
+        this.reportService.spstktrfMdSummaryReport(fromDate, toDate, sessionStorage.getItem('ouId'), fromLocationId, toLocationId, subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2848,7 +3005,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.spstktrfMdSummaryReport(fromDate, toDate, sessionStorage.getItem('locId'), toLocationId, subInventory)
+        this.reportService.spstktrfMdSummaryReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), toLocationId, subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2860,14 +3017,22 @@ export class SparesReportsComponent implements OnInit {
 
     else if (reportName === 'Stock Transfer Received Detail Report') {
       this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
-      var tolocationId = this.sparesReportForm.get('tolocationId').value;
+      var tolocationId = this.sparesReportForm.get('tolocationId2').value;
       // alert(tolocationId)
       var fromLocName = this.sparesReportForm.get('fromLocName').value;
-      var fromLocationId = this.sparesReportForm.get('fromLocationId').value;
+      var fromLocationId = this.sparesReportForm.get('fromLocationId2').value;
+      // alert(fromLocationId)
       if (fromLocName === null) {
         fromLocationId = ''
       }
+      // debugger;
       if (tolocationId === null && Number(sessionStorage.getItem('deptId')) === 4) {
+        alert('Please Select To Location.!');
+        this.isDisabled1 = false;
+        this.dataDisplay = 'Please Select To Location.!'
+        return;
+      }
+      if (tolocationId === null && Number(sessionStorage.getItem('roleId')) === 10) {
         alert('Please Select To Location.!');
         this.isDisabled1 = false;
         this.dataDisplay = 'Please Select To Location.!'
@@ -2876,7 +3041,7 @@ export class SparesReportsComponent implements OnInit {
 
       const fileName = 'Stock Transfer Received Detail Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) == 10) {
         this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate, sessionStorage.getItem('ouId'), tolocationId, fromLocationId, subInventory, sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -2897,11 +3062,17 @@ export class SparesReportsComponent implements OnInit {
     }
     else if (reportName === 'Stock Transfer Received Summary Report') {
       this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
-      var tolocationId = this.sparesReportForm.get('tolocationId').value;
+      var tolocationId = this.sparesReportForm.get('tolocationId2').value;
       //  alert(fromLocName)
-      var fromLocationId = this.sparesReportForm.get('fromLocationId').value;
+      var fromLocationId = this.sparesReportForm.get('fromLocationId2').value;
       var fromLocName = this.sparesReportForm.get('fromLocName').value;
       if (tolocationId === null && Number(sessionStorage.getItem('deptId')) === 4) {
+        alert('Please Select To Location.!');
+        this.isDisabled1 = false;
+        this.dataDisplay = 'Please Select To Location.!'
+        return;
+      }
+      if (tolocationId === null && Number(sessionStorage.getItem('roleId')) === 10) {
         alert('Please Select To Location.!');
         this.isDisabled1 = false;
         this.dataDisplay = 'Please Select To Location.!'
@@ -2914,8 +3085,8 @@ export class SparesReportsComponent implements OnInit {
       // alert(fromLocationId)
       const fileName = 'Stock Transfer Received Summary Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate, tolocationId, fromLocationId, subInventory)
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
+        this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate, sessionStorage.getItem('ouId'), tolocationId, fromLocationId, subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2924,7 +3095,7 @@ export class SparesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate, sessionStorage.getItem('locId'), fromLocationId, subInventory)
+        this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), fromLocationId, subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2939,7 +3110,7 @@ export class SparesReportsComponent implements OnInit {
 
       const fileName = 'Spares-Customer-Off-Take-Statement-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.SprcusttakestatReport(fromDate, toDate, locId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -2971,7 +3142,7 @@ export class SparesReportsComponent implements OnInit {
       }
       const fileName = 'Spares Back Order Qty Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.spbackOrderQtyReport(fromDate, toDate, locId, custAccNo, orderNumber)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -2996,7 +3167,7 @@ export class SparesReportsComponent implements OnInit {
 
       const fileName = 'Spares Misc Issue Receipt Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.spSparesMiscIssueReceiptReport(fromDate, toDate, locId, sessionStorage.getItem('ouId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -3021,7 +3192,7 @@ export class SparesReportsComponent implements OnInit {
 
       const fileName = 'Spares Sales Return Register-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.spslReturnRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -3045,7 +3216,7 @@ export class SparesReportsComponent implements OnInit {
 
       const fileName = 'Spares Income Statement-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.spIncomeStatement(fromDate, toDate, locId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -3069,7 +3240,7 @@ export class SparesReportsComponent implements OnInit {
 
       const fileName = 'Spares Closing Stock As On Date-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.sprClsAsonDtReport(toDate, locId, subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -3094,7 +3265,7 @@ export class SparesReportsComponent implements OnInit {
 
       const fileName = 'Spares Proforma Details Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.spProforDtReport(fromDate, toDate, locId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -3118,7 +3289,7 @@ export class SparesReportsComponent implements OnInit {
 
       const fileName = 'Cheque Bounce Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.chequebounceReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -3160,7 +3331,7 @@ export class SparesReportsComponent implements OnInit {
 
       const fileName = 'Spares Inventory Aging Report-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.sspInvAgingReport(spInvAging1, spInvAging2, spInvAging3, sessionStorage.getItem('ouId'), locId, subInventory, userName)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -3192,7 +3363,7 @@ export class SparesReportsComponent implements OnInit {
       }
       const fileName = 'Spares Debtors Executive Wise report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.spDebtorExicutiveWise(toDate, sessionStorage.getItem('ouId'), locId, ticketNo, custAcctNo, deptId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -3217,7 +3388,7 @@ export class SparesReportsComponent implements OnInit {
 
       const fileName = 'Sub Inventory Transfer Received Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if ((Number(sessionStorage.getItem('deptId')) === 4)) {
+      if ((Number(sessionStorage.getItem('deptId')) === 4) || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.spInvTransRecFuc(fromDate, toDate, locId, subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -3242,7 +3413,7 @@ export class SparesReportsComponent implements OnInit {
 
       const fileName = 'Sub Inventory Transfer Made Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if ((Number(sessionStorage.getItem('deptId')) === 4)) {
+      if ((Number(sessionStorage.getItem('deptId')) === 4) || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.spInvTransMadeFuc(fromDate, toDate, locId, subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -3263,10 +3434,18 @@ export class SparesReportsComponent implements OnInit {
     }
     else if (reportName === 'Internal Consumption Report') {
       this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
+      var locId = this.sparesReportForm.get('locId2')?.value;
 
       const fileName = 'Internal Consumption Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if ((Number(sessionStorage.getItem('deptId')) === 4)) {
+      if ((Number(sessionStorage.getItem('deptId')) === 4) || Number(sessionStorage.getItem('roleId')) === 10) {
+        if (locId == null) {
+          alert('Please Select Location.!');
+          this.closeResetButton = false;
+          this.isDisabled1 = false;
+          this.dataDisplay = 'Please Select Location.!'
+          return;
+        };
         this.reportService.internalConsuptionReport(fromDate, toDate, locId, subInventory, sessionStorage.getItem('ouId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -3296,7 +3475,7 @@ export class SparesReportsComponent implements OnInit {
       }
       const fileName = 'Customer Ledger Report-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.customerLedger(fromDate, toDate, custAccNo, sessionStorage.getItem('ouId'), deptId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -3314,7 +3493,7 @@ export class SparesReportsComponent implements OnInit {
 
       const fileName = 'Credit Note Register-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.creditNoteReg(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -3353,7 +3532,7 @@ export class SparesReportsComponent implements OnInit {
 
       const fileName = 'IRN Generation Report-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         var deptId = this.sparesReportForm.get('deptId').value;
         this.reportService.irnGenerationReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
           .subscribe(data => {
@@ -3378,7 +3557,7 @@ export class SparesReportsComponent implements OnInit {
 
       const fileName = 'Spares Issue Summary-Transaction Wise-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         var deptId = this.sparesReportForm.get('deptId').value;
         this.reportService.sprIssSummaryReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
           .subscribe(data => {
@@ -3403,7 +3582,7 @@ export class SparesReportsComponent implements OnInit {
 
       const fileName = 'Spares Zero Stock Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if ((Number(sessionStorage.getItem('deptId')) === 4)) {
+      if ((Number(sessionStorage.getItem('deptId')) === 4) || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.sprZeroStockReport(fromDate, toDate, locId, subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -3427,7 +3606,7 @@ export class SparesReportsComponent implements OnInit {
 
       const fileName = 'Spares Issue Summary-Average Cost-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         var deptId = this.sparesReportForm.get('deptId').value;
         this.reportService.sprIssSummaryAvgCostReport(fromDate, toDate, locId, sessionStorage.getItem('deptId'))
           .subscribe(data => {
@@ -3454,7 +3633,7 @@ export class SparesReportsComponent implements OnInit {
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       var locId = this.sparesReportForm.get('locId').value;
       var compileName = this.sparesReportForm.get('compileCode').value;
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
 
         this.reportService.stockTakingBlankFormatReport(locId, compileName)
           .subscribe(data => {
@@ -3481,7 +3660,7 @@ export class SparesReportsComponent implements OnInit {
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       var locId = this.sparesReportForm.get('locId').value;
       var compileName = this.sparesReportForm.get('compileCode').value;
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.stockTakingQtyReport(locId, compileName)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -3507,7 +3686,7 @@ export class SparesReportsComponent implements OnInit {
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       var locId = this.sparesReportForm.get('locId').value;
       var compileName = this.sparesReportForm.get('compileCode').value;
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.stockTakingPhyStockUpldReport(locId, compileName)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -3527,11 +3706,17 @@ export class SparesReportsComponent implements OnInit {
 
     }
     else if (reportName === 'Spares Item Consumption Report') {
+      // alert(Number(sessionStorage.getItem('roleId')))
       const fileName = 'Spares Item Consumption Report-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      var locId = this.sparesReportForm.get('locId').value;
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.spConsumptionReport(fromDate, toDate, locId)
+      var locId1 = this.sparesReportForm.get('locId2').value;
+      if (locId1 = null) {
+        alert('Please Select Location Code.!');
+        return;
+      }
+      // debugger;
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
+        this.reportService.spConsumptionReport(fromDate, toDate, locId1)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -3552,7 +3737,7 @@ export class SparesReportsComponent implements OnInit {
     else if (reportName === 'Receipt-Other Details Report') {
       const fileName = 'Receipt-Other Details Report-' + '-TO-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.receiptOtherDetails(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -3574,7 +3759,7 @@ export class SparesReportsComponent implements OnInit {
     else if (reportName === 'Account Bill Handover Report') {
       const fileName = 'Receipt-Other Details Report-' + '-TO-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.actBillHandoverReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -3596,7 +3781,7 @@ export class SparesReportsComponent implements OnInit {
     else if (reportName === 'Spares Stock Mismatch Report') {
       const fileName = 'Spares Stock Mismatch Report-' + '-TO-' + '.pdf';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.StockMissMatchFN(fromDate, toDate, subInventory, locId, userName)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -3653,7 +3838,7 @@ export class SparesReportsComponent implements OnInit {
       const fileName = 'Spares Debtor O/S Letter' + fromDate + '.pdf';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
 
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.spDebtorOSLetterFn(tDate1, sessionStorage.getItem('ouId'), locId, custAccNo, deptId, spDbAg1, spDbAg2, spDbAg3, spDbAg4)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -3675,7 +3860,7 @@ export class SparesReportsComponent implements OnInit {
     else if (reportName === 'Short Landed Claim Report') {
       const fileName = 'Short Landed Claim Report' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.shortLandedClaimReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -3697,7 +3882,7 @@ export class SparesReportsComponent implements OnInit {
     else if (reportName == 'Spares Aging Report As of Date') {
       const fileName = 'Spares Aging Report As of Date' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.sparesAgingReportAsOfDateFn(toDate, locId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -3719,7 +3904,7 @@ export class SparesReportsComponent implements OnInit {
     else if (reportName == 'Spares Daily Report') {
       const fileName = 'Spares Daily Report' + '.pdf';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.spareDailyReportFn(toDate, locId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -3743,7 +3928,7 @@ export class SparesReportsComponent implements OnInit {
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       var subInventory = this.sparesReportForm.get('subInventory').value;
       var noOfDays = this.sparesReportForm.get('noOfDays').value;
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.spDeadStockNoConsuptionDaywiseFn(sessionStorage.getItem('ouId'), locId, noOfDays, subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -3777,7 +3962,7 @@ export class SparesReportsComponent implements OnInit {
       const fileName = 'Item Master List-' + sessionStorage.getItem('ouName').trim() + '.xls';
       // alert (fileName)
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.itemMasterListReport(sessionStorage.getItem('ouId'), maintp, subtp)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -3801,7 +3986,7 @@ export class SparesReportsComponent implements OnInit {
       const fileName = 'Spares Dead Stock Calculation -SOP-' + sessionStorage.getItem('ouName').trim() + '.xls';
       // alert (fileName)
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.sparesDeadStockCalSOPFn(fromDate, toDate, sessionStorage.getItem('ouId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -3825,7 +4010,7 @@ export class SparesReportsComponent implements OnInit {
 
       const fileName = 'PartyWise Debtors Outstanding Report-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.gstSparesPartyOutstandingReport(toDate, locId, sessionStorage.getItem('ouId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -3850,7 +4035,7 @@ export class SparesReportsComponent implements OnInit {
 
       const fileName = 'PartyWise Debtors Advance Report-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.gstSparesPartyAdvReport(toDate, locId, sessionStorage.getItem('ouId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -3875,7 +4060,7 @@ export class SparesReportsComponent implements OnInit {
 
       const fileName = 'PartyWise Consolidated Receivable Report-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.gstSparesPartyReceivableReport(toDate, locId, sessionStorage.getItem('ouId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -3903,7 +4088,7 @@ export class SparesReportsComponent implements OnInit {
       if (custAccNo === null || custAccNo === undefined || custAccNo === '') {
         custAccNo = '';
       }
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.reportService.gstSparesPartyDetReceivableReport(toDate, locId, sessionStorage.getItem('ouId'), custAccNo)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
