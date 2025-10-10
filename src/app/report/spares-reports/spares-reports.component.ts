@@ -167,7 +167,7 @@ export class SparesReportsComponent implements OnInit {
   ngOnInit(): void {
     this.locId = Number(sessionStorage.getItem('locId'));
     this.sparesReportForm.patchValue({ OUCode: sessionStorage.getItem('ouId') + '-' + sessionStorage.getItem('ouName') });
-    alert(sessionStorage.getItem('ouId') + '-' + sessionStorage.getItem('ouName'));
+    // alert(sessionStorage.getItem('ouId') + '-' + sessionStorage.getItem('ouName'));
     this.sparesReportForm.patchValue({ locCode: sessionStorage.getItem('locId') + '-' + sessionStorage.getItem('locName') })
     this.sparesReportForm.patchValue({ department: 'Spares', fromLocationId: sessionStorage.getItem('locId') });
     this.sparesReportForm.patchValue({ deptId: 5 })

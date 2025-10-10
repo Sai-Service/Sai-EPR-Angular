@@ -540,9 +540,8 @@ export class AdminComponent implements OnInit {
       this.isVisibleReinsurance = false;
       this.isVisibleToolReport = false;
       this.isVisibleAdminService=false;
-      // if (sessionStorage.getItem('deptName')==='Account'){
-
-      // }
+      this.isVisible21=true;
+      this.isVisible32=true;
     }
 
     if (Number(sessionStorage.getItem('divisionId')) === 2 && Number(sessionStorage.getItem('roleId')) === 9 && sessionStorage.getItem('deptName') === 'Account') {

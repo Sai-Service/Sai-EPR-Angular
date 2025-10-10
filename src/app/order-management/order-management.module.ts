@@ -32,6 +32,7 @@ import { SalesOrderProformaChetakComponent } from './sales-order-proforma-chetak
 import { OrderDetailsUpdationComponent } from './order-details-updation/order-details-updation.component';
 import { VehicleAndAddonPriceUploadComponent } from './vehicle-and-addon-price-upload/vehicle-and-addon-price-upload.component';
 import { OrderCancellationUploadComponent } from './order-cancellation-upload/order-cancellation-upload.component';
+import { SalesOrderReversalComponent } from './sales-order-reversal/sales-order-reversal.component';
 // import { SalesSuperUserGatePassComponent } from './sales-super-user-gate-pass/sales-super-user-gate-pass.component';
 
 
@@ -65,6 +66,7 @@ import { OrderCancellationUploadComponent } from './order-cancellation-upload/or
      OrderDetailsUpdationComponent,
      VehicleAndAddonPriceUploadComponent,
      OrderCancellationUploadComponent,
+     SalesOrderReversalComponent,
     //  SalesSuperUserGatePassComponent,
       ],
   imports: [

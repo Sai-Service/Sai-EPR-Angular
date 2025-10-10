@@ -1609,7 +1609,7 @@ export class SalesOrderFormComponent implements OnInit {
 
 
   OrderFind(orderNumber) {
-    alert(orderNumber)
+    // alert(orderNumber)
     this.displaySalesLines = false;
     this.displayAllButtons = false;
     this.displayCreateOrderButton = true;
@@ -1637,7 +1637,7 @@ export class SalesOrderFormComponent implements OnInit {
          data => {
           // debugger;
            if (data != null) {
-            alert("in data : "+ orderNumber)
+            // alert("in data : "+ orderNumber)
 
              this.lstgetOrderLineDetails = data.obj.oeOrderLinesAllList;
              this.lstgetOrderTaxDetails = data.obj.taxAmounts;

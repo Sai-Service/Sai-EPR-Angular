@@ -977,11 +977,22 @@ getsearchByOrderNo2(orderNumber,customerId,locId): Observable<any> {
     });
   }
 
-  panNoCheckFn(panNo): Observable<any> {
+  panNoCheckFn(panNo:any): Observable<any> {
     // alert('------'+panNo)
     return this.http.get(this.ServerUrl + `/Customer/findByPanNoDetails?panNo=${panNo}`);
   }
-  
+
+  reversalSalesOrderFn(orderNumber:any,emplId:any){
+    const REQUEST_PARAMS = new HttpParams().set('orderNumber', orderNumber)
+      .set('orderNumber', orderNumber)
+      .set('emplId', emplId)
+    const REQUEST_URI = this.ServerUrl + `/arInv/OMVHSalesReversalNew?orderNumber=${orderNumber}&emplId=${emplId}`;
+    return this.http.post(REQUEST_URI, {
+      params: REQUEST_PARAMS,
+
+    });
+  }
+
 }
 
 
