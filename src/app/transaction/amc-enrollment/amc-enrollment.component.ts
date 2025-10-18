@@ -20,7 +20,7 @@ interface IAmcEnroll {
   contactNo: string;
   custAddress: string;
   custAccountNo: number
-
+  deptId:number|null;
   schemeGrp: string;
   schemeId: number;
   schemeNumber: string;
@@ -49,7 +49,7 @@ interface IAmcEnroll {
 export class AmcEnrollmentComponent implements OnInit {
 
   amcEnrollmentForm: FormGroup;
-
+  
   pipe = new DatePipe('en-US');
   public minDate = new Date();
 
@@ -78,7 +78,7 @@ export class AmcEnrollmentComponent implements OnInit {
   ouId: number;
   deptId: number;
   emplId: number;
-
+  // deptId:number;
   enrollmentNo: string;
   // enrollmentDate:Date;
   enrollmentDt = this.pipe.transform(Date.now(), 'y-MM-dd');
@@ -145,12 +145,14 @@ export class AmcEnrollmentComponent implements OnInit {
 
   invoiceNo: string;
   invoiceDate: string;
-  onOptionsSelectedTL: any = [];
+  // onOptionsSelectedTL: any = [];
   salesRepNameList: any = [];
+  ticketNoSearch:any=[];
+  salesAd:string='';
 
   constructor(private service: MasterService, private orderManagementService: OrderManagementService, private transactionService: TransactionService, private serviceService: ServiceService, private fb: FormBuilder, private router: Router) {
     this.amcEnrollmentForm = fb.group({
-
+      salesAd:[],
       loginArray: [''],
       loginName: [''],
       divisionId: [],
@@ -273,12 +275,13 @@ export class AmcEnrollmentComponent implements OnInit {
     this.ouId = Number(sessionStorage.getItem('ouId'));
     this.locId = Number(sessionStorage.getItem('locId'));
     this.locName = (sessionStorage.getItem('locName'));
-    this.deptId = Number(sessionStorage.getItem('dept'));
+    this.deptId = Number(sessionStorage.getItem('deptId'));
     this.emplId = Number(sessionStorage.getItem('emplId'));
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
     this.orgId = this.ouId;
     console.log(this.loginArray);
     console.log(this.locId);
+ 
 
     this.service.AmcSchemeList()
       .subscribe(
@@ -298,6 +301,7 @@ export class AmcEnrollmentComponent implements OnInit {
 
     if (sessionStorage.getItem('deptName') === 'Sales') {
       this.displayexecutive = false;
+        this.amcEnrollmentForm.patchValue({srvAdvisor:sessionStorage.getItem('emplId'),salesAd:sessionStorage.getItem('ticketNo')})
     }
     if (sessionStorage.getItem('deptname') === 'Service') {
       this.displayexecutive = true;
@@ -523,7 +527,7 @@ export class AmcEnrollmentComponent implements OnInit {
     delete val.ouName;
     delete val.locationId;
     // delete val.ouId;
-    delete val.deptId;
+    // delete val.deptId;
     // delete val.emplId;
     delete val.orgId;
 
@@ -532,7 +536,8 @@ export class AmcEnrollmentComponent implements OnInit {
 
 
   newMast() {
-    const formValue: IAmcEnroll = this.transeData(this.amcEnrollmentForm.value);
+    const formValue: IAmcEnroll = this.transeData(this.amcEnrollmentForm.getRawValue());
+    // formValue.deptId=sessionStorage.getItem('deptId');
     this.checkAmcHeaderValidations();
     if (this.amcHeaderValidation) {
       var resp = confirm("Save AMC Enrollment ???");
@@ -708,5 +713,27 @@ export class AmcEnrollmentComponent implements OnInit {
       });
   }
 
+
+  onOptionsSelectedTL(event: any) {
+    
+    var ticketNo=event.target.value;
+    
+     var ticketNoNew = ticketNo.substr(ticketNo.indexOf(':') + 1);
+    //  alert(ticketNoNew);
+     var ticketNoNew1= ticketNoNew.trim();
+    var dept = Number(sessionStorage.getItem('deptId'));
+    this.amcEnrollmentForm.patchValue({srvAdvisor:sessionStorage.getItem('emplId')})
+  
+    // if (ticketNoNew1 != null) {
+    //   this.orderManagementService.ticketNoSearchFn(ticketNoNew1, dept)
+    //     .subscribe(
+    //       data => {
+    //         this.ticketNoSearch = data.obj;
+    //         console.log(this.ticketNoSearch);
+           
+    //       }
+    //     );
+    // }
+  }
 
 }

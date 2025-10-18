@@ -4528,6 +4528,17 @@ TransactionTypemiscpPaint(): Observable<any> {
     });
   }
 
+
+    commercialPrint(trxNumber) {
+    const REQUEST_URI = this.ServerUrl + `/SparesReports/SprCommCreditNote?trxNumber=${trxNumber}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+
   getJonCardNoSearch(jonCardNo): Observable<any> {
     return this.http.get(this.ServerUrl + `/jobCard/jobDtls/${jonCardNo}`);
   }

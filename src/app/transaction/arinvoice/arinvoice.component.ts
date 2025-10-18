@@ -1710,22 +1710,20 @@ export class ARInvoiceComponent implements OnInit {
       }
     }
 
-    console.log('---' + JSON.stringify(taxStr));
+    // console.log('---' + JSON.stringify(taxStr));
 
     let manArInvObj = Object.assign(new ManualARInvoiceObj(), jsonData);
     manArInvObj.setinvLines(this.arInvoiceForm.value.invLines);
     manArInvObj.setTaxLines(taxStr);
     manArInvObj.setinvDisLines(disStr);
 
-    // manArInvObj.setTaxLines(Array.from(this.taxarr.values()));
-    // manArInvObj.setinvDisLines(this.arInvoiceForm.value.invDisLines);
-    // manArInvObj.setinvDisLines(Array.from(this.distarr.values()));
-    // alert(this.distarr.size+'Array')
-
-
-
-
-    console.log(JSON.stringify(manArInvObj));
+   if (this.arInvoiceForm.get('class')?.value==='Credit Memo'){
+    if (this.arInvoiceForm.get('referenceNo')?.value===null|| this.arInvoiceForm.get('referenceNo')?.value===undefined){
+      alert('Please Enter Reference no.!');
+      return;
+    }
+   }
+    // console.log(JSON.stringify(manArInvObj));
     this.transactionService.ARInvoiceSubmit(JSON.stringify(manArInvObj)).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
@@ -3133,6 +3131,17 @@ export class ARInvoiceComponent implements OnInit {
     var trxNumber = this.arInvoiceForm.get('trxNumber')?.value;
     const fileName = 'download.pdf';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    // alert(this.arInvoiceForm.get('custTrxTypeId')?.value)
+    if (this.arInvoiceForm.get('custTrxTypeId')?.value===342){
+     this.service.commercialPrint(trxNumber)
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      })
+    }
+    else{
     this.service.viewInvnote(trxNumber)
       .subscribe(data => {
         var blob = new Blob([data], { type: 'application/pdf' });
@@ -3140,6 +3149,7 @@ export class ARInvoiceComponent implements OnInit {
         var printWindow = window.open(url, '', 'width=800,height=500');
         printWindow.open
       })
+    }
   }
 
   validateDate(date1, dType) {
@@ -3194,6 +3204,7 @@ export class ARInvoiceComponent implements OnInit {
               this.isVisibleArInvoiceLine = false;
               this.displaySaveButton = false;
               this.showApplyButton = false;
+              this.arInvoiceForm.get('referenceNo')?.reset();
               return;
             }
           }

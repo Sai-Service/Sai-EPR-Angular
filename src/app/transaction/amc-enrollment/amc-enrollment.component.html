@@ -24,8 +24,8 @@
                                 class="form-control" [(ngModel)]="emplId" placeholder=""></td>
                         <td> <input hidden disabled style="width:30px ;" type="number" formControlName="ouId" id="ouId"
                                 [(ngModel)]="ouId" class="form-control"></td>
-                        <td> <input hidden disabled style="width:30px ;" type="number" formControlName="deptId"
-                                id="deptId" [(ngModel)]="deptId" class="form-control"></td>
+                        <td> <input  disabled style="width:30px ;" type="number" formControlName="deptId"
+                               hidden id="deptId" [(ngModel)]="deptId" class="form-control"></td>
 
                     </tr>
                 </table>
@@ -165,16 +165,19 @@
                                     </select>
                                 </ng-template>
                                 <ng-template #elseSalesRepName>
-                                    <select formControlName="srvAdvisor" id="srvAdvisor" class="form-control" style="background-color: yellow;">
+                                    <!-- <select formControlName="salesAd" id="salesAd" class="form-control" style="background-color: #ffff00;"  (change)="onOptionsSelectedTL($event)">
                                         <option>--Select--</option>
                                         <option *ngFor="let pt of salesRepNameList" [(ngValue)]="pt.ticketNo">
                                             {{pt.ticketNo}}--{{pt.description}}
                                         </option>
-                                    </select>
+                                    </select> -->
+                                      <input type="text" disabled formControlName="salesAd" class="form-control" >
+                                      <input type="text" hidden  formControlName="srvAdvisor">
                                 </ng-template>
+                                <!-- <input type="text" formControlName="srvAdvisor"> -->
                             </td>
 
-
+                            <!-- <input type="text" hidden  formControlName="deptId"> -->
                             <td style="width: 15%" class="LabelFontStyle">&nbsp;Cust&nbsp;Name:&nbsp;</td>
 
                             <td colspan="3"> <input disabled style="width: 100%;" type="text" class="form-control"

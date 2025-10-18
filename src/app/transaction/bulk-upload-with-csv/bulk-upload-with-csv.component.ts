@@ -485,12 +485,12 @@ export class BulkUploadWithCsvComponent implements OnInit {
         csvRecord.WarehouseExcessQty = curruntRecord[14].trim();
         csvRecord.Remark = curruntRecord[15].trim();
         csvRecord.BaseAmount = curruntRecord[16].trim();
-        csvRecord.CESS = curruntRecord[17].trim();
-        csvRecord.UTGST = curruntRecord[18].trim();
-        csvRecord.SGSTUTGST = curruntRecord[19].trim();
-        csvRecord.CGST = curruntRecord[20].trim();
-        csvRecord.IGST = curruntRecord[21].trim();
-        csvRecord.Amount = curruntRecord[22].trim();
+        // csvRecord.CESS = curruntRecord[17].trim();
+        // csvRecord.UTGST = curruntRecord[18].trim();
+        csvRecord.SGSTUTGST = curruntRecord[17].trim();
+        csvRecord.CGST = curruntRecord[18].trim();
+        csvRecord.IGST = curruntRecord[19].trim();
+        csvRecord.Amount = curruntRecord[20].trim();
         csvArr.push(csvRecord);
       }
       return csvArr;
