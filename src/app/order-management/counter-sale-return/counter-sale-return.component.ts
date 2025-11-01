@@ -295,6 +295,7 @@ export class CounterSaleReturnComponent implements OnInit {
 
   ngOnInit(): void {
     $("#wrapper").toggleClass("toggled");
+    // alert(sessionStorage.getItem('dept'))
     this.name=  sessionStorage.getItem('name');
     this.loginArray=sessionStorage.getItem('divisionName');
     this.loginName=sessionStorage.getItem('name');
@@ -372,6 +373,7 @@ export class CounterSaleReturnComponent implements OnInit {
           console.log(this.lstOrderHeader);
             this.dispOrderDetails=true;
             this.searchButton=false;
+            this.deptId=Number(sessionStorage.getItem('dept'));
             this.showLineLov(this.lstOrderHeader.orderNumber);
             this.orderedDate=this.lstOrderHeader.orderedDate;
             this.headerFound=true;
@@ -394,7 +396,7 @@ export class CounterSaleReturnComponent implements OnInit {
             this.shipToLocId=this.lstOrderHeader.shipToLocId;
             this.compId=this.lstOrderHeader.compId;
             this.divisionId=this.lstOrderHeader.divisionId;
-            this.deptId=this.lstOrderHeader.deptId;
+            // this.deptId=this.lstOrderHeader.deptId;
             // this.emplId=this.lstOrderHeader.emplId;
             this.headerId=this.lstOrderHeader.headerId;
             this.ouId=this.lstOrderHeader.ouId;
@@ -898,7 +900,7 @@ for (let i = 0; i <  this.lineDetailsArray.length ; i++)
         delete val.locName;
         delete val.ouName;
         delete val.ouId;
-        delete val.deptId;
+       // delete val.d:\DMS-ERP -01NOV\Veh Stock Report\11CO SS DMS Inventory Stock Report-VH -31.10.25.xlsx;
         delete val.orgId;
         return val;
       }
