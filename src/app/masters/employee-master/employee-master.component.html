@@ -1,0 +1,309 @@
+<form [formGroup]="employeesMasterForm" (ngSubmit)="employeesMaster(employeesMasterForm.value)">
+
+    <div class="center">
+
+        <table style="width: 100%;background-color: white;">
+            <tr>
+                <td class="PageHeader">
+                    &nbsp;&nbsp;EMPLOYEE&nbsp;MASTER
+                </td>
+            </tr>
+        </table>
+        <fieldset class="employee-form">
+            <legend>Employee Details</legend>
+
+            <div class="form-grid">
+
+
+                <div class="form-group">
+                    <label for="divisionId">Division</label>
+                    <select formControlName="divisionId" [(ngModel)]="divisionId" (change)="onke($event)">
+                        <option *ngFor="let sc of DivisionIDList" [ngValue]="sc.divisionId">{{sc.divisionName }}
+                        </option>
+                    </select>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="locId">Location</label>
+                    <select formControlName="locId" id="locId">
+                        <option *ngFor="let sc of locIdList" [ngValue]="sc.locId">
+                            {{ sc.locId }} - {{ sc.locCode }} -{{sc.locName}}
+                        </option>
+                    </select>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="deptId">Department</label>
+                    <select formControlName="deptId" id="deptId" (change)="onOptionsDEPTSelected($event)">
+                        <option *ngFor="let sc of DepartmentList" [ngValue]="sc.cmnTypeId">
+                            {{ sc.cmnTypeId }} - {{ sc.code }}
+                        </option>
+                    </select>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="ticketNo">Ticket No</label>
+                    <input type="text" formControlName="ticketNo" (keyup)="onKey($event,'tkt')" />
+                </div>
+                <!-- <div class="form-group">
+                    <input type="text" placeholder="Enter email and press Enter" (keydown.enter)="addEmail($event)">
+                    <div>
+                        <span *ngFor="let email of emails; let i = index" class="chip">
+                            {{ email }} <button type="button" (click)="removeEmail(i)">x</button>
+                        </span>
+                    </div>
+                </div> -->
+        
+
+                <div class="form-group">
+                    <label for="designation">Designation</label>
+                    <select formControlName="designation" id="designation">
+                        <option *ngFor="let sc of DesignationList" [ngValue]="sc.code">
+                            {{ sc.code }}
+                        </option>
+                    </select>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <select formControlName="title" id="title" [(ngModel)]="title" (Change)="onTitleSelected($event)">
+                        <option *ngFor="let sc of titleList" [ngValue]="sc.code">
+                            {{ sc.code }}
+                        </option>
+                    </select>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="fname">First Name</label>
+                    <input type="text" formControlName="fname" [(ngModel)]="fname" (keyup)="onKey($event,'nam')" />
+                </div>
+
+                <div class="form-group">
+                    <label for="mname">Middle Name</label>
+                    <input type="text" formControlName="mname" [(ngModel)]="mname" (keyup)="onKey($event,'nam')" />
+                </div>
+
+                <div class="form-group">
+                    <label for="lname">Last Name</label>
+                    <input type="text" formControlName="lname" [(ngModel)]="lname" (keyup)="onKey($event,'nam')" />
+                </div>
+                 <div class="form-group ">
+                <label for="fullName">Full Name</label>
+                <input style="width: 21cm;" type="text" formControlName="fullName" [(ngModel)]='fullName'
+                    value={{fullName}} readonly />
+            </div>
+
+            </div>
+            <!-- <div class="form-group ">
+                <label for="fullName">Full Name</label>
+                <input style="width: 38cm;" type="text" formControlName="fullName" [(ngModel)]='fullName'
+                    value={{fullName}} readonly />
+            </div> -->
+
+
+            <div class="form-grid">
+
+
+                <div class="form-group">
+                    <label style="font-style: normal;">DOB</label>
+                    <input type="date" formControlName="dob" (change)="validateDob($event)" />
+                </div>
+
+
+                <div class="form-group">
+                    <label for="contact1">Contact 1</label>
+                    <input type="number" formControlName="contact1" />
+                </div>
+
+                <div class="form-group">
+                    <label>Contact 2</label>
+                    <input type="number" formControlName="contact2" />
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" formControlName="emailId" />
+                </div>
+
+
+                <div class="form-group">
+                    <label>PAN</label>
+                    <input type="text" formControlName="panNo" (keyup)="onKey($event,'pan')" />
+                </div>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Status</label>
+                    <ng-container *ngIf="displayButton; else statusDropdown">
+                        <input type="text" formControlName="status" readonly [(ngModel)]='status' value={{status}} />
+                    </ng-container>
+                    <ng-template #statusDropdown>
+                        <select formControlName="status" id="status" (Change)="onOptionsSelected($event)">
+                            <option disabled>--Select--</option>
+                            <option *ngFor="let sc of statusList" [ngValue]="sc.code">{{ sc.code }}</option>
+                        </select>
+                    </ng-template>
+                </div>
+
+                <div class="form-group">
+                    <label>Start Date</label>
+                    <input type="date" formControlName="startDate" (change)="validateStartDate(startDate)" />
+                </div>
+
+                <div class="form-group">
+                    <label for="endDate">End Date</label>
+                    <input type="date" formControlName="endDate" readonly />
+                </div>
+                <div class="form-group">
+                    <label for="loginAccess">Login Access</label>
+                    <select formControlName="loginAccess" id="loginAccess" (change)="loginRights($event)">
+                        <option value="N">No</option>
+                        <option value="Y">Yes</option>
+                    </select>
+                </div>
+                <div *ngIf="showLoginDetails; then LoginYes; else LoginNo"></div>
+                <ng-template #LoginYes>
+                    <br>
+                    <div class="form-group">
+                        <label>Role Id</label>
+                        <input type="test" formControlName="roleId" [(ngModel)]='roleId' value={{roleId}} readonly />
+                    </div>
+                    <div class="form-group">
+                        <label> Team&nbsp;&nbsp;Role:</label>
+                        <select formControlName="teamRole" id="teamRole">
+                            <option *ngFor="let sc of teamRoleList" [value]="sc.code">
+                                {{ sc.code }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Password&nbsp;&nbsp;:</label>
+                        <input type="password" formControlName="loginPass" />
+                    </div>
+                    <!-- </div> -->
+                    <!-- </div>
+        </fieldset> -->
+                </ng-template>
+                <ng-template #LoginNo></ng-template>
+            </div>
+        </fieldset>
+
+        <fieldset class="employee-form1">
+            <div class="form-grid1">
+                <div class="form-group1">
+                    <button type="button" class="btn-primary" style="width: 3cm; height: 1cm;"
+                        (click)="newMast()">&nbsp;&nbsp;SAVE&nbsp;&nbsp; </button>
+                </div>
+                <div class="form-group1">
+                    <button type="button" class="btn-primary" style="width: 3cm; height: 1cm;" (click)="updateMast()">
+                        UPDATE </button>
+                </div>
+                <div class="form-group1">
+                    <button type="button" class="btn-primary" style="width: 3cm; height: 1cm;"
+                        (click)="resetMast()">RESET</button>
+                </div>
+            </div>
+        </fieldset>
+
+
+          <fieldset class="RFS">
+            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
+               Search </legend>
+
+         <table class="center" style="width: 100%;background-color: #FFE4B5;">
+                 <tr>
+                  <td >
+                      <table class="center">
+                          <tr> 
+                           <td>&nbsp;Ticket&nbsp;No:&nbsp;</td>
+                           <td>
+                                <input type ="text" class="form-control" formControlName="ticketNo" [(ngModel)]='ticketNo'
+                                    value={{ticketNo}} >
+                                 
+                            </td>
+
+                            <td>
+                                <button type="button" class="btn-primary" (click)="SearchByTktNo(ticketNo)"><i class="fa fa-search"
+                                        aria-hidden="true"></i></button>
+                            </td>
+
+                            <td>&nbsp;Employee&nbsp;Name:&nbsp;</td>
+                            <td>
+                                 <input type ="text" class="form-control" formControlName="fullName" [(ngModel)]='fullName'
+                                     value={{fullName}} >
+                                  
+                             </td>
+ 
+                             <td>
+                                 <button type="button" class="btn-primary" (click)="SearchByFullName(fullName)"><i class="fa fa-search"
+                                         aria-hidden="true"></i></button>
+                             </td>
+
+                          
+                           
+                          </tr>
+                      </table>
+                  </td>
+                </tr>
+
+               
+            </table>
+        </fieldset>
+    </div>
+</form>
+
+
+<div class="container1">
+    <div class="col-md-12 table-responsive" #epltable1>
+        <div style="padding-bottom: 10px;padding-top: 10px;">
+            <div class="row">
+             <div class="col-sm-12">
+              <button (click)="exportToExcel1()" class="btn btn-success" style="width: fit-content;">Export To Excel</button> 
+             </div>
+            </div>
+           </div>
+    <div class="grid_scroll">
+    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
+        <tbody>
+            <tr class="GridHeader">
+                <th scope="col" style="background-color: aqua;">Employee Id</th>
+                <th scope="col">Ticket No</th>
+                <th scope="col">Division ID</th>
+                <th scope="col">Full Name</th>
+                <th scope="col">Location ID</th>
+                <th scope="col">Department</th>
+                <th scope="col">Designation</th>
+                <th scope="col">Date of Birth</th>
+                <th scope="col">PAN No</th>
+                <th scope="col">Email ID</th>
+                <th scope="col">Contact No1</th>
+                <th scope="col">Contact No2</th>
+                <th scope="col">Status</th>
+                <th scope="col">Select one</th>
+            </tr>
+        </tbody>
+        <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
+            <td  style="background-color: aqua;">{{com.emplId}}</td>
+            <td>{{com.ticketNo}}</td>
+            <td>{{com.divisionId}}</td>
+            <td>{{com.fullName}}</td>
+            <td>{{com.locId}}</td>
+            <td>{{com.deptId}}</td>
+            <td>{{com.designation}}</td>
+            <td>{{com.dob}}</td>
+            <td>{{com.panNo}}</td>
+            <td>{{com.emailId}}</td>
+            <td>{{com.contact1}}</td>
+            <td>{{com.contact2}}</td>  
+            <td>{{com.status}}</td>
+            <td><button class="btn btn-info" (click)="Select(com.emplId)">Select</button></td>
+        </tr>
+    </table>
+</div>
+    </div>
+</div>

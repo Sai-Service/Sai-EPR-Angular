@@ -27,10 +27,9 @@ export class CounterSaleInvComponent {
   orderNumber:number;
   custAccountNo:number;
 
-
-
-isDisabled11 = false;
-displayCustomerSite = true;
+  
+  isDisabled11 = false;
+  displayCustomerSite = true;
 
   constructor(private fb: FormBuilder,private router1: ActivatedRoute, private router: Router, private orderManagementService: CounterSaleService) {
     this.CounterSaleOrderBookingForm = fb.group({
