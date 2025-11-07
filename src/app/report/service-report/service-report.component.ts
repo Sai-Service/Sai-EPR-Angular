@@ -65,6 +65,8 @@ export class ServiceReportComponent implements OnInit {
   regNo: string;
   isVisiblepanelfromtoOuId: boolean = false;
   isVisibleEwayBillChalan: boolean = false;
+  isVisiblespDebtorsReport1:boolean=false;
+  isVisiblespDebtorsReport:boolean=false;
   age1: number = 20;
   age2: number = 30;
   age3: number = 45;
@@ -202,11 +204,18 @@ export class ServiceReportComponent implements OnInit {
   }
 
 
-  onOptionsLocation(event) {
-    // alert(event);
-    this.serviceReportForm.patchValue({ locId: event })
-  }
+  // onOptionsLocation(event) {
+  //   // alert(event);
+  //   this.serviceReportForm.patchValue({ locId: event })
+  // }
 
+
+
+  onOptionsLocation(event: any) {
+  if (this.serviceReportForm.get('locId')?.value !== event) {
+    this.serviceReportForm.patchValue({ locId: event }, { emitEvent: false });
+  }
+}
 
   reportName: string;
   reportDetails(reportName) {
@@ -224,6 +233,8 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleWarrantyClaimDet = false;
       this.isVisiblefromtosubinventory = false;
       this.isVisibleEwayBillChalan = false;
+      this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
         if (Number(sessionStorage.getItem('deptId'))==4){
         this.isVisiblelocationInput=false;
         this.isVisiblelocationLOV=true;
@@ -255,6 +266,8 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleWarrantyClaimDet = false;
       this.isVisiblefromtosubinventory = false;
       this.isVisibleEwayBillChalan = false;
+       this.isVisiblespDebtorsReport1=false;
+       this.isVisiblespDebtorsReport=false;
         if (Number(sessionStorage.getItem('deptId'))==4){
         this.isVisiblelocationInput=false;
         this.isVisiblelocationLOV=true;
@@ -286,6 +299,8 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleWarrantyClaimDet = false;
       this.isVisiblefromtosubinventory = false;
       this.isVisibleEwayBillChalan = false;
+       this.isVisiblespDebtorsReport1=false;
+       this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'serviceDeliverySummary') {
       this.reportName = 'Service Delivery Summary';
@@ -301,6 +316,8 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleWarrantyClaimDet = false;
       this.isVisiblefromtosubinventory = false;
       this.isVisibleEwayBillChalan = false;
+       this.isVisiblespDebtorsReport1=false;
+       this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'gstReceiptRegister') {
       this.reportName = 'Receipt Register';
@@ -308,6 +325,8 @@ export class ServiceReportComponent implements OnInit {
       this.isVisiblefromtolocationdepartment = true;
       this.isVisiblepaneltolocation = false;
       this.isVisiblecustomerLedger = false;
+       this.isVisiblespDebtorsReport1=false;
+       this.isVisiblespDebtorsReport=false;
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.isVisibleDepartmentList = true;
         this.isVisiblegstsaiDebtors = false;
@@ -352,6 +371,8 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleWarrantyClaimDet = false;
       this.isVisiblefromtosubinventory = false;
       this.isVisibleEwayBillChalan = false;
+       this.isVisiblespDebtorsReport1=false;
+       this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'customerLedger') {
       this.reportName = 'Customer Ledger Report';
@@ -370,6 +391,8 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleWarrantyClaimDet = false;
       this.isVisiblefromtosubinventory = false;
       this.isVisibleEwayBillChalan = false;
+       this.isVisiblespDebtorsReport1=false;
+       this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'gSTSaleRegister') {
       this.reportName = 'GST Sales Register';
@@ -385,6 +408,8 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleWarrantyClaimDet = false;
       this.isVisiblefromtosubinventory = false;
       this.isVisibleEwayBillChalan = false;
+       this.isVisiblespDebtorsReport1=false;
+       this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'laborChargeSummary') {
       this.reportName = 'Labour Charge Summary Report';
@@ -400,6 +425,8 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleWarrantyClaimDet = false;
       this.isVisiblefromtosubinventory = false;
       this.isVisibleEwayBillChalan = false;
+       this.isVisiblespDebtorsReport1=false;
+       this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'technicianSummary') {
       this.reportName = 'Technician  Summary Report';
@@ -415,6 +442,8 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleWarrantyClaimDet = false;
       this.isVisiblefromtosubinventory = false;
       this.isVisibleEwayBillChalan = false;
+       this.isVisiblespDebtorsReport1=false;
+       this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'amcSaleRegister') {
       this.reportName = 'AMC Sales Register';
@@ -430,6 +459,8 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleWarrantyClaimDet = false;
       this.isVisiblefromtosubinventory = false;
       this.isVisibleEwayBillChalan = false;
+       this.isVisiblespDebtorsReport1=false;
+       this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'EWSaleRegister') {
       this.reportName = 'EW Sales Register';
@@ -445,6 +476,8 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleWarrantyClaimDet = false;
       this.isVisiblefromtosubinventory = false;
       this.isVisibleEwayBillChalan = false;
+       this.isVisiblespDebtorsReport1=false;
+       this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'creditNoteReg') {
       this.reportName = 'Credit Note Register';
@@ -460,6 +493,8 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleWarrantyClaimDet = false;
       this.isVisiblefromtosubinventory = false;
       this.isVisibleEwayBillChalan = false;
+       this.isVisiblespDebtorsReport1=false;
+       this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'jobIssueDetails') {
       this.reportName = 'Job Issue Details Report';
@@ -475,6 +510,8 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleWarrantyClaimDet = false;
       this.isVisiblefromtosubinventory = false;
       this.isVisibleEwayBillChalan = false;
+       this.isVisiblespDebtorsReport1=false;
+       this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'IrnGenerationReport') {
       this.reportName = 'IRN Generation Report';
@@ -493,6 +530,8 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleWarrantyClaimDet = false;
       this.isVisiblefromtosubinventory = false;
       this.isVisibleEwayBillChalan = false;
+       this.isVisiblespDebtorsReport1=false;
+       this.isVisiblespDebtorsReport=false;
     }
     else if (reportName == 'invoiceSummary') {
       this.reportName = 'Invoice Summary Report';
@@ -508,6 +547,8 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleWarrantyClaimDet = false;
       this.isVisiblefromtosubinventory = false;
       this.isVisibleEwayBillChalan = false;
+       this.isVisiblespDebtorsReport1=false;
+       this.isVisiblespDebtorsReport=false;
     }
     else if (reportName == 'amcHistrory') {
       this.reportName = 'AMC History Report';
@@ -523,6 +564,8 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleWarrantyClaimDet = false;
       this.isVisiblefromtosubinventory = false;
       this.isVisibleEwayBillChalan = false;
+       this.isVisiblespDebtorsReport1=false;
+       this.isVisiblespDebtorsReport=false;
     }
     else if (reportName == 'amcUtilisation') {
       this.reportName = 'AMC Utilisation Report';
@@ -538,6 +581,8 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleWarrantyClaimDet = false;
       this.isVisiblefromtosubinventory = false;
       this.isVisibleEwayBillChalan = false;
+       this.isVisiblespDebtorsReport1=false;
+       this.isVisiblespDebtorsReport=false;
     }
 
     else if (reportName == 'amcControlReport') {
@@ -554,6 +599,8 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleWarrantyClaimDet = false;
       this.isVisiblefromtosubinventory = false;
       this.isVisibleEwayBillChalan = false;
+       this.isVisiblespDebtorsReport1=false;
+       this.isVisiblespDebtorsReport=false;
     }
     else if (reportName == 'fscCouponData') {
       this.reportName = 'FSC Coupon Data Report';
@@ -569,6 +616,8 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleWarrantyClaimDet = false;
       this.isVisiblefromtosubinventory = false;
       this.isVisibleEwayBillChalan = false;
+       this.isVisiblespDebtorsReport1=false;
+       this.isVisiblespDebtorsReport=false;
     }
     else if (reportName == 'receiptOtherDetails') {
       this.reportName = '21. Receipt-Other Details Report';
@@ -584,6 +633,8 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleWarrantyClaimDet = false;
       this.isVisiblefromtosubinventory = false;
       this.isVisibleEwayBillChalan = false;
+       this.isVisiblespDebtorsReport1=false;
+       this.isVisiblespDebtorsReport=false;
     }
     else if (reportName == 'gstsaiDebtorsAsOf') {
       this.reportName = '22. Service Debtor Report As Of';
@@ -599,6 +650,8 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleWarrantyClaimDet = false;
       this.isVisiblefromtosubinventory = false;
       this.isVisibleEwayBillChalan = false;
+       this.isVisiblespDebtorsReport1=false;
+       this.isVisiblespDebtorsReport=false;
     }
     else if (reportName == 'bajajWarrantyClaimDet') {
       this.reportName = '23. Bajaj Warranty Claim Details';
@@ -614,6 +667,8 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleWarrantyClaimDet = true;
       this.isVisiblefromtosubinventory = false;
       this.isVisibleEwayBillChalan = false;
+       this.isVisiblespDebtorsReport1=false;
+       this.isVisiblespDebtorsReport=false;
     }
     else if (reportName == 'warrantyClaimInternalConsu') {
       this.reportName = '24. Warranty Claim internal Consumption';
@@ -629,6 +684,8 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleWarrantyClaimDet = false;
       this.isVisiblefromtosubinventory = true;
       this.isVisibleEwayBillChalan = false;
+      this.isVisiblespDebtorsReport=false;
+       this.isVisiblespDebtorsReport1=false;
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.isVisiblelocationInput = false;
         this.isVisiblelocationLOV = true;
@@ -661,6 +718,8 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleWarrantyClaimDet = false;
       this.isVisiblefromtosubinventory = false;
       this.isVisibleEwayBillChalan = true;
+       this.isVisiblespDebtorsReport1=false;
+       this.isVisiblespDebtorsReport=false;
     }
         else if (reportName == 'ewayBillChallanReport') {
       this.reportName = '26. Eway Excel Generation Report';
@@ -676,6 +735,141 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleWarrantyClaimDet = false;
       this.isVisiblefromtosubinventory = false;
       this.isVisibleEwayBillChalan = true;
+       this.isVisiblespDebtorsReport1=false;
+       this.isVisiblespDebtorsReport=false;
+    }
+   else if (reportName === 'partyDebout') {
+      this.reportName = '27.PartyWise Debtors Outstanding Report';
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisiblepanelfromtolocation = false;
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisiblepaneltolocation = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleGSTSaleRegister = false;
+      this.panelamcHistrory = false;
+      this.isVisiblepanelfromtoOuId = false;
+      this.isVisiblepanelserviceagingReport = false;
+      this.isVisibleWarrantyClaimDet = false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisibleEwayBillChalan = false;
+       this.isVisiblespDebtorsReport = true;
+      this.isVisiblespDebtorsReport1 = false;
+     if (Number(sessionStorage.getItem('deptId')) == 4) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
+      }
+      else {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = true;
+      }
+      if (Number(sessionStorage.getItem('roleId')) == 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
+      }
+      else {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = true;
+      }
+    }
+       else if (reportName == 'dbtrsAdvanceReport') {
+      this.reportName = '28.PartyWise Debtors Advance Report';
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisiblepanelfromtolocation = false;
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisiblepaneltolocation = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleGSTSaleRegister = false;
+      this.panelamcHistrory = false;
+      this.isVisiblepanelfromtoOuId = false;
+      this.isVisiblepanelserviceagingReport = false;
+      this.isVisibleWarrantyClaimDet = false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisibleEwayBillChalan = false;
+      this.isVisiblespDebtorsReport = true;
+      this.isVisiblespDebtorsReport1 = false;
+        if (Number(sessionStorage.getItem('deptId')) == 4) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
+      }
+      else {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = true;
+      }
+      if (Number(sessionStorage.getItem('roleId')) == 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
+      }
+      else {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = true;
+      }
+    }
+       else if (reportName == 'receivableConsolidatedReport') {
+      this.reportName = '29.PartyWise Consolidated Receivable Report';
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisiblepanelfromtolocation = false;
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisiblepaneltolocation = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleGSTSaleRegister = false;
+      this.panelamcHistrory = false;
+      this.isVisiblepanelfromtoOuId = false;
+      this.isVisiblepanelserviceagingReport = false;
+      this.isVisibleWarrantyClaimDet = false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisibleEwayBillChalan = false;
+        this.isVisiblespDebtorsReport = true;
+      this.isVisiblespDebtorsReport1 = false;
+        if (Number(sessionStorage.getItem('deptId')) == 4) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
+      }
+      else {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = true;
+      }
+      if (Number(sessionStorage.getItem('roleId')) == 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
+      }
+      else {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = true;
+      }
+    }
+       else if (reportName == 'detailedreceivableReport') {
+        // alert(reportName)
+        // debugger;
+      this.reportName = '30.PartyWise Detailed Receivable Report';
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisiblepanelfromtolocation = false;
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisiblepaneltolocation = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleGSTSaleRegister = false;
+      this.panelamcHistrory = false;
+      this.isVisiblepanelfromtoOuId = false;
+      this.isVisiblepanelserviceagingReport = false;
+      this.isVisibleWarrantyClaimDet = false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisibleEwayBillChalan = false;
+       this.isVisiblespDebtorsReport1=true;
+         if (Number(sessionStorage.getItem('deptId')) == 4) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
+      }
+      else {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = true;
+      }
+      if (Number(sessionStorage.getItem('roleId')) == 10) {
+        this.isVisiblelocationInput = false;
+        this.isVisiblelocationLOV = true;
+      }
+      else {
+        this.isVisiblelocationInput = true;
+        this.isVisiblelocationLOV = true;
+      }
     }
   }
 
@@ -1362,6 +1556,108 @@ export class ServiceReportComponent implements OnInit {
             this.dataDisplay = ''
           })
     }
+   else if (reportName === '27.PartyWise Debtors Outstanding Report') {
+      this.toDateValidation(tDate); if (this.rptValidation == false) { return; }
+
+      const fileName = 'PartyWise Debtors Outstanding Report-' + toDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
+        this.reportService.gstSparesPartyOutstandingReport(toDate, locId, sessionStorage.getItem('ouId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.gstSparesPartyOutstandingReport(toDate, sessionStorage.getItem('locId'), sessionStorage.getItem('ouId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
+
+    else if (reportName === '28.PartyWise Debtors Advance Report') {
+      this.toDateValidation(tDate); if (this.rptValidation == false) { return; }
+
+      const fileName = 'PartyWise Debtors Advance Report-' + toDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
+        this.reportService.gstSparesPartyAdvReport(toDate, locId, sessionStorage.getItem('ouId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.gstSparesPartyAdvReport(toDate, sessionStorage.getItem('locId'), sessionStorage.getItem('ouId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
+
+    else if (reportName === '29.PartyWise Consolidated Receivable Report') {
+      this.toDateValidation(tDate); if (this.rptValidation == false) { return; }
+
+      const fileName = 'PartyWise Consolidated Receivable Report-' + toDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
+        this.reportService.gstSparesPartyReceivableReport(toDate, locId, sessionStorage.getItem('ouId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.gstSparesPartyReceivableReport(toDate, sessionStorage.getItem('locId'), sessionStorage.getItem('ouId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
+
+    else if (reportName === '30.PartyWise Detailed Receivable Report') {
+      this.toDateValidation(tDate); if (this.rptValidation == false) { return; }
+
+      const fileName = 'PartyWise Detailed Receivable Report-' + toDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (custAccNo === null || custAccNo === undefined || custAccNo === '') {
+        custAccNo = '';
+      }
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
+        this.reportService.gstSparesPartyDetReceivableReport(toDate, locId, sessionStorage.getItem('ouId'), custAccNo)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.gstSparesPartyDetReceivableReport(toDate, sessionStorage.getItem('locId'), sessionStorage.getItem('ouId'), custAccNo)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }    
   }
 
 

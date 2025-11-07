@@ -63,45 +63,48 @@ export class PaymentArComponent implements OnInit {
   msgType: string = "Close";
   methodName:string;
   // public DivisionIDList : Array<string>=[];
-  // public OUIdList: Array<string> = [];
+  // public OUIdList:any=[];
 
-  public OUIdList: Array<string> = [];
-  public DepartmentList: Array<string> = [];
-  public statusList: Array<string> = [];
-  public locIdList: Array<string> = [];
-  // public PaymentModeList: Array<string> = [];
-  // public ReceiptMethodList: Array<string> = [];
+  public OUIdList:any=[];
+  public DepartmentList:any=[];
+  public statusList:any=[];
+  public locIdList:any=[];
+  ReceiptMethodValList:any=[];
+  // public PaymentModeList:any=[];
+  // public ReceiptMethodList:any=[];
   ReceiptMethodList: any=[] ;
-  public ReceiptStatusList: Array<string> = [];
-  public ReceiptStateList: Array<string> = [];
-  public ReverseReasonList: Array<string> = [];
-  public ReceiptTypeArList: Array<string> = [];
-  public VehRegNoList: Array<string> = [];
-  public RefReasonList: Array<string> = [];
+  public ReceiptStatusList:any=[];
+  public ReceiptStateList:any=[];
+  public ReverseReasonList:any=[];
+  public ReceiptTypeArList:any=[];
+  public VehRegNoList:any=[];
+  public RefReasonList:any=[];
 
-  PaymentModeList: any;
+  // PaymentModeList: any=[];
+  PaymentModeList: any[] = [];
   ChqBounceReasonList: any;
-  viewAccountingArRcpt: Array<string> = [];
-  viewAccountingLines: Array<string> = [];
+  viewAccountingArRcpt:any=[];
+  viewAccountingLines:any=[];
+  receiptMethodsList:any=[];
 
   receiptDetails: any=[];
-  customerNameSearch: any;
-  accountNoSearch: any;
-  getVehRegDetails: any;
-  CustomerDetailsList: any;
-  CustomerSiteDetails: any;
-  GLPeriodCheck: any;
+  customerNameSearch: any=[];
+  accountNoSearch: any=[];
+  getVehRegDetails: any=[];
+  CustomerDetailsList: any=[];
+  CustomerSiteDetails: any=[];
+  GLPeriodCheck: any=[];
   glPrdStartDate: string;
   glPrdEndDate: string;
 
-  userList1: any[] = [];
+  userList1: any=[];
   lastkeydown1: number = 0;
 
-  lstcomments: any[];
-  lstinvoices: any[];
-  lstCustomer: any[];
-  lstApplyHistory: any[];
-  lstRcptOtherDetails: any;
+  lstcomments: any=[];
+  lstinvoices: any=[];
+  lstCustomer: any=[];
+  lstApplyHistory: any=[];
+  lstRcptOtherDetails: any=[];
 
 
 
@@ -1151,7 +1154,7 @@ export class PaymentArComponent implements OnInit {
       this.service.ReceiptMethodListNew(payType, rmStatus, this.deptId, this.ouId)
         .subscribe(
           data => {
-            this.ReceiptMethodList = data.obj;
+            this.receiptMethodsList = data.obj;
             console.log(this.ReceiptMethodList);
             this.showBankDetails = false;
             this.paymentArForm.get("checkDate").reset();
@@ -1159,18 +1162,46 @@ export class PaymentArComponent implements OnInit {
         );
     } else {
       // alert("Chq/dd/neft/... selected");
-      this.service.ReceiptMethodListNew(payType, rmStatus, this.deptId, this.ouId)
+      // this.service.ReceiptMethodListNew(payType, rmStatus, this.deptId, this.ouId)
+      //   .subscribe(
+      //     data => {
+      //       this.ReceiptMethodList = data.obj[0];
+      //       console.log(data.obj[0]+'------');
+      //       this.showBankDetails = true;
+      //       if (this.displayButton == true) {
+      //         this.checkDate = this.pipe.transform(Date.now(), 'y-MM-dd');
+      //       }
+          
+      //       if (Number(sessionStorage.getItem('deptId')) === 4) {
+      //         // var selectReceiptmethodList= this.receiptMethodId.
+      //         if ( this.receiptMethodId != undefined){
+      //         let selectReceiptmethodList = this.ReceiptMethodList.find(d => d.receiptMethodId === this.receiptMethodId);
+      //         console.log(selectReceiptmethodList);
+      //         console.log(selectReceiptmethodList.methodName);
+      //         if (selectReceiptmethodList.methodName.includes('FSC Control')) {
+      //           this.refType = 'Service-Order'
+      //         }
+      //         if (selectReceiptmethodList.methodName.includes('Sales Control')) {
+      //           this.refType = 'Sales-Order'
+      //         }
+      //       }
+      //       }
+      //     });
+        this.service.ReceiptMethodListNew(payType, rmStatus, this.deptId, this.ouId)
         .subscribe(
           data => {
-            this.ReceiptMethodList = data.obj;
-            console.log(this.ReceiptMethodList+'------');
-            this.showBankDetails = true;
+            if (data.code===200){
+            this.receiptMethodsList = data.obj;
+            console.log( this.receiptMethodsList);
+              this.showBankDetails = true;
             if (this.displayButton == true) {
               this.checkDate = this.pipe.transform(Date.now(), 'y-MM-dd');
             }
+          
             if (Number(sessionStorage.getItem('deptId')) === 4) {
               // var selectReceiptmethodList= this.receiptMethodId.
-              let selectReceiptmethodList = this.ReceiptMethodList.find(d => d.receiptMethodId === this.receiptMethodId);
+              if ( this.receiptMethodId != undefined){
+              let selectReceiptmethodList = this.receiptMethodsList.find(d => d.receiptMethodId === this.receiptMethodId);
               console.log(selectReceiptmethodList);
               console.log(selectReceiptmethodList.methodName);
               if (selectReceiptmethodList.methodName.includes('FSC Control')) {
@@ -1179,9 +1210,11 @@ export class PaymentArComponent implements OnInit {
               if (selectReceiptmethodList.methodName.includes('Sales Control')) {
                 this.refType = 'Sales-Order'
               }
-
             }
-          });
+            }
+            }
+          
+          })
     }
     var customerId = this.paymentArForm.get('customerId')?.value;
     // this.ReceiptAmount=Number(this.ReceiptAmount)+Number(this.paymentArForm.get('paymentAmt').value);
@@ -1189,7 +1222,7 @@ export class PaymentArComponent implements OnInit {
     this.service.methodWiseAmountCheckVal(customerId, sessionStorage.getItem('locId'), sessionStorage.getItem('ouId'), payType)
       .subscribe(
         data => {
-          this.ReceiptMethodList = data.obj;
+          this.ReceiptMethodValList = data.obj;
           if (payType === 'CASH') {
             var apiAmt = frmRecAmt + Number(data.obj);
             if (apiAmt > 150000) {
@@ -1231,7 +1264,7 @@ export class PaymentArComponent implements OnInit {
           }
         }
       )
-      console.log(this.ReceiptMethodList+'--------');
+      // console.log(this.receiptMethodsList+'--------');
       
   }
 
@@ -1272,7 +1305,7 @@ export class PaymentArComponent implements OnInit {
 
 
   SearchByRcptNo(rcptNo: any) {
-    alert ("Receipt Num : " +rcptNo);
+    // alert ("Receipt Num : " +rcptNo);
     // if(rcptNo ===undefined || rcptNo===null || rcptNo<=0 ) {return;}
 
     this.status = null;
@@ -1536,12 +1569,12 @@ export class PaymentArComponent implements OnInit {
 
 
   SelectReceipt(receiptNumber: any) {
-    alert('selectReceiptMethod'+'---'+receiptNumber)
+    // alert('selectReceiptMethod'+'---'+receiptNumber)
     this.displayButton = false;
     this.display = false;
     this.othSaveButton = true;
     if (Number(sessionStorage.getItem('deptId')) != 4) {
-      debugger;
+
       this.service.getArReceiptDetailsByRcptNoAndloc(receiptNumber)
         .subscribe(
           data => {
@@ -2950,12 +2983,8 @@ export class PaymentArComponent implements OnInit {
 
 
   newMast() {
-
     // alert ("GL period..." +this.GLPeriodCheck);
-
-
     this.CheckDataValidations();
-
     if (this.checkValidation === true) {
       // alert("Data Validation Sucessfull....\nPosting data  to AR PAYMENT TABLE");
       var resp = confirm("Do You Want to Save this Receipt ???");
@@ -3823,7 +3852,36 @@ export class PaymentArComponent implements OnInit {
 
   }
 
-onReceiptMethodSelected(methodName){
+
+onReceiptMethodSelected(event:any){
+    var methodName=event.target.value;
+  // alert("test "+methodName);
+    var payType = this.paymentArForm.get('payType')?.value;
+  var rmStatus='Active';
+  var customerId = this.paymentArForm.get('customerId')?.value;
+  console.log( this.receiptMethodsList);
+   let selectReceiptmethodList = this.receiptMethodsList.find(d => d.methodName === methodName);
+   this.paymentArForm.patchValue({receiptMethodId:selectReceiptmethodList.receiptMethodId,methodName:selectReceiptmethodList.methodName})
+  
+  //  this.service.ReceiptMethodListNew(payType, rmStatus, this.deptId, this.ouId)
+  //       .subscribe(
+  //         data => {
+  //           this.ReceiptMethodList = data.obj;
+  //           debugger;
+  //           let selectReceiptmethodList = this.ReceiptMethodList.find(d => d.methodName === methodName);
+  //             this.paymentArForm.patchValue({receiptMethodId:selectReceiptmethodList.receiptMethodId,methodName:selectReceiptmethodList.methodName})
+  //             // if (selectReceiptmethodList.attribute1=='Y'){
+  //             //   this.showControlModal=true;
+  //             // }
+  //             // else{
+  //             //   this.showControlModal=false;
+  //             // }
+  //         });
+}
+
+onReceiptMethodSelected1(event:any){
+  var methodName=event.target.value;
+  alert("test "+methodName);
   var payType = this.paymentArForm.get('payType')?.value;
   var rmStatus='Active';
   var customerId = this.paymentArForm.get('customerId')?.value;
@@ -3831,10 +3889,11 @@ onReceiptMethodSelected(methodName){
         .subscribe(
           data => {
             this.ReceiptMethodList = data.obj;
+            // debugger;
             // console.log(this.ReceiptMethodList);
             let selectReceiptmethodList = this.ReceiptMethodList.find(d => d.methodName === methodName);
               // console.log(selectReceiptmethodList);
-              this.paymentArForm.patchValue({receiptMethodId:selectReceiptmethodList.receiptMethodId})
+              this.paymentArForm.patchValue({receiptMethodId:selectReceiptmethodList.receiptMethodId,methodName:selectReceiptmethodList.methodName})
               if (selectReceiptmethodList.attribute1=='Y'){
                 this.showControlModal=true;
               }

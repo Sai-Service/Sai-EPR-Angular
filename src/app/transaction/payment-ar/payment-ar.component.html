@@ -554,7 +554,6 @@
                                                         class="form-control"
                                                         (change)='onPayTypeSelected($event,"Active")'
                                                         style="background-color: yellow;">
-                                                        <option disabled>--Select--</option>
                                                         <option *ngFor="let sc of  PaymentModeList"
                                                             [ngValue]="sc.lookupValue">
                                                             {{sc.lookupValue}}
@@ -573,25 +572,25 @@
                                                 <ng-template #No1></ng-template>
                                             </tr>
                                         </table>
+                                        
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle1">Receipt&nbsp;Method:&nbsp;</td>
                                     <td>
                                         <table>
                                             <tr>
                                                 <td>
-                                                    <select formControlName="methodName" id="methodName"
-                                                        [(ngModel)]="receiptMethodId" class="form-control"
-                                                        style="background-color: yellow;width: 100%;" (change)='onReceiptMethodSelected(receiptMethodId,"Active")'>
+                                                    <select formControlName="methodName" id="methodName"   class="form-control"
+                                                        style="background-color: yellow;width: 100%;" (change)='onReceiptMethodSelected($event,"Active")'>
                                                         <option disabled>--Select--</option>
-                                                        <option *ngFor="let sc of  ReceiptMethodList "
+                                                        <option *ngFor="let sc of  receiptMethodsList"
                                                             [value]="sc.methodName">
-                                                            <!-- {{sc.receiptMethodId}}- -->
                                                             {{sc.methodName}}
                                                         </option>
                                                     </select>
+                                                   
                                                     <input type="number" hidden formControlName="receiptMethodId" >
                                                 </td>
-                                                <td>
+                                                <!-- <td> -->
                                                     <div *ngIf="showControlModal; then Yes1; else No1"></div>
                                         <ng-template #Yes1>
                                             <td>
@@ -602,7 +601,7 @@
                                             </td>
                                         </ng-template>
                                         <ng-template #No1></ng-template>
-                                                </td>
+                                                <!-- </td> -->
                             </tr>
                         </table>
                         </td>
@@ -1188,8 +1187,7 @@
                                                                 <table>
                                                                     <tr>
 
-                                                                        <div *ngIf="accountsLogin ,then refundYes; else refundNo"
-                                                                            )></div>
+                                                                        <div *ngIf="accountsLogin ,then refundYes; else refundNo" ></div>
                                                                         <ng-template #refundYes>
                                                                             <td>
                                                                                 <select formControlName="applyTo"
