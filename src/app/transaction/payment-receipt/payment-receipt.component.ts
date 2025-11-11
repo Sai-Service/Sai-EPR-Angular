@@ -554,6 +554,7 @@ export class PaymentReceiptComponent implements OnInit {
               // this.lstcomments = data;
               console.log(this.lstcomments);
               this.showBankDetails = false;
+              this.allRecetptSearch();
             }
 
           );
@@ -828,5 +829,31 @@ export class PaymentReceiptComponent implements OnInit {
     }
 
   }
+
+
+
+allRecetptSearch(){
+   this.lstcomments = [];
+    this.orderManagementService.getOmReceiptSearchByOrdNo(this.orderNumber)
+        .subscribe(
+          data => {
+            this.lstcomments = data.obj.oePayList;
+            this.custName = data.obj.custName;
+            this.customerId = data.obj.customerId;
+            this.custPan = data.obj.custPan;
+            this.custGst = data.obj.custGst;
+            this.paymentReceiptForm.patchValue({ balancePay: data.obj.balancePay })
+            // this.lstcomments = data.obj;
+            // this.lstcomments = data;
+            console.log(this.lstcomments);
+            if (data.obj.oePayList.length > 0) {
+              this.buttonviewReceipt = false;
+            }
+          }
+
+        );
+  }
+
+
 }
 

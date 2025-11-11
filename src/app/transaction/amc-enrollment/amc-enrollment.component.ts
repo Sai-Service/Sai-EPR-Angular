@@ -354,7 +354,16 @@ export class AmcEnrollmentComponent implements OnInit {
             });
             // this.enableCustAccount = false;
             this.GetCustomerDetailsNew(this.getVehRegDetails.custAccountNo);
-          } else { alert("Vehicle Regno. Not Found...."); this.resetMast(); }
+
+            if (data.obj.mcpYN==='Y'){
+              alert('MCP Already Enroll.MCP No Is- '+data.obj.mcpNo+' MCP Package No-'+data.obj.mcpPackage)
+             
+               this.amcEnrollmentForm.patchValue(data.obj);
+                this.displayButton=false;
+                this.serchEnrollByRegNo(data.obj.regNo)
+            }
+          }
+           else { alert("Vehicle Regno. Not Found...."); this.resetMast(); }
 
         });
 
