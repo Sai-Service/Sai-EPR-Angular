@@ -1790,8 +1790,10 @@ export class SalesOrderFormComponent implements OnInit {
                      this.isVisible2 = true;
                    }
                  }
+              
                 //  alert(this.lstgetOrderLineDetails[i].flowStatusCode +'-----1671')
                  if (this.lstgetOrderLineDetails[i].flowStatusCode === 'CANCELLED' || this.lstgetOrderLineDetails[i].flowStatusCode === 'DE-ALLOTED') {
+
                    this.isDisabledtaxbtn[i] = true;
                    if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED') {
                      this.isVisible4 = true;
