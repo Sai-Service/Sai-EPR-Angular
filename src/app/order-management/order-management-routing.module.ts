@@ -31,8 +31,9 @@ import { OrderDetailsUpdationComponent } from './order-details-updation/order-de
 import { VehicleAndAddonPriceUploadComponent } from './vehicle-and-addon-price-upload/vehicle-and-addon-price-upload.component';
 import { OrderCancellationUploadComponent } from './order-cancellation-upload/order-cancellation-upload.component';
 import { SalesOrderReversalComponent } from './sales-order-reversal/sales-order-reversal.component';
+import { CsvUploadComponent } from './csv-upload/csv-upload.component';
 // import { SalesSuperUserGatePassComponent } from './sales-super-user-gate-pass/sales-super-user-gate-pass.component';
-
+import { SparesOrderListComponent } from './spares-order-list/spares-order-list.component';
 
 const routes: Routes = [
   {path:'salesOrderBooking', component:SalesOrderBookingComponent},
@@ -69,6 +70,9 @@ const routes: Routes = [
   {path:'VehicleAndAddonPriceUpload',component:VehicleAndAddonPriceUploadComponent},
   {path:'orderCancellationUpload',component:OrderCancellationUploadComponent},
   {path:'salesOrderReversal',component:SalesOrderReversalComponent},
+  {path:'csvupload',component:CsvUploadComponent},
+   {path:'SparesOrderList',component:SparesOrderListComponent},
+  {path:'OrderGeneration/:orderNumber',component:OrderGenerationComponent},
   {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
 

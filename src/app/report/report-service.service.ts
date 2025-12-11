@@ -1534,6 +1534,20 @@ ewayBillChallanReportFuc(locId,suppNo, siteName, dlrCode, challanNo){
     headers: this.headers,
   }); 
 }
+paintOpningStockNewFn(orgId,toDate){
+  const REQUEST_URI = this.ServerUrl +`/PaintReports/PnOpeningStkRep?ouId=${orgId}&toDate=${toDate}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  }); 
+}
 
+paintClosingStockNewFn(orgId,toDate){
+  const REQUEST_URI = this.ServerUrl +`/PaintReports/PnClosingStkRep?ouId=${orgId}&toDate=${toDate}`;
+  return this.http.get(REQUEST_URI, {
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  }); 
+}
 }
 

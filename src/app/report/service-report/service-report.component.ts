@@ -301,6 +301,22 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleEwayBillChalan = false;
        this.isVisiblespDebtorsReport1=false;
        this.isVisiblespDebtorsReport=false;
+       if (Number(sessionStorage.getItem('deptId'))==4){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+      if (Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
+       if (Number(sessionStorage.getItem('roleId'))==10){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+     if (Number(sessionStorage.getItem('roleId')) !=10 && Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
     }
     else if (reportName === 'serviceDeliverySummary') {
       this.reportName = 'Service Delivery Summary';
@@ -916,6 +932,9 @@ export class ServiceReportComponent implements OnInit {
     else if (reportName === 'Service Invoice Not Delivered') {
       const fileName = 'Invoice-Not-Delivery-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (locId ==undefined || locId ===''||locId===null){
+        locId=''
+      }
       if (Number(sessionStorage.getItem('deptId')) === 4  || Number(sessionStorage.getItem('roleId'))==10) {
         this.reportService.servindToDtReport(toDate, sessionStorage.getItem('ouId'), locId)
           .subscribe(data => {
@@ -938,6 +957,9 @@ export class ServiceReportComponent implements OnInit {
     else if (reportName === 'Service Pending Vehicle Report') {
       const fileName = 'Service Pending Vehicle Report-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+       if (locId ===undefined|| locId===null|| locId===''){
+        locId =''
+      }
       if (Number(sessionStorage.getItem('deptId')) === 4  || Number(sessionStorage.getItem('roleId'))==10) {
         this.reportService.serPendingVehicleReport(toDate, sessionStorage.getItem('ouId'), locId)
           .subscribe(data => {

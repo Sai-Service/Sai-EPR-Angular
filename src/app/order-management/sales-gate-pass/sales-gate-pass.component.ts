@@ -27,33 +27,33 @@ export class SalesGatePassComponent implements OnInit {
 
   pipe = new DatePipe('en-US');
   now = Date.now();
-  gpDate1 = this.pipe.transform( Date.now(), 'y-MM-dd');
+  gpDate1 = this.pipe.transform(Date.now(), 'y-MM-dd');
   minDate = new Date();
   public insNameList: Array<string>[];
   public insSiteList: Array<string>[];
   lstPendingGatepass: any[];
-
+  isDisabled7 = false;
   isDisabled = false;
-  isGatePassDisabled=false;
-  disSuperUserGateButton=true;
+  isGatePassDisabled = false;
+  disSuperUserGateButton = true;
   isDisabled2 = true;
   gatepassNo: number;
   dateOfDelv: Date;
-  itemId: number; 
+  itemId: number;
   segment: String;
   regNo: string;
   vin: String;
   // password:String='Super@2022';
   // userName:String='SuperUser';
-  password:string;
-  userName:string;
+  password: string;
+  userName: string;
   modelVarClr: String;
   deliveryLoc: String;
   vehicleNo: String;
   serviceLoc: String;
   orderNumber: number;
   // orderNumber=222220210600263;
-   
+
   trxNumber: number;
   trxDate: Date;
   dmsSob: String;
@@ -74,21 +74,21 @@ export class SalesGatePassComponent implements OnInit {
   public BillShipList: Array<string> = [];
   regDate: Date;
   isVisiblegatePassDetails: boolean = false;
-  isVisiblegatePassVehicleDetails:boolean=false;
-  isVisibleVehicleNumberUpdate:boolean=false;
-  isVisibleInsDetails:boolean=false;
-  downloadButton=false;
+  isVisiblegatePassVehicleDetails: boolean = false;
+  isVisibleVehicleNumberUpdate: boolean = false;
+  isVisibleInsDetails: boolean = false;
+  downloadButton = false;
 
-  insType :string;
-  insuDate:string;
-  policyNo :string ; //='222220210600263';
-  insuPeriod:number;
-  insurerCompId:number;
-  insurerSiteId:number;
-  insurerIdName:string;
-  insurerSiteName:string;
-  isDisabledIns=true;
-  regNo1:string;
+  insType: string;
+  insuDate: string;
+  policyNo: string; //='222220210600263';
+  insuPeriod: number;
+  insurerCompId: number;
+  insurerSiteId: number;
+  insurerIdName: string;
+  insurerSiteName: string;
+  isDisabledIns = true;
+  regNo1: string;
 
 
   constructor(private fb: FormBuilder, private router: Router, private router1: ActivatedRoute, private service: MasterService, private orderManagementService: OrderManagementService) {
@@ -100,7 +100,7 @@ export class SalesGatePassComponent implements OnInit {
       segment: [],
       vin: [],
       itemId: [],
-      regNo: ['',[Validators.required,]],
+      regNo: ['', [Validators.required,]],
       regDate: [],
       modelVarClr: [],
       deliveryLoc: [],
@@ -118,17 +118,17 @@ export class SalesGatePassComponent implements OnInit {
       salesExeName: [],
       balOutstandAmt: [],
       excessAmt: [],
-      userName:[],
-      password:[],
-      insType :[],
-      policyNo:[],
-      insuDate:[],
-      insuPeriod:[],
-      insurerCompId:[],
-      insurerSiteId:[],
-      insurerIdName:[],
-      insurerSiteName:[],
-      regNo1:[],
+      userName: [],
+      password: [],
+      insType: [],
+      policyNo: [],
+      insuDate: [],
+      insuPeriod: [],
+      insurerCompId: [],
+      insurerSiteId: [],
+      insurerIdName: [],
+      insurerSiteName: [],
+      regNo1: [],
     })
   }
   ngOnInit(): void {
@@ -136,7 +136,7 @@ export class SalesGatePassComponent implements OnInit {
     // this.shipToLoc = Number(sessionStorage.getItem('locCode'));
     // this.shipToLoc = Number(sessionStorage.getItem('locId'));
     this.isVisiblegatePassDetails = false;
-    this.isVisiblegatePassVehicleDetails=false;
+    this.isVisiblegatePassVehicleDetails = false;
 
     this.sub = this.router1.params.subscribe(params => {
       this.orderNumber = params['orderNumber'];
@@ -156,19 +156,19 @@ export class SalesGatePassComponent implements OnInit {
       );
 
 
-      this.service.insNameList()
+    this.service.insNameList()
       .subscribe(
         data => {
-        this.insNameList = data;
-        console.log(this.insNameList);
-      } );
+          this.insNameList = data;
+          console.log(this.insNameList);
+        });
 
-        var mDate = this.pipe.transform(this.gpDate1, 'dd-MMM-y');
-        this.orderManagementService.gatePassPendList(mDate,sessionStorage.getItem('locId'))
-          .subscribe(
-            data => {
-              this.lstPendingGatepass = data;
-              console.log(this.lstPendingGatepass);
+    var mDate = this.pipe.transform(this.gpDate1, 'dd-MMM-y');
+    this.orderManagementService.gatePassPendList(mDate, sessionStorage.getItem('locId'))
+      .subscribe(
+        data => {
+          this.lstPendingGatepass = data;
+          console.log(this.lstPendingGatepass);
         })
 
   }
@@ -202,57 +202,57 @@ export class SalesGatePassComponent implements OnInit {
           this.contactPerson = this.lstcomments.contactPerson;
           this.gatepassNo = this.lstcomments.gatePassNo;
           this.dateOfDelv = this.lstcomments.orderDate;
-          this.insType= this.lstcomments.insType;
-          this.insurerCompId= this.lstcomments.insurerCompId;
-          this.insurerSiteId= this.lstcomments.insurerSiteId;
-          this.insuDate= this.lstcomments.insuDate;
-          this.policyNo= this.lstcomments.policyNo;
-          this.insuPeriod= this.lstcomments.insuPeriod;
+          this.insType = this.lstcomments.insType;
+          this.insurerCompId = this.lstcomments.insurerCompId;
+          this.insurerSiteId = this.lstcomments.insurerSiteId;
+          this.insuDate = this.lstcomments.insuDate;
+          this.policyNo = this.lstcomments.policyNo;
+          this.insuPeriod = this.lstcomments.insuPeriod;
 
           if (this.lstcomments.gatePassNo != 0) {
             this.isVisiblegatePassDetails = false;
-            this.isVisiblegatePassVehicleDetails=false;
-            this.isDisabled2=false;
+            this.isVisiblegatePassVehicleDetails = false;
+            this.isDisabled2 = false;
             // this.isVisibleInsDetails=false;
-            
+
           }
-          else if (this.lstcomments.gatePassNo === 0 && this.lstcomments.vehicleNo ==='NA'  ) {
+          else if (this.lstcomments.gatePassNo === 0 && this.lstcomments.vehicleNo === 'NA') {
             this.isVisiblegatePassDetails = false;
-            this.isVisiblegatePassVehicleDetails=true;
+            this.isVisiblegatePassVehicleDetails = true;
             // this.isVisibleInsDetails=true;
-            this.isDisabled2=true;
+            this.isDisabled2 = true;
           }
-          else if (this.lstcomments.gatePassNo === 0 && this.lstcomments.vehicleNo !='NA'  ){
+          else if (this.lstcomments.gatePassNo === 0 && this.lstcomments.vehicleNo != 'NA') {
             this.isVisiblegatePassDetails = true;
-            this.isVisiblegatePassVehicleDetails=false;
+            this.isVisiblegatePassVehicleDetails = false;
             // this.isVisibleInsDetails=true;
-            this.isDisabled2=true;
+            this.isDisabled2 = true;
           }
           // alert(this.lstcomments.vehicleNo +'------'+ data.obj.gatePassNo)
           // debugger;
-          if (this.lstcomments.vehicleNo != 'NA' && this.lstcomments.gatePassNo === 0){
-              this.isVisibleVehicleNumberUpdate =true;
-            }
-            if (this.lstcomments.vehicleNo != 'NA' && this.lstcomments.gatePassNo != 0){
-              this.isVisibleVehicleNumberUpdate =false;
-            }
+          if (this.lstcomments.vehicleNo != 'NA' && this.lstcomments.gatePassNo === 0) {
+            this.isVisibleVehicleNumberUpdate = true;
+          }
+          if (this.lstcomments.vehicleNo != 'NA' && this.lstcomments.gatePassNo != 0) {
+            this.isVisibleVehicleNumberUpdate = false;
+          }
 
-        if(this.lstcomments.gatePassNo === 0 && (this.lstcomments.policyNo==undefined || this.lstcomments.policyNo==null || this.lstcomments.policyNo.trim()=='')){ 
-          this.isVisiblegatePassDetails = false;
-          this.isVisiblegatePassVehicleDetails=true;
-          // this.isVisibleInsDetails=true;
-          this.isDisabled2=true;
+          if (this.lstcomments.gatePassNo === 0 && (this.lstcomments.policyNo == undefined || this.lstcomments.policyNo == null || this.lstcomments.policyNo.trim() == '')) {
+            this.isVisiblegatePassDetails = false;
+            this.isVisiblegatePassVehicleDetails = true;
+            // this.isVisibleInsDetails=true;
+            this.isDisabled2 = true;
 
-        }
-            
-        if(this.lstcomments.gatePassNo === 0 && (this.lstcomments.insuDate==undefined|| this.lstcomments.insuDate==null || this.lstcomments.insuDate.trim()=='')){ 
-          this.isVisiblegatePassDetails = false;
-          this.isVisiblegatePassVehicleDetails=true;
-          // this.isVisibleInsDetails=true;
-          this.isDisabled2=true;
+          }
 
-        }
-             
+          if (this.lstcomments.gatePassNo === 0 && (this.lstcomments.insuDate == undefined || this.lstcomments.insuDate == null || this.lstcomments.insuDate.trim() == '')) {
+            this.isVisiblegatePassDetails = false;
+            this.isVisiblegatePassVehicleDetails = true;
+            // this.isVisibleInsDetails=true;
+            this.isDisabled2 = true;
+
+          }
+
 
         }
 
@@ -297,21 +297,21 @@ export class SalesGatePassComponent implements OnInit {
   //    }
 
   // -------------------New GatePass Fn ---by rk 27/8/22
-  SalesGatePassPost(orderNumber,srvLoc){
+  SalesGatePassPost(orderNumber, srvLoc) {
 
-    if(this.policyNo==undefined|| this.policyNo==null || this.policyNo.trim()==''){ alert("Policy No should not be null..");return;}
-    if(this.insuDate==undefined|| this.insuDate===null || this.insuDate.trim()==''){ alert("Policy Date should not be null..");return;}
+    if (this.policyNo == undefined || this.policyNo == null || this.policyNo.trim() == '') { alert("Policy No should not be null.."); return; }
+    if (this.insuDate == undefined || this.insuDate === null || this.insuDate.trim() == '') { alert("Policy Date should not be null.."); return; }
 
     this.isDisabled = true;
-    const formValue =this.SalesGatepassForm.value;
+    const formValue = this.SalesGatepassForm.value;
 
     // var srvLoc =this.SalesGatepassForm.get('shipToLoc').value;
 
-    if(srvLoc==undefined || srvLoc==null || srvLoc<=0) { alert ("Please Select Service Location.");return;}
-    var mreg= this.SalesGatepassForm.get('regNo').value;
-  
+    if (srvLoc == undefined || srvLoc == null || srvLoc <= 0) { alert("Please Select Service Location."); return; }
+    var mreg = this.SalesGatepassForm.get('regNo').value;
 
-    this.orderManagementService.SalesGatePassGenSubmit(orderNumber,this.emplId,srvLoc).subscribe((res: any) => {
+
+    this.orderManagementService.SalesGatePassGenSubmit(orderNumber, this.emplId, srvLoc).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
         this.gatePassOrderNo(this.orderNumber);
@@ -327,7 +327,7 @@ export class SalesGatePassComponent implements OnInit {
   }
 
 
-// -------------------Old GatePass Fn ---
+  // -------------------Old GatePass Fn ---
   orderNumberPost(orderNumber, locId) {
     this.orderManagementService.orderNoPost(orderNumber, this.emplId, locId).subscribe((res: any) => {
       if (res.code === 200) {
@@ -352,20 +352,20 @@ export class SalesGatePassComponent implements OnInit {
 
   vehiclePolicyupdate(itemId, regNo, regDate) {
 
-    var policuNum=this.SalesGatepassForm.get('policyNo').value;
-    var policyDate=this.SalesGatepassForm.get('insuDate').value;
-       
-    if(policuNum==undefined|| policuNum==null || policuNum.trim()==''){ alert("Policy No should not be null..");return;}
-    if(policyDate==undefined|| policyDate==null || policyDate.trim()==''){ alert("Policy Date should not be null..");return;}
+    var policuNum = this.SalesGatepassForm.get('policyNo').value;
+    var policyDate = this.SalesGatepassForm.get('insuDate').value;
+
+    if (policuNum == undefined || policuNum == null || policuNum.trim() == '') { alert("Policy No should not be null.."); return; }
+    if (policyDate == undefined || policyDate == null || policyDate.trim() == '') { alert("Policy Date should not be null.."); return; }
 
     // alert ("Regno & Policy no is ok...."); return;
 
-    var customerId=this.lstcomments.customerId;
+    var customerId = this.lstcomments.customerId;
     var orderedDate2 = this.pipe.transform(regDate, 'MM/dd/yyyy');
 
-    const formValue= this.SalesGatepassForm.value;
+    const formValue = this.SalesGatepassForm.value;
 
-      // this.orderManagementService.vehicleNoupdateFn(itemId, regNo, orderedDate2,customerId).subscribe((res: any) => {
+    // this.orderManagementService.vehicleNoupdateFn(itemId, regNo, orderedDate2,customerId).subscribe((res: any) => {
     this.orderManagementService.vehicleNoInsuranceupdateFn(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
@@ -387,25 +387,25 @@ export class SalesGatePassComponent implements OnInit {
       return;
     }
 
-    if(regNo==undefined|| regNo==null || regNo.trim()==''){ alert("Reg No should not be null..");return;}
+    if (regNo == undefined || regNo == null || regNo.trim() == '') { alert("Reg No should not be null.."); return; }
     // alert(regNo.trim()=='')
     // alert("Registration No1:"+regNo +","+regNo.length);
-    var regNo1=regNo.toUpperCase();
-    regNo1 =regNo1.trim();
+    var regNo1 = regNo.toUpperCase();
+    regNo1 = regNo1.trim();
     // this.regNo=regNo1
-    this.SalesGatepassForm.patchValue({regNo:regNo1});
+    this.SalesGatepassForm.patchValue({ regNo: regNo1 });
 
     // alert("Registration No:"+this.regNo+","+regNo1.length);  
-    var policuNum=this.SalesGatepassForm.get('policyNo').value;
-    var policyDate=this.SalesGatepassForm.get('insuDate').value;
-       
+    var policuNum = this.SalesGatepassForm.get('policyNo').value;
+    var policyDate = this.SalesGatepassForm.get('insuDate').value;
+
     // if(policuNum==undefined|| policuNum==null || policuNum.trim()==''){ alert("Policy No should not be null..");return;}
     // if(policyDate==undefined|| policyDate==null || policyDate.trim()==''){ alert("Policy Date should not be null..");return;}
 
-    var customerId=this.lstcomments.customerId;
+    var customerId = this.lstcomments.customerId;
     var orderedDate2 = this.pipe.transform(regDate, 'MM/dd/yyyy');
 
-    const formValue= this.SalesGatepassForm.value;
+    const formValue = this.SalesGatepassForm.value;
 
     // this.orderManagementService.vehicleNoInsuranceupdateFn(formValue).subscribe((res: any) => {
     //   if (res.code === 200) {
@@ -417,21 +417,21 @@ export class SalesGatePassComponent implements OnInit {
     //       alert(res.message + '---' + res.obj);
     //     }
     //   }
-      
+
     // });
 
-    this.orderManagementService.vehicleNoupdateFn(itemId, regNo1, orderedDate2,customerId).subscribe((res: any) => {
-        if (res.code === 200) {
-          alert(res.message);
-          this.gatePassOrderNo(this.orderNumber);
-          this.gatepassNo = res.obj;
-        } else {
-          if (res.code === 400) {
-            alert(res.message + '---' + res.obj);
-          }
+    this.orderManagementService.vehicleNoupdateFn(itemId, regNo1, orderedDate2, customerId).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert(res.message);
+        this.gatePassOrderNo(this.orderNumber);
+        this.gatepassNo = res.obj;
+      } else {
+        if (res.code === 400) {
+          alert(res.message + '---' + res.obj);
         }
-      });
-    
+      }
+    });
+
   }
 
 
@@ -461,98 +461,117 @@ export class SalesGatePassComponent implements OnInit {
 
   onInsurerNameSelected(customerId: number) {
     // alert('in '+ customerId)
-    if(customerId >0) {
-    this.service.insSiteList(customerId)
-      .subscribe(
-        data => {
-          this.insSiteList = data.customerSiteMasterList;
-          console.log(this.insSiteList);
-        }
-      );
-  } }
+    if (customerId > 0) {
+      this.service.insSiteList(customerId)
+        .subscribe(
+          data => {
+            this.insSiteList = data.customerSiteMasterList;
+            console.log(this.insSiteList);
+          }
+        );
+    }
+  }
 
 
   validatePolicyDate(policyDate) {
     var currDate = new Date();
     var invDate = this.SalesGatepassForm.get('invoiceDt').value;
     var billDate = new Date(invDate);
-    var insDate =new Date(policyDate);
-    alert (insDate +","+billDate);
+    var insDate = new Date(policyDate);
+    alert(insDate + "," + billDate);
     if (insDate < billDate) {
       alert("POLICY DATE :" + "Should not be below Vehcile Sale Date");
       this.insuDate = this.pipe.transform(Date.now(), 'y-MM-dd');
     }
   }
 
-    validatePolicyTerm(prd) { 
-      // alert ("Period : "+prd);
-      if(prd<0 || prd ==undefined || prd==null) {alert ("POLICY TERM : Please Enter valid Policy Period..")
-      this.SalesGatepassForm.patchValue({insuPeriod:0});
-     }
-      
-
+  validatePolicyTerm(prd) {
+    // alert ("Period : "+prd);
+    if (prd < 0 || prd == undefined || prd == null) {
+      alert("POLICY TERM : Please Enter valid Policy Period..")
+      this.SalesGatepassForm.patchValue({ insuPeriod: 0 });
     }
 
-    SelectOrdNum(ordNumber){
-      alert ("Order Number Seleted :" + ordNumber);
-
-    }
-    login(){
-      // alert(this.userName+'------****'+this.password);
-      // password:String='Super@2022';
-  // userName:String='SuperUser';
-      if (this.userName==='SuperUser'&& this.password==='Super@2022'){
-        alert('Login Successfully..!')
-        this.disSuperUserGateButton=false;
-        // this.orderSuperNumberPost(this.orderNumber,this.shipToLoc)
-   
-      }
-      else{
-        this.disSuperUserGateButton=true;
-      }
-    }
-
-
-
-    orderSuperNumberPost(orderNumber, locId) {
-      // alert(orderNumber+'-----'+locId)
-      if (locId===undefined || locId===null||locId===''){
-        alert('Please Select Service Location.!');
-        return;
-      }
-      this.orderManagementService.orderNoPost(orderNumber, this.emplId, locId).subscribe((res: any) => {
-        if (res.code === 200) {
-          alert(res.message);
-          this.gatePassOrderNo(this.orderNumber);
-          //window.location.reload();
-          this.gatepassNo = res.obj;
-          this.isGatePassDisabled=true;
-        } else {
-          if (res.code === 400) {
-            alert(res.message + '---' + res.obj);
-            this.isGatePassDisabled=false;
-            this.SalesGatepassForm.get('userName').reset();
-            this.SalesGatepassForm.get('password').reset();
-            // window.location.reload();
-          }
-        }
-      });
-    }
-
-
-exVehicleNoupdate(){
-var regNo =   this.SalesGatepassForm.get('vehicleNo')?.value;  
-var regNo1 =   this.SalesGatepassForm.get('regNo1')?.value;  
-var vin = this.SalesGatepassForm.get('vin')?.value;
- this.orderManagementService.exVehicleNoUpdate(regNo,vin,regNo1).subscribe((res: any) => {
-        if (res.code === 200) {
-          alert(res.message)
-        }
-        else{
-          alert(res.message)
-        }
- }
-)
-}
 
   }
+
+  SelectOrdNum(ordNumber) {
+    alert("Order Number Seleted :" + ordNumber);
+
+  }
+  login() {
+    // alert(this.userName+'------****'+this.password);
+    // password:String='Super@2022';
+    // userName:String='SuperUser';
+    if (this.userName === 'SuperUser' && this.password === 'Super@2022') {
+      alert('Login Successfully..!')
+      this.disSuperUserGateButton = false;
+      // this.orderSuperNumberPost(this.orderNumber,this.shipToLoc)
+
+    }
+    else {
+      this.disSuperUserGateButton = true;
+    }
+  }
+
+
+
+  orderSuperNumberPost(orderNumber, locId) {
+    // alert(orderNumber+'-----'+locId)
+    if (locId === undefined || locId === null || locId === '') {
+      alert('Please Select Service Location.!');
+      return;
+    }
+    this.orderManagementService.orderNoPost(orderNumber, this.emplId, locId).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert(res.message);
+        this.gatePassOrderNo(this.orderNumber);
+        //window.location.reload();
+        this.gatepassNo = res.obj;
+        this.isGatePassDisabled = true;
+      } else {
+        if (res.code === 400) {
+          alert(res.message + '---' + res.obj);
+          this.isGatePassDisabled = false;
+          this.SalesGatepassForm.get('userName').reset();
+          this.SalesGatepassForm.get('password').reset();
+          // window.location.reload();
+        }
+      }
+    });
+  }
+
+
+  exVehicleNoupdate() {
+    var regNo = this.SalesGatepassForm.get('vehicleNo')?.value;
+    var regNo1 = this.SalesGatepassForm.get('regNo1')?.value;
+    var vin = this.SalesGatepassForm.get('vin')?.value;
+    this.orderManagementService.exVehicleNoUpdate(regNo, vin, regNo1).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert(res.message)
+      }
+      else {
+        alert(res.message)
+      }
+    }
+    )
+  }
+
+
+  SOA() {
+    this.isDisabled7 = true;
+    const fileName = 'download.pdf';
+    // const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    this.orderManagementService.downloadSoa(this.orderNumber)
+      .subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+        this.isDisabled7 = false;
+        // saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+      });
+  }
+
+
+}

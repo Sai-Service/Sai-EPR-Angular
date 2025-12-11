@@ -2187,6 +2187,8 @@
                                                                     <th scope="col" style="text-align: right;">Material Taxable&nbsp;&nbsp;</th>
                                                                     <th scope="col" style="text-align: right;">Material Tax&nbsp;&nbsp;</th>
                                                                     <th scope="col" style="text-align: right;">Material Total&nbsp;&nbsp;</th>
+                                                                     <th scope="col" style="text-align: right;">INS Salvage Total&nbsp;&nbsp;</th>
+                                                                      <th scope="col" style="text-align: right;">INS ECA Total&nbsp;&nbsp;</th>
                                                                     <th scope="col" style="text-align: right;">Total Amount&nbsp;&nbsp;</th>
                                                                     <th scope="col" style="text-align: center;">Print&nbsp;&nbsp;</th>
                                                                 </tr>
@@ -2238,6 +2240,8 @@
                                                                     <td><input disabled type="number" min="0" formControlName="matTaxableAmt" [(ngModel)]="matTaxableAmt" style="width: 7em;font-weight: bold;font-size: small;" ></td>
                                                                     <td><input disabled type="number" min="0" formControlName="matTotTaxAmt" [(ngModel)]="matTotTaxAmt" style="width: 7em;font-weight: bold;font-size: small;" ></td>
                                                                     <td><input disabled type="number" min="0"  formControlName="matTotAmt" style="width: 7em;font-weight: bold;font-size: small;">  </td>
+                                                                      <td><input disabled type="number" min="0"  formControlName="salvage1" class="form-control"  style="width: 8em;font-weight: bold;font-size: small;"></td>
+                                                                        <td><input disabled type="number" min="0"  formControlName="ecaAmt1" class="form-control"  style="width: 8em;font-weight: bold;font-size: small;"></td>
                                                                     <td><input disabled type="number" min="0"  formControlName="invTotAmt" class="form-control"  style="width: 8em;font-weight: bold;font-size: small;"></td>
                                                                                          
                                                                     <div *ngIf="printInvoiceButton; then PINV1; else PINV2"></div>
@@ -2413,8 +2417,9 @@
                                                                                                                                                    
                                                                             <td><input disabled type="number" min="0"   style="width: 7em;font-weight: bold;font-size: small;" formControlName="insMatTaxableAmt"></td>
                                                                             <td><input disabled type="number" min="0"   style="width: 7em;font-weight: bold;font-size: small;" formControlName="insMatTotTaxAmt"></td>
-                                                                            <td><input disabled type="number" min="0"  formControlName="insMatTotAmt" style="width: 7em;font-weight: bold;font-size: small;" formControlName="insMatTotAmt"></td>
-
+                                                                            <td><input disabled type="number" min="0"  formControlName="insMatTotAmt1" style="width: 7em;font-weight: bold;font-size: small;" ></td>
+                                                                                  <td><input disabled type="number" min="0"  formControlName="salvage1" class="form-control"  style="width: 8em;font-weight: bold;font-size: small;"></td>
+                                                                        <td><input disabled type="number" min="0"  formControlName="ecaAmt1" class="form-control"  style="width: 8em;font-weight: bold;font-size: small;"></td>
                                                                             <td><input disabled type="number" min="0"  formControlName="insInvTotAmt" class="form-control"  style="width: 8em;font-weight: bold;font-size: small;"></td>
 
                                                                             <div *ngIf="printInsInvoiceButton; then PINSINV1; else PINSINV2"></div>
@@ -2429,10 +2434,10 @@
                                                                 </tr>
                                                                 
 
-                                                            <div *ngIf="bajajDivision ; then bajajDiv; else marutiDiv"></div>
-                                                            <ng-template #marutiDiv>
-                                                               <div *ngIf="dispSplitRatio ; then salv1; else salv2"></div>
-                                                                <ng-template #salv1>
+                                                             <div *ngIf="bajajDivision ; then bajajDiv; else marutiDiv"></div>
+                                                            <ng-template #bajajDiv>
+                                                          <!--      <div *ngIf="dispSplitRatio ; then salv1; else salv2"></div>
+                                                                <ng-template #salv1> -->
                                                               
                                                                     <tr class="ItemStyle" style="text-decoration:none;">
                                                                     
@@ -2440,7 +2445,7 @@
                                                                         
                                                                         <td>
                                                                             <input type="number" min="0"   style="width:7em;font-weight: bold;font-size: small;"
-                                                                                placeholder="" formControlName="ecaAmt" class="form-control">
+                                                                                placeholder="" formControlName="ecaAmt"  (keydown.tab)="deducatableAmtVali(salvage)"  class="form-control">
                                                                         </td>
                                                                      </tr>
                                                                       <tr class="ItemStyle" style="text-decoration:none;">
@@ -2448,12 +2453,12 @@
                                                                         
                                                                         <td>
                                                                             <input type="number" min="0"   style="width: 7em;font-weight: bold;font-size: small;"
-                                                                                placeholder="" formControlName="salvage" class="form-control">
+                                                                                placeholder="" formControlName="salvage"    (keydown.tab)="salavageAmountVal(salvage)" class="form-control">
                                                                         </td>
 
                                                                       </tr>
-                                                            </ng-template><ng-template #salv2></ng-template>
-                                                            </ng-template><ng-template #bajajDiv> </ng-template>
+                                                           </ng-template><ng-template #marutiDiv></ng-template>
+                                                          <!--    </ng-template><ng-template #bajajDiv> </ng-template> -->
                                                                                                                                                                 
                                                             </tbody>
                                                         </table>
@@ -2615,8 +2620,15 @@
                                                                 (click)="applyDiscnt()">Apply Discount</button>
                                                         </td> -->
                                                         <td>
-                                                            <button type="button" class="btn btn-primary"
-                                                                style="width: 6rem;" (click)="BillingCal()">Save Bill</button>
+                                                            <!-- <button type="button" class="btn btn-primary"
+                                                                style="width: 6rem;" (click)="BillingCal()">Save Bill</button> -->
+
+                                                                  <button type="button" class="btn btn-primary" id="invoiceBtn" 
+                                            [disabled]="isDisabled10" data-toggle="modal" data-target="#confirmAlertInv"
+                                            (click)=" getMessage1('INVOICE')">
+                                            Save Bill
+                                        </button>
+
                                                         </td>
                                                        </ng-template>
                                                         <ng-template #SB2>
@@ -3576,3 +3588,36 @@
 
 </form>
 
+
+
+
+
+<!-- Confirmation Message -->
+<div class="modal" id="confirmAlertInv" tabindex="-1" role="dialog" aria-hidden="true"  style="margin-left: 30%;width: 30%;" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmation!</h5>
+            </div>
+            <div class="modal-body">
+                <label
+                    style="font-size: small; color: black; font-weight: bold; text-align: left; vertical-align: middle; ">
+                    {{message}}
+                </label>
+            </div>
+            <div class="modal-footer">
+                <table class="center" style="width: 30%;">
+                    <tr>
+                        <td>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" id="register"
+                                (click)="executeAction1()">Yes</button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="closeModalDialog()">No</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

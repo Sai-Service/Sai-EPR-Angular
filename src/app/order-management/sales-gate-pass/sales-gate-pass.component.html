@@ -1,4 +1,4 @@
-<form [formGroup]="SalesGatepassForm" (ngSubmit)="SalesGatepass(SalesGatepassForm.value)" >
+<form [formGroup]="SalesGatepassForm" (ngSubmit)="SalesGatepass(SalesGatepassForm.value)">
     <table style="width: 100%;background-color: white;">
         <tr>
             <td colspan="4" class="PageHeader" style="width: 100%;">
@@ -15,330 +15,408 @@
             </tr>
            </table>
     </fieldset> -->
-  
+
     <fieldset class="RFS">
         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
-           Find</legend>
-    <table class="center" style="width: 100%;background-color: #FFE4B5;">
-        <tr>
-          <td >
-              <table class="center">
-                  <tr>
-                    <td  style="background-color: #FFE4B5;">
-                        &nbsp;Order&nbsp;No&nbsp;:&nbsp;
-                    </td>
-                    <td style="background-color: #FFE4B5;">
-                        <input  class="form-control" formControlName="orderNumber" [(ngModel)]='orderNumber'  value={{orderNumber}}>
-                    </td>
-                    <td style="background-color: #FFE4B5;">
-                        <button type="button" class="btn-primary" (click)="gatePassOrderNo(orderNumber)"><i class="fa fa-search"
-                                aria-hidden="true"></i></button>
-                    </td>
-                  </tr>
-              </table>
-          </td>
-        </tr>
-    </table>
-    </fieldset>
-    <fieldset class="RFS">
-    <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Details</legend>
-  <table class="center" style="width: 100%;">
-    <tr>
-        <input  hidden formControlName="emplId"  [(ngModel)]='emplId'  class="form-control" >
-
-        <td style="width: 15%" class="LabelFontStyle"> Vehicle&nbsp;No&nbsp;: </td>
-       <td> <input disabled type="text" formControlName="segment" value="segment" [(ngModel)]='segment'  class="form-control" style="height: 20px;width: 160px;"></td>
-        <td style="width: 15%" class="LabelFontStyle">   Chassis&nbsp;No/&nbsp;(VIN)&nbsp;:  </td>
-       <td> <input disabled type="text" formControlName="vin" value="vin"  [(ngModel)]='vin' class="form-control" style="height: 20px;width: 160px;"></td>
-        <td style="width: 15%" class="LabelFontStyle">  Model&nbsp;/&nbsp;Variant&nbsp;/&nbsp;Color: </td>
-        <td colspan="4">
-            <input disabled type="text" formControlName="modelVarClr" value="modelVarClr" [(ngModel)]='modelVarClr' class="form-control" style="height: 20px;width: 100%;">
-        </td>
-    </tr>
-    <tr>
-        <td style="width: 15%" class="LabelFontStyle">  Customer&nbsp;Name&nbsp;: </td>
-        <td colspan="3"><input disabled type="text" formControlName="custName" [(ngModel)]='custName' id="custName" value="custName"  class="form-control" style="height: 20px;width: 100%;"></td>
-        <td style="width: 15%" class="LabelFontStyle">  Customer&nbsp;Address&nbsp;: </td>
-        <td colspan="3"><input disabled type="text" formControlName="custAdd" [(ngModel)]='custAdd' id="custAdd" value="custAdd"  class="form-control" style="height: 20px;width: 100%;"></td>
-    </tr>
-    <tr>
-        <td style="width: 15%" class="LabelFontStyle">  Delivery&nbsp;Location&nbsp;:  </td>
-      <td><input disabled type="text" formControlName="deliveryLoc" [(ngModel)]='deliveryLoc' id="deliveryLoc" value="deliveryLoc"  class="form-control" style="height: 20px;width: 160px;"></td>
-        <td style="width: 15%" class="LabelFontStyle">  Servicing&nbsp;Location&nbsp;: </td>
-        <td><input disabled type="text" formControlName="deliveryLoc" [(ngModel)]='serviceLoc' id="serviceLoc" value="serviceLoc"  class="form-control" style="height: 20px;width: 160px;"></td>
-    </tr>
-    <tr>
-        <td style="width: 15%" class="LabelFontStyle">  Contact&nbsp;Number&nbsp;: </td> 
-            <td><input disabled type="text" formControlName="contactNo" [(ngModel)]='contactNo' id="contactNo" value="contactNo"  class="form-control" style="height: 20px;width: 160px;"></td>
-            <td style="width: 15%" class="LabelFontStyle">  Contact&nbsp;Person&nbsp;: </td>
-            <td><input disabled type="text" formControlName="contactPerson" [(ngModel)]='contactPerson' id="contactPerson" value="contactPerson"  class="form-control" style="height: 20px;width: 160px;"></td>
-            <td style="width: 15%" class="LabelFontStyle">  Sales&nbsp;Executive&nbsp;: </td>
-            <td><input disabled type="text" formControlName="salesExeName" [(ngModel)]='salesExeName' id="salesExeName" value="salesExeName"  class="form-control" style="height: 20px;width: 160px;"></td>
-        </tr>
-    <tr>
-        <td style="width: 15%" class="LabelFontStyle">   Order&nbsp;Number&nbsp;: </td>
-        <td><input disabled type="text" formControlName="orderNumber" [(ngModel)]='orderNumber' id="orderNumber" value="orderNumber"  class="form-control" style="height: 20px;width: 160px;"></td>
-        <td style="width: 15%" class="LabelFontStyle"> Order&nbsp;Date&nbsp;: </td>
-        <td><input disabled type="text" formControlName="dateOfDelv"  id="dateOfDelv" [(ngModel)]="dateOfDelv" value="dateOfDelv"  class="form-control" style="height: 20px;width: 160px;"></td>
-        <td style="width: 15%" class="LabelFontStyle"> Invoice&nbsp;Number&nbsp;: </td>
-        <td><input disabled type="text" formControlName="invoiceNo" [ngModel]="invoiceNo" id="invoiceNo" value="invoiceNo"  class="form-control" style="height: 20px;width: 160px;"></td>
-        <td style="width: 15%" class="LabelFontStyle"> Invoice&nbsp;Date&nbsp;:</td>
-        <td><input disabled type="text" formControlName="invoiceDt"  id="invoiceDt" value="invoiceDt" [(ngModel)]="invoiceDt" class="form-control" style="height: 20px;width: 160px;"></td>
-    </tr>
-
-    
-    <tr>
-        <td style="width: 15%" class="LabelFontStyle"> Registration&nbsp;Number&nbsp;: </td>
-        <td><input disabled type="text" formControlName="vehicleNo" [ngModel]="vehicleNo" id="vehicleNo" value="vehicleNo"  class="form-control" style="height: 20px;width: 160px;"></td>
-        <td style="width: 15%" class="LabelFontStyle">  DMS&nbsp;SOB&nbsp;No&nbsp;: </td>
-        <td><input disabled type="text" formControlName="dmsSob" [ngModel]="dmsSob" id="dmsSob" value="dmsSob"  class="form-control" style="height: 20px;width: 160px;"></td>
-        <td style="width: 15%" class="LabelFontStyle"> Remark&nbsp;: </td>
-        <td><input disabled type="text" formControlName="remark" [ngModel]="remark" id="remark" value="remark"  class="form-control" style="height: 20px;width: 160px;"></td>
-        <td style="width: 15%" class="LabelFontStyle"> Gatepass&nbsp;No&nbsp;: </td>
-        <td><input disabled type="number" formControlName="gatepassNo" [ngModel]="gatepassNo" id="gatepassNo" value="gatepassNo"  class="form-control" style="height: 20px;width: 160px;"></td>
-    </tr>
-
-    <!-- <div *ngIf="isVisiblegatePassDetails; then Block1; else Block2"></div> -->
-    
-    <div *ngIf="isVisiblegatePassVehicleDetails; then Block1; else Block2"></div>
-    <ng-template #Block1>
-    <tr>
-        <td style="width: 15%" class="LabelFontStyle">Insurance&nbsp;Type&nbsp;:&nbsp;</td>
-        <td><input disabled type="text" formControlName="insType" [(ngModel)]='insType' value={{insType}} class="form-control" style="height: 20px;width: 160px;" ></td>
-        <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Number&nbsp;: </td>
-        <td><input   type="text" formControlName="policyNo" [(ngModel)]="policyNo " id="policyNo"   class="form-control" style="height: 20px;width: 160px;background-color:yellow ;"  placeholder="Insurance Policy no"></td>
-        <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Date&nbsp;:</td>
-        <td><input type="date" formControlName="insuDate"  id="insuDate" value="insuDate" [(ngModel)]="insuDate"   class="form-control" style="height: 20px;width: 160px;" max="{{minDate | date:'yyyy-MM-dd'}}" ></td>
-        <!-- (change)="validatePolicyDate(insuDate)"  -->
-        <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Term&nbsp;: </td>
-        <td><input  type="number" formControlName="insuPeriod" [(ngModel)]="insuPeriod" id="insuPeriod"  (change)="validatePolicyTerm(insuPeriod)"  class="form-control" style="height: 20px;width: 160px;"  placeholder="Policy Term"></td>
-           
-    </tr>
-    <tr>
-        <td style="width: 12%" class="LabelFontStyle">Ins&nbsp;Company:&nbsp;</td>
-         <td colspan="3">
-             <select  formControlName="insurerCompId" id="insurerCompId" [(ngModel)]="insurerCompId"  (ngModelChange)='onInsurerNameSelected($event)' class="form-control" style="width: 100%;">
-             <option></option>
-             <option *ngFor="let sc of insNameList"
-                 [ngValue]="sc.customerId">
-                 {{sc.custName}}
-             </option>
-             </select>
-         </td>
-       
-        <td style="width: 12%" class="LabelFontStyle">Ins&nbsp;Site:&nbsp;</td>
-        <td colspan="3">
-        <select  formControlName="insurerSiteId" id="insurerSiteId" [(ngModel)]="insurerSiteId" class="form-control" style="width: 100%;">
-        <option></option>
-        <option *ngFor="let sc of insSiteList"
-            [ngValue]="sc.customerSiteId">
-            {{sc.address1}}{{sc.address2}}-{{sc.address3}}-{{sc.location}}-{{sc.city}}-{{sc.pinCd}}-{{sc.state}}
-        </option>
-        </select>
-    </td>
-    </tr>
-
-    </ng-template>
-    <ng-template #Block2>
-        <tr>
-            <td style="width: 15%" class="LabelFontStyle">Insurance&nbsp;Type&nbsp;:&nbsp;</td>
-            <td><input disabled type="text" formControlName="insType" [(ngModel)]='insType' value={{insType}} class="form-control" style="height: 20px;width: 160px;" ></td>
-            <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Number&nbsp;: </td>
-            <td><input disabled  type="text" formControlName="policyNo" [(ngModel)]="policyNo" id="policyNo"   class="form-control" style="height: 20px;width: 160px;"  placeholder="Insurance Policy no"></td>
-            <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Date&nbsp;:</td>
-            <td><input disabled type="date" formControlName="insuDate"  id="insuDate"  [(ngModel)]="insuDate"  class="form-control" style="height: 20px;width: 160px;" ></td>
-            
-           
-            <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Term&nbsp;: </td>
-            <td><input disabled  type="number" formControlName="insuPeriod" [(ngModel)]="insuPeriod" id="insuPeriod"  (change)="validatePolicyTerm(insuPeriod)"  class="form-control" style="height: 20px;width: 160px;"  placeholder="Policy Term"></td>
-        </tr>
-
-         <tr>
-           <td style="width: 12%" class="LabelFontStyle">Ins&nbsp;Company:&nbsp;</td>
-            <td colspan="3">
-                <select disabled formControlName="insurerCompId" id="insurerCompId" [(ngModel)]="insurerCompId" (ngModelChange)='onInsurerNameSelected($event)' class="form-control" style="width: 100%;">
-                <option></option>
-                <option *ngFor="let sc of insNameList"
-                    [ngValue]="sc.customerId">
-                    {{sc.custName}}
-                </option>
-                </select>
-            </td>
-          
-                <td style="width: 12%" class="LabelFontStyle">Ins&nbsp;Site:&nbsp;</td>
-                <td colspan="3">
-                <select disabled formControlName="insurerSiteId" id="insurerSiteId" [(ngModel)]="insurerSiteId" class="form-control" style="width: 100%;">
-                <option></option>
-                <option *ngFor="let sc of insSiteList"
-                    [ngValue]="sc.customerSiteId">
-                    {{sc.address1}}{{sc.address2}}-{{sc.address3}}-{{sc.location}}-{{sc.city}}-{{sc.pinCd}}-{{sc.state}}
-                </option>
-                </select>
-               </td>
-         </tr>
-        </ng-template>
-</table>
-    </fieldset>
-    <div [style.display]="isVisiblegatePassVehicleDetails ? 'block' : 'none'">
-    <fieldset class="RFS">
-            <table class="center" style="width: 100%;">
+            Find</legend>
+        <table class="center" style="width: 100%;background-color: #FFE4B5;">
             <tr>
-                <input disabled hidden type="number" class="form-control" formControlName="itemId" [(ngModel)]="itemId" style="border:solid 1px black" >
-                <td style="font-weight: bold;" class="LabelFontStyle1"> Vehicle&nbsp;No&nbsp;:&nbsp;  </td>
-                <td><input  class="form-control" formControlName="regNo" style="border:solid 1px black;background-color: yellow;text-transform: uppercase;" [(ngModel)]="regNo" placeholder="Enter Vehicle Reg No" > </td>
-                <td style="font-weight: bold;" class="LabelFontStyle1"> Vehicle&nbsp;Date&nbsp;:&nbsp;  </td>
-                <td><input type="date"  class="form-control" formControlName="regDate" max="{{minDate | date:'yyyy-MM-dd'}}" style="border:solid 1px black" [(ngModel)]="regDate"> </td>
-              
-              <td><button type="submit" class="btn btn-primary" id="register" (click)="vehiclePolicyupdate(itemId,regNo,regDate)" style="width: fit-content;">Update Policy Details</button>  </td>
-              <td><button type="submit" class="btn btn-primary" id="register" (click)="vehicleNoupdate(itemId,regNo,regDate)" style="width: fit-content;">Update Registration No</button>  </td>
-            </tr>   
-           </table>
+                <td>
+                    <table class="center">
+                        <tr>
+                            <td style="background-color: #FFE4B5;">
+                                &nbsp;Order&nbsp;No&nbsp;:&nbsp;
+                            </td>
+                            <td style="background-color: #FFE4B5;">
+                                <input class="form-control" formControlName="orderNumber" [(ngModel)]='orderNumber'
+                                    value={{orderNumber}}>
+                            </td>
+                            <td style="background-color: #FFE4B5;">
+                                <button type="button" class="btn-primary" (click)="gatePassOrderNo(orderNumber)"><i
+                                        class="fa fa-search" aria-hidden="true"></i></button>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
     </fieldset>
-</div>
-<fieldset class="RFS" [style.display]="isVisibleVehicleNumberUpdate ? 'block' : 'none'">
-<table class="center">
-    <tr>
-        <td style="font-weight: bold;" class="LabelFontStyle1"> New &nbsp;Vehicle&nbsp;No&nbsp;:&nbsp;  </td>
-        <td><input  class="form-control" formControlName="regNo1" style="border:solid 1px black;background-color: yellow;text-transform: uppercase;" [(ngModel)]="regNo" placeholder="Enter Vehicle Reg No" > </td>
-        <td><button type="submit" class="btn btn-primary" id="register" (click)="exVehicleNoupdate()" style="width: fit-content;">Existing Update Registration No</button>  </td>
-    </tr>
-</table>
-</fieldset>
-<div [style.display]="isVisiblegatePassDetails ? 'block' : 'none'">
     <fieldset class="RFS">
-        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
-           Gate Pass Generation</legend>
-    <table class="center" style="width: 100%;">
-        <tr>
-          <td>
-              <table> 
-                  <tr>
-                    <td style="font-weight: bold;" class="LabelFontStyle1"> Order&nbsp;No&nbsp;:&nbsp;  </td>
-                    <td><input disabled class="form-control" formControlName="orderNumber" style="border:solid 1px black" [(ngModel)]="orderNumber"> </td>&nbsp;&nbsp;
-                    <td style="font-weight: bold;" class="LabelFontStyle1"> Service&nbsp;Location&nbsp;:&nbsp;  </td>
-                    <td>
-                        <select formControlName="shipToLoc" id="shipToLoc" [(ngModel)]="shipToLoc" class="form-control">
+        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Details
+        </legend>
+        <table class="center" style="width: 100%;">
+            <tr>
+                <input hidden formControlName="emplId" [(ngModel)]='emplId' class="form-control">
+
+                <td style="width: 15%" class="LabelFontStyle"> Vehicle&nbsp;No&nbsp;: </td>
+                <td> <input disabled type="text" formControlName="segment" value="segment" [(ngModel)]='segment'
+                        class="form-control" style="height: 20px;width: 160px;"></td>
+                <td style="width: 15%" class="LabelFontStyle"> Chassis&nbsp;No/&nbsp;(VIN)&nbsp;: </td>
+                <td> <input disabled type="text" formControlName="vin" value="vin" [(ngModel)]='vin'
+                        class="form-control" style="height: 20px;width: 160px;"></td>
+                <td style="width: 15%" class="LabelFontStyle"> Model&nbsp;/&nbsp;Variant&nbsp;/&nbsp;Color: </td>
+                <td colspan="4">
+                    <input disabled type="text" formControlName="modelVarClr" value="modelVarClr"
+                        [(ngModel)]='modelVarClr' class="form-control" style="height: 20px;width: 100%;">
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 15%" class="LabelFontStyle"> Customer&nbsp;Name&nbsp;: </td>
+                <td colspan="3"><input disabled type="text" formControlName="custName" [(ngModel)]='custName'
+                        id="custName" value="custName" class="form-control" style="height: 20px;width: 100%;"></td>
+                <td style="width: 15%" class="LabelFontStyle"> Customer&nbsp;Address&nbsp;: </td>
+                <td colspan="3"><input disabled type="text" formControlName="custAdd" [(ngModel)]='custAdd' id="custAdd"
+                        value="custAdd" class="form-control" style="height: 20px;width: 100%;"></td>
+            </tr>
+            <tr>
+                <td style="width: 15%" class="LabelFontStyle"> Delivery&nbsp;Location&nbsp;: </td>
+                <td><input disabled type="text" formControlName="deliveryLoc" [(ngModel)]='deliveryLoc' id="deliveryLoc"
+                        value="deliveryLoc" class="form-control" style="height: 20px;width: 160px;"></td>
+                <td style="width: 15%" class="LabelFontStyle"> Servicing&nbsp;Location&nbsp;: </td>
+                <td><input disabled type="text" formControlName="deliveryLoc" [(ngModel)]='serviceLoc' id="serviceLoc"
+                        value="serviceLoc" class="form-control" style="height: 20px;width: 160px;"></td>
+            </tr>
+            <tr>
+                <td style="width: 15%" class="LabelFontStyle"> Contact&nbsp;Number&nbsp;: </td>
+                <td><input disabled type="text" formControlName="contactNo" [(ngModel)]='contactNo' id="contactNo"
+                        value="contactNo" class="form-control" style="height: 20px;width: 160px;"></td>
+                <td style="width: 15%" class="LabelFontStyle"> Contact&nbsp;Person&nbsp;: </td>
+                <td><input disabled type="text" formControlName="contactPerson" [(ngModel)]='contactPerson'
+                        id="contactPerson" value="contactPerson" class="form-control"
+                        style="height: 20px;width: 160px;"></td>
+                <td style="width: 15%" class="LabelFontStyle"> Sales&nbsp;Executive&nbsp;: </td>
+                <td><input disabled type="text" formControlName="salesExeName" [(ngModel)]='salesExeName'
+                        id="salesExeName" value="salesExeName" class="form-control" style="height: 20px;width: 160px;">
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 15%" class="LabelFontStyle"> Order&nbsp;Number&nbsp;: </td>
+                <td><input disabled type="text" formControlName="orderNumber" [(ngModel)]='orderNumber' id="orderNumber"
+                        value="orderNumber" class="form-control" style="height: 20px;width: 160px;"></td>
+                <td style="width: 15%" class="LabelFontStyle"> Order&nbsp;Date&nbsp;: </td>
+                <td><input disabled type="text" formControlName="dateOfDelv" id="dateOfDelv" [(ngModel)]="dateOfDelv"
+                        value="dateOfDelv" class="form-control" style="height: 20px;width: 160px;"></td>
+                <td style="width: 15%" class="LabelFontStyle"> Invoice&nbsp;Number&nbsp;: </td>
+                <td><input disabled type="text" formControlName="invoiceNo" [ngModel]="invoiceNo" id="invoiceNo"
+                        value="invoiceNo" class="form-control" style="height: 20px;width: 160px;"></td>
+                <td style="width: 15%" class="LabelFontStyle"> Invoice&nbsp;Date&nbsp;:</td>
+                <td><input disabled type="text" formControlName="invoiceDt" id="invoiceDt" value="invoiceDt"
+                        [(ngModel)]="invoiceDt" class="form-control" style="height: 20px;width: 160px;"></td>
+            </tr>
+
+
+            <tr>
+                <td style="width: 15%" class="LabelFontStyle"> Registration&nbsp;Number&nbsp;: </td>
+                <td><input disabled type="text" formControlName="vehicleNo" [ngModel]="vehicleNo" id="vehicleNo"
+                        value="vehicleNo" class="form-control" style="height: 20px;width: 160px;"></td>
+                <td style="width: 15%" class="LabelFontStyle"> DMS&nbsp;SOB&nbsp;No&nbsp;: </td>
+                <td><input disabled type="text" formControlName="dmsSob" [ngModel]="dmsSob" id="dmsSob" value="dmsSob"
+                        class="form-control" style="height: 20px;width: 160px;"></td>
+                <td style="width: 15%" class="LabelFontStyle"> Remark&nbsp;: </td>
+                <td><input disabled type="text" formControlName="remark" [ngModel]="remark" id="remark" value="remark"
+                        class="form-control" style="height: 20px;width: 160px;"></td>
+                <td style="width: 15%" class="LabelFontStyle"> Gatepass&nbsp;No&nbsp;: </td>
+                <td><input disabled type="number" formControlName="gatepassNo" [ngModel]="gatepassNo" id="gatepassNo"
+                        value="gatepassNo" class="form-control" style="height: 20px;width: 160px;"></td>
+            </tr>
+
+            <!-- <div *ngIf="isVisiblegatePassDetails; then Block1; else Block2"></div> -->
+
+            <div *ngIf="isVisiblegatePassVehicleDetails; then Block1; else Block2"></div>
+            <ng-template #Block1>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">Insurance&nbsp;Type&nbsp;:&nbsp;</td>
+                    <td><input disabled type="text" formControlName="insType" [(ngModel)]='insType' value={{insType}}
+                            class="form-control" style="height: 20px;width: 160px;"></td>
+                    <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Number&nbsp;: </td>
+                    <td><input type="text" formControlName="policyNo" [(ngModel)]="policyNo " id="policyNo"
+                            class="form-control" style="height: 20px;width: 160px;background-color:yellow ;"
+                            placeholder="Insurance Policy no"></td>
+                    <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Date&nbsp;:</td>
+                    <td><input type="date" formControlName="insuDate" id="insuDate" value="insuDate"
+                            [(ngModel)]="insuDate" class="form-control" style="height: 20px;width: 160px;"
+                            max="{{minDate | date:'yyyy-MM-dd'}}"></td>
+                    <!-- (change)="validatePolicyDate(insuDate)"  -->
+                    <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Term&nbsp;: </td>
+                    <td><input type="number" formControlName="insuPeriod" [(ngModel)]="insuPeriod" id="insuPeriod"
+                            (change)="validatePolicyTerm(insuPeriod)" class="form-control"
+                            style="height: 20px;width: 160px;" placeholder="Policy Term"></td>
+
+                </tr>
+                <tr>
+                    <td style="width: 12%" class="LabelFontStyle">Ins&nbsp;Company:&nbsp;</td>
+                    <td colspan="3">
+                        <select formControlName="insurerCompId" id="insurerCompId" [(ngModel)]="insurerCompId"
+                            (ngModelChange)='onInsurerNameSelected($event)' class="form-control" style="width: 100%;">
                             <option></option>
-                            <option *ngFor="let sc of  BillShipList" [value]="sc.locId">
-                                {{sc.locCode}}--{{sc.locName}}
+                            <option *ngFor="let sc of insNameList" [ngValue]="sc.customerId">
+                                {{sc.custName}}
                             </option>
                         </select>
-                    </td>&nbsp;&nbsp;
-                    <td>
-                        <!-- <button type="button" style="width:fit-content ;" class="btn btn-secondary" data-dismiss="modal" (click)="orderNumberPost(orderNumber,shipToLoc)">Generate&nbsp;Gatepass</button> -->
-                        <button type="button" style="width:fit-content ;" [disabled]="isDisabled" class="btn btn-secondary" data-dismiss="modal" (click)="SalesGatePassPost(orderNumber,shipToLoc)">Generate&nbsp;Gatepass</button>
-
                     </td>
-                     <td>
-                       
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="width: fit-content;">
-    Super User Gate Pass
-  </button>
-  
 
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">User Details</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-         <table class="center">
-            <tr>
-                <td style="font-weight: bold;" class="LabelFontStyle1"> User&nbsp;Name&nbsp;:&nbsp;  </td>
-                    <td><input type="text" class="form-control" formControlName="userName" style="border:solid 1px black" [(ngModel)]="userName"> </td>&nbsp;&nbsp;
-            </tr>
-            <tr> 
-                <td style="font-weight: bold;" class="LabelFontStyle1"> Password&nbsp;:&nbsp;  </td>
-                    <td><input type="password" class="form-control" formControlName="password" style="border:solid 1px black" [(ngModel)]="password"> </td>&nbsp;&nbsp;
-            </tr>
-         </table>
-         <table class="center">
-            <div *ngIf="disSuperUserGateButton; then thenSuperUserGateButton; else elseSuperUserGateButton"> </div>
-         <ng-template #thenSuperUserGateButton>
-            <tr>
-                <td>
-                    <button type="button" class="btn btn-primary" (click)="login()">Login</button>
-                </td>
-            </tr>
-         </ng-template>
-         <ng-template #elseSuperUserGateButton>
-            <tr>
-                <td>
-                     <button type="button" style="width:fit-content ;" [disabled]="isGatePassDisabled"  class="btn btn-secondary" data-dismiss="modal" (click)="orderSuperNumberPost(orderNumber,shipToLoc)">Super&nbsp;User&nbsp;Gatepass</button>
-                    <!-- <button type="button" style="width:fit-content ;" [disabled]="isDisabled" class="btn btn-secondary" data-dismiss="modal" (click)="SalesGatePassPost()">Generate&nbsp;Gatepass</button> -->
+                    <td style="width: 12%" class="LabelFontStyle">Ins&nbsp;Site:&nbsp;</td>
+                    <td colspan="3">
+                        <select formControlName="insurerSiteId" id="insurerSiteId" [(ngModel)]="insurerSiteId"
+                            class="form-control" style="width: 100%;">
+                            <option></option>
+                            <option *ngFor="let sc of insSiteList" [ngValue]="sc.customerSiteId">
+                                {{sc.address1}}{{sc.address2}}-{{sc.address3}}-{{sc.location}}-{{sc.city}}-{{sc.pinCd}}-{{sc.state}}
+                            </option>
+                        </select>
+                    </td>
+                </tr>
 
-                </td>
-            </tr>
-         </ng-template>
-         </table>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          
-        </div>
-      </div>
-    </div>
-  </div>
-                    </td> 
-                   
-                  </tr>
-              </table>
-          </td>
-        </tr>
-    </table>
+            </ng-template>
+            <ng-template #Block2>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">Insurance&nbsp;Type&nbsp;:&nbsp;</td>
+                    <td><input disabled type="text" formControlName="insType" [(ngModel)]='insType' value={{insType}}
+                            class="form-control" style="height: 20px;width: 160px;"></td>
+                    <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Number&nbsp;: </td>
+                    <td><input disabled type="text" formControlName="policyNo" [(ngModel)]="policyNo" id="policyNo"
+                            class="form-control" style="height: 20px;width: 160px;" placeholder="Insurance Policy no">
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Date&nbsp;:</td>
+                    <td><input disabled type="date" formControlName="insuDate" id="insuDate" [(ngModel)]="insuDate"
+                            class="form-control" style="height: 20px;width: 160px;"></td>
+
+
+                    <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Term&nbsp;: </td>
+                    <td><input disabled type="number" formControlName="insuPeriod" [(ngModel)]="insuPeriod"
+                            id="insuPeriod" (change)="validatePolicyTerm(insuPeriod)" class="form-control"
+                            style="height: 20px;width: 160px;" placeholder="Policy Term"></td>
+                </tr>
+
+                <tr>
+                    <td style="width: 12%" class="LabelFontStyle">Ins&nbsp;Company:&nbsp;</td>
+                    <td colspan="3">
+                        <select disabled formControlName="insurerCompId" id="insurerCompId" [(ngModel)]="insurerCompId"
+                            (ngModelChange)='onInsurerNameSelected($event)' class="form-control" style="width: 100%;">
+                            <option></option>
+                            <option *ngFor="let sc of insNameList" [ngValue]="sc.customerId">
+                                {{sc.custName}}
+                            </option>
+                        </select>
+                    </td>
+
+                    <td style="width: 12%" class="LabelFontStyle">Ins&nbsp;Site:&nbsp;</td>
+                    <td colspan="3">
+                        <select disabled formControlName="insurerSiteId" id="insurerSiteId" [(ngModel)]="insurerSiteId"
+                            class="form-control" style="width: 100%;">
+                            <option></option>
+                            <option *ngFor="let sc of insSiteList" [ngValue]="sc.customerSiteId">
+                                {{sc.address1}}{{sc.address2}}-{{sc.address3}}-{{sc.location}}-{{sc.city}}-{{sc.pinCd}}-{{sc.state}}
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+            </ng-template>
+        </table>
     </fieldset>
-</div>
+    <div [style.display]="isVisiblegatePassVehicleDetails ? 'block' : 'none'">
+        <fieldset class="RFS">
+            <table class="center" style="width: 100%;">
+                <tr>
+                    <input disabled hidden type="number" class="form-control" formControlName="itemId"
+                        [(ngModel)]="itemId" style="border:solid 1px black">
+                    <td style="font-weight: bold;" class="LabelFontStyle1"> Vehicle&nbsp;No&nbsp;:&nbsp; </td>
+                    <td><input class="form-control" formControlName="regNo"
+                            style="border:solid 1px black;background-color: yellow;text-transform: uppercase;"
+                            [(ngModel)]="regNo" placeholder="Enter Vehicle Reg No"> </td>
+                    <td style="font-weight: bold;" class="LabelFontStyle1"> Vehicle&nbsp;Date&nbsp;:&nbsp; </td>
+                    <td><input type="date" class="form-control" formControlName="regDate"
+                            max="{{minDate | date:'yyyy-MM-dd'}}" style="border:solid 1px black" [(ngModel)]="regDate">
+                    </td>
+
+                    <td><button type="submit" class="btn btn-primary" id="register"
+                            (click)="vehiclePolicyupdate(itemId,regNo,regDate)" style="width: fit-content;">Update
+                            Policy Details</button> </td>
+                    <td><button type="submit" class="btn btn-primary" id="register"
+                            (click)="vehicleNoupdate(itemId,regNo,regDate)" style="width: fit-content;">Update
+                            Registration No</button> </td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+    <fieldset class="RFS" [style.display]="isVisibleVehicleNumberUpdate ? 'block' : 'none'">
+        <table class="center">
+            <tr>
+                <td style="font-weight: bold;" class="LabelFontStyle1"> New &nbsp;Vehicle&nbsp;No&nbsp;:&nbsp; </td>
+                <td><input class="form-control" formControlName="regNo1"
+                        style="border:solid 1px black;background-color: yellow;text-transform: uppercase;"
+                        [(ngModel)]="regNo" placeholder="Enter Vehicle Reg No"> </td>
+                <td><button type="submit" class="btn btn-primary" id="register" (click)="exVehicleNoupdate()"
+                        style="width: fit-content;">Existing Update Registration No</button> </td>
+            </tr>
+        </table>
+    </fieldset>
+    <div [style.display]="isVisiblegatePassDetails ? 'block' : 'none'">
+        <fieldset class="RFS">
+            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
+                Gate Pass Generation</legend>
+            <table class="center" style="width: 100%;">
+                <tr>
+                    <td>
+                        <table>
+                            <tr>
+                                <td style="font-weight: bold;" class="LabelFontStyle1"> Order&nbsp;No&nbsp;:&nbsp; </td>
+                                <td><input disabled class="form-control" formControlName="orderNumber"
+                                        style="border:solid 1px black" [(ngModel)]="orderNumber"> </td>&nbsp;&nbsp;
+                                <td style="font-weight: bold;" class="LabelFontStyle1">
+                                    Service&nbsp;Location&nbsp;:&nbsp; </td>
+                                <td>
+                                    <select formControlName="shipToLoc" id="shipToLoc" [(ngModel)]="shipToLoc"
+                                        class="form-control">
+                                        <option></option>
+                                        <option *ngFor="let sc of  BillShipList" [value]="sc.locId">
+                                            {{sc.locCode}}--{{sc.locName}}
+                                        </option>
+                                    </select>
+                                </td>&nbsp;&nbsp;
+                                <td>
+                                    <!-- <button type="button" style="width:fit-content ;" class="btn btn-secondary" data-dismiss="modal" (click)="orderNumberPost(orderNumber,shipToLoc)">Generate&nbsp;Gatepass</button> -->
+                                    <button type="button" style="width:fit-content ;" [disabled]="isDisabled"
+                                        class="btn btn-secondary" data-dismiss="modal"
+                                        (click)="SalesGatePassPost(orderNumber,shipToLoc)">Generate&nbsp;Gatepass</button>
+
+                                </td>
+                                <td>
+
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#exampleModal" style="width: fit-content;">
+                                        Super User Gate Pass
+                                    </button>
+
+
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">User Details</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <table class="center">
+                                                        <tr>
+                                                            <td style="font-weight: bold;" class="LabelFontStyle1">
+                                                                User&nbsp;Name&nbsp;:&nbsp; </td>
+                                                            <td><input type="text" class="form-control"
+                                                                    formControlName="userName"
+                                                                    style="border:solid 1px black"
+                                                                    [(ngModel)]="userName"> </td>&nbsp;&nbsp;
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="font-weight: bold;" class="LabelFontStyle1">
+                                                                Password&nbsp;:&nbsp; </td>
+                                                            <td><input type="password" class="form-control"
+                                                                    formControlName="password"
+                                                                    style="border:solid 1px black"
+                                                                    [(ngModel)]="password"> </td>&nbsp;&nbsp;
+                                                        </tr>
+                                                    </table>
+                                                    <table class="center">
+                                                        <div
+                                                            *ngIf="disSuperUserGateButton; then thenSuperUserGateButton; else elseSuperUserGateButton">
+                                                        </div>
+                                                        <ng-template #thenSuperUserGateButton>
+                                                            <tr>
+                                                                <td>
+                                                                    <button type="button" class="btn btn-primary"
+                                                                        (click)="login()">Login</button>
+                                                                </td>
+                                                            </tr>
+                                                        </ng-template>
+                                                        <ng-template #elseSuperUserGateButton>
+                                                            <tr>
+                                                                <td>
+                                                                    <button type="button" style="width:fit-content ;"
+                                                                        [disabled]="isGatePassDisabled"
+                                                                        class="btn btn-secondary" data-dismiss="modal"
+                                                                        (click)="orderSuperNumberPost(orderNumber,shipToLoc)">Super&nbsp;User&nbsp;Gatepass</button>
+                                                                    <!-- <button type="button" style="width:fit-content ;" [disabled]="isDisabled" class="btn btn-secondary" data-dismiss="modal" (click)="SalesGatePassPost()">Generate&nbsp;Gatepass</button> -->
+
+                                                                </td>
+                                                            </tr>
+                                                        </ng-template>
+                                                    </table>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Close</button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
     <fieldset class="RFS">
         <table class="center">
             <tr>
                 <td>
-                    <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button> 
+                    <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
                 </td>
                 <td>
-                    <button type="submit" class="btn btn-primary" id="register" (click)="Close()">Close</button> 
+                    <button type="submit" class="btn btn-primary" id="register" (click)="Close()">Close</button>
                 </td>
 
                 <td>
-                    <button [disabled]="isDisabled2" type="button" class="btn btn-primary" id="register" (click)="downloadGatePass()" style="width: fit-content;">Download Gatepass</button> 
+                    <button [disabled]="isDisabled2" type="button" class="btn btn-primary" id="register"
+                        (click)="downloadGatePass()" style="width: fit-content;">Download Gatepass</button>
                 </td>
 
-
+                <td>
+                    <button type="submit" class="btn btn-primary" (click)="SOA()" [disabled]="isDisabled7">SOA</button>
+                </td>
             </tr>
         </table>
     </fieldset>
 
-<br>
-    <div> <h5>Pending GatePass</h5></div>
+    <br>
+    <div>
+        <h5>Pending GatePass</h5>
+    </div>
     <div class="container1">
         <div class="grid_scroll">
-        <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
-       <tbody>
-            <tr class="GridHeader">
-                <th style="width:5rem" scope="col">Srl&nbsp;No&nbsp;</th>
-                <!-- <th style="width:6rem" scope="col">Regime Id</th> -->
-                <th style="width:10rem;text-align: center;" scope="col">Order Number</th>
-                <th style="width:10rem;text-align: center;" scope="col">Invoice Number</th>
-                <th style="width:30rem;text-align: left;" scope="col">Customer Name</th>
-                <!-- <th style="width:10rem;text-align: center;" scope="col">Mobile No</th> -->
-               <th style="width:6rem;text-align: left;" scope="col">Select</th>
-        </tr>
-       </tbody>
-       <tr *ngFor="let com of lstPendingGatepass let i=index" class="ItemStyle" style="text-decoration:none;font-size: small;">
-        
-        <td style="text-align: center;">{{i+1}}</td>
-        <!-- <td>{{com.regimeId}}</td> -->
-        <td style="text-align:center">{{com.ORDERNUMBER}}</td>
-        <td style="text-align:center">{{com.INVNO}}</td>
-        <td >{{com.CUSTNAME}}</td>
-        <!-- <td style="text-align:center">{{com.contactNo}}</td> -->
-        <td><button class="btn btn-secondary" (click)="gatePassOrderNo(com.ORDERNUMBER)">Select</button></td>   
-       </tr>
-        </table>
-    </div>
+            <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0"
+                id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+                <tbody>
+                    <tr class="GridHeader">
+                        <th style="width:5rem" scope="col">Srl&nbsp;No&nbsp;</th>
+                        <!-- <th style="width:6rem" scope="col">Regime Id</th> -->
+                        <th style="width:10rem;text-align: center;" scope="col">Order Number</th>
+                        <th style="width:10rem;text-align: center;" scope="col">Invoice Number</th>
+                        <th style="width:30rem;text-align: left;" scope="col">Customer Name</th>
+                        <!-- <th style="width:10rem;text-align: center;" scope="col">Mobile No</th> -->
+                        <th style="width:6rem;text-align: left;" scope="col">Select</th>
+                    </tr>
+                </tbody>
+                <tr *ngFor="let com of lstPendingGatepass let i=index" class="ItemStyle"
+                    style="text-decoration:none;font-size: small;">
+
+                    <td style="text-align: center;">{{i+1}}</td>
+                    <!-- <td>{{com.regimeId}}</td> -->
+                    <td style="text-align:center">{{com.ORDERNUMBER}}</td>
+                    <td style="text-align:center">{{com.INVNO}}</td>
+                    <td>{{com.CUSTNAME}}</td>
+                    <!-- <td style="text-align:center">{{com.contactNo}}</td> -->
+                    <td><button class="btn btn-secondary" (click)="gatePassOrderNo(com.ORDERNUMBER)">Select</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
 
 </form>

@@ -992,6 +992,9 @@ getsearchByOrderNo2(orderNumber,customerId,locId): Observable<any> {
 
     });
   }
+getBackOrderByUser(fromDate:any,toDate :any,locId:any): Observable<any> {
+    return this.http.get(this.ServerUrl + `/spareOrder/FindByBackOrder?fromDt=${fromDate}&tDate=${toDate}&locId=${locId}`);
+  }
 
 }
 

@@ -33,6 +33,8 @@ import { OrderDetailsUpdationComponent } from './order-details-updation/order-de
 import { VehicleAndAddonPriceUploadComponent } from './vehicle-and-addon-price-upload/vehicle-and-addon-price-upload.component';
 import { OrderCancellationUploadComponent } from './order-cancellation-upload/order-cancellation-upload.component';
 import { SalesOrderReversalComponent } from './sales-order-reversal/sales-order-reversal.component';
+import { CsvUploadComponent } from './csv-upload/csv-upload.component';
+import { SparesOrderListComponent } from './spares-order-list/spares-order-list.component';
 // import { SalesSuperUserGatePassComponent } from './sales-super-user-gate-pass/sales-super-user-gate-pass.component';
 
 
@@ -67,6 +69,8 @@ import { SalesOrderReversalComponent } from './sales-order-reversal/sales-order-
      VehicleAndAddonPriceUploadComponent,
      OrderCancellationUploadComponent,
      SalesOrderReversalComponent,
+     CsvUploadComponent,
+     SparesOrderListComponent,
     //  SalesSuperUserGatePassComponent,
       ],
   imports: [

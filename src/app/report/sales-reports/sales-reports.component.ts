@@ -24,7 +24,7 @@ export class SalesReportsComponent implements OnInit {
   closeResetButton = true;
   dataDisplay: any;
   progress = 0;
-  soaParameter:string;
+  soaParameter: string;
   public minDate = new Date();
   pipe = new DatePipe('en-US');
   now = new Date();
@@ -59,7 +59,7 @@ export class SalesReportsComponent implements OnInit {
   isVisiblelocationInput: boolean = false;
   isVisibleDepartmentList: boolean = false;
   isVisiblegstsaiDebtors: boolean = false;
-  isVisibleSaleSOAParameter:boolean = false;
+  isVisibleSaleSOAParameter: boolean = false;
   // fromDate: Date;
   // toDate: Date;
   fromDate = this.pipe.transform(Date.now(), 'y-MM-dd');
@@ -74,7 +74,7 @@ export class SalesReportsComponent implements OnInit {
   isVisiblecustomerLedger: boolean = false;
   isVisiblespPurRegDownLoad: boolean = false;
   isVisiblestockTransfer: boolean = false;
-  isVisiblespTodateOuIdLocId:boolean=false;
+  isVisiblespTodateOuIdLocId: boolean = false;
   isVisiblefromtoloccustaccno: boolean = false;
   isVisibleSalesInventoryAging: boolean = false;
   inVisiblepanelSaleSaiDebtors: boolean = false;
@@ -110,6 +110,8 @@ export class SalesReportsComponent implements OnInit {
   subInvCode: any;
   panelamcHistrory: boolean = false;
   ispanelTolocationOu: boolean = false;
+  isVisiblespDebtorsReport: boolean = false;
+  isVisiblespDebtorsReport1 : boolean=false;
 
   age1: number = 20;
   age2: number = 30;
@@ -122,9 +124,9 @@ export class SalesReportsComponent implements OnInit {
       fromDate: [''],
       toDate: [''],
       locId: [''],
-      locCode:[],
-      soaParameter:[],
-      deptName1:[],
+      locCode: [],
+      soaParameter: [],
+      deptName1: [],
       OUCode: [''],
       custAccNo: [''],
       deptId: [],
@@ -140,7 +142,7 @@ export class SalesReportsComponent implements OnInit {
       salesINDFromDt: [''],
       salesINDToDt: [''],
       ouName: [''],
-      deptId1:[''],
+      deptId1: [''],
       salesbkregToDt: [''],
       salesbkregFromDt: [''],
       salesAltnotInvToDt: [''],
@@ -174,10 +176,10 @@ export class SalesReportsComponent implements OnInit {
   ngOnInit(): void {
     this.salesReportForm.patchValue({ OUCode: sessionStorage.getItem('ouId') + '-' + sessionStorage.getItem('ouName') })
     this.salesReportForm.patchValue({ locCode: sessionStorage.getItem('locId') + '-' + sessionStorage.getItem('locName') })
-    if (Number(sessionStorage.getItem('deptId'))!=4){
-    this.salesReportForm.patchValue({ department: 'Sales' });
-    this.salesReportForm.patchValue({ deptId: 1 });
-  }
+    if (Number(sessionStorage.getItem('deptId')) != 4) {
+      this.salesReportForm.patchValue({ department: 'Sales' });
+      this.salesReportForm.patchValue({ deptId: 1 });
+    }
     // Prevent closing from click inside dropdown
     $(document).on('click', '.dropdown-menu', function (e) {
       e.stopPropagation();
@@ -216,7 +218,7 @@ export class SalesReportsComponent implements OnInit {
         data => {
           this.DepartmentList = data;
           console.log(data);
-          
+
         }
       );
 
@@ -242,14 +244,14 @@ export class SalesReportsComponent implements OnInit {
 
 
     this.service.getInterBranchNatural()
-    .subscribe(
-      data => {
-        for (let j = 0; j < data.obj.length; j++) {
-          var str = data.obj[j].naturalaccount + '-' + data.obj[j].description;
-          this.NaturalAccountList.push(str);
+      .subscribe(
+        data => {
+          for (let j = 0; j < data.obj.length; j++) {
+            var str = data.obj[j].naturalaccount + '-' + data.obj[j].description;
+            this.NaturalAccountList.push(str);
+          }
         }
-      }
-    );
+      );
 
     this.service.subInvCode2(sessionStorage.getItem('deptId'), sessionStorage.getItem('divisionId')).subscribe(
       data => {
@@ -290,7 +292,7 @@ export class SalesReportsComponent implements OnInit {
     if (reportName === 'gstVehicleSaleRegister') {
       this.reportName = 'Vehicle Sales Register'
       this.isVisibleVehicleSaleRegister = true;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isVisibleSaleIND = false;
       this.isSaleClosingStock = false;
       this.isVisiblefromtolocationdepartment = false;
@@ -307,7 +309,9 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+      this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'gstSaleIND') {
       this.reportName = 'Sales Invoiced Not Delivered'
@@ -317,7 +321,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isVisiblefromtoloccustaccno = false;
       this.isVisibleSalesInventoryAging = false;
       this.isVisiblepanelfromtolocation1 = false;
@@ -329,7 +333,9 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'gstVehicleBookingReg') {
       this.reportName = 'Vehicle Booking Register'
@@ -339,7 +345,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isVisiblefromtoloccustaccno = false;
       this.isVisibleSalesInventoryAging = false;
       this.isVisiblepanelfromtolocation1 = false;
@@ -351,14 +357,16 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'gstSaleAllotNotInv') {
       this.reportName = 'Sales Alloted Not Invoiced Report'
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = true;
       this.isSaleClosingStock = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer = false;
@@ -373,14 +381,16 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'gstSaleClosingStock') {
       this.reportName = 'Vehicle Closing Stock'
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
       this.isSaleClosingStock = true;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblefromtoloccustaccno = false;
@@ -394,14 +404,16 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'gstSaleClosingStockNew') {
       this.reportName = 'Vehicle Closing Stock-New'
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
       this.isSaleClosingStock = true;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblefromtoloccustaccno = false;
@@ -415,7 +427,9 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'gstSaleRegister') {
       this.reportName = 'GST Sales Register'
@@ -425,7 +439,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isVisiblepanelfromtolocation1 = false;
       this.isVisiblefromtoloccustaccno = false;
       this.isVisibleSalesInventoryAging = false;
@@ -437,7 +451,9 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'gstSparesSaiDebtors') {
       // alert(reportName +'---'+this.inVisiblepanelSaleSaiDebtors);
@@ -447,11 +463,11 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleSaleIND = false;
       this.inVisiblepanelSaleSaiDebtors = true;
       this.isSaleClosingStock = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblestockTransfer = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.isVisibleDepartmentList = true;
 
@@ -467,6 +483,8 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'gstReceiptRegister') {
       this.reportName = 'Receipt Register';
@@ -474,7 +492,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
       this.isSaleClosingStock = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer = false;
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -493,7 +511,9 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.isVisiblepanelfromtolocation1 = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
 
     else if (reportName === 'customerLedger') {
@@ -501,7 +521,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtolocationdepartment = false;
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblecustomerLedger = true;
@@ -519,7 +539,9 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'gststockTransferSummary') {
       this.reportName = 'Stock Transfer Made Detail Report';
@@ -527,7 +549,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
       this.isSaleClosingStock = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isVisiblestockTransfer = true;
       this.isVisiblecustomerLedger = false;
       this.isVisiblefromtoloccustaccno = false;
@@ -541,7 +563,9 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'gststockTransferReceivedDetails') {
       this.reportName = 'Stock Transfer Received Detail Report';
@@ -551,7 +575,7 @@ export class SalesReportsComponent implements OnInit {
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer = true;
       this.isVisiblecustomerLedger = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isVisiblefromtoloccustaccno = false;
       this.isVisibleSalesInventoryAging = false;
       this.isVisiblepanelfromtolocation = false;
@@ -563,7 +587,9 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.isVisiblepanelfromtolocation1 = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'gststockTransferReceivedSummary') {
       this.reportName = 'Sales Stock Transfer Received Summary Report';
@@ -572,7 +598,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleSaleIND = false;
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer = true;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblefromtoloccustaccno = false;
       this.isVisibleSalesInventoryAging = false;
@@ -585,7 +611,9 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'saleProformaSummary') {
       this.reportName = 'Sales Proforma Summary Report';
@@ -595,7 +623,7 @@ export class SalesReportsComponent implements OnInit {
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblecustomerLedger = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isVisiblefromtoloccustaccno = false;
       this.isVisibleSalesInventoryAging = false;
       this.isVisiblepanelfromtolocation = false;
@@ -607,14 +635,16 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.isVisiblepanelfromtolocation1 = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'creditNoteReg') {
       this.reportName = 'Credit Note Register';
       this.isVisiblefromtolocationdepartment = false;
       this.isVisibleVehicleSaleRegister = true;
       this.isVisibleSaleIND = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblecustomerLedger = false;
@@ -629,7 +659,9 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'subDealerRep') {
       this.reportName = 'SubDealer-Sales Register Report';
@@ -637,7 +669,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
       this.isSaleClosingStock = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblefromtoloccustaccno = true;
@@ -651,7 +683,9 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'salesaggingReports') {
       this.reportName = 'Sales Aging Report';
@@ -660,7 +694,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleSaleIND = false;
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblefromtoloccustaccno = false;
       this.isVisibleSalesInventoryAging = true;
@@ -673,7 +707,9 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelfromtolocation1 = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'saleAddonRegister') {
       this.reportName = 'Sales Addon Register';
@@ -683,7 +719,7 @@ export class SalesReportsComponent implements OnInit {
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblecustomerLedger = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isVisiblefromtoloccustaccno = false;
       this.isVisibleSalesInventoryAging = false;
       this.isVisiblepanelfromtolocation = false;
@@ -695,7 +731,9 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'EWSaleRegister') {
       this.reportName = 'EW Sales Register';
@@ -703,7 +741,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleVehicleSaleRegister = true;
       this.isVisibleSaleIND = false;
       this.isSaleClosingStock = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblefromtoloccustaccno = false;
@@ -717,14 +755,16 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'reinsuarnceReceiptPrint') {
       this.reportName = 'Reinsurance Receipt Print';
       this.isVisiblefromtolocationdepartment = false;
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblecustomerLedger = false;
@@ -739,14 +779,16 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.isVisiblepanelfromtolocation1 = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'salesAddonReconciliation') {
       this.reportName = 'Sales Addon Reconciliation';
       this.isVisiblefromtolocationdepartment = false;
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblecustomerLedger = false;
@@ -761,7 +803,9 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelfromtolocation1 = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'sparesSubinvTransReceived') {
       this.reportName = 'Sub Inventory Transfer Received Report';
@@ -770,7 +814,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleSaleIND = false;
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblefromtoloccustaccno = false;
       this.isVisibleSalesInventoryAging = false;
@@ -783,14 +827,16 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelfromtolocation1 = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'sparesSubinvTransMade') {
       this.reportName = 'Sub Inventory Transfer Made Report';
       this.isVisiblefromtolocationdepartment = false;
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblecustomerLedger = false;
@@ -804,7 +850,9 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'IrnGenerationReport') {
       this.reportName = 'IRN Generation Report';
@@ -812,7 +860,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
       this.isSaleClosingStock = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblefromtoloccustaccno = false;
@@ -830,14 +878,16 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.isVisiblepanelfromtolocation1 = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'amcHistrory') {
       this.reportName = 'AMC History Report';
       this.isVisiblefromtolocationdepartment = false;
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblecustomerLedger = false;
@@ -852,7 +902,9 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.isVisiblepanelfromtolocation1 = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'reInsuarnceRegister') {
       this.salesReportForm.patchValue({ department: 'Sales' });
@@ -861,7 +913,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtolocationdepartment = true;
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isSaleClosingStock = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer = false;
@@ -879,7 +931,9 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.isVisiblepanelfromtolocation1 = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'gstPurRegister') {
       this.reportName = 'Purchase Register Details';
@@ -888,7 +942,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtolocationdepartment = true;
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isSaleClosingStock = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer = false;
@@ -906,14 +960,16 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.isVisiblepanelfromtolocation1 = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'vehicleClosingStockAsOn') {
       this.reportName = 'Vehicle Closing Stock As on Date';
       this.isVisiblefromtolocationdepartment = false;
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isSaleClosingStock = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer = false;
@@ -928,7 +984,9 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblepanelfromtolocation1 = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'deliverySummary') {
       this.reportName = 'Delivery Summary Report';
@@ -936,7 +994,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
       this.isSaleClosingStock = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblefromtoloccustaccno = false;
@@ -950,14 +1008,16 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblepanelfromtolocation1 = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'fscCouponData') {
       this.reportName = 'FSC Coupon Data Report';
       this.isVisiblefromtolocationdepartment = false;
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isSaleClosingStock = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer = false;
@@ -972,7 +1032,9 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblepanelfromtolocation1 = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
 
     else if (reportName === 'salesPendingPayment') {
@@ -980,7 +1042,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtolocationdepartment = false;
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isSaleClosingStock = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer = false;
@@ -995,7 +1057,9 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = true;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblepanelfromtolocation1 = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'salesBookingCancReport') {
       this.reportName = 'Sales Booking Cancellation Report';
@@ -1003,7 +1067,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
       this.isSaleClosingStock = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblefromtoloccustaccno = false;
@@ -1017,7 +1081,9 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblepanelfromtolocation1 = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
 
     else if (reportName === 'salesRtoRegister') {
@@ -1025,7 +1091,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtolocationdepartment = false;
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isSaleClosingStock = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer = false;
@@ -1040,14 +1106,16 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblepanelfromtolocation1 = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'pendBookingChetakLy') {
       this.reportName = 'Chetak Pending Booking-Last Year'
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
       this.isSaleClosingStock = true;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isVisiblepanelfromtolocation1 = false;
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblestockTransfer = false;
@@ -1061,7 +1129,9 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
 
     else if (reportName === 'receiptOtherDetails') {
@@ -1070,7 +1140,7 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleSaleIND = false;
       this.ispanelTolocationOu = false;
       this.isSaleClosingStock = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblefromtoloccustaccno = false;
@@ -1083,7 +1153,9 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblepanelfromtolocation1 = true;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'SaleSOAParameter') {
       this.reportName = 'Sales SOA Line wise Report';
@@ -1095,7 +1167,7 @@ export class SalesReportsComponent implements OnInit {
       this.salesReportForm.patchValue({ deptId: 1 });
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblestockTransfer = false;
-      this.isVisibleSaleSOAParameter=true;
+      this.isVisibleSaleSOAParameter = true;
       this.isVisiblefromtoloccustaccno = false;
       this.isVisibleSalesInventoryAging = false;
       this.isVisiblepanelreceiptNo = false;
@@ -1109,13 +1181,15 @@ export class SalesReportsComponent implements OnInit {
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.isVisibleDepartmentList = true;
       }
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
     else if (reportName === 'gstsaiDebtorsAsOf') {
       this.reportName = 'Sale Debtor Report As Of';
       this.isVisibleVehicleSaleRegister = false;
       this.isVisibleSaleIND = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isVisiblegstsaiDebtors = true;
       this.ispanelTolocationOu = false;
       this.isSaleClosingStock = false;
@@ -1134,14 +1208,16 @@ export class SalesReportsComponent implements OnInit {
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.isVisibleDepartmentList = true;
       }
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
-    else if (reportName ==='saleQtyChartForVehicle'){
+    else if (reportName === 'saleQtyChartForVehicle') {
       this.reportName = 'Sales Qty Chart for Vehicle';
       this.isVisiblefromtolocationdepartment = false;
       this.isVisibleVehicleSaleRegister = true;
       this.isVisibleSaleIND = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblecustomerLedger = false;
@@ -1156,9 +1232,11 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.isVisiblepanelfromtolocation1 = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
-    else if(reportName=='salesInvoiceCan'){
+    else if (reportName == 'salesInvoiceCan') {
       this.reportName = 'Sales Invoice Cancellation Report';
       this.isVisiblefromtolocationdepartment = false;
       this.isVisibleVehicleSaleRegister = false;
@@ -1166,7 +1244,7 @@ export class SalesReportsComponent implements OnInit {
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblecustomerLedger = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isVisiblefromtoloccustaccno = false;
       this.isVisibleSalesInventoryAging = false;
       this.isVisiblepanelfromtolocation = false;
@@ -1178,9 +1256,11 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.isVisiblepanelfromtolocation1 = true;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblespTodateOuIdLocId=false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
-    else if(reportName=='salesPendingPaymentDtls'){
+    else if (reportName == 'salesPendingPaymentDtls') {
       this.reportName = 'Sales Pending Payment Dtls Report';
       this.isVisiblefromtolocationdepartment = false;
       this.isVisibleVehicleSaleRegister = false;
@@ -1188,7 +1268,7 @@ export class SalesReportsComponent implements OnInit {
       this.isSaleClosingStock = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblecustomerLedger = false;
-      this.isVisibleSaleSOAParameter=false;
+      this.isVisibleSaleSOAParameter = false;
       this.isVisiblefromtoloccustaccno = false;
       this.isVisibleSalesInventoryAging = false;
       this.isVisiblepanelfromtolocation = false;
@@ -1200,7 +1280,133 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepaneltolocation = false;
       this.isVisiblepanelfromtolocation1 = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblespTodateOuIdLocId=true;
+      this.isVisiblespTodateOuIdLocId = true;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
+    }
+    else if (reportName == 'partyDebout') {
+      this.reportName = 'PartyWise Debtors Outstanding Report';
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisibleVehicleSaleRegister = false;
+      this.isVisibleSaleIND = false;
+      this.isSaleClosingStock = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleSaleSOAParameter = false;
+      this.isVisiblefromtoloccustaccno = false;
+      this.isVisibleSalesInventoryAging = false;
+      this.isVisiblepanelfromtolocation = false;
+      this.isVisiblepanelreceiptNo = false;
+      this.isVisiblepanelSalesAddonReconciliation = false;
+      this.isVisiblefromtosubinventory = false;
+      this.panelamcHistrory = false;
+      this.ispanelTolocationOu = false;
+      this.isVisiblepaneltolocation = false;
+      this.isVisiblepanelfromtolocation1 = false;
+      this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId = false;
+      this.isVisiblespDebtorsReport = true;
+      this.isVisiblespDebtorsReport1 = false;
+    }
+      else if (reportName == 'dbtrsAdvanceReport') {
+      this.reportName = 'PartyWise Debtors Advance Report';
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisibleVehicleSaleRegister = false;
+      this.isVisibleSaleIND = false;
+      this.isSaleClosingStock = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleSaleSOAParameter = false;
+      this.isVisiblefromtoloccustaccno = false;
+      this.isVisibleSalesInventoryAging = false;
+      this.isVisiblepanelfromtolocation = false;
+      this.isVisiblepanelreceiptNo = false;
+      this.isVisiblepanelSalesAddonReconciliation = false;
+      this.isVisiblefromtosubinventory = false;
+      this.panelamcHistrory = false;
+      this.ispanelTolocationOu = false;
+      this.isVisiblepaneltolocation = false;
+      this.isVisiblepanelfromtolocation1 = false;
+      this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId = false;
+      this.isVisiblespDebtorsReport = true;
+        this.isVisiblespDebtorsReport1 = false;
+    }
+      else if (reportName == 'receivableConsolidatedReport') {
+      this.reportName = 'PartyWise Consolidated Receivable Report';
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisibleVehicleSaleRegister = false;
+      this.isVisibleSaleIND = false;
+      this.isSaleClosingStock = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleSaleSOAParameter = false;
+      this.isVisiblefromtoloccustaccno = false;
+      this.isVisibleSalesInventoryAging = false;
+      this.isVisiblepanelfromtolocation = false;
+      this.isVisiblepanelreceiptNo = false;
+      this.isVisiblepanelSalesAddonReconciliation = false;
+      this.isVisiblefromtosubinventory = false;
+      this.panelamcHistrory = false;
+      this.ispanelTolocationOu = false;
+      this.isVisiblepaneltolocation = false;
+      this.isVisiblepanelfromtolocation1 = false;
+      this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId = false;
+      this.isVisiblespDebtorsReport = true;
+        this.isVisiblespDebtorsReport1 = false;
+    }
+      else if (reportName == 'detailedreceivableReport') {
+      this.reportName = 'PartyWise Detailed Receivable Report';
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisibleVehicleSaleRegister = false;
+      this.isVisibleSaleIND = false;
+      this.isSaleClosingStock = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleSaleSOAParameter = false;
+      this.isVisiblefromtoloccustaccno = false;
+      this.isVisibleSalesInventoryAging = false;
+      this.isVisiblepanelfromtolocation = false;
+      this.isVisiblepanelreceiptNo = false;
+      this.isVisiblepanelSalesAddonReconciliation = false;
+      this.isVisiblefromtosubinventory = false;
+      this.panelamcHistrory = false;
+      this.ispanelTolocationOu = false;
+      this.isVisiblepaneltolocation = false;
+      this.isVisiblepanelfromtolocation1 = false;
+      this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId = false;
+      this.isVisiblespDebtorsReport1 = true;
+        this.isVisiblespDebtorsReport = false;
+    }
+  else if (reportName === 'amcSaleRegister') {
+      this.reportName = 'AMC Sales Register';
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisibleVehicleSaleRegister = false;
+      this.isVisibleSaleIND = false;
+      this.isSaleClosingStock = false;
+      this.isVisibleSaleSOAParameter = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisiblefromtoloccustaccno = false;
+      this.isVisibleSalesInventoryAging = false;
+      this.isVisiblepanelfromtolocation = true;
+      this.isVisiblepanelreceiptNo = false;
+      this.isVisiblepanelSalesAddonReconciliation = false;
+      this.isVisiblefromtosubinventory = false;
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.isVisibleDepartmentList = true;
+
+      }
+      this.panelamcHistrory = false;
+      this.ispanelTolocationOu = false;
+      this.isVisiblepaneltolocation = false;
+      this.isVisiblepanelfromtolocation1 = false;
+      this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
     }
   }
 
@@ -1237,11 +1443,11 @@ export class SalesReportsComponent implements OnInit {
       alert('Please Select location Code.!');
       return;
     }
-    if (deptId ===undefined){
-      deptId =''
+    if (deptId === undefined) {
+      deptId = ''
     }
     if (reportName === 'Vehicle Sales Register') {
-      const fileName = 'Vehicle Sales Register-' +  fromDate + '-TO-' + toDate + '.xls';
+      const fileName = 'Vehicle Sales Register-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.vhslRegisterReport(fromDate, toDate, locId)
@@ -1263,10 +1469,10 @@ export class SalesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Sales Invoiced Not Delivered') {
-      const fileName = 'Sales Invoiced Not Delivered-' +  '-TO-' + toDate + '.xls';
+      const fileName = 'Sales Invoiced Not Delivered-' + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.salesINDReport(toDate, sessionStorage.getItem('ouId'),locId)
+        this.reportService.salesINDReport(toDate, sessionStorage.getItem('ouId'), locId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''
@@ -1275,7 +1481,7 @@ export class SalesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.salesINDReport(toDate, sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'))
+        this.reportService.salesINDReport(toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''
@@ -1285,7 +1491,7 @@ export class SalesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Vehicle Booking Register') {
-      const fileName = 'Sales Booking Register-' +  fromDate + '-TO-' + toDate + '.xls';
+      const fileName = 'Sales Booking Register-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.salesbookingregReport(fromDate, toDate, locId)
@@ -1307,10 +1513,10 @@ export class SalesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Sales Alloted Not Invoiced Report') {
-      const fileName = 'Sales Alloted Not Invoiced Report-' +  '-TO-' + toDate + '.xls';
+      const fileName = 'Sales Alloted Not Invoiced Report-' + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.salesAltnotInvReport(toDate, sessionStorage.get('ouId'),locId)
+        this.reportService.salesAltnotInvReport(toDate, sessionStorage.get('ouId'), locId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''
@@ -1319,7 +1525,7 @@ export class SalesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.salesAltnotInvReport(toDate, sessionStorage.get('ouId'),sessionStorage.getItem('locId'))
+        this.reportService.salesAltnotInvReport(toDate, sessionStorage.get('ouId'), sessionStorage.getItem('locId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''
@@ -1330,7 +1536,7 @@ export class SalesReportsComponent implements OnInit {
     }
 
     else if (reportName === 'Vehicle Closing Stock') {
-      const fileName = 'Vehicle Closing Stock-' +  '-TO-' + '.xls';
+      const fileName = 'Vehicle Closing Stock-' + '-TO-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.vehicleClosingStockReport(sessionStorage.getItem('ouId'))
@@ -1352,7 +1558,7 @@ export class SalesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Vehicle Closing Stock-New') {
-      const fileName = 'Vehicle Closing StockNew-' +  '-TO-' + '.xls';
+      const fileName = 'Vehicle Closing StockNew-' + '-TO-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.vehicleClosingStockReportNew(sessionStorage.getItem('ouId'))
@@ -1377,49 +1583,49 @@ export class SalesReportsComponent implements OnInit {
 
     }
     else if (reportName === 'Sales SOA Line wise Report') {
-      const fileName = 'Sales SOA Line wise Report-' +  '-TO-' + '.xls';
+      const fileName = 'Sales SOA Line wise Report-' + '-TO-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       var reportPar = this.salesReportForm.get('soaParameter').value;
-      if (reportPar==='InvoiceWise'){
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.soaLineWiseInvoiceWise(fromDate, toDate, sessionStorage.getItem('ouId'), locId,sessionStorage.getItem('deptId'),reportPar)
-          .subscribe(data => {
-            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-            this.dataDisplay = ''
-            this.closeResetButton = true;
-            this.isDisabled1 = false;
-          })
+      if (reportPar === 'InvoiceWise') {
+        if (Number(sessionStorage.getItem('deptId')) === 4) {
+          this.reportService.soaLineWiseInvoiceWise(fromDate, toDate, sessionStorage.getItem('ouId'), locId, sessionStorage.getItem('deptId'), reportPar)
+            .subscribe(data => {
+              saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+              this.dataDisplay = ''
+              this.closeResetButton = true;
+              this.isDisabled1 = false;
+            })
+        }
+        else if (Number(sessionStorage.getItem('deptId')) != 4) {
+          this.reportService.soaLineWiseInvoiceWise(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'), reportPar)
+            .subscribe(data => {
+              saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+              this.dataDisplay = ''
+              this.closeResetButton = true;
+              this.isDisabled1 = false;
+            })
+        }
       }
-      else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.soaLineWiseInvoiceWise(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),sessionStorage.getItem('deptId'),reportPar)
-          .subscribe(data => {
-            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-            this.dataDisplay = ''
-            this.closeResetButton = true;
-            this.isDisabled1 = false;
-          })
+      if (reportPar === 'OrderWise') {
+        if (Number(sessionStorage.getItem('deptId')) === 4) {
+          this.reportService.soaLineWiseOrderWise(fromDate, toDate, sessionStorage.getItem('ouId'), locId, sessionStorage.getItem('deptId'), reportPar)
+            .subscribe(data => {
+              saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+              this.dataDisplay = ''
+              this.closeResetButton = true;
+              this.isDisabled1 = false;
+            })
+        }
+        else if (Number(sessionStorage.getItem('deptId')) != 4) {
+          this.reportService.soaLineWiseOrderWise(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'), reportPar)
+            .subscribe(data => {
+              saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+              this.dataDisplay = ''
+              this.closeResetButton = true;
+              this.isDisabled1 = false;
+            })
+        }
       }
-    }
-    if (reportPar==='OrderWise'){
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.soaLineWiseOrderWise(fromDate, toDate, sessionStorage.getItem('ouId'), locId,sessionStorage.getItem('deptId'),reportPar)
-          .subscribe(data => {
-            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-            this.dataDisplay = ''
-            this.closeResetButton = true;
-            this.isDisabled1 = false;
-          })
-      }
-      else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.soaLineWiseOrderWise(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),sessionStorage.getItem('deptId'),reportPar)
-          .subscribe(data => {
-            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-            this.dataDisplay = ''
-            this.closeResetButton = true;
-            this.isDisabled1 = false;
-          })
-      }
-    }
     }
     else if (reportName === 'Sai Debtors') {
       var custAccNo = this.salesReportForm.get('custAccNo').value;
@@ -1429,7 +1635,7 @@ export class SalesReportsComponent implements OnInit {
       }
       // alert(deptId);
       // debugger;
-      const fileName = 'Sai Debtors-' +  fromDate + '.xls';
+      const fileName = 'Sai Debtors-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         if (deptId === null || deptId == undefined || deptId == '') {
@@ -1514,10 +1720,10 @@ export class SalesReportsComponent implements OnInit {
     else if (reportName === 'Stock Transfer Made Detail Report') {
       var tolocId = this.salesReportForm.get('tolocId').value;
       var subInventory = 'VH';
-      const fileName = 'Stock Transfer Made Detail Report-' +  fromDate + '.xls';
+      const fileName = 'Stock Transfer Made Detail Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.stockMadeDetailsReport(fromDate, toDate, sessionStorage.getItem('ouId'),locId, tolocId, subInventory, sessionStorage.getItem('deptId'))
+        this.reportService.stockMadeDetailsReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, tolocId, subInventory, sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1526,7 +1732,7 @@ export class SalesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.stockMadeDetailsReport(fromDate, toDate, sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'), tolocId, subInventory, sessionStorage.getItem('deptId'))
+        this.reportService.stockMadeDetailsReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), tolocId, subInventory, sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1538,10 +1744,10 @@ export class SalesReportsComponent implements OnInit {
     else if (reportName === 'Stock Transfer Received Detail Report') {
       var tolocId = this.salesReportForm.get('tolocId').value;
       var subInventory = 'VH';
-      const fileName = 'Stock Transfer Received Detail Report-' +  fromDate + '.xls';
+      const fileName = 'Stock Transfer Received Detail Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate, sessionStorage.getItem('ouId'),locId, tolocId, subInventory, this.deptId)
+        this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, tolocId, subInventory, this.deptId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1550,7 +1756,7 @@ export class SalesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate, sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'), tolocId, subInventory, sessionStorage.getItem('deptId'))
+        this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), tolocId, subInventory, sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1562,10 +1768,10 @@ export class SalesReportsComponent implements OnInit {
     else if (reportName === 'Sales Stock Transfer Received Summary Report') {
       var tolocId = this.salesReportForm.get('tolocId').value;
       var subInventory = 'VH';
-      const fileName = 'Sales Stock Transfer Received Summary Report-' +  fromDate + '.xls';
+      const fileName = 'Sales Stock Transfer Received Summary Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate, sessionStorage.getItem('ouId'),locId, tolocId, subInventory)
+        this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, tolocId, subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1574,7 +1780,7 @@ export class SalesReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate, sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'), tolocId, subInventory)
+        this.reportService.SprStkTrfRecdSummaryReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), tolocId, subInventory)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1584,7 +1790,7 @@ export class SalesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Sales Proforma Summary Report') {
-      const fileName = 'Sales Proforma Summary Report-' +  fromDate + '.xls';
+      const fileName = 'Sales Proforma Summary Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.saleProformaSummary(fromDate, toDate, locId)
@@ -1606,7 +1812,7 @@ export class SalesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Credit Note Register') {
-      const fileName = 'Credit Note Register-' +  fromDate + '.xls';
+      const fileName = 'Credit Note Register-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.creditNoteReg(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
@@ -1632,7 +1838,7 @@ export class SalesReportsComponent implements OnInit {
       if (custAcctNo === undefined || custAcctNo === null) {
         custAcctNo = '';
       }
-      const fileName = 'SubDealer-Sales Register Report-' +  fromDate + '.xls';
+      const fileName = 'SubDealer-Sales Register Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.subDealerRep(fromDate, toDate, locId, custAcctNo)
@@ -1672,7 +1878,7 @@ export class SalesReportsComponent implements OnInit {
         this.dataDisplay = 'Please Check Aging 3 Parameter.!';
         return;
       }
-      const fileName = 'Spares Inventory Aging Report-' +  '.xls';
+      const fileName = 'Spares Inventory Aging Report-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.salesAgingReport(sessionStorage.getItem('ouId'), spInvAging1, spInvAging2, spInvAging3)
@@ -1694,7 +1900,7 @@ export class SalesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Sales Addon Register') {
-      const fileName = 'Sales Addon Register-' +  '.xls';
+      const fileName = 'Sales Addon Register-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.saleAddonRegister(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
@@ -1717,7 +1923,7 @@ export class SalesReportsComponent implements OnInit {
     }
 
     else if (reportName === 'EW Sales Register') {
-      const fileName = 'EW Sales Register-' +  fromDate + '-TO-' + toDate + '.xls';
+      const fileName = 'EW Sales Register-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.EWSaleRegister(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
@@ -1762,7 +1968,7 @@ export class SalesReportsComponent implements OnInit {
       // var segment4 = this.salesReportForm.get('segment4').value;
       var segment4 = (this.salesReportForm.get('segment4').value).split('-')
       var segment5 = this.salesReportForm.get('segment5').value;
-      const fileName = 'Sales Addon Reconciliation -' +  fromDate + '-TO-' + toDate + '.xls';
+      const fileName = 'Sales Addon Reconciliation -' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       this.reportService.salesAddonReconciliation(fromDate, toDate, segment1, segment2, segment3, segment4[0], segment5)
         .subscribe(data => {
@@ -1775,7 +1981,7 @@ export class SalesReportsComponent implements OnInit {
     else if (reportName === 'Sub Inventory Transfer Received Report') {
       var subInvCode = this.salesReportForm.get('subInventory').value;
       // alert(subInvCode)
-      const fileName = 'Sub Inventory Transfer Received Report-' +  fromDate + '.xls';
+      const fileName = 'Sub Inventory Transfer Received Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if ((Number(sessionStorage.getItem('deptId')) === 4)) {
         this.reportService.SalesInvTransRecFuc(fromDate, toDate, locId, subInvCode)
@@ -1799,7 +2005,7 @@ export class SalesReportsComponent implements OnInit {
     else if (reportName === 'Sub Inventory Transfer Made Report') {
       var subInvCode = this.salesReportForm.get('subInventory').value;
       // alert(subInvCode)
-      const fileName = 'Sub Inventory Transfer Made Report-' +  fromDate + '.xls';
+      const fileName = 'Sub Inventory Transfer Made Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if ((Number(sessionStorage.getItem('deptId')) === 4)) {
         this.reportService.spInvTransMadeFuc(fromDate, toDate, locId, subInvCode)
@@ -1821,7 +2027,7 @@ export class SalesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'IRN Generation Report') {
-      const fileName = 'IRN Generation Report-' +  '.xls';
+      const fileName = 'IRN Generation Report-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         var deptId = this.salesReportForm.get('deptId').value;
@@ -1884,7 +2090,7 @@ export class SalesReportsComponent implements OnInit {
     }
 
     else if (reportName == 'Purchase Register Details') {
-      const fileName = 'Purchase Register Details-' +  fromDate + '-TO-' + toDate + '.xls';
+      const fileName = 'Purchase Register Details-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       // var departId=this.DepartmentList.filter(d=>d.code== this.locCode)
       // alert(deptId+this.locCode);
@@ -1911,7 +2117,7 @@ export class SalesReportsComponent implements OnInit {
       }
     }
     else if (reportName == 'Vehicle Closing Stock As on Date') {
-      const fileName = 'Vehicle Closing Stock As on Date-' +  fromDate + '-TO-' + toDate + '.xls';
+      const fileName = 'Vehicle Closing Stock As on Date-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       this.reportService.vehicleClosingStockAsOn(toDate, sessionStorage.getItem('ouId'))
         .subscribe(data => {
@@ -1922,29 +2128,29 @@ export class SalesReportsComponent implements OnInit {
         })
     }
     else if (reportName == 'Sales Pending Payment Dtls Report') {
-      const fileName = 'Sales Pending Payment Dtls Report-' +  fromDate + '-TO-' + toDate + '.xls';
+      const fileName = 'Sales Pending Payment Dtls Report-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId'))!=4){
-      this.reportService.salesPendingPaymentDtlsFn(toDate, sessionStorage.getItem('ouId'),sessionStorage.getItem('locId'))
-        .subscribe(data => {
-          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-          this.dataDisplay = ''
-          this.closeResetButton = true;
-          this.isDisabled1 = false;
-        })
-      }
-      if (Number(sessionStorage.getItem('deptId'))===4){
-        this.reportService.salesPendingPaymentDtlsFn(toDate, sessionStorage.getItem('ouId'),locId)
+      if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.salesPendingPaymentDtlsFn(toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''
             this.closeResetButton = true;
             this.isDisabled1 = false;
           })
-        }
+      }
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.salesPendingPaymentDtlsFn(toDate, sessionStorage.getItem('ouId'), locId)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.dataDisplay = ''
+            this.closeResetButton = true;
+            this.isDisabled1 = false;
+          })
+      }
     }
     else if (reportName == 'Delivery Summary Report') {
-      const fileName = 'Delivery Summary Report-' +  fromDate + '-TO-' + toDate + '.xls';
+      const fileName = 'Delivery Summary Report-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number((sessionStorage.getItem('deptId'))) == 4) {
         this.reportService.deliverySummary(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
@@ -1968,7 +2174,7 @@ export class SalesReportsComponent implements OnInit {
 
 
     else if (reportName == 'FSC Coupon Data Report') {
-      const fileName = 'FSC Coupon Data Report-' +  '.xls';
+      const fileName = 'FSC Coupon Data Report-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) == 4) {
         this.reportService.fscCouponData(fromDate, toDate, locId)
@@ -1991,13 +2197,13 @@ export class SalesReportsComponent implements OnInit {
     }
 
     else if (reportName == 'Sales Pending Payment Report') {
-      const fileName = 'Sales Pending Payment Report-' +  '.xls';
+      const fileName = 'Sales Pending Payment Report-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) == 4) {
         // this.reportService.salesPendingPymntReport(fromDate,toDate,locId,sessionStorage.getItem('ouId'))
         // this.reportService.salesPendingPymntReport(toDate, locId, sessionStorage.getItem('ouId'))
-       
-        this.reportService.salesPendingPaymentDtlsFn(toDate,  sessionStorage.getItem('ouId'),locId)
+
+        this.reportService.salesPendingPaymentDtlsFn(toDate, sessionStorage.getItem('ouId'), locId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2017,7 +2223,7 @@ export class SalesReportsComponent implements OnInit {
     }
 
     else if (reportName == 'Sales Booking Cancellation Report') {
-      const fileName = 'Sales Booking Cancellation Report-' +  '.xls';
+      const fileName = 'Sales Booking Cancellation Report-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) == 4) {
         this.reportService.salesBookCancelReport(fromDate, toDate, locId, sessionStorage.getItem('ouId'))
@@ -2039,7 +2245,7 @@ export class SalesReportsComponent implements OnInit {
       }
     }
     else if (reportName == 'Sales RTO Register') {
-      const fileName = 'Sales RTO Register-' +  fromDate + '-TO-' + toDate + '.xls';
+      const fileName = 'Sales RTO Register-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number((sessionStorage.getItem('deptId'))) == 4) {
         this.reportService.salesRTOReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
@@ -2061,7 +2267,7 @@ export class SalesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Chetak Pending Booking-Last Year') {
-      const fileName = 'Chetak Pending Booking-LastYear-' +  '-TO-' + '.xls';
+      const fileName = 'Chetak Pending Booking-LastYear-' + '-TO-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.ChetakPendingBookingLastYear(sessionStorage.getItem('ouId'))
@@ -2083,7 +2289,7 @@ export class SalesReportsComponent implements OnInit {
       }
     }
     else if (reportName === 'Receipt-Other Details Report') {
-      const fileName = 'Receipt-Other Details Report-' +  '-TO-' + '.xls';
+      const fileName = 'Receipt-Other Details Report-' + '-TO-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.receiptOtherDetails(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
@@ -2158,7 +2364,7 @@ export class SalesReportsComponent implements OnInit {
 
       if (this.rptValidation == false) { this.closeResetButton = true; this.dataDisplay = 'Please check Aging Values.'; return; }
       this.isDisabled1 = true;
-      const fileName = 'Sales-Debtors-' +  fromDate + '.xls';
+      const fileName = 'Sales-Debtors-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
 
       if (Number(sessionStorage.getItem('deptId')) === 4) {
@@ -2180,8 +2386,8 @@ export class SalesReportsComponent implements OnInit {
           });
       }
     }
-    else if (reportName === 'Sales Qty Chart for Vehicle'){
-      const fileName = 'Sales Qty Chart for Vehicle Report-' +  fromDate + '.xls';
+    else if (reportName === 'Sales Qty Chart for Vehicle') {
+      const fileName = 'Sales Qty Chart for Vehicle Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.saleqtyChartForVh(fromDate, toDate, locId)
@@ -2225,6 +2431,129 @@ export class SalesReportsComponent implements OnInit {
           })
       }
     }
+    else if (reportName === 'PartyWise Debtors Outstanding Report') {
+      this.toDateValidation(tDate); if (this.rptValidation == false) { return; }
+
+      const fileName = 'PartyWise Debtors Outstanding Report-' + toDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
+        this.reportService.gstSparesPartyOutstandingReport(toDate, locId, sessionStorage.getItem('ouId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.gstSparesPartyOutstandingReport(toDate, sessionStorage.getItem('locId'), sessionStorage.getItem('ouId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
+    else if (reportName === 'PartyWise Debtors Advance Report') {
+      this.toDateValidation(tDate); if (this.rptValidation == false) { return; }
+
+      const fileName = 'PartyWise Debtors Advance Report-' + toDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
+        this.reportService.gstSparesPartyAdvReport(toDate, locId, sessionStorage.getItem('ouId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.gstSparesPartyAdvReport(toDate, sessionStorage.getItem('locId'), sessionStorage.getItem('ouId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
+
+    else if (reportName === 'PartyWise Consolidated Receivable Report') {
+      this.toDateValidation(tDate); if (this.rptValidation == false) { return; }
+
+      const fileName = 'PartyWise Consolidated Receivable Report-' + toDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
+        this.reportService.gstSparesPartyReceivableReport(toDate, locId, sessionStorage.getItem('ouId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.gstSparesPartyReceivableReport(toDate, sessionStorage.getItem('locId'), sessionStorage.getItem('ouId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
+
+    else if (reportName === 'PartyWise Detailed Receivable Report') {
+      this.toDateValidation(tDate); if (this.rptValidation == false) { return; }
+
+      const fileName = 'PartyWise Detailed Receivable Report-' + toDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (custAccNo === null || custAccNo === undefined || custAccNo === '') {
+        custAccNo = '';
+      }
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
+        this.reportService.gstSparesPartyDetReceivableReport(toDate, locId, sessionStorage.getItem('ouId'), custAccNo)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.gstSparesPartyDetReceivableReport(toDate, sessionStorage.getItem('locId'), sessionStorage.getItem('ouId'), custAccNo)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
+        else if (reportName === 'AMC Sales Register') {
+          const fileName = 'AMC Sales Register-' + fromDate + '-TO-' + toDate + '.xls';
+          const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+          if (Number(sessionStorage.getItem('deptId')) === 4  || Number(sessionStorage.getItem('roleId'))==10) {
+            this.reportService.amcSaleRegister(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
+              .subscribe(data => {
+                saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+                this.dataDisplay = ''
+                this.closeResetButton = true;
+                this.isDisabled1 = false;
+              })
+          }
+          if (Number(sessionStorage.getItem('deptId')) != 4) {
+            this.reportService.amcSaleRegister(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
+              .subscribe(data => {
+                saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+                this.dataDisplay = ''
+                this.closeResetButton = true;
+                this.isDisabled1 = false;
+              })
+          }
+        }
   }
 
 
@@ -2232,13 +2561,13 @@ export class SalesReportsComponent implements OnInit {
   department(department) {
     if (department === 'Sales') {
       // alert(sessionStorage.getItem('deptId'))
-      if (Number(sessionStorage.getItem('deptId')) != 4){
-      let department = this.DepartmentList.filter((customer) => ((customer.codeDesc.includes('Sales') == true)));
-      console.log(department);
-      this.DepartmentList = department;
-      this.department = department.code;
+      if (Number(sessionStorage.getItem('deptId')) != 4) {
+        let department = this.DepartmentList.filter((customer) => ((customer.codeDesc.includes('Sales') == true)));
+        console.log(department);
+        this.DepartmentList = department;
+        this.department = department.code;
+      }
     }
-  }
   }
 
   onOptionsToLocation(event) {
@@ -2259,7 +2588,7 @@ export class SalesReportsComponent implements OnInit {
     var fromDate = this.pipe.transform(purStDt, 'dd-MMM-yyyy');
     var spreceipttoDate2 = this.salesReportForm.get('vhslRegisterToDt').value;
     var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
-    const fileName = 'Vehicle Sales Register-' +  fromDate + '-TO-' + toDate + '.xls';
+    const fileName = 'Vehicle Sales Register-' + fromDate + '-TO-' + toDate + '.xls';
     // alert(fromDate+'----'+ toDate+'-----'+ sessionStorage.getItem('locId'))
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.vhslRegisterReport(fromDate, toDate, sessionStorage.getItem('locId'))
@@ -2282,10 +2611,10 @@ export class SalesReportsComponent implements OnInit {
     // var fromDate = this.pipe.transform(purStDt, 'dd-MMM-yyyy');
     var spreceipttoDate2 = this.salesReportForm.get('salesINDToDt').value;
     var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
-    const fileName = 'Sales Invoiced Not Delivered-' +  '-TO-' + toDate + '.xls';
+    const fileName = 'Sales Invoiced Not Delivered-' + '-TO-' + toDate + '.xls';
 
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.salesINDReport(toDate,sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
+    this.reportService.salesINDReport(toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.dataDisplay = ''
@@ -2305,7 +2634,7 @@ export class SalesReportsComponent implements OnInit {
     var fromDate = this.pipe.transform(purStDt, 'dd-MMM-yyyy');
     var spreceipttoDate2 = this.salesReportForm.get('salesbkregToDt').value;
     var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
-    const fileName = 'Sales Booking Register-' +  fromDate + '-TO-' + toDate + '.xls';
+    const fileName = 'Sales Booking Register-' + fromDate + '-TO-' + toDate + '.xls';
 
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.salesbookingregReport(fromDate, toDate, sessionStorage.getItem('locId'))
@@ -2328,9 +2657,9 @@ export class SalesReportsComponent implements OnInit {
     // var fromDate = this.pipe.transform(purStDt, 'dd-MMM-yyyy');
     var spreceipttoDate2 = this.salesReportForm.get('salesAltnotInvToDt').value;
     var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
-    const fileName = 'Sales Alloted Not Invoiced Report-' +  '-TO-' + toDate + '.xls';
+    const fileName = 'Sales Alloted Not Invoiced Report-' + '-TO-' + toDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    this.reportService.salesAltnotInvReport(toDate,sessionStorage.get('ouId') ,sessionStorage.getItem('locId'))
+    this.reportService.salesAltnotInvReport(toDate, sessionStorage.get('ouId'), sessionStorage.getItem('locId'))
       .subscribe(data => {
         saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
         this.dataDisplay = ''
@@ -2350,7 +2679,7 @@ export class SalesReportsComponent implements OnInit {
     // var fromDate = this.pipe.transform(purStDt, 'dd-MMM-yyyy');
     // var spreceipttoDate2 = this.salesReportForm.get('salesAltnotInvToDt').value;
     // var toDate = this.pipe.transform(spreceipttoDate2, 'dd-MMM-yyyy');
-    const fileName = 'Vehicle Closing Stock-' +  '-TO-' + '.xls';
+    const fileName = 'Vehicle Closing Stock-' + '-TO-' + '.xls';
 
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.vehicleClosingStockReport(sessionStorage.getItem('ouId'))
@@ -2371,7 +2700,7 @@ export class SalesReportsComponent implements OnInit {
     var fromDate = this.pipe.transform(fromDate1, 'dd-MMM-yyyy');
     var toDate1 = this.salesReportForm.get('toGstSaleReg').value;
     var toDate = this.pipe.transform(toDate1, 'dd-MMM-yyyy');
-    const fileName = 'Vehicle Closing Stock-' +  '-TO-' + '.xls';
+    const fileName = 'Vehicle Closing Stock-' + '-TO-' + '.xls';
 
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.gstSaleRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
@@ -2392,7 +2721,7 @@ export class SalesReportsComponent implements OnInit {
     var invcDt2 = this.salesReportForm.get('invcDt1').value;
     var fromDate = this.pipe.transform(invcDt2, 'dd-MMM-yyyy');
     //const fileName = 'download.pdf';
-    const fileName = 'SP-Debtors-' +  fromDate + '.xls';
+    const fileName = 'SP-Debtors-' + fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.SPDebtorReport(fromDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'), sessionStorage.getItem('deptId'), 0, 0, 0, 0)
       .subscribe(data => {
@@ -2405,7 +2734,7 @@ export class SalesReportsComponent implements OnInit {
 
 
   spPurRegDownLoad() {
-    const fileName = 'Purchase-Register-' +  '.xls';
+    const fileName = 'Purchase-Register-' + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.reportService.spPurRegDownLoadReport(sessionStorage.getItem('ouId'))
       .subscribe(data => {
