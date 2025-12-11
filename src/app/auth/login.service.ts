@@ -24,9 +24,15 @@ export class LoginService {
     let options = {
       headers: this.headers
     };
+<<<<<<< HEAD
     // const url = 'http://localhost:8081/loginpage';
     const url='http://saihorizon.com:8051/ErpReplica/loginpage';
     // const url='http://saierp.horizon.org:8080/ErpReplica/loginpage';
+=======
+    const url = 'http://localhost:8081/loginpage';
+    //  const url='http://saihorizon.com:8051/ErpReplica/loginpage';
+    //  const url='http://saierp.horizon.org:8080/ErpReplica/loginpage';
+>>>>>>> 20a757305224f4e521565d9456ae23f07013889b
     // const url= "http://saierp.horizon.org:7867/PetrolPump/loginpage"; 
   
     console.log(body);

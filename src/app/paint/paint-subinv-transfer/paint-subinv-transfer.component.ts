@@ -157,7 +157,7 @@ export class PaintSubinvTransferComponent implements OnInit {
   isVisibleReceiveButton:boolean=false;
   headerValidation1:boolean=false;
   lineValidation1=false;
-
+  lineItemRepeated = false;
   pendingrec:any;
   attribute17:string;
   attribute18:string;
@@ -572,18 +572,23 @@ if (this.lineValidation1) {
     console.log(select1.itemId);
     if (select1 != undefined) {
       // alert(select1.itemId)
-      var trxLnArr1 = this.PaintSubinventoryTransferForm.get(
-        'trfLinesList'
-      ) as FormArray;
+      var trxLnArr1 = this.PaintSubinventoryTransferForm.get( 'trfLinesList' ) as FormArray;
+
       trxLnArr1.controls[i].patchValue({ itemId: select1.itemId });
       var subcode = this.PaintSubinventoryTransferForm.get('subInventoryCode').value;
+
+          //  --------------------------------------------------------------
+              // alert("Checking for duplicate line item....");
+              this.duplicateLineCheck(i, select1.itemId,select1.SEGMENT);
+              if( this.lineItemRepeated) { return;}
+         //  --------------------------------------------------------------
+
       this.service.getItemDetail(select1.itemId).subscribe((data) => {
         this.getItemDetail = data;
         if (this.getItemDetail.description != undefined) {
           trxLnArr1.controls[i].patchValue({ description: this.getItemDetail.description,});
           trxLnArr1.controls[i].patchValue({ uom: this.getItemDetail.uom });
           trxLnArr1.controls[i].patchValue({ attribute10: this.getItemDetail.attribute10 });
-
           trxLnArr1.controls[i].patchValue({ locId: Number(sessionStorage.getItem('locId')),
           });
 
@@ -1531,6 +1536,29 @@ if (this.lineValidation1) {
   
          this.lineValidation1=true;
   
+      }
+
+      duplicateLineCheck(index, mItem, itemSeg) {
+        // alert("in duplicate check section..."+index +" , "+mItem+" , "+itemSeg)
+        this.lineItemRepeated = false;
+        var trxLnArr1 = this.PaintSubinventoryTransferForm.get('trfLinesList') as FormArray
+        var trxLnArr = this.PaintSubinventoryTransferForm.get('trfLinesList').value;
+        var len1=trxLnArr.length;
+      
+         for (let i = 0; i < trxLnArr.length; i++) {
+          // var x = trxLnArr[i].invItemId;
+          var x = trxLnArr[i].itemId;
+
+          // alert ("i,x,mitem :" +i+","+x +" , "+mItem);
+
+          if (i != index && (x === mItem)) {
+            alert(itemSeg + " - Item Already Entered.Please Check Line :" + (i + 1));
+            trxLnArr1.controls[index].patchValue({ segment: '' });
+      
+            this.lineItemRepeated = true;
+            break;
+          }
+        }
       }
   
 
