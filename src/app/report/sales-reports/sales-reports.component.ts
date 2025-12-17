@@ -1669,7 +1669,10 @@ export class SalesReportsComponent implements OnInit {
       //  alert(deptId);
       const fileName = 'Receipt Register-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
+        if (locId === undefined){
+          locId=' ';
+        }
         this.reportService.spReceiptRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -1722,7 +1725,10 @@ export class SalesReportsComponent implements OnInit {
       var subInventory = 'VH';
       const fileName = 'Stock Transfer Made Detail Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId'))==10) {
+        if (locId===undefined){
+          locId=' ';
+        }
         this.reportService.stockMadeDetailsReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, tolocId, subInventory, sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -1747,6 +1753,9 @@ export class SalesReportsComponent implements OnInit {
       const fileName = 'Stock Transfer Received Detail Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
+        if (locId===undefined){
+          locId=' '
+        }
         this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, tolocId, subInventory, this.deptId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -2096,6 +2105,9 @@ export class SalesReportsComponent implements OnInit {
       // alert(deptId+this.locCode);
       var locaId = this.salesReportForm.get('locId').value;
       if (Number(sessionStorage.getItem('deptId')) == 4) {
+        if (locaId===undefined){
+          locaId=' ';
+        }
         // this.reportService.sppurRegidetailReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
         this.reportService.sppurRegidetailReport(fromDate, toDate, sessionStorage.getItem('ouId'), locaId, deptId)
           .subscribe(data => {
@@ -2152,7 +2164,10 @@ export class SalesReportsComponent implements OnInit {
     else if (reportName == 'Delivery Summary Report') {
       const fileName = 'Delivery Summary Report-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-      if (Number((sessionStorage.getItem('deptId'))) == 4) {
+      if (Number((sessionStorage.getItem('deptId'))) == 4  || Number(sessionStorage.getItem('roleId'))==10) {
+        if (locId===undefined){
+          locId=' ';
+        }
         this.reportService.deliverySummary(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);

@@ -1538,7 +1538,10 @@ reportParameter(reportName) {
 
     const fileName = 'Stock Transfer Made Detail Report-' +  fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-    if (Number(sessionStorage.getItem('deptId')) === 4) {
+    if (Number(sessionStorage.getItem('deptId')) === 4|| Number(sessionStorage.getItem('roleId'))==10) {
+      if (locId===undefined){
+        locId=' ';
+      }
       this.reportService.stockMadeDetailsReport(fromDate, toDate,sessionStorage.getItem('ouId'),locId, tolocId, subInventory,sessionStorage.getItem('deptId'))
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -1587,6 +1590,9 @@ reportParameter(reportName) {
     const fileName = 'Stock Transfer Received Detail Report-' +  fromDate + '.xls';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (locId===undefined){
+        locId=' ';
+      }
       this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate, sessionStorage.getItem('ouId'),locId, tolocId, subInventory,sessionStorage.getItem('deptId'))
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);

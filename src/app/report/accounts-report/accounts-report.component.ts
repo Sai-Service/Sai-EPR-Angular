@@ -1127,6 +1127,9 @@ reportName:string;
     else if (reportName==='Receipt Register Report'){
       const fileName = 'Receipt Register Report-' +  fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (locId === undefined){
+        locId=' ';
+      }
       this.reportService.spReceiptRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId,deptId)
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);

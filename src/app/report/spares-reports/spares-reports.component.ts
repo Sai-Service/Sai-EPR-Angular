@@ -2512,6 +2512,9 @@ export class SparesReportsComponent implements OnInit {
       this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
 
       if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
+        if (locId===undefined){
+          locId=' ';
+        }
         const fileName = 'Purchase Register Details-' + fromDate + '-TO-' + toDate + '.xls';
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
         this.reportService.sppurRegidetailReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
@@ -2680,6 +2683,9 @@ export class SparesReportsComponent implements OnInit {
       const fileName = 'Spares Receipt Register-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
+        if (locId === undefined){
+          locId=' '
+        }
         this.reportService.spReceiptRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -2950,6 +2956,9 @@ export class SparesReportsComponent implements OnInit {
       const fileName = 'Stock Transfer Made Detail Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
+        if (fromLocationId===undefined){
+          fromLocationId=' ';
+        }
         this.reportService.stockMadeDetailsReport(fromDate, toDate, sessionStorage.getItem('ouId'), fromLocationId, toLocationId, subInventory, sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -3042,6 +3051,9 @@ export class SparesReportsComponent implements OnInit {
       const fileName = 'Stock Transfer Received Detail Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) == 10) {
+        if (tolocationId===undefined){
+          tolocationId=' ';
+        }
         this.reportService.SprStkTrfRecdDtlsReport(fromDate, toDate, sessionStorage.getItem('ouId'), tolocationId, fromLocationId, subInventory, sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);

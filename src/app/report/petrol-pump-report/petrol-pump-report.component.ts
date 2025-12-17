@@ -653,6 +653,9 @@ else if (reportName === 'Sales Register - Petrol Pump'){
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
       if (Number(sessionStorage.getItem('deptId')) === 4) {
+        if (locId===undefined){
+          locId=' ';
+        }
         const fileName = 'Pump Purchase Register Details-' +  fromDate + '-TO-' + toDate + '.xls';
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
         this.reportService.sppurRegidetailReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)

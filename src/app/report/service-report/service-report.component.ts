@@ -903,6 +903,7 @@ export class ServiceReportComponent implements OnInit {
     var deptId = this.serviceReportForm.get('deptId').value;
     var fDate = this.serviceReportForm.get('fromDate').value;
     var tDate = this.serviceReportForm.get('toDate').value;
+    alert(locId)
     if (locId === null) {
       alert('Please Select location Code.!');
       return;
@@ -911,6 +912,10 @@ export class ServiceReportComponent implements OnInit {
       const fileName = 'Job-Card-Summary-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId'))==10) {
+        if (locId===undefined){
+          locId='';
+        }
+        alert(locId)
         this.reportService.jobSummaryReport(fromDate, toDate, locId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
@@ -983,6 +988,9 @@ export class ServiceReportComponent implements OnInit {
       const fileName = 'Receipt Register-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4  || Number(sessionStorage.getItem('roleId'))==10) {
+        if (locId===undefined){
+          locId=' ';
+        }
         this.reportService.spReceiptRegisterReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);

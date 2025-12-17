@@ -944,6 +944,9 @@ export class PaintReportsNewComponent implements OnInit {
       this.fromToDateValidation(fDate,tDate); if(this.rptValidation==false){return;}
 
       if (Number(sessionStorage.getItem('deptId')) === 4) {
+        if (locId===undefined){
+          locId=' ';
+        }
         const fileName = 'Paint Purchase Register Details-' +  fromDate + '-TO-' + toDate + '.xls';
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
         // this.reportService.sppurRegidetailReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
@@ -1238,6 +1241,9 @@ export class PaintReportsNewComponent implements OnInit {
       const fileName = 'Stock Transfer Made Detail Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
+        if (locId===undefined){
+          locId=' ';
+        }
         this.reportService.stockMadeDetailsReport(fromDate, toDate, sessionStorage.getItem('ouId'),locId, tolocId, subInventory,sessionStorage.getItem('deptId'))
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
