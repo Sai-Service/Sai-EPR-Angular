@@ -1,7 +1,7 @@
 <form [formGroup]="itemMasterForm" (ngSubmit)="itemMaster(itemMasterForm.value)">
     <table style="width: 100%;background-color: white;">
         <tr>
-            <td class="PageHeader">
+            <td class="PageHeader"> 
                 &nbsp;&nbsp;ITEM&nbsp;MASTER
             </td>
             <td>
@@ -23,7 +23,7 @@
     </table>
     <fieldset class="RFS">
         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
-            Header&nbsp;Details
+            Header&nbsp;Details 
         </legend>
         <table class="center">
             <div *ngIf="displayActiveHeader; then thenActiveHeader; else elseActiveHeader"></div>
@@ -44,6 +44,7 @@
                         <div *ngIf="f.itemTypeForCat.errors.required">Please enter Item type </div>
                     </div>
                 </td>
+                
                 <td style="width: 12%" class="LabelFontStyle1">Item&nbsp;Category&nbsp;:&nbsp;</td>
                 <td>
                     <select style="width:fit-content" formControlName="categoryId" id="categoryId" class="form-control"
@@ -127,6 +128,7 @@
                     </td>
 
                 </ng-template>
+
                 <ng-template #elseBlockdisItemCode>
                     <td><input type="text" disabled class="form-control" formControlName="segment"></td>
                 </ng-template>
@@ -143,6 +145,7 @@
                 <td>
                     <input type="text" disabled class="form-control" formControlName="itemTypeForCat" value={{itemTypeForCat}}>
                 </td>
+                  <input type="text" hidden class="form-control" formControlName="itemId">
                 <td style="width: 12%" class="LabelFontStyle">Item&nbsp;Category&nbsp;:&nbsp;</td>
                 <td>
                     <input hidden type="number" disabled class="form-control" formControlName="categoryId" value={{categoryId}}>
@@ -934,7 +937,7 @@
                             <tr>
                                 <td style="width: 12%" class="LabelFontStyle"> MFG&nbsp;Year&nbsp;:&nbsp;</td>
                                 <td><input type="date" formControlName="monthYrManf" class="form-control"
-                                        max="{{maxDate | date:'yyyy-MM-dd'"></td>
+                                        max="{{maxDate | date:'yyyy-MM-dd'}}"></td>
                                 <td style="width: 12%" class="LabelFontStyle">Interiors&nbsp;:&nbsp; </td>
                                 <td><input type="checkbox" [(ngModel)]="interiors" formControlName="interiors"
                                         (change)="interiorsEvent($event)"></td>
@@ -1014,6 +1017,10 @@
                     <button disabled type="submit" class="btn btn-primary" id="saveBtn" data-toggle="modal"
                         data-target="#confirmAlert" (click)="getMessage('Save')">Save</button>
                 </td>
+                 <td class="center">
+                    <button type="button" class="btn btn-primary" style="width: fit-content;" id="SchemeBtn" data-toggle="modal"
+                     (click)= "openScheme()">SCHEME MASTER</button>
+                </td>
 
                 <td  [style.display]="isVisibleUpdateBtn ? 'block' : 'none'">
                     <button type="submit"  class="btn btn-primary" id="updateBtn" data-toggle="modal"
@@ -1032,7 +1039,47 @@
             </ng-template>
         </tr>
     </table>
+
+
+<div class="modal-overlay" *ngIf="showSchemeModal">
+  <div class="modal-box large-modal">
+    
+     <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">SCHEME MASTER DETAILS&nbsp; </legend>
+                        <table style="width: 100%;">
+                            <tr>
+                                <td style="width: 15%" class="LabelFontStyle1">
+                                Model&nbsp;:&nbsp;
+                            </td>
+                            <td>
+                                <select formControlName="model" id="model" class="form-control" style="width: 170px;">
+                                    <option disabled>--Select--</option>
+                                    <option *ngFor="let mm of mainModelList" [ngValue]="mm.code">
+                                        {{mm.code}}
+                                    </option>
+                                </select>
+                            </td>
+                                <td style="width: 15%;" class="LabelFontStyle">
+                                    From&nbsp;Date&nbsp;:&nbsp;</td>
+                                <td><input type="date" formControlName="STARTDATE" class="form-control"></td>
+                                <td style="width: 12%" class="LabelFontStyle">
+                                    To&nbsp;Date&nbsp;:&nbsp;</td>
+                                <td><input type="date" formControlName="ATTRIBUTE2" class="form-control">
+                                    <div *ngIf="itemMasterForm.get('ATTRIBUTE2')?.errors?.invalidDate" style="color:red">To Date cannot be earlier than From Date</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </fieldset>
+
+    <div class="actions">
+      <button  class="btn btn-primary" (click)="closeScheme()">Close</button>
+      <button  class="btn btn-primary" (click)="saveScheme()">SAVE</button>
+    </div>
+
+  </div>
+</div>
 </form>
+
 <div class="modal" id="confirmAlert" tabindex="-1" role="dialog" aria-hidden="true"
     style="width: 500px; text-align: center;">
     <div class="modal-dialog modal-dialog-centered modal-sm" role="document">

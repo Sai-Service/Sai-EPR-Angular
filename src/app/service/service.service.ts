@@ -57,6 +57,13 @@ getByRegNo(RegNo,ouId,jcType): Observable<any> {
   return this.http.get(this.ServerUrl +`/jobCard/regDtls?regNo=${RegNo}&ouId=${ouId}&jyType=${jcType}`);
   // http://localhost:8081/jobCard/regDtls?regNo=MH12EM8970&ouId=101&jyType=Service
 }
+
+getByRegNoBydtls(RegNo,kmt): Observable<any> {
+  // alert ("reg,ou,jtype:"+RegNo+","+ouId +","+jcType);
+  return this.http.get(this.ServerUrl +`/EwScheme/getEWStatus?regNo=${RegNo}&kms=${kmt}`);
+  // http://localhost:8081/jobCard/regDtls?regNo=MH12EM8970&ouId=101&jyType=Service
+}
+
 jobCarStatusListFn(): Observable<any> {
   return this.http.get(this.ServerUrl +`/cmnLookup/type/jobCardStatus`);
 }

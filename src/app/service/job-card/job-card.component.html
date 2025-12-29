@@ -327,7 +327,7 @@
                                                                             </td>
 
                                                                             <td style="width: 15%" class="LabelFontStyle1">OMR&nbsp;/Current&nbsp;KMS&nbsp;:</td>
-                                                                            <td><input type="number" style="background-color: yellow;" class="form-control" placeholder="" formControlName="lastRunKms" (change)="validateKm($event)" > </td>
+                                                                            <td><input type="number" style="background-color: yellow;" class="form-control" placeholder="" formControlName="lastRunKms"  (keydown.tab)="getByRegNoBydtlsFn()" (change)="validateKm($event)" > </td>
   
 
                                                                             <!-- <td style="width: 15%"  class="LabelFontStyle">Tech&nbsp;Advisor&nbsp;:</td> -->
@@ -1212,7 +1212,7 @@
                                                                                 </select> -->
 
                                                                                 <select formControlName="billableTyId"  id="billableTyId"   style="width: fit-content;"  class="form-control" >
-                                                                                    <option></option>
+                                                                                    <!-- <option></option> -->
                                                                                     <option
                                                                                     *ngFor="let sc of  billableTyIdList" [selected]="sc.billableTyId===1"  [(ngValue)]=sc.billableTyId> 
                                                                                         {{sc.billableTyName}}
@@ -2374,6 +2374,8 @@
                                                                   <td><input disabled type="number" min="0" formControlName="cwiMatTaxableAmt"  style="width: 7em;font-weight: bold;font-size: small;" ></td>
                                                                   <td><input disabled type="number" min="0" formControlName="cwiMatTotTaxAmt"  style="width: 7em;font-weight: bold;font-size: small;" ></td>
                                                                   <td><input disabled type="number" min="0"  formControlName="cwiMatTotAmt" style="width: 7em;font-weight: bold;font-size: small;">  </td>
+                                                                  <td><input disabled type="number" min="0"   style="width: 8em;font-weight: bold;font-size: small;"> </td>
+                                                                  <td><input disabled type="number" min="0"   style="width: 8em;font-weight: bold;font-size: small;"></td>
                                                                   <td><input disabled type="number" min="0"  formControlName="cwiInvTotAmt" class="form-control"  style="width: 8em;font-weight: bold;font-size: small;"></td>
 
                                                                   <div *ngIf="printCwiInvButton; then PCwiInv1; else PCwiInv2"></div>

@@ -681,7 +681,7 @@ export class WsVehicleMasterComponent implements OnInit {
 
   updateMast() {
     // alert ("Update  Vehicle Master Data......")
-    const formValue: IWsVehicleMaster =this.transeData( this.wsVehicleMasterForm.value);
+    const formValue: IWsVehicleMaster =this.transeData( this.wsVehicleMasterForm.getRawValue());
     // this.CreateItemCode();
     this.CheckDataValidations();
    
@@ -752,7 +752,16 @@ export class WsVehicleMasterComponent implements OnInit {
             this.GetItemDeatils(this.lstcomments.itemId);
             this.GetCustomerDetails(this.lstcomments.custAccountNo);
            if(this.lstcomments.status ==='Inactive') { this.wsVehicleMasterForm.disable();}
-      
+            if (this.wsVehicleMasterForm.get('regDate')?.value) {
+  this.wsVehicleMasterForm.get('regDate')?.disable();
+} else {
+  this.wsVehicleMasterForm.get('regDate')?.enable();
+}
+  if (this.wsVehicleMasterForm.get('deliveryDate')?.value) {
+  this.wsVehicleMasterForm.get('deliveryDate')?.disable();
+} else {
+  this.wsVehicleMasterForm.get('deliveryDate')?.enable();
+}
       } 
       });
     }
@@ -794,6 +803,31 @@ export class WsVehicleMasterComponent implements OnInit {
             // this.CreateItemCode();
             
             if(this.lstcomments.status ==='Inactive') { this.wsVehicleMasterForm.disable();}
+
+ /////////////////////////////// PRAYAG ///////////////////////////////////////           
+             if (this.wsVehicleMasterForm.get('regDate')?.value) {
+  this.wsVehicleMasterForm.get('regDate')?.disable();
+} else {
+  this.wsVehicleMasterForm.get('regDate')?.enable();
+}
+  if (this.wsVehicleMasterForm.get('deliveryDate')?.value) {
+  this.wsVehicleMasterForm.get('deliveryDate')?.disable();
+} else {
+  this.wsVehicleMasterForm.get('deliveryDate')?.enable();
+}
+
+const fields = ['policyNo','insuDate','insurerCompId','insurerSiteId',
+    'ewStatus','ewType','ewBookletNo','ewStartDate','ewEndDate',
+    'ewInsurerId','ewInsurerSite',
+    'mcpYN','pkgSource','mcpNo','mcpStartDate','mcpEndDate'];
+
+fields.forEach(f => {
+  const c = this.wsVehicleMasterForm.get(f);
+  if (!c) return;
+  c?.value ? c.disable() : c.enable();
+});
+
+//////////////////////////
 
           }
         });
@@ -1342,7 +1376,7 @@ export class WsVehicleMasterComponent implements OnInit {
 
     // alert ("in validation...");
 
-    const formValue: IWsVehicleMaster = this.wsVehicleMasterForm.value;
+    const formValue: IWsVehicleMaster = this.wsVehicleMasterForm.getRawValue();
 
     this.wsVehicleMasterForm.patchValue({regNo :formValue.regNo.trim()});
     this.wsVehicleMasterForm.patchValue({vin :formValue.vin.trim()});

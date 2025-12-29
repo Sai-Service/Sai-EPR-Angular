@@ -1202,6 +1202,9 @@ export class ServiceReportComponent implements OnInit {
       const fileName = 'EW Sales Register-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4  || Number(sessionStorage.getItem('roleId'))==10) {
+        if (locId == undefined || locId==null){
+          locId=' ';
+        }
         this.reportService.EWSaleRegister(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);

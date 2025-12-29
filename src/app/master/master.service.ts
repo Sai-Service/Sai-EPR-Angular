@@ -708,6 +708,30 @@ export class MasterService {
     return this.http.put(url, itemMasterRecord, options);
   }
 
+  // UpdateSchemMaster(itemId,model,STARTDATE,ATTRIBUTE2){
+
+
+  // }
+
+
+//   UpdateSchemMaster(itemId: any, model: any, fromDate: any, toDate: any) {
+//   const url =  (this.ServerUrl + `/itemMst/updateScheme`);
+//   const params = new HttpParams()
+//     .set('itemId', itemId)
+//     .set('model', model)
+//     .set('fromDate', fromDate)
+//     .set('toDate1', toDate);
+
+//   return this.http.put(url,{ params });  // MUST RETURN
+// }
+
+UpdateSchemMaster(itemId: any, model: any, fromDate: any, toDate: any) {
+  const url = this.ServerUrl + `/itemMst/updateScheme?itemId=${itemId}&model=${model}&fromDate=${fromDate}&toDate1=${toDate}`;
+
+  return this.http.put(url, {});
+}
+
+
   UpdateLocatorMasterById(LocatorMasterRecord, locatorId) {
     const options = {
       headers: this.headers

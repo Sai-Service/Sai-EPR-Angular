@@ -188,6 +188,7 @@ export class JobCardComponent implements OnInit {
 
   // lstcomments: any;
   RegNoList: any;
+  RegNoListFn:any;
   RegNoList1: any[];
   public RegNoList2: any;
   userList1: any[] = [];
@@ -586,7 +587,7 @@ export class JobCardComponent implements OnInit {
       regDate: [],
       pickupDate: [],
       promiseDate: [],
-      lastRunKms: [],
+      lastRunKms: [''],
       storedKmr: [],
       itemId: [],
 
@@ -1134,7 +1135,13 @@ export class JobCardComponent implements OnInit {
           var patch = this.jobcardForm.get('jobCardMatLines') as FormArray;
           for (let i = 0; i <= data1.length; i++) {
             // this.jobcardForm.get('jobCardMatLines').patchValue({lineNum: i+1})change by vinita
-            patch.controls[i].patchValue({ lineNum: i + 1 })
+            patch.controls[i].patchValue({ lineNum: i + 1 });
+            ////////////// PRAYAG //////////////
+            const billableCtrl = patch.at(i).get('billableTyId');
+  if (billableCtrl?.value !== null && billableCtrl?.value !== undefined) {
+    billableCtrl.disable();
+  }
+
           }
           // this.jobCarStatusList = data1;
           // console.log(this.jobCarStatusList);  lineNum
@@ -1570,6 +1577,12 @@ export class JobCardComponent implements OnInit {
       this.jobcardForm.patchValue({ regNo: '' });
       return;
     }
+    //  var lastRunKms = this.jobcardForm.get('lastRunKms').value;
+    // if (lastRunKms === '--Select--' || lastRunKms === null || lastRunKms === undefined) {
+    //   alert("Please Select Current KM ...");
+    //   this.jobcardForm.patchValue({ regNo: '' });
+    //   return;
+    // }
 
     this.serviceService.getByRegNo(RegNo, sessionStorage.getItem('ouId'), jcType)
       .subscribe(
@@ -1592,11 +1605,36 @@ export class JobCardComponent implements OnInit {
             status: 'Opened',
             storedKmr: this.RegNoList.lastRunKms,
           });
+          this.getByRegNoBydtlsFn();
         }
       );
   }
 
+getByRegNoBydtlsFn(){
+     var RegNo = this.jobcardForm.get('regNo').value;
+    if (RegNo === '--Select--' || RegNo === null || RegNo === undefined) {
+      alert("Enter Valid Vehicle Registration No.");
+      this.jobcardForm.patchValue({ regNo: '' });
+      return;
+    }
 
+   
+     var lastRunKms = this.jobcardForm.get('lastRunKms').value;
+    if (lastRunKms === '--Select--' || lastRunKms === null || lastRunKms === undefined) {
+      alert("Please Select Current KM ...");
+      this.jobcardForm.patchValue({ regNo: '' });
+      return;
+    }
+     this.serviceService.getByRegNoBydtls(RegNo,lastRunKms)
+      .subscribe(
+        data => {
+          this.RegNoListFn = data.obj;
+           if (data.code === 200) { alert(data.message)}
+          if (data.code === 400) { alert(data.message)}})
+
+
+
+}
 
 
   onOptionsSelectedsrTypeId(srTypeId) {
@@ -2221,7 +2259,7 @@ export class JobCardComponent implements OnInit {
 
   saveMaterial() {
 
-    var jcmArr = this.jobcardForm.get('jobCardMatLines').value;
+    var jcmArr = this.jobcardForm.get('jobCardMatLines')?.value;
     var len1 = jcmArr.length;
 
     for (let i = 0; i < len1; i++) {
@@ -2232,7 +2270,7 @@ export class JobCardComponent implements OnInit {
     if (this.matLineValidation) {
       this.saveMatButton = false;
 
-      const formValue: IjobCard = this.tranceFun(this.jobcardForm.value);
+      const formValue: IjobCard = this.tranceFun(this.jobcardForm.getRawValue());
       formValue.emplId = Number(sessionStorage.getItem('emplId'));
       this.serviceService.saveMaterialSubmit(formValue).subscribe((res: any) => {
         if (res.code === 200) {
@@ -2861,7 +2899,7 @@ export class JobCardComponent implements OnInit {
                   this.custInvoiceNo = res.obj.CustomerInvoiceNo;
                   this.insInvoiceNo = res.obj.InsuranceInvoiceNo;
                 }
-
+                this.Search(jobCardNum)
               } else {
                 // if (res.code === 400) {
                 this.genBillButton = true;
@@ -3426,14 +3464,15 @@ export class JobCardComponent implements OnInit {
     //     invTotAmt:Math.round(((ltot+mtot)+Number.EPSILON)*100)/100,
     // });
 
-    var custTotal = Number(this.jobcardForm.get('labTotAmt').value) + Number(this.jobcardForm.get('matTotAmt').value)
-    var addonTotal = Number(this.jobcardForm.get('addonLabTotAmt').value) + Number(this.jobcardForm.get('addonMatTotAmt').value)
-    var cwiTotal = Number(this.jobcardForm.get('cwiLabTotAmt').value) + Number(this.jobcardForm.get('cwiMatTotAmt').value)
-
+    var custTotal = Number(this.jobcardForm.get('labTotAmt')?.value) + Number(this.jobcardForm.get('matTotAmt')?.value)
+    var addonTotal = Number(this.jobcardForm.get('addonLabTotAmt')?.value) + Number(this.jobcardForm.get('addonMatTotAmt')?.value)
+    var cwiTotal = Number(this.jobcardForm.get('cwiLabTotAmt')?.value) + Number(this.jobcardForm.get('cwiMatTotAmt')?.value)
+    // var cwiTotal1=(( Math.round(((Number(this.jobcardForm.get('cwiLabTotAmt')?.value)) + Number.EPSILON) * 100) / 100)+
+    //               Math.round(((Number(this.jobcardForm.get('cwiMatTotAmt')?.value) + Number.EPSILON) * 100) / 100))
     this.jobcardForm.patchValue({
       invTotAmt: Math.round(((custTotal) + Number.EPSILON) * 100) / 100,
       addonInvTotAmt: Math.round(((addonTotal) + Number.EPSILON) * 100) / 100,
-      cwiInvTotAmt: Math.round(((cwiTotal) + Number.EPSILON) * 100) / 100,
+      cwiInvTotAmt: (Math.round(((cwiTotal) + Number.EPSILON) * 100) / 100),
     });
 
   }
@@ -3726,7 +3765,7 @@ export class JobCardComponent implements OnInit {
 
 
   showReceiptScreen() {
-    var mVehNo = this.jobcardForm.get('regNo').value;
+    var mVehNo = this.jobcardForm.get('regNo')?.value;
     alert("mVehNo :" + mVehNo);
     this.router.navigate(['/admin/transaction/PaymentAr', mVehNo]);
   }

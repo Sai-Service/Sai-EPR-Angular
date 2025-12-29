@@ -227,6 +227,11 @@ export class ItemMasterNewComponent implements OnInit {
   displaytaxCategoryListSalesIGST = true;
   taxCategorySaleNm: string;
   isVisibleUpdateBtn:boolean=false;
+  showSchemeModal :boolean= false;
+  model:String;
+  STARTDATE:Date;
+  ATTRIBUTE2:Date;
+  itemId:Number;
 
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private orderManagementService: OrderManagementService) {
@@ -312,6 +317,10 @@ export class ItemMasterNewComponent implements OnInit {
       materialType: [],
       lotSize: [],
       taxCategoryPurIGSTNm: [],
+      model:[],
+      STARTDATE:[],
+      ATTRIBUTE2:[],
+      itemId:[],  
     })
   }
 
@@ -381,13 +390,38 @@ export class ItemMasterNewComponent implements OnInit {
         }
       );
     this.status = 'Active';
+
+
+
+
+
+    this.service.mainModelListDivisionWise(sessionStorage.getItem('divisionId'))
+      .subscribe(
+        data => {
+          this.mainModelList = data;
+          console.log(this.mainModelList);
+        }
+      );
   }
+
+
 
   get f() { return this.itemMasterForm.controls; }
 
 
   itemMaster(itemMaster: any) {
   }
+
+  dateValidator(form: FormGroup) {
+  const from = form.get('STARTDATE')?.value;
+  const to = form.get('ATTRIBUTE2')?.value;
+
+  if (from && to && to < from) {
+    form.get('ATTRIBUTE2')?.setErrors({ invalidDate: true });
+  } else {
+    return null;
+  }
+}
 
 
   SearchItemCode(segment) {
@@ -399,11 +433,14 @@ export class ItemMasterNewComponent implements OnInit {
           this.displayActiveHeader = false;
           this.taxCategoryDataList = data.taxCategoryNameList;
           this.itemMasterForm.patchValue(this.lstcomments);
+          this.itemMasterForm.patchValue({ATTRIBUTE2:data.endDate});
+          // alert(data.endDate)
+          this.itemMasterForm.patchValue({STARTDATE: new Date(data.startDate).toISOString().substring(0, 10)});
           let selloc = sessionStorage.getItem('locCode');
           this.segmentName = selloc + '.'
             + this.costCenter + '.'
             + this.poChargeAccount + '.'
-            + '0000'; //this.lookupValueDesc5
+            + '0000';
           if (data.itemTypeForCat == 'ss_vehicle') {
             this.ssVehical = true;
           }
@@ -970,6 +1007,18 @@ export class ItemMasterNewComponent implements OnInit {
 
     }
 
+      if (msgType.includes("Scheme")) {
+      this.submitted = true;
+      (document.getElementById('SchemeBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
+      // if (this.itemMasterForm.invalid) {
+      //   alert('Some fields validation error (D)');
+      //   (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '');
+      //   return;
+      // }
+      this.message = "Do you want to OPEN SHCEME Master(Yes/No)?"
+
+    }
+
     if (msgType.includes("Update")) {
       this.submitted = true;
       (document.getElementById('updateBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
@@ -988,14 +1037,81 @@ export class ItemMasterNewComponent implements OnInit {
     }
 
     if (msgType.includes("Close")) {
-      this.message = "Do you want to Close the Form(Yes/No)?"
+      this.message = "Do you want to Close the MASTER(Yes/No)?"
     }
     return;
   }
 
+
+ openScheme() {
+ this.showSchemeModal = true;
+}
+
+closeScheme() {
+ this.showSchemeModal = false;
+}
+
+formatApiDate(date: string) {
+  if (!date) return '';
+
+  const d = new Date(date);
+
+  const day = String(d.getDate()).padStart(2, '0');
+
+  const months = ["JAN","FEB","MAR","APR","MAY","JUN",
+                  "JUL","AUG","SEP","OCT","NOV","DEC"];
+
+  const month = months[d.getMonth()];
+  const year = d.getFullYear();
+
+  return `${day}-${month}-${year}`;
+}
+
+
+saveScheme() {
+  var itemId = this.itemMasterForm.get('itemId').value;
+   var model = this.itemMasterForm.get('model').value;
+    let STARTDATE = this.itemMasterForm.get('STARTDATE').value;
+    let ATTRIBUTE2 = this.itemMasterForm.get('ATTRIBUTE2').value;
+
+    STARTDATE = this.formatApiDate(STARTDATE);
+    ATTRIBUTE2 = this.formatApiDate(ATTRIBUTE2);
+
+    if (model == undefined || model == null || model == '') {
+      alert('Select Item Code.!');
+      return;
+    }
+    else if (STARTDATE == undefined || STARTDATE == null || STARTDATE == '') {
+      alert('Select From Date!');
+      return;
+    }
+
+    else if (ATTRIBUTE2 == undefined || ATTRIBUTE2 == null || ATTRIBUTE2 ==''){
+      alert('Select To Date .!');
+      return;
+    }
+   this.service.UpdateSchemMaster(itemId,model,STARTDATE,ATTRIBUTE2).subscribe((res: any) => {
+      if (res.code === 200) {
+        alert(res.message);
+        this.itemMasterForm.disable();
+        
+      } else {
+        if (res.code === 400) {
+          alert(res.message
+          );
+        }
+      }
+    });
+}
+
   executeAction() {
     if (this.msgType.includes("Save")) {
       this.newItemMast();
+    }
+
+     if (this.msgType.includes("Scheme")) {
+     
+  
     }
 
     if (this.msgType.includes("Update")) {
@@ -1031,13 +1147,6 @@ export class ItemMasterNewComponent implements OnInit {
   }
 
   newItemMast() {
-    // this.submitted = true;
-    // if(this.itemMasterForm.invalid){
-    //   alert('Error');
-    // return;
-    // } 
-   
-    // alert(this.isTaxable);
     var costCenter = this.itemMasterForm.get('costCenter').value;
     var poChargeAccount = this.itemMasterForm.get('poChargeAccount').value;
     if (this.segment == undefined || this.segment == null || this.segment == '') {
