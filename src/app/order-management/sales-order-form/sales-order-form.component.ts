@@ -1013,6 +1013,7 @@ export class SalesOrderFormComponent implements OnInit {
             
               return;
             }
+            
              if (((select.description).toUpperCase()) == this.SalesOrderBookingForm.get('model')?.value){
                this.displaysegmentInvType[k] = false;
              }
