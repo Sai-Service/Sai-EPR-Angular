@@ -608,7 +608,8 @@ export class SaiExtendedWarrantyComponent implements OnInit {
       );
   }
 
-  GetSchemeDetails(mSchemeId: any) {
+  GetSchemeDetails(event:any) {
+    var mSchemeId =event.target.value;
     // alert("mscheme id :" + mSchemeId);
     if (mSchemeId !== null) {
       this.service.getEWSchemeDetails(mSchemeId)

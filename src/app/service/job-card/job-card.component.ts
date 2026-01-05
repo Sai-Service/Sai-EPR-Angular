@@ -3003,7 +3003,7 @@ getByRegNoBydtlsFn(){
       this.CheckSaveBillValidation()
       if (this.saveBillValidation) {
         this.saveBillButton = false;
-        debugger;
+        // debugger;
         if (this.jobcardForm.get('jcType')?.value === 'BS') {
           const salvage = this.jobcardForm.get('salvage')?.value;
           const ecaAmt = this.jobcardForm.get('ecaAmt')?.value;
