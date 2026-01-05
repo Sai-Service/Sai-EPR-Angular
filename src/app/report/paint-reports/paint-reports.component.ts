@@ -90,6 +90,7 @@ export class PaintReportsComponent implements OnInit {
   isVisibleonlyOuCodeSubInv: boolean = false;
   isVisiblegstsaiDebtors: boolean = false;
   isVisibleStockLedger: boolean = false;
+  isVisibleStockMismatch: boolean = false;
   isVisiblestockTransfer: boolean = false;
   isVisiblestockTransferRecd: boolean = false;
   isVisibleSparesBackOrderQty: boolean = false;
@@ -317,6 +318,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
       this.isVisiblespClosingStockAsOndate1 = false;
+      this.isVisibleStockMismatch=false;
 
     }
     else if (reportName === 'gstpurRegSumm') {
@@ -347,6 +349,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
       this.isVisiblespClosingStockAsOndate1 = false;
+            this.isVisibleStockMismatch=false;
+
 
     }
     else if (reportName === 'consumptionSummary') {
@@ -380,6 +384,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePaintReconReport = false;
 
       this.isVisiblespClosingStockAsOndate1 = false;
+            this.isVisibleStockMismatch=false;
+
     }
 
 
@@ -408,6 +414,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
       this.isVisiblespClosingStockAsOndate1 = false;
+      this.isVisibleStockMismatch=false;
 
 
     }
@@ -436,6 +443,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
       this.isVisiblespClosingStockAsOndate1 = false;
+      this.isVisibleStockMismatch=false;
 
 
     }
@@ -465,6 +473,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
       this.isVisiblespClosingStockAsOndate1 = false;
+      this.isVisibleStockMismatch=false;
 
     }
 
@@ -492,7 +501,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePaintPanelDetailReport = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;
+      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+
     }
 
     else if (reportName === 'itemMasterList') {
@@ -519,7 +529,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory = false;
       this.isVisiblePaintPanelDetailReport = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;
+      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+
     }
 
 
@@ -547,7 +558,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePaintPanelDetailReport = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;
+      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+
     }
 
     else if (reportName === 'paintReconcillationReport') {
@@ -575,7 +587,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePaintPanelDetailReport = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = true;
-      this.isVisiblespClosingStockAsOndate1 = false;
+      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+
     }
 
     else if (reportName === 'gstsparesMiscIssueReceipt') {
@@ -602,7 +615,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePaintPanelDetailReport = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;
+      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+
     }
 
     else if (reportName === 'gstsparesPaintPanel') {
@@ -629,7 +643,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePaintPanelDetailReport = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;
+      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+
 
     }
     else if (reportName === 'gstsparesPaintPanelDtlRpt') {
@@ -656,7 +671,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePaintPanelDetailReport = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;
+      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+
 
     }
 
@@ -684,7 +700,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePaintPanelDetailReport = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;
+      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+
 
     }
 
@@ -712,7 +729,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePaintPanelDetailReport = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;
+      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+
 
     }
 
@@ -740,7 +758,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePaintPanelDetailReport = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;
+      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+
 
     }
 
@@ -768,7 +787,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePaintPanelDetailReport = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;
+      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+
 
     }
 
@@ -796,7 +816,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePaintPanelDetailReport = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;
+      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+
 
     }
 
@@ -829,7 +850,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;
+      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+
     }
 
     else if (reportName === 'paintStockTakingBlankFormat') {
@@ -856,7 +878,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;
+      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+
     }
 
     else if (reportName === 'paintStockTakingDetailFormat') {
@@ -883,7 +906,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;
+      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+
     }
 
     else if (reportName === 'paintStockTakinUploadFormat') {
@@ -910,7 +934,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;
+      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+
     }
 
     else if (reportName === 'paintStockTakingQtyDetails') {
@@ -937,7 +962,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;
+      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+
     }
     else if (reportName === 'icConsumptionReport') {
       this.reportName = 'Internal Consumption Report';
@@ -962,7 +988,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;
+      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+
 
     }
     else if (reportName === 'paintDailyReport') {
@@ -988,7 +1015,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;
+      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+
 
     }
     else if (reportName === 'panelConsuptionRe') {
@@ -1014,7 +1042,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;
+      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+
 
     }
 
@@ -1042,7 +1071,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibileIssueCategory = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;
+      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+
     }
     else if (reportName === 'sparesSubinvTransMade') {
       this.reportName = 'Sub Inventory Transfer Made Report';
@@ -1068,7 +1098,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibileIssueCategory = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;
+      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+
     }
     else if (reportName === 'paintOpningStockNew') {
       this.reportName = 'Paint Opening Stock Report New';
@@ -1094,7 +1125,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
       this.isVisiblespClosingStockAsOndate = false;
-      this.isVisiblespClosingStockAsOndate1 = true;
+      this.isVisiblespClosingStockAsOndate1 = true;      this.isVisibleStockMismatch=false;
+
     }
     else if (reportName === 'paintClosingStockNew') {
       this.reportName = 'Paint Closing Stock Report New';
@@ -1120,8 +1152,36 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
       this.isVisiblespClosingStockAsOndate = false;
-      this.isVisiblespClosingStockAsOndate1 = true;
+      this.isVisiblespClosingStockAsOndate1 = true;      this.isVisibleStockMismatch=false;
+
     }
+     else if (reportName === 'gstStockMismatch') {
+      this.reportName = 'Paint Stock Mismatch Report';
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisibleStockLedger = true;
+      this.isVisiblestockTransfer = false;
+      this.isVisiblestockTransferRecd = false;
+      this.isVisiblespClosingStockAsOndate = false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.isVisiblesparesPaintPanelReport = false;
+      this.isVisibleonlyOuCode = false;
+      this.isVisiblePanelOUFromDateToDateSubInv = false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblePaintPanelDetailReport = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisiblePaintReconReport = false;
+      this.isVisiblespClosingStockAsOndate1 = false;
+      this.isVisibleStockMismatch=false;
+  }
   }
 
   spPurRegDownLoad() {
@@ -1277,6 +1337,35 @@ export class PaintReportsComponent implements OnInit {
           })
       }
     }
+
+      else if (reportName === 'Paint Stock Mismatch Report') {
+      this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.stockMismatchReport(fromDate, toDate, subInventory, locId, userName)
+          .subscribe(data => {
+            var blob = new Blob([data], { type: 'application/pdf' });
+            var url = URL.createObjectURL(blob);
+            var printWindow = window.open(url, '', 'width=800,height=500');
+            printWindow.open;
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.stockMismatchReport(fromDate, toDate, subInventory, sessionStorage.getItem('locId'), userName)
+          .subscribe(data => {
+            var blob = new Blob([data], { type: 'application/pdf' });
+            var url = URL.createObjectURL(blob);
+            var printWindow = window.open(url, '', 'width=800,height=500');
+            printWindow.open;
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
+
     else if (reportName === 'Paint Inventory Aging Report') {
       this.isDisabled1 = false;
       this.rptValidation = true;
