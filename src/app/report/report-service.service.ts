@@ -878,8 +878,18 @@ export class ReportServiceService {
     });
   }
 
+
   stockLedgerReport(fromDate, toDate, subInvCode, partNo,locId,userName){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/StockLedger?fromDate=${fromDate}&toDate=${toDate}&subInvCode=${subInvCode}&partNo=${partNo}&locId=${locId}&userName=${userName}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+   stockMismatchReport(fromDate, toDate, subInvCode,locId,userName){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/StockMismatch?fromDate=${fromDate}&toDate=${toDate}&subInvCode=${subInvCode}&locId=${locId}&userName=${userName}`;
+    // http://localhost:8081/SparesReports/StockMismatch/?fromDate=05-Jan-2026&toDate=05-Jan-2026&subInvCode=PN&locId=1603&userName=C23603
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
