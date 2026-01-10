@@ -814,6 +814,7 @@ export class WsVehicleMasterComponent implements OnInit {
   this.wsVehicleMasterForm.get('deliveryDate')?.disable();
 } else {
   this.wsVehicleMasterForm.get('deliveryDate')?.enable();
+  
 }
 
 const fields = ['policyNo','insuDate','insurerCompId','insurerSiteId',

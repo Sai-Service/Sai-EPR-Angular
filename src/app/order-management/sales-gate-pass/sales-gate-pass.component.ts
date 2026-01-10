@@ -78,6 +78,7 @@ export class SalesGatePassComponent implements OnInit {
   isVisibleVehicleNumberUpdate: boolean = false;
   isVisibleInsDetails: boolean = false;
   downloadButton = false;
+  isVisiblePolicyButton :Boolean= true;
 
   insType: string;
   insuDate: string;
@@ -128,7 +129,7 @@ export class SalesGatePassComponent implements OnInit {
       insurerSiteId: [],
       insurerIdName: [],
       insurerSiteName: [],
-      regNo1: [],
+      regNo1: ['' ,[Validators.required,]],
     })
   }
   ngOnInit(): void {
@@ -208,6 +209,11 @@ export class SalesGatePassComponent implements OnInit {
           this.insuDate = this.lstcomments.insuDate;
           this.policyNo = this.lstcomments.policyNo;
           this.insuPeriod = this.lstcomments.insuPeriod;
+
+          if(this.lstcomments.policyNo != null ){
+            this.isVisiblePolicyButton=false;
+
+          }
 
           if (this.lstcomments.gatePassNo != 0) {
             this.isVisiblegatePassDetails = false;
@@ -349,14 +355,20 @@ export class SalesGatePassComponent implements OnInit {
   SalesGatepass(SalesGatepassForm) { }
   get f() { return this.SalesGatepassForm.controls; }
 
-
   vehiclePolicyupdate(itemId, regNo, regDate) {
 
     var policuNum = this.SalesGatepassForm.get('policyNo').value;
     var policyDate = this.SalesGatepassForm.get('insuDate').value;
+    var policyDate = this.SalesGatepassForm.get('insuDate').value;
+    var insurerSiteId = this.SalesGatepassForm.get('insurerSiteId').value;
+     var insurerCompId = this.SalesGatepassForm.get('insurerCompId').value;
+    //  var regDate = this.SalesGatepassForm.get('regDate').value;
 
     if (policuNum == undefined || policuNum == null || policuNum.trim() == '') { alert("Policy No should not be null.."); return; }
     if (policyDate == undefined || policyDate == null || policyDate.trim() == '') { alert("Policy Date should not be null.."); return; }
+    if (insurerCompId == undefined || insurerCompId == null) { alert("Insurance Company should not be null.."); return; }
+    if (insurerSiteId == undefined || insurerSiteId == null ) { alert("Insurance site should not be null.."); return; }
+    // if (regDate == undefined || regDate == null ) { alert("Vehicle Date should not be null.."); return; }
 
     // alert ("Regno & Policy no is ok...."); return;
 
@@ -382,14 +394,21 @@ export class SalesGatePassComponent implements OnInit {
 
   vehicleNoupdate(itemId, regNo, regDate) {
 
-    if (regNo === undefined || itemId === undefined || regDate === undefined) {
+    if (regNo === undefined || itemId === undefined ) {
       alert('Please Enter All required Details...!')
       return;
     }
-
-    if (regNo == undefined || regNo == null || regNo.trim() == '') { alert("Reg No should not be null.."); return; }
+  // var regDate = this.SalesGatepassForm.get('regDate').value;
+   if (regDate == undefined || regDate == null ) { alert("Vehicle Date should not be null.."); return; }
+  if (regNo == undefined || regNo == null || regNo.trim() == '') { alert("Reg No should not be null.."); return; }
     // alert(regNo.trim()=='')
     // alert("Registration No1:"+regNo +","+regNo.length);
+
+    // if (!regDate || regDate === undefined) {
+    // alert('Vehicle Date should not be null..');
+    // return;
+    //  }
+
     var regNo1 = regNo.toUpperCase();
     regNo1 = regNo1.trim();
     // this.regNo=regNo1
