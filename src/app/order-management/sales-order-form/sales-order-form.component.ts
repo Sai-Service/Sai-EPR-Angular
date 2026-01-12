@@ -1569,22 +1569,22 @@ export class SalesOrderFormComponent implements OnInit {
     var lesseeCustName = this.SalesOrderBookingForm.get('lesseeCustName')?.value;
     var rtoLocation = this.SalesOrderBookingForm.get('attribute17')?.value;
     var brokerType = this.SalesOrderBookingForm.get('brokerType')?.value;
-    var msRefNo = this.SalesOrderBookingForm.get('msRefNo')?.value;
-    var msRefType = this.SalesOrderBookingForm.get('msRefType')?.value;
-    var msRefCustNo = this.SalesOrderBookingForm.get('msRefCustNo')?.value;
+    // var msRefNo = this.SalesOrderBookingForm.get('msRefNo')?.value;
+    // var msRefType = this.SalesOrderBookingForm.get('msRefType')?.value;
+    // var msRefCustNo = this.SalesOrderBookingForm.get('msRefCustNo')?.value;
     // if (model === 'CHETAK') {
-      if (msRefNo === undefined || msRefNo === null || msRefNo === '') {
-        alert('Please Enter CDMS Booking No.!');
-        return;
-      }
-       if (msRefType === undefined || msRefType === null || msRefType === '') {
-        alert('Please Enter CDMS Invoice No.!');
-        return;
-      }
-       if (msRefCustNo === undefined || msRefCustNo === null || msRefCustNo === '') {
-        alert('Please Enter CDMS Customer.!');
-        return;
-      }
+      // if (msRefNo === undefined || msRefNo === null || msRefNo === '') {
+      //   alert('Please Enter CDMS Booking No.!');
+      //   return;
+      // }
+      //  if (msRefType === undefined || msRefType === null || msRefType === '') {
+      //   alert('Please Enter CDMS Invoice No.!');
+      //   return;
+      // }
+      //  if (msRefCustNo === undefined || msRefCustNo === null || msRefCustNo === '') {
+      //   alert('Please Enter CDMS Customer.!');
+      //   return;
+      // }
     // }
     if (Number(sessionStorage.getItem('ouId')) == 22 || Number(sessionStorage.getItem('divisionId')) == 2) {
       if (rtoLocation == undefined || rtoLocation == '' || rtoLocation == null) {
@@ -3897,8 +3897,22 @@ export class SalesOrderFormComponent implements OnInit {
     }
     var state = this.SalesOrderBookingForm.get('custAddress')?.value;
     var custTaxCat = this.SalesOrderBookingForm.get('custTaxCat')?.value;
+     var msRefNo = this.SalesOrderBookingForm.get('msRefNo')?.value;
+    var msRefType = this.SalesOrderBookingForm.get('msRefType')?.value;
+    var msRefCustNo = this.SalesOrderBookingForm.get('msRefCustNo')?.value;
     // alert(custTaxCat+'-----'+state)
-
+ if (msRefNo === undefined || msRefNo === null || msRefNo === '') {
+        alert('Please Enter CDMS Booking No.!');
+        return;
+      }
+       if (msRefType === undefined || msRefType === null || msRefType === '') {
+        alert('Please Enter CDMS Invoice No.!');
+        return;
+      }
+       if (msRefCustNo === undefined || msRefCustNo === null || msRefCustNo === '') {
+        alert('Please Enter CDMS Customer.!');
+        return;
+      }
     this.orderManagementService.createInvoiceAll(this.orderNumber, (sessionStorage.getItem('emplId'))).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);

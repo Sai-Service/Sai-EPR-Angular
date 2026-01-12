@@ -2,8 +2,10 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MasterService } from 'src/app/master/master.service';
-import { TransactionService } from 'src/app/transaction/transaction.service';
+// import { MasterService } from 'src/app/master/master.service';
+import {MasterService} from '../../master/master.service';
+// import { TransactionService } from 'src/app/transaction/transaction.service';
+import {TransactionService} from '../../transaction/transaction.service'
 
 
 
@@ -64,9 +66,9 @@ interface InternalConsumption {
 }
 
 export class IcTrans {
-  segment: string;
-  Locator: string;
-  quantity: number;
+  segment!: string;
+  Locator!: string;
+  quantity!: number;
 }
 
 @Component({
@@ -77,58 +79,58 @@ export class IcTrans {
 })
 export class InternalConsumptionComponent implements OnInit {
   InternalConsumptionForm: FormGroup;
-  public ItemIdList: any[];
+  public ItemIdList: any=[];
   public subInvCode: any;
-  compNo: string;
-  onHandQty: number;
-  JobNo: string;
-  id: number;
+  compNo!: string;
+  onHandQty!: number;
+  JobNo!: string;
+  id!: number;
   public transType: any = [];
-  invItemId: number;
+  invItemId!: number;
   userList2: any[] = [];
   lastkeydown1: number = 0;
 
-  segmentName: string;
-  adjustmentQty: number;
-  physicalQty: number;
+  segmentName!: string;
+  adjustmentQty!: number;
+  physicalQty!: number;
   // locData =[ {
   //   "locatorId": 999,
   //   "segmentName": "D.U.01.D.01",
   //   "id": 7,
   //   "onHandQty": 40
   // }];
-  compileId: number;
+  compileId!: number;
   acccodedesc: any;
-  systemQty: number;
-  locatorId: number;
-  subInventory: string;
-  itemUnitCost: number;
-  uom: string;
-  avlqty: number;
-  description: string;
-  locId: number;
-  deptId: number;
-  divisionId: number;
+  systemQty!: number;
+  locatorId!: number;
+  subInventory!: string;
+  itemUnitCost!: number;
+  uom!: string;
+  avlqty!: number;
+  description!: string;
+  locId!: number;
+  deptId!: number;
+  divisionId!: number;
   getItemDetail: any;
-  resveQty: number;
+  resveQty!: number;
   CostDetail: any;
-  subInventoryId: number;
+  subInventoryId!: number;
   processItemList: any;
   getfrmSubLoc: any = [];
   public onhand: any;
-  segment11: string;
-  lookupValueDesc1: string;
-  segment2: number;
-  lookupValueDesc2: string;
-  segment3: number;
-  trans: string;
-  lookupValueDesc3: string;
-  segment4: number;
-  lookupValueDesc4: string;
-  segment5: string;
-  lookupValueDesc5: string;
+  segment11!: string;
+  lookupValueDesc1!: string;
+  segment2!: number;
+  lookupValueDesc2!: string;
+  segment3!: number;
+  trans!: string;
+  lookupValueDesc3!: string;
+  segment4!: number;
+  lookupValueDesc4!: string;
+  segment5!: string;
+  lookupValueDesc5!: string;
   branch: any;
-  display: true;
+  display!: true;
   displayheader: boolean = true;
   displayLocator: Array<boolean> = [];
   displayButton: boolean = true;
@@ -141,70 +143,70 @@ export class InternalConsumptionComponent implements OnInit {
   public locIdList: Array<string> = [];
   public TypeList: Array<string> = [];
   public issueByList: Array<string> = [];
-  public workshopIssue: any[];
+  public workshopIssue: any=[];
   segmentNameList: any;
-  codeCombinationId: number;
-  compileType: number;
-  reason: string;
+  codeCombinationId!: number;
+  compileType!: number;
+  reason!: string;
   reasonlist: any;
   compileStatus: string = "OPEN"
-  entryStatusCode: number;
-  LocatorSegment: string;
-  Floor: string;
-  Rack: string;
-  RackNo: number;
-  showModal: boolean;
-  Row: string;
-  RowNo: number;
-  itemId: number;
-  onHnQty: number;
-  subInventoryCode: string;
+  entryStatusCode!: number;
+  LocatorSegment!: string;
+  Floor!: string;
+  Rack!: string;
+  RackNo!: number;
+  showModal!: boolean;
+  Row!: string;
+  RowNo!: number;
+  itemId!: number;
+  onHnQty!: number;
+  subInventoryCode!: string;
   getItemDetail1: any;
-  LocatorSegment1: string;
+  LocatorSegment1!: string;
   LocatorList: any;
-  compileName: string;
-  approvedBy: string;
+  compileName!: string;
+  approvedBy!: string|null;
   click: boolean = false;
-  totalCompileItems: number;
-  totalItemValue: number;
+  totalCompileItems!: number;
+  totalItemValue!: number;
   // compileDate:Date;
   lstcomment: any;
-  segment: string;
-  lineNumber: number;
-  compileLineId: number;
-  resrveqty: number;
-  Adjustment: string;
-  Approve: string;
-  View1: string;
-  content: number;
-  title: string;
-  sub: string;
-  attribute1: number;
-  attribute2: Date;
+  segment!: string;
+  lineNumber!: number;
+  compileLineId!: number;
+  resrveqty!: number;
+  Adjustment!: string;
+  Approve!: string;
+  View1!: string;
+  content!: number;
+  title!: string;
+  sub!: string;
+  attribute1!: number;
+  attribute2!: Date;
 
   jobData: any = [];
 
-  type1: string;
+  type1!: string;
   dispheader: boolean = false;
   displable: boolean = false;
   pipe = new DatePipe('en-US');
   now = new Date();
   compileDate = this.pipe.transform(this.now, 'dd-MM-yyyy')
-  currentOp: string;
+  currentOp!: string;
   dispRow: boolean = true;
   displayRemoveRow: Array<boolean> = [];
-  name: string;
+  name!: string;
 
   public itemMap = new Map<string, IcTrans>();
 
-  @ViewChild("myinput") myinput: ElementRef;
-  @ViewChild("input1") input1: ElementRef;
-  @ViewChild("input2") input2: ElementRef;
-  @ViewChild("input3") input3: ElementRef;
-  @ViewChild("input4") input4: ElementRef;
-  @ViewChild("input5") input5: ElementRef;
-  @ViewChild("input6") input6: ElementRef;
-  @ViewChild("Item") Item: ElementRef;
+  @ViewChild("myinput") myinput!: ElementRef;
+  @ViewChild("input1") input1!: ElementRef;
+  @ViewChild("input2") input2!: ElementRef;
+  @ViewChild("input3") input3!: ElementRef;
+  @ViewChild("input4") input4!: ElementRef;
+  @ViewChild("input5") input5!: ElementRef;
+  @ViewChild("input6") input6!: ElementRef;
+  @ViewChild("Item") Item!: ElementRef;
   getVehRegDetails: any;
 
   // @ViewChild("suppCode1") suppCode1: ElementRef;
@@ -298,7 +300,7 @@ export class InternalConsumptionComponent implements OnInit {
 
   addnewcycleLinesList(i: number) {
     if (i > -1) {
-      var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList').value;
+       var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList')?.value; 
       var itemqty = trxLnArr1[i].physicalQty;
       var item1 = trxLnArr1[i].segment;
       // alert(item1);
@@ -332,8 +334,8 @@ export class InternalConsumptionComponent implements OnInit {
       var btnrm = document.getElementById("btnrm" + i) as HTMLInputElement;
       if (document.contains(btnrm)) {
         (document.getElementById("btnrm" + i) as HTMLInputElement).disabled = false;
-        this.InternalConsumptionForm.get('compileType').disable();
-        this.InternalConsumptionForm.get('reason').disable();
+        this.InternalConsumptionForm.get('compileType')?.disable();
+        this.InternalConsumptionForm.get('reason')?.disable();
         // this.Item[i+1].nativeElement.focus();
         // (document.getElementById('btnrm'+i+1) as InputElement).disabled = true;
       }
@@ -342,13 +344,13 @@ export class InternalConsumptionComponent implements OnInit {
     // this.displayRemoveRow[i]=true;
     // alert(i);
   }
-  removenewcycleLinesList(trxLineIndex) {
+  removenewcycleLinesList(trxLineIndex:any) {
     var len1 = this.cycleLinesList().length;
     if (len1 === 1) {
       alert('You can not delete the line');
       return;
     }
-    var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList').value;
+    var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList')?.value;
     var itemid = trxLnArr1[trxLineIndex].segment;
     // alert(itemid+'Delete');
     if (itemid != null) {
@@ -476,7 +478,7 @@ export class InternalConsumptionComponent implements OnInit {
   }
   InternalConsumption(InternalConsumptionForm: any) { }
 
-  getInvItemId($event) {
+  getInvItemId($event:any) {
     // alert('in getInvItemId')
     let userId = (<HTMLInputElement>document.getElementById('invItemIdFirstWay')).value;
     this.userList2 = [];
@@ -486,7 +488,7 @@ export class InternalConsumptionComponent implements OnInit {
       }
     }
   }
-  searchFromArray1(arr, regex) {
+  searchFromArray1(arr:any, regex:any) {
     let matches = [], i;
     for (i = 0; i < arr.length; i++) {
       if (arr[i].match(regex)) {
@@ -500,19 +502,19 @@ export class InternalConsumptionComponent implements OnInit {
     this.router.navigate(['admin']);
   }
 
-  onOptiongetItem(event: any, i) {
+  onOptiongetItem(event: any, i:any) {
     if (this.currentOp === 'SEARCH') {
       return;
     }
 
-    let select1 = this.ItemIdList.find(d => d.SEGMENT === event);
+    let select1 = this.ItemIdList.find((d:any) => d.SEGMENT === event);
     if (select1 != undefined) {
       var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList') as FormArray;
-      var trxLnArr = this.InternalConsumptionForm.get('cycleLinesList').value;
+      var trxLnArr = this.InternalConsumptionForm.get('cycleLinesList')?.value;
       trxLnArr1.controls[i].patchValue({ invItemId: select1.itemId })
-      var compId = this.InternalConsumptionForm.get('compileId').value;
-      var compileType1 = this.InternalConsumptionForm.get('compileType').value;
-      var subcode = this.InternalConsumptionForm.get('subInventory').value;
+      var compId = this.InternalConsumptionForm.get('compileId')?.value;
+      var compileType1 = this.InternalConsumptionForm.get('compileType')?.value;
+      var subcode = this.InternalConsumptionForm.get('subInventory')?.value;
       this.displayheader = false;
       this.service.getItemDetail(select1.itemId).subscribe
         (data => {
@@ -526,8 +528,8 @@ export class InternalConsumptionComponent implements OnInit {
             trxLnArr1.controls[i].patchValue({ locId: Number(sessionStorage.getItem('locId')) })
           }
         });
-      var reasonArr1 = this.InternalConsumptionForm.get('reason').value;
-      var valOp = this.InternalConsumptionForm.get('name').value;
+      var reasonArr1 = this.InternalConsumptionForm.get('reason')?.value;
+      var valOp = this.InternalConsumptionForm.get('name')?.value;
       if (valOp != undefined) {
         var reasonArray = reasonArr1.split('-');
         var op = valOp.split('-');
@@ -625,11 +627,11 @@ export class InternalConsumptionComponent implements OnInit {
     }
 
   }
-  AvailQty(event: any, i) {
+  AvailQty(event: any, i:any) {
 
     // alert(event.target.value);
     var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList') as FormArray;
-    var trxLnArr = this.InternalConsumptionForm.get('cycleLinesList').value;
+    var trxLnArr = this.InternalConsumptionForm.get('cycleLinesList')?.value;
     var itemid = trxLnArr[i].invItemId;
     var locId = trxLnArr[i].LocatorSegment;
     trxLnArr1.controls[i].patchValue({ locatorId: locId });
@@ -667,15 +669,15 @@ export class InternalConsumptionComponent implements OnInit {
     window.location.reload();
   }
 
-  onLocatorSelection(event: any, i) {
+  onLocatorSelection(event: any, i:any) {
     var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList') as FormArray;
-    var trxLnArr = this.InternalConsumptionForm.get('cycleLinesList').value;
+    var trxLnArr = this.InternalConsumptionForm.get('cycleLinesList')?.value;
     var itemid = trxLnArr[i].invItemId;
     var locId = trxLnArr[i].locatorId;
     var onhandid = trxLnArr[i].id;
-    var subcode = this.InternalConsumptionForm.get('subInventory').value;
+    var subcode = this.InternalConsumptionForm.get('subInventory')?.value;
     // let select2= this.subInvCode.find(d=>d.subInventoryCode===subcode);
-    let selloc = this.getfrmSubLoc.find(d => d.segmentName === event);
+    let selloc = this.getfrmSubLoc.find((d:any) => d.segmentName === event);
     // alert(selloc.locatorId+'Id')
 
     this.service.getonhandqty(Number(sessionStorage.getItem('locId')), this.subInvCode.subInventoryId, locId, itemid).subscribe
@@ -714,16 +716,16 @@ export class InternalConsumptionComponent implements OnInit {
     );
 
   }
-  OpenLocator(i) {
+  OpenLocator(i:any) {
 
-    var LocSegment = this.cycleLinesList().controls[i].get('LocatorSegment').value;
+    var LocSegment = this.cycleLinesList().controls[i].get('LocatorSegment')?.value;
 
     if (LocSegment === null) {
-      this.InternalConsumptionForm.get('Floor').reset();
-      this.InternalConsumptionForm.get('Rack').reset();
-      this.InternalConsumptionForm.get('RackNo').reset();
-      this.InternalConsumptionForm.get('Row').reset();
-      this.InternalConsumptionForm.get('RowNo').reset();
+      this.InternalConsumptionForm.get('Floor')?.reset();
+      this.InternalConsumptionForm.get('Rack')?.reset();
+      this.InternalConsumptionForm.get('RackNo')?.reset();
+      this.InternalConsumptionForm.get('Row')?.reset();
+      this.InternalConsumptionForm.get('RowNo')?.reset();
     }
     if (LocSegment != null) {
       var temp = LocSegment.split('.');
@@ -742,16 +744,16 @@ export class InternalConsumptionComponent implements OnInit {
 
   }
 
-  okLocator(i) {
+  okLocator(i:any) {
 
     // alert(i);
-    var LocSegment = this.InternalConsumptionForm.get('cycleLinesList').value;
+    var LocSegment = this.InternalConsumptionForm.get('cycleLinesList')?.value;
     var patch = this.InternalConsumptionForm.get('cycleLinesList') as FormArray;
-    LocSegment[i].LocatorSegment = this.InternalConsumptionForm.get('Floor').value + '.' +
-      this.InternalConsumptionForm.get('Rack').value + '.' +
-      this.InternalConsumptionForm.get('RackNo').value + '.' +
-      this.InternalConsumptionForm.get('Row').value + '.' +
-      this.InternalConsumptionForm.get('RowNo').value;
+    LocSegment[i].LocatorSegment = this.InternalConsumptionForm.get('Floor')?.value + '.' +
+      this.InternalConsumptionForm.get('Rack')?.value + '.' +
+      this.InternalConsumptionForm.get('RackNo')?.value + '.' +
+      this.InternalConsumptionForm.get('Row')?.value + '.' +
+      this.InternalConsumptionForm.get('RowNo')?.value;
 
 
     var LocatorSegment1 = LocSegment[i].LocatorSegment;
@@ -773,33 +775,33 @@ export class InternalConsumptionComponent implements OnInit {
           }
         }
         else if (this.LocatorList.code === 400) {
-          var arraycontrol = this.InternalConsumptionForm.get('cycleLinesList').value;
+          var arraycontrol = this.InternalConsumptionForm.get('cycleLinesList')?.value;
           patch.controls[i].patchValue({ LocatorSegment: '' });
         }
 
       });
-    this.InternalConsumptionForm.get('Floor').reset();
-    this.InternalConsumptionForm.get('Rack').reset();
-    this.InternalConsumptionForm.get('RackNo').reset();
-    this.InternalConsumptionForm.get('Row').reset();
-    this.InternalConsumptionForm.get('RowNo').reset();
+    this.InternalConsumptionForm.get('Floor')?.reset();
+    this.InternalConsumptionForm.get('Rack')?.reset();
+    this.InternalConsumptionForm.get('RackNo')?.reset();
+    this.InternalConsumptionForm.get('Row')?.reset();
+    this.InternalConsumptionForm.get('RowNo')?.reset();
     alert('locator search complete')
   }
 
   openCodeCombination() {
-    let SegmentName1 = this.InternalConsumptionForm.get('SegmentName').value;
+    let SegmentName1 = this.InternalConsumptionForm.get('SegmentName')?.value;
     if (SegmentName1 === null) {
-      this.InternalConsumptionForm.get('segment11').reset();
-      this.InternalConsumptionForm.get('segment2').reset();
-      this.InternalConsumptionForm.get('segment3').reset();
-      this.InternalConsumptionForm.get('segment4').reset();
-      this.InternalConsumptionForm.get('segment5').reset();
+      this.InternalConsumptionForm.get('segment11')?.reset();
+      this.InternalConsumptionForm.get('segment2')?.reset();
+      this.InternalConsumptionForm.get('segment3')?.reset();
+      this.InternalConsumptionForm.get('segment4')?.reset();
+      this.InternalConsumptionForm.get('segment5')?.reset();
 
-      this.InternalConsumptionForm.get('lookupValueDesc1').reset();
-      this.InternalConsumptionForm.get('lookupValueDesc2').reset();
-      this.InternalConsumptionForm.get('lookupValueDesc3').reset();
-      this.InternalConsumptionForm.get('lookupValueDesc4').reset();
-      this.InternalConsumptionForm.get('lookupValueDesc5').reset();
+      this.InternalConsumptionForm.get('lookupValueDesc1')?.reset();
+      this.InternalConsumptionForm.get('lookupValueDesc2')?.reset();
+      this.InternalConsumptionForm.get('lookupValueDesc3')?.reset();
+      this.InternalConsumptionForm.get('lookupValueDesc4')?.reset();
+      this.InternalConsumptionForm.get('lookupValueDesc5')?.reset();
     }
     if (SegmentName1 != null) {
       var temp = SegmentName1.split('.');
@@ -814,11 +816,11 @@ export class InternalConsumptionComponent implements OnInit {
 
   }
   fnCancatination() {
-    this.segmentName = this.InternalConsumptionForm.get('segment11').value + '.' +
-      this.InternalConsumptionForm.get('segment2').value + '.' +
-      this.InternalConsumptionForm.get('segment3').value + '.' +
-      this.InternalConsumptionForm.get('segment4').value + '.' +
-      this.InternalConsumptionForm.get('segment5').value;
+    this.segmentName = this.InternalConsumptionForm.get('segment11')?.value + '.' +
+      this.InternalConsumptionForm.get('segment2')?.value + '.' +
+      this.InternalConsumptionForm.get('segment3')?.value + '.' +
+      this.InternalConsumptionForm.get('segment4')?.value + '.' +
+      this.InternalConsumptionForm.get('segment5')?.value;
 
     // alert(this.segmentName);
 
@@ -842,29 +844,29 @@ export class InternalConsumptionComponent implements OnInit {
           }
         }
       );
-    this.InternalConsumptionForm.get('segment11').reset();
-    this.InternalConsumptionForm.get('segment2').reset();
-    this.InternalConsumptionForm.get('segment3').reset();
-    this.InternalConsumptionForm.get('segment4').reset();
-    this.InternalConsumptionForm.get('segment5').reset();
+    this.InternalConsumptionForm.get('segment11')?.reset();
+    this.InternalConsumptionForm.get('segment2')?.reset();
+    this.InternalConsumptionForm.get('segment3')?.reset();
+    this.InternalConsumptionForm.get('segment4')?.reset();
+    this.InternalConsumptionForm.get('segment5')?.reset();
 
-    this.InternalConsumptionForm.get('lookupValueDesc1').reset();
-    this.InternalConsumptionForm.get('lookupValueDesc2').reset();
-    this.InternalConsumptionForm.get('lookupValueDesc3').reset();
-    this.InternalConsumptionForm.get('lookupValueDesc4').reset();
-    this.InternalConsumptionForm.get('lookupValueDesc5').reset();
+    this.InternalConsumptionForm.get('lookupValueDesc1')?.reset();
+    this.InternalConsumptionForm.get('lookupValueDesc2')?.reset();
+    this.InternalConsumptionForm.get('lookupValueDesc3')?.reset();
+    this.InternalConsumptionForm.get('lookupValueDesc4')?.reset();
+    this.InternalConsumptionForm.get('lookupValueDesc5')?.reset();
   }
 
-  reservePos(i) {//alert("Hello");
-    var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList').value;
+  reservePos(i:any) {//alert("Hello");
+    var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList')?.value;
     const formValue: InternalConsumption = this.InternalConsumptionForm.value;
     let variants = <FormArray>this.cycleLinesList();
     // alert( this.InternalConsumptionForm.get('compileType').value)
-    var transtypeid = this.InternalConsumptionForm.get('compileType').value;
+    var transtypeid = this.InternalConsumptionForm.get('compileType')?.value;
     // alert(transtypeid +'trans')
     // var seltranstyp = this.transType.find(d => d.transactionTypeId === transtypeid);
     // alert(seltranstyp.transactionTypeName);
-    var locId1 = this.InternalConsumptionForm.get('locId').value
+    var locId1 = this.InternalConsumptionForm.get('locId')?.value
 
     let variantFormGroup = <FormGroup>variants.controls[i];
     variantFormGroup.removeControl('reservedQty');
@@ -900,15 +902,15 @@ export class InternalConsumptionComponent implements OnInit {
     );
   }
 
-  validate(i: number, qty1) {//alert("Validate");
-    var trxLnArr = this.InternalConsumptionForm.get('cycleLinesList').value;
+  validate(i: number, qty1:any) {//alert("Validate");
+    var trxLnArr = this.InternalConsumptionForm.get('cycleLinesList')?.value;
     var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList') as FormArray
     let avalqty = trxLnArr[i].avlqty;
     let qty = trxLnArr[i].physicalQty;
     let uomCode = trxLnArr[i].uom;
     //alert(avalqty+'avalqty');
     //alert(trxLnArr[i].physicalQty +' qty');
-    if (qty > avalqty && this.InternalConsumptionForm.get('compileType').value !== 13) {
+    if (qty > avalqty && this.InternalConsumptionForm.get('compileType')?.value !== 13) {
       alert("You can not enter more than available quantity");
       trxLnArr1.controls[i].patchValue({ physicalQty: '' });
       qty1.focus();
@@ -927,10 +929,10 @@ export class InternalConsumptionComponent implements OnInit {
     }
   }
 
-  searchByCompileID(itemId) {
+  searchByCompileID(itemId:any) {
 
     // alert(itemId+'ID')
-    var compileId = this.InternalConsumptionForm.get('compileId').value;
+    var compileId = this.InternalConsumptionForm.get('compileId')?.value;
     // alert(compileId+'CompileID');
     // let select1=this.ItemIdList.find(d=>d.itemid===itemId);
     // var itemId= select1.itemId
@@ -947,7 +949,7 @@ export class InternalConsumptionComponent implements OnInit {
           console.log(data.obj);
           console.log(xx);
           let patch = this.InternalConsumptionForm.get('cycleLinesList') as FormArray;
-          var control = this.InternalConsumptionForm.get('cycleLinesList').value;
+          var control = this.InternalConsumptionForm.get('cycleLinesList')?.value;
           var len = this.cycleLinesList().length;
           // alert(control[0].segment );
           if (len === 1) {
@@ -974,12 +976,12 @@ export class InternalConsumptionComponent implements OnInit {
       }
     )
   }
-  search(compNo) {
+  search(compNo:any) {
     // alert('In Search' + compNo);
     if (compNo != undefined) {
       this.currentOp = 'SEARCH';
-      var compno = this.InternalConsumptionForm.get('compNo').value;
-      var appflag = this.InternalConsumptionForm.get('trans').value;
+      var compno = this.InternalConsumptionForm.get('compNo')?.value;
+      var appflag = this.InternalConsumptionForm.get('trans')?.value;
       this.service.getSearchViewByIc(compno).subscribe
         (data => {
           if (data.code === 400) {
@@ -1029,9 +1031,9 @@ export class InternalConsumptionComponent implements OnInit {
     if (this.InternalConsumptionForm.valid) {
       // this.displayButton=true;
       // this.displayaddButton=true;
-      var reason = this.InternalConsumptionForm.get('reason').value;
+      var reason = this.InternalConsumptionForm.get('reason')?.value;
       // alert(reason);
-      var attribute1 = this.InternalConsumptionForm.get('attribute1').value;
+      var attribute1 = this.InternalConsumptionForm.get('attribute1')?.value;
       // alert(attribute1)
       var reason1 = reason.split('-');
       // console.log(reason1);
@@ -1046,10 +1048,10 @@ export class InternalConsumptionComponent implements OnInit {
         }
       };
       const formValue: InternalConsumption = this.InternalConsumptionForm.getRawValue();
-      formValue.attribute2 = this.InternalConsumptionForm.get('compileDate').value;
-      formValue.compileType = this.InternalConsumptionForm.get('compileId').value;
+      formValue.attribute2 = this.InternalConsumptionForm.get('compileDate')?.value;
+      formValue.compileType = this.InternalConsumptionForm.get('compileId')?.value;
       // alert(this.InternalConsumptionForm.get('attribute1').value+'In save')
-      var itemCode = this.InternalConsumptionForm.get('attribute1').value;
+      var itemCode = this.InternalConsumptionForm.get('attribute1')?.value;
       // alert(itemCode+'after')
       // debugger;
       if (itemCode != null || itemCode != undefined) {
@@ -1094,10 +1096,11 @@ export class InternalConsumptionComponent implements OnInit {
   }
 
 
-  onSelectReason(event) {
+  onSelectReason(event:any) {
     var reasonArr = event.split('-');
     // alert(reasonArr)
-
+    // alert(reasonArr)
+    // alert(reasonArr[0] +'----'+reasonArr[1])
     this.service.reasonaccCode(this.locId, reasonArr[0], reasonArr[1]).subscribe(
 
       data => {
@@ -1107,7 +1110,9 @@ export class InternalConsumptionComponent implements OnInit {
 
       }
     );
-    var selreason = this.reasonlist.find(d => d.reasonName === reasonArr[0])
+    var selreason = this.reasonlist.find((d:any) => d.reasonName === reasonArr[0]);
+    // console.log(selreason);
+    // alert(selreason.attribute2)
     this.service.WorkShopIcIssue(this.locId, selreason.attribute2).subscribe(
       data => {
         this.workshopIssue = data;
@@ -1123,7 +1128,7 @@ export class InternalConsumptionComponent implements OnInit {
       alert('Plesae enter Repair Order No.!')
     }
   }
-  keytab(event, maxLength, nxtEle) {
+  keytab(event:any, maxLength:any, nxtEle:any) {
     console.log(event);
     // let sib=event.srcElement.nextElementSibling;
     // alert(sib);
@@ -1177,18 +1182,18 @@ export class InternalConsumptionComponent implements OnInit {
 
 
 
-  getGroupControl(fieldName) {
+  getGroupControl(fieldName:any) {
     return (this.InternalConsumptionForm.get(fieldName));
   }
 
-  getGroupControllinewise(index, fieldName) {
+  getGroupControllinewise(index:any, fieldName:any) {
     // alert('nam'+fieldName);
     return (<FormArray>this.InternalConsumptionForm.get('cycleLinesList')).at(index).get(fieldName);
 
   }
   deleteReserve() {
-    var transtypeid = this.InternalConsumptionForm.get('compileType').value;
-    var seltranstyp = this.transType.find(d => d.transactionTypeId === transtypeid);
+    var transtypeid = this.InternalConsumptionForm.get('compileType')?.value;
+    var seltranstyp = this.transType.find((d:any) => d.transactionTypeId === transtypeid);
     this.service.reserveDelete(seltranstyp.transactionTypeName, Number(sessionStorage.getItem('locId'))).subscribe((res: any) => {
       //  var obj=res.obj;
       if (res.code === 200) {
@@ -1196,10 +1201,10 @@ export class InternalConsumptionComponent implements OnInit {
       }
     });
   }
-  deleteReserveLinewise(i) {
-    var transtypeid = this.InternalConsumptionForm.get('compileType').value;
-    var seltranstyp = this.transType.find(d => d.transactionTypeId === transtypeid);
-    var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList').value;
+  deleteReserveLinewise(i:any) {
+    var transtypeid = this.InternalConsumptionForm.get('compileType')?.value;
+    var seltranstyp = this.transType.find((d:any) => d.transactionTypeId === transtypeid);
+    var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList')?.value;
     var itemid = trxLnArr1[i].itemId;
     this.service.reserveDeleteLine(transtypeid, Number(sessionStorage.getItem('locId')), itemid).subscribe((res: any) => {
       //  var obj=res.obj;
@@ -1214,7 +1219,7 @@ export class InternalConsumptionComponent implements OnInit {
   userList1: any[] = [];
   lastkeydown2: number = 0;
 
-  getUserIdsFirstWay($event) {
+  getUserIdsFirstWay($event:any) {
     let userId = (<HTMLInputElement>document.getElementById('userIdFirstWay')).value;
     this.userList1 = [];
 
@@ -1225,7 +1230,7 @@ export class InternalConsumptionComponent implements OnInit {
     }
   }
 
-  searchFromArray(arr, regex) {
+  searchFromArray(arr:any, regex:any) {
     let matches = [], i;
     for (i = 0; i < arr.length; i++) {
       if (arr[i].match(regex)) {
@@ -1258,11 +1263,11 @@ export class InternalConsumptionComponent implements OnInit {
     )
   }
 
-  calculatewarranty(event) {
-    alert(event.target.value + 'warr');
+  calculatewarranty(event:any) {
+    // alert(event.target.value + 'warr');
     var value = event.target.value.split('--');
     var jobNo = value[0]
-    var wIregNum = this.workshopIssue.find(d => d.jobCardNum === jobNo);
+    var wIregNum = this.workshopIssue.find((d:any) => d.jobCardNum === jobNo);
     console.log(wIregNum);
     var regNum = wIregNum.regNo;
     this.service.getVehRegDetail(regNum).subscribe(
@@ -1283,7 +1288,7 @@ export class InternalConsumptionComponent implements OnInit {
   }
 
   viewDocument(){
-    var orderNumber = this.InternalConsumptionForm.get('compileName').value;
+    var orderNumber = this.InternalConsumptionForm.get('compileName')?.value;
     const fileName = 'download.pdf';
   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
   this.TransactionService.viewInterconsumptionNote(orderNumber)

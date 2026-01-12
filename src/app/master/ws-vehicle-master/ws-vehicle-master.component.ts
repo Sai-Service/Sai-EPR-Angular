@@ -8,8 +8,10 @@ import { NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { InteractionModeRegistry } from 'chart.js';
 import { now } from 'jquery';
-import { ServiceService } from 'src/app/service/service.service';
-import { OrderManagementService } from 'src/app/order-management/order-management.service';
+// import { ServiceService } from 'src/app/service/service.service';
+import {ServiceService} from '../../service/service.service'
+// import { OrderManagementService } from 'src/app/order-management/order-management.service';
+import {OrderManagementService} from '../../order-management/order-management.service'
 
 interface IWsVehicleMaster {
   regNo: string;
@@ -35,7 +37,7 @@ interface IWsVehicleMaster {
   pinCd: string;
   custTaxCategoryName: string;
   divisionId:number;
-  divisionName:string;
+  divisionName:string|null;
   dealerCode:string;
   itemTypeForCat:string;
   lastRunKm:number;
@@ -82,15 +84,15 @@ export class WsVehicleMasterComponent implements OnInit {
   dealerCodeList:any;
   mainModelList:any;
   accountNoSearchdata: any;
-  customerNameSearch: any[];
+  customerNameSearch: any=[];
 
   pipe = new DatePipe('en-US');
   public minDate = new Date()  ;
 
   /////////////////////SEARCH/////
-  mainModelName: string;
+  mainModelName!: string;
   // chassisNum: string;
-  vehRegNo: string ;
+  vehRegNo!: string ;
   // = 'MH12EM6011';
   ///////////////////////////////
   categoryIdList: any;
@@ -111,124 +113,124 @@ export class WsVehicleMasterComponent implements OnInit {
   userList1: any[] = [];
   lastkeydown1: number = 0;
 
-  loginName: string;
-  loginArray: string;
-  name: string;
-  ouName: string;
-  locId: number;
-  locName: string;
-  orgId: number;
-  ouId: number;
-  deptId: number;
-  divisionId: number;
+  loginName!: string|null;
+  loginArray!: string|null;
+  name!: string|null;
+  ouName!: string|null;
+  locId!: number;
+  locName!: string|null;
+  orgId!: number;
+  ouId!: number;
+  deptId!: number;
+  divisionId!: number;
   // emplId :number;
   public emplId = 6;
-  public varAging: number;
+  public varAging!: number;
   ddate = Date.now();
 
 
 
   ///////////////////////////
 
-  ewregNo: string;
-  ewId: number;
-  ewSchemeId: number;
-  ewBookletNo: string;
-  ewType:string;
+  ewregNo!: string|null;
+  ewId!: number|null;
+  ewSchemeId!: number|null;
+  ewBookletNo!: string|null;
+  ewType!:string|null;
   
   ///////////////////////////////////////////////////
-  regNo: string;
-  vin: string;
-  monthYrManf: string;
-  segment: string;
-  itemId: number;
-  itemDesc: string;
-  itemCatg: string;
-  colorCode: string;
-  mainModel: string;
+  regNo!: string|null;
+  vin!: string|null;
+  monthYrManf!: string|null;
+  segment!: string|null;
+  itemId!: number|null;
+  itemDesc!: string|null;
+  itemCatg!: string|null;
+  colorCode!: string|null;
+  mainModel!: string|null;
 
   // rfId: string;
-  govtVehicleYn: string;
-  vipYn: string;
-  dealerCode: string;
-  dealerName: string;
-  dealerSite: string;
-  dlrInvoiceNo: string;
-  dmsInvoiceNo: string;
+  govtVehicleYn!: string|null;
+  vipYn!: string|null;
+  dealerCode!: string|null;
+  dealerName!: string|null;
+  dealerSite!: string|null;
+  dlrInvoiceNo!: string|null;
+  dmsInvoiceNo!: string|null;
 
-  insuDate: string;
-  policyNo: string;
-  insurerCompId: string;
-  insurerSiteId: string;
-  insCompanyName: string;
-  insCompanySite: string;
+  insuDate!: string|null;
+  policyNo!: string|null;
+  insurerCompId!: string|null;
+  insurerSiteId!: string|null;
+  insCompanyName!: string|null;
+  insCompanySite!: string|null;
   status :string='Active';
-  ewStatus: string;
-  mcpStatus: string;
+  ewStatus!: string|null;
+  mcpStatus!: string|null;
   // ewBookletNo:string;
-  ewInsurerId: number;
-  ewInsurerSite: number;
-  ewEndDate: string;
-  ewBalanceDays: number;
+  ewInsurerId!: number|null;
+  ewInsurerSite!: number|null;
+  ewEndDate!: string|null;
+  ewBalanceDays!: number|null;
 
-  mcpNo: string;
-  mcpEndDate: string;
-  mcpStartDate:string;
-  mcpYN: string;
-  mcpPackage: string;
-  pkgSource:string;
+  mcpNo!: string|null;
+  mcpEndDate!: string|null;
+  mcpStartDate!:string|null;
+  mcpYN!: string|null;
+  mcpPackage!: string|null;
+  pkgSource!:string|null;
 
-  cngCylinderNo: string;
-  cngKitNumber: string;
-  cngExpDate: string;
+  cngCylinderNo!: string|null;
+  cngKitNumber!: string|null;
+  cngExpDate!: string|null;
   ////////////////////////////////////////////////////
-  fuelType: string;
-  variantDesc: string;
-  variantCode: string;
-  chassisNo: string;
-  engineNo: string;
-  vehicleDelvDate: Date;
-  serviceModel: string;
-  kmReading: string;
-  soldByEmpId: string;
-  customerId: number;
-  custAccountNo: number;
-  dmsCustNo: number;
-  custName: string;
-  address1: string;
-  address2: string;
-  address3: string;
-  custAddress4: string;
-  city: string;
-  state: string;
-  pinCd: string;
-  mobile1: string;
-  mobile2: string;
-  contactNo: string;
-  emailId1: string;
-  custTaxCategoryName: string;
-  customerSiteId: number;
-  custType: string;
-  billToAddress: string;
-  shipToAddress: string;
+  fuelType!: string|null;
+  variantDesc!: string|null;
+  variantCode!: string|null;
+  chassisNo!: string|null;
+  engineNo!: string|null;
+  vehicleDelvDate!: Date;
+  serviceModel!: string|null;
+  kmReading!: string|null;
+  soldByEmpId!: string;
+  customerId!: number|null;
+  custAccountNo!: number|null;
+  dmsCustNo!: number|null;
+  custName!: string|null;
+  address1!: string|null;
+  address2!: string|null;
+  address3!: string|null;
+  custAddress4!: string|null;
+  city!: string|null;
+  state!: string|null;
+  pinCd!: string|null;
+  mobile1!: string|null;
+  mobile2!: string|null;
+  contactNo!: string|null;
+  emailId1!: string|null;
+  custTaxCategoryName!: string|null;
+  customerSiteId!: number|null;
+  custType!: string|null;
+  billToAddress!: string|null;
+  shipToAddress!: string|null;
   // contractEndDate:string;
-  ewPeriod: number;
-  warrantyDealer: string;
-  vehicleAgeDays: number;
-  paytmentSource: string;
-  ewAmt: number;
+  ewPeriod!: number|null;
+  warrantyDealer!: string|null;
+  vehicleAgeDays!: number|null;
+  paytmentSource!: string|null;
+  ewAmt!: number|null;
   // ewDiscAmt: number;
   // ewTotalAmt: number;
   // ewSaleDate:Date;
   // segment: string;
 
   now = Date.now();
-  deliveryDate : string;
+  deliveryDate! : string|null;
   // = this.pipe.transform(this.now, 'y-MM-dd');
-  oemWarrentyEndDate: string;
-  regDate: string;
+  oemWarrentyEndDate!: string|null;
+  regDate!: string|null;
   contractEndDate = this.pipe.transform(this.now, 'y-MM-dd');
-  ewStartDate: String
+  ewStartDate!: String|null;
   // payType: number;
   // receiptMethodId: number;
   // paymentAmt: number;
@@ -239,7 +241,7 @@ export class WsVehicleMasterComponent implements OnInit {
 
   displayInactive = false;
   Status1: any;
-  inactiveDate: string;
+  inactiveDate!: string|null;
   // inactiveDate = this.pipe.transform(Date.now(), 'dd-MM-y');
   display = true;
   displayButton = true;
@@ -256,32 +258,32 @@ export class WsVehicleMasterComponent implements OnInit {
   saveButton=true;
   updateButton=false;
 
-  variantItemId: number;
+  variantItemId!: number;
 
   // ewCancelDate:Date;
   ewCancelDate = this.pipe.transform(this.now, 'y-MM-dd');
-  ewCancelReason: string;
+  ewCancelReason!: string;
 
   //////////////////true value
-  tvStatus: string;
-  tvReSaleDate: Date;
-  tvWrExpDate: Date;
-  tvWrExpMileage: number;
-  tvCertificateNo: string;
-  tvSaleDealer: string;
-  tvSaleLocation: string;
+  tvStatus!: string|null;
+  tvReSaleDate!: Date|null;
+  tvWrExpDate!: Date|null;
+  tvWrExpMileage!: number|null;
+  tvCertificateNo!: string|null;
+  tvSaleDealer!: string|null;
+  tvSaleLocation!: string|null;
 
   itemTypeForCat: string='SS_VEHICLE' ;
-  categoryId: number;
-  lastRunKm:number;
-  endDate:Date;
-  oemWarrantyPeriod:number;
+  categoryId!: number|null;
+  lastRunKm!:number|null;
+  endDate!:Date|null;
+  oemWarrantyPeriod!:number|null;
   isVisiblejobCardForm:boolean=false;
 
   public ServiceModelList   :Array<string> = [];
-  public insNameList: Array<string>[];
-  public insSiteList: Array<string>[];
-  public ewInsSiteList: Array<string>[];
+  public insNameList: Array<string>=[];
+  public insSiteList: Array<string>=[];
+  public ewInsSiteList: Array<string>=[];
   
 
   get f() { return this.wsVehicleMasterForm.controls; }
@@ -590,7 +592,7 @@ export class WsVehicleMasterComponent implements OnInit {
   }
 
   onStatusSelected(event: any) {
-    this.Status1 = this.wsVehicleMasterForm.get('status').value;
+    this.Status1 = this.wsVehicleMasterForm.get('status')?.value;
     // alert ( "this.Status1  :"+ this.Status1);
     if (this.Status1 === 'Inactive') {
       this.displayInactive = true;
@@ -599,7 +601,7 @@ export class WsVehicleMasterComponent implements OnInit {
       // alert (this.inactiveDate);
     }
     else if (this.Status1 === 'Active') {
-      this.wsVehicleMasterForm.get('inactiveDate').reset();
+      this.wsVehicleMasterForm.get('inactiveDate')?.reset();
       this.displayInactive=false;
     }
 
@@ -608,7 +610,7 @@ export class WsVehicleMasterComponent implements OnInit {
     if(this.divisionId===1) { this.enableCngDetails=true;} 
   }
 
-  transeData(val) {
+  transeData(val:any) {
 
     delete val.loginArray;
     delete val.loginName;
@@ -718,7 +720,7 @@ export class WsVehicleMasterComponent implements OnInit {
     this.router.navigate(['admin']);
   }
 
-  SearchByModelChas(mdl, chas) {
+  SearchByModelChas(mdl:any, chas:any) {
     alert("Search Vehicle by Model+Chassis..... wip - " + mdl + "+" + chas);
   }
 
@@ -729,7 +731,7 @@ export class WsVehicleMasterComponent implements OnInit {
       // mReg=mReg.toUpperCase();
 
         //  ----------------------------------------------------
-        var mReg=this.wsVehicleMasterForm.get('regNo').value
+        var mReg=this.wsVehicleMasterForm.get('regNo')?.value
         if(mReg==null || mReg==undefined || mReg.trim()=='') {
           alert ("Enter Valid Vehicle Registration No."); return;
         }
@@ -737,7 +739,7 @@ export class WsVehicleMasterComponent implements OnInit {
         mReg=mReg.trim();
         this.regNo=mReg;
          //  ---------------------------------------------------
-      if(mReg.length<8 || mReg.length>10) { alert (mReg+ " :Registration No should have minimum 9 & maximum 10 characters. " ) ; this.wsVehicleMasterForm.patchValue({regNo :''});return;}
+      if(mReg.length<8 || mReg.length>11) { alert (mReg+ " :Registration No should have minimum 9 & maximum 11 characters. " ) ; this.wsVehicleMasterForm.patchValue({regNo :''});return;}
    
     this.service.getVehRegDetailsNew(mReg)
     .subscribe(
@@ -835,10 +837,10 @@ fields.forEach(f => {
   }
 
 
-  SearchByModelChass(mdl, chas) {
+  SearchByModelChass(mdl:any, chas:any) {
     // alert ("Search Vehicle by RegNo..... wip :"+mReg);
-    var mdl=this.wsVehicleMasterForm.get("mainModel").value
-    var chas=this.wsVehicleMasterForm.get("chassisNo").value
+    var mdl=this.wsVehicleMasterForm.get("mainModel")?.value
+    var chas=this.wsVehicleMasterForm.get("chassisNo")?.value
      chas=chas.toUpperCase();
        this.service.getVehDetailsByModelChassis(mdl,chas)
       .subscribe(
@@ -878,7 +880,7 @@ fields.forEach(f => {
 
 
 
-  GetItemDeatils(mItemId) {
+  GetItemDeatils(mItemId:any) {
     // alert ("Item Id :"+mItemId);
     if (mItemId > 0) {
       this.showCreateItemButton = false;
@@ -1006,7 +1008,7 @@ fields.forEach(f => {
       );
   }
 
-  searchByContact(contactNo) {
+  searchByContact(contactNo:any) {
 
     // this.displayNewButton = false;
     this.service.searchCustomerByContact(contactNo)
@@ -1020,7 +1022,7 @@ fields.forEach(f => {
       );
   }
 
-  custNameSearch(custName) {
+  custNameSearch(custName:any) {
     // alert(custName)
     this.orderManagementService.custNameSearchFn1(custName, sessionStorage.getItem('divisionId'))
       .subscribe(
@@ -1039,7 +1041,7 @@ fields.forEach(f => {
       );
   }
 
-  SearchByCustPhone(contactNo) {
+  SearchByCustPhone(contactNo:any) {
     // alert("Search by Cust Phone..... wip :" + contactNo);
     this.service.searchCustomerByContact(contactNo)
       .subscribe(
@@ -1069,7 +1071,7 @@ fields.forEach(f => {
       );
   }
 
-  SearchByCustNo(accountNo) {
+  SearchByCustNo(accountNo:any) {
        this.service.searchCustomerByAccount(accountNo)
       .subscribe(
         data => {
@@ -1089,11 +1091,11 @@ fields.forEach(f => {
   }
 
 
-  SearchByCustName(mName) { alert("Search by Cust Name..... wip :" + mName); }
+  SearchByCustName(mName:any) { alert("Search by Cust Name..... wip :" + mName); }
 
  
 
-  CreateNewItem(mCode, mColor, mChassis) {
+  CreateNewItem(mCode:any, mColor:any, mChassis:any) {
     alert("Creating new item code ....wip:" + mCode + "-" + mColor + "-" + mChassis);
   }
 
@@ -1103,7 +1105,7 @@ fields.forEach(f => {
     this.vin =this.vin.toUpperCase();
     
   
-    var colorCode1 = this.wsVehicleMasterForm.get('colorCode').value;
+    var colorCode1 = this.wsVehicleMasterForm.get('colorCode')?.value;
     this.segment = this.variantCode + "-" + colorCode1 + "-" + this.chassisNo
     this.wsVehicleMasterForm.patchValue({segment:this.segment});
 
@@ -1156,10 +1158,10 @@ fields.forEach(f => {
   }
 
 
-  onSelectedDealer(dlrCode) {
+  onSelectedDealer(dlrCode:any) {
     // alert ("dlrCode:" +dlrCode);
     if(dlrCode != undefined){
-      let select = this.dealerCodeList.find(d=>d.dealerCode === dlrCode);
+      let select = this.dealerCodeList.find((d:any)=>d.dealerCode === dlrCode);
       if (select) {
         this.dealerName=select.dealerDesc
 
@@ -1168,7 +1170,7 @@ fields.forEach(f => {
   }
 
 
-  onOptionsSelectedVariant(modelVariant) {
+  onOptionsSelectedVariant(modelVariant:any) {
     if(modelVariant != undefined){
      
     this.service.variantDetailsList(modelVariant)
@@ -1196,7 +1198,7 @@ fields.forEach(f => {
       }
   }
 
-  onChangeRegDate(mRegDate) {
+  onChangeRegDate(mRegDate:any) {
     // alert ("Sale Date :"+this.deliveryDate);
     var currDate = new Date();
     var regDate =new Date(mRegDate);
@@ -1211,7 +1213,7 @@ fields.forEach(f => {
 
   }
 
-  onChangeDelDate(mDelDate) {
+  onChangeDelDate(mDelDate:any) {
     this.regDate=null;
 
     var currDate = new Date();
@@ -1223,7 +1225,7 @@ fields.forEach(f => {
     } else {
     // ------------Date-----------
     var stDate = new Date(mDelDate);
-    var prd =this.wsVehicleMasterForm.get("oemWarrantyPeriod").value
+    var prd =this.wsVehicleMasterForm.get("oemWarrantyPeriod")?.value
     if(prd ===null || prd===undefined || prd <0) {prd=0;}
 
     var date2 = this.addDays(stDate, prd * 365);
@@ -1238,8 +1240,8 @@ fields.forEach(f => {
     return date1;
   }
 
-  onChangeEwStartDate(mEwStDate){
-    var oemEndDate =this.wsVehicleMasterForm.get("oemWarrentyEndDate").value;
+  onChangeEwStartDate(mEwStDate:any){
+    var oemEndDate =this.wsVehicleMasterForm.get("oemWarrentyEndDate")?.value;
     if(oemEndDate===undefined || oemEndDate ===null) { 
       alert ("Please enter Vehicle Sale Date ....");this.ewStartDate=null;return;
     } 
@@ -1254,16 +1256,16 @@ fields.forEach(f => {
     this.ewStartDate = this.pipe.transform(date1, 'y-MM-dd');
   } 
 
-    var ewStDt =this.wsVehicleMasterForm.get("ewStartDate").value;
+    var ewStDt =this.wsVehicleMasterForm.get("ewStartDate")?.value;
     var date2 = this.addDays(new Date(ewStDt), 365);
     this.ewEndDate = this.pipe.transform(date2, 'y-MM-dd');
   
 
   }
 
-  onChangeEwEndDate(ewEndDt){
-    var ewEndDt =this.wsVehicleMasterForm.get("ewEndDate").value;
-    var ewStDt =this.wsVehicleMasterForm.get("ewStartDate").value;
+  onChangeEwEndDate(ewEndDt:any){
+    var ewEndDt =this.wsVehicleMasterForm.get("ewEndDate")?.value;
+    var ewStDt =this.wsVehicleMasterForm.get("ewStartDate")?.value;
 
     if(ewStDt===undefined || ewStDt ===null) { 
       alert ("Please enter EW Start Date....");this.ewEndDate=null;return;
@@ -1280,8 +1282,8 @@ fields.forEach(f => {
   }
 
 
-  onChangMcpStartDate(mcpstDt){
-    var delDate =this.wsVehicleMasterForm.get("deliveryDate").value;
+  onChangMcpStartDate(mcpstDt:any){
+    var delDate =this.wsVehicleMasterForm.get("deliveryDate")?.value;
     if(delDate===undefined || delDate ===null) { 
       alert ("Please enter Vehicle Sale Date ....");this.mcpStartDate=null;return;
     } 
@@ -1293,8 +1295,8 @@ fields.forEach(f => {
 
   }
 
-  onChangMcpEndDate(mcpendDt){
-    var mcpstDt =this.wsVehicleMasterForm.get("mcpStartDate").value;
+  onChangMcpEndDate(mcpendDt:any){
+    var mcpstDt =this.wsVehicleMasterForm.get("mcpStartDate")?.value;
     if(mcpstDt===undefined || mcpstDt ===null) { 
       alert ("Please enter MCP start Date ....");this.mcpEndDate=null;return;
     } 
@@ -1312,16 +1314,16 @@ fields.forEach(f => {
 
 
 
-  tvFlag(e) {
+  tvFlag(e:any) {
     if (e.target.checked === true) { this.showTvDetails = true; }
     else { this.showTvDetails = false; }
   }
 
-  GovtVehicle(e) {
+  GovtVehicle(e:any) {
     if (e.target.checked === true) { alert("Govt Vehicle"); }
     else { alert("non-Govt Vehicle"); }
   }
-  VipVehicle(e) {
+  VipVehicle(e:any) {
     if (e.target.checked === true) { alert("VIP Vehicle"); }
     else { alert("NON-VIP Vehicle"); }
   }
@@ -1329,10 +1331,10 @@ fields.forEach(f => {
   resetVehDet() {
     this.regNo = null; this.regDate = null; this.monthYrManf = null;
     this.vin = null; this.segment = null;
-    this.wsVehicleMasterForm.get('mainModel').reset();
+    this.wsVehicleMasterForm.get('mainModel')?.reset();
     this.variantCode = null; this.variantDesc = null;
-    this.wsVehicleMasterForm.get('colorCode').reset();
-    this.wsVehicleMasterForm.get('fuelType').reset();
+    this.wsVehicleMasterForm.get('colorCode')?.reset();
+    this.wsVehicleMasterForm.get('fuelType')?.reset();
     this.chassisNo = null; this.engineNo = null;
     this.serviceModel = null; 
     // this.rfId = null;
@@ -1340,7 +1342,7 @@ fields.forEach(f => {
     this.dmsInvoiceNo = null; this.dlrInvoiceNo = null;
     this.dealerCode = null; this.dealerName = null; this.dealerSite = null;
     this.oemWarrentyEndDate = null;
-    this.wsVehicleMasterForm.get('categoryId').reset();
+    this.wsVehicleMasterForm.get('categoryId')?.reset();
     this.VariantSearch = null;
   }
   resetCustDet() {
@@ -1355,8 +1357,8 @@ fields.forEach(f => {
 
   }
   resetAddnl() {
-    this.wsVehicleMasterForm.get('ewStatus').reset();
-    this.wsVehicleMasterForm.get('mcpStatus').reset();
+    this.wsVehicleMasterForm.get('ewStatus')?.reset();
+    this.wsVehicleMasterForm.get('mcpStatus')?.reset();
     this.policyNo = null; this.insuDate = null; this.insCompanyName = null;
     this.insCompanySite = null; this.ewBookletNo = null;
     this.ewInsurerId = null; this.ewEndDate = null;
@@ -1383,9 +1385,9 @@ fields.forEach(f => {
     this.wsVehicleMasterForm.patchValue({vin :formValue.vin.trim()});
     // alert ("regno:"+formValue.regNo);
 
-    if (formValue.regNo === undefined || formValue.regNo === null || formValue.regNo.trim() === '' || formValue.regNo.length <9 || formValue.regNo.length>10) {
+    if (formValue.regNo === undefined || formValue.regNo === null || formValue.regNo.trim() === '' || formValue.regNo.length <9 || formValue.regNo.length>11) {
       this.checkValidation = false;
-      alert("REGISTRATION NO  is not valid ...\nShould have minimum 9 & maximum 10 characters.");
+      alert("REGISTRATION NO  is not valid ...\nShould have minimum 9 & maximum 11 characters.");
       return;
     }
 
@@ -1402,9 +1404,9 @@ fields.forEach(f => {
     }
 
     
-    if (formValue.vin === undefined || formValue.vin === null || formValue.vin.trim() === '' || formValue.vin.length <10 ){
+    if (formValue.vin === undefined || formValue.vin === null || formValue.vin.trim() === '' || formValue.vin.length <11 ){
       this.checkValidation = false;
-      alert("VIN  is not valid....\nShould have minimum 10 characters");
+      alert("VIN  is not valid....\nShould have minimum 11 characters");
       return;
     }
 
@@ -1545,9 +1547,9 @@ fields.forEach(f => {
 
   }
 
-  validateVin(x){
+  validateVin(x:any){
     this.wsVehicleMasterForm.patchValue({vin :x.trim()});
-    if(x.length<10) { alert ("VIN : Should have minimum 10 characters. " +x.length) ; this.wsVehicleMasterForm.patchValue({vin :''});}
+    if(x.length<11) { alert ("VIN : Should have minimum 11 characters. " +x.length) ; this.wsVehicleMasterForm.patchValue({vin :''});}
     
   }
 
@@ -1590,7 +1592,7 @@ fields.forEach(f => {
   } }
 
 
-  onSelectEwStatus(evnt) {
+  onSelectEwStatus(evnt:any) {
      if(evnt==='Active') { this.enableEwDetails=true;  } 
 
      else {
@@ -1598,14 +1600,14 @@ fields.forEach(f => {
       this.ewBookletNo=null;
       this.ewStartDate=null;
       this.ewEndDate=null;
-      this.wsVehicleMasterForm.get('ewType').reset();
-      this.wsVehicleMasterForm.get('ewInsurerId').reset();
-      this.wsVehicleMasterForm.get('ewInsurerSite').reset();
+      this.wsVehicleMasterForm.get('ewType')?.reset();
+      this.wsVehicleMasterForm.get('ewInsurerId')?.reset();
+      this.wsVehicleMasterForm.get('ewInsurerSite')?.reset();
     }
 
    } 
 
-   onSelectMcpStatus(evnt) {
+   onSelectMcpStatus(evnt:any) {
       if(evnt==='Y') { this.enableMcpDetails=true;  } else {this.enableMcpDetails=false;}
    } 
 
@@ -1619,7 +1621,7 @@ fields.forEach(f => {
 
    
   vehHistory(){
-  var vehRegNum=this.wsVehicleMasterForm.get('vehRegNo').value
+  var vehRegNum=this.wsVehicleMasterForm.get('vehRegNo')?.value
   const fileName = 'download.pdf';
   const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
   this.serviceService.printVehicleHistory(vehRegNum)
@@ -1640,7 +1642,7 @@ fields.forEach(f => {
   // }
 
   
-  onInput(event) {
+  onInput(event:any) {
     event.target.value = event.target.value.toLocaleUpperCase();
   }
 
