@@ -541,6 +541,11 @@
                                         <input type="text" class="form-control" formControlName="msRefType"
                                             value={{msRefType}} style="width:100%;background-color: yellow;">
                                     </td>
+                                    <td>
+                                        <!--  -->
+                                        <button type="button" class="btn-primary" [style.display]="isVisibleCDMSDetials ? 'block' : 'none'"
+                                          (click)="updateCDMSDet()" style="width: 25px;"><i class="fa fa-edit"></i></button>
+                                    </td>
                                 </tr>
                                 <!-- <tr>
                                     <td style="width: 15%" class="LabelFontStyle">
