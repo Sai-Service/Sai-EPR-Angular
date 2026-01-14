@@ -4846,6 +4846,80 @@ methodWiseAmountCheckVal(customerId,locId,orgId,payType): Observable<any> {
 methodWiseAmountCheckRefVal(orderNumber,locId,orgId,payType): Observable<any> {
     return this.http.get(this.ServerUrl + `/arCashReceipts/checkMethodwiseAmountRef?referenceNo=${orderNumber}&locId=${locId}&orgId=${orgId}&paymentType=${payType}`);
   }
+
+ getColours(): Observable<any[]> {
+    return this.http.get<any[]>(this.ServerUrl + `/cmnLookup/MulColour`, {
+      headers: this.headers
+    });
+  }
+  insertModelColor(data: any) {
+    return this.http.post(this.ServerUrl + `/AllColors/insert`, data, {
+      headers: this.headers
+    });
+  }
+  getVariantModelColor(
+    variantId: number | null,
+    mainModel: number,
+    colorCode: number | null
+  ): Observable<any> {
+    let params: string[] = [];
+    params.push(`mainModel=${mainModel}`);
+    if (variantId !== null) {
+      params.push(`variantId=${variantId}`);
+    }
+    if (colorCode !== null) {
+      params.push(`colorCode=${colorCode}`);
+    }
+    const url = `${this.ServerUrl}/VariantMst/getDetailsByModel?${params.join('&')}`;
+    return this.http.get(url, { headers: this.headers });
+  }
+
+  getModels(): Observable<any[]> {
+    return this.http.get<any[]>(this.ServerUrl + `/cmnLookup/MulModel`, {
+      headers: this.headers
+    });
+  }
+  getVariantsByModel(mainModel: any) {
+    return this.http.get(this.ServerUrl +
+      `/cmnLookup/mainModelWiseVariant?mainModel=${mainModel}`
+    );
+  }
+
+ updateVariantMstCreation(data: any) {
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + '/VariantMst/VariantInfo';
+    return this.http.put(url, data, options);
+  }
+   public saveVariantMstCreation(variantMaster: any) {
+    const options = {
+      headers: this.headers
+    };
+       const url = this.ServerUrl + '/VariantMst/VariantInfo';
+    return this.http.post(url, variantMaster, options);
+  }
+
+    getByVariant(variant: number): Observable<any> {
+    return this.http.get(this.ServerUrl + `/VariantMst/getByVariant?variant=${variant}`, { headers: this.headers });
+  }
+
+UpdateVariantPrice(variantPriceRecord: any) {
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + '/VariantMst/updateVariantPrice';
+    return this.http.put(url, variantPriceRecord, options);
+  }
+
+    viewVariantHistory(modelId: number): Observable<any> {
+    return this.http.get(this.ServerUrl + `/VariantMst/viewhistory?model=${modelId}`, { headers: this.headers });
+  }
+
+  getVariantsByModel1(mainModelId: number): Observable<any> {
+    return this.http.get(this.ServerUrl + `/VariantMst/getBynewvariant?mainModel=${mainModelId}`, { headers: this.headers });
+  }
+
 }
 
 
