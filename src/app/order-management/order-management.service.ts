@@ -552,6 +552,15 @@ getsearchByOrderNo2(orderNumber,customerId,locId): Observable<any> {
   }
 
 
+updateCDMSDetFn(orderNumber:any, msRefCustNo:any, msRefNo:any, msRefType:any) {
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + `/orderHeader/updateCDMSDetails?orderNumber=${orderNumber}&msRefNo=${msRefNo}&msRefCustNo=${msRefCustNo}&msRefType=${msRefType}`;
+    return this.http.put(url, options);
+  }
+
+
   // autoApplyInvoiceFn(currentDate){
   //   const options = {
   //     headers: this.headers

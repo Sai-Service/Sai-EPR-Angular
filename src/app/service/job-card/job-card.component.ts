@@ -1,11 +1,12 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators, FormArray, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MasterService } from 'src/app/master/master.service';
+import { MasterService } from '../../master/master.service';
 import { ServiceService } from '../service.service';
-import { OrderManagementService } from 'src/app/order-management/order-management.service';
+import { OrderManagementService } from '../../order-management/order-management.service';
 import { DatePipe } from '@angular/common';
-import { IFinanaceExchangeForm } from 'src/app/order-management/sales-order-form/sales-order-form.component';
+// import { IFinanaceExchangeForm } from 'src/app/order-management/sales-order-form/sales-order-form.component';
+import {IFinanaceExchangeForm} from '../../order-management/sales-order-form/sales-order-form.component'
 
 interface IjobCard {
 
@@ -485,6 +486,11 @@ export class JobCardComponent implements OnInit {
   unSaved: boolean = true;
   taxPer: number;
   // @ViewChild('jobcardForm') public createJobcardForm: NgForm;
+
+ closeResetButton = true;
+  dataDisplay: any;
+  progress = 0;
+   isDisabled = false;
 
   get f() { return this.jobcardForm.controls; }
 
@@ -1304,6 +1310,19 @@ export class JobCardComponent implements OnInit {
       var patch = this.jobcardForm.get('jobCardLabLines') as FormArray;
       (patch.controls[0]).patchValue({ techName: select.description })
     }
+     if (this.RegNoList.lastRunKms===this.jobcardForm.get('lastRunKms')?.value){
+      alert('Last KMS & Current KMS should be same. Please check.');
+      // this.jobcardForm.get('techName')?.reset();
+      this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Last KMS & Current KMS should be same. Please check.';
+    this.isDisabled=true;
+      return;
+    }
+     if (this.RegNoList.lastRunKms !=this.jobcardForm.get('lastRunKms')?.value){
+      this.isDisabled=false;
+      this.dataDisplay = '';
+     }
   }
 
 
@@ -1571,7 +1590,7 @@ export class JobCardComponent implements OnInit {
     this.regNo = RegNo;
     // alert ("this.regno :"+this.regNo);
 
-    var jcType = this.jobcardForm.get('jcType').value;
+    var jcType = this.jobcardForm.get('jcType')?.value;
     if (jcType === '--Select--' || jcType === null || jcType === undefined) {
       alert("Please Select Job Card Type...");
       this.jobcardForm.patchValue({ regNo: '' });
@@ -2336,8 +2355,9 @@ getByRegNoBydtlsFn(){
   }
 
   CheckJobHraderValidation() {
-    const formValue: IjobCard = this.tranceFun(this.jobcardForm.value);
+    const formValue: IjobCard = this.tranceFun(this.jobcardForm.getRawValue());
     var msg1;
+    alert(formValue.promiseDate)
     if (formValue.regNo === undefined || formValue.regNo === null) {
       this.jobHeaderValidation = false;
       msg1 = "REGISTRATION NO: Should not be null...."; alert(msg1); return;
@@ -2983,7 +3003,7 @@ getByRegNoBydtlsFn(){
       this.CheckSaveBillValidation()
       if (this.saveBillValidation) {
         this.saveBillButton = false;
-        debugger;
+        // debugger;
         if (this.jobcardForm.get('jcType')?.value === 'BS') {
           const salvage = this.jobcardForm.get('salvage')?.value;
           const ecaAmt = this.jobcardForm.get('ecaAmt')?.value;
@@ -3494,6 +3514,21 @@ getByRegNoBydtlsFn(){
       this.jobcardForm.patchValue({ lastRunKms: storeKm });
       this.jobHeaderValidation = false;
     }
+      if (this.RegNoList.lastRunKms===this.jobcardForm.get('lastRunKms')?.value){
+      alert('Last KMS & Current KMS should be same. Please check.');
+      this.jobcardForm.get('promiseDate')?.reset();
+      this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Last KMS & Current KMS should be same. Please check.';
+    this.isDisabled=true;
+      return;
+    }
+     if (this.RegNoList.lastRunKms !=this.jobcardForm.get('lastRunKms')?.value){
+      this.isDisabled=false;
+      this.dataDisplay = '';
+      this.closeResetButton = true;
+        this.progress = 0;
+     }
   }
 
   getLastRunKms(RegNo) {
@@ -3792,12 +3827,44 @@ getByRegNoBydtlsFn(){
     if (pDt < currDate) {
       alert("PROMISED  DATE :" + "Should not be below Today's Date");
       this.promiseDate = this.pipe.transform(this.now, 'y-MM-dd');
+         this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = "PROMISED  DATE :" + "Should not be below Today's Date";
     }
+    if (this.RegNoList.lastRunKms===this.jobcardForm.get('lastRunKms')?.value){
+      alert('Last KMS & Current KMS should be same. Please check.');
+      this.jobcardForm.get('promiseDate')?.reset();
+      this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Last KMS & Current KMS should be same. Please check.';
+    this.isDisabled=true;
+      return;
+    }
+     if (this.RegNoList.lastRunKms !=this.jobcardForm.get('lastRunKms')?.value){
+      this.isDisabled=false;
+      this.dataDisplay = '';
+     }
+  }
+
+  kmsList(){
+    alert('hi');
+      if (this.RegNoList.lastRunKms===this.jobcardForm.get('lastRunKms')?.value){
+      alert('Last KMS & Current KMS should be same. Please check.');
+      this.jobcardForm.get('promiseDate')?.reset();
+      this.closeResetButton = false;
+    this.progress = 0;
+    this.dataDisplay = 'Last KMS & Current KMS should be same. Please check.';
+    this.isDisabled=true;
+      return;
+    }
+     if (this.RegNoList.lastRunKms !=this.jobcardForm.get('lastRunKms')?.value){
+      this.isDisabled=false;
+      this.dataDisplay = '';
+     }
   }
 
 
-
-  onFreePickupSelected(xyz) {
+  onFreePickupSelected(xyz:any) {
     // alert(xyz);
     if (xyz == 'No') { this.pickupType = null; }
 

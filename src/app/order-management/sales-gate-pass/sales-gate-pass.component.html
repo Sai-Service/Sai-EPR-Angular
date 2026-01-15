@@ -191,7 +191,7 @@
                 <tr>
                     <td style="width: 12%" class="LabelFontStyle">Ins&nbsp;Company:&nbsp;</td>
                     <td colspan="3">
-                        <select disabled formControlName="insurerCompId" id="insurerCompId" [(ngModel)]="insurerCompId"
+                        <select formControlName="insurerCompId" id="insurerCompId" [(ngModel)]="insurerCompId"
                             (ngModelChange)='onInsurerNameSelected($event)' class="form-control" style="width: 100%;">
                             <option></option>
                             <option *ngFor="let sc of insNameList" [ngValue]="sc.customerId">
@@ -202,7 +202,7 @@
 
                     <td style="width: 12%" class="LabelFontStyle">Ins&nbsp;Site:&nbsp;</td>
                     <td colspan="3">
-                        <select disabled formControlName="insurerSiteId" id="insurerSiteId" [(ngModel)]="insurerSiteId"
+                        <select formControlName="insurerSiteId" id="insurerSiteId" [(ngModel)]="insurerSiteId"
                             class="form-control" style="width: 100%;">
                             <option></option>
                             <option *ngFor="let sc of insSiteList" [ngValue]="sc.customerSiteId">
@@ -221,21 +221,21 @@
                     <input disabled hidden type="number" class="form-control" formControlName="itemId"
                         [(ngModel)]="itemId" style="border:solid 1px black">
                     <td style="font-weight: bold;" class="LabelFontStyle1"> Vehicle&nbsp;No&nbsp;:&nbsp; </td>
-                    <td><input class="form-control" formControlName="regNo"
+                    <td><input class="form-control" formControlName="regNo" (keydown.space)="$event.preventDefault()"
                             style="border:solid 1px black;background-color: yellow;text-transform: uppercase;"
                             [(ngModel)]="regNo" placeholder="Enter Vehicle Reg No"> </td>
                     <td style="font-weight: bold;" class="LabelFontStyle1"> Vehicle&nbsp;Date&nbsp;:&nbsp; </td>
-                    <td><input type="date" class="form-control" formControlName="regDate"
-                            max="{{minDate | date:'yyyy-MM-dd'}}" style="border:solid 1px black" [(ngModel)]="regDate">
+                    <td><input type="date" class="form-control" formControlName="regDate" sty
+                            max="{{minDate | date:'yyyy-MM-dd'}}" style="border:solid 1px black ;background-color: yellow;" [(ngModel)]="regDate">
                     </td>
 
-                    <td><button type="submit" class="btn btn-primary" id="register"
+                    <td><button type="submit" class="btn btn-primary" id="register"  [style.display]="isVisiblePolicyButton ? 'block' : 'none'"
                             (click)="vehiclePolicyupdate(itemId,regNo,regDate)" style="width: fit-content;">Update
                             Policy Details</button> </td>
                     <td><button type="submit" class="btn btn-primary" id="register"
                             (click)="vehicleNoupdate(itemId,regNo,regDate)" style="width: fit-content;">Update
                             Registration No</button> </td>
-                </tr>
+                </tr>  
             </table>
         </fieldset>
     </div>
@@ -243,7 +243,7 @@
         <table class="center">
             <tr>
                 <td style="font-weight: bold;" class="LabelFontStyle1"> New &nbsp;Vehicle&nbsp;No&nbsp;:&nbsp; </td>
-                <td><input class="form-control" formControlName="regNo1"
+                <td><input class="form-control" formControlName="regNo1" (keydown.space)="$event.preventDefault()"
                         style="border:solid 1px black;background-color: yellow;text-transform: uppercase;"
                         [(ngModel)]="regNo" placeholder="Enter Vehicle Reg No"> </td>
                 <td><button type="submit" class="btn btn-primary" id="register" (click)="exVehicleNoupdate()"

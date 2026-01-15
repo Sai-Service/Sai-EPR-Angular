@@ -525,21 +525,26 @@
                                     </td>
                                     <td>
                                         <input type="text" class="form-control" formControlName="msRefCustNo"
-                                            value={{msRefCustNo}} style="width:100%;">
+                                            value={{msRefCustNo}}  style="width:100%;background-color: yellow;">
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">
                                         CDMS&nbsp;Booking&nbsp;No&nbsp;:&nbsp;
                                     </td>
                                     <td>
                                         <input type="text" class="form-control" formControlName="msRefNo"
-                                            value={{msRefNo}} style="width:100%;">
+                                            value={{msRefNo}} style="width:100%;background-color: yellow;">
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle">
                                         CDMS&nbsp;Invoice&nbsp;No&nbsp;:&nbsp;
                                     </td>
                                     <td>
                                         <input type="text" class="form-control" formControlName="msRefType"
-                                            value={{msRefType}} style="width:100%;">
+                                            value={{msRefType}} style="width:100%;background-color: yellow;">
+                                    </td>
+                                    <td>
+                                        <!--  -->
+                                        <button type="button" class="btn-primary" [style.display]="isVisibleCDMSDetials ? 'block' : 'none'"
+                                          (click)="updateCDMSDet()" style="width: 25px;"><i class="fa fa-edit"></i></button>
                                     </td>
                                 </tr>
                                 <!-- <tr>

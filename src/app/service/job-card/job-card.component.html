@@ -1017,13 +1017,31 @@
                                                                         </tr>
                                                                     </table>
                                                                     </fieldset>
+                                                                    <fieldset>
+                                                                         <table class="center">
+        <tr>
+            <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+            <ng-template #hList2>
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only" id="loading"></span>
 
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template #hList1> </ng-template>
+
+            <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">&nbsp;{{dataDisplay}}&nbsp;
+            </td>
+        </tr>
+    </table>
+                                                                    </fieldset>
                                                                 </table>
                                                                 <table class="center">
                                                                     <tr>
                                                                     <div *ngIf="dispButtonStatus; then B1; else B2"></div>
                                                                      <ng-template #B1>
-                                                                        <td> <button type="button"
+                                                                        <td> <button type="button"  [disabled]="isDisabled"
                                                                                 class="btn btn-primary"
                                                                                 (click)="saveArInvoice()"
                                                                                 style="width: 5rem;">Save</button></td>
@@ -2794,7 +2812,8 @@
                                                                             <option value="Contractor">Contractor</option>
                                                                         </select>
                                                                     </td>
-                                                                    <td><select formControlName="techId" id="techId"  class="form-control">
+                                                                   
+                                                                    <td><select formControlName="techId" id="techId"  class="form-control" >
                                                                             <option>--Select--</option>
                                                                             <option *ngFor="let sc of  TechnicianList" [ngValue]="sc.teamId">
                                                                                 {{sc.teamId}}-{{sc.description}}
@@ -2819,7 +2838,9 @@
                                                                             <option value="Contractor">Contractor</option>
                                                                         </select>
                                                                     </td>
-                                                                    <td><select disabled formControlName="techId" id="techId"  class="form-control">
+                                                                    
+                                                                    <td>
+                                                                        1<select disabled formControlName="techId" id="techId"  class="form-control" >
                                                                             <option>--Select--</option>
                                                                             <option *ngFor="let sc of  TechnicianList" [ngValue]="sc.teamId">
                                                                                 {{sc.teamId}}-{{sc.description}}

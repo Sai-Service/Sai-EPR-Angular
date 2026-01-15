@@ -656,13 +656,13 @@ export class MiscellaneousTransactionComponent implements OnInit {
     }
   }
 
-  filterRecord(event, i) {
-    var trxType = this.miscellaneousForm.get('compileType').value;
+  filterRecord(event:any, i:any) {
+    var trxType = this.miscellaneousForm.get('compileType')?.value;
 
     var itemCode = event.target.value;
     if (event.keyCode == 13) {
       // enter keycode
-      if (itemCode.length == 8) {
+      if (itemCode.length == 8 || itemCode.length == 7) {
         if (this.ItemIdList.length <= 1) {
           if (trxType === 4) {
             // alert('inside if--');

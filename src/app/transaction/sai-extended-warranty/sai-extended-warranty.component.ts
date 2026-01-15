@@ -72,12 +72,12 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   EwSchemeItemList: any;
 
   pipe = new DatePipe('en-US');
-  resMsg: string;
+  resMsg: string | null = null;
 
   message: string = "PleaseFixtheErrors!";
   msgType: string = "Close";
 
-  invItemListEw: any[];
+  invItemListEw: any = [];
   VehicleRegDetails: any;
   EWItemList: any;
   ItemDetailList: any;
@@ -92,121 +92,121 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   vehicleSaleOrderDetails: any;
   CustomerSiteDetails: any;
   CustomerSiteDetailsNew: any;
-  lstcomments: any[];
+  lstcomments: any = [];
   getLastRunKmsVeh: any;
 
   userList1: any[] = [];
   lastkeydown1: number = 0;
 
-  loginName: string;
-  loginArray: string;
-  name: string;
-  ouName: string;
-  locId: number;
-  locName: string;
-  orgId: number;
-  ouId: number;
-  deptId: number;
-  divisionId: number;
+  loginName: string | null = null;
+  loginArray: string | null = null;
+  name: string | null = null;
+  ouName: string | null = null;
+  locId: number | null = null;
+  locName: string | null = null;
+  orgId: number | null = null;
+  ouId: number | null = null;
+  deptId: number | null = null;
+  divisionId: number | null = null;
   // emplId :number;
   public emplId = 6;
-  public varAging: number;
+  public varAging: number | null = null;
   ddate = Date.now();
 
   showOrderInputLine = false;
   pymntSource = true;
 
   ///////////////////////////
-  ewStatus: string;
-  ewStatusBookletno: string;
-  ewStatusStartDate: string;
-  ewStatusPeriod: number;
+  ewStatus: string | null = null;
+  ewStatusBookletno: string | null = null;
+  ewStatusStartDate: string | null = null;
+  ewStatusPeriod: number | null = null;
   isEwActive = false;
 
-  ewInvoiceNo: string;
-  regNo: string;
-  ewId: number;
-  ewSchemeId: number;
-  ewBookletNo: string;
+  ewInvoiceNo: string | null = null;
+  regNo: string | null = null;
+  ewId: number | null = null;
+  ewSchemeId: number | null = null;
+  ewBookletNo: string | null = null;
 
-  orderNumber: number;
-  vehRegNo: string;
-  vehicleId: string;
-  ewItemCode: string;
-  itemId: number;
-  itemDesc: string;
+  orderNumber: number | null = null;
+  vehRegNo: string | null = null;
+  vehicleId: string | null = null;
+  ewItemCode: string | null = null;
+  itemId: number | null = null;
+  itemDesc: string | null = null;
 
-  fuelType: string;
-  variant: string;
-  variantDesc: string;
-  chassisNo: string;
-  engineNo: string;
-  serviceModel: string;
-  deliveryDate: string;
-  regDate: Date;
-  dealerCode: string;
-  kmsEwSale: number;
-  soldByEmpId: number;
-  salesExecutiveName: string;
+  fuelType: string | null = null;
+  variant: string | null = null;
+  variantDesc: string | null = null;
+  chassisNo: string | null = null;
+  engineNo: string | null = null;
+  serviceModel: string | null = null;
+  deliveryDate: string | null = null;
+  regDate: Date | null = null;
+  dealerCode: string | null = null;
+  kmsEwSale: number | null = null;
+  soldByEmpId: number | null = null;
+  salesExecutiveName: string | null = null;
   // salesExecutiveId:number;
 
-  custId: number;
-  dmsCustNo: number;
-  custName: string;
-  customerSiteId: number;
-  customerSiteAddress: string;
-  custCity: string;
-  custState: String;
-  custPincode: string;
-  CustomerGstNo: string
-  customerPanNo: string
-  custAccountNo: number;
-  billToSiteId: number;
-  custPhone: string;
-  customerType: string;
-  custTaxCategoryName: string;
+  custId: number | null = null;
+  dmsCustNo: number | null = null;
+  custName: string | null = null;
+  customerSiteId: number | null = null;
+  customerSiteAddress: string | null = null;
+  custCity: string | null = null;
+  custState: String | null = null;
+  custPincode: string | null = null;
+  CustomerGstNo: string | null = null;
+  customerPanNo: string | null = null;
+  custAccountNo: number | null = null;
+  billToSiteId: number | null = null;
+  custPhone: string | null = null;
+  customerType: string | null = null;
+  custTaxCategoryName: string | null = null;
 
 
-  ewPeriod: number;
-  warrantyDealer: string;
-  vehicleAgeDays: number;
+  ewPeriod: number | null = null;
+  warrantyDealer: string | null = null;
+  vehicleAgeDays: number | null = null;
   paytmentSource: string = 'SERVICE'
-  ewType: string;
-  ewInsurerId: number;
-  ewInsurerSiteId: number;
+  ewType: string | null = null;
+  ewInsurerId: number | null = null;
+  ewInsurerSiteId: number | null = null;
 
-  ewSchemeAmt: number;
-  ewDiscAmt: number;
-  ewTotalAmt: number;
+  ewSchemeAmt: number | null = null;
+  ewDiscAmt: number | null = null;
+  ewTotalAmt: number | null = null;
 
   // ewSaleDate:Date;
-  segment: string;
+  segment: string | null = null;
 
 
   now = Date.now();
   ewSaleDate = this.pipe.transform(this.now, 'y-MM-dd');
   // ewStartDate = this.pipe.transform(this.now, 'y-MM-dd');
   // ewEndDate = this.pipe.transform(this.now, 'y-MM-dd');
-  ewStartDate: string;
-  ewEndDate: string;
-  oemWarrantyPeriod: number;
-  oemWarrEndDate: string;
+  ewStartDate: string | null = null;
+  ewEndDate: string | null = null;
+  oemWarrantyPeriod: number | null = null;
+  oemWarrEndDate: string | null = null;
 
-  receiptNumber: number;
-  payType: string;
-  receiptMethodId: number;
-  paymentAmt: number;
-  bankName: string;
-  bankBranch: string;
-  checkNo: string;
-  checkDate: string;
+  receiptNumber: number | null = null;
+  payType: string | null = null;
+  receiptMethodId: number | null = null;
+  paymentAmt: number | null = null;
+  bankName: string | null = null;
+  bankBranch: string | null = null;
+  checkNo: string | null = null;
+  checkDate: string | null = null;
   // checkDate = this.pipe.transform(Date.now(), 'y-MM-dd');
 
-  lastRunKms: number;
+  lastRunKms: number | null = null;
   checkValidation = false;
   displayInactive = true;
   Status1: any;
-  inactiveDate: Date;
+  inactiveDate: Date | null = null;
   display = true;
   displayButton = true;
   showBankDetails = false;
@@ -221,14 +221,14 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   showSchemeLov = true;
   ewGracePeriod = false;
 
-  variantItemId: number;
+  variantItemId: number | null = null;
 
-  ewCancelDate: string;
+  ewCancelDate: string | null = null;
 
-  ewCancelReason: string;
-  ewClaimStatus1: string;
-  bajajCwiNo: string;
-  ewSchemeName: string;
+  ewCancelReason: string | null = null;
+  ewClaimStatus1: string | null = null;
+  bajajCwiNo: string | null = null;
+  ewSchemeName: string | null = null;
 
   get f() { return this.saiEwForm.controls; }
 
@@ -516,9 +516,9 @@ export class SaiExtendedWarrantyComponent implements OnInit {
 
   onEnterKms(x: any) {
 
-    var mVAriant = this.saiEwForm.get("variant").value;
-    var mAging = this.saiEwForm.get("vehicleAgeDays").value;
-    var mKms = this.saiEwForm.get("kmsEwSale").value;
+    var mVAriant = this.saiEwForm.get("variant")?.value;
+    var mAging = this.saiEwForm.get("vehicleAgeDays")?.value;
+    var mKms = this.saiEwForm.get("kmsEwSale")?.value;
 
     // alert (mVAriant +","+mAging+","+mKms);
 
@@ -595,7 +595,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
 
   }
 
-  LoadEWSchemeVariant(mVariant, mAging, mKmsCurr) {
+  LoadEWSchemeVariant(mVariant: any, mAging: any, mKmsCurr: any) {
     this.resetSection2();
     // alert(mVariant+","+mAging+","+mKmsCurr);
     this.service.EwSchemeItemList(mVariant, this.ouId, mAging, mKmsCurr)
@@ -608,7 +608,8 @@ export class SaiExtendedWarrantyComponent implements OnInit {
       );
   }
 
-  GetSchemeDetails(mSchemeId) {
+  GetSchemeDetails(event:any) {
+    var mSchemeId =event.target.value;
     // alert("mscheme id :" + mSchemeId);
     if (mSchemeId !== null) {
       this.service.getEWSchemeDetails(mSchemeId)
@@ -652,7 +653,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
 
   }
 
-  GetEWitemList(e, v, p) {
+  GetEWitemList(e: any, v: any, p: any) {
     // alert("evp= "+e +"," +v+","+p);
     this.service.invItemListEw(e, v, p)
       .subscribe(
@@ -672,7 +673,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
 
 
 
-  GetVariantDeatils(modelVariant) {
+  GetVariantDeatils(modelVariant: any) {
 
     this.service.variantDetailsList(modelVariant)
       .subscribe(
@@ -695,7 +696,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
 
   }
 
-  GetEwReceiptDetails(mEwId) {
+  GetEwReceiptDetails(mEwId: any) {
 
     this.service.getEWCustomerSearchByEWNo(mEwId)
       .subscribe(
@@ -721,7 +722,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   }
 
 
-  GetLastRunKmsSearch(mRegNo) {
+  GetLastRunKmsSearch(mRegNo: any) {
     var z = 0;
     this.service.getLastRunKms(mRegNo)
       .subscribe(
@@ -738,7 +739,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
 
 
 
-  GetItemDeatils1(mItemId) {
+  GetItemDeatils1(mItemId: any) {
 
     this.service.getItemDetail(mItemId)
       .subscribe(
@@ -755,7 +756,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
       );
   }
 
-  GetItemDeatils2(mItemId) {
+  GetItemDeatils2(mItemId: any) {
 
     this.service.getItemDetail(mItemId)
       .subscribe(
@@ -774,7 +775,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
 
 
 
-  GetVehicleRegInfomation(mRegNo) {
+  GetVehicleRegInfomation(mRegNo: any) {
     this.service.getVehRegDetails(mRegNo)
 
       .subscribe(
@@ -833,9 +834,9 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   }
 
 
-  serchByRegNo(mRegNo) {
+  serchByRegNo(mRegNo: any) {
     //  ----------------------------------------------------
-    var mreg = this.saiEwForm.get('vehRegNo').value
+    var mreg = this.saiEwForm.get('vehRegNo')?.value
     if (mreg == null || mreg == undefined || mreg.trim() == '') {
       alert("Enter Valid Vehicle Registration No."); return;
     }
@@ -974,7 +975,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
 
 
   ////////////////// not in use//////////////////     
-  CustAccountNoSearchSite(accountNo) {
+  CustAccountNoSearchSite(accountNo: any) {
     alert("CustAccountNoSearch:" + accountNo);
     if (accountNo <= 0) {
       this.custName = null;
@@ -1007,7 +1008,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   }
   ////////////////// ////////// //////////////////////   
 
-  getDiffDays(date1, date2, oPrd) {
+  getDiffDays(date1: any, date2: any, oPrd: any) {
     // alert ("Delv Date :"+date1 +" ew Sale date :"+date2);
     date1 = new Date(date1);
     date2 = new Date(date2);
@@ -1017,7 +1018,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
     var mDays3 = Math.round(mDays2 - 0.5)
     this.vehicleAgeDays = mDays3;
 
-    var oemPrd = this.saiEwForm.get('oemWarrantyPeriod').value;
+    var oemPrd = this.saiEwForm.get('oemWarrantyPeriod')?.value;
 
     //  alert ("mdays3 :"+mDays3 +"....oemPrd :"+oemPrd);
 
@@ -1036,7 +1037,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   }
 
 
-  serchByVin(mVin) {
+  serchByVin(mVin: any) {
     // alert(mVin);
     this.service.getVehVinDetails(mVin)
       .subscribe(
@@ -1082,7 +1083,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   }
 
 
-  getUserIdsFirstWayVin($event) {
+  getUserIdsFirstWayVin($event: any) {
 
     let userId = (<HTMLInputElement>document.getElementById('userIdFirstWay')).value;
     this.userList1 = [];
@@ -1095,7 +1096,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   }
 
 
-  getUserIdsFirstWay($event) {
+  getUserIdsFirstWay($event: any) {
     let userId = (<HTMLInputElement>document.getElementById('userIdFirstWay')).value;
     this.userList1 = [];
 
@@ -1250,10 +1251,9 @@ export class SaiExtendedWarrantyComponent implements OnInit {
 
 
   Select(ewId: number) {
-
     this.saiEwForm.reset();
-    //  alert ("In Search...");
-    let select = this.lstcomments.find(d => d.ewId === ewId);
+    let select = this.lstcomments.find((d: any) => d.ewId === ewId);
+    console.log(select);
     if (select) {
       this.ewId = select.ewId;
       var ewSchId = select.ewSchemeId;
@@ -1264,32 +1264,24 @@ export class SaiExtendedWarrantyComponent implements OnInit {
         this.ewCancelDate = select.ewCancelDate;
         this.ewCancelReason = select.ewCancelReason;
       }
-
-
       if (this.ewCancelDate != null) {
         this.cancelledFlag = true; this.saiEwForm.disable();
       }
       else {
-
         this.cancelledFlag = false;
         this.saiEwForm.disable();
-        this.saiEwForm.get('ewBookletNo').enable();
-        this.saiEwForm.get('ewCancelReason').enable();
+        this.saiEwForm.get('ewBookletNo')?.enable();
+        this.saiEwForm.get('ewCancelReason')?.enable();
       }
-
-
-      this.saiEwForm.patchValue(select);
-      this.GetVariantDeatils(this.variant);
-
-
+      // alert('select.ewStartDate---'+select.ewStartDate+'select.ewendDate'+select.ewEndDate)
       this.saiEwForm.patchValue({
         vehRegNo: select.vehRegNo,
         orderNumber: select.orderNo,
         ewStartDate: select.ewStartDate,
         ewEndDate: select.ewEndDate
       });
-
-
+      this.saiEwForm.patchValue(select);
+      this.GetVariantDeatils(this.variant);
       this.service.getEWSchemeDetails(ewSchId).subscribe(
         data => {
           this.saiEwForm.patchValue({
@@ -1299,22 +1291,12 @@ export class SaiExtendedWarrantyComponent implements OnInit {
             ewType: data.ewType,
             paymentAmt: data.schemeAmount,
             // ewInsurerId: data.ewInsId,
-
           });
-
           this.GetEWitemList(this.ewType, this.variant, this.ewPeriod)
 
         });
-
-      //  this.GetVehicleRegInfomation(this.vehRegNo);
       this.GetCustomerDetails(this.custId);
       this.GetCustomerSiteDetails(this.custId);
-
-      // this.GetEwReceiptDetails(ewId);
-      // this.GetItemDeatils2(select.itemId);
-      // this.getDiffDays(this.deliveryDate,this.ewSaleDate,0);
-      // this.LoadEWSchemeVariant(this.variant,this.vehicleAgeDays,this.kmsEwSale);
-
       this.getEwClaimStatus(this.vehRegNo);
     }
   }
@@ -1322,7 +1304,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
 
 
 
-  transeData(val) {
+  transeData(val: any) {
 
     delete val.divisionId;
     delete val.division;
@@ -1429,10 +1411,10 @@ export class SaiExtendedWarrantyComponent implements OnInit {
 
 
 
-  onOptioninvItemIdSelectedSingle(itemId) {
+  onOptioninvItemIdSelectedSingle(itemId: any) {
 
     //  alert('item function');
-    let selectedValue = this.invItemListEw.find(v => v.segment == itemId);
+    let selectedValue = this.invItemListEw.find((v: any) => v.segment == itemId);
     if (selectedValue != undefined) {
       alert(selectedValue.itemId);
       console.log(selectedValue);
@@ -1442,7 +1424,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
     }
   }
 
-  getInvItemId($event) {
+  getInvItemId($event: any) {
     let userId = (<HTMLInputElement>document.getElementById('invItemIdFirstWay')).value;
     this.userList1 = [];
 
@@ -1454,7 +1436,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   }
 
 
-  searchFromArray(arr, regex) {
+  searchFromArray(arr: any, regex: any) {
     let matches = [], i;
     for (i = 0; i < arr.length; i++) {
       if (arr[i].match(regex)) {
@@ -1469,7 +1451,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
     return date1;
   }
 
-  onInput(event) {
+  onInput(event: any) {
     event.target.value = event.target.value.toLocaleUpperCase();
   }
 
@@ -1648,7 +1630,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
   }
 
 
-  executeAlertMsg(msg1) {
+  executeAlertMsg(msg1: any) {
     if (this.checkValidation == false) {
       (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
       this.message = msg1;
@@ -1658,7 +1640,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
 
   PrintDoc() { alert("Not Available...") }
 
-  validateEwSaleDate(x) {
+  validateEwSaleDate(x: any) {
     //  alert ("Sale Date :"+x);
     var currDate = new Date();
     var ewSalDate = new Date(x);
@@ -1690,7 +1672,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
 
   }
 
-  diffDays(currentDate, dateSent) {
+  diffDays(currentDate: any, dateSent: any) {
     // let currentDate = new Date();
 
     currentDate = new Date(currentDate);
