@@ -1094,11 +1094,12 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblesparesPaintPanelReport = false;
       this.isVisibleonlyOuCode = false;
       this.isVisiblePanelOUFromDateToDateSubInv = false;
-      this.isVisiblefromtosubinventory = false;
+      this.isVisiblefromtosubinventory = true;
       this.isVisibileIssueCategory = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+      this.isVisiblespClosingStockAsOndate1 = false;      
+      this.isVisibleStockMismatch=false;
 
     }
     else if (reportName === 'paintOpningStockNew') {

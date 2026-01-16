@@ -317,6 +317,8 @@ export class PaintPoReceiptComponent implements OnInit {
       qtyReceived: [],
       locId: [],
       baseAmount: [],
+      disAmt:[],
+
       totAmount: [],
       invItemId: [''],
       billToLoc: [''],
@@ -659,6 +661,7 @@ export class PaintPoReceiptComponent implements OnInit {
                   totAmount: data.obj.rcvLines[j].totAmount.toFixed(2),
                   unitPrice: data.obj.rcvLines[j].unitPrice.toFixed(2),
                   baseAmount: data.obj.rcvLines[j].baseAmount.toFixed(2),
+                  disAmt: data.obj.rcvLines[j].discAmt.toFixed(2),
                   sgstAmt: data.obj.rcvLines[j].sgstAmt.toFixed(2),
                   cgstAmt: data.obj.rcvLines[j].cgstAmt.toFixed(2),
                   igstAmt: data.obj.rcvLines[j].igstAmt.toFixed(2),
@@ -721,6 +724,7 @@ export class PaintPoReceiptComponent implements OnInit {
                   totAmount: data.obj.rcvLines[j].totAmount.toFixed(2),
                   unitPrice: data.obj.rcvLines[j].unitPrice.toFixed(2),
                   baseAmount: data.obj.rcvLines[j].baseAmount.toFixed(2),
+                  disAmt: data.obj.rcvLines[j].discAmt.toFixed(2),
                   sgstAmt: data.obj.rcvLines[j].sgstAmt.toFixed(2),
                   cgstAmt: data.obj.rcvLines[j].cgstAmt.toFixed(2),
                   igstAmt: data.obj.rcvLines[j].igstAmt.toFixed(2),
@@ -1242,6 +1246,7 @@ export class PaintPoReceiptComponent implements OnInit {
     formValue.taxAmt = this.paintPoReceiptForm.get('taxAmt').value;
     formValue.totalAmt = this.paintPoReceiptForm.get('totalAmt').value;
     formValue.billToLocId = Number(sessionStorage.getItem('locId'));
+    
     this.locId = Number(sessionStorage.getItem('locId'));
     console.log(formValue);
     this.service.poSaveSubmit(formValue).subscribe((res: any) => {
