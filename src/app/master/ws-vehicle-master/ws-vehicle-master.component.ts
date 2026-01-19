@@ -824,13 +824,23 @@ const fields = ['policyNo','insuDate','insurerCompId','insurerSiteId',
     'ewInsurerId','ewInsurerSite',
     'mcpYN','pkgSource','mcpNo','mcpStartDate','mcpEndDate'];
 
-fields.forEach(f => {
+
+ const delivery = new Date(this.wsVehicleMasterForm.get('deliveryDate')?.value);
+  const today = new Date();
+
+  const oneYearLater = new Date(delivery);
+  oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
+
+  if (today < oneYearLater) {
+  fields.forEach(f => {
   const c = this.wsVehicleMasterForm.get(f);
   if (!c) return;
   c?.value ? c.disable() : c.enable();
 });
+  } else {
+    
+  }
 
-//////////////////////////
 
           }
         });

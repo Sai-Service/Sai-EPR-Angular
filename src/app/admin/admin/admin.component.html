@@ -466,7 +466,15 @@
               </ul>
             </li>
           </ul>
-        </li>
+        </li>     
+        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Variant / Color Master</a> 
+         <ul class="dropdown-menu">
+          <li> <a class="dropdown-item" [routerLink]="['/admin/master/ColorMaster']">Color</a></li>
+          <li> <a class="dropdown-item" [routerLink]="['/admin/master/VariantCreationMaster']">New Variant</a></li>
+          <li> <a class="dropdown-item" [routerLink]="['/admin/master/VariantWithPriceMaster']">Variant Price</a></li>
+         </ul>
+      
+    </li>
       </ul>
     </li>
   </div>

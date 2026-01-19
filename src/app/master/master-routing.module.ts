@@ -41,8 +41,9 @@ import { ItemMasterNewComponent } from './item-master-new/item-master-new.compon
 import { ItemRelatedMasterComponent } from './item-related-master/item-related-master.component';
 import { VariantMasterNewComponent } from './variant-master-new/variant-master-new.component';
 // import { SubinventoryTransferComponent } from '../transaction/subinventory-transfer/subinventory-transfer.component';
-
-
+import {ColorMasterComponent} from './color-master/color-master.component';
+import {VariantCreationMasterComponent} from './variant-creation-master/variant-creation-master.component'
+import {VariantWithPriceMasterComponent} from './variant-with-price-master/variant-with-price-master.component'
 
 // import { FlexFieldComponent } from './flex-field/flex-field.component';
 
@@ -96,6 +97,9 @@ const routes: Routes = [
   {path:'CustomerRelationMaster',component:CustomerRelationMasterComponent},
   {path:'ItemRelatedMaster',component:ItemRelatedMasterComponent},
   {path:'VariantMst',component:VariantMasterNewComponent},
+  {path:'ColorMaster',component:ColorMasterComponent},
+  {path:'VariantCreationMaster',component:VariantCreationMasterComponent},
+  {path:'VariantWithPriceMaster',component:VariantWithPriceMasterComponent},
   // {path:'SubinventoryTransfer',component:SubinventoryTransferComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];

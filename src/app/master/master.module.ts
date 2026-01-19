@@ -44,6 +44,9 @@ import { CustomerRelationMasterComponent } from './customer-relation-master/cust
 import { ItemMasterNewComponent } from './item-master-new/item-master-new.component';
 import { ItemRelatedMasterComponent } from './item-related-master/item-related-master.component';
 import { VariantMasterNewComponent } from './variant-master-new/variant-master-new.component';
+import { ColorMasterComponent } from './color-master/color-master.component';
+import { VariantCreationMasterComponent } from './variant-creation-master/variant-creation-master.component';
+import { VariantWithPriceMasterComponent } from './variant-with-price-master/variant-with-price-master.component';
 
 
 // import { DashboardComponent } from './dashboard/dashboard.component';
@@ -87,7 +90,10 @@ import { VariantMasterNewComponent } from './variant-master-new/variant-master-n
     CustomerRelationMasterComponent,
     ItemMasterNewComponent,
     ItemRelatedMasterComponent,
-    VariantMasterNewComponent,  ],
+    VariantMasterNewComponent,
+    ColorMasterComponent,
+    VariantCreationMasterComponent,
+    VariantWithPriceMasterComponent,  ],
     
   // declarations: [DivisionMasterComponent, OrganizationMasterComponent, LocationMasterComponent, CompanyMasterComponent, FNDCommonLookupComponent, ItemCategortComponent, SupplierMasterComponent, LocatorMasterComponent, ItemMasterComponent, CommonMasterComponent, DocumentSequenceMasterComponent, EpmloyeeMasterComponent, CustomerMasterComponent, GlCodeCombinationComponent, HsnSacMasterComponent, OPMasterDtoComponent, JaiRegimeMasterComponent, TaxAccountsComponent, TaxCategoryMasterComponent, JaiTaxCategoryLineComponent, JaiTaxRatesMasterComponent, JaiTaxTypeComponent,FlexFieldComponent, PricelistMasterComponent, OmGruopMasterComponent, OrderTypeMasterComponent,SubinventoryMasterComponent,SaiEwSchemeComponent],
   

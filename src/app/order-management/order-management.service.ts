@@ -18,29 +18,29 @@ export class OrderManagementService {
     this.ServerUrl = AppConstants.ServerUrl;
   }
 
-  getsearchByOrderNo(orderNumber): Observable<any> {
+  getsearchByOrderNo(orderNumber:any): Observable<any> {
     return this.http.get(this.ServerUrl + `/orderHeader/${orderNumber}`);
   }
 
-getsearchByOrderNo2(orderNumber,customerId,locId): Observable<any> {
+getsearchByOrderNo2(orderNumber:any,customerId:any,locId:any): Observable<any> {
     return this.http.get(this.ServerUrl + `/orderHeader/getSaleOrderCustIdLocId?orderNumber=${orderNumber}&customerId=${customerId}&locationId=${locId}`);
   }
 
-  getsearchByOrderNo1(orderNumber,locId): Observable<any> {
+  getsearchByOrderNo1(orderNumber:any,locId:any): Observable<any> {
     return this.http.get(this.ServerUrl + `/orderHeader/orderLocWise?orderNumber=${orderNumber}&locationId=${locId}`);
   }
 
-  getsearchBymsRefNo(deptId,locId,msRefNo): Observable<any> {
+  getsearchBymsRefNo(deptId:any,locId:any,msRefNo:any): Observable<any> {
     return this.http.get(this.ServerUrl + `/orderHeader/${deptId}/${locId}/${msRefNo}`);
   }
 
-  getsearchByOrderNoToUpdate(orderNumber): Observable<any> {
+  getsearchByOrderNoToUpdate(orderNumber:any): Observable<any> {
     return this.http.get(this.ServerUrl + `/orderHeader/OrderToUpdate/${orderNumber}`);
     // http://localhost:8081/orderHeader/OrderToUpdate/222220910400113
 
   }
 
-  UpdateOrderDetails(saleOrderRecord) {
+  UpdateOrderDetails(saleOrderRecord:any) {
     const options = {
       headers: this.headers
     };
