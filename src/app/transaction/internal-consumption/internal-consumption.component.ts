@@ -535,7 +535,7 @@ export class InternalConsumptionComponent implements OnInit {
         var op = valOp.split('-');
         var value1 = op[1];
 
-        alert(reasonArray[2]);
+        // alert(reasonArray[2]);
         // if(reasonArray[2]!=undefined){
         if (reasonArray[2].includes('OEM') && value1 == 'MRP') {
           this.service.getCostDetailforWarranty(Number(sessionStorage.getItem('locId')), select1.itemId).subscribe
