@@ -44,7 +44,7 @@ import { VariantMasterNewComponent } from './variant-master-new/variant-master-n
 import {ColorMasterComponent} from './color-master/color-master.component';
 import {VariantCreationMasterComponent} from './variant-creation-master/variant-creation-master.component'
 import {VariantWithPriceMasterComponent} from './variant-with-price-master/variant-with-price-master.component'
-
+import {ReceiptMethodComponent} from './receipt-method/receipt-method.component'
 // import { FlexFieldComponent } from './flex-field/flex-field.component';
 
 
@@ -100,6 +100,7 @@ const routes: Routes = [
   {path:'ColorMaster',component:ColorMasterComponent},
   {path:'VariantCreationMaster',component:VariantCreationMasterComponent},
   {path:'VariantWithPriceMaster',component:VariantWithPriceMasterComponent},
+  {path:'ReceiptMethod',component:ReceiptMethodComponent},
   // {path:'SubinventoryTransfer',component:SubinventoryTransferComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];

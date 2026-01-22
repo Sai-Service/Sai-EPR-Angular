@@ -1,0 +1,376 @@
+<div class="center">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td class="PageHeader">
+                &nbsp;Receipt&nbsp;Method&nbsp;
+            </td>
+        </tr>
+    </table>
+     <form [formGroup]="receiptForm" (ngSubmit)="save()">
+
+        <div class="center" style="width: 100%;">
+            <div class="form-bg">
+                <div class="center" style="width: 100%;">
+                    <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;"> Details
+                        </legend>
+                        <table class="center" style="width: 100%;">
+                            <tr>
+                                <td>
+                                    <table class="center">
+                                        <tr>
+                                        <tr style="align-items: center;">
+                                            <td style="width: 15%" class="LabelFontStyle"> &nbsp;Method&nbsp;Type:&nbsp;
+                                            </td>
+                                            <td>
+                                               <select  class="form-control" formControlName="methodType" required>
+                                                <option>--Select--</option>
+                                                        <option *ngFor="let sc of  MethodTypeList"
+                                                            [value]="sc.lookupValue">
+                                                            {{sc.lookupValue}}
+
+                                                </option>
+                                               </select>
+
+
+                                            </td>
+                                            <td style="width: 15%" class="LabelFontStyle"> &nbsp;Method&nbsp;Name:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" formControlName="methodName" required>
+
+
+                                            </td>
+
+                                            
+
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                &nbsp;&nbsp;Cost &nbsp;Center:&nbsp; </td>
+                                              <td>
+                                                    <select formControlName="costCentre"
+                                                        class="form-control" required>
+                                                        <option>--Select--</option>
+                                                        <option *ngFor="let sc of  CostCenterList"
+                                                            [value]="sc.lookupValue" >
+                                                            {{sc.lookupValue}}
+
+                                                        </option>
+                                                    </select>
+                                                </td>
+
+                                        </tr>
+
+                                         <tr>
+                                        <tr style="align-items: center;">
+                          
+
+                                            <td style="width: 15%" class="LabelFontStyle"> &nbsp;Status&nbsp;:&nbsp;
+                                            </td>
+                                            <td style="border: none;color: black;">
+                                                <select formControlName="Status" class="form-control" required>
+                                                    <option value="">--Select Status--</option>
+                                                    <option value="ACTIVE"> Active</option>
+                                                    <option value="INACTIVE"> Inactive</option>
+                                                </select>
+
+
+                                            </td>
+
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                &nbsp;&nbsp;Start  &nbsp;Date:&nbsp; </td>
+                                            <td>
+                                               <input type="date" class="form-control" formControlName="startDate" required>
+
+
+                                            </td>
+                                             <td style="width: 15%" class="LabelFontStyle">
+                                                &nbsp;&nbsp;End &nbsp;Date:&nbsp; </td>
+                                            <td>
+                                               <input type="date" class="form-control" formControlName="endDate" [disabled]="receiptForm.get('Status')?.value === 'ACTIVE'">
+
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr>
+                                        <tr style="align-items: center;">
+                                               <td style="width: 15%" class="LabelFontStyle">
+                                                &nbsp;&nbsp;Refund&nbsp;CCID:&nbsp;</td>
+                                            <td>
+                                             
+                                                <select formControlName="refundccId"  
+                                                        class="form-control" required >
+                                                        <option>--Select--</option>
+                                                        <option *ngFor="let sc of  NaturalAccountList"
+                                                            [value]="sc.lookupValue">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select>
+
+
+                                            </td>
+                                         
+
+                                            <td style="width: 15%" class="LabelFontStyle"> &nbsp;Earned&nbsp;CCID:&nbsp;
+                                            </td>
+                                            <td style="border: none;color: black;">
+                                                 <select formControlName="earnedccId"  
+                                                        class="form-control" required>
+                                                        <option>--Select--</option>
+                                                        <option *ngFor="let sc of  NaturalAccountList"
+                                                            [value]="sc.lookupValue">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select>
+
+
+                                            </td>
+
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                &nbsp;&nbsp;OnAccount  &nbsp;CCID:&nbsp; </td>
+                                            <td>
+                                               
+                                                <select formControlName="onaccountccId"  
+                                                        class="form-control" required>
+                                                        <option>--Select--</option>
+                                                        <option *ngFor="let sc of  NaturalAccountList"
+                                                            [value]="sc.lookupValue">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select>
+
+
+                                            </td>
+
+                                        </tr>
+
+                                         <tr>
+                                        <tr style="align-items: center;">
+                                            <td style="width: 15%" class="LabelFontStyle"> &nbsp;Receipt&nbsp;Clearing&nbsp;CCID:&nbsp;
+                                            </td>
+                                            <td>
+                                             
+                                                 <select formControlName="receiptclearingccId"  
+                                                        class="form-control" required>
+                                                        <option>--Select--</option>
+                                                        <option *ngFor="let sc of  NaturalAccountList"
+                                                            [value]="sc.lookupValue">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select>
+
+                                            </td>
+
+                                            <td style="width: 15%" class="LabelFontStyle"> &nbsp;Remittance&nbsp;CCID:&nbsp;
+                                            </td>
+                                            <td style="border: none;color: black;">
+                                             
+                                                 <select formControlName="remittanceccId"  
+                                                        class="form-control" required>
+                                                        <option>--Select--</option>
+                                                        <option *ngFor="let sc of  NaturalAccountList"
+                                                            [value]="sc.lookupValue">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select>
+
+
+                                            </td>
+
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                &nbsp;&nbsp;Unearned  &nbsp;CCID:&nbsp; </td>
+                                            <td>
+                                       
+                                                <select formControlName="unearnedccId"  
+                                                        class="form-control" required>
+                                                        <option>--Select--</option>
+                                                        <option *ngFor="let sc of  NaturalAccountList"
+                                                            [value]="sc.lookupValue">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select>
+
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr style="align-items: center;">
+                                            <td style="width: 15%" class="LabelFontStyle"> &nbsp;Unidentified&nbsp;CCID:&nbsp;
+                                            </td>
+                                            <td>
+                                             
+                                                 <select formControlName="unidentifiedccId"  
+                                                        class="form-control" required>
+                                                        <option>--Select--</option>
+                                                        <option *ngFor="let sc of  NaturalAccountList"
+                                                            [value]="sc.lookupValue">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select>
+
+
+                                            </td>
+
+                                            <td style="width: 15%" class="LabelFontStyle"> &nbsp;Unapplied&nbsp;CCID:&nbsp;
+                                            </td>
+                                            <td style="border: none;color: black;">
+                                            
+                                                 <select formControlName="unappliedccId"  
+                                                        class="form-control" required>
+                                                        <option>--Select--</option>
+                                                        <option *ngFor="let sc of  NaturalAccountList"
+                                                            [value]="sc.lookupValue">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select>
+
+
+                                            </td>
+
+                                         
+                                               <td style="width: 15%" class="LabelFontStyle"> &nbsp;Bank&nbsp;Method:&nbsp;&nbsp;
+                                            </td>
+                                            <td>
+                                                <select formControlName="bankMethod"  
+                                                        class="form-control" >
+                                                        <option>--Select--</option>
+                                                        <option >
+                                                            Y
+                                                        </option>
+                                                         <option >
+                                                            N
+                                                        </option>
+                                                    </select>
+
+
+                                            </td>
+                                            
+
+                                        </tr>
+                                        <tr style="align-items: center;" [hidden]="receiptForm.get('bankMethod')?.value !== 'Y'">
+                                         
+                                               <td style="width: 15%" class="LabelFontStyle"> &nbsp;Bank&nbsp;Account&nbsp;Name:&nbsp;
+                                            </td>
+                                            <td>
+                                                <select formControlName="bankAccName"  
+                                                        class="form-control" >
+                                                        <option>--Select--</option>
+                                                        <option *ngFor="let sc of BankNameList"
+                                                [value]="sc.customerId">
+                                            {{sc.custName}}
+                                        </option>
+                                                    </select>
+
+
+                                            </td>
+                                            
+
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                           
+                            
+                          
+                        </table>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+
+
+           <fieldset class="RFS">
+                    <table class="center">
+                        <tr>
+                           <td>
+                                <button type="submit" class="btn btn-primary" [disabled]="receiptForm.invalid ||isEditMode" >{{ isEditMode ? 'Save' : 'Save' }}</button>
+                            </td>
+                            <td>
+                            <button
+                                    type="button"
+                                    class="btn btn-primary"
+                                    (click)="update()"
+                                    [disabled]="!isEditMode"
+                                    >
+                                    Update
+                                    </button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-primary" (click)="clear()" >
+                                    Clear
+                                </button>
+                            </td>
+
+                            <td>
+                                <button type="button" class="btn btn-primary" (click)="close()" >Close</button>
+                            </td>
+                            <td>
+                           
+                            </td>
+
+
+                        </tr>
+                    </table>
+               </fieldset>
+                <fieldset class="RFS">
+        <table style="width: 100%; background-color: #FFE4B5;display: flex;justify-content: center; align-items: center; padding: 8px; height: 40px; margin-top: 8px;">
+            <tr>
+                <td style="width: 15%" class="LabelFontStyle1">Method&nbsp;Name&nbsp;:</td>
+                <td>
+                 <input type="text" formControlName="methodTypeSearch" class="form-control"  (input)="onMethodTypeInput()"
+          autocomplete="off">
+                  <ul *ngIf="suggestions.length > 0" class="suggestion-box">
+          <li
+            *ngFor="let s of suggestions"
+            (click)="selectSuggestion(s)"
+          >
+            {{ s }}
+          </li>
+        </ul>
+                </td>
+               
+        
+                <td>
+                    <button type="button" class="btn-primary" (click)="searchMethod()" ><i
+                            class="fa fa-search" aria-hidden="true"></i></button>
+                </td>
+              
+            </tr>
+        </table>
+        </fieldset>  
+    </form>
+
+    
+
+        <table
+  *ngIf="methodList.length > 0"
+  class="table table-bordered table-striped mt-3"
+>
+  <thead>
+    <tr>
+      <th>Sr No</th>
+      <th>Method Type</th>
+      <th>Method Name</th>
+      <th>Status</th>
+      <th>Select</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let m of methodList; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ m.methodType }}</td>
+      <td>{{ m.methodName }}</td>
+      <td>{{ m.status }}</td>
+      <td>
+        <button class="btn btn-sm btn-success" (click)="selectMethod(m)">
+          Select
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+</div>

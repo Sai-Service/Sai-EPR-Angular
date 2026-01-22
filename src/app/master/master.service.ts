@@ -4920,6 +4920,26 @@ UpdateVariantPrice(variantPriceRecord: any) {
     return this.http.get(this.ServerUrl + `/VariantMst/getBynewvariant?mainModel=${mainModelId}`, { headers: this.headers });
   }
 
+
+ saveReceiptMethod(data: any) {
+    return this.http.post(this.ServerUrl + `/receiptMethod/receiptInfo`, data);
+  }
+
+  Methodtype(methodName: string): Observable<any> {
+    return this.http.get(this.ServerUrl + `/receiptMethod/recptmethodName/${methodName}`, { headers: this.headers });
+  }
+
+  updateReceiptMethod(payload: any) {
+  return this.http.put(this.ServerUrl+ `/receiptMethod/receiptInfo`,payload);
+}
+
+ methodTypeList(): Observable<any> {
+    return this.http.get(this.ServerUrl + `/fndAcctLookup/lookupTypeWise/PayType`, { headers: this.headers });
+  }
+
+ BankNameListFn(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/Customer/ClassCode/BANK', { headers: this.headers });
+  }
 }
 
 
