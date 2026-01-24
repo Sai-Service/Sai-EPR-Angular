@@ -1017,6 +1017,7 @@ export class SalesOrderFormComponent implements OnInit {
                 alert('End Date must be less than today’s date');
                  (controlinv.controls[k]).patchValue({ segment: '' });
               }
+              // debugger;
               if (segment.includes('OFFER')) {
                 // alert((select.description).toUpperCase()+'------'+ this.SalesOrderBookingForm.get('model')?.value)
                 if (((select.description).toUpperCase()) != this.SalesOrderBookingForm.get('model')?.value) {
@@ -2337,7 +2338,7 @@ updateCDMSDet(){
                     this.SalesOrderBookingForm.get('custPoDate')?.disable();
                   }
                   // alert(this.lstgetOrderLineDetails[i].invType.includes('VEHICLE'))
-                  debugger;
+                  // debugger;
                   if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE')) {
                     if (this.lstgetOrderLineDetails[i].flowStatusCode === 'INVOICED') {
                       this.isVisiblefinexchangeUpdate = false;

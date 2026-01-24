@@ -1347,7 +1347,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
       if (resp == true) {
         this.displayButton = false;
         // alert("Data Validation Sucessfull....\nPosting data  to EW CUSTOMER TABLE")
-        const formValue: IExtendedWarranty = this.transeData(this.saiEwForm.value);
+        const formValue: IExtendedWarranty = this.transeData(this.saiEwForm.getRawValue());
         console.log(formValue);
         this.service.SaiEwCustomerSubmit(formValue).subscribe((res: any) => {
           if (res.code === 200) {
