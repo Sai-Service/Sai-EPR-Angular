@@ -379,17 +379,11 @@
   
     </li>
   </div>
-
-
-
   <div [style.display]="isVisibleGL ? 'block' : 'none'">
     <!-- <li class="nav-item dropdown"> -->
   <li><a class="dropdown-item" [routerLink]="['/admin/transaction/glTrialBalance']">GL Trial Balance</a> </li>
     <!-- </li> -->
   </div>
-
-
-
   <div [style.display]="isVisibleMaster ? 'block' : 'none'">
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle " id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
@@ -566,6 +560,19 @@
       </ul>
     </li>
   </div>
+
+
+<li class="nav-item dropdown" >
+  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+    aria-haspopup="true" aria-expanded="false" >
+     IT Correction Form
+  </a>
+   <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+       <li>
+       <a class="dropdown-item" routerLink="/admin/itCorrection/itCorrectionForAll">It Correction Form</a>
+    </li>   
+  </ul>
+</li>
 
  <!-- PETROL PUMP SYSTEM -->
 
