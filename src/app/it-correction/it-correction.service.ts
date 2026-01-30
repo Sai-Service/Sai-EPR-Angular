@@ -16,7 +16,7 @@ httpclient: any;
     this.headers = this.headers.set('Content-Type', 'application/json; charset=utf-8');
     this.ServerUrl = AppConstants.ServerUrl;
   }
-  custNameSearchFn1(custName: any): Observable<any> {
+    custNameSearchFn1(custName: any): Observable<any> {
     return this.http.get(this.ServerUrl + `/Customer/getCustDetails?custName=${custName}`, { headers: this.headers });
   }
 
@@ -64,7 +64,21 @@ httpclient: any;
       this.ServerUrl + `/bajajIssues/getAccApprName`,
       { headers: this.headers }
     );
-  }  
+  }
+  
+  getDetailsByVehicleNo(regNo: string): Observable<any> {
+    return this.http.get(
+      this.ServerUrl + `/bajajIssues/getDetByRegNo?regNo=${regNo}`,
+      { headers: this.headers }
+    );
+  }
+  
+  getDetailsByJobCardNo(jobCardNo: string): Observable<any> {
+    return this.http.get(
+      this.ServerUrl + `/bajajIssues/getDetByJobCardNo?jobCardNo=${jobCardNo}`,
+      { headers: this.headers }
+    );
+  }
   
 }
 
