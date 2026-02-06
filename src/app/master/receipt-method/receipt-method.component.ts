@@ -7,33 +7,43 @@ import {  OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-receipt-method',
+  // imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './receipt-method.component.html',
   styleUrls: ['./receipt-method.component.css']
 })
 export class ReceiptMethodComponent implements OnInit {
-receiptForm: FormGroup;
-  locId!: number;
-  ouId!: number;
-  createdBy!:number;
+ receiptForm: FormGroup;
+  locId?: number;
+  ouId?: number;
+  createdBy?:number;
   public CostCenterList:any=[];
   public NaturalAccountList: any=[];
   public MethodTypeList: any=[];
   methodList: any[] = [];
+  method: any[]=[];
   suggestions: string[] = [];
   methodTypeSearch = '';
+  methodSearch = '';
   isEditMode = false;
   selectedReceiptMethodId: number | null = null;
   public BankNameList:any=[];
-  customerId!: number;
+  customerId?: number;
+  lastSearchedMethodType!: string;
+
 
 
   
 
-  constructor(private fb: FormBuilder,private service: MasterService,private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private service: MasterService,
+    private router: Router
+  ) {
     this.receiptForm = this.fb.group({
       methodName: ['',Validators.required],
       methodType: ['',Validators.required],
       methodTypeSearch: [''],
+      methodSearch: [''],
       costCentre: ['',Validators.required],
       receiptclassCode: [''],
       Status: ['ACTIVE',Validators.required],
@@ -175,6 +185,8 @@ selectSuggestion(name: string) {
 //   );
 // }
 
+
+
 searchMethod() {
   const methodName = this.receiptForm.get('methodTypeSearch')?.value?.trim();
 
@@ -184,17 +196,17 @@ searchMethod() {
   }
 
   this.service.Methodtype(methodName).subscribe({
-    next: (res) => {
+    next: (res: any) => {
+      console.log('FULL RESPONSE:', res);
 
-      
-      if (res.code !== 200) {
+      if (res?.code !== 200 || !res?.obj) {
         this.methodList = [];
-        alert(res.message || 'No data found');
+        alert(res?.message || 'No data found');
         return;
       }
 
-   
-      this.methodList = res.obj || [];
+      
+      this.methodList = [res.obj];
     },
     error: (err) => {
       console.error('HTTP error', err);
@@ -202,6 +214,50 @@ searchMethod() {
     }
   });
 }
+
+
+
+searchMethodType() {
+  const methodType = this.receiptForm.get('methodSearch')?.value?.trim();
+
+  if (!methodType) {
+    alert('Please enter Method Type');
+    return;
+  }
+
+  this.lastSearchedMethodType = methodType;
+
+  this.service.MethodtypeSearch(methodType).subscribe({
+    next: (res: any) => {
+      console.log('FULL RESPONSE:', res);
+
+      if (res?.code === 200 && Array.isArray(res.obj)) {
+        this.method = res.obj;   
+      } else {
+        this.method = [];
+        alert(res?.message || 'No data found');
+      }
+    },
+    error: (err) => {
+      console.error('HTTP error', err);
+      alert('Server error occurred');
+      this.method = [];
+    }
+  });
+}
+
+refreshTableAfterUpdate() {
+  if (!this.lastSearchedMethodType) return;
+
+  this.service.MethodtypeSearch(this.lastSearchedMethodType).subscribe({
+    next: (res: any) => {
+      if (res?.code === 200) {
+        this.method = [...res.obj]; 
+      }
+    }
+  });
+}
+
 
 
  
@@ -252,8 +308,9 @@ searchMethod() {
         console.log(res);
         alert(res.message || 'Saved Successfully');
         this.isEditMode = true;
+        this.receiptForm.reset();
       },
-      (err:any) => {
+      err => {
         console.error(err);
         alert('Error while saving');
         this.isEditMode = true;
@@ -295,8 +352,30 @@ onaccountccId: m.onAccountCcid?.toString(),
   // this.methodList = [];
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  this.disableFieldsAfterSelect();
 
 }
+
+disableFieldsAfterSelect() {
+  this.receiptForm.get('methodType')?.disable();
+  this.receiptForm.get('methodName')?.disable();
+  this.receiptForm.get('costCentre')?.disable();
+  this.receiptForm.get('startDate')?.disable();
+  this.receiptForm.get('refundccId')?.disable();
+  this.receiptForm.get('earnedccId')?.disable();
+  this.receiptForm.get('onaccountccId')?.disable();
+  this.receiptForm.get('receiptclearingccId')?.disable();
+  this.receiptForm.get('remittanceccId')?.disable();
+  this.receiptForm.get('unearnedccId')?.disable();
+  this.receiptForm.get('unidentifiedccId')?.disable();
+  this.receiptForm.get('unappliedccId')?.disable();
+  this.receiptForm.get('bankMethod')?.disable();
+  this.receiptForm.get('bankAccName')?.disable();
+  
+}
+
+
+
 
 update() {
   if (!this.selectedReceiptMethodId) {
@@ -339,6 +418,10 @@ update() {
       this.isEditMode = false;
       this.selectedReceiptMethodId = null;
       this.receiptForm.reset();
+      this.receiptForm.enable(); 
+      this.refreshTableAfterUpdate();
+      // this.searchMethod();
+      // this.searchMethodType();
       this.methodList = [];
     },
     error: () => {
@@ -358,4 +441,3 @@ update() {
   }
 
 }
-

@@ -4940,6 +4940,13 @@ UpdateVariantPrice(variantPriceRecord: any) {
  BankNameListFn(): Observable<any> {
     return this.http.get(this.ServerUrl + '/Customer/ClassCode/BANK', { headers: this.headers });
   }
+
+  MethodtypeSearch(methodType: string): Observable<any> {
+  return this.http.get(
+    this.ServerUrl + `/receiptMethod/methods?methodType=${methodType}`,
+    { headers: this.headers }
+  );
+}
 }
 
 

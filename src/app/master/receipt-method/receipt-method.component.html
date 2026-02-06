@@ -315,6 +315,19 @@
                 <fieldset class="RFS">
         <table style="width: 100%; background-color: #FFE4B5;display: flex;justify-content: center; align-items: center; padding: 8px; height: 40px; margin-top: 8px;">
             <tr>
+                 <td style="width: 15%" class="LabelFontStyle1">Method&nbsp;Type&nbsp;:</td>
+                <td>
+                 <input type="text" formControlName="methodSearch" class="form-control"  
+          autocomplete="off">
+                 
+                </td>
+               
+        
+                <td>
+                    <button type="button" class="btn-primary"  (click)="searchMethodType()"><i
+                            class="fa fa-search" aria-hidden="true"></i></button>
+                </td>
+
                 <td style="width: 15%" class="LabelFontStyle1">Method&nbsp;Name&nbsp;:</td>
                 <td>
                  <input type="text" formControlName="methodTypeSearch" class="form-control"  (input)="onMethodTypeInput()"
@@ -368,6 +381,34 @@
         </button>
       </td>
     </tr>
+  </tbody>
+</table>
+
+<table *ngIf="method.length > 0" class="table table-bordered table-striped mt-3">
+  <thead>
+    <tr>
+      <th>Sr No</th>
+      <th>Method Type</th>
+      <th>Method Name</th>
+      <th>Status</th>
+      <th>Select</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let m of method; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ m.methodType }}</td>
+      <td>{{ m.methodName }}</td>
+      <td>{{ m.status }}</td>
+        <td>
+        <button class="btn btn-sm btn-success" (click)="selectMethod(m)">
+          Select
+        </button>
+      </td>
+    </tr>
+
+   
   </tbody>
 </table>
 

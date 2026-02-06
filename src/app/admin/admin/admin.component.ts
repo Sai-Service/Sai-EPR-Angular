@@ -44,6 +44,7 @@ interface IAdmin {
 
 declare var $: any;
 
+
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -171,7 +172,7 @@ export class AdminComponent implements OnInit {
   subInventoryCode: string;
   itemLineCount: number;
 
-
+  showItCorrection = false;
 
   @ViewChild('myinput') myInputField: ElementRef;
   emplId: number;
@@ -250,6 +251,7 @@ export class AdminComponent implements OnInit {
     });
 
     this.ticketNo = sessionStorage.getItem('ticketNo');
+    this.showItCorrection = this.ticketNo === 'M33485';
     this.divisionId = Number(sessionStorage.getItem('divisionId'));
     this.fullName = sessionStorage.getItem('fullName');
     this.deptName = sessionStorage.getItem('deptName');

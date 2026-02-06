@@ -46,14 +46,11 @@
                             <td>
                                 <!-- <button type="button" class="btn btn-primary" (click)="searchByAccount1()"
                                     style="width: 2rem;color: white;"><i class="fa fa-search"></i></button> -->
-                                    <button type="button"
-                                    class="btn btn-primary"
-                                    (click)="searchByAccount1()"
-                                    data-toggle="modal"
-                                    data-target="#customerNameSearchModel"
+                                <button type="button" class="btn btn-primary" (click)="searchByAccount1()"
+                                    data-toggle="modal" data-target="#customerNameSearchModel"
                                     style="width: 2rem;color: white;">
-                                <i class="fa fa-search"></i>
-                            </button>                            
+                                    <i class="fa fa-search"></i>
+                                </button>
                             </td>
 
                             <td style="width:10%" class="LabelFontStyle">Customer&nbsp;Name&nbsp;:&nbsp;</td>
@@ -107,9 +104,12 @@
                     </table>
 
                     <!-- VEHICLE NO SEARCH -->
-                    <table class="center"
-                        *ngIf="itCorrectionForm.get('referenceType')?.value === 'Vehicle Number Update'">
-
+                    <!-- <table class="center"
+                        *ngIf="itCorrectionForm.get('referenceType')?.value === 'Vehicle Number Update'"> -->
+                    <table class="center" *ngIf="
+                          itCorrectionForm.get('referenceType')?.value === 'Vehicle Number Update' ||
+                          itCorrectionForm.get('referenceType')?.value === 'Customer Vehicle Mapping'
+                        ">
                         <tr>
                             <td class="LabelFontStyle">VEHICLE&nbsp;No&nbsp;:&nbsp;</td>
                             <td style="width:15%">
@@ -367,28 +367,27 @@
                         <tr>
                             <td class="LabelFontStyle" style="width:15%">New Customer Name :</td>
                             <td colspan="7">
-                                <input type="text" class="form-control"
-                                       formControlName="newCustomerName"
-                                       style="width: 60%;">
+                                <input type="text" class="form-control" formControlName="newCustomerName"
+                                    style="width: 60%;">
                             </td>
                         </tr>
 
                         <ng-container *ngIf="itCorrectionForm.get('customerType')?.value === 'Person'">
-                    
+
                             <tr>
                                 <td class="LabelFontStyle">New Title :</td>
                                 <td><input type="text" class="form-control" formControlName="newTitle"></td>
-                    
+
                                 <td class="LabelFontStyle">New First Name :</td>
                                 <td><input type="text" class="form-control" formControlName="newFirstName"></td>
-                    
+
                                 <td class="LabelFontStyle">New Middle Name :</td>
                                 <td><input type="text" class="form-control" formControlName="newMiddleName"></td>
-                    
+
                                 <td class="LabelFontStyle">New Last Name :</td>
                                 <td><input type="text" class="form-control" formControlName="newLastName"></td>
                             </tr>
-                    
+
                         </ng-container>
 
                         <tr>
@@ -397,9 +396,9 @@
                                 <input type="text" class="form-control" formControlName="itReason">
                             </td>
                         </tr>
-                    
+
                     </table>
-                    
+
 
                     <!-- ADDRESS CORRECTION -->
                     <table class="center" *ngIf="selectedIssueType === 'Address Correction'">
@@ -422,7 +421,9 @@
                             <td><input type="text" class="form-control" formControlName="newCity"></td>
 
                             <td class="LabelFontStyle">New State :</td>
-                            <td><input type="text" class="form-control" formControlName="newState"></td>
+                            <td><input type="text" class="form-control" formControlName="newState"
+                                    [readonly]="isStateReadonlyForAddressCorrection()">
+                            </td>
 
                             <td class="LabelFontStyle">New Pin Code :</td>
                             <td><input type="text" class="form-control" formControlName="newPinCode"></td>
@@ -489,6 +490,20 @@
                                 <input type="text" class="form-control" formControlName="newGstNo"
                                     style="text-transform: uppercase;">
                             </td>
+                            <!-- <div *ngIf=" itCorrectionForm.get('newGstNo')?.touched &&
+                                            itCorrectionForm.get('newGstNo')?.errors
+                                        " style="color:red;font-size:11px;margin-top:3px;">
+
+                                <div *ngIf="itCorrectionForm.get('newGstNo')?.errors?.['invalidGSTFormat'] ">
+                                    Invalid GST format
+                                </div>
+
+                                <div *ngIf="itCorrectionForm.get('newGstNo')?.errors?.['invalidGSTFormat']
+                                ">
+                                    GST does not match customer state
+                                </div>
+
+                            </div> -->
                         </tr>
                         <tr>
                             <td class="LabelFontStyle">Remarks :</td>
@@ -539,6 +554,23 @@
                             <td class="LabelFontStyle">New Status :</td>
                             <td>
                                 <input type="text" class="form-control" formControlName="newJobCardStatus">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="LabelFontStyle">Remarks :</td>
+                            <td colspan="7">
+                                <input type="text" class="form-control" formControlName="itReason">
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- CUSTOMER VEHICLE MAPPING -->
+                    <table class="center" *ngIf="selectedIssueType === 'Customer Vehicle Mapping'">
+                        <tr>
+                            <td class="LabelFontStyle">New Cust Account No :</td>
+                            <td>
+                                <input type="number" class="form-control" formControlName="newCustAccountNo">
                             </td>
                         </tr>
 

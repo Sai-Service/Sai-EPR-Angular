@@ -16,7 +16,7 @@ httpclient: any;
     this.headers = this.headers.set('Content-Type', 'application/json; charset=utf-8');
     this.ServerUrl = AppConstants.ServerUrl;
   }
-    custNameSearchFn1(custName: any): Observable<any> {
+custNameSearchFn1(custName: any): Observable<any> {
     return this.http.get(this.ServerUrl + `/Customer/getCustDetails?custName=${custName}`, { headers: this.headers });
   }
 
@@ -31,9 +31,15 @@ httpclient: any;
     );
   }
 
-  getReferenceTypes(): Observable<any> {
+  // getReferenceTypes(): Observable<any> {
+  //   return this.http.get(
+  //     this.ServerUrl + `/cmnLookup/issueSubTypes`,
+  //     { headers: this.headers }
+  //   );
+  // }
+  getReferenceTypes(issueType: string): Observable<any> {
     return this.http.get(
-      this.ServerUrl + `/cmnLookup/issueSubTypes`,
+      this.ServerUrl + `/cmnLookup/getIssueSubTypeByIssueType?issueType=` + issueType,
       { headers: this.headers }
     );
   }
@@ -79,6 +85,5 @@ httpclient: any;
       { headers: this.headers }
     );
   }
-  
 }
 

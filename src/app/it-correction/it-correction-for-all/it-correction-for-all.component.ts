@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ItCorrectionService } from '../it-correction.service';
@@ -26,6 +26,15 @@ itCorrectionForm!: FormGroup;
   irnGenerated = false;
   approverNameLovList: any[] = [];
 
+  stateGstCodeMap: any = {
+    'MAHARASHTRA': '27',
+    'GOA': '30',
+    'KARNATAKA': '29',
+    'GUJARAT': '24',
+    'DELHI': '07',
+    'TAMIL NADU': '33'
+  };  
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -40,6 +49,33 @@ itCorrectionForm!: FormGroup;
     this.itCorrectionForm.get('issueType')?.valueChanges.subscribe(val => {
       this.selectedIssueType = val;
 
+      // this.service.getReferenceTypes().subscribe({
+      //   next: (res: { code: number; obj: any[]; message: any; }) => {
+      //     if (res.code === 200) {
+      //       this.referenceTypeLovList = res.obj;
+      //     } else {
+      //       alert(res.message);
+      //     }
+      //   },
+      //   error: () => {
+      //     alert('Reference Type API failed');
+      //   }
+      // });
+      if (this.selectedIssueType) {
+        this.service.getReferenceTypes(this.selectedIssueType).subscribe({
+          next: (res: { code: number; obj: any[]; message: any; }) => {
+            if (res.code === 200) {
+              this.referenceTypeLovList = res.obj;
+            } else {
+              alert(res.message);
+            }
+          },
+          error: () => {
+            alert('Reference Type API failed');
+          }
+        });
+      }      
+
       if (val === 'GST Updation' || val === 'PAN No Updation') {
         this.showAccountsApproval = true;
       } else {
@@ -48,6 +84,7 @@ itCorrectionForm!: FormGroup;
         }
       }
       this.syncCustomerToCorrection();
+      this.applyGstValidationByState();
     });
 
     this.service.getIssueTypes().subscribe({
@@ -63,18 +100,18 @@ itCorrectionForm!: FormGroup;
       }
     });
 
-    this.service.getReferenceTypes().subscribe({
-      next: (res: { code: number; obj: any[]; message: any; }) => {
-        if (res.code === 200) {
-          this.referenceTypeLovList = res.obj;
-        } else {
-          alert(res.message);
-        }
-      },
-      error: () => {
-        alert('Reference Type API failed');
-      }
-    });
+    // this.service.getReferenceTypes().subscribe({
+    //   next: (res: { code: number; obj: any[]; message: any; }) => {
+    //     if (res.code === 200) {
+    //       this.referenceTypeLovList = res.obj;
+    //     } else {
+    //       alert(res.message);
+    //     }
+    //   },
+    //   error: () => {
+    //     alert('Reference Type API failed');
+    //   }
+    // });
 
     this.service.getAccApproverNames().subscribe({
       next: (res: any) => {
@@ -133,7 +170,7 @@ itCorrectionForm!: FormGroup;
       newPinCode: [null],
       newMobileNo: [null],
       newEmailId: [null],
-      newPanNo: [null],
+      newPanNo: [null, [ Validators.pattern(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/) ]],
       newGstNo: [null],
       newDiscountPercent: [null],
       newCustomerName: [null],
@@ -148,7 +185,8 @@ itCorrectionForm!: FormGroup;
       vinNo: [''],
       engineNo: [''],
       model: [''],
-      jobCardStatus: ['']
+      jobCardStatus: [''],
+      newCustAccountNo: [''],
     });
   }
 
@@ -229,6 +267,7 @@ itCorrectionForm!: FormGroup;
       discountPercent: com.discountPercent
     });
     this.syncCustomerToCorrection();
+    this.applyGstValidationByState();
   }
 
   searchByAccount1() {
@@ -325,6 +364,7 @@ itCorrectionForm!: FormGroup;
             discountPercent: obj.disPer
           });
           this.syncCustomerToCorrection();
+          this.applyGstValidationByState();
 
           this.service.getOrderStatus(orderNo).subscribe({
             next: (statusRes: any) => {
@@ -423,11 +463,12 @@ itCorrectionForm!: FormGroup;
           });
 
           this.syncCustomerToCorrection();
+          this.applyGstValidationByState();
   
           alert('Job Card details fetched successfully');
   
         } else {
-          alert('Job Card details not found');
+          alert(res.message);
         }
       },
       error: () => {
@@ -487,6 +528,7 @@ itCorrectionForm!: FormGroup;
           });
   
           this.syncCustomerToCorrection();
+          this.applyGstValidationByState();
 
           alert('Vehicle details fetched successfully');
   
@@ -565,6 +607,10 @@ syncCustomerToCorrection() {
       f.patchValue({
         newGstNo: f.get('gstNo')?.value
       });
+
+      f.get('newGstNo')?.markAsTouched();
+      f.get('newGstNo')?.updateValueAndValidity();
+
       break;
 
     case 'Discount Percent Change':
@@ -585,5 +631,60 @@ syncCustomerToCorrection() {
       });
       break;
   }
+}  
+
+gstStateValidator(expectedStateCode: string) {
+  return (control: any) => {
+
+    if (!control.value) return null;
+
+    const gst = control.value.toUpperCase();
+
+    const gstRegex =
+      /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
+
+    if (!gstRegex.test(gst)) {
+      return { invalidGSTFormat: true };
+    }
+
+    const gstStateCode = gst.substring(0, 2);
+
+    if (gstStateCode !== expectedStateCode) {
+      return { gstStateMismatch: true };
+    }
+
+    return null;
+  };
 }
+
+applyGstValidationByState() {
+
+  if (this.selectedIssueType !== 'GST Updation') {
+    this.itCorrectionForm.get('newGstNo')?.clearValidators();
+    this.itCorrectionForm.get('newGstNo')?.updateValueAndValidity();
+    return;
+  }
+
+  const state = this.itCorrectionForm.get('state')?.value?.toString().trim();
+  if (!state) return;
+
+  const stateCode = this.stateGstCodeMap[state.toUpperCase()];
+  if (!stateCode) return;
+
+  const gstCtrl = this.itCorrectionForm.get('newGstNo');
+
+  gstCtrl?.setValidators([
+    this.gstStateValidator(stateCode)
+  ]);
+
+  gstCtrl?.updateValueAndValidity();
+}
+
+isStateReadonlyForAddressCorrection(): boolean {
+  return (
+    this.selectedIssueType === 'Address Correction' &&
+    this.orderStatus === 'INVOICED'
+  );
+}
+
 }
