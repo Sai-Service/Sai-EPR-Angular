@@ -6,16 +6,6 @@
             </td>
         </tr>
     </table>
-    <!-- <fieldset class="RFS">
-        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
-           Vehicle Number Details</legend>
-           <table class="center">
-            <tr>
-                <td style="font-weight: bold;" class="LabelFontStyle1"> Order&nbsp;No&nbsp;:&nbsp;  </td> 
-            </tr>
-           </table>
-    </fieldset> -->
-
     <fieldset class="RFS">
         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
             Find</legend>
@@ -132,16 +122,20 @@
                     <td><input type="text" formControlName="policyNo" [(ngModel)]="policyNo " id="policyNo"
                             class="form-control" style="height: 20px;width: 160px;background-color:yellow ;"
                             placeholder="Insurance Policy no"></td>
-                    <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Date&nbsp;:</td>
-                    <td><input type="date" formControlName="insuDate" id="insuDate" value="insuDate"
-                            [(ngModel)]="insuDate" class="form-control" style="height: 20px;width: 160px;"
-                            max="{{minDate | date:'yyyy-MM-dd'}}"></td>
-                    <!-- (change)="validatePolicyDate(insuDate)"  -->
-                    <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Term&nbsp;: </td>
+                </tr>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Start&nbsp;Date&nbsp;:</td>
+                    <td><input type="date" formControlName="insstDate" id="insstDate" value="insstDate"
+                            [(ngModel)]="insstDate" class="form-control" style="height: 20px;width: 160px;"
+                            (change)="calculateEndDate()"
+                            min="{{minDate | date:'dd-MM-yyyy'}}"></td>
+                     <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Term&nbsp;: </td>
                     <td><input type="number" formControlName="insuPeriod" [(ngModel)]="insuPeriod" id="insuPeriod"
-                            (change)="validatePolicyTerm(insuPeriod)" class="form-control"
+                            (change)="calculateEndDate()" class="form-control"
                             style="height: 20px;width: 160px;" placeholder="Policy Term"></td>
-
+                            <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;End&nbsp;Date&nbsp;:</td>
+                    <td><input type="text" disabled formControlName="insuDate" id="insuDate" value="insuDate"
+                            [(ngModel)]="insuDate" class="form-control" style="height: 20px;width: 160px;"></td>
                 </tr>
                 <tr>
                     <td style="width: 12%" class="LabelFontStyle">Ins&nbsp;Company:&nbsp;</td>
@@ -177,15 +171,21 @@
                     <td><input disabled type="text" formControlName="policyNo" [(ngModel)]="policyNo" id="policyNo"
                             class="form-control" style="height: 20px;width: 160px;" placeholder="Insurance Policy no">
                     </td>
-                    <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Date&nbsp;:</td>
-                    <td><input disabled type="date" formControlName="insuDate" id="insuDate" [(ngModel)]="insuDate"
-                            class="form-control" style="height: 20px;width: 160px;"></td>
-
-
-                    <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Term&nbsp;: </td>
-                    <td><input disabled type="number" formControlName="insuPeriod" [(ngModel)]="insuPeriod"
+                </tr>
+                <tr>
+                     <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Start&nbsp;Date&nbsp;:</td>
+                    <td><input type="date" disabled formControlName="insstDate" id="insstDate" value="insstDate"
+                            [(ngModel)]="insuDate" class="form-control" style="height: 20px;width: 160px;"
+                            max="{{minDate | date:'dd-MM-yyyy'}}"></td>
+                     <td style="width: 15%" class="LabelFontStyle"> Policy&nbsp;Term&nbsp;: </td>
+                            <td><input disabled type="number" formControlName="insuPeriod" [(ngModel)]="insuPeriod"
                             id="insuPeriod" (change)="validatePolicyTerm(insuPeriod)" class="form-control"
                             style="height: 20px;width: 160px;" placeholder="Policy Term"></td>
+                    <td style="width: 15%" class="LabelFontStyle">End&nbsp;Policy&nbsp;Date&nbsp;:</td>
+                    <td><input disabled type="text" formControlName="insuDate" id="insuDate" [(ngModel)]="insuDate"
+                            class="form-control" style="height: 20px;width: 160px;"></td>
+                   
+                   
                 </tr>
 
                 <tr>

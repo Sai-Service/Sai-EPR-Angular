@@ -66,28 +66,28 @@ getsearchByOrderNo2(orderNumber:any,customerId:any,locId:any): Observable<any> {
     return this.http.get(this.ServerUrl + `/cmnLookup/FinanceType`);
   }
 
-  getFinNameSearchNew(divisionId): Observable<any> {
+  getFinNameSearchNew(divisionId:any): Observable<any> {
     return this.http.get(this.ServerUrl + `/cmnLookup/Catgtype?cmnType=FinCmpny&divisionId=${divisionId}`);
   }
 
   ItemIdList(): Observable<any> {
     return this.http.get(this.ServerUrl + `/itemMst/category`);
   }
-  addonItemList(category): Observable<any> {
+  addonItemList(category:any): Observable<any> {
     return this.http.get(this.ServerUrl + `/itemMst/segmentLike/${category}`);
   }
 
   //http://localhost:8081/itemMst/ByCatType?itemCatType=SS_SPARES&divId=1
-  getItemByCatType(itemCatType, divId): Observable<any> {
+  getItemByCatType(itemCatType:any, divId:any): Observable<any> {
     return this.http.get(this.ServerUrl + `/itemMst/ByCatType?itemCatType=${itemCatType}&divId=${divId}`)
   }
 
 
-  getItemByCatTypeNew(itemCatType, divId, variant): Observable<any> {
+  getItemByCatTypeNew(itemCatType:any, divId:any, variant:any): Observable<any> {
     return this.http.get(this.ServerUrl + `//itemMst/ByCatType1?itemCatType=${itemCatType}&divId=${divId}&variant=${variant}`)
   }
 
-  searchByItemSegmentDiv(divId, itemSeg): Observable<any> {
+  searchByItemSegmentDiv(divId:any, itemSeg:any): Observable<any> {
     return this.http.get(this.ServerUrl + `/itemMst/details/${divId}/${itemSeg}`)
 
     // http://localhost:8081/itemMst/searchBydesc/2/ring
@@ -835,7 +835,7 @@ updateCDMSDetFn(orderNumber:any, msRefCustNo:any, msRefNo:any, msRefType:any) {
   }
 
 
-  public vehicleNoInsuranceupdateFn(gpInsuranceRecord) {
+  public vehicleNoInsuranceupdateFn(gpInsuranceRecord:any) {
     const options = {
       headers: this.headers
     };

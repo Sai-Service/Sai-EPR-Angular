@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { OrderManagementService } from 'src/app/order-management/order-management.service';
-import { MasterService } from 'src/app/master/master.service';
+// import { OrderManagementService } from 'src/app/order-management/order-management.service';
+import{OrderManagementService} from'../order-management.service'
+// import { MasterService } from 'src/app/master/master.service';
+import{MasterService} from '../../master/master.service'
 import { Router } from '@angular/router';
 import { saveAs } from 'file-saver';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { DatePipe, Location } from '@angular/common';
+
 
 
 const MIME_TYPES = {
@@ -29,50 +32,51 @@ export class SalesGatePassComponent implements OnInit {
   now = Date.now();
   gpDate1 = this.pipe.transform(Date.now(), 'y-MM-dd');
   minDate = new Date();
-  public insNameList: Array<string>[];
-  public insSiteList: Array<string>[];
-  lstPendingGatepass: any[];
+  public insNameList: Array<string>=[];
+  public insSiteList: Array<string>=[];
+  lstPendingGatepass: any=[];
   isDisabled7 = false;
   isDisabled = false;
   isGatePassDisabled = false;
   disSuperUserGateButton = true;
   isDisabled2 = true;
-  gatepassNo: number;
-  dateOfDelv: Date;
-  itemId: number;
-  segment: String;
-  regNo: string;
-  vin: String;
+  gatepassNo?: number;
+  dateOfDelv?: Date;
+  itemId?: number;
+  segment?: String;
+  regNo?: string;
+  vin?: String;
+  insstDate?:Date;
   // password:String='Super@2022';
   // userName:String='SuperUser';
-  password: string;
-  userName: string;
-  modelVarClr: String;
-  deliveryLoc: String;
-  vehicleNo: String;
-  serviceLoc: String;
-  orderNumber: number;
+  password?: string;
+  userName?: string;
+  modelVarClr?: String;
+  deliveryLoc?: String;
+  vehicleNo?: String;
+  serviceLoc?: String;
+  orderNumber?: number;
   // orderNumber=222220210600263;
 
-  trxNumber: number;
-  trxDate: Date;
-  dmsSob: String;
-  remark: String;
-  balOutstandAmt: number;
-  excessAmt: number
+  trxNumber?: number;
+  trxDate?: Date;
+  dmsSob?: String;
+  remark?: String;
+  balOutstandAmt?: number;
+  excessAmt?: number
   lstcomments: any;
-  emplId: number;
-  invoiceNo: number;
-  invoiceDt: Date;
-  custName: string;
-  custAdd: string;
-  contactNo: number;
-  contactPerson: string;
-  salesExeName: string;
+  emplId?: number;
+  invoiceNo?: number;
+  invoiceDt?: Date;
+  custName?: string;
+  custAdd?: string;
+  contactNo?: number;
+  contactPerson?: string;
+  salesExeName?: string;
   private sub: any;
-  shipToLoc: number;
+  shipToLoc?: number;
   public BillShipList: Array<string> = [];
-  regDate: Date;
+  regDate?: Date;
   isVisiblegatePassDetails: boolean = false;
   isVisiblegatePassVehicleDetails: boolean = false;
   isVisibleVehicleNumberUpdate: boolean = false;
@@ -80,16 +84,16 @@ export class SalesGatePassComponent implements OnInit {
   downloadButton = false;
   isVisiblePolicyButton :Boolean= true;
 
-  insType: string;
-  insuDate: string;
-  policyNo: string; //='222220210600263';
-  insuPeriod: number;
-  insurerCompId: number;
-  insurerSiteId: number;
-  insurerIdName: string;
-  insurerSiteName: string;
+  insType?: string;
+  insuDate?: string|null;
+  policyNo?: string; //='222220210600263';
+  insuPeriod?: number;
+  insurerCompId?: number;
+  insurerSiteId?: number;
+  insurerIdName?: string;
+  insurerSiteName?: string;
   isDisabledIns = true;
-  regNo1: string;
+  regNo1?: string;
 
 
   constructor(private fb: FormBuilder, private router: Router, private router1: ActivatedRoute, private service: MasterService, private orderManagementService: OrderManagementService) {
@@ -129,6 +133,7 @@ export class SalesGatePassComponent implements OnInit {
       insurerSiteId: [],
       insurerIdName: [],
       insurerSiteName: [],
+      insstDate:[],
       regNo1: ['' ,[Validators.required,]],
     })
   }
@@ -174,7 +179,7 @@ export class SalesGatePassComponent implements OnInit {
 
   }
 
-  gatePassOrderNo(orderNumber) {
+  gatePassOrderNo(orderNumber:any) {
     // alert(orderNumber);
     this.orderManagementService.getGatepassSearch(orderNumber)
       .subscribe(
@@ -303,7 +308,7 @@ export class SalesGatePassComponent implements OnInit {
   //    }
 
   // -------------------New GatePass Fn ---by rk 27/8/22
-  SalesGatePassPost(orderNumber, srvLoc) {
+  SalesGatePassPost(orderNumber:any, srvLoc:any) {
 
     if (this.policyNo == undefined || this.policyNo == null || this.policyNo.trim() == '') { alert("Policy No should not be null.."); return; }
     if (this.insuDate == undefined || this.insuDate === null || this.insuDate.trim() == '') { alert("Policy Date should not be null.."); return; }
@@ -314,7 +319,7 @@ export class SalesGatePassComponent implements OnInit {
     // var srvLoc =this.SalesGatepassForm.get('shipToLoc').value;
 
     if (srvLoc == undefined || srvLoc == null || srvLoc <= 0) { alert("Please Select Service Location."); return; }
-    var mreg = this.SalesGatepassForm.get('regNo').value;
+    var mreg = this.SalesGatepassForm.get('regNo')?.value;
 
 
     this.orderManagementService.SalesGatePassGenSubmit(orderNumber, this.emplId, srvLoc).subscribe((res: any) => {
@@ -334,7 +339,7 @@ export class SalesGatePassComponent implements OnInit {
 
 
   // -------------------Old GatePass Fn ---
-  orderNumberPost(orderNumber, locId) {
+  orderNumberPost(orderNumber:any, locId:any) {
     this.orderManagementService.orderNoPost(orderNumber, this.emplId, locId).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
@@ -352,22 +357,24 @@ export class SalesGatePassComponent implements OnInit {
 
 
 
-  SalesGatepass(SalesGatepassForm) { }
+  SalesGatepass(SalesGatepassForm:any) { }
   get f() { return this.SalesGatepassForm.controls; }
 
-  vehiclePolicyupdate(itemId, regNo, regDate) {
+  vehiclePolicyupdate(itemId:any, regNo:any, regDate:any) {
 
-    var policuNum = this.SalesGatepassForm.get('policyNo').value;
-    var policyDate = this.SalesGatepassForm.get('insuDate').value;
-    var policyDate = this.SalesGatepassForm.get('insuDate').value;
-    var insurerSiteId = this.SalesGatepassForm.get('insurerSiteId').value;
-     var insurerCompId = this.SalesGatepassForm.get('insurerCompId').value;
+    var policuNum = this.SalesGatepassForm.get('policyNo')?.value;
+    var policyDate = this.SalesGatepassForm.get('insuDate')?.value;
+    // var policyDate = this.SalesGatepassForm.get('insuDate')?.value;
+    var insurerSiteId = this.SalesGatepassForm.get('insurerSiteId')?.value;
+     var insurerCompId = this.SalesGatepassForm.get('insurerCompId')?.value;
+     var insstDate = this.SalesGatepassForm.get('insstDate')?.value;
     //  var regDate = this.SalesGatepassForm.get('regDate').value;
-
+   
     if (policuNum == undefined || policuNum == null || policuNum.trim() == '') { alert("Policy No should not be null.."); return; }
     if (policyDate == undefined || policyDate == null || policyDate.trim() == '') { alert("Policy Date should not be null.."); return; }
     if (insurerCompId == undefined || insurerCompId == null) { alert("Insurance Company should not be null.."); return; }
     if (insurerSiteId == undefined || insurerSiteId == null ) { alert("Insurance site should not be null.."); return; }
+    if (insstDate == undefined || insstDate == null ) { alert("Insurance site should not be null.."); return; }
     // if (regDate == undefined || regDate == null ) { alert("Vehicle Date should not be null.."); return; }
 
     // alert ("Regno & Policy no is ok...."); return;
@@ -376,7 +383,7 @@ export class SalesGatePassComponent implements OnInit {
     var orderedDate2 = this.pipe.transform(regDate, 'MM/dd/yyyy');
 
     const formValue = this.SalesGatepassForm.value;
-
+     formValue.insuDate=this.pipe.transform(policyDate,'yyyy-dd-mm');
     // this.orderManagementService.vehicleNoupdateFn(itemId, regNo, orderedDate2,customerId).subscribe((res: any) => {
     this.orderManagementService.vehicleNoInsuranceupdateFn(formValue).subscribe((res: any) => {
       if (res.code === 200) {
@@ -392,7 +399,7 @@ export class SalesGatePassComponent implements OnInit {
   }
 
 
-  vehicleNoupdate(itemId, regNo, regDate) {
+  vehicleNoupdate(itemId:any, regNo:any, regDate:any) {
 
     if (regNo === undefined || itemId === undefined ) {
       alert('Please Enter All required Details...!')
@@ -415,8 +422,8 @@ export class SalesGatePassComponent implements OnInit {
     this.SalesGatepassForm.patchValue({ regNo: regNo1 });
 
     // alert("Registration No:"+this.regNo+","+regNo1.length);  
-    var policuNum = this.SalesGatepassForm.get('policyNo').value;
-    var policyDate = this.SalesGatepassForm.get('insuDate').value;
+    var policuNum = this.SalesGatepassForm.get('policyNo')?.value;
+    var policyDate = this.SalesGatepassForm.get('insuDate')?.value;
 
     // if(policuNum==undefined|| policuNum==null || policuNum.trim()==''){ alert("Policy No should not be null..");return;}
     // if(policyDate==undefined|| policyDate==null || policyDate.trim()==''){ alert("Policy Date should not be null..");return;}
@@ -492,9 +499,9 @@ export class SalesGatePassComponent implements OnInit {
   }
 
 
-  validatePolicyDate(policyDate) {
+  validatePolicyDate(policyDate:any) {
     var currDate = new Date();
-    var invDate = this.SalesGatepassForm.get('invoiceDt').value;
+    var invDate = this.SalesGatepassForm.get('invoiceDt')?.value;
     var billDate = new Date(invDate);
     var insDate = new Date(policyDate);
     alert(insDate + "," + billDate);
@@ -504,7 +511,7 @@ export class SalesGatePassComponent implements OnInit {
     }
   }
 
-  validatePolicyTerm(prd) {
+  validatePolicyTerm(prd:any) {
     // alert ("Period : "+prd);
     if (prd < 0 || prd == undefined || prd == null) {
       alert("POLICY TERM : Please Enter valid Policy Period..")
@@ -514,7 +521,7 @@ export class SalesGatePassComponent implements OnInit {
 
   }
 
-  SelectOrdNum(ordNumber) {
+  SelectOrdNum(ordNumber:any) {
     alert("Order Number Seleted :" + ordNumber);
 
   }
@@ -535,7 +542,7 @@ export class SalesGatePassComponent implements OnInit {
 
 
 
-  orderSuperNumberPost(orderNumber, locId) {
+  orderSuperNumberPost(orderNumber:any, locId:any) {
     // alert(orderNumber+'-----'+locId)
     if (locId === undefined || locId === null || locId === '') {
       alert('Please Select Service Location.!');
@@ -552,8 +559,8 @@ export class SalesGatePassComponent implements OnInit {
         if (res.code === 400) {
           alert(res.message + '---' + res.obj);
           this.isGatePassDisabled = false;
-          this.SalesGatepassForm.get('userName').reset();
-          this.SalesGatepassForm.get('password').reset();
+          this.SalesGatepassForm.get('userName')?.reset();
+          this.SalesGatepassForm.get('password')?.reset();
           // window.location.reload();
         }
       }
@@ -591,6 +598,30 @@ export class SalesGatePassComponent implements OnInit {
         // saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
       });
   }
+
+
+calculateEndDate() {
+alert('hi')
+  const startValue = this.SalesGatepassForm.get('insstDate')?.value;
+  const yearValue = this.SalesGatepassForm.get('insuPeriod')?.value;
+
+  if (!startValue || !yearValue) {
+    return;
+  }
+
+  const startDate = new Date(startValue);   // string -> Date
+  const years = Number(yearValue);
+alert(startDate)
+  const endDate = new Date(startDate);
+  endDate.setFullYear(startDate.getFullYear() + years);
+const formattedDate = this.pipe.transform(endDate, 'dd-MM-yyyy');
+alert(formattedDate)
+this.insuDate= formattedDate; 
+  this.SalesGatepassForm.patchValue({
+    insuDate: formattedDate   
+  });
+
+}
 
 
 }
