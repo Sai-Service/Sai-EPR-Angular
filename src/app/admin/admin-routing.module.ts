@@ -54,7 +54,10 @@ const routes: Routes = [
       path: 'reInsuarnce',
         loadChildren: () => import('../re-insuarnce/re-insuarnce.module').then(mod => mod.ReInsuarnceModule)
         },
-      
+      {
+        path: 'itCorrection',
+        loadChildren: () => import('../it-correction/it-correction.module').then(mod => mod.ItCorrectionModule)
+      },
       { path : '' ,redirectTo: 'master', pathMatch: 'full' }
     ]}
 ];

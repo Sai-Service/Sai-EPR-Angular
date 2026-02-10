@@ -2569,7 +2569,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     this.progress = 0;
     this.dataDisplay = 'Order Save in progress....Do not refresh the Page';
     this.isDisabled = true;
-    var cusTaxcat = this.CounterSaleOrderBookingForm.get('taxCategoryName').value;
+    var cusTaxcat = this.CounterSaleOrderBookingForm.get('taxCategoryName')?.value;
     // alert(cusTaxcat)
     // debugger;
     if (cusTaxcat.includes('IGST') && this.state == 'MAHARASHTRA') {

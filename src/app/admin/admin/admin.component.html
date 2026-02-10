@@ -379,17 +379,11 @@
   
     </li>
   </div>
-
-
-
   <div [style.display]="isVisibleGL ? 'block' : 'none'">
     <!-- <li class="nav-item dropdown"> -->
   <li><a class="dropdown-item" [routerLink]="['/admin/transaction/glTrialBalance']">GL Trial Balance</a> </li>
     <!-- </li> -->
   </div>
-
-
-
   <div [style.display]="isVisibleMaster ? 'block' : 'none'">
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle " id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
@@ -417,6 +411,8 @@
                <li> <a class="dropdown-item" [routerLink]="['/admin/master/VariantMst']">Variant Master New</a> </li>
                 <li> <a class="dropdown-item" [routerLink]="['/admin/master/ReceivableTranstypeMaster']">Receivable Trans Type Master</a> </li>
                 <li> <a class="dropdown-item" [routerLink]="['/admin/master/CustomerRelationMaster']">Customer Relation Master</a> </li>
+                 <li> <a class="dropdown-item" [routerLink]="['/admin/master/ReceiptMethod']">Receipt Method Master</a> </li>
+             
               </ul>
             </li>
             <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Supplier Master</a>
@@ -564,6 +560,19 @@
       </ul>
     </li>
   </div>
+
+
+<li class="nav-item dropdown" *ngIf="showItCorrection">
+  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+    aria-haspopup="true" aria-expanded="false" >
+     IT Correction Form
+  </a>
+   <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+       <li>
+       <a class="dropdown-item" routerLink="/admin/itCorrection/itCorrectionForAll">It Correction Form</a>
+    </li>   
+  </ul>
+</li>
 
  <!-- PETROL PUMP SYSTEM -->
 
