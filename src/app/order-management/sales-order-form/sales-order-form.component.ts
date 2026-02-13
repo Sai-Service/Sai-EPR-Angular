@@ -1906,10 +1906,6 @@ updateCDMSDet(){
                     this.SalesOrderBookingForm.get('offerPrice')?.enable();
                     this.isVisiblemodelDetailsUpdate = false;
                   }
-
-
-
-
                   if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE') && this.lstgetOrderLineDetails[i].flowStatusCode === 'ALLOTED') {
                     this.displayLineflowStatusCodeVehicle[i] = true;
                     console.log(this.lineLevelOrderStatusVehicleList);
@@ -1917,7 +1913,6 @@ updateCDMSDet(){
                     console.log(lineLevelOrderStatusListVehicle);
                     this.lineLevelOrderStatusVehicleList = lineLevelOrderStatusListVehicle;
                   }
-
                   if (this.lstgetOrderLineDetails[i].invType.includes('VEHICLE') == false && this.lstgetOrderLineDetails[i].flowStatusCode != 'ALLOTED') {
                     this.displayLineflowStatusCodeVehicle[i] = false;
                     console.log(this.lineLevelOrderStatusList);
@@ -2129,18 +2124,15 @@ updateCDMSDet(){
                       this.SalesOrderBookingForm.patchValue({ financerName: selectColo.codeDesc })
                     }
                   );
-              }
-              
+              }          
               if (data.obj.orderStatus === 'CANCELLED' || data.obj.orderStatus === 'CLOSED') {
                 this.isVisible6 = false;
               }
-              if (data.obj.orderStatus === 'INVOICED') {
-                
+              if (data.obj.orderStatus === 'INVOICED') {             
                 if (Number(sessionStorage.getItem('deptId')) != 4) {
                   this.isVisible2 = true;
                 }
               }
-
               if (Number(sessionStorage.getItem('deptId')) == 4) {
                 if (data.obj.orderStatus != 'INVOICED' && data.obj.flowStatusCode != 'CANCELLED') {
                   this.isVisiblecancelledSalesOrder = true;
@@ -2163,9 +2155,6 @@ updateCDMSDet(){
                     }
                   );
               }
-              // if (data.obj.msRefNo != '') {
-              //   this.SalesOrderBookingForm.get('msRefNo')?.disable();
-              // }
               let control = this.SalesOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
               if (this.lstgetOrderLineDetails.length === 0 && this.lstgetOrderTaxDetails.length === 0) {
                 this.orderlineDetailsArray().push(this.orderlineDetailsGroup());
@@ -2360,7 +2349,6 @@ updateCDMSDet(){
               }
               this.TaxDetailsArray().clear()
               let control1 = this.SalesOrderBookingForm.get('taxAmounts') as FormArray;
-              // debugger;
               for (let x = 0; x < this.lstgetOrderTaxDetails.length; x++) {
                 var invLnNo = (this.lstgetOrderTaxDetails[x].invLineNo);
 
@@ -2446,6 +2434,14 @@ updateCDMSDet(){
 
                 this.salesRepName = data.obj.salesRepName;
               }
+              for (let k = 0; k < this.lstgetOrderLineDetails.length; k++) {
+                const vehicleLines = this.lstgetOrderLineDetails.filter((x:any) => x.invType === 'SS_VEHICLE'
+              && x.flowStatusCode==='INVOICED');
+              if (vehicleLines.length === 1) {
+                var invTypeList = this.categoryList.filter((x: any) => x.itemType !== 'SS_OTHER' );
+                this.categoryList=invTypeList;
+              }
+              }
               if (data.obj.transactionTypeName.includes('CSD')) {
                 this.isVisibleCSDDetails = true;
                 this.SalesOrderBookingForm.get('lesseeAccNo')?.disable();
@@ -2468,14 +2464,8 @@ updateCDMSDet(){
               var custPoDate1 = (data.obj.custPoDate)
               var custPoDateNew = this.pipe.transform(custPoDate1, 'y-MM-dd');
               this.SalesOrderBookingForm.patchValue({ custPoDate: custPoDateNew });
-              // this.SalesOrderBookingForm.get('custPoNumber').disable();
-              // this.SalesOrderBookingForm.get('msRefCustNo').disable();
-              // this.SalesOrderBookingForm.get('msRefNo').disable();
-              // this.SalesOrderBookingForm.get('msRefType').disable();
               for (let i = 0; i < this.lstgetOrderLineDetails.length; i++) {
-
                 if (this.lstgetOrderLineDetails[i].segment.includes('SUBSIDY') === true) {
-
                 }
               }
             }
@@ -3629,6 +3619,14 @@ updateCDMSDet(){
           return;
         }
       }
+    
+      const vehicleLines = orderLines.filter((x:any) => x.invType === 'SS_VEHICLE');
+if (vehicleLines.length > 1) {
+  alert('Two Vehicle Line Added. Please Co-Ordinate with IT Team');
+  this.dataDisplay = 'Two Vehicle Line Added. Please Co-Ordinate with IT Team !';
+  this.closeResetButton = true;
+  return;
+}
 
       if (orderLines[k].flowStatusCode === 'READY FOR INVOICE') {
         // alert(financeType+'---'+financerName)
