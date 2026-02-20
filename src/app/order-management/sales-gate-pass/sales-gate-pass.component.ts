@@ -381,10 +381,16 @@ export class SalesGatePassComponent implements OnInit {
 
     var customerId = this.lstcomments.customerId;
     var orderedDate2 = this.pipe.transform(regDate, 'MM/dd/yyyy');
-
+    // alert(orderedDate2)
+    alert(policyDate+'policyDate')
     const formValue = this.SalesGatepassForm.value;
-     formValue.insuDate=this.pipe.transform(policyDate,'yyyy-dd-mm');
-    // this.orderManagementService.vehicleNoupdateFn(itemId, regNo, orderedDate2,customerId).subscribe((res: any) => {
+   const rawDate = this.SalesGatepassForm.get('insuDate')?.value;
+
+if (rawDate) {
+  const [day, month, year] = rawDate.split('-');
+  const convertedDate = new Date(+year, +month - 1, +day);
+  formValue.insuDate = this.pipe.transform(convertedDate, 'yyyy-MM-dd');
+}
     this.orderManagementService.vehicleNoInsuranceupdateFn(formValue).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
