@@ -303,6 +303,7 @@ export class InternalConsumptionComponent implements OnInit {
        var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList')?.value; 
       var itemqty = trxLnArr1[i].physicalQty;
       var item1 = trxLnArr1[i].segment;
+      if(itemqty <=0) {alert ("Incomplete Record...") ;return}
       // alert(item1);
       if (item1 === '') {
         alert('Please enter Blank Data');
@@ -507,15 +508,37 @@ export class InternalConsumptionComponent implements OnInit {
       return;
     }
 
+    // alert ("event : "+event);
+    var rsnArr1 = this.InternalConsumptionForm.get('reason')?.value;
+    var rsnArr2 = rsnArr1.split('-');
+    var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList') as FormArray;
+
     let select1 = this.ItemIdList.find((d:any) => d.SEGMENT === event);
+
+        //  alert ("Select1 : "+event+","+select1.itemId +","+select1.DESCRIPTION +","+select1.attribute4);
+         
+         if (rsnArr2[2].includes('IC53') && select1.attribute4 !='RPW'   ) {
+            alert ("This part is not coming under Replacement Part Warranty List.");
+
+            trxLnArr1.controls[i].patchValue({ description: '' });
+            trxLnArr1.controls[i].patchValue({ uom: ''});
+            trxLnArr1.controls[i].patchValue({ subInventory: '' })
+            trxLnArr1.controls[i].patchValue({ locId: '' })
+            trxLnArr1.controls[i].patchValue({ attribute4: '' })
+            return;
+          }
+
+
     if (select1 != undefined) {
-      var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList') as FormArray;
+      // var trxLnArr1 = this.InternalConsumptionForm.get('cycleLinesList') as FormArray;
       var trxLnArr = this.InternalConsumptionForm.get('cycleLinesList')?.value;
       trxLnArr1.controls[i].patchValue({ invItemId: select1.itemId })
       var compId = this.InternalConsumptionForm.get('compileId')?.value;
       var compileType1 = this.InternalConsumptionForm.get('compileType')?.value;
       var subcode = this.InternalConsumptionForm.get('subInventory')?.value;
       this.displayheader = false;
+
+
       this.service.getItemDetail(select1.itemId).subscribe
         (data => {
           this.getItemDetail = data;
@@ -528,6 +551,7 @@ export class InternalConsumptionComponent implements OnInit {
             trxLnArr1.controls[i].patchValue({ locId: Number(sessionStorage.getItem('locId')) })
           }
         });
+
       var reasonArr1 = this.InternalConsumptionForm.get('reason')?.value;
       var valOp = this.InternalConsumptionForm.get('name')?.value;
       if (valOp != undefined) {
@@ -539,6 +563,7 @@ export class InternalConsumptionComponent implements OnInit {
 
         // alert(reasonArray[2]);
         // if(reasonArray[2]!=undefined){
+
         if (reasonArray[2].includes('OEM') && value1 == 'MRP') {
           this.service.getCostDetailforWarranty(Number(sessionStorage.getItem('locId')), select1.itemId).subscribe
             (data => {

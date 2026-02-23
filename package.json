@@ -25,7 +25,7 @@
     "date-fns": "^3.3.1",
     "file-saver": "^2.0.5",
     "jquery": "^3.7.1",
-    "moment": "^2.29.1",
+    "moment": "^2.30.1",
     "ng-sidebar": "^9.4.2",
     "ng2-charts": "^2.4.2",
     "ngx-daterange": "^1.0.43",
