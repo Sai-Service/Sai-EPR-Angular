@@ -2002,7 +2002,7 @@ export class PaintReportsComponent implements OnInit {
     }
 
     else if (reportName === 'Paint Opening Stock Report New') {
-      this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
+      // this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
 
       const fileName = 'Paint Opening Stock Report New-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
@@ -2027,7 +2027,7 @@ export class PaintReportsComponent implements OnInit {
     }
 
     else if (reportName === 'Paint Closing Stock Report New') {
-      this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
+      // this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
 
       const fileName = 'Paint Closing Stock Report New-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
@@ -2055,7 +2055,7 @@ export class PaintReportsComponent implements OnInit {
 
   fromToDateValidation(fDate, tDate) {
     this.rptValidation = true;
-
+debugger;
     if (fDate == null || fDate == undefined || fDate.trim() == '') { this.rptValidation = false; }
     if (tDate == null || tDate == undefined || tDate.trim() == '') { this.rptValidation = false; }
 
