@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ReactiveFormsModule } from '@angular/forms';
 import { ItCorrectionForAllComponent } from './it-correction-for-all.component';
 
 describe('ItCorrectionForAllComponent', () => {

@@ -4947,6 +4947,8 @@ UpdateVariantPrice(variantPriceRecord: any) {
     { headers: this.headers }
   );
 }
+
+
 }
 
 

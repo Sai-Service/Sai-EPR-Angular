@@ -13,23 +13,27 @@ import {  OnInit, ViewChild } from '@angular/core';
 })
 export class ReceiptMethodComponent implements OnInit {
  receiptForm: FormGroup;
-  locId?: number;
-  ouId?: number;
-  createdBy?:number;
-  public CostCenterList:any=[];
-  public NaturalAccountList: any=[];
-  public MethodTypeList: any=[];
-  methodList: any[] = [];
-  method: any[]=[];
+  searchForm: FormGroup;
+  locId: number;
+  ouId: number;
+  createdBy:number;
+  public CostCenterList:any[];
+  public NaturalAccountList: any[];
+  public MethodTypeList: any[];
+  // methodList: any[] = [];
+  methodNameList: any[] = [];
+
+  methods: any[]=[];
   suggestions: string[] = [];
   methodTypeSearch = '';
   methodSearch = '';
   isEditMode = false;
+  isSave = true;
   selectedReceiptMethodId: number | null = null;
-  public BankNameList:any=[];
-  customerId?: number;
+  public BankNameList:any[];
+  customerId: number;
   lastSearchedMethodType!: string;
-
+  todayDate: string = '';
 
 
   
@@ -42,8 +46,8 @@ export class ReceiptMethodComponent implements OnInit {
     this.receiptForm = this.fb.group({
       methodName: ['',Validators.required],
       methodType: ['',Validators.required],
-      methodTypeSearch: [''],
-      methodSearch: [''],
+      // methodTypeSearch: [''],
+      // methodSearch: [''],
       costCentre: ['',Validators.required],
       receiptclassCode: [''],
       Status: ['ACTIVE',Validators.required],
@@ -64,7 +68,13 @@ export class ReceiptMethodComponent implements OnInit {
       ouId:[],
       createdBy:[]
     });
+
+     this.searchForm = this.fb.group({
+       methodTypeSearch: [''],
+      methodSearch: [''],
+     })
   }
+  
 
       ngOnInit(): void {
 
@@ -72,9 +82,10 @@ export class ReceiptMethodComponent implements OnInit {
     this.ouId = Number(sessionStorage.getItem('ouId'));
     this.createdBy = Number(sessionStorage.getItem('emplId'));
 
-    const today = new Date().toISOString().substring(0,10)
+    const today = new Date();
+    this.todayDate = today.toISOString().split('T')[0];
     this.receiptForm.patchValue({
-      startDate: today
+      startDate: this.todayDate
     })
 
       this.receiptForm.get('bankMethod')?.valueChanges.subscribe(value => {
@@ -132,9 +143,29 @@ export class ReceiptMethodComponent implements OnInit {
         }
       );
 
+      this.searchForm.get('methodSearch')?.valueChanges.subscribe(type => {
+  if (!type) {
+    this.methodNameList = [];
+    this.searchForm.get('methodTypeSearch')?.reset();
+    return;
+  }
+
+  this.loadMethodNames(type);
+});
+
 
 }
 
+loadMethodNames(type: string) {
+  this.service.MethodtypeSearch(type).subscribe({
+    next: (res: any) => {
+      this.methodNameList = res?.obj || [];
+    },
+    error: () => {
+      this.methodNameList = [];
+    }
+  });
+}
 
 
 
@@ -187,6 +218,34 @@ selectSuggestion(name: string) {
 
 
 
+// searchMethod() {
+//   const methodName = this.receiptForm.get('methodTypeSearch')?.value?.trim();
+
+//   if (!methodName) {
+//     alert('Please enter Method Name');
+//     return;
+//   }
+
+//   this.service.Methodtype(methodName).subscribe({
+//     next: (res: any) => {
+//       console.log('FULL RESPONSE:', res);
+
+//       if (res?.code !== 200 || !res?.obj) {
+//         this.methodList = [];
+//         alert(res?.message || 'No data found');
+//         return;
+//       }
+
+      
+//       this.methodList = [res.obj];
+//     },
+//     error: (err) => {
+//       console.error('HTTP error', err);
+//       alert('Server error occurred');
+//     }
+//   });
+// }
+
 searchMethod() {
   const methodName = this.receiptForm.get('methodTypeSearch')?.value?.trim();
 
@@ -195,27 +254,51 @@ searchMethod() {
     return;
   }
 
+  this.methods = []; // clear old data
+
   this.service.Methodtype(methodName).subscribe({
     next: (res: any) => {
-      console.log('FULL RESPONSE:', res);
-
-      if (res?.code !== 200 || !res?.obj) {
-        this.methodList = [];
+      if (res?.code === 200 && res?.obj) {
+        this.methods = [res.obj]; // single row
+      } else {
+        this.methods = [];
         alert(res?.message || 'No data found');
-        return;
       }
-
-      
-      this.methodList = [res.obj];
-    },
-    error: (err) => {
-      console.error('HTTP error', err);
-      alert('Server error occurred');
     }
   });
 }
 
 
+
+
+// searchMethodType() {
+//   const methodType = this.receiptForm.get('methodSearch')?.value?.trim();
+
+//   if (!methodType) {
+//     alert('Please enter Method Type');
+//     return;
+//   }
+
+//   this.lastSearchedMethodType = methodType;
+
+//   this.service.MethodtypeSearch(methodType).subscribe({
+//     next: (res: any) => {
+//       console.log('FULL RESPONSE:', res);
+
+//       if (res?.code === 200 && Array.isArray(res.obj)) {
+//         this.method = res.obj;   
+//       } else {
+//         this.method = [];
+//         alert(res?.message || 'No data found');
+//       }
+//     },
+//     error: (err) => {
+//       console.error('HTTP error', err);
+//       alert('Server error occurred');
+//       this.method = [];
+//     }
+//   });
+// }
 
 searchMethodType() {
   const methodType = this.receiptForm.get('methodSearch')?.value?.trim();
@@ -225,26 +308,60 @@ searchMethodType() {
     return;
   }
 
-  this.lastSearchedMethodType = methodType;
+  this.methods = []; // clear old data
 
   this.service.MethodtypeSearch(methodType).subscribe({
     next: (res: any) => {
-      console.log('FULL RESPONSE:', res);
-
       if (res?.code === 200 && Array.isArray(res.obj)) {
-        this.method = res.obj;   
+        this.methods = res.obj; // multiple rows
       } else {
-        this.method = [];
+        this.methods = [];
         alert(res?.message || 'No data found');
       }
-    },
-    error: (err) => {
-      console.error('HTTP error', err);
-      alert('Server error occurred');
-      this.method = [];
     }
   });
 }
+
+search() {
+  const methodType = this.searchForm.get('methodSearch')?.value?.trim();
+  const methodName = this.searchForm.get('methodTypeSearch')?.value?.trim();
+
+  this.methods = [];
+
+  // BOTH → exact match filter
+  if (methodType && methodName) {
+    this.service.MethodtypeSearch(methodType).subscribe(res => {
+      const list = res?.obj || [];
+
+      this.methods = list.filter((x: any) =>
+        x.methodName?.toLowerCase().trim() === methodName.toLowerCase().trim()
+      );
+    });
+    return;
+  }
+
+  // ONLY TYPE
+  if (methodType) {
+    this.service.MethodtypeSearch(methodType).subscribe(res => {
+      this.methods = res?.obj || [];
+    });
+    return;
+  }
+
+  // ONLY NAME
+  if (methodName) {
+    this.service.Methodtype(methodName).subscribe(res => {
+      this.methods = res?.obj ? [res.obj] : [];
+    });
+    return;
+  }
+
+  alert('Enter Method Type or Method Name');
+}
+
+
+
+
 
 refreshTableAfterUpdate() {
   if (!this.lastSearchedMethodType) return;
@@ -252,7 +369,7 @@ refreshTableAfterUpdate() {
   this.service.MethodtypeSearch(this.lastSearchedMethodType).subscribe({
     next: (res: any) => {
       if (res?.code === 200) {
-        this.method = [...res.obj]; 
+        this.methods = [...res.obj]; 
       }
     }
   });
@@ -267,29 +384,32 @@ refreshTableAfterUpdate() {
     
   if (this.receiptForm.invalid) {
     this.receiptForm.markAllAsTouched();
+    console.log(this.receiptForm.controls); 
+    Object.keys(this.receiptForm.controls).forEach(key => {
+  if (this.receiptForm.get(key)?.invalid) console.log(key);
+});
+
     alert( 'Enter Required Fields'); 
     return; 
   }
 
-  this.isEditMode = false;
-
     const payload = {
-      methodName: this.receiptForm.value.methodName,
-      methodType: this.receiptForm.value.methodType,
-      costCenter: this.receiptForm.value.costCentre,
-      receiptClassCode: this.receiptForm.value.receiptclassCode,
-      status: this.receiptForm.value.Status,
-      startDate: this.receiptForm.value.startDate,
-      postToGl: this.receiptForm.value.posttoGl,
+      methodName: this.receiptForm.getRawValue().methodName,
+      methodType: this.receiptForm.getRawValue().methodType,
+      costCenter: this.receiptForm.getRawValue().costCentre,
+      receiptClassCode: this.receiptForm.getRawValue().receiptclassCode,
+      status: this.receiptForm.getRawValue().Status,
+      startDate: this.receiptForm.getRawValue().startDate,
+      postToGl: this.receiptForm.getRawValue().posttoGl,
 
-      earnedCcid: this.receiptForm.value.earnedccId,
-      unEarnedCcid:this.receiptForm.value.unearnedccId,
-      onAccountCcid: this.receiptForm.value.onaccountccId,
-      receiptClearingCcid: this.receiptForm.value.receiptclearingccId,
-      remittanceCcid: this.receiptForm.value.remittanceccId,
-      unIdentifiedCcid: this.receiptForm.value.unidentifiedccId,
-      unappliedCcid: this.receiptForm.value.unappliedccId,
-      refundCcid: this.receiptForm.value.refundccId,
+      earnedCcid: this.receiptForm.getRawValue().earnedccId,
+      unEarnedCcid:this.receiptForm.getRawValue().unearnedccId,
+      onAccountCcid: this.receiptForm.getRawValue().onaccountccId,
+      receiptClearingCcid: this.receiptForm.getRawValue().receiptclearingccId,
+      remittanceCcid: this.receiptForm.getRawValue().remittanceccId,
+      unIdentifiedCcid: this.receiptForm.getRawValue().unidentifiedccId,
+      unappliedCcid: this.receiptForm.getRawValue().unappliedccId,
+      refundCcid: this.receiptForm.getRawValue().refundccId,
 
       // backend fixed fields
       createdBy: this.createdBy,
@@ -299,16 +419,26 @@ refreshTableAfterUpdate() {
       orgId: this.ouId,
      // bankAccountId: null,
       endDate: null,
-      bankMethodYn: this.receiptForm.value.bankMethod,
-      bankAccountId:this.receiptForm.value.bankAccName
+      bankMethodYn: this.receiptForm.getRawValue().bankMethod,
+      bankAccountId:this.receiptForm.getRawValue().bankAccName
     };
-
+      //this.isEditMode = true;
     this.service.saveReceiptMethod(payload).subscribe(
       (res: any) => {
         console.log(res);
         alert(res.message || 'Saved Successfully');
         this.isEditMode = true;
-        this.receiptForm.reset();
+        this.isSave = false;
+       this.receiptForm.reset({
+  Status: 'ACTIVE',
+  startDate: new Date().toISOString().substring(0,10),
+  bankMethod: '',
+  
+});
+      this.receiptForm.enable();
+      this.isEditMode = false;
+      this.isSave = true;
+
       },
       err => {
         console.error(err);
@@ -321,11 +451,14 @@ refreshTableAfterUpdate() {
   selectMethod(m: any) {
 
      this.selectedReceiptMethodId = m.receiptMethodId;
+     const status = (m.status || '').toString().toUpperCase();
   this.isEditMode = true;
+  this.isSave = false;
   this.receiptForm.patchValue({
     methodType: m.methodType,
     methodName: m.methodName,
     Status: m.status,
+
 
     startDate: m.startDate,
     endDate: m.endDate,
@@ -350,6 +483,9 @@ onaccountccId: m.onAccountCcid?.toString(),
 
   // Optional: hide search results after selection
   // this.methodList = [];
+  this.receiptForm.get('Status')?.setValue(
+  (m.status || '').toString().toUpperCase());
+  this.receiptForm.get('bankAccName')?.setValue(m.bankAccountId);
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
   this.disableFieldsAfterSelect();
@@ -416,13 +552,15 @@ update() {
 
       // reset to Save mode
       this.isEditMode = false;
+      this.isSave = true;
       this.selectedReceiptMethodId = null;
       this.receiptForm.reset();
+      this.searchForm.reset();
       this.receiptForm.enable(); 
       this.refreshTableAfterUpdate();
       // this.searchMethod();
       // this.searchMethodType();
-      this.methodList = [];
+      this.methods = [];
     },
     error: () => {
       alert('Update failed');
@@ -436,6 +574,7 @@ update() {
 
   clear() {
     this.receiptForm.reset();
+    this.searchForm.reset();
       this.isEditMode = false;
   this.selectedReceiptMethodId = null;
   }

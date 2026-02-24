@@ -8,16 +8,17 @@ import { ItCorrectionService } from '../it-correction.service';
 @Component({
   selector: 'app-it-correction-for-all',
   templateUrl: './it-correction-for-all.component.html',
-  styleUrls: ['./it-correction-for-all.component.css']
+  styleUrls: ['./it-correction-for-all.component.css'],
+  
 })
 export class ItCorrectionForAllComponent implements OnInit {
-itCorrectionForm!: FormGroup;
+itCorrectionForm: FormGroup;
 
   ticketNo!: string;
   issueTypeLovList: any[] = [];
   referenceTypeLovList: any[] = [];
   customerNameSearch: any[] = [];
-  custName?: string;
+  custName: string;
   selectedIssueType: string | null = null;
 
   showAccountsApproval = false;
