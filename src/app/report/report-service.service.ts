@@ -133,7 +133,7 @@ export class ReportServiceService {
 
     ReconcillationReportPaint(dt1,dt2,locId,ouId){
     // alert(locId+'-----'+fromlocId)
-    const REQUEST_URI = this.ServerUrl +`/PaintReports/PnMonthlyDtlsRep?fromDate=${dt1}&toDate=${dt2}&ouId=${ouId}&locId=${locId}`;
+    const REQUEST_URI = this.ServerUrl +`/PaintReports/PnMonthlyDtlsRep?fromDate=${dt1}&toDate=${dt2}&ouId=${ouId}&locId=`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,

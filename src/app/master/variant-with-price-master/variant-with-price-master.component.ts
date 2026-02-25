@@ -16,7 +16,7 @@ import { data } from 'jquery';
   styleUrls: ['./variant-with-price-master.component.css']
 })
 export class VariantWithPriceMasterComponent implements OnInit {
- variantMasterForm: FormGroup;
+  variantMasterForm: FormGroup;
   orgId!: number;
   ouId!: number;
   deptId!: number;
@@ -72,6 +72,8 @@ export class VariantWithPriceMasterComponent implements OnInit {
   colorListNew: any = [];
   varianListNew: any = [];
   colorCode!: string;
+  attribute1!: number;
+  attribute2!: number;
 
   constructor(private service: MasterService, private fb: FormBuilder, private router: Router) {
     this.variantMasterForm = fb.group({
@@ -116,7 +118,9 @@ export class VariantWithPriceMasterComponent implements OnInit {
       mainModel1: [],
       variant1: [],
       colorCode: [],
-      locId: []
+      locId: [],
+      attribute1: [],
+      attribute2: []
     })
   }
 
@@ -299,7 +303,7 @@ export class VariantWithPriceMasterComponent implements OnInit {
     this.variantMasterForm.patchValue({
       variantId: selectedVariant.variantId,
       vardescription: selectedVariant.variantDesc
-    }); 
+    });
 
     this.service.colorListFn(selectedVariant.variantId).subscribe(res => {
       this.colorListNew = res.obj;

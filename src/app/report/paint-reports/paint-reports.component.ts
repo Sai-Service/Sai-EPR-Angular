@@ -2055,7 +2055,7 @@ export class PaintReportsComponent implements OnInit {
 
   fromToDateValidation(fDate, tDate) {
     this.rptValidation = true;
-debugger;
+// debugger;
     if (fDate == null || fDate == undefined || fDate.trim() == '') { this.rptValidation = false; }
     if (tDate == null || tDate == undefined || tDate.trim() == '') { this.rptValidation = false; }
 

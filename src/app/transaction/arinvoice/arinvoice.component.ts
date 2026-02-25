@@ -915,22 +915,16 @@ export class ARInvoiceComponent implements OnInit {
       .subscribe(
         data => {
           if (data.code === 200) {
-
             this.lstcomments = data.obj;
-
             alert("data.obj.status >> " + data.obj.status);
-
             if (data.obj.status == 'CLOSE') { this.showApplyButton = false; } else { this.showApplyButton = true; }
-
             this.orderManagementService.accountNoSearchFn(data.obj.billToCustNo, this.ouId, this.divisionId)
 
               .subscribe(
                 data1 => {
                   this.accountNoSearch = data1.obj[0];
                   this.accountNoSite = data1.obj;
-
                   console.log(data1.obj);
-
                   console.log(this.accountNoSearch);
                   let selectedValue = this.paymentTermList.find(v => v.lookupValue === this.accountNoSearch.paymentType);
                   this.arInvoiceForm.patchValue({
@@ -965,26 +959,19 @@ export class ARInvoiceComponent implements OnInit {
                   for (let i = 0; i < data.obj.invLines.length - len; i++) {
                     var invLnGrp: FormGroup = this.lineDetailsGroup();
                     this.lineDetailsArray.push(invLnGrp);
-
                     var patch = this.arInvoiceForm.get('invLines') as FormArray;
-
-
                   }
                   for (let i = 0; i < data.obj.invDisLines.length; i++) {
                     var invLnGrp: FormGroup = this.distLineDetails();
                     this.lineDistributionArray().push(invLnGrp);
                   }
-
                   for (let i = 0; i < data.obj.taxLines.length; i++) {
                     var invLnGrp: FormGroup = this.TaxDetailsGroup();
                     this.TaxDetailsArray().push(invLnGrp);
                   }
-                  this.arInvoiceForm.get('taxLines').patchValue(data.obj.taxLines);
-
+                  this.arInvoiceForm.get('taxLines')?.patchValue(data.obj.taxLines);
                   var arinvLnDtlArray = this.arInvoiceForm.get('invDisLines') as FormArray;
-
                   this.arInvoiceForm.patchValue(data.obj);
-
                   this.glDate = data.obj.glDate;
                   this.invoiceDate = data.obj.invoiceDate;
                   if (Number(sessionStorage.getItem('deptId')) == 4) {
@@ -998,11 +985,9 @@ export class ARInvoiceComponent implements OnInit {
                       data1 => {
                         this.invTypeList = data1;
                         console.log(this.invTypeList);
-
                         var seltrxtyp = this.invTypeList.find(d => d.name == data.obj.invType)
                         console.log(seltrxtyp);
                         this.arInvoiceForm.patchValue({ custTrxTypeId: seltrxtyp.custTrxTypeId });
-
                       });
                   }
                   else {
@@ -1033,9 +1018,14 @@ export class ARInvoiceComponent implements OnInit {
                   if (data.obj.class == 'Credit Memo') {
                     this.isVisibleApply = true;
                   }
-                  if (data.obj.status == 'Closed') {
-                    this.isVisibleApply = true;
+                  
+                  if (data.obj.status == 'Closed' ) {
+                    this.isVisibleApply = false;
                     this.disabledComplete = false;
+                    this.arInvoiceForm.disable();
+                  }
+                  if (data.obj.status == 'CLOSE'){
+                     this.isVisibleApply = false;
                     this.arInvoiceForm.disable();
                   }
                   if (data.obj.invStatus == 'InComplete') {
@@ -1074,8 +1064,8 @@ export class ARInvoiceComponent implements OnInit {
                   }
 
                 });
-            alert(data.obj.class)
-            if (data.obj.class === 'Credit Memo') {
+            // alert(data.obj.class)
+            if (data.obj.class === 'Credit Memo' && data.obj.status != 'CLOSE') {
               this.showApplyButton = true;
             }
             else {
