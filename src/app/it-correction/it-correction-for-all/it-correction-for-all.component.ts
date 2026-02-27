@@ -12,13 +12,14 @@ import { ItCorrectionService } from '../it-correction.service';
   
 })
 export class ItCorrectionForAllComponent implements OnInit {
-itCorrectionForm: FormGroup;
+
+  itCorrectionForm!: FormGroup;
 
   ticketNo!: string;
   issueTypeLovList: any[] = [];
   referenceTypeLovList: any[] = [];
   customerNameSearch: any[] = [];
-  custName: string;
+  custName!: string;
   selectedIssueType: string | null = null;
 
   showAccountsApproval = false;
@@ -27,6 +28,8 @@ itCorrectionForm: FormGroup;
   irnGenerated = false;
   approverNameLovList: any[] = [];
 
+  titleLovList: any[] = [];
+
   stateGstCodeMap: any = {
     'MAHARASHTRA': '27',
     'GOA': '30',
@@ -34,7 +37,7 @@ itCorrectionForm: FormGroup;
     'GUJARAT': '24',
     'DELHI': '07',
     'TAMIL NADU': '33'
-  };  
+  };
 
   constructor(
     private fb: FormBuilder,
@@ -49,6 +52,42 @@ itCorrectionForm: FormGroup;
 
     this.itCorrectionForm.get('issueType')?.valueChanges.subscribe(val => {
       this.selectedIssueType = val;
+
+      const firstNameCtrl = this.itCorrectionForm.get('newFirstName');
+      const middleNameCtrl = this.itCorrectionForm.get('newMiddleName');
+      const lastNameCtrl = this.itCorrectionForm.get('newLastName');
+
+      if (val === 'Name Correction') {
+
+        firstNameCtrl?.setValidators([
+          Validators.required,
+          Validators.maxLength(12),
+          Validators.pattern(/^[A-Za-z ]+$/)
+        ]);
+
+        lastNameCtrl?.setValidators([
+          Validators.required,
+          Validators.maxLength(12),
+          Validators.pattern(/^[A-Za-z ]+$/)
+        ]);
+
+        middleNameCtrl?.setValidators([
+          Validators.maxLength(12),
+          Validators.pattern(/^[A-Za-z ]+$/)
+        ]);
+
+      } else {
+
+        firstNameCtrl?.clearValidators();
+        middleNameCtrl?.clearValidators();
+        lastNameCtrl?.clearValidators();
+
+      }
+
+      firstNameCtrl?.updateValueAndValidity();
+      middleNameCtrl?.updateValueAndValidity();
+      lastNameCtrl?.updateValueAndValidity();
+
 
       // this.service.getReferenceTypes().subscribe({
       //   next: (res: { code: number; obj: any[]; message: any; }) => {
@@ -75,7 +114,7 @@ itCorrectionForm: FormGroup;
             alert('Reference Type API failed');
           }
         });
-      }      
+      }
 
       if (val === 'GST Updation' || val === 'PAN No Updation') {
         this.showAccountsApproval = true;
@@ -127,6 +166,17 @@ itCorrectionForm: FormGroup;
       }
     });
 
+    this.service.getTitleLov().subscribe({
+      next: (res: any) => {
+
+        console.log('Title LOV Response:', res);
+        this.titleLovList = res.filter((x: any) => x.status === 'Active');
+      },
+      error: () => {
+        alert('Title LOV API failed');
+      }
+    });
+
   }
 
   createForm() {
@@ -162,6 +212,9 @@ itCorrectionForm: FormGroup;
       newFirstName: [null],
       newMiddleName: [null],
       newLastName: [null],
+      // newFirstName: [null,[Validators.required, Validators.maxLength(12), Validators.pattern(/^[A-Za-z ]+$/)]],
+      // newMiddleName: [null,[Validators.maxLength(12), Validators.pattern(/^[A-Za-z ]+$/)]],
+      // newLastName: [ null, [Validators.required, Validators.maxLength(12), Validators.pattern(/^[A-Za-z ]+$/)]],
       newAddress1: [null],
       newAddress2: [null],
       newAddress3: [null],
@@ -170,8 +223,10 @@ itCorrectionForm: FormGroup;
       newState: [null],
       newPinCode: [null],
       newMobileNo: [null],
+      // ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
       newEmailId: [null],
-      newPanNo: [null, [ Validators.pattern(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/) ]],
+      newPanNo: [null],
+      // , [Validators.pattern(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/)]
       newGstNo: [null],
       newDiscountPercent: [null],
       newCustomerName: [null],
@@ -273,58 +328,58 @@ itCorrectionForm: FormGroup;
 
   searchByAccount1() {
     const accountNo = this.itCorrectionForm.get('customerAccNo')?.value;
-  
+
     if (!accountNo) {
       alert('Please enter Customer Account Number');
       return;
     }
-  
+
     this.service.searchCustomerByAccount(accountNo).subscribe({
       next: (res: any) => {
-  
+
         if (res.code === 200 && res.obj) {
-  
+
           const o = res.obj;
           this.customerNameSearch = o.customerSiteMasterList.map((site: any) => ({
             customerId: o.customerId,
             customerAccNo: o.custAccountNo,
             customerSiteId: site.customerSiteId,
-          
+
             newCustomerName: o.custName,
             customerType: o.custType,
-          
+
             newTitle: o.title,
             newFirstName: o.fName,
             newMiddleName: o.mName,
             newLastName: o.lName,
-          
+
             saddress1: site.address1,
             saddress2: site.address2,
             saddress3: site.address3,
             newAddress4: o.address4,
-          
+
             scity: site.city,
             sstate: site.state,
             spinCd: site.pinCd,
-          
+
             newGstNo: site.gstNo,
             newPanNo: site.panNo,
             smobile1: site.mobile1,
             semailId: site.emailId,
-          
+
             discountPercent: site.disPer,
-            siteName: site.siteName 
-          }));  
+            siteName: site.siteName
+          }));
         } else {
           alert('Customer not found');
         }
-  
+
       },
       error: () => {
         alert('Search by Account API failed');
       }
     });
-  }  
+  }
 
   searchBySalesOrder() {
     const orderNo = this.itCorrectionForm.get('soNumber')?.value;
@@ -410,6 +465,17 @@ itCorrectionForm: FormGroup;
   }
 
   confirmUpdate() {
+
+    if (this.selectedIssueType === 'Address Correction') {
+
+      const f = this.itCorrectionForm.value;
+
+      if (!f.newAddress1 || !f.newAddress2 || !f.newCity || !f.newState || !f.newPinCode) {
+        alert('Please fill Address1, Address2, City, State and Pin Code before updating');
+        return;
+      }
+    }
+
     if (this.itCorrectionForm.invalid) {
       alert('Please fill required fields');
       return;
@@ -420,21 +486,21 @@ itCorrectionForm: FormGroup;
 
   searchByJobCard() {
     const jobCardNo = this.itCorrectionForm.get('jobCardNo')?.value;
-  
+
     if (!jobCardNo) {
       alert('Please enter Job Card Number');
       return;
     }
-  
+
     this.service.getDetailsByJobCardNo(jobCardNo).subscribe({
       next: (res: any) => {
-  
+
         console.log('Job Card API response:', res);
-  
+
         if (res.code === 200 && res.obj && res.obj.length > 0) {
-  
+
           const jc = res.obj[0];
-  
+
           this.itCorrectionForm.patchValue({
 
             customerId: jc.CUSTOMERID,
@@ -465,9 +531,9 @@ itCorrectionForm: FormGroup;
 
           this.syncCustomerToCorrection();
           this.applyGstValidationByState();
-  
+
           alert('Job Card details fetched successfully');
-  
+
         } else {
           alert(res.message);
         }
@@ -477,28 +543,28 @@ itCorrectionForm: FormGroup;
       }
     });
   }
-   
+
 
   searchByVehicleNo() {
     let vehicleNo = this.itCorrectionForm.get('vehicleNo')?.value;
-  
+
     if (!vehicleNo) {
       alert('Please enter Vehicle Number');
       return;
     }
-  
+
     vehicleNo = vehicleNo.toUpperCase();
     this.itCorrectionForm.get('vehicleNo')?.setValue(vehicleNo);
-  
+
     this.service.getDetailsByVehicleNo(vehicleNo).subscribe({
       next: (res: any) => {
-  
+
         console.log('Vehicle API response:', res);
-  
+
         if (res.code === 200 && res.obj && res.obj.length > 0) {
-  
+
           const v = res.obj[0];
-  
+
           this.itCorrectionForm.patchValue({
 
             customerId: v.CUSTOMERID,
@@ -527,12 +593,12 @@ itCorrectionForm: FormGroup;
             engineNo: v.ENGINENO,
             model: v.MAINMODEL
           });
-  
+
           this.syncCustomerToCorrection();
           this.applyGstValidationByState();
 
           alert('Vehicle details fetched successfully');
-  
+
         } else {
           alert('Vehicle details not found');
         }
@@ -541,151 +607,178 @@ itCorrectionForm: FormGroup;
         alert('Vehicle search API failed');
       }
     });
-  }   
-  
-syncCustomerToCorrection() {
-  const f = this.itCorrectionForm;
-  const issue = this.selectedIssueType;
+  }
 
-  if (!issue) return;
+  syncCustomerToCorrection() {
+    const f = this.itCorrectionForm;
+    const issue = this.selectedIssueType;
 
-  const customerType = f.get('customerType')?.value;
+    if (!issue) return;
 
-  switch (issue) {
-    case 'Name Correction':
-      f.patchValue({
-        newCustomerName: f.get('customerName')?.value
-      });
+    const customerType = f.get('customerType')?.value;
 
-      if (customerType === 'Person') {
+    switch (issue) {
+      case 'Name Correction':
         f.patchValue({
-          newTitle: f.get('title')?.value,
-          newFirstName: f.get('firstName')?.value,
-          newMiddleName: f.get('middleName')?.value,
-          newLastName: f.get('lastName')?.value
+          newCustomerName: f.get('customerName')?.value
         });
-      } else {
+
+        if (customerType === 'Person') {
+          f.patchValue({
+            newTitle: f.get('title')?.value,
+            newFirstName: f.get('firstName')?.value,
+            newMiddleName: f.get('middleName')?.value,
+            newLastName: f.get('lastName')?.value
+          });
+        } else {
+          f.patchValue({
+            newTitle: null,
+            newFirstName: null,
+            newMiddleName: null,
+            newLastName: null
+          });
+        }
+        break;
+
+      case 'Address Correction':
         f.patchValue({
-          newTitle: null,
-          newFirstName: null,
-          newMiddleName: null,
-          newLastName: null
+          newAddress1: f.get('address1')?.value,
+          newAddress2: f.get('address2')?.value,
+          newAddress3: f.get('address3')?.value,
+          newAddress4: f.get('address4')?.value,
+          newCity: f.get('city')?.value,
+          newState: f.get('state')?.value,
+          newPinCode: f.get('pinCode')?.value
         });
+        break;
+
+      case 'Mobile No Updation':
+        f.patchValue({
+          newMobileNo: f.get('mobile1')?.value
+        });
+        break;
+
+      case 'Email Id Updation':
+        f.patchValue({
+          newEmailId: f.get('email1')?.value
+        });
+        break;
+
+      case 'PAN No Updation':
+        f.patchValue({
+          newPanNo: f.get('panNo')?.value
+        });
+        break;
+
+      case 'GST Updation':
+        f.patchValue({
+          newGstNo: f.get('gstNo')?.value
+        });
+
+        f.get('newGstNo')?.markAsTouched();
+        f.get('newGstNo')?.updateValueAndValidity();
+
+        break;
+
+      case 'Discount Percent Change':
+        f.patchValue({
+          newDiscountPercent: f.get('discountPercent')?.value
+        });
+        break;
+
+      case 'Vehicle No Updation':
+        f.patchValue({
+          newVehicleNo: f.get('vehicleNo')?.value
+        });
+        break;
+
+      case 'Job Card Reopen':
+        f.patchValue({
+          newJobCardStatus: f.get('jobCardStatus')?.value
+        });
+        break;
+    }
+  }
+
+  gstStateValidator(expectedStateCode: string) {
+    return (control: any) => {
+
+      if (!control.value) return null;
+
+      const gst = control.value.toUpperCase();
+
+      const gstRegex =
+        /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
+
+      if (!gstRegex.test(gst)) {
+        return { invalidGSTFormat: true };
       }
-      break;
 
-    case 'Address Correction':
-      f.patchValue({
-        newAddress1: f.get('address1')?.value,
-        newAddress2: f.get('address2')?.value,
-        newAddress3: f.get('address3')?.value,
-        newAddress4: f.get('address4')?.value,
-        newCity: f.get('city')?.value,
-        newState: f.get('state')?.value,
-        newPinCode: f.get('pinCode')?.value
-      });
-      break;
+      const gstStateCode = gst.substring(0, 2);
 
-    case 'Mobile No Updation':
-      f.patchValue({
-        newMobileNo: f.get('mobile1')?.value
-      });
-      break;
+      if (gstStateCode !== expectedStateCode) {
+        return { gstStateMismatch: true };
+      }
 
-    case 'Email Id Updation':
-      f.patchValue({
-        newEmailId: f.get('email1')?.value
-      });
-      break;
-
-    case 'PAN No Updation':
-      f.patchValue({
-        newPanNo: f.get('panNo')?.value
-      });
-      break;
-
-    case 'GST Updation':
-      f.patchValue({
-        newGstNo: f.get('gstNo')?.value
-      });
-
-      f.get('newGstNo')?.markAsTouched();
-      f.get('newGstNo')?.updateValueAndValidity();
-
-      break;
-
-    case 'Discount Percent Change':
-      f.patchValue({
-        newDiscountPercent: f.get('discountPercent')?.value
-      });
-      break;
-
-    case 'Vehicle No Updation':
-      f.patchValue({
-        newVehicleNo: f.get('vehicleNo')?.value
-      });
-      break;
-
-    case 'Job Card Reopen':
-      f.patchValue({
-        newJobCardStatus: f.get('jobCardStatus')?.value
-      });
-      break;
-  }
-}  
-
-gstStateValidator(expectedStateCode: string) {
-  return (control: any) => {
-
-    if (!control.value) return null;
-
-    const gst = control.value.toUpperCase();
-
-    const gstRegex =
-      /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
-
-    if (!gstRegex.test(gst)) {
-      return { invalidGSTFormat: true };
-    }
-
-    const gstStateCode = gst.substring(0, 2);
-
-    if (gstStateCode !== expectedStateCode) {
-      return { gstStateMismatch: true };
-    }
-
-    return null;
-  };
-}
-
-applyGstValidationByState() {
-
-  if (this.selectedIssueType !== 'GST Updation') {
-    this.itCorrectionForm.get('newGstNo')?.clearValidators();
-    this.itCorrectionForm.get('newGstNo')?.updateValueAndValidity();
-    return;
+      return null;
+    };
   }
 
-  const state = this.itCorrectionForm.get('state')?.value?.toString().trim();
-  if (!state) return;
+  applyGstValidationByState() {
 
-  const stateCode = this.stateGstCodeMap[state.toUpperCase()];
-  if (!stateCode) return;
+    if (this.selectedIssueType !== 'GST Updation') {
+      this.itCorrectionForm.get('newGstNo')?.clearValidators();
+      this.itCorrectionForm.get('newGstNo')?.updateValueAndValidity();
+      return;
+    }
 
-  const gstCtrl = this.itCorrectionForm.get('newGstNo');
+    const state = this.itCorrectionForm.get('state')?.value?.toString().trim();
+    if (!state) return;
 
-  gstCtrl?.setValidators([
-    this.gstStateValidator(stateCode)
-  ]);
+    const stateCode = this.stateGstCodeMap[state.toUpperCase()];
+    if (!stateCode) return;
 
-  gstCtrl?.updateValueAndValidity();
-}
+    const gstCtrl = this.itCorrectionForm.get('newGstNo');
 
-isStateReadonlyForAddressCorrection(): boolean {
-  return (
-    this.selectedIssueType === 'Address Correction' &&
-    this.orderStatus === 'INVOICED'
-  );
-}
+    gstCtrl?.setValidators([
+      this.gstStateValidator(stateCode)
+    ]);
 
+    gstCtrl?.updateValueAndValidity();
+  }
+
+  isStateReadonlyForAddressCorrection(): boolean {
+    return (
+      this.selectedIssueType === 'Address Correction' &&
+      this.orderStatus === 'INVOICED'
+    );
+  }
+
+  validateNewCustAccNo() {
+
+    const custAccNo = this.itCorrectionForm.get('newCustAccountNo')?.value;
+
+    if (!custAccNo) {
+      return;
+    }
+
+    this.service.getCustAccNoValidation(custAccNo).subscribe({
+      next: (res: any) => {
+
+        console.log('Validation response:', res);
+
+        if (res.code === 200) {
+          // Valid account
+          console.log('Customer Account is valid');
+        } else {
+          alert('Invalid Customer Account Number');
+          this.itCorrectionForm.get('newCustAccountNo')?.setValue('');
+        }
+
+      },
+      error: () => {
+        alert('Customer Account Validation API failed');
+      }
+    });
+  }
 }

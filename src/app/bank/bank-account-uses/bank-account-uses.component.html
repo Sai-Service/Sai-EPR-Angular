@@ -7,12 +7,12 @@
         </tr>
     </table>
     <form [formGroup]="bankAccUsesForm" (ngSubmit)="bankAccUses(bankAccUsesForm.value)">
-        <table class="center" style="width: 100;"
+        <!-- <table class="center" style="width: 100;"
             style="border-bottom: solid 1px blue;width: 100%; background-color: #FFE4B5; padding-bottom: 2rem;">
             <tr>
                 <td>
                     <table class="center" style="width: 100%;">
-                        <tr>
+                         <tr>
                             <tr style="align-items: center;">
                                 <td style="width: 15%" class="LabelFontStyle"> &nbsp;Bank&nbsp;Name&nbsp;:&nbsp; </td>
                                 <td>
@@ -22,10 +22,6 @@
                                             {{sc.custName}}
                                         </option>
                                     </select>
-
-                                   
-                                    <!-- <input formControlName="bkName" class="form-control" placeholder="Search by bank name"
-                                        (keydown.tab)="serchByBanhName(bkName)"> -->
                                 </td>
                                 <td style="width: 15%" class="LabelFontStyle"> &nbsp;Branch&nbsp;Name&nbsp;:&nbsp; </td>
                                 <td>
@@ -45,14 +41,16 @@
                                     </button>
                                 </td> 
                            
-                        </tr>
+                        </tr> 
                     </table>
                 </td>
             </tr>
-        </table>
+        </table> -->
         <div class="center" style="width: 100%;">
             <div class="form-bg">
                 <div class="center" style="width: 100%;">
+                    <fieldset class="RFS">
+            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;"> Details</legend>
                     <table class="center" style="width: 100%;">
                         <tr>
                             <td>
@@ -61,27 +59,28 @@
                                         <tr style="align-items: center;">
                                             <td style="width: 15%" class="LabelFontStyle"> &nbsp;Bank&nbsp;Name&nbsp;:&nbsp; </td>
                                             <td>
-                                                <select formControlName="bkName" id="bkName" class="form-control" (ngModelChange)="onBankNameSelected1($event)" >
-                                                    <option>--Select--</option>
-                                                    <option *ngFor="let sc of BankNameList" >
-                                                        {{sc.custName}}
-                                                    </option>
-                                                </select>
-                                                <input formControlName="customerId" class="form-control" placeholder="Search by bank name" >
-                                                <!-- <input formControlName="bkName" class="form-control" placeholder="Search by bank name"
-                                                    (keydown.tab)="serchByBanhName(bkName)"> -->
+                                            <select formControlName="bkName"
+                                                class="form-control"
+                                                (change)="onBankNameSelected1($any($event.target).value)">
+                                        <option value="">--Select--</option>
+
+                                        <option *ngFor="let sc of BankNameList"
+                                                [value]="sc.custName">
+                                            {{sc.custName}}
+                                        </option>
+                                        </select>
+
+
+                                            <input formControlName="customerId" class="form-control" hidden>
+
+
                                             </td>
                                             <td style="width: 15%" class="LabelFontStyle"> &nbsp;Branch&nbsp;Name&nbsp;:&nbsp; </td>
-                                            <!-- <td>
-                                                <input formControlName="bkBranchName" [(ngModel)]="bkBranchName" class="form-control" placeholder="Search by branch name"
-                                                   >
-                                            </td>  -->
+
                                             <td style="border: none;color: black;">
-                                                <!-- <input type="text" formControlName="branchName"
-                                                    class="form-control" placeholder="Enter branch name"> -->
-                                                    <select formControlName="bkBranchName" id="bkBranchName" [(ngModel)]="bkBranchName" class="form-control" (ngModelChange)="onbranchIdSelected($event)" >
-                                                        <option>--Select--</option>
-                                                        <option *ngFor="let sc of BankBranchList" >
+                                                    <select formControlName="bkBranchName" id="bkBranchName"  class="form-control" (change)="onbranchIdSelected($event)"  >
+                                                        <option value="">--Select--</option>
+                                                        <option *ngFor="let sc of BankBranchList" [value]="sc.name">
                                                             {{sc.name}}
                                                         </option>
                                                     </select>
@@ -89,13 +88,12 @@
                                             
                                             <td style="width: 15%" class="LabelFontStyle"> &nbsp;Accounts&nbsp;Name&nbsp;:&nbsp; </td>
                                             <td>
-                                                 <select formControlName="bankAccountId" id="bankAccountId" [(ngModel)]="bankAccountId" class="form-control" style="width: 250px;">
-                                              <option>--Select--</option>
-                                                        <option *ngFor="let sc of BankAcDtlsList" [ngValue]="sc.id">
+                                                 <select formControlName="bankAccountId" id="bankAccountId"  class="form-control" >
+                                                    <option value="">--Select--</option>
+                                                    <option *ngFor="let sc of BankAcDtlsList" [value]="sc.id">
                                                             {{sc.name}}-{{sc.name1}}
-                                                        </option>
+                                                    </option>
                                                     </select>
-                                                    <!-- <input type="number" min="0"   formControlName="bankAccountId" id="bankAccountId" [(ngModel)]="bankAccountId" > -->
                                             </td> 
                                         
                                     </tr>
@@ -108,7 +106,7 @@
                                                         {{sc.ouName}}
                                                     </option>
                                                 </select>
-                                                <span *ngIf="!bankAccUsesForm.get('ouId').valid && bankAccUsesForm.get('ouId').touched">Please
+                                                <span *ngIf="bankAccUsesForm.get('ouId')?.touched && bankAccUsesForm.get('ouId')?.invalid">Please
                                                     Enter valid Operating Unit </span> 
                                             </td>
                                          
@@ -116,146 +114,323 @@
                                             Operating&nbsp;Party&nbsp;Id&nbsp;:&nbsp;
                                         </td>
                                         <td style="border: none;color: black;">
-                                            <!-- <input type="text"  formControlName="ownerPartyId"
-                                                           class="form-control"  > -->
+                                    
                                             <select formControlName="orgPartyId" id="orgPartyId" class="form-control"  >
-                                                    <option>--Select--</option>
-                                                    <option *ngFor="let sc of  BankNameList" [ngValue]="sc.customerId">
-                                                        {{sc.custName}}
-                                                    </option>
+                                                    
+                                                   <option>--Select--</option>
+                                                <option *ngFor="let sc of  BankNameList1" [ngValue]="sc.customerId">
+                                                    {{sc.custName}}
+                                                </option>
                                                 </select>
                                         </td>
                                         <td style="width: 15%" class="LabelFontStyle">
                                             AP&nbsp;Use&nbsp;Enable&nbsp;Flag&nbsp;:&nbsp;
                                         </td>
                                         <td> <input  type="checkbox"  name="apUseEnableFlag" formControlName="apUseEnableFlag"  [(ngModel)]="apUseEnableFlag"  (change)="apUseEnableFlag1($event)"></td>
-                                        <td style="width: 15%" class="LabelFontStyle">
-                                            AR&nbsp;Use&nbsp;Enable&nbsp;Flag&nbsp;:&nbsp;
-                                        </td>
-                                        <td> <input  type="checkbox"  name="arUseEnableFlag" formControlName="arUseEnableFlag"  [(ngModel)]="arUseEnableFlag"  (change)="arUseEnableFlag1($event)"></td>
+                                        
                                        
                                        
                                     </tr>
                                     <tr> 
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            AR&nbsp;Use&nbsp;Enable&nbsp;Flag&nbsp;:&nbsp;
+                                        </td>
+                                        <td> <input  type="checkbox"  name="arUseEnableFlag" formControlName="arUseEnableFlag"  [(ngModel)]="arUseEnableFlag"  (change)="arUseEnableFlag1($event)"></td>
                                         <td style="width: 15%" class="LabelFontStyle"> AP&nbsp;Asset&nbsp;:&nbsp; </td>
-                                        <td style="border: none;color: black;"><input  type="text"   formControlName="apAssetCcid" placeholder="Enter"
-                                            class="form-control"  [(ngModel)]="apAssetCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('apAssetCcid', apAssetCcid)" ></td>
+                                        <td style="border: none;color: black;">
+                                            <!-- <input  type="text"   formControlName="apAssetCcid" placeholder="Enter"
+                                            class="form-control"  [(ngModel)]="apAssetCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('apAssetCcid', apAssetCcid)" > -->
+                                              <select formControlName="apAssetCcid"  
+                                                        class="form-control">
+                                                        <option value="">--Select--</option>
+                                                        <option *ngFor="let sc of  NaturalAccountList"
+                                                            [value]="sc.lookupValue">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select>
+                                        </td>
                                             <td style="width: 15%" class="LabelFontStyle"> AR&nbsp;Asset&nbsp;:&nbsp; </td>
                                             <td style="border: none;color: black;">
-                                                <input type="text" formControlName="arAssetCcid"  [(ngModel)]="arAssetCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('arAssetCcid', arAssetCcid)"
-                                                    class="form-control" placeholder="Enter ">
+                                                <!-- <input type="text" formControlName="arAssetCcid"  [(ngModel)]="arAssetCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('arAssetCcid', arAssetCcid)"
+                                                    class="form-control" placeholder="Enter "> -->
+                                                 <select formControlName="arAssetCcid"  
+                                                        class="form-control">
+                                                        <option value="">--Select--</option>
+                                                        <option *ngFor="let sc of  NaturalAccountList"
+                                                            [value]="sc.lookupValue">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select>   
                                             </td>   
-                                            <td style="width: 15%" class="LabelFontStyle"> Cash&nbsp;Clearing&nbsp;:&nbsp; </td>
-                                            <td style="border: none;color: black;">
-                                                <input type="text" formControlName="cashClearingCcid" [(ngModel)]="cashClearingCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('cashClearingCcid', cashClearingCcid)"
-                                                    class="form-control" placeholder="Enter ">
-                                            </td> 
-                                            <td style="width: 15%" class="LabelFontStyle"> Bank&nbsp;Charges&nbsp;:&nbsp; </td>
-                                            <td style="border: none;color: black;">
-                                                <input type="text" formControlName="bankChargesCcid" [(ngModel)]="bankChargesCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('bankChargesCcid', bankChargesCcid)"
-                                                    class="form-control" placeholder="Enter ">
-                                            </td> 
+                                            
+                                          
                                     </tr>  
                                     <tr>
+                                        <td style="width: 15%" class="LabelFontStyle"> Cash&nbsp;Clearing&nbsp;:&nbsp; </td>
+                                            <td style="border: none;color: black;">
+                                                <!-- <input type="text" formControlName="cashClearingCcid" [(ngModel)]="cashClearingCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('cashClearingCcid', cashClearingCcid)"
+                                                    class="form-control" placeholder="Enter "> -->
+                                                <select formControlName="cashClearingCcid"  
+                                                        class="form-control">
+                                                        <option value="">--Select--</option>
+                                                        <option *ngFor="let sc of  NaturalAccountList"
+                                                            [value]="sc.lookupValue">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select> 
+                                                
+                                            </td> 
+
+                                          <td style="width: 15%" class="LabelFontStyle"> Bank&nbsp;Charges&nbsp;:&nbsp; </td>
+                                            <td style="border: none;color: black;">
+                                                <!-- <input type="text" formControlName="bankChargesCcid" [(ngModel)]="bankChargesCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('bankChargesCcid', bankChargesCcid)"
+                                                    class="form-control" placeholder="Enter "> -->
+                                                <select formControlName="bankChargesCcid"  
+                                                        class="form-control">
+                                                        <option value="">--Select--</option>
+                                                        <option *ngFor="let sc of  NaturalAccountList"
+                                                            [value]="sc.lookupValue">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select> 
+                                            </td> 
                                         <td style="width: 15%" class="LabelFontStyle"> Bank&nbsp;Errors&nbsp;:&nbsp; </td>
                                             <td style="border: none;color: black;">
-                                                <input type="text" formControlName="bankErrorsCcid" [(ngModel)]="bankErrorsCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('bankErrorsCcid', bankErrorsCcid)"
-                                                    class="form-control" placeholder="Enter ">
+                                                <!-- <input type="text" formControlName="bankErrorsCcid" [(ngModel)]="bankErrorsCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('bankErrorsCcid', bankErrorsCcid)"
+                                                    class="form-control" placeholder="Enter "> -->
+                                                <select formControlName="bankErrorsCcid"  
+                                                        class="form-control">
+                                                        <option value="">--Select--</option>
+                                                        <option *ngFor="let sc of  NaturalAccountList"
+                                                            [value]="sc.lookupValue">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select> 
                                             </td> 
-                                            <td style="width: 15%" class="LabelFontStyle"> Realized&nbsp;Gain&nbsp;:&nbsp; </td> 
+                                            
+                                           
+                                          
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 15%" class="LabelFontStyle"> Realized&nbsp;Gain&nbsp;:&nbsp; </td> 
                                             <td style="border: none;color: black;">
-                                                <input type="text" formControlName="gainCodeCombId" [(ngModel)]="gainCodeCombId" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('gainCodeCombId', gainCodeCombId)"
-                                                    class="form-control" placeholder="Enter ">
+                                                <!-- <input type="text" formControlName="gainCodeCombId" [(ngModel)]="gainCodeCombId" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('gainCodeCombId', gainCodeCombId)"
+                                                    class="form-control" placeholder="Enter "> -->
+                                                <select formControlName="gainCodeCombId"  
+                                                        class="form-control">
+                                                        <option value="">--Select--</option>
+                                                        <option *ngFor="let sc of  NaturalAccountList"
+                                                            [value]="sc.lookupValue">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select> 
                                             </td>
-                                            <td style="width: 15%" class="LabelFontStyle"> Realized&nbsp;Loss&nbsp;:&nbsp; </td>
+                                         <td style="width: 15%" class="LabelFontStyle"> Realized&nbsp;Loss&nbsp;:&nbsp; </td>
                                             <td style="border: none;color: black;">
-                                                <input type="text" formControlName="lossCodeCombId" [(ngModel)]="lossCodeCombId" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('lossCodeCombId', lossCodeCombId)"
-                                                    class="form-control" placeholder="Enter ">
+                                                <!-- <input type="text" formControlName="lossCodeCombId" [(ngModel)]="lossCodeCombId" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('lossCodeCombId', lossCodeCombId)"
+                                                    class="form-control" placeholder="Enter "> -->
+                                                <select formControlName="lossCodeCombId"  
+                                                        class="form-control">
+                                                        <option value="">--Select--</option>
+                                                        <option *ngFor="let sc of  NaturalAccountList"
+                                                            [value]="sc.lookupValue">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select> 
                                             </td>
-                                            <td style="width: 15%" class="LabelFontStyle"> ON&nbsp;Account&nbsp;:&nbsp; </td>
+                                          <td style="width: 15%" class="LabelFontStyle"> ON&nbsp;Account&nbsp;:&nbsp; </td>
                                             <td style="border: none;color: black;">
-                                                <input type="text" formControlName="onAccountCcid" [(ngModel)]="onAccountCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('onAccountCcid', onAccountCcid)"
-                                                    class="form-control" placeholder="Enter ">
+                                                <!-- <input type="text" formControlName="onAccountCcid" [(ngModel)]="onAccountCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('onAccountCcid', onAccountCcid)"
+                                                    class="form-control" placeholder="Enter "> -->
+                                                <select formControlName="onAccountCcid"  
+                                                        class="form-control">
+                                                        <option value="">--Select--</option>
+                                                        <option *ngFor="let sc of  NaturalAccountList"
+                                                            [value]="sc.lookupValue">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select> 
                                             </td>
                                     </tr>
                                     <tr>
                                         <td style="width: 15%" class="LabelFontStyle"> Unapplied&nbsp;Receipts&nbsp;:&nbsp; </td>
                                             <td style="border: none;color: black;">
-                                                <input type="text" formControlName="unappliedCcid" [(ngModel)]="unappliedCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('unappliedCcid', unappliedCcid)"
-                                                    class="form-control" placeholder="Enter ">
+                                                <!-- <input type="text" formControlName="unappliedCcid" [(ngModel)]="unappliedCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('unappliedCcid', unappliedCcid)"
+                                                    class="form-control" placeholder="Enter "> -->
+                                                <select formControlName="unappliedCcid"  
+                                                        class="form-control">
+                                                        <option value="">--Select--</option>
+                                                        <option *ngFor="let sc of  NaturalAccountList"
+                                                            [value]="sc.lookupValue">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select> 
                                             </td>
                                             <td style="width: 15%" class="LabelFontStyle"> Factored&nbsp;Receipt&nbsp;:&nbsp; </td>  
                                             <td style="border: none;color: black;">
-                                                <input type="text" formControlName="factorCcid" [(ngModel)]="factorCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('factorCcid', factorCcid)"
-                                                    class="form-control" placeholder="Enter ">
+                                                <!-- <input type="text" formControlName="factorCcid" [(ngModel)]="factorCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('factorCcid', factorCcid)"
+                                                    class="form-control" placeholder="Enter "> -->
+                                                <select formControlName="factorCcid"  
+                                                        class="form-control">
+                                                        <option value="">--Select--</option>
+                                                        <option *ngFor="let sc of  NaturalAccountList"
+                                                            [value]="sc.lookupValue">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select> 
                                             </td>
                                             <td style="width: 15%" class="LabelFontStyle"> Receipt&nbsp;Clearing&nbsp;:&nbsp; </td>
                                             <td style="border: none;color: black;">
-                                                <input type="text" formControlName="receiptClearingCcid" [(ngModel)]="receiptClearingCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('receiptClearingCcid', receiptClearingCcid)"
-                                                    class="form-control" placeholder="Enter ">
+                                                <!-- <input type="text" formControlName="receiptClearingCcid" [(ngModel)]="receiptClearingCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('receiptClearingCcid', receiptClearingCcid)"
+                                                    class="form-control" placeholder="Enter "> -->
+                                                <select formControlName="receiptClearingCcid"  
+                                                        class="form-control">
+                                                        <option value="">--Select--</option>
+                                                        <option *ngFor="let sc of  NaturalAccountList"
+                                                            [value]="sc.lookupValue">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select> 
                                             </td>
+                                        </tr>
                                             <td style="width: 15%" class="LabelFontStyle"> Remitted&nbsp;Receipts&nbsp;:&nbsp; </td> 
                                             <td style="border: none;color: black;">
-                                                <input type="text" formControlName="remittanceCcid" [(ngModel)]="remittanceCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('remittanceCcid' , remittanceCcid)"
-                                                    class="form-control" placeholder="Enter ">
+                                                <!-- <input type="text" formControlName="remittanceCcid" [(ngModel)]="remittanceCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('remittanceCcid' , remittanceCcid)"
+                                                    class="form-control" placeholder="Enter "> -->
+                                                <select formControlName="remittanceCcid"  
+                                                        class="form-control">
+                                                        <option value="">--Select--</option>
+                                                        <option *ngFor="let sc of  NaturalAccountList"
+                                                            [value]="sc.lookupValue">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select> 
                                             </td>
-                                    </tr>
-                                    <tr>  
-                                        <td style="width: 15%" class="LabelFontStyle"> AR&nbsp;Short&nbsp;Term&nbsp;&nbsp;Debt:&nbsp; </td>
+                                              <td style="width: 15%" class="LabelFontStyle"> AR&nbsp;Short&nbsp;Term&nbsp;&nbsp;Debt:&nbsp; </td>
                                         <td style="border: none;color: black;">
-                                            <input type="text" formControlName="arShrtTermDepositCcid"  [(ngModel)]="arShrtTermDepositCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('arShrtTermDepositCcid', arShrtTermDepositCcid)"
-                                                class="form-control" placeholder="Enter ">
+                                            <!-- <input type="text" formControlName="arShrtTermDepositCcid"  [(ngModel)]="arShrtTermDepositCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('arShrtTermDepositCcid', arShrtTermDepositCcid)"
+                                                class="form-control" placeholder="Enter "> -->
+                                            <select formControlName="arShrtTermDepositCcid"  
+                                                        class="form-control">
+                                                        <option value="">--Select--</option>
+                                                        <option *ngFor="let sc of  NaturalAccountList"
+                                                            [value]="sc.lookupValue">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select> 
                                         </td>
-                                        <td style="width: 15%" class="LabelFontStyle"> apShrtTermDepositCcid&nbsp;&nbsp;:&nbsp; </td>
+                                         <td style="width: 15%" class="LabelFontStyle"> apShrtTermDepositCcid&nbsp;&nbsp;:&nbsp; </td>
                                             <td style="border: none;color: black;">
-                                                <input type="text" formControlName="apShrtTermDepositCcid"  [(ngModel)]="apShrtTermDepositCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('apShrtTermDepositCcid' , apShrtTermDepositCcid)"
-                                                    class="form-control" placeholder="Enter ">
+                                                <!-- <input type="text" formControlName="apShrtTermDepositCcid"  [(ngModel)]="apShrtTermDepositCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('apShrtTermDepositCcid' , apShrtTermDepositCcid)"
+                                                    class="form-control" placeholder="Enter "> -->
+                                                <select formControlName="apShrtTermDepositCcid"  
+                                                        class="form-control">
+                                                        <option value="">--Select--</option>
+                                                        <option *ngFor="let sc of  NaturalAccountList"
+                                                            [value]="sc.lookupValue">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select> 
                                             </td>
+                                    
+                                    <tr>  
+                                      
+                                       
                                             <td style="width: 15%" class="LabelFontStyle"> Future&nbsp;Dated&nbsp;Payment:&nbsp; </td> 
                                             <td style="border: none;color: black;">
-                                                <input type="text" formControlName="futureDatedPaymentCcid"  [(ngModel)]="futureDatedPaymentCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('futureDatedPaymentCcid' , futureDatedPaymentCcid)"
-                                                    class="form-control" placeholder="Enter ">
+                                                <!-- <input type="text" formControlName="futureDatedPaymentCcid"  [(ngModel)]="futureDatedPaymentCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('futureDatedPaymentCcid' , futureDatedPaymentCcid)"
+                                                    class="form-control" placeholder="Enter "> -->
+                                                <select formControlName="futureDatedPaymentCcid"  
+                                                        class="form-control">
+                                                        <option value="">--Select--</option>
+                                                        <option *ngFor="let sc of  NaturalAccountList"
+                                                            [value]="sc.lookupValue">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select> 
                                             </td>
                                             <td style="width: 15%" class="LabelFontStyle"> BR&nbsp;Remittance&nbsp;:&nbsp; </td>
                                             <td style="border: none;color: black;">
-                                                <input type="text" formControlName="brRemittanceCcid" [(ngModel)]="brRemittanceCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('brRemittanceCcid' , brRemittanceCcid)"
-                                                    class="form-control" placeholder="Enter ">
+                                                <!-- <input type="text" formControlName="brRemittanceCcid" [(ngModel)]="brRemittanceCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('brRemittanceCcid' , brRemittanceCcid)"
+                                                    class="form-control" placeholder="Enter "> -->
+                                                <select formControlName="brRemittanceCcid"  
+                                                        class="form-control">
+                                                        <option value="">--Select--</option>
+                                                        <option *ngFor="let sc of  NaturalAccountList"
+                                                            [value]="sc.lookupValue">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select> 
                                             </td>
+                                            <td style="width: 15%" class="LabelFontStyle"> BR&nbsp;Factor&nbsp;:&nbsp; </td>
+                                        <td style="border: none;color: black;">
+                                            <!-- <input type="text" formControlName="brFactorCcid" [(ngModel)]="brFactorCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('brFactorCcid' , brFactorCcid)"
+                                                class="form-control" placeholder="Enter "> -->
+                                            <select formControlName="brFactorCcid"  
+                                                        class="form-control">
+                                                        <option value="">--Select--</option>
+                                                        <option *ngFor="let sc of  NaturalAccountList"
+                                                            [value]="sc.lookupValue">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select> 
+                                        </td>
                                     </tr>
                                     <tr>
-                                        <td style="width: 15%" class="LabelFontStyle"> BR&nbsp;Factor&nbsp;:&nbsp; </td>
-                                        <td style="border: none;color: black;">
-                                            <input type="text" formControlName="brFactorCcid" [(ngModel)]="brFactorCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('brFactorCcid' , brFactorCcid)"
-                                                class="form-control" placeholder="Enter ">
-                                        </td>
+                                        
                                         <td style="width: 15%" class="LabelFontStyle"> Bank&nbsp;Interest&nbsp;Expense&nbsp;:&nbsp; </td> 
                                         <td style="border: none;color: black;">
-                                            <input type="text" formControlName="bankInterestExpenseCcid" [(ngModel)]="bankInterestExpenseCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('bankInterestExpenseCcid' , bankInterestExpenseCcid)"
-                                                class="form-control" placeholder="Enter ">
+                                            <!-- <input type="text" formControlName="bankInterestExpenseCcid" [(ngModel)]="bankInterestExpenseCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('bankInterestExpenseCcid' , bankInterestExpenseCcid)"
+                                                class="form-control" placeholder="Enter "> -->
+                                            <select formControlName="bankInterestExpenseCcid"  
+                                                        class="form-control">
+                                                        <option value="">--Select--</option>
+                                                        <option *ngFor="let sc of  NaturalAccountList"
+                                                            [value]="sc.lookupValue">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select> 
                                         </td>
                                         <td style="width: 15%" class="LabelFontStyle"> Bank&nbsp;Interest&nbsp;Income&nbsp;:&nbsp; </td>
                                         <td style="border: none;color: black;">
-                                            <input type="text" formControlName="bankInterestIncomeCcid" [(ngModel)]="bankInterestIncomeCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('bankInterestIncomeCcid' , bankInterestIncomeCcid)"
-                                                class="form-control" placeholder="Enter ">
+                                            <!-- <input type="text" formControlName="bankInterestIncomeCcid" [(ngModel)]="bankInterestIncomeCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('bankInterestIncomeCcid' , bankInterestIncomeCcid)"
+                                                class="form-control" placeholder="Enter "> -->
+                                            <select formControlName="bankInterestIncomeCcid"  
+                                                        class="form-control">
+                                                        <option value="">--Select--</option>
+                                                        <option *ngFor="let sc of  NaturalAccountList"
+                                                            [value]="sc.lookupValue">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select> 
                                         </td>
                                         <td style="width: 15%" class="LabelFontStyle"> XTR&nbsp;Asset&nbsp;&nbsp;:&nbsp; </td>
                                         <td style="border: none;color: black;">   
-                                            <input type="text" formControlName="xtrAssetCcid" [(ngModel)]="xtrAssetCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('xtrAssetCcid' , xtrAssetCcid)"
-                                                class="form-control" placeholder="Enter ">
+                                            <!-- <input type="text" formControlName="xtrAssetCcid" [(ngModel)]="xtrAssetCcid" data-toggle="modal" data-target="#myModel" (click)="openCodeComb('xtrAssetCcid' , xtrAssetCcid)"
+                                                class="form-control" placeholder="Enter "> -->
+                                            <select formControlName="xtrAssetCcid"  
+                                                        class="form-control">
+                                                        <option value="">--Select--</option>
+                                                        <option *ngFor="let sc of  NaturalAccountList"
+                                                            [value]="sc.lookupValue">
+                                                            {{sc.lookupValue}}
+                                                        </option>
+                                                    </select> 
                                         </td>
                                     </tr>
                                 </table>
                             </td>
                         </tr>
                     </table>
+                    </fieldset>
                 </div>
             </div>
         </div>
-        <div *ngIf="displayModal; then thenBlockModal; else elseBlockModal">
+        <!-- <div *ngIf="displayModal; then thenBlockModal; else elseBlockModal">
         </div>
         <ng-template #thenBlockModal>
-        </ng-template>
-        <ng-template #elseBlockModal>
+        </ng-template> -->
+        <!-- <ng-template #elseBlockModal>
             <div id="myModel" [style.display]="showModal ? 'block' : 'none'" class="modal fade" tabindex="-1" role="dialog"
                 aria-hidden="true" style="width: 500px; margin-left:350px">
         
@@ -286,8 +461,7 @@
                                     <td>
                                         <input type="text" style="width: 150px; background-color: white; border: none;"
                                             formControlName="lookupValueDesc1" [(ngModel)]="lookupValueDesc1"
-                                            class="form-control" disabled>
-                                        <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc1" [(ngModel)]="lookupValueDesc1"  style="border:none;"> -->
+                                            class="form-control" [disabled]="true">
                                     </td>
                                 </tr>
                                 <tr>
@@ -307,8 +481,7 @@
                                     <td>
                                         <input type="text" style="width: 150px; background-color: white; border: none;"
                                             formControlName="lookupValueDesc2" [(ngModel)]="lookupValueDesc2"
-                                            class="form-control" disabled>
-                                        <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc2" [(ngModel)]="lookupValueDesc2" style="border:none;"> -->
+                                            class="form-control" [disabled]="true">
                                     </td>
                                 </tr>
                                 <tr>
@@ -328,8 +501,7 @@
                                     <td>
                                         <input type="text" style="width: 150px; background-color: white; border: none;"
                                             formControlName="lookupValueDesc3" [(ngModel)]="lookupValueDesc3"
-                                            class="form-control" disabled>
-                                        <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc3" [(ngModel)]="lookupValueDesc3" style="border:none;"> -->
+                                            class="form-control" [disabled]="true">
                                     </td>
                                 </tr>
                                 <tr>
@@ -349,8 +521,7 @@
                                     <td>
                                         <input type="text" style="width: 150px; background-color: white; border: none;"
                                             formControlName="lookupValueDesc4" [(ngModel)]="lookupValueDesc4"
-                                            class="form-control" disabled>
-                                        <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc4"  [(ngModel)]="lookupValueDesc4"  style="border:none;"> -->
+                                            class="form-control" [disabled]="true">
                                     </td>
                                 </tr>
                                 <tr>
@@ -371,89 +542,19 @@
                                     <td>
                                         <input type="text" style="width: 150px; background-color: white; border: none;"
                                             formControlName="lookupValueDesc5" [(ngModel)]="lookupValueDesc5"
-                                            class="form-control" disabled>
-                                        <!-- <input disabled type="text"  class="form-control" fromControlName="lookupValueDesc5" [(ngModel)]="lookupValueDesc5" style="border:none;"> -->
+                                            class="form-control" [disabled]="true">
                                     </td>
                                 </tr>
-                                <!-- <tr>
-                                    <td style="width: 15%" class="LabelFontStyle">
-                                        Company&nbsp;:
-                                    </td>
-                                    <td>
-                                        <select formControlName="segment6" id="segment6" class="form-control">
-                                            <option>--Select--</option>
-                                            <option *ngFor="let sc of  companyCodeList">
-                                                {{sc.compId}}
-                                            </option>
-                                        </select>
-                                    </td>
-                                </tr> -->
-                                <!-- <tr>
-                         <td style="width: 15%"
-                             class="LabelFontStyle">
-                             Division&nbsp;:
-                         </td>
-        <td>
-                         <select formControlName="segment7"
-                             id="segment7" class="form-control">
-                             <option>--Select--</option>
-                             <option
-                                 *ngFor="let sc of  DivisionIDList">
-                                 {{sc.divisionId}}
-                             </option>
-                         </select>
-                        </td>
-                     </tr>
-                     <tr>
-                         <td style="width: 15%"
-                             class="LabelFontStyle">
-                            Future&nbsp;:
-                         </td>
-                         <td>
-                             <select formControlName="segment8"
-                                 id="segment8"
-                                 class="form-control">
-                                 <option>--Select--</option>
-                                 <option
-                                     *ngFor="let sc of  FutureList">
-                                     {{sc.lookupValue}}
-                                 </option>
-                             </select>
-                         </td>
-                     </tr>
-                     <tr>
-                         <td style="width: 15%"
-                             class="LabelFontStyle">
-                            Sub-Account&nbsp;:
-                         </td>
-                         <td>
-                             <select formControlName="segment9"
-                                 id="segment9"
-                                 class="form-control">
-                                 <option>--Select--</option>
-                                 <option
-                                     *ngFor="let sc of  SubAccountList">
-                                     {{sc.lookupValue}}
-                                 </option>
-                             </select>
-                         </td>
-                     </tr> -->
+                              
                             </table>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="fnCancatination(content)" >Ok</button>
-                            <!-- [disabled]="(segment6.value === null || segment5.value=== null)" -->
-                            <!-- <button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true"
-                           [disabled]="!segment11 || !segment2 || !segment3 || !segment4 || !segment5"
-                                (click)="fnCancatination(content)">OK</button>  -->
-                            <!-- <button type="button" class="btn btn-primary" 
-                                [disabled]="!segment11 || !segment2 || !segment3 || !segment4 || !segment5"
-                                (click)="fnCancatination(content)" data-dismiss="modal">Ok</button> -->
-                        </div>
+                           </div>
                     </div>
                 </div>
             </div>
-        </ng-template>
+        </ng-template> -->
         <table class="center" style="width:100%">
             <tr>
                 <td>
@@ -467,8 +568,17 @@
                             </td>
                             <td>
                                 <button type="submit" class="btn btn-primary"
-                                    (click)="BankAccUseSave()">Save</button>
+                                    (click)="BankAccUseSave()" [disabled]="isSave">Save</button>
 
+                            </td>
+                              <td>
+                                <button type="submit" class="btn btn-primary"
+                                    (click)="update()" [disabled]="isUpdate" >Update</button>
+
+                            </td>
+                             <td>
+                                <button type="submit" (click)="search()"
+                                    class="btn btn-primary">Search</button>
                             </td>
                             <td>
                                 <button type="submit" (click)="close()"
@@ -481,4 +591,42 @@
             </tr>
         </table>
     </form>
+
+    <table class="table table-bordered table-striped mt-3" *ngIf="bankAccUseList.length > 0">
+  <thead>
+    <tr>
+      <th>Sr No</th>
+      <th hidden>BankAccUseId</th>
+      <th>Bank Account Name</th>
+      <th>Account No</th>
+      <th>Start Date</th>
+      <th>Status</th>
+      <th>Select</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let item of bankAccUseList; let i = index">
+      <td>{{ i + 1 }}</td>
+
+      <td hidden>{{ item.bankAccUseId }}</td>
+
+      <td>{{ item.bankAccountId?.bankAccountName }}</td>
+
+      <td>{{ item.bankAccountId?.bankAccountNo }}</td>
+
+      <td>{{ item.bankAccountId?.startDate | date:'yyyy-MM-dd' }}</td>
+
+      <td>{{ item.bankAccountId?.status }}</td>
+
+      <td>
+        <button class="btn btn-success btn-sm"
+                (click)="selectRow(item.bankAccUseId)">
+          Select
+        </button>
+      </td>
+    </tr>
+  </tbody>
+    </table>
+
 </div>

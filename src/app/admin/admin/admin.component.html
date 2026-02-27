@@ -547,21 +547,17 @@
         <!-- <li><a class="dropdown-submenu" style="padding-left: 28px ;" [routerLink]="['/admin/Report/PaintReports']">Reports</a></li> -->
         <li><a class="dropdown-submenu" style="padding-left: 28px ;" [routerLink]="['/admin/Report/PaintReportsNew']">Paint Reports</a></li>
       </div>
-
-       
-
       </ul>
     </li>
   </div>
 
 
-<li class="nav-item dropdown" *ngIf="showItCorrection">
-  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-    aria-haspopup="true" aria-expanded="false" >
-     IT Correction Form
-  </a>
-   <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-       <li>
+ <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle " id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="false">IT Management </a>
+      <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">IT</a>
+         <ul class="dropdown-menu">
+        <li>
        <a class="dropdown-item" routerLink="/admin/itCorrection/itCorrectionForAll">It Correction Form</a>
     </li>   
      <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Variant / Color Master</a> 
@@ -570,10 +566,11 @@
           <li> <a class="dropdown-item" [routerLink]="['/admin/master/VariantCreationMaster']">New Variant</a></li>
           <li> <a class="dropdown-item" [routerLink]="['/admin/master/VariantWithPriceMaster']">Variant Price</a></li>
          </ul>
-      
-    </li>
-  </ul>
-</li>
+     </li>
+                </ul>
+        </li>
+      </ul>
+ </li>
 
  <!-- PETROL PUMP SYSTEM -->
 

@@ -85,5 +85,20 @@ custNameSearchFn1(custName: any): Observable<any> {
       { headers: this.headers }
     );
   }
+
+    getCustAccNoValidation(custAccountNo: string): Observable<any> {
+    return this.http.get(
+      this.ServerUrl + `/bajajIssues/getCustAccNoValidation?custAccountNo=${custAccountNo}`,
+      { headers: this.headers }
+    );
+  }
+
+    getTitleLov(): Observable<any> {
+    return this.http.get(
+      this.ServerUrl + `/cmnLookup/TitleList`,
+      { headers: this.headers }
+    );
+  }
+  
 }
 
