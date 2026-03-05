@@ -2041,7 +2041,7 @@ export class PaintReportsComponent implements OnInit {
           })
       }
       else if ((Number(sessionStorage.getItem('deptId'))) != 4) {
-        this.reportService.paintClosingStockNewFn(sessionStorage.getItem('orgId'), toDate)
+        this.reportService.paintClosingStockNewFn(sessionStorage.getItem('ouId'), toDate)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;

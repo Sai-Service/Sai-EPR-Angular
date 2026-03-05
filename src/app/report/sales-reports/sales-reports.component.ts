@@ -2553,6 +2553,9 @@ export class SalesReportsComponent implements OnInit {
         else if (reportName === 'AMC Sales Register') {
           const fileName = 'AMC Sales Register-' + fromDate + '-TO-' + toDate + '.xls';
           const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+          if (locId === undefined || locId=== null){
+            locId=' ';
+          }
           if (Number(sessionStorage.getItem('deptId')) === 4  || Number(sessionStorage.getItem('roleId'))==10) {
             this.reportService.amcSaleRegister(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
               .subscribe(data => {
