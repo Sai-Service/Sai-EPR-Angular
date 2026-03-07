@@ -3150,6 +3150,9 @@ export class OPMasterDtoComponent implements OnInit {
     if (msgType.includes("Update")) {
       this.message1 = "Do you want to Update the Form(Yes/No)?"
     }
+     if (msgType.includes("print")) {
+      this.message1 = "Do you want to Print(Yes/No)?"
+    }
     if (msgType.includes("Approve")) {
       this.message1 = "Do you want to Approve this PO (Yes/No)?"
     }
@@ -3191,6 +3194,10 @@ export class OPMasterDtoComponent implements OnInit {
     if (this.msgType.includes("Reset")) {
       //       alert("reset clicked");
       this.clearFormArray();
+    }
+     if (this.msgType.includes("print")) {
+      //       alert("reset clicked");
+      this.openOutPut();
     }
 
     if (this.msgType.includes("Close")) {
@@ -3266,5 +3273,14 @@ export class OPMasterDtoComponent implements OnInit {
             }
           });
   }
+
+openOutPut(){
+   this.service.viewPo(this.poNo).subscribe(data => {
+        var blob = new Blob([data], { type: 'application/pdf' });
+        var url = URL.createObjectURL(blob);
+        var printWindow = window.open(url, '', 'width=800,height=500');
+        printWindow.open
+      });
+}
 
 }

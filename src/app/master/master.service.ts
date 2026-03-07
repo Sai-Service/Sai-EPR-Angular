@@ -4948,6 +4948,13 @@ UpdateVariantPrice(variantPriceRecord: any) {
   );
 }
 
+ viewPo(poNo): Observable<any> {
+    const REQUEST_URI = this.ServerUrl + `//orderHeader/cntrTaxPreInvPrint/${poNo}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
 
 }
 
