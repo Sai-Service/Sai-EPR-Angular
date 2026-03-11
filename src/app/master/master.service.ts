@@ -4949,7 +4949,7 @@ UpdateVariantPrice(variantPriceRecord: any) {
 }
 
  viewPo(poNo): Observable<any> {
-    const REQUEST_URI = this.ServerUrl + `//orderHeader/cntrTaxPreInvPrint/${poNo}`;
+    const REQUEST_URI = this.ServerUrl + `/rcvShipment/POPrint/${poNo}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,

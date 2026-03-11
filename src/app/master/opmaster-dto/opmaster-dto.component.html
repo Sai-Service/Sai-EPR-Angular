@@ -1757,6 +1757,11 @@
                 <button type="button" class="btn btn-primary" id="UpdateBtn" data-toggle="modal"
                     data-target="#confirmAlert" (click)="getMessage('Approve')">Approve</button>
             </td>
+             <td>
+                <button type="button" class="btn btn-primary" id="printBtn" data-toggle="modal"
+                    data-target="#confirmAlert" (click)="getMessage('print')">Print</button>
+                <!-- (click)="resetItemCatMast()" -->
+            </td>
             <td>
                 <!-- hi2 -->
                 <input hidden type="text" disabled formControlName="segment1" class="form-control"
@@ -1813,6 +1818,11 @@
                         data-toggle="modal" data-target="#confirmAlert"
                         (click)="getMessage('goReceiptForm(segment1))')">View GRR</button>
                 </div>
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary" id="printBtn" data-toggle="modal"
+                    data-target="#confirmAlert" (click)="getMessage('print')">Print</button>
+                <!-- (click)="resetItemCatMast()" -->
             </td>
             <td>
                 <button type="button" class="btn btn-primary" id="resetBtn" data-toggle="modal"

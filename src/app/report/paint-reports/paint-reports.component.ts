@@ -1,16 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ReportServiceService } from 'src/app/report/report-service.service'
+// import { ReportServiceService } from 'src/app/report/report-service.service'
+import { ReportServiceService } from '../report-service.service'
 import { DatePipe, Location, CommonModule } from '@angular/common';
-import { MasterService } from 'src/app/master/master.service';
+// import { MasterService } from 'src/app/master/master.service';
+import { MasterService } from '../../master/master.service'
 import { saveAs } from 'file-saver';
 
 
-const MIME_TYPES = {
-  pdf: 'application/pdf',
-  xls: 'application/vnd.ms-excel',
-  xlsx: 'application/vnc.openxmlformats-officedocument.spreadsheetxml.sheet'
+// const MIME_TYPES = {
+//   pdf: 'application/pdf',
+//   xls: 'application/vnd.ms-excel',
+//   xlsx: 'application/vnc.openxmlformats-officedocument.spreadsheetxml.sheet'
+// };
+
+type FileExt = "pdf" | "xls" | "xlsx";
+
+const EXT: FileExt = "pdf";
+
+const MIME_TYPES: Record<FileExt, string> = {
+  pdf: "application/pdf",
+  xls: "application/vnd.ms-excel",
+  xlsx: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 };
 
 @Component({
@@ -30,12 +42,12 @@ export class PaintReportsComponent implements OnInit {
 
 
 
-  OUCode: string;
-  locCode: string;
-  locCode1: number;
+  OUCode!: string;
+  locCode!: string;
+  locCode1!: number;
 
-  locId: number;
-  trxNumber: number;
+  locId!: number;
+  trxNumber!: number;
   public OpUnitList: Array<string> = [];
 
 
@@ -52,25 +64,25 @@ export class PaintReportsComponent implements OnInit {
   closeResetButton = true;
   dataDisplay: any;
   progress = 0;
-  deptId: number;
-  userName: string;
-  subInventory: string;
+  deptId!: number;
+  userName!: string;
+  subInventory!: string;
   issCatg: string = 'PN002';
 
   subInvCode: any;
-  subTp: string;
-  mainTp: string;
+  subTp!: string;
+  mainTp!: string;
 
 
-  segment: string;
-  fromlocCode: string;
-  fromLocId: number;
-  compileCode: string;
+  segment!: string;
+  fromlocCode!: string;
+  fromLocId!: number;
+  compileCode!: string;
 
-  tolocCode: string;
-  tolocId: number;
-  orderNumber: number;
-  custAccNo: number;
+  tolocCode!: string;
+  tolocId!: number;
+  orderNumber!: number;
+  custAccNo!: number;
   spInvAging1: number = 30;
   spInvAging2: number = 60;
   spInvAging3: number = 90;
@@ -108,7 +120,7 @@ export class PaintReportsComponent implements OnInit {
   isVisiblePaintReconReport = false;
   isVisiblespClosingStockAsOndate1: boolean = false;
   isDisabled1 = false;
-  userName1: string;
+  userName1!: string;
   dispLocation: boolean = true;
   rptValidation = true;
   isVisiblePanelOUFromDateToDateSubInv: boolean = false;
@@ -155,7 +167,7 @@ export class PaintReportsComponent implements OnInit {
   }
 
 
-  paintReport(paintReportForm) {
+  paintReport(paintReportForm:any) {
   }
 
   ngOnInit(): void {
@@ -185,7 +197,7 @@ export class PaintReportsComponent implements OnInit {
     });
 
     // make it as accordion for smaller screens
-    if ($(window).width() < 992) {
+    if (($(window).width() ?? 0) < 992) {
       $('.dropdown-menu a').click(function (e) {
         e.preventDefault();
         if ($(this).next('.submenu').length) {
@@ -283,9 +295,9 @@ export class PaintReportsComponent implements OnInit {
     this.location1.back();
   }
 
-  reportName: string;
+  reportName!: string;
 
-  reportDetails(reportName) {
+  reportDetails(reportName:any) {
 
     if (reportName === 'gstPurRegister') {
       this.reportName = 'Paint Purchase Register Details';
@@ -788,10 +800,37 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
       this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
-
-
     }
-
+     else if (reportName === 'paintMainColorCreation') {
+      this.reportName = 'Paint Main Colour Creation Report';
+      this.paintReportForm.get('locId')?.disable();
+      this.paintReportForm.patchValue({locId:' '})
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblesparesMiscIssueReceipt=true;
+      this.isVisiblespClosingStockAsOndate = false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisiblestockTransferRecd = false;
+      this.isVisibleSparesBackOrderQty = false;
+      // this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.isVisiblesparesPaintPanelReport = false;
+      this.isVisibleonlyOuCode = false;
+      this.isVisiblePanelOUFromDateToDateSubInv = false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblePaintPanelDetailReport = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisiblePaintReconReport = false;
+      this.isVisiblespClosingStockAsOndate1 = false;     
+       this.isVisibleStockMismatch=false;
+    }
     else if (reportName === 'gstSparesClosingStockAsOnDate') {
       this.reportName = 'Paint Closing Stock As On Date';
       this.isVisibleGSTPurchaseRegister = false;
@@ -1198,7 +1237,7 @@ export class PaintReportsComponent implements OnInit {
       })
   }
 
-  reportParameter(reportName) {
+  reportParameter(reportName:any) {
 
     // alert ("reportName:"+reportName)
 
@@ -1206,18 +1245,18 @@ export class PaintReportsComponent implements OnInit {
     this.closeResetButton = false;
     this.progress = 0;
     this.dataDisplay = 'Report Is Running....Do not refresh the Page';
-    var purStDt = this.paintReportForm.get('fromDate').value;
+    var purStDt = this.paintReportForm.get('fromDate')?.value;
     var fromDate = this.pipe.transform(purStDt, 'dd-MMM-yyyy');
-    var toDate1 = this.paintReportForm.get('toDate').value;
+    var toDate1 = this.paintReportForm.get('toDate')?.value;
     var toDate = this.pipe.transform(toDate1, 'dd-MMM-yyyy');
-    var locId = this.paintReportForm.get('locId').value;
-    var fromlocId = this.paintReportForm.get('fromLocId').value;
-    var tolocId = this.paintReportForm.get('tolocId').value;
-    var deptId = this.paintReportForm.get('deptId').value;
-    var userName = this.paintReportForm.get('userName').value;
-    var segment = this.paintReportForm.get('segment').value;
-    var subInventory = this.paintReportForm.get('subInventory').value;
-    var tolocId = this.paintReportForm.get('tolocId').value;
+    var locId = this.paintReportForm.get('locId')?.value;
+    var fromlocId = this.paintReportForm.get('fromLocId')?.value;
+    var tolocId = this.paintReportForm.get('tolocId')?.value;
+    var deptId = this.paintReportForm.get('deptId')?.value;
+    var userName = this.paintReportForm.get('userName')?.value;
+    var segment = this.paintReportForm.get('segment')?.value;
+    var subInventory = this.paintReportForm.get('subInventory')?.value;
+    var tolocId = this.paintReportForm.get('tolocId')?.value;
 
     // alert ("locid :"+ locId  +" ," + tolocId);
 
@@ -1229,15 +1268,10 @@ export class PaintReportsComponent implements OnInit {
       alert('Please Select location Code.!');
       return;
     }
-
-    var fDate = this.paintReportForm.get('fromDate').value;
-    var tDate = this.paintReportForm.get('toDate').value;
-
-
+    var fDate = this.paintReportForm.get('fromDate')?.value;
+    var tDate = this.paintReportForm.get('toDate')?.value;
     if (reportName === 'Paint Purchase Register Details') {
-
       this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
-
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         const fileName = 'Paint Purchase Register Details-' + fromDate + '-TO-' + toDate + '.xls';
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
@@ -1261,10 +1295,35 @@ export class PaintReportsComponent implements OnInit {
           })
       }
     }
+    else   if (reportName === 'Paint Main Colour Creation Report') {
+      this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        const fileName = 'Paint Purchase Register Details-' + fromDate + '-TO-' + toDate + '.xls';
+        const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+        this.reportService.paintMainColorCreationFn(fromDate, toDate, sessionStorage.getItem('ouId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.dataDisplay = ''
+            this.closeResetButton = true;
+            this.isDisabled1 = false;
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        const fileName = 'Paint Purchase Register Details-' + fromDate + '-TO-' + toDate + '.xls';
+        const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+        this.reportService.paintMainColorCreationFn(fromDate, toDate, sessionStorage.getItem('ouId'))
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.dataDisplay = ''
+            this.closeResetButton = true;
+            this.isDisabled1 = false;
+          })
+      }
+    }
     else if (reportName === 'Paint Purchase Register - Summary') {
       this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
 
-      const fileName = 'Paint Purchase Register - Summary-' + sessionStorage.getItem('locName').replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
+      const fileName = 'Paint Purchase Register - Summary-' + sessionStorage.getItem('locName')?.replace(' ', '') + '-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.sppurRegiSummReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
