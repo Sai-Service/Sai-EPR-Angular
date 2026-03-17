@@ -4956,6 +4956,18 @@ UpdateVariantPrice(variantPriceRecord: any) {
     });
   }
 
+  BankNameList(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/Customer/ClassCodeCompany', { headers: this.headers });
+  }
+
+   BankBranchList(BkName: any): Observable<any> {
+    return this.http.get(this.ServerUrl + `/ceBankBranch/branchList/${BkName}`, { headers: this.headers });
+  }
+
+gstVerficationFn(gstNo: any): Observable<any> {
+    return this.http.get(this.ServerUrl + `/gstVerify/gstin/${gstNo}`, { headers: this.headers });
+  }
+
 }
 
 

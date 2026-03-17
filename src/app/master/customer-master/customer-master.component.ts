@@ -612,6 +612,14 @@ export class CustomerMasterComponent implements OnInit {
     // var gstno = this.customerMasterForm.get('gstNo').value
     var gstno=event.target.value;
     // alert(gstno+'gst');
+    // if ((gstno !='' || gstno !=undefined || gstno !=null) && gstno !='GSTUNREGISTERED'){
+    //   this.service.gstVerficationFn(gstno)
+    //     .subscribe(
+    //       data => {
+    //         this.staxCatName = data.taxCategoryName;
+    //       }
+    //     );
+    // }
     if (gstno === '') {
       this.customerMasterForm.patchValue({ 'gstNo': 'GSTUNREGISTERED' });
       return;
