@@ -4965,7 +4965,7 @@ UpdateVariantPrice(variantPriceRecord: any) {
   }
 
 gstVerficationFn(gstNo: any): Observable<any> {
-    return this.http.get(this.ServerUrl + `/gstVerify/gstin/${gstNo}`, { headers: this.headers });
+    return this.http.get(`http://172.16.21.3:8051/gstVerify/gstin/${gstNo}`);
   }
 
 }

@@ -418,7 +418,7 @@ export class ReportServiceService {
   }
 
   paintMainColorCreationFn(fromDate,toDate,ouId){
-    const REQUEST_URI = this.ServerUrl +`/PaintReports/PnMainClrRep/?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}`;
+    const REQUEST_URI = this.ServerUrl +`/PaintReports/PnMainClrRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}`;
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,

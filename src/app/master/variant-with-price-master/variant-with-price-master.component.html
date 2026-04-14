@@ -148,9 +148,9 @@
                 </tr>
                 <tr>
                     <td style="width: 15%" class="LabelFontStyle1">Subsidy&nbsp;Central Gov.&nbsp;:&nbsp;</td>
-                    <td><input type="number" formControlName="attribute1" class="form-control"> </td>
+                    <td><input type="number" formControlName="attribute4" class="form-control"> </td>
                     <td style="width: 15%" class="LabelFontStyle1">Subsidy&nbsp;State Gov.&nbsp;:&nbsp;</td>
-                    <td><input type="number" formControlName="attribute2" class="form-control"> </td>
+                    <td><input type="number" formControlName="attribute5" class="form-control"> </td>
                     <td style="width: 15%" class="LabelFontStyle1">Postal&nbsp;Charge&nbsp;:&nbsp;</td>
                     <td><input type="number" formControlName="postalCharge" class="form-control"> </td>
                     <td style="width: 15%" class="LabelFontStyle1">Status&nbsp;:&nbsp;</td>
@@ -249,6 +249,7 @@
                             <th style="width:5rem" scope="col">Color</th>
                             <th style="width:5rem" scope="col">Basic Price</th>
                             <th style="width:5rem" scope="col">Old Basic Price</th>
+                            <th style="width:5rem" scope="col">Last Update Date </th>
                             <th style="width:5rem" scope="col">GST %</th>
                             <th style="width:5rem" scope="col">Old GST %</th>
                             <th style="width:5rem" scope="col">Cess %</th>
@@ -263,6 +264,7 @@
                             <td>{{ h.color }}</td>
                             <td>{{ h.newvalue }}</td>
                             <td>{{h.oldvalue}}</td>
+                            <td>{{ h.lastupdateddate | date:'dd-MM-yyyy HH:mm' }}</td>
                             <td>{{ h.newGstPer }}</td>
                             <td>{{h.oldGstPer}}</td>
                             <td>{{ h.newCessPer }}</td>
