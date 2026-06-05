@@ -132,10 +132,16 @@ export class SalesOrderReversalComponent implements OnInit {
         this.dataDisplay = 'Credit Memo Generated Successefully.!';
       }
       else{
-        alert(res.message);
+        // alert(res.message);
+        // alert(res.obj[*].trxNumber);
+        let trxNumbers = '';
+        res.obj.forEach((item:any )=> {
+        trxNumbers += item.trxNumber + '\n';
+        });
+        alert(res.message+'\n'+trxNumbers);
         this.closeResetButton = false;
         this.progress = 0;
-        this.dataDisplay = 'Credit Memo Generation Error.!';
+        this.dataDisplay = res.message+'\n'+trxNumbers;
       }
     })
 

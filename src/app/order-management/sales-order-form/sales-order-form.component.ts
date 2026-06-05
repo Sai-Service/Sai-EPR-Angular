@@ -3619,8 +3619,8 @@ updateCDMSDet(){
           return;
         }
       }
-    
-      const vehicleLines = orderLines.filter((x:any) => x.invType === 'SS_VEHICLE');
+     
+      const vehicleLines = orderLines.filter((x:any) => x.invType === 'SS_VEHICLE' && x.pricingQty != 0);
 if (vehicleLines.length > 1) {
   alert('Two Vehicle Line Added. Please Co-Ordinate with IT Team');
   this.dataDisplay = 'Two Vehicle Line Added. Please Co-Ordinate with IT Team !';

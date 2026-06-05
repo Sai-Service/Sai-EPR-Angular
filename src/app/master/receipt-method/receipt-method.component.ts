@@ -12,28 +12,37 @@ import {  OnInit, ViewChild } from '@angular/core';
   styleUrls: ['./receipt-method.component.css']
 })
 export class ReceiptMethodComponent implements OnInit {
- receiptForm: FormGroup;
+  receiptForm: FormGroup;
   searchForm: FormGroup;
-  locId: number;
-  ouId: number;
-  createdBy:number;
-  public CostCenterList:any[];
-  public NaturalAccountList: any[];
-  public MethodTypeList: any[];
-  // methodList: any[] = [];
-  methodNameList: any[] = [];
+  locId!: number;
+  ouId!: number;
+  createdBy!:number;
+  public CostCenterList:any=[];
+  public NaturalAccountList: any=[];
+  public MethodTypeList: any=[];
+  // methodList: any=[] = [];
+  methodNameList: any=[] = [];
 
-  methods: any[]=[];
+  methods: any=[]=[];
   suggestions: string[] = [];
   methodTypeSearch = '';
+  methodNameSearch = '';
   methodSearch = '';
   isEditMode = false;
   isSave = true;
   selectedReceiptMethodId: number | null = null;
-  public BankNameList:any[];
-  customerId: number;
+  public BankNameList:any=[];
+  customerId!: number;
+  branchId!: number;
+  custName!: string;
   lastSearchedMethodType!: string;
   todayDate: string = '';
+  public BankBranchList: any=[];
+  minCheckAmt!: number;
+  maxCheckAmt!: number;
+   public BankNameList1:any=[];
+   orgPartyId!: string;
+   methodName!: string;
 
 
   
@@ -64,9 +73,15 @@ export class ReceiptMethodComponent implements OnInit {
       refundccId: ['',Validators.required],
       bankMethod:['',Validators.required],
       bankAccName: [''],
+      bankId:[''],
+      branchName:[''],
+      minCheckAmt:[''],
+      maxCheckAmt:[''],
       locId: [],
       ouId:[],
-      createdBy:[]
+      createdBy:[],
+      lastUpdatedBy:[],
+      orgPartyId:['']
     });
 
      this.searchForm = this.fb.group({
@@ -140,6 +155,15 @@ export class ReceiptMethodComponent implements OnInit {
           this.BankNameList = data;
           console.log(this.BankNameList);
           this.customerId = data.customerId;
+          this.custName = data.custName;
+        }
+      );
+
+       this.service.BankNameList()
+      .subscribe(
+        data => {
+          this.BankNameList1 = data;
+          console.log(this.BankNameList1);
         }
       );
 
@@ -168,6 +192,15 @@ loadMethodNames(type: string) {
 }
 
 
+selectCustomer(cust:any){
+
+  this.custName = cust.BkName;      // used to load branches
+  this.customerId = cust.customerId;  // used for saving
+
+  this.onBankNameSelected1(this.custName);
+
+}
+
 
 
 
@@ -195,6 +228,15 @@ selectSuggestion(name: string) {
   this.suggestions = [];
 }
 
+//  onBankNameSelected1(BkName: any) {
+//     this.service.BankBranchList(BkName)
+//       .subscribe(
+//         data => {
+//           this.BankBranchList = data.obj;
+//           console.log(this.BankBranchList);
+//         }
+//       );
+//   }
 
 // searchMethod() {
 //   const methodName = this.receiptForm.value.methodTypeSearch;
@@ -245,6 +287,31 @@ selectSuggestion(name: string) {
 //     }
 //   });
 // }
+
+onBankNameSelected1(customerId: any) {
+
+  this.customerId = customerId;   // for saving
+
+  const selected = this.BankNameList.find(
+    (x: any) => x.customerId == customerId
+  );
+
+  if (selected) {
+    this.custName = selected.custName;  // for branch API
+  }
+
+  console.log("customerId:", this.customerId);
+  console.log("custName:", this.custName);
+
+  // load branches using name
+   this.service.BankBranchList(this.custName)
+      .subscribe(
+        data => {
+          this.BankBranchList = data.obj;
+          console.log(this.BankBranchList);
+        }
+      );
+}
 
 searchMethod() {
   const methodName = this.receiptForm.get('methodTypeSearch')?.value?.trim();
@@ -320,6 +387,17 @@ searchMethodType() {
       }
     }
   });
+
+  //  this.service.MethodNameSearch(methodName).subscribe({
+  //   next: (res: any) => {
+  //     if (res?.code === 200 && Array.isArray(res.obj)) {
+  //       this.methods = res.obj; // multiple rows
+  //     } else {
+  //       this.methods = [];
+  //       alert(res?.message || 'No data found');
+  //     }
+  //   }
+  // });
 }
 
 search() {
@@ -420,7 +498,13 @@ refreshTableAfterUpdate() {
      // bankAccountId: null,
       endDate: null,
       bankMethodYn: this.receiptForm.getRawValue().bankMethod,
-      bankAccountId:this.receiptForm.getRawValue().bankAccName
+      bankAccountId:this.receiptForm.getRawValue().bankAccName,
+      bankId:this.receiptForm.getRawValue().bankAccName,
+      branchId:this.receiptForm.getRawValue().branchName,
+      minCheckAmt:this.receiptForm.getRawValue().minCheckAmt,
+      maxCheckAmt:this.receiptForm.getRawValue().maxCheckAmt,
+      lastUpdatedBy:this.createdBy,
+      orgPartyId:this.receiptForm.getRawValue().orgPartyId
     };
       //this.isEditMode = true;
     this.service.saveReceiptMethod(payload).subscribe(
@@ -448,50 +532,108 @@ refreshTableAfterUpdate() {
     );
   }
 
-  selectMethod(m: any) {
+//   selectMethod(m: any) {
 
-     this.selectedReceiptMethodId = m.receiptMethodId;
-     const status = (m.status || '').toString().toUpperCase();
-  this.isEditMode = true;
-  this.isSave = false;
-  this.receiptForm.patchValue({
-    methodType: m.methodType,
-    methodName: m.methodName,
-    Status: m.status,
+   
+
+//      this.selectedReceiptMethodId = m.receiptMethodId;
+//      const status = (m.status || '').toString().toUpperCase();
+//   this.isEditMode = true;
+//   this.isSave = false;
+//   this.receiptForm.patchValue({
+//     methodType: m.methodType,
+//     methodName: m.methodName,
+//     Status: m.status,
 
 
-    startDate: m.startDate,
-    endDate: m.endDate,
+//     startDate: m.startDate,
+//     endDate: m.endDate,
 
-    costCentre: m.costCenter,
+//     costCentre: m.costCenter,
 
-    //earnedccId: m.earnedCcid,
-     unearnedccId: m.unEarnedCcid,
-    // onaccountccId: m.onAccountCcid,
-    earnedccId: m.earnedCcid?.toString(),
-onaccountccId: m.onAccountCcid?.toString(),
+//     //earnedccId: m.earnedCcid,
+//      unearnedccId: m.unEarnedCcid,
+//     // onaccountccId: m.onAccountCcid,
+//     earnedccId: m.earnedCcid?.toString(),
+// onaccountccId: m.onAccountCcid?.toString(),
 
-    receiptclearingccId: m.receiptClearingCcid,
-    remittanceccId: m.remittanceCcid,
-    unidentifiedccId: m.unIdentifiedCcid,
-    unappliedccId: m.unappliedCcid,
-    refundccId: m.refundCcid,
+//     receiptclearingccId: m.receiptClearingCcid,
+//     remittanceccId: m.remittanceCcid,
+//     unidentifiedccId: m.unIdentifiedCcid,
+//     unappliedccId: m.unappliedCcid,
+//     refundccId: m.refundCcid,
 
-    bankMethod: m.bankMethodYn,
-    bankAccName: m.bankAccountId
+//     bankMethod: m.bankMethodYn,
+//    // bankAccName: m.bankAccountId?.toString()
+//    bankAccName: m.bankId
+//   });
+
+//   // Optional: hide search results after selection
+//   // this.methodList = [];
+//   this.receiptForm.get('Status')?.setValue(
+//   (m.status || '').toString().toUpperCase());
+//   this.receiptForm.get('bankAccName')?.setValue(m.bankAccountId);
+
+//   window.scrollTo({ top: 0, behavior: 'smooth' });
+//   this.disableFieldsAfterSelect();
+
+// }
+
+
+selectMethod(m: any) {
+
+  const methodName = m.methodName;   // get from selected row
+
+  this.service.Methodtype(methodName)
+  .subscribe(res => {
+
+    const data = res.obj;
+
+    this.selectedReceiptMethodId = data.receiptMethodId;
+
+    const status = (data.status || '').toString().toUpperCase();
+    const startDate = data.startDate ? data.startDate.split('T')[0] : null;
+
+    this.isEditMode = true;
+    this.isSave = false;
+
+    this.receiptForm.patchValue({
+
+      methodType: data.methodType,
+      methodName: data.methodName,
+      Status: status,
+
+      startDate: startDate,
+      endDate: data.endDate,
+
+      costCentre: data.costCenter,
+
+      unearnedccId: data.unEarnedCcid,
+
+      earnedccId: data.earnedCcid?.toString(),
+      onaccountccId: data.onAccountCcid?.toString(),
+
+      receiptclearingccId: data.receiptClearingCcid,
+      remittanceccId: data.remittanceCcid,
+      unidentifiedccId: data.unIdentifiedCcid,
+      unappliedccId: data.unappliedCcid,
+      refundccId: data.refundCcid,
+
+      bankMethod: data.bankMethodYn,
+
+      bankAccName: data.bankId,
+      branchName:data.branchId,
+      orgPartyId:data.orgPartyId
+
+    });
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    this.disableFieldsAfterSelect();
+
   });
 
-  // Optional: hide search results after selection
-  // this.methodList = [];
-  this.receiptForm.get('Status')?.setValue(
-  (m.status || '').toString().toUpperCase());
-  this.receiptForm.get('bankAccName')?.setValue(m.bankAccountId);
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  this.disableFieldsAfterSelect();
-
 }
-
 disableFieldsAfterSelect() {
   this.receiptForm.get('methodType')?.disable();
   this.receiptForm.get('methodName')?.disable();
@@ -507,6 +649,8 @@ disableFieldsAfterSelect() {
   this.receiptForm.get('unappliedccId')?.disable();
   this.receiptForm.get('bankMethod')?.disable();
   this.receiptForm.get('bankAccName')?.disable();
+  this.receiptForm.get('branchName')?.disable();
+  this.receiptForm.get('orgPartyId')?.disable();
   
 }
 

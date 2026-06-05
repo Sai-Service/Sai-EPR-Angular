@@ -168,6 +168,7 @@ export class CustomerMasterComponent implements OnInit {
   ExeAddress: string;
   divisionName: string;
   name: string;
+  gstCount:any=[];
   public status = "Active";
   displayInactive = true;
   displaystatus = true;
@@ -612,6 +613,26 @@ export class CustomerMasterComponent implements OnInit {
     // var gstno = this.customerMasterForm.get('gstNo').value
     var gstno=event.target.value;
     // alert(gstno+'gst');
+    // debugger;
+  if (gstno !='GSTUNREGISTERED'){
+    if ((gstno !='' || gstno !=undefined || gstno !=null) ){
+      this.service.gstVerficationFn(gstno)
+        .subscribe(
+          data => {
+            this.gstCount = data.gstCount;
+            if (data.Status===1){
+              alert('GST No find successfully.!');
+              const GstNo1 = gstno.substr(2, 10);
+              this.panNo = GstNo1;
+            }
+            else{
+            alert('GST No Not verfied.Please Confirm GST No!');
+             this.customerMasterForm.patchValue({ gstNo: '',panNo:''});
+            }
+          }
+        );
+    }
+  }
     if (gstno === '') {
       this.customerMasterForm.patchValue({ 'gstNo': 'GSTUNREGISTERED' });
       return;
@@ -626,10 +647,12 @@ export class CustomerMasterComponent implements OnInit {
       
       let validgst = patt.test(gstno);
       // alert(validgst);
+      if (gstno != 'GSTUNREGISTERED'){
       if (validgst === false) {
         alert('Please enter valid GST Number');
         this.customerMasterForm.patchValue({ 'gstNo': '' });
         return false;
+        }
       }
       // else {
       //   alert('Please enter valid PAN Number');

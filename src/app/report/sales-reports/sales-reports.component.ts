@@ -2155,6 +2155,9 @@ export class SalesReportsComponent implements OnInit {
           })
       }
       if (Number(sessionStorage.getItem('deptId')) === 4) {
+        if (locId==undefined || locId==null|| locId==''){
+          locId=' '
+        }
         this.reportService.salesPendingPaymentDtlsFn(toDate, sessionStorage.getItem('ouId'), locId)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);

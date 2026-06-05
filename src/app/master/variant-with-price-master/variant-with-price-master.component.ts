@@ -72,8 +72,8 @@ export class VariantWithPriceMasterComponent implements OnInit {
   colorListNew: any = [];
   varianListNew: any = [];
   colorCode!: string;
-  attribute1!: number;
-  attribute2!: number;
+  attribute4!: number;
+  attribute5!: number;
 
   constructor(private service: MasterService, private fb: FormBuilder, private router: Router) {
     this.variantMasterForm = fb.group({
@@ -119,8 +119,8 @@ export class VariantWithPriceMasterComponent implements OnInit {
       variant1: [],
       colorCode: [],
       locId: [],
-      attribute1: [],
-      attribute2: []
+      attribute4: [],
+      attribute5: []
     })
   }
 

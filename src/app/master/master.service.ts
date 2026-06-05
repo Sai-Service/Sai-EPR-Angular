@@ -4948,6 +4948,25 @@ UpdateVariantPrice(variantPriceRecord: any) {
   );
 }
 
+ viewPo(poNo): Observable<any> {
+    const REQUEST_URI = this.ServerUrl + `/rcvShipment/POPrint/${poNo}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+  BankNameList(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/Customer/ClassCodeCompany', { headers: this.headers });
+  }
+
+   BankBranchList(BkName: any): Observable<any> {
+    return this.http.get(this.ServerUrl + `/ceBankBranch/branchList/${BkName}`, { headers: this.headers });
+  }
+
+gstVerficationFn(gstNo: any): Observable<any> {
+    return this.http.get(`http://172.16.21.3:8051/gstVerify/gstin/${gstNo}`);
+  }
 
 }
 

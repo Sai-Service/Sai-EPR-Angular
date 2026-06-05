@@ -1004,6 +1004,9 @@ updateCDMSDetFn(orderNumber:any, msRefCustNo:any, msRefNo:any, msRefType:any) {
 getBackOrderByUser(fromDate:any,toDate :any,locId:any): Observable<any> {
     return this.http.get(this.ServerUrl + `/spareOrder/FindByBackOrder?fromDt=${fromDate}&tDate=${toDate}&locId=${locId}`);
   }
+reversalOrderFn(orderNumber:any,emplId:any): Observable<any>{
+  return this.http.get(this.ServerUrl + `/arInv/OMVHSalesReversalNew?orderNumber=${orderNumber}&emplId=${emplId}`);
+}
 
 }
 

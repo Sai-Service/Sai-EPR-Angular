@@ -608,6 +608,33 @@ export class InternalConsumptionComponent implements OnInit {
             });
         }
 
+
+
+        // ---------------------
+         else if (reasonArray[2].includes('IC53') ||  reasonArray[2].includes('IC52') && value1 == 'NDP') {
+          this.service.getCostDetail(Number(sessionStorage.getItem('locId')), select1.itemId).subscribe
+            (data => {
+              this.CostDetail = data;
+              trxLnArr1.controls[i].patchValue({ itemUnitCost: this.CostDetail.rate });
+              if (this.CostDetail.rate === 0.0) {
+                alert(this.CostDetail.segment);
+              }
+            });
+        }
+
+         else if (reasonArray[2].includes('IC53') || reasonArray[2].includes('IC52') && value1 == 'MRP') {
+          this.service.getCostDetail(Number(sessionStorage.getItem('locId')), select1.itemId).subscribe
+            (data => {
+              this.CostDetail = data;
+              trxLnArr1.controls[i].patchValue({ itemUnitCost: this.CostDetail.rate });
+              if (this.CostDetail.rate === 0.0) {
+                alert(this.CostDetail.segment);
+              }
+            });
+        }
+
+        // -------------------------
+
         else if (reasonArray[2].includes('EW')) {
           this.service.getCostDetailforWarranty(Number(sessionStorage.getItem('locId')), select1.itemId).subscribe
             (data => {

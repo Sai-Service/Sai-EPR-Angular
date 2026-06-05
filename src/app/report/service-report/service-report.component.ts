@@ -702,7 +702,7 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleEwayBillChalan = false;
       this.isVisiblespDebtorsReport=false;
        this.isVisiblespDebtorsReport1=false;
-      if (Number(sessionStorage.getItem('deptId')) === 4) {
+      if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         this.isVisiblelocationInput = false;
         this.isVisiblelocationLOV = true;
       }
@@ -710,14 +710,14 @@ export class ServiceReportComponent implements OnInit {
         this.isVisiblelocationLOV = false;
         this.isVisiblelocationInput = true;
       }
-       if (Number(sessionStorage.getItem('roleId')) === 10) {
-        this.isVisiblelocationInput = false;
-        this.isVisiblelocationLOV = true;
-      }
-      else {
-        this.isVisiblelocationLOV = false;
-        this.isVisiblelocationInput = true;
-      }
+      //  if (Number(sessionStorage.getItem('roleId')) === 10) {
+      //   this.isVisiblelocationInput = false;
+      //   this.isVisiblelocationLOV = true;
+      // }
+      // else {
+      //   this.isVisiblelocationLOV = false;
+      //   this.isVisiblelocationInput = true;
+      // }
 
     }
     else if (reportName == 'ewayBillChallanPrint') {
@@ -1491,9 +1491,11 @@ export class ServiceReportComponent implements OnInit {
     else if (reportName === '24. Warranty Claim internal Consumption') {
       var subInventory = this.serviceReportForm.get('subInventory')?.value;
       this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
-
       const fileName = 'Warranty Claim internal Consumption Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (locId === undefined){
+        locId='';
+      }
       if ((Number(sessionStorage.getItem('deptId')) === 4)  || Number(sessionStorage.getItem('roleId'))==10) {
         this.reportService.warrantyClaimInternalConsuFuc(fromDate, toDate, locId, subInventory)
           .subscribe(data => {

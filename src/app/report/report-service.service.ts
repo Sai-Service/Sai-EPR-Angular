@@ -417,6 +417,14 @@ export class ReportServiceService {
     });
   }
 
+  paintMainColorCreationFn(fromDate,toDate,ouId){
+    const REQUEST_URI = this.ServerUrl +`/PaintReports/PnMainClrRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
   shortLandedClaimReport(fromDate,toDate,ouId,locaId,deptId){
     const REQUEST_URI = this.ServerUrl +`/AccountsReports/ShortLandedRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locaId}&deptId=${deptId}`;
     return this.http.get(REQUEST_URI, {
