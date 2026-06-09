@@ -219,7 +219,9 @@ export class ServiceReportComponent implements OnInit {
 
   reportName: string;
   reportDetails(reportName) {
+    // alert(reportName)
     if (reportName === 'jobcardsummary') {
+      // alert(reportName)
       this.reportName = 'Job Card Summary';
       this.isVisiblepanelfromtolocation = true;
       this.isVisiblefromtolocationdepartment = false;
@@ -334,6 +336,22 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleEwayBillChalan = false;
        this.isVisiblespDebtorsReport1=false;
        this.isVisiblespDebtorsReport=false;
+        if (Number(sessionStorage.getItem('deptId'))==4){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+      if (Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
+       if (Number(sessionStorage.getItem('roleId'))==10){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+     if (Number(sessionStorage.getItem('roleId')) !=10 && Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
     }
     else if (reportName === 'gstReceiptRegister') {
       this.reportName = 'Receipt Register';
@@ -351,7 +369,6 @@ export class ServiceReportComponent implements OnInit {
       }
        if (Number(sessionStorage.getItem('deptId')) != 4) {
         this.isVisibleDepartmentList = false;
-        // this.isVisiblegstsaiDebtors = true;
         this.isVisiblelocationInput=true;
         this.isVisiblelocationLOV=false;
        }
@@ -565,6 +582,22 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleEwayBillChalan = false;
        this.isVisiblespDebtorsReport1=false;
        this.isVisiblespDebtorsReport=false;
+          if (Number(sessionStorage.getItem('deptId'))==4){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+      if (Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
+       if (Number(sessionStorage.getItem('roleId'))==10){
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+     if (Number(sessionStorage.getItem('roleId')) !=10 && Number(sessionStorage.getItem('deptId')) !=4){
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+      }
     }
     else if (reportName == 'amcHistrory') {
       this.reportName = 'AMC History Report';

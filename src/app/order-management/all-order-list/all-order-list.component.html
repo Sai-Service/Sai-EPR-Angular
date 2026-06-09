@@ -75,6 +75,7 @@
                 <th >Receipt Date</th>
                 <th >Receipt Amt</th>
                 <th >Invoice Amt</th>
+                <th >Total Amt</th>
                 <th >Receipt Status</th>
                 <th>Invoice Status</th>
                 <th> IRN Status</th>
@@ -101,6 +102,9 @@
                 <td style="padding-left: 5px; text-align: right;">{{com.reAmt}}&nbsp;&nbsp;
                 </td>
                 <td style="padding-left: 5px; text-align: right;">{{com.invAmt}}&nbsp;&nbsp;
+                </td>
+                <td style="padding-left: 5px; text-align: right;">
+                    {{ com.totAmt | number:'1.2-2' }}&nbsp;&nbsp;
                 </td>
                 <td style="padding-left: 5px; text-align: right;">{{com.reStatus}}&nbsp;&nbsp;
                 </td>
