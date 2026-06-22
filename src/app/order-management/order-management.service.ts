@@ -1008,6 +1008,9 @@ reversalOrderFn(orderNumber:any,emplId:any): Observable<any>{
   return this.http.get(this.ServerUrl + `/arInv/OMVHSalesReversalNew?orderNumber=${orderNumber}&emplId=${emplId}`);
 }
 
+invoicestatuscheck(orderNumber:any): Observable<any>{
+  return this.http.get(this.ServerUrl + `/orderHeader/getCntrInvRcptStatus?orderNumber=${orderNumber}`);
+}
 }
 
 

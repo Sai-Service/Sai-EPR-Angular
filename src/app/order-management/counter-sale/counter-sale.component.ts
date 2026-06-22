@@ -3,7 +3,7 @@ import { FormGroup, FormControl, FormBuilder, FormControlName, NgForm, Validator
 import { Url } from 'url';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 // import { MasterService } from 'src/app/master/master.service';
-import {MasterService} from '../../master/master.service'
+import { MasterService } from '../../master/master.service'
 // import { TransactionService } from 'src/app/transaction/transaction.service';
 import { TransactionService } from '../../transaction/transaction.service'
 // import { OrderManagementService } from 'src/app/order-management/order-management.service';
@@ -121,6 +121,10 @@ export class reserveLine {
 export class CounterSaleComponent implements OnInit, OnDestroy {
 
   CounterSaleOrderBookingForm: FormGroup;
+  csorderStatus!: string | null;
+  csreceiptAmt!: string | null;
+  csmessages!:string;
+  csrcptBalNew!: number;
   itemSeg: string = "";
   lnflowStatusCode!: 'BOOKED';
   refCustNo!: string;
@@ -163,10 +167,10 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   taxAmt!: number;
   discType!: string;
   locData: any = [];
-  deptName!: string|null;
+  deptName!: string | null;
   resveQty!: number;
   resrveqty: any;
-  loginArray!: string|null;
+  loginArray!: string | null;
   frmLocatorName!: string;
   userList2: any[] = [];
   lastkeydown1: number = 0;
@@ -197,10 +201,10 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   displayPerson!: boolean;
   displaycustPoDate = true;
   public minDate = new Date();
-  public cityList: Array<string>=[];
-  public issueCodeTypeList: any=[];
+  public cityList: Array<string> = [];
+  public issueCodeTypeList: any = [];
   public status = "Active";
-  public titleList: Array<string>=[];
+  public titleList: Array<string> = [];
   displayOrgnization!: boolean;
   PersonType: any;
   classCodeType!: string;
@@ -241,7 +245,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   showApplyDiscount = true;
   displayothRefNo = true;
   selectedLine = 0;
-  categoryList: any=[];
+  categoryList: any = [];
   custSiteList: any = [];
   // orderedDate:Date;
   diss!: number;
@@ -257,7 +261,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   dept!: number;
   baseAmt!: number;
   discAmt!: number;
-  issuedBy!: string|null;
+  issuedBy!: string | null;
   orderedItem!: string;
   emplId!: number;
   taxCategoryId!: number;
@@ -276,7 +280,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   shipToLocId!: number;
   billLocName!: string;
   shipLocName!: string;
-  locCode!: string|null;
+  locCode!: string | null;
   customerId!: number;
   custType!: string;
   custAccountNo!: number;
@@ -306,11 +310,11 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   // transactionTypeName:string;
   deptId!: number;
   // createOrderType:string;
-  ticketNo!: string|null;
+  ticketNo!: string | null;
   // locId:number;
   panNo!: string;
   SelectCustType!: string;
-  ouName!: string|null;
+  ouName!: string | null;
   gstNo!: string;
   msRefCustNo!: string;
   msRefNo!: string;
@@ -318,15 +322,15 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   taxCategoryName!: string;
   public taxCategoryList: any = [];
   public allTaxCategoryList: any = [];
-  lstgetOrderLineDetails: any=[];
-  lstgetOrderTaxDetails: any=[];
+  lstgetOrderLineDetails: any = [];
+  lstgetOrderTaxDetails: any = [];
   custSiteAddressList: any;
   newCustomerButton = true;
   PaymentButton = true;
   displaysegment = true;
-  lstInvLineDeatails1: any=[];
-  createOrderTypeList: any=[];
-  createOrderTypeAllList: any=[];
+  lstInvLineDeatails1: any = [];
+  createOrderTypeList: any = [];
+  createOrderTypeAllList: any = [];
   allDatastore: any;
   displayorderLineDetailsPart = true;
   public payTermDescList: any = [];
@@ -335,8 +339,8 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   public taxCalforItem: any;
   public salesRepNameList: any;
   public priceListNameList: any;
-  invItemList1: any=[];
-  public addonDescList: any=[];
+  invItemList1: any = [];
+  public addonDescList: any = [];
   displaycustAccountNo = true;
   displaycounterSaleOrderSave = true;
   displayaddRow = true;
@@ -435,6 +439,9 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       classCodeType: [''],
       // uuidRef: [''],
       taxCategoryName: [''],
+      csorderStatus: [''],
+      csreceiptAmt: [''],
+      csrcptBalNew: [''],
       perAdd: [''],
       disPer: [''],
       issueCodeType1: [''],
@@ -830,10 +837,25 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   }
 
 
+  csinvoiceLock(orderNumber: any) {
+    this.orderManagementService.invoicestatuscheck(orderNumber)
+      .subscribe(
+        data1 => {
+          this.csmessages=data1.message;
+          if (data1.code==200){
+          this.csorderStatus = data1.obj.orderStatus;
+          this.csreceiptAmt = data1.obj.receiptAmt;
+          this.csrcptBalNew = data1.obj.rcptBalNew;
+          }
+        }
+      );
+
+  }
 
 
-  OrderFind(orderNumber:any) {
+  OrderFind(orderNumber: any) {
     this.op = 'Search';
+    this.csinvoiceLock(orderNumber)
     this.isDisabled11 = true;
     this.displayothRefNo = false;
     // this.isDisabled10=false;
@@ -897,7 +919,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               var invLn = Number(invLnNo - 1);
               control1.push(this.TaxDetailsGroup());
               var lenNo = x + 1;
-              let taxes = this.lstgetOrderTaxDetails.filter((customer:any) => (customer.invLineNo === lenNo));
+              let taxes = this.lstgetOrderTaxDetails.filter((customer: any) => (customer.invLineNo === lenNo));
               this.taxMap.set(String(x), taxes);
             }
             var taxItemsArray = this.CounterSaleOrderBookingForm.get('taxAmounts')?.value;
@@ -1174,7 +1196,11 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   downloadCSINV() {
     var invoiceNumber = this.CounterSaleOrderBookingForm.get('trxNumber')?.value;
     const fileName = 'download.pdf';
-    // const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+    if (this.csorderStatus === 'INVOICED' && this.csrcptBalNew < 0 && (this.csreceiptAmt === null || this.csreceiptAmt === undefined)) {
+      // 👉 Your logic here
+      alert(this.csmessages+' '+".Invoice will not print until receipt generation and application.!");
+      return;
+    }
     if (this.divisionId === 1) {
       this.orderManagementService.downloadCSINV(this.orderNumber)
         .subscribe(data => {
@@ -1283,7 +1309,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         // window.location.reload();
       } else {
         if (res.code === 400) {
-          alert(res.message + '---'+res.obj);
+          alert(res.message + '---' + res.obj);
           this.CounterSaleOrderBookingForm.reset();
           this.dataDisplay = res.obj;
           this.closeResetButton = true;
@@ -1332,6 +1358,11 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
   viewReceipt() {
     var orderNumber = this.CounterSaleOrderBookingForm.get('orderNumber')?.value;
+    if (this.csorderStatus === 'INVOICED' && this.csrcptBalNew < 0 && (this.csreceiptAmt === null || this.csreceiptAmt === undefined)) {
+      // 👉 Your logic here
+       alert(this.csmessages+' '+".Invoice will not print until receipt generation and application.!");
+      return;
+    }
     const fileName = 'download.pdf';
     const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
     this.orderManagementService.viewReceipt(orderNumber)
@@ -1365,7 +1396,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     window.location.reload();
   }
 
-  onOptionsSelectedTL(createOrderType:any) {
+  onOptionsSelectedTL(createOrderType: any) {
     // alert(createOrderType1.target.value);
     // var createOrderType=createOrderType1.target.value
     // alert(createOrderType);
@@ -1477,7 +1508,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
 
 
-  searchFromArray1(arr:any, regex:any) {
+  searchFromArray1(arr: any, regex: any) {
     let matches = [], i;
     for (i = 0; i < arr.length; i++) {
       if (arr[i].match(regex)) {
@@ -1487,7 +1518,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     return matches;
   };
 
-  accountNoSearch(custAccountNo:any) {
+  accountNoSearch(custAccountNo: any) {
     // alert(custAccountNo);
     this.service.searchCustomerByAccount(custAccountNo)
       .subscribe(
@@ -1511,7 +1542,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
             this.CounterSaleOrderBookingForm.patchValue({ tcsPer: data.obj.tcsPer });
             this.CounterSaleOrderBookingForm.patchValue({ custAccountNo: custAccountNo });
-            let select = this.payTermDescList.find((d:any) => d.lookupValueId === this.selCustomer.termId);
+            let select = this.payTermDescList.find((d: any) => d.lookupValueId === this.selCustomer.termId);
             // this.paymentType = select.lookupValue;
             console.log(this.custSiteList);
 
@@ -1547,7 +1578,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               this.displaywalkingCustomer = false;
               this.CounterSaleOrderBookingForm.patchValue({ discType: 'Header Level Discount' });
               this.displaydisPer = false;
-              let select = this.orderTypeList.find((d:any) => d.transactionTypeName.includes('Cash'));
+              let select = this.orderTypeList.find((d: any) => d.transactionTypeName.includes('Cash'));
               this.CounterSaleOrderBookingForm.patchValue({ transactionTypeName: select.transactionTypeName });
               this.CounterSaleOrderBookingForm.patchValue({ walkCustPan: 'Applied For' });
               this.CounterSaleOrderBookingForm.patchValue({ createOrderType: 'Direct Invoice' });
@@ -1630,11 +1661,11 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
 
 
-  onOptionsSelectedcustSiteName(siteName:any) {
+  onOptionsSelectedcustSiteName(siteName: any) {
     // alert(siteName);
     // siteName= siteName.target.value;
     //  alert(sessionStorage.getItem('ouId'));
-    let selSite = this.custSiteList.find((d:any) => d.siteName === siteName);
+    let selSite = this.custSiteList.find((d: any) => d.siteName === siteName);
     // alert(selSite.taxCategoryName)
     console.log(selSite);
     console.log(this.custSiteList);
@@ -1720,10 +1751,10 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       this.displaywalkingCustomer = false;
       this.CounterSaleOrderBookingForm.patchValue({ discType: 'Header Level Discount' });
       this.displaydisPer = false;
-      let select = this.orderTypeList.find((d:any) => d.transactionTypeName.includes('Cash'));
+      let select = this.orderTypeList.find((d: any) => d.transactionTypeName.includes('Cash'));
       console.log(this.createOrderTypeList);
       this.CounterSaleOrderBookingForm.patchValue({ transactionTypeName: select.transactionTypeName });
-      var createOrderList = this.createOrderTypeAllList.filter((orderType:any) => (orderType.codeDesc.includes('Direct Invoice') == true));
+      var createOrderList = this.createOrderTypeAllList.filter((orderType: any) => (orderType.codeDesc.includes('Direct Invoice') == true));
       console.log(createOrderList);
       //  this.createOrderTypeList=createOrderList;
       this.CounterSaleOrderBookingForm.patchValue({ createOrderType: createOrderList[0].code });
@@ -1740,17 +1771,17 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     }
     if (this.transactionTypeName.includes('Sale - Credit')) {
       console.log(this.createOrderTypeList);
-      let createOrderList = this.createOrderTypeAllList.filter((customer:any) => (customer.codeDesc.includes('Direct Invoice') == false));
+      let createOrderList = this.createOrderTypeAllList.filter((customer: any) => (customer.codeDesc.includes('Direct Invoice') == false));
       console.log(createOrderList);
       this.createOrderTypeList = createOrderList;
     }
     // this.CounterSaleOrderBookingForm.patchValue({ createOrderType: 'Pick Ticket' });
   }
 
-  salesOrderDetails(event:any) {
+  salesOrderDetails(event: any) {
     // alert(event.target.value); 
     var orderNumber = event.target.value;
-    let orderNumberDetails = this.othRefNoSearchFnData.find((d:any) => Number(d.orderNumber1) === Number(orderNumber));
+    let orderNumberDetails = this.othRefNoSearchFnData.find((d: any) => Number(d.orderNumber1) === Number(orderNumber));
     console.log(orderNumberDetails);
     this.salesRepName = orderNumberDetails.salesRepName1;
     this.tlName = orderNumberDetails.tlName1;
@@ -1790,7 +1821,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   }
 
 
-  contactNoSearch(mobile1:any) {
+  contactNoSearch(mobile1: any) {
     // alert(mobile1)
     this.orderManagementService.contactNoSearchFn(mobile1, this.ouId)
       .subscribe(
@@ -1820,7 +1851,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
 
 
-  getGroupControllinewise(index:any, fieldName:any) {
+  getGroupControllinewise(index: any, fieldName: any) {
     // alert('nam'+fieldName);
     return (<FormArray>this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList')).at(index).get(fieldName);
 
@@ -1828,7 +1859,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
 
 
-  custNameSearch(custName:any) {
+  custNameSearch(custName: any) {
     // alert(custName)
     this.orderManagementService.custNameSearchFn1(custName, sessionStorage.getItem('divisionId'))
       .subscribe(
@@ -1847,7 +1878,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   }
 
 
-  validate(index: number, qty1:any) {
+  validate(index: number, qty1: any) {
     // var trxLnArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var trxLnArr = trxLnArr1.getRawValue();
@@ -1869,7 +1900,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     }
     var transactionTypeName = this.CounterSaleOrderBookingForm.get('transactionTypeName')?.value;
     var createOrderType = this.CounterSaleOrderBookingForm.get('createOrderType')?.value;
-    let selloc = this.locData[index].find((d:any) => Number(d.ROWNUM) === Number(locator));
+    let selloc = this.locData[index].find((d: any) => Number(d.ROWNUM) === Number(locator));
     console.log(this.locData[index]);
     if (createOrderType === 'Pick Ticket' && transactionTypeName.includes('Credit') && Avalqty === 0) {
       var bckOrd = qty1 - Avalqty;
@@ -1915,7 +1946,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     }
   }
 
-  onKey(index:any, fldName:any, event:any) {
+  onKey(index: any, fldName: any, event: any) {
     if (event.keyCode != 13) {
       var arrayControlNew = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
       var arrayControl = arrayControlNew.getRawValue();
@@ -1953,7 +1984,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       let select;
       var taxCategoryId = arrayControl[index].taxCategoryId;
       if (taxCategoryId === null) {
-        select = this.taxCategoryList[index].find((d:any) => d.taxCategoryName === taxcatName.taxCategoryName);
+        select = this.taxCategoryList[index].find((d: any) => d.taxCategoryName === taxcatName.taxCategoryName);
         taxCategoryId = select.taxCategoryId;
         patch.controls[index].patchValue({ taxCategoryId: taxCategoryId });
         patch.controls[index].patchValue({ taxCategoryName: select });
@@ -1986,7 +2017,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
       this.service.taxCalforItem(itemId, taxCategoryId, disAmt1, baseAmt)
         .subscribe(
-          (data: any=[]) => {
+          (data: any = []) => {
             this.taxCalforItem = data;
             console.log(this.taxCalforItem);
             // debugger;
@@ -2057,13 +2088,13 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
 
 
-  onOptionsSelectedDescription(segment: string, k:any) {
+  onOptionsSelectedDescription(segment: string, k: any) {
     // debugger;
     if (segment != undefined && segment != "") {
       this.displayorderHedaerDetails = false;
       this.displaysalesRepName = true;
       if (this.op != 'Search') {
-        let selPayTerm = this.payTermDescList.find((d:any) => d.lookupValueId === this.selCustomer.termId);
+        let selPayTerm = this.payTermDescList.find((d: any) => d.lookupValueId === this.selCustomer.termId);
         this.paymentType = selPayTerm.lookupValue;
       }
       var orderedDate = this.pipe.transform(this.now, 'dd-MMM-yyyy');
@@ -2099,7 +2130,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
               .subscribe(
                 data => {
                   if (data.code === 200) {
-                   
+
                     this.addonDescList = data.obj;
                     for (let i = 0; i < data.obj.length; i++) {
                       var itemtaxCatNm: string = data.obj[i].taxCategoryName;
@@ -2118,7 +2149,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                               console.log(this.taxCategoryList[k]);
                               console.log(data.obj[i].taxCategoryName);
                               this.allTaxCategoryList[k] = data1;
-                              let itemCateNameList = this.taxCategoryList[k].find((d:any) => d.taxCategoryName === data.obj[i].taxCategoryName);
+                              let itemCateNameList = this.taxCategoryList[k].find((d: any) => d.taxCategoryName === data.obj[i].taxCategoryName);
                               console.log(itemCateNameList);
 
                               (controlinv.controls[k]).patchValue({
@@ -2213,7 +2244,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                       // alert(data.obj.length)
                       var taxCatNm: string = data.obj[i].taxCategoryName;
                       var mrp = data.obj[0].mrp;
-                      if (taxCatNm.includes('Sale-Disc-S&C') ) {
+                      if (taxCatNm.includes('Sale-Disc-S&C')) {
                         (controlinv.controls[k]).patchValue({
                           itemId: data.obj[i].itemId,
                           orderedItem: data.obj[i].description,
@@ -2227,7 +2258,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
                             data1 => {
                               this.taxCategoryList[k] = data1;
                               this.allTaxCategoryList[k] = data1;
-                              let itemCateNameList = this.taxCategoryList[k].find((d:any) => d.taxCategoryName === data.obj[i].taxCategoryName);
+                              let itemCateNameList = this.taxCategoryList[k].find((d: any) => d.taxCategoryName === data.obj[i].taxCategoryName);
                               (controlinv.controls[k]).patchValue({
                                 taxCategoryId: itemCateNameList.taxCategoryId,
                                 taxCategoryName: itemCateNameList,
@@ -2352,11 +2383,11 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   }
 
 
-  onSelLocaPrice(event: Number, i:any) {
+  onSelLocaPrice(event: Number, i: any) {
     console.log(event);
     console.log(this.locData);
     var linLocData = this.locData[i];
-    let selloc = linLocData.find((d:any) => Number(d.ROWNUM) === Number(event));
+    let selloc = linLocData.find((d: any) => Number(d.ROWNUM) === Number(event));
     console.log(selloc);
     var trxLnArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList')?.value;
     var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
@@ -2375,7 +2406,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   }
 
 
-  resverQty(i:any, itemId:any, locatorId:any, prc:any) {
+  resverQty(i: any, itemId: any, locatorId: any, prc: any) {
     let controlinv = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     this.service.getreserqtyNew(this.locId, itemId, locatorId, prc).subscribe
       (data => {
@@ -2386,7 +2417,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       });
   }
 
-  AvailQty(i:any, itemId:any, calledFrom:any) {
+  AvailQty(i: any, itemId: any, calledFrom: any) {
     var trxLnArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList')?.value;
     var trxLnFormArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     if (itemId === undefined) {
@@ -2396,7 +2427,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     // debugger;
     if (calledFrom === 'Item') {
       var linLocData = this.locData[i];
-      let sellocId = linLocData.find((d:any) => Number(d.ROWNUM) === trxLnArr[i].frmLocatorId);
+      let sellocId = linLocData.find((d: any) => Number(d.ROWNUM) === trxLnArr[i].frmLocatorId);
       locId = sellocId.locatorId;
       // alert(locId);
       (trxLnFormArr.controls[i]).patchValue({
@@ -2454,13 +2485,13 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   }
 
 
-  onOptionTaxCatSelected(taxCategoryName:any, i:any) {
+  onOptionTaxCatSelected(taxCategoryName: any, i: any) {
     this.indexVal = i;
     var arrayControl = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList')?.value;
 
     var amount = arrayControl[i].unitSellingPrice;
 
-    let select = this.taxCategoryList[i].find((d:any) => d.taxCategoryName === taxCategoryName);
+    let select = this.taxCategoryList[i].find((d: any) => d.taxCategoryName === taxCategoryName);
 
     this.taxCategoryId = select.taxCategoryId;
     console.log(this.taxCategoryId);
@@ -2470,7 +2501,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     if (this.baseAmt != undefined) {
       this.service.taxCalforItem(this.itemId, this.taxCategoryId, diss, this.baseAmt)
         .subscribe(
-          (data: any=[]) => {
+          (data: any = []) => {
             this.lstInvLineDeatails1 = data;
             console.log(this.lstInvLineDeatails1);
             let controlinv1 = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray;
@@ -2491,7 +2522,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
 
 
-  transData(val:any) {
+  transData(val: any) {
     return val;
   }
 
@@ -2548,7 +2579,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     });
   }
 
-  discountTaxValidation(k:any) {
+  discountTaxValidation(k: any) {
     var orderLines1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var orderLines = orderLines1.getRawValue();
     // for (let k=0; k < orderLines.length; k++){
@@ -2581,7 +2612,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       var orderLines1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
       var orderLines = orderLines1.getRawValue();
       console.log(orderLines);
-      
+
       var custName = this.CounterSaleOrderBookingForm.get('custName')?.value;
       var walkCustName = this.CounterSaleOrderBookingForm.get('walkCustName')?.value;
       var walkCustPan = this.CounterSaleOrderBookingForm.get('walkCustPan')?.value;
@@ -2721,7 +2752,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     }
   }
 
-  addRow(i:any) {
+  addRow(i: any) {
     // alert(i+'--------i value')
     var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList')?.value;
     if (this.op == 'Search') {
@@ -2810,7 +2841,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
 
 
-  addRow1(i:any) {
+  addRow1(i: any) {
     var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList')?.value;
 
     var trxLnArr2 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
@@ -2886,7 +2917,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
 
 
-  enterKeyLock(event:any, i:any) {
+  enterKeyLock(event: any, i: any) {
     // alert(event.key)
     console.log(event);
     if (event.keyCode === 9) {
@@ -2902,7 +2933,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
   }
 
-  updateTotAmtPerline(lineIndex:any) {
+  updateTotAmtPerline(lineIndex: any) {
     var formArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var formVal = formArr.getRawValue();
     var tcsPer = this.CounterSaleOrderBookingForm.get('tcsPer')?.value;
@@ -3011,7 +3042,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   }
 
 
-  RemoveRow(OrderLineIndex:any) {
+  RemoveRow(OrderLineIndex: any) {
     // alert(OrderLineIndex)
     // var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList').value;
     var trxLnArr2 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
@@ -3048,7 +3079,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     this.updateTotAmtPerline(0);
   }
 
-  updateLineOnCancel(i:any) {
+  updateLineOnCancel(i: any) {
     var trxArrVal = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList')?.value;
     var trxArr = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     var taxArrVal = this.CounterSaleOrderBookingForm.get('taxAmounts')?.value;
@@ -3112,7 +3143,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
 
 
-  addDiscount(lnNo:any) {
+  addDiscount(lnNo: any) {
     // alert(lnNo)
     // debugger;
     let controlinv2 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
@@ -3159,7 +3190,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
 
 
-  validateNum(index:any, j:any) {
+  validateNum(index: any, j: any) {
     var arrayControl = this.CounterSaleOrderBookingForm.get('taxAmounts')?.value
     // this.TaxDetailsArray().controls[index].get('taxAmounts').value;
     // this.poMasterDtoForm.get('poLines').value
@@ -3173,7 +3204,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
 
 
-  taxDetails(op:any, i:any, taxCategoryId:any) {
+  taxDetails(op: any, i: any, taxCategoryId: any) {
     // alert(i);
     this.TaxDetailsArray().clear();
     this.TaxDetailsArray().disable();
@@ -3230,7 +3261,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       var itemId = invLine[i].itemId;
       this.service.taxCalforItem(itemId, taxCategoryId, disAmt1, baseAmt1)
         .subscribe(
-          (data: any=[]) => {
+          (data: any = []) => {
             this.taxCalforItem = data;
             var sum = 0;
             for (i = 0; i < this.taxCalforItem.length; i++) {
@@ -3261,13 +3292,13 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
 
 
-  patchResultList(i:any, taxCalforItem:any, invLineNo:any, invLineItemId:any) {
+  patchResultList(i: any, taxCalforItem: any, invLineNo: any, invLineItemId: any) {
     // alert( 'Discount Add Inv Line Number' +'--- '+ invLineNo)
     alert('Tax has been applied.')
     let control = this.CounterSaleOrderBookingForm.get('taxAmounts') as FormArray
     control.clear();
     // alert('in patch' + this.taxCalforItem);
-    taxCalforItem.forEach((x:any) => {
+    taxCalforItem.forEach((x: any) => {
       console.log('in patch' + taxCalforItem);
       console.log(x.taxRateName);
       control.push(this.fb.group({
@@ -3356,7 +3387,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     }
 
   }
-  mergeCustName(fName:any, mName:any, lName:any) {
+  mergeCustName(fName: any, mName: any, lName: any) {
     const aaa = fName + ' ' + mName + ' ' + lName;
     this.custName = aaa;
   }
@@ -3379,10 +3410,10 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     }
 
   }
-  transDataWithSite(val:any) { }
+  transDataWithSite(val: any) { }
 
 
-  onOptionsSelectedDiscountType(discType:any) {
+  onOptionsSelectedDiscountType(discType: any) {
     // alert(discType)
     if (discType === 'Header Level Discount') {
       this.displaydisPer = false;
@@ -3394,7 +3425,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     }
   }
 
-  onOptionsSelectedDiscountPer(disPer:any) {
+  onOptionsSelectedDiscountPer(disPer: any) {
     // alert(disPer);
     var patch = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
     // alert(patch.length)
@@ -3424,9 +3455,9 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   hideloader() {
     const loading = document.getElementById('loading');
     if (loading) {
-  loading.style.display = 'none';
-}
-  //  document.getElementById('loading').style.display = 'none';
+      loading.style.display = 'none';
+    }
+    //  document.getElementById('loading').style.display = 'none';
   }
 
 
@@ -3447,7 +3478,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       console.log(this.orderTypeList);
 
       // alert(this.transactionTypeName);
-      let select = this.orderTypeList.find((d:any) => d.transactionTypeName === this.transactionTypeName);
+      let select = this.orderTypeList.find((d: any) => d.transactionTypeName === this.transactionTypeName);
       console.log(select);
       // alert(select.transactionTypeId)
       this.CounterSaleOrderBookingForm.patchValue({ transactionTypeId: select.transactionTypeId })
@@ -3460,19 +3491,19 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       // debugger;
       if (transactionTypeName.includes('Cash')) {
         console.log(this.createOrderTypeAllList + '-----create');
-        let selectTrx = this.createOrderTypeAllList.find((d:any) => d.code === 'Direct Invoice');
+        let selectTrx = this.createOrderTypeAllList.find((d: any) => d.code === 'Direct Invoice');
         this.CounterSaleOrderBookingForm.patchValue({ createOrderType: selectTrx.codeDesc });
         this.setFocus('createOrderType');
-        let createOrderList = this.createOrderTypeAllList.filter((customer:any) => (customer.codeDesc.includes('Direct Invoice') == true));
+        let createOrderList = this.createOrderTypeAllList.filter((customer: any) => (customer.codeDesc.includes('Direct Invoice') == true));
         console.log(createOrderList);
         this.createOrderTypeList = createOrderList;
 
       }
       if (transactionTypeName.includes('Credit')) {
-        let selectTrx = this.createOrderTypeAllList.find((d:any) => d.code === 'Pick Ticket');
+        let selectTrx = this.createOrderTypeAllList.find((d: any) => d.code === 'Pick Ticket');
         this.CounterSaleOrderBookingForm.patchValue({ createOrderType: selectTrx.codeDesc });
         this.setFocus('createOrderType');
-        let createOrderList = this.createOrderTypeAllList.filter((customer:any) => (customer.codeDesc.includes('Direct Invoice') == false));
+        let createOrderList = this.createOrderTypeAllList.filter((customer: any) => (customer.codeDesc.includes('Direct Invoice') == false));
         console.log(createOrderList);
         this.createOrderTypeList = createOrderList;
         // this.CounterSaleOrderBookingForm.get('name').disable();
@@ -3482,7 +3513,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
   }
 
-  searchByContact(contactNo:any) {
+  searchByContact(contactNo: any) {
     this.service.searchCustomerByContact(contactNo)
       .subscribe(
         data => {
@@ -3492,7 +3523,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         });
   }
 
-  Select(custAccountNo:any) {
+  Select(custAccountNo: any) {
     //alert(custAccountNo)
     if (custAccountNo != undefined) {
       let currCustomer = this.accountNoSearchdata.filter((customer) => (customer.custAccountNo === custAccountNo));
@@ -3502,7 +3533,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
       this.custSiteList = this.selCustomer.customerSiteMasterList;
       this.CounterSaleOrderBookingForm.patchValue(this.selCustomer);
 
-      let selPayTerm = this.payTermDescList.find((d:any) => d.lookupValueId === this.selCustomer.termId);
+      let selPayTerm = this.payTermDescList.find((d: any) => d.lookupValueId === this.selCustomer.termId);
       this.paymentType = selPayTerm.lookupValue;
       this.CounterSaleOrderBookingForm.get('custName')?.disable();
       if (this.custSiteList.length === 1) {
@@ -3557,7 +3588,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     this.isDisabled = false;
   }
 
-  reservePos(i:any) {
+  reservePos(i: any) {
     var len = i;
     var trxLnArr1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList')?.value;
     console.log(trxLnArr1);
@@ -3609,7 +3640,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     }
   }
 
-  deleteReserveLinewise(i:any, itemid:any, transferId:any) {
+  deleteReserveLinewise(i: any, itemid: any, transferId: any) {
 
 
     if (itemid != null) {
@@ -3622,7 +3653,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     }
   }
 
-  setFocus(name:any) {
+  setFocus(name: any) {
 
     const ele = this.aForm.nativeElement[name];
     if (ele) {
@@ -3670,7 +3701,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
 
   onOptionsSelectedissueTypeCode(event: any) {
-    let selectIssueCode = this.issueCodeTypeList.find((d:any) => d.codeDesc === event);
+    let selectIssueCode = this.issueCodeTypeList.find((d: any) => d.codeDesc === event);
     this.CounterSaleOrderBookingForm.patchValue({ issueCode: selectIssueCode.code })
     var concatissuetypecode = this.CounterSaleOrderBookingForm.get('issueCode')?.value + '-' + this.CounterSaleOrderBookingForm.get('issueCodeType1')?.value
     this.CounterSaleOrderBookingForm.patchValue({ issueCodeType: concatissuetypecode });
@@ -3687,7 +3718,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
 
 
   lineTaxdetails: any = [];
-  selTaxLn:any = '';
+  selTaxLn: any = '';
   popDisAmt!: number;
   popTaxAmt!: number;
   popTotAmt!: number;
@@ -3781,7 +3812,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
         })
   }
 
-  backOrderDetails(i:any) {
+  backOrderDetails(i: any) {
     // alert(i)
 
     var accNo = this.CounterSaleOrderBookingForm.get('custAccountNo')?.value;
@@ -3805,7 +3836,7 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     }
   }
 
-  transData1(val:any) {
+  transData1(val: any) {
     delete val.oeOrderLinesAllList;
     delete val.taxAmounts;
     delete val.taxCategoryName;
