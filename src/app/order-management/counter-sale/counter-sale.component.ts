@@ -189,8 +189,8 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
   isVisibleViewGatePass: boolean = false;
   isVisibleBackOrderBtn: boolean = false;
   displayremarks = true;
-displayTaxiSalesOrderRef: boolean = false;
-displayTaxiSalesOrderRefOrg:boolean=true;
+  displayTaxiSalesOrderRef: boolean = false;
+  displayTaxiSalesOrderRefOrg: boolean = true;
   displayPerson: boolean;
   displaycustPoDate = true;
   public minDate = new Date();
@@ -1279,7 +1279,7 @@ displayTaxiSalesOrderRefOrg:boolean=true;
         // window.location.reload();
       } else {
         if (res.code === 400) {
-          alert(res.message + '---'+res.obj);
+          alert(res.message + '---' + res.obj);
           this.CounterSaleOrderBookingForm.reset();
           this.dataDisplay = res.obj;
           this.closeResetButton = true;
@@ -1368,8 +1368,8 @@ displayTaxiSalesOrderRefOrg:boolean=true;
     if (createOrderType === 'Pick Ticket' || createOrderType === 'Direct Invoice') {
       // Sales Order
       this.displaysalesRepName = true;
-       this.displayTaxiSalesOrderRef = false;
-       this.displayTaxiSalesOrderRefOrg=true;
+      this.displayTaxiSalesOrderRef = false;
+      this.displayTaxiSalesOrderRefOrg = true;
       this.CounterSaleOrderBookingForm.get('othRefNo').disable();
       this.CounterSaleOrderBookingForm.get('salesRepName').reset();
       this.CounterSaleOrderBookingForm.get('tlName').reset();
@@ -1377,8 +1377,8 @@ displayTaxiSalesOrderRefOrg:boolean=true;
     else {
       if (createOrderType === 'Sales Order') {
         this.displaysalesRepName = false;
-         this.displayTaxiSalesOrderRef = false;
-         this.displayTaxiSalesOrderRefOrg=true
+        this.displayTaxiSalesOrderRef = false;
+        this.displayTaxiSalesOrderRefOrg = true
         this.CounterSaleOrderBookingForm.get('othRefNo').enable();
         this.othRefNoSearch();
       }
@@ -1387,8 +1387,8 @@ displayTaxiSalesOrderRefOrg:boolean=true;
       if (createOrderType === 'Taxi Sale Order') {
         alert('3333333')
         this.displaysalesRepName = false;
-         this.displayTaxiSalesOrderRef = true;
-         this.displayTaxiSalesOrderRefOrg=false;
+        this.displayTaxiSalesOrderRef = true;
+        this.displayTaxiSalesOrderRefOrg = false;
         this.CounterSaleOrderBookingForm.get('othRefNo').enable();
         this.othRefNoSearch();
       }
@@ -2115,7 +2115,7 @@ displayTaxiSalesOrderRefOrg:boolean=true;
               .subscribe(
                 data => {
                   if (data.code === 200) {
-                   
+
                     this.addonDescList = data.obj;
                     for (let i = 0; i < data.obj.length; i++) {
                       var itemtaxCatNm: string = data.obj[i].taxCategoryName;
@@ -2229,7 +2229,7 @@ displayTaxiSalesOrderRefOrg:boolean=true;
                       // alert(data.obj.length)
                       var taxCatNm: string = data.obj[i].taxCategoryName;
                       var mrp = data.obj[0].mrp;
-                      if (taxCatNm.includes('Sale-Disc-S&C') ) {
+                      if (taxCatNm.includes('Sale-Disc-S&C')) {
                         (controlinv.controls[k]).patchValue({
                           itemId: data.obj[i].itemId,
                           orderedItem: data.obj[i].description,
@@ -2517,8 +2517,14 @@ displayTaxiSalesOrderRefOrg:boolean=true;
     this.closeResetButton = false;
     this.progress = 0;
 
-    var tcsPer = this.CounterSaleOrderBookingForm.get('tcsPer').value;
-    var ordTotAmt = this.CounterSaleOrderBookingForm.get('totAmt').value;
+    var tcsPer = this.CounterSaleOrderBookingForm.get('tcsPer')?.value;
+    var ordTotAmt = this.CounterSaleOrderBookingForm.get('totAmt')?.value;
+    const crediOutStandingAmt = this.CounterSaleOrderBookingForm.get('outStandingAmt')?.valid;
+    const crediAmount = this.CounterSaleOrderBookingForm.get('creditAmt')?.value;
+    if (Number(crediOutStandingAmt) > Number(crediAmount)) {
+      alert('Credit Amount is exceeded.! Credit Amount is ' + crediAmount + ' Total Outstanding Amount is ' + crediOutStandingAmt);
+      return;
+    }
     var tcsCal = Math.round((ordTotAmt * tcsPer / 100 + Number.EPSILON) * 100) / 100;
     this.CounterSaleOrderBookingForm.patchValue({ 'tcsAmt': tcsCal });
     if (tcsCal > 0) {
@@ -2597,7 +2603,7 @@ displayTaxiSalesOrderRefOrg:boolean=true;
       var orderLines1 = this.CounterSaleOrderBookingForm.get('oeOrderLinesAllList') as FormArray;
       var orderLines = orderLines1.getRawValue();
       console.log(orderLines);
-      
+
       var custName = this.CounterSaleOrderBookingForm.get('custName').value;
       var walkCustName = this.CounterSaleOrderBookingForm.get('walkCustName').value;
       var walkCustPan = this.CounterSaleOrderBookingForm.get('walkCustPan').value;
@@ -3969,10 +3975,10 @@ displayTaxiSalesOrderRefOrg:boolean=true;
   }
 
   exportToExcel(event) {
-      if(event && event.key === 'Enter'){
-    event.preventDefault();
-    return;
-  }
+    if (event && event.key === 'Enter') {
+      event.preventDefault();
+      return;
+    }
     const ws: xlsx.WorkSheet =
       // xlsx.utils.table_to_sheet(this.epltable.nativeElement);
       xlsx.utils.json_to_sheet(this.lstgetOrderLineDetails);
