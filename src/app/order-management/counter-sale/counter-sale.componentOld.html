@@ -493,13 +493,11 @@
                             <input disabled type="text" formControlName="createOrderType" value={{createOrderType}}
                                 class="form-control" style="width: 160px;">
                         </ng-template>
-                        
                     </td>
-                    
                     <td style="width: 15%" class="LabelFontStyle">
                         Reference&nbsp;No&nbsp;:&nbsp;
                     </td>
-                    <td *ngIf="displayTaxiSalesOrderRefOrg">
+                    <td>
                         <div *ngIf="displayothRefNo; then thenothRefNo; else elseothRefNo"></div>
                         <ng-template #thenothRefNo>
                             <select formControlName="othRefNo" name="othRefNo" class="form-control"
@@ -515,11 +513,6 @@
                              class="form-control" style="width: 160px;">
                         </ng-template>
                     </td>
-                    <td *ngIf="displayTaxiSalesOrderRef">
-  <input type="text" formControlName="othRefNo1"
-         class="form-control" style="width: 160px;"
-         placeholder="Enter Taxi Sales Order No">
-</td>
                 </tr>
                 <tr>
                     <td style="width: 15%;font-weight: bold;" class="LabelFontStyle">
@@ -975,7 +968,7 @@
                                 <div style="padding-bottom: 10px;padding-top: 10px;">
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <button type="button" (click)="exportToExcel($event)" class="btn btn-success" style="width: fit-content;">Export&nbsp;To&nbsp;Excel&nbsp;Counter&nbsp;Sale</button>
+                                            <button (click)="exportToExcel()" class="btn btn-success" style="width: fit-content;">Export&nbsp;To&nbsp;Excel&nbsp;Counter&nbsp;Sale</button>
                                         </div>
                                     </div>
                                 </div>

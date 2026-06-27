@@ -35,6 +35,11 @@ import { OrderCancellationUploadComponent } from './order-cancellation-upload/or
 import { SalesOrderReversalComponent } from './sales-order-reversal/sales-order-reversal.component';
 import { CsvUploadComponent } from './csv-upload/csv-upload.component';
 import { SparesOrderListComponent } from './spares-order-list/spares-order-list.component';
+import{ErpTaxiAllotedListComponent} from'./erp-taxi-alloted-list/erp-taxi-alloted-list.component';
+import{TaxiPoReportsComponent} from './taxi-po-reports/taxi-po-reports.component';
+import{TaxiVehCounterOrderComponent} from'./taxi-veh-counter-order/taxi-veh-counter-order.component';
+import{TaxiVehGrrFormComponent} from'./taxi-veh-grr-form/taxi-veh-grr-form.component';
+import{TxiVehiclePurchaseOrderFromComponent} from'./txi-vehicle-purchase-order-from/txi-vehicle-purchase-order-from.component';
 // import { SalesSuperUserGatePassComponent } from './sales-super-user-gate-pass/sales-super-user-gate-pass.component';
 
 
@@ -71,6 +76,11 @@ import { SparesOrderListComponent } from './spares-order-list/spares-order-list.
      SalesOrderReversalComponent,
      CsvUploadComponent,
      SparesOrderListComponent,
+       ErpTaxiAllotedListComponent,
+    TxiVehiclePurchaseOrderFromComponent,
+    TaxiPoReportsComponent,
+    TaxiVehGrrFormComponent,
+    TaxiVehCounterOrderComponent
     //  SalesSuperUserGatePassComponent,
       ],
   imports: [

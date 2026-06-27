@@ -34,6 +34,11 @@ import { SalesOrderReversalComponent } from './sales-order-reversal/sales-order-
 import { CsvUploadComponent } from './csv-upload/csv-upload.component';
 // import { SalesSuperUserGatePassComponent } from './sales-super-user-gate-pass/sales-super-user-gate-pass.component';
 import { SparesOrderListComponent } from './spares-order-list/spares-order-list.component';
+import{ ErpTaxiAllotedListComponent} from './erp-taxi-alloted-list/erp-taxi-alloted-list.component'
+import {TxiVehiclePurchaseOrderFromComponent} from './txi-vehicle-purchase-order-from/txi-vehicle-purchase-order-from.component'
+import{ TaxiPoReportsComponent  } from './taxi-po-reports/taxi-po-reports.component'
+import{TaxiVehGrrFormComponent} from './taxi-veh-grr-form/taxi-veh-grr-form.component'
+import{TaxiVehCounterOrderComponent } from './taxi-veh-counter-order/taxi-veh-counter-order.component'
 
 const routes: Routes = [
   {path:'salesOrderBooking', component:SalesOrderBookingComponent},
@@ -73,6 +78,13 @@ const routes: Routes = [
   {path:'csvupload',component:CsvUploadComponent},
    {path:'SparesOrderList',component:SparesOrderListComponent},
   {path:'OrderGeneration/:orderNumber',component:OrderGenerationComponent},
+  {path:'ErpTxVehAllotment' , component:ErpTaxiAllotedListComponent},
+  {path:'TxiVehPurchaseorder', component:TxiVehiclePurchaseOrderFromComponent},
+  {path:'TxiVehPurchaseorder/:transId', component:TxiVehiclePurchaseOrderFromComponent},
+  {path:'TaxiPOReport' , component: TaxiPoReportsComponent},
+  {path:'TaxiGrrFrom' ,component: TaxiVehGrrFormComponent},
+  {path:'TxiCounterOrd', component:TaxiVehCounterOrderComponent},
+ 
   {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
 

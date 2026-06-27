@@ -1011,7 +1011,208 @@ reversalOrderFn(orderNumber:any,emplId:any): Observable<any>{
 invoicestatuscheck(orderNumber:any): Observable<any>{
   return this.http.get(this.ServerUrl + `/orderHeader/getCntrInvRcptStatus?orderNumber=${orderNumber}`);
 }
+
+
+
+ supplierCodeWithEmplListNew(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/supp/getAllSupp');
+  }
+
+    poTypeList(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/cmnLookup/PoTypes');
+  }
+
+   getLocationSearch1(ouId:any): Observable<any> {
+    return this.http.get(this.ServerUrl + `/locationMst/locListOuwise/${ouId}`);
+  }
+    hsnSacCodeData(type:any): Observable<any> {
+    // return this.http.get(this.ServerUrl +'/hsnsacMst/HsnSacCode');
+    return this.http.get(this.ServerUrl + `/hsnSacMst/codeType/${type}`);
+  }
+    locationCodeList(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/SS_Location');
+  }
+
+    DivisionIDList(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/divMst');
+  }
+
+    companyCodeList(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/CompMst');
+  }
+
+    BranchList(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/SS_Branch');
+  }
+
+    CostCenterList(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/CostCentre');
+  }
+  NaturalAccountList(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/NaturalAccount');
+  }
+  NaturalAccountList1(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/naturalAcc/Payable');
+  }
+    TransactionNatureList(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/cmnLookup/TranNature');
+  }
+
+    purchaseLocationList(temp:any): Observable<any> {
+  
+    return this.http.get(this.ServerUrl + `/fndAcctLookup/lookupTypeBrLoc?lookupType=SS_Branch&lookupValue=${temp}`);
+  }
+   InterBrancList(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/SS_Interbranch');
+  }
+
+  
+  delearCodeList(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/DealerMst');
+  }
+
+  //   getsearchBySOBNo(poNo:any): Observable<any> {
+  //   return this.http.get(this.ServerUrl + `/SsErpItemMst/getById?transId=${poNo}`);
+  // }
+
+      getsearchBySOBNo(poNo:any): Observable<any> {
+    return this.http.get(this.ServerUrl + `/SsErpItemMst/getPartData?transId=${poNo}`);
+  }
+
+
+
+
+     getsrchcounterSOBNo(poNo:any): Observable<any> {
+    return this.http.get(this.ServerUrl + `/taxircv/getBySobNo?transId=${poNo}`);
+  }
+
+
+  
+
+
+  getPartsByVariant(variantCd: string): Observable<any> {
+    return this.http.get(this.ServerUrl +`/api/part-master/variant?variantCd=${variantCd}`
+    );
+  }
+
+
+   suppIdList(suppId:any, ouId:any) {
+    const REQUEST_PARAMS = new HttpParams().set('suppId', suppId)
+      .set('ouId', ouId)
+
+    const REQUEST_URI = this.ServerUrl + '/supp/ouSites';
+    return this.http.get(REQUEST_URI, {
+      params: REQUEST_PARAMS,
+
+    });
+  }
+
+
+  saveTaxiPO(payload: any): Observable<any> {
+  return this.http.post<any>( this.ServerUrl + `/taxipo/save`, payload);
 }
+
+
+saveTaxiCounterorder(payload: any): Observable<any> {
+  return this.http.post<any>( this.ServerUrl + `/taxiorder/saveOrder`, payload);
+}
+
+
+
+  grrTaxiPO(payload: any): Observable<any> {
+  return this.http.post<any>( this.ServerUrl + `/taxircv/saveRcvShipment`, payload);
+}
+
+ approveTaxiPO(payload: any): Observable<any> {
+    return this.http.post<any>(  this.ServerUrl + `/taxipo/approve`, payload);
+  }
+
+
+  getBySegment(segment1: string): Observable<any> {
+  return this.http.get<any>(  this.ServerUrl + `/taxipo/getBySegment?segment1=${segment1}`);
+}
+
+
+ getByOrderNumber(segment1: string): Observable<any> {
+  return this.http.get<any>(  this.ServerUrl + `/taxiorder/getByOrderNumber?orderNumber=${segment1}`);
+}
+
+updateTaxiPO(segment1: string, payload: any): Observable<any> {
+    return this.http.put<any>(
+      `${this.ServerUrl}/taxipo/update?segment1=${segment1}`,
+      payload
+    );
+  }
+
+
+  getPoPrintUrl(segment1: string): Observable<any> {
+    return this.http.get<any>(this.ServerUrl + `/taxipo/poprint/${segment1}`);
+  }
+
+  sendPoToVendor(segment1: string): Observable<any> {
+    return this.http.get<any>(this.ServerUrl + `/taxipo/posend/${segment1}`);
+  }
+
+
+taxiPoReport(ouId:any,fromDate:any,toDate:any){
+  const REQUEST_URI = this.ServerUrl +`/taxipo/poregister?ouId=${ouId}&fromDate=${fromDate}&toDate=${toDate}`;
+  return this.http.get(REQUEST_URI, {
+    // params: REQUEST_PARAMS,
+    responseType: 'arraybuffer',
+    headers: this.headers,
+  });
+}
+  
+
+
+
+createInvbyordNo(segment1: string, payload: any): Observable<any> {
+    return this.http.put<any>(
+      `${this.ServerUrl}/taxiorder/generateInvoice?orderNumber=${segment1}`,
+      payload
+    );
+  }
+
+  getSOBallotedList(): Observable<any> {
+    return this.http.get(this.ServerUrl + `/SsErpItemMst/getAll`);
+  }
+
+      DepartmentList(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/cmnLookup/DeptList');
+  }
+
+    supplierCodeListNew(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/supp/typewiseDet/Supplier');
+  }
+
+  getsearchByAccountNo1(accountId:any, divisionId:any): Observable<any> {
+    return this.http.get(this.ServerUrl + `/Customer/getByAccountNo1?accountNo=${accountId}&divisionId=${divisionId}`);
+  }
+
+  searchCustomerByContact(contactNo:any): Observable<any> {
+    return this.http.get(this.ServerUrl + `/Customer/contactNo/${contactNo}`);
+  }
+
+  searchCustomerByAccount(accountNo:any): Observable<any> {
+    return this.http.get(this.ServerUrl + `/Customer/getByCustAcctNo?accountNo=${accountNo}`);
+  }
+
+  custAccountNoSearch(accountNo:any, ouId:any, divId:any): Observable<any> {
+    // alert("ms >>account no:"+accountNo+","+ouId +","+divId);
+    return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}&divisionId=${divId}`);
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
 
 
 

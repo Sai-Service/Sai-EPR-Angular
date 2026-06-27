@@ -48,6 +48,7 @@
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Counter Sale Order</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/orderList']">Order List</a></li> 
+             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/ErpTxVehAllotment']">ERP Taxi veh Allotment</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/CounterSaleOrder']">Counter Sale Order</a></li>  
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/CounterSaleWithCSV']">Counter Sale With CSV</a></li>     
             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/CounterSaleReturn']">Counter Sale Return</a></li>    
@@ -103,6 +104,9 @@
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/pendingPoList']">PO List</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/master/OPMasterDto']">Purchase Order</a></li>
+             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/TxiVehPurchaseorder']">Txi Purchase Order</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/TxiCounterOrd']">Txi Counter Order Boking/Invoice</a></li>
+             <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/TaxiGrrFrom']">Txi Vehicle GRR</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/transaction/BulkUploadWithCsv']">Bulk Upload PO</a></li>
             <li><a class="dropdown-item" [routerLink]="['/admin/master/PoReceiptForm']">PO Receipt</a></li>
             <li [style.display]="isVisibleReturnToVendor ? 'block' : 'none'"><a class="dropdown-item" [routerLink]="['/admin/transaction/ReturnToVendor']">Return To Vendor</a></li>
