@@ -1204,8 +1204,8 @@ empLedgerControlReport(toDate,ouId){
   });
 }
 
-laborChargeSummary(fromDate,toDate,ouId,locId){
-  const REQUEST_URI = this.ServerUrl +`/ServiceReports/LabSummaryRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
+laborChargeSummary(fromDate,toDate,ouId,locId,srvType){
+  const REQUEST_URI = this.ServerUrl +`/ServiceReports/LabSummaryRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}servType=${srvType}`;
   return this.http.get(REQUEST_URI, {
     // params: REQUEST_PARAMS,
     responseType: 'arraybuffer',
@@ -1213,14 +1213,15 @@ laborChargeSummary(fromDate,toDate,ouId,locId){
   }); 
 }
 
-technicianSummary(fromDate,toDate,ouId,locId){
-  const REQUEST_URI = this.ServerUrl +`/ServiceReports/TechSummRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
+technicianSummary(fromDate,toDate,ouId,locId,servType){
+  const REQUEST_URI = this.ServerUrl +`/ServiceReports/TechSummRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&servType=${servType}`;
   return this.http.get(REQUEST_URI, {
     // params: REQUEST_PARAMS,
     responseType: 'arraybuffer',
     headers: this.headers,
   });
 }
+
 
 
 amcSaleRegister(fromDate,toDate,ouId,locId){

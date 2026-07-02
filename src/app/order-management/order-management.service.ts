@@ -1173,9 +1173,7 @@ createInvbyordNo(segment1: string, payload: any): Observable<any> {
     );
   }
 
-  getSOBallotedList(): Observable<any> {
-    return this.http.get(this.ServerUrl + `/SsErpItemMst/getAll`);
-  }
+ 
 
       DepartmentList(): Observable<any> {
     return this.http.get(this.ServerUrl + '/cmnLookup/DeptList');
@@ -1200,6 +1198,31 @@ createInvbyordNo(segment1: string, payload: any): Observable<any> {
   custAccountNoSearch(accountNo:any, ouId:any, divId:any): Observable<any> {
     // alert("ms >>account no:"+accountNo+","+ouId +","+divId);
     return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}&divisionId=${divId}`);
+  }
+
+
+    getSOBallotedList(): Observable<any> {
+    return this.http.get(this.ServerUrl + `/SsErpItemMst/getAll`);
+  }
+  getPOGeneratedList(): Observable<any> {
+    return this.http.get(this.ServerUrl + `/poHdr/getTaxiPendingPO`);
+  }
+    statusList(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus');
+  }
+  
+  OUIdList(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/opUnit');
+  }
+    
+  // supplierCodeListNew(): Observable<any> {
+  //   return this.http.get(this.ServerUrl + '/supp/typewiseDet/Supplier');
+  // }
+
+ 
+  createPO(sobNumber: string, createdBy: string): Observable<any> {
+  const url = `${this.ServerUrl}/poHdr/taxiPO?SOBNumber=${sobNumber}&createdBy=3442`;
+  return this.http.post(url, null );
   }
 
 }

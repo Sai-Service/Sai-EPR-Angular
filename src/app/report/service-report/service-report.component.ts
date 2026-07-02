@@ -21,6 +21,7 @@ const MIME_TYPES = {
 export class ServiceReportComponent implements OnInit {
   serviceReportForm: FormGroup;
   closeResetButton = true;
+  ServiceTypeVisible=false;
   dataDisplay: any;
   progress = 0;
   jobSumFromDt: Date;
@@ -67,6 +68,7 @@ export class ServiceReportComponent implements OnInit {
   isVisibleEwayBillChalan: boolean = false;
   isVisiblespDebtorsReport1:boolean=false;
   isVisiblespDebtorsReport:boolean=false;
+  isVisibleServiceType:boolean=false;
   age1: number = 20;
   age2: number = 30;
   age3: number = 45;
@@ -81,6 +83,7 @@ export class ServiceReportComponent implements OnInit {
   dlrCode: string;
   challanNo: string;
   supplierCodeList: any = [];
+  servType:string;
 
   constructor(private fb: FormBuilder, private router: Router, private service: MasterService, private location1: Location, private router1: ActivatedRoute, private reportService: ReportServiceService) {
     this.serviceReportForm = this.fb.group({
@@ -111,6 +114,7 @@ export class ServiceReportComponent implements OnInit {
       siteName: [],
       dlrCode: [],
       challanNo: [],
+      servType:[],
     })
   }
 
@@ -224,6 +228,7 @@ export class ServiceReportComponent implements OnInit {
       // alert(reportName)
       this.reportName = 'Job Card Summary';
       this.isVisiblepanelfromtolocation = true;
+      this.ServiceTypeVisible=false;
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblegstsaiDebtors = false;
       this.isVisiblepaneltolocation = false;
@@ -323,6 +328,8 @@ export class ServiceReportComponent implements OnInit {
     else if (reportName === 'serviceDeliverySummary') {
       this.reportName = 'Service Delivery Summary';
       this.isVisiblepanelfromtolocation = true;
+      this.ServiceTypeVisible=false;
+      this.isVisibleServiceType=false;
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblegstsaiDebtors = false;
       this.isVisiblepaneltolocation = false;
@@ -448,6 +455,8 @@ export class ServiceReportComponent implements OnInit {
       this.reportName = 'Labour Charge Summary Report';
       this.isVisiblegstsaiDebtors = false;
       this.isVisiblepanelfromtolocation = true;
+      this.ServiceTypeVisible=true;
+      this.isVisibleServiceType=false;
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblepaneltolocation = false;
       this.isVisiblecustomerLedger = false;
@@ -465,6 +474,8 @@ export class ServiceReportComponent implements OnInit {
       this.reportName = 'Technician  Summary Report';
       this.isVisiblegstsaiDebtors = false;
       this.isVisiblepanelfromtolocation = true;
+      this.ServiceTypeVisible=true;
+      this.ServiceTypeVisible=true;
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblepaneltolocation = false;
       this.isVisiblecustomerLedger = false;
@@ -482,6 +493,8 @@ export class ServiceReportComponent implements OnInit {
       this.reportName = 'AMC Sales Register';
       this.isVisiblegstsaiDebtors = false;
       this.isVisiblepanelfromtolocation = true;
+      this.ServiceTypeVisible=false;
+      this.isVisibleServiceType=false;
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblepaneltolocation = false;
       this.isVisiblecustomerLedger = false;
@@ -499,6 +512,8 @@ export class ServiceReportComponent implements OnInit {
       this.reportName = 'EW Sales Register';
       this.isVisiblegstsaiDebtors = false;
       this.isVisiblepanelfromtolocation = true;
+      this.ServiceTypeVisible=false;
+      this.isVisibleServiceType=false;
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblepaneltolocation = false;
       this.isVisiblecustomerLedger = false;
@@ -516,6 +531,8 @@ export class ServiceReportComponent implements OnInit {
       this.reportName = 'Credit Note Register';
       this.isVisiblegstsaiDebtors = false;
       this.isVisiblepanelfromtolocation = true;
+      this.ServiceTypeVisible=false;
+      this.isVisibleServiceType=false;
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblepaneltolocation = false;
       this.isVisiblecustomerLedger = false;
@@ -533,6 +550,8 @@ export class ServiceReportComponent implements OnInit {
       this.reportName = 'Job Issue Details Report';
       this.isVisiblegstsaiDebtors = false;
       this.isVisiblepanelfromtolocation = true;
+      this.ServiceTypeVisible=false;
+      this.isVisibleServiceType=false;
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblepaneltolocation = false;
       this.isVisiblecustomerLedger = false;
@@ -570,6 +589,8 @@ export class ServiceReportComponent implements OnInit {
       this.reportName = 'Invoice Summary Report';
       this.isVisiblegstsaiDebtors = false;
       this.isVisiblepanelfromtolocation = true;
+      this.ServiceTypeVisible=false;
+      this.isVisibleServiceType=false;
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblepaneltolocation = false;
       this.isVisiblecustomerLedger = false;
@@ -655,6 +676,8 @@ export class ServiceReportComponent implements OnInit {
       this.reportName = 'FSC Coupon Data Report';
       this.isVisiblegstsaiDebtors = false;
       this.isVisiblepanelfromtolocation = true;
+      this.ServiceTypeVisible=false;
+      this.isVisibleServiceType=false;
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblepaneltolocation = false;
       this.isVisiblecustomerLedger = false;
@@ -672,6 +695,8 @@ export class ServiceReportComponent implements OnInit {
       this.reportName = '21. Receipt-Other Details Report';
       this.isVisiblegstsaiDebtors = false;
       this.isVisiblepanelfromtolocation = true;
+      this.ServiceTypeVisible=false;
+      this.isVisibleServiceType=false;
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblepaneltolocation = false;
       this.isVisiblecustomerLedger = false;
@@ -1168,8 +1193,12 @@ export class ServiceReportComponent implements OnInit {
     else if (reportName === 'Labour Charge Summary Report') {
       const fileName = 'Labour Charge Summary Report-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      var servType = this.serviceReportForm.get('servType')?.value;
+      if (servType==undefined){
+        servType=' ';
+      }
       if (Number(sessionStorage.getItem('deptId')) === 4  || Number(sessionStorage.getItem('roleId'))==10) {
-        this.reportService.laborChargeSummary(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
+        this.reportService.laborChargeSummary(fromDate, toDate, sessionStorage.getItem('ouId'), locId,servType)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''
@@ -1178,7 +1207,7 @@ export class ServiceReportComponent implements OnInit {
           })
       }
       if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.laborChargeSummary(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
+        this.reportService.laborChargeSummary(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),servType)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''
@@ -1188,10 +1217,14 @@ export class ServiceReportComponent implements OnInit {
       }
     }
     else if (reportName === 'Technician  Summary Report') {
+      var servType = this.serviceReportForm.get('servType')?.value;
+      if (servType===undefined){
+        servType=' '
+      }
       const fileName = 'Technician  Summary Report-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4  || Number(sessionStorage.getItem('roleId'))==10) {
-        this.reportService.technicianSummary(fromDate, toDate, sessionStorage.getItem('ouId'), locId)
+        this.reportService.technicianSummary(fromDate, toDate, sessionStorage.getItem('ouId'), locId,servType)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''
@@ -1200,7 +1233,7 @@ export class ServiceReportComponent implements OnInit {
           })
       }
       if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.technicianSummary(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'))
+        this.reportService.technicianSummary(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'),servType)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''

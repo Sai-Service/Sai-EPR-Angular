@@ -2521,10 +2521,12 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     var ordTotAmt = this.CounterSaleOrderBookingForm.get('totAmt')?.value;
     const crediOutStandingAmt = this.CounterSaleOrderBookingForm.get('outStandingAmt')?.valid;
     const crediAmount = this.CounterSaleOrderBookingForm.get('creditAmt')?.value;
+    var paymentType = this.CounterSaleOrderBookingForm.get('paymentType')?.value
+    if (paymentType !='IMMEDIATE'){
     if (Number(crediOutStandingAmt) > Number(crediAmount)) {
       alert('Credit Amount is exceeded.! Credit Amount is ' + crediAmount + ' Total Outstanding Amount is ' + crediOutStandingAmt);
       return;
-    }
+    }}
     var tcsCal = Math.round((ordTotAmt * tcsPer / 100 + Number.EPSILON) * 100) / 100;
     this.CounterSaleOrderBookingForm.patchValue({ 'tcsAmt': tcsCal });
     if (tcsCal > 0) {

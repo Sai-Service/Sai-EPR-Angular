@@ -4968,6 +4968,12 @@ gstVerficationFn(gstNo: any): Observable<any> {
     return this.http.get(`http://172.16.21.3:8051/gstVerify/gstin/${gstNo}`);
   }
 
+  getPoPrintUrl(segment1: string): Observable<any> {
+    return this.http.get<any>(this.ServerUrl + `/poHdr/poprintView/${segment1}`);
+  }
+  sendPoToVendor(segment1: string): Observable<any> {
+    return this.http.get<any>(this.ServerUrl + `/poHdr/poprint/${segment1}`);
+  }
 }
 
 

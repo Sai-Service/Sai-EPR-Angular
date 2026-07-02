@@ -301,7 +301,27 @@
                 <input disabled hidden type="number" class="form-control" formControlName="locId">
 
               </td>
+              
             </tr>
+            <div *ngIf="ServiceTypeVisible; then thenServiceType; else elseServiceType"></div>
+            <ng-template #thenServiceType>
+            <tr >
+               <td style="width: 15%" class="LabelFontStyle" >
+                &nbsp;Service&nbsp;Type&nbsp;:&nbsp;
+              </td>
+              <td>
+                 <select formControlName="servType" id="servType" class="form-control">
+                  <option>--Select--</option>
+                  <option value="SERVICE">SERVICE </option>
+                  <option value="BS">BS </option>
+                  <option value="">All </option>
+                </select>
+              </td>
+            </tr>
+            </ng-template>
+            <ng-template #elseServiceType>
+
+            </ng-template>
             <tr>
               <td colspan="4">
                 <table class="center">

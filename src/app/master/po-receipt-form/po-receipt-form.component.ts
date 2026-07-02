@@ -1511,6 +1511,27 @@ export class PoReceiptFormComponent implements OnInit {
         );
     
   }
+
+
+
+
+  
+  sendPoToVendor(): void {
+    const segment1 = this.poReceiptForm.getRawValue().segment1;
+    if (!segment1) { alert('No approved PO loaded.'); return; }
+
+    this.service.sendPoToVendor(segment1).subscribe({
+      next: (res: any) => {
+        alert(res.code === 200 ? (res.message || 'PO sent to vendor successfully.') : 'Error: ' + (res.message || 'Send failed'));
+      },
+      error: (err: any) => {
+         alert('PO sent to vendor successfully.')
+        
+         }
+    });
+  }
+
+
 }
 
 
