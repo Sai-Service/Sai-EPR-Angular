@@ -3951,7 +3951,15 @@ export class CounterSaleComponent implements OnInit, OnDestroy {
     formValue.qty = this.CounterSaleOrderBookingForm.get('qty1').value;
     formValue.status = this.CounterSaleOrderBookingForm.get('status1').value;
     formValue.orderNumber = this.CounterSaleOrderBookingForm.get('orderNumber1').value;
-    console.log(formValue);
+     if (sessionStorage.getItem('attribute1') === 'TAXI') {
+    const referenceNo = this.CounterSaleOrderBookingForm.get('msRefCustNo')?.value;
+    if (!referenceNo || referenceNo.toString().trim() === '') {
+      alert('CDMS Reference No is mandatory for TAXI users.');
+      this.CounterSaleOrderBookingForm.get('msRefCustNo')?.markAsTouched();
+      this.CounterSaleOrderBookingForm.get('msRefCustNo')?.setErrors({ required: true });
+      return;
+    }
+  }
     var index = this.CounterSaleOrderBookingForm.get('indexNo').value;
     var qty1 = this.CounterSaleOrderBookingForm.get('qty1').value;
     var item = this.CounterSaleOrderBookingForm.get('item').value;

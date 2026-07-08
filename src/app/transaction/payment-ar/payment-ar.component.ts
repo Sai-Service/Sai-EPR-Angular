@@ -2707,7 +2707,7 @@ export class PaymentArComponent implements OnInit {
 
   }
 
-  SaveApply(applType) {
+  SaveApply(applType:any) {
 
 
     if (applType === 'INVOICE') {
@@ -2985,6 +2985,15 @@ export class PaymentArComponent implements OnInit {
   newMast() {
     // alert ("GL period..." +this.GLPeriodCheck);
     this.CheckDataValidations();
+    if (sessionStorage.getItem('attribute1') === 'TAXI') {
+    const referenceNo = this.paymentArForm.get('referenceNo')?.value;
+    if (!referenceNo || referenceNo.toString().trim() === '') {
+      alert('Reference No is mandatory for TAXI users.');
+      this.paymentArForm.get('referenceNo')?.markAsTouched();
+      this.paymentArForm.get('referenceNo')?.setErrors({ required: true });
+      return;
+    }
+  }
     if (this.checkValidation === true) {
       // alert("Data Validation Sucessfull....\nPosting data  to AR PAYMENT TABLE");
       var resp = confirm("Do You Want to Save this Receipt ???");
