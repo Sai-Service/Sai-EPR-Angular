@@ -99,6 +99,20 @@ custNameSearchFn1(custName: any): Observable<any> {
       { headers: this.headers }
     );
   }
+
+    getInsuranceCompanyLov(): Observable<any> {
+    return this.http.get(
+      this.ServerUrl + `/bajajIssues/getInsCustList`,
+      { headers: this.headers }
+    );
+  }
+
+getInsuranceSiteLov(custId: number): Observable<any> {
+  return this.http.get(
+    this.ServerUrl + `/bajajIssues/getInsCustSites?custId=${custId}`,
+    { headers: this.headers }
+  );
+}
   
 }
 
