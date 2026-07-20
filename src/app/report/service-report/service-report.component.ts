@@ -526,6 +526,24 @@ export class ServiceReportComponent implements OnInit {
       this.isVisibleEwayBillChalan = false;
        this.isVisiblespDebtorsReport1=false;
        this.isVisiblespDebtorsReport=false;
+         if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.isVisibleDepartmentList = true;
+        // this.isVisiblegstsaiDebtors = false;
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
+       if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.isVisibleDepartmentList = false;
+        this.isVisiblelocationInput=true;
+        this.isVisiblelocationLOV=false;
+       }
+
+      if (Number(sessionStorage.getItem('roleId'))==10){
+        this.isVisibleDepartmentList = true;
+        // this.isVisiblegstsaiDebtors = false;
+        this.isVisiblelocationInput=false;
+        this.isVisiblelocationLOV=true;
+      }
     }
     else if (reportName === 'creditNoteReg') {
       this.reportName = 'Credit Note Register';

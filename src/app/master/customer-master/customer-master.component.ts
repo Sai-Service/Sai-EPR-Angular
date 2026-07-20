@@ -10,7 +10,6 @@ import { DatePipe } from '@angular/common';
 import { OrderManagementService } from '../../order-management/order-management.service'
 // import { data } from 'jquery';
 
-
 interface IcustomerMaster {
   custType: string;
   customerId: number;
@@ -390,7 +389,6 @@ export class CustomerMasterComponent implements OnInit {
       );
 
 
-
     this.service.statusList()
       .subscribe(
         data => {
@@ -398,7 +396,6 @@ export class CustomerMasterComponent implements OnInit {
           console.log(this.statusList);
         }
       );
-
 
 
     this.service.titleList()
@@ -426,7 +423,6 @@ export class CustomerMasterComponent implements OnInit {
       );
 
 
-
     this.service.StateList()
       .subscribe(
         data => {
@@ -448,11 +444,9 @@ export class CustomerMasterComponent implements OnInit {
       }
     )
 
-
     // this.PersonType='Person';
   }
   originalTdsPer: any;
-
 
   customerMaster(customerMaster: any) {
   }
@@ -687,7 +681,6 @@ export class CustomerMasterComponent implements OnInit {
         break;
     }
 
-
     const GstNo1 = gstno.substr(2, 10);
     this.panNo = GstNo1;
     //  alert('Gst verificaition2');
@@ -755,7 +748,6 @@ export class CustomerMasterComponent implements OnInit {
         break;
     }
 
-
     const GstNo1 = gstno.substr(2, 10);
     this.spanNo = GstNo1;
     //  alert('Gst verificaition2');
@@ -774,13 +766,11 @@ export class CustomerMasterComponent implements OnInit {
   //       var patt = new RegExp(regex);
   //       let validgst = patt.test(sGstnoVal);
 
-
   //       if (validgst === false) {
   //         alert('Please enter valid GST Number');
   //         this.customerMasterForm.patchValue({'sGstNo':''});
   //         return false;
   //       }
-
 
   //     }
 
@@ -842,13 +832,11 @@ export class CustomerMasterComponent implements OnInit {
     const aaa = this.customerMasterForm.get('title')?.value + '. ' + this.customerMasterForm.get('fName')?.value + ' ' + this.customerMasterForm.get('mName')?.value + ' ' + this.customerMasterForm.get('lName')?.value;
     var person = this.customerMasterForm.get('custType')?.value;
 
-
     if (person === 'Person') {
       this.custName = aaa;
     }
 
   }
-
 
   mergeCustName(fName: any, mName: any, lName: any) {
     const aaa = fName + ' ' + mName + ' ' + lName;
@@ -1082,7 +1070,6 @@ export class CustomerMasterComponent implements OnInit {
     return val;
   }
 
-
   updateMast() {
 
     var isvaliddata = this.validation();
@@ -1165,7 +1152,6 @@ export class CustomerMasterComponent implements OnInit {
     return (k >= 48 && k <= 57);
   }
 
-
   searchByContact(contactNo: any) {
 
     this.displayNewButton = false;
@@ -1207,37 +1193,17 @@ export class CustomerMasterComponent implements OnInit {
   }
 
 
-
   searchByAccount1(accountNo: any) {
+
     this.displayNewButton = false;
     this.service.searchCustomerByAccount(accountNo)
       .subscribe(
         data => {
           this.lstcomments = data.obj;
-          debugger;
-          // debugger;
           this.lstSiteList = data.obj.customerSiteMasterList;
           console.log(this.lstcomments);
-          this.customerMasterForm.patchValue(this.lstcomments);
-          this.displayenable = false;
-          // alert(data.obj.customerSiteMasterList[0].shipTo)
-          this.customerMasterForm.patchValue({
-            panNo: this.lstcomments.customerSiteMasterList[0].panNo,
-            gstNo: this.lstcomments.customerSiteMasterList[0].gstNo,
-            taxCategoryName: this.lstcomments.customerSiteMasterList[0].taxCategoryName,
-            highAmt: this.lstcomments.customerSiteMasterList[0].highAmt,
-            creditAmt: this.lstcomments.customerSiteMasterList[0].creditAmt,
-            disPer: this.lstcomments.customerSiteMasterList[0].disPer,
-            location: this.lstcomments.customerSiteMasterList[0].location,
-            shipTo: data.obj.customerSiteMasterList[0].shipTo,
-            shipToState: data.obj.customerSiteMasterList[0].shipToState,
-          });
-          // 79943
-          var title1 = this.titleList.find((d: any) => d.code === this.lstcomments.title);
-          var payTerm = this.payTermDescList.find((d: any) => d.lookupValueId === this.lstcomments.termId);
-          this.customerMasterForm.patchValue({ title: this.lstcomments.title, paymentType: payTerm.lookupValueId });
-          this.displayadditional = false;
-          this.customerMasterForm.get('fName')?.disable();
+         if (sessionStorage.getItem('attribute7') != 'Yes') {
+           this.customerMasterForm.get('fName')?.disable();
           this.customerMasterForm.get('mName')?.disable();
           this.customerMasterForm.get('lName')?.disable();
           this.customerMasterForm.get('custName')?.disable();
@@ -1254,13 +1220,42 @@ export class CustomerMasterComponent implements OnInit {
           this.customerMasterForm.get('disPer')?.disable();
           this.customerMasterForm.get('perAdd')?.disable();
           this.customerMasterForm.get('shipTo')?.disable();
-          this.customerMasterForm.get('creditAmt')?.disable;
-          this.customerMasterForm.get('paymentType')?.disable;
-          this.customerMasterForm.get('highAmt')?.disable;
-          this.customerMasterForm.get('disPer')?.disable;
-          this.customerMasterForm.get('screditAmt')?.disable;
-          this.customerMasterForm.get('shighAmt')?.disable;
-          this.customerMasterForm.get('sdisPer')?.disable;
+          this.customerMasterForm.get('creditAmt')?.disable();
+          this.customerMasterForm.get('paymentType')?.disable();
+          this.customerMasterForm.get('highAmt')?.disable();
+          this.customerMasterForm.get('disPer')?.disable();
+          this.customerMasterForm.get('screditAmt')?.disable();
+          this.customerMasterForm.get('shighAmt')?.disable();
+          this.customerMasterForm.get('sdisPer')?.disable();
+        }
+        if (sessionStorage.getItem('attribute7')=='Yes'){
+          this.customerMasterForm.get('paymentType')?.enable();
+          this.customerMasterForm.get('highAmt')?.enable();
+          this.customerMasterForm.get('disPer')?.enable();
+          this.customerMasterForm.get('screditAmt')?.enable();
+          this.customerMasterForm.get('shighAmt')?.enable();
+          this.customerMasterForm.get('sdisPer')?.enable();
+             }
+          this.customerMasterForm.patchValue(this.lstcomments);
+          this.displayenable = false;
+          // alert(data.obj.customerSiteMasterList[0].shipTo)
+          this.customerMasterForm.patchValue({
+            panNo: this.lstcomments.customerSiteMasterList[0].panNo,
+            gstNo: this.lstcomments.customerSiteMasterList[0].gstNo,
+            taxCategoryName: this.lstcomments.customerSiteMasterList[0].taxCategoryName,
+            highAmt: this.lstcomments.customerSiteMasterList[0].highAmt,
+            creditAmt: this.lstcomments.customerSiteMasterList[0].creditAmt,
+            disPer: this.lstcomments.customerSiteMasterList[0].disPer,
+            location: this.lstcomments.customerSiteMasterList[0].location,
+            shipTo: data.obj.customerSiteMasterList[0].shipTo,
+            shipToState: data.obj.customerSiteMasterList[0].shipToState,
+          });
+        
+          var title1 = this.titleList.find((d: any) => d.code === this.lstcomments.title);
+          var payTerm = this.payTermDescList.find((d: any) => d.lookupValueId === this.lstcomments.termId);
+          this.customerMasterForm.patchValue({ title: this.lstcomments.title, paymentType: payTerm.lookupValueId });
+          this.displayadditional = false;
+         
           this.dispstatus = false;
           if (data.obj.tcsYN === 'N') {
             this.displayTcsPer = false;
@@ -1270,7 +1265,6 @@ export class CustomerMasterComponent implements OnInit {
           }
         });
   }
-
 
   Select(customerSiteId: number) {
     // alert(customerSiteId);
@@ -1344,7 +1338,6 @@ export class CustomerMasterComponent implements OnInit {
     }
   }
 
-
   tcssel(e) {
     // alert(e.target.checked)
     if (e.target.checked === true) {
@@ -1414,7 +1407,6 @@ export class CustomerMasterComponent implements OnInit {
   }
   onBirthgDateChange(event: any) {
     var birthdt: Date = new Date(event.target.value);
-
 
     // this.customerMasterForm.controls.weddingDate.setValue(formatDate(this.minDateWedding,'yyyy-MM-dd','en'));
 
@@ -1496,7 +1488,7 @@ export class CustomerMasterComponent implements OnInit {
     // }
   }
 
-  message: string = "Please Fix the Errors !";
+  message: string = "Please Fix the Errors !";
   msgType: string = "Close";
   getMessage(msgType: string) {
     this.msgType = msgType;
@@ -1512,11 +1504,11 @@ export class CustomerMasterComponent implements OnInit {
       (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
       if (this.customerMasterForm.invalid) {
         alert('Please enter all mandatory fields');
-        //this.submitted = false;
+        //this.submitted = false;
         (document.getElementById('saveBtn') as HTMLInputElement).setAttribute('data-target', '');
         return;
       }
-      this.message = "Do you want to SAVE the changes(Yes/No)?"
+      this.message = "Do you want to SAVE the changes(Yes/No)?"
 
     }
 
@@ -1533,11 +1525,11 @@ export class CustomerMasterComponent implements OnInit {
       (document.getElementById('updateBtn') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
       if (this.customerMasterForm.invalid) {
         alert('Invalid Validation Errors !!');
-        //this.submitted = false;
+        //this.submitted = false;
         (document.getElementById('updateBtn') as HTMLInputElement).setAttribute('data-target', '');
         return;
       }
-      this.message = "Do you want to Update the changes(Yes/No)?"
+      this.message = "Do you want to Update the changes(Yes/No)?"
 
     }
 
@@ -1552,21 +1544,20 @@ export class CustomerMasterComponent implements OnInit {
       this.submitted = true;
       // (document.getElementById('NewSite') as HTMLInputElement).setAttribute('data-target', '#confirmAlert');
       if (this.customerMasterForm.invalid) {
-        //this.submitted = false;
+        //this.submitted = false;
         // (document.getElementById('NewSite') as HTMLInputElement).setAttribute('data-target', '');
         // return;
       }
-      this.message = "Do you want to SAVE New Site(Yes/No)?"
+      this.message = "Do you want to SAVE New Site(Yes/No)?"
 
     }
 
-
     if (msgType.includes("Reset")) {
-      this.message = "Do you want to Reset the changes(Yes/No)?"
+      this.message = "Do you want to Reset the changes(Yes/No)?"
     }
 
     if (msgType.includes("Close")) {
-      this.message = "Do you want to Close the Form(Yes/No)?"
+      this.message = "Do you want to Close the Form(Yes/No)?"
     }
     return;
   }
@@ -1580,12 +1571,12 @@ export class CustomerMasterComponent implements OnInit {
       this.updateMast();
     }
     if (this.msgType.includes("Reset")) {
-      // this.resetItemCatMast();
+      // this.resetItemCatMast();
       this.customerMasterForm.reset();
     }
 
     if (this.msgType.includes("Close")) {
-      // this.closeItemCatMast();
+      // this.closeItemCatMast();
       this.router.navigate(['admin']);
     }
 
@@ -1664,7 +1655,6 @@ export class CustomerMasterComponent implements OnInit {
       );
   }
 
-
   panCardCheck1(pan: any) {
     // var panNo = this.customerMasterForm.get('panNo').value;
     // alert(pan)
@@ -1685,3 +1675,5 @@ export class CustomerMasterComponent implements OnInit {
       );
   }
 }
+
+
