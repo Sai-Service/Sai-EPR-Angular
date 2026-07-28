@@ -1,5 +1,3 @@
 {
-    "js/ts.implicitProjectConfig.experimentalDecorators": true;
-
-   // "terminal.integrated.defaultProfile.windows": "PowerShell"
+    "js/ts.implicitProjectConfig.experimentalDecorators": true
 }

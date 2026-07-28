@@ -3891,7 +3891,6 @@ export class SparesReportsComponent implements OnInit {
           })
       }
     }
-    
     else if (reportName == 'Spares Aging Report As of Date') {
       const fileName = 'Spares Aging Report As of Date' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);

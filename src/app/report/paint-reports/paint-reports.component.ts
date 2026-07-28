@@ -1222,36 +1222,6 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblespClosingStockAsOndate1 = false;
       this.isVisibleStockMismatch=false;
   }
-
-   else if (reportName === 'shortLandedClaim') {
-      this.reportName = 'Paint Short Landed Report' 
-      this.isVisibleonlyLocationCode = false;
-      this.isVisiblegstsaiDebtors = false;
-      this.isVisibleGSTPurchaseRegister = true;
-      this.isVisibleStockLedger = false;
-      this.isVisiblestockTransfer = false;
-      this.isVisiblestockTransferRecd = false;
-      this.isVisiblespClosingStockAsOndate = false;
-      this.isVisibleSparesBackOrderQty = false;
-      this.isVisiblesparesMiscIssueReceipt = false;
-      this.isVisiblesparesInventoryAging = false;
-      this.isVisibleSparesDebtorsExecutiveWise = false;
-      this.isVisiblefromtosubinventory = false;
-      this.isVisiblecustomerLedger = false;
-      this.isVisibleEwayBill = false;
-      this.isVisiblepanelStockTaking = false;
-      this.isVisiblesparesPaintPanelReport = false;
-      this.isVisibleonlyOuCode = false;
-      this.isVisiblePanelOUFromDateToDateSubInv = false;
-      this.isVisiblefromtosubinventory = false;
-      this.isVisiblePaintPanelDetailReport = false;
-      this.isVisibleonlyOuCodeSubInv = false;
-      this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;
-      this.isVisibleStockMismatch=false;
-  }
-
-
   }
 
   spPurRegDownLoad() {
@@ -2139,30 +2109,6 @@ export class PaintReportsComponent implements OnInit {
           })
       }
     }
-
-     else if (reportName === 'Paint Short Landed Report') {
-          const fileName = 'Paint Short Landed Report' + '.xls';
-          const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-          if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
-            this.reportService.shortLandedClaimReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
-              .subscribe(data => {
-                saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-                this.closeResetButton = true;
-                this.dataDisplay = ''
-                this.isDisabled1 = false;
-              })
-          }
-          else if (Number(sessionStorage.getItem('deptId')) != 4) {
-            this.reportService.shortLandedClaimReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
-              .subscribe(data => {
-                saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
-                this.closeResetButton = true;
-                this.dataDisplay = ''
-                this.isDisabled1 = false;
-              })
-          }
-        }
-        
 
   }
 
