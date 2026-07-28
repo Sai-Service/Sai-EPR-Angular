@@ -265,6 +265,8 @@ export class AdminComponent implements OnInit {
     this.locId = Number(sessionStorage.getItem('locId'));
     this.locCode = sessionStorage.getItem('locCode');
 
+    this.showItCorrection = this.deptName === 'IT';
+
     $('.dropdown-menu a.dropdown-toggle').on('click', function (e) {
       if (!$(this).next().hasClass('show')) {
         $(this)

@@ -1,0 +1,70 @@
+<form [formGroup]="taxiporeportform" (ngSubmit)="potaxiReport(taxiporeportform.value)">
+    <div class="center">
+        <table style="width: 100%;background-color: white;">
+            <tr>
+                <td class="PageHeader">
+                    &nbsp;TAXI &nbsp;PO&nbsp;REPORT&nbsp;
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+
+
+     <table class="center">
+                <tr>
+                    <td>
+                        <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                        <ng-template #hList2>
+                            <div class="d-flex justify-content-center">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="sr-only" id="loading"></span>
+
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template #hList1> </ng-template>
+                    </td>
+                    <td class="LabelFontStyle" style="color: blue;">&nbsp;{{this.dataDisplay}}&nbsp; </td>
+                </tr>
+            </table>
+              <table class="center">
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;Orgnization&nbsp;Name&nbsp;:&nbsp;</td>
+                     <td><input type="text" disabled class="form-control" formControlName="OUCode" ></td>
+
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;From&nbsp;Date&nbsp;:&nbsp;</td>
+                    <td><input type="date" class="form-control" formControlName="fromDate" [(ngModel)]="fromDate"
+                            max="{{minDate | date:'yyyy-MM-dd'}}"></td>
+                    <td style="width: 15%" class="LabelFontStyle">&nbsp;To&nbsp;Date&nbsp;:&nbsp; </td>
+                    <td><input type="date" class="form-control" formControlName="toDate" [(ngModel)]="toDate"
+                            max="{{minDate | date:'yyyy-MM-dd'}}"></td>
+                </tr>
+                <tr>
+                </tr>
+            </table>
+
+              <table class="center">
+        <tr>
+             <td>
+                        <button class="btn-primary"9 (click)="reportParameter()">View
+                            Report</button>
+                    </td>
+            <td>
+                <button type="submit" class="btn btn-primary" id="register" (click)="refresh()">
+                    Clear
+                </button>
+            </td>
+            <td>
+                <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+            </td>
+        </tr>
+    </table>
+
+
+
+
+
+</form>
+

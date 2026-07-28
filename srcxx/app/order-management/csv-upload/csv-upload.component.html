@@ -1,0 +1,30 @@
+<table style="width: 100%;background-color: white;">
+        <tr>
+            <td colspan="4" class="PageHeader" style="width: 100%;">
+                &nbsp;&nbsp;CSV&nbsp;UPLOAD&nbsp;
+            </td>
+        </tr>
+</table>
+
+<div style="padding: 20px;margin-left: 450px;" >
+    <label class="LabelFontStyle1">Select CSV File:</label>
+    <input type="file" accept=".csv" class="form-control" (change)="onFileSelected($event)" />
+
+    <br />
+
+    <button class="btn-primary" (click)="uploadCSV()" [disabled]="!selectedFile">Upload</button>
+     <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
+      <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
+</div>
+
+<!-- <table class="center">
+    <tr>
+        <td>
+                        <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
+                    </td>
+    </tr>
+</table> -->
+<hr>

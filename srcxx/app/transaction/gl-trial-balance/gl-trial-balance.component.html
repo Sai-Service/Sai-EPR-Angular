@@ -1,0 +1,408 @@
+<form [formGroup]="glTrialBalanceForm" (ngSubmit)="glTrialBalance(glTrialBalanceForm.value)">
+
+    <div class="center">
+        <table style="width: 100%;background-color: white;">
+            <tr>
+                <td class="PageHeader">
+                    &nbsp;&nbsp;GL&nbsp;Trial&nbsp;Balance&nbsp;
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="center" style="width: 100%;">
+        <div class="form-bg">
+            <div class="center" style="width: 100%;">
+
+                <!-- <table class="center" style="width: 100%; background-color: #a4d3e9;">
+                    <tr>
+                        <td >
+                        <table class="center">
+                        <tr>
+                      
+                        <td style="width: 15%" class="LabelFontStyle">Division&nbsp;:</td>
+                        <td><input disabled type="text"  class="form-control" formControlName="loginArray" id="loginArray" [(ngModel)]='loginArray' ></td>
+                       
+                        <td style="width: 15%" class="LabelFontStyle">Operating&nbsp;Unit&nbsp;:</td>
+                        <td><input disabled type="text"  class="form-control" formControlName="ouName" id="ouName" [(ngModel)]='ouName' ></td>
+                                         
+                        <td style="width: 15%" class="LabelFontStyle">GL&nbsp;Period&nbsp;:</td>
+                        <td><input type="text"  class="form-control" formControlName="glPeriod" id="glPeriod" name="glPeriod" ></td>
+                       
+                        <td colspan="8" style="text-align: left; width: 100%;">
+                        <button type="button" class="btn btn-primary" (click)="SearchTB()"><i class="fa fa-search"></i></button></td>
+                        </tr>
+                        </table>
+                        </td>
+                    </tr>
+                
+                </table> -->
+
+                     <table class="center" style="width: 100%;background-color: #FFE4B5;">
+                        <tr>
+                          <td >
+                              <table class="center">
+                                  <tr>
+                                    <td style="width: 15%" class="LabelFontStyle">Division&nbsp;:&nbsp; {{this.loginArray}}&nbsp; </td>
+                                     <!-- <td><input disabled type="text"  class="form-control" formControlName="loginArray" id="loginArray" [(ngModel)]='loginArray' style="border-style: none;background-color: #FFE4B5;font-weight: bold;"></td> -->
+                                 
+                                    <td style="width: 15%" class="LabelFontStyle">Operating&nbsp;Unit&nbsp;:</td>
+                                    <!-- <td><input disabled type="text"  class="form-control" formControlName="ouName" id="ouName" [(ngModel)]='ouName' style="border-style: none;background-color: #FFE4B5;font-weight: bold;"></td> -->
+                                    <!-- <td><input disabled type="text"  class="form-control" formControlName="ouCode" id="ouCode" [(ngModel)]='ouCode' style="border-style: none;background-color: #FFE4B5;font-weight: bold;"></td> -->
+                                    <td style="width: 15%" class="LabelFontStyle">&nbsp;{{this.ouCode}}&nbsp; </td>
+                                   
+                                    <td style="width: 15%" class="LabelFontStyle">GL&nbsp;Period&nbsp;:&nbsp;</td>
+                                    <td>
+                                      <select formControlName="periodName" id="periodName" class="form-control" [(ngModel)]="periodName">
+                                      <!-- <option>--Select--</option> -->
+                                      <option *ngFor="let sc of  periodNameList" [ngValue]="sc.periodName">
+                                        {{sc.periodName}}
+                                      </option>
+                                    </select>
+                                    </td>
+    
+                                    <!-- <td style="background-color: #FFE4B5;"><button type="button" class="btn-primary" (click)="SearchTB()"><i class="fa fa-search"
+                                                aria-hidden="true"></i></button>
+                                    </td> -->
+                                    <td> <button type="button" class="btn btn-info" (click)="SearchTB(periodName)" >Run</button> </td>
+                                    <td> <button type="button" class="btn btn-info" (click)="resetMast()" >Reset</button> </td>
+                                    <div *ngIf="exportExcel; then TBEYes; else TBENo"></div>
+                                    <ng-template #TBEYes> 
+                                    <td> <button  (click)="glTbReportExport()" class="btn btn-info" style="width: fit-content;">Excel</button></td>  
+                                    <td> <button  (click)="glTbReport2()" class="btn btn-info" style="width: fit-content;">Report</button></td>  
+                                    
+                                    </ng-template>
+                                    <ng-template #TBENo> </ng-template>  
+                                    <td> <button type="button" class="btn btn-info" (click)="closeMast()" >Close</button> </td>
+                                  </tr>
+                              </table>
+                          </td>
+                        </tr>
+                    </table>
+
+
+                    <fieldset class="RFS">
+                        <div class="container1">
+                                <div class="grid_scroll">
+                                <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:black;border-collapse:collapse;width: 100%;font-size: small;;">
+                                    <tbody>
+                                            <tr class="GridHeader">
+                                            <th style="width:3rem" scope="col">Srl&nbsp;No&nbsp;</th> 
+                                            <th style="width:10rem" scope="col">Natural&nbsp;Account&nbsp;</th>
+                                            <th style="width:25rem" scope="col">Description&nbsp;</th>
+                                            <th style="width:12rem" scope="col">Opening&nbsp;Balance</th>
+                                            <th style="width:12rem" scope="col">Debit&nbsp;Amount&nbsp;</th>
+                                            <th style="width:12rem" scope="col">Credit&nbsp;Amount</th>
+                                            <th style="width:12rem" scope="col">Closing&nbsp;Balance</th>
+                                        
+                                        </tr>
+                                    </tbody>
+                                    <tr *ngFor="let com of lstTBList let i=index" class="ItemStyle" style="text-decoration:none;font-size: large;border-color: black;">
+                                      <td style="padding-left: 5px;padding-top: 10px;border-color:black;">{{i+1}}</td>
+                                        <!-- <td style="text-align: center;">{{com.naturalAccount}}</td> -->
+
+                                         <td style="padding-left: 5px;padding-top: 10px;border-color:black;">
+                                            <a href="#naturalAccount" (click) ='SelectTbAct(com.naturalAccount,com.accountDesc,com.periodNetDr,com.periodNetCR)'   data-toggle="modal" data-target="#viewGLDetails">{{com.naturalAccount}}</a>
+                                        </td> 
+
+                                       
+                                        
+                                        <!-- <div id="naturalAccount" class="collapse">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                          </div> -->
+                                          
+                                          <td style="padding-left: 5px;padding-top: 10px;border-color:black;">{{com.accountDesc}}</td>
+                                          <td style="padding-right: 5px;padding-top: 10px;border-color:black;text-align: right;">{{com.openingBal |number:'1.2-2'}}</td>
+                                          <td style="padding-right: 5px;padding-top: 10px;border-color:black;text-align: right;">{{com.periodNetDr|number:'1.2-2'}}</td> 
+                                          <td style="padding-right: 5px;padding-top: 10px;border-color:black;text-align: right;">{{com.periodNetCR|number:'1.2-2' }}</td>
+                                          <td style="padding-right: 5px;padding-top: 10px;border-color:black;text-align: right;">{{com.closingBal |number:'1.2-2'}}</td>
+                                    </tr> 
+                                </table>
+                            </div>
+                            </div>
+                        
+                        </fieldset>
+
+
+
+                        <!-- <fieldset class="RFS">
+
+                        <div class="table-responsive">
+                            <table class="table">
+                              <thead>
+                                <tr>
+                                    <th style="width:2rem" scope="col">Srl&nbsp;No&nbsp;</th> 
+                                    <th style="width:10rem" scope="col">Natural&nbsp;Account&nbsp;</th>
+                                    <th style="width:25rem" scope="col">Description&nbsp;</th>
+                                    <th style="width:12rem" scope="col">Opening&nbsp;Balance</th>
+                                    <th style="width:12rem" scope="col">Debit&nbsp;Amount&nbsp;</th>
+                                    <th style="width:12rem" scope="col">Credit&nbsp;Amount</th>
+                                    <th style="width:12rem" scope="col">Closing&nbsp;Balance</th>
+                                </tr>
+                              </thead>
+                        <tbody>
+                        <tr *ngFor="let com of lstTBList let i=index" class="ItemStyle" style="text-decoration:none;font-size: large;">
+                            
+                          <td style="text-align: center;">{{i+1}}</td>
+                            <td style="padding-left: 5px;padding-top: 10px;">
+                                <a class="accordion-toggle collapsed" id="accordion1" data-toggle="collapse" data-parent="#accordion1" href="#naturalAccount"  (click) ='SelectTbAct(com.naturalAccount)'>{{com.naturalAccount}}</a>
+                            </td> 
+                           <td style="text-align: left;">{{com.accountDesc}}</td>
+                            <td style="text-align: right;">{{com.openingBal |number:'0.00'}}</td>
+                            <td style="text-align: right;">{{com.periodNetDr|number:'0.00'}}</td> 
+                            <td style="text-align: right;">{{com.periodNetCR|number:'0.00' }}</td>
+                            <td style="text-align: right; padding-right: 10px;">{{com.closingBal |number:'0.00'}}</td>
+                         </tr>
+                                                
+                        </tbody>
+                        </table>
+                        </div> 
+
+                      
+                        </fieldset> -->
+                                  
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- ==================================Drilldown level 1============================================== -->
+
+<div class="modal fade" id="viewGLDetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle" style="margin-left: 40%;">Trial Balance GL Account Details</h5>
+       
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+              <table class="center" style="width: 100%;">
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">Natural&nbsp;A/c&nbsp;:&nbsp;</td>
+                    <td style="font-weight: bold;">{{this.natAccount}}
+                    <td style="width: 15%" class="LabelFontStyle">Description&nbsp;:&nbsp;</td>
+                    <td style="font-weight: bold;">{{this.natActDesc}}
+                    <td style="width: 15%" class="LabelFontStyle">Debit&nbsp;Amt&nbsp;:</td>
+                    <td style="font-weight: bold;">{{this.glDebitAmt | number:'1.2-2'}}
+                    <td style="width: 15%" class="LabelFontStyle">Credit&nbsp;Amt&nbsp;:</td>
+                    <td style="font-weight: bold;">{{this.glCreditAmt | number:'1.2-2'}}
+                    <td> <button  (click)="glTbReportExport_Level1()" class="btn btn-success" style="width: fit-content;">Export</button></td>  
+
+                </tr>
+            </table>
+
+            <div class="container1">
+               <div class="grid_scroll_2">
+              <!-- <table class="auto-style4" class="GridFont"   style="border-color:#959595;width:100%;"> -->
+                <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+                  <thead>
+                    <tr class="GridHeader">
+                    <th>Srl#</th> 
+                    <th>Document No</th>
+                    <th>Refernce No</th>
+                    <th>GL Code</th> 
+                    <th>Category</th>
+                    <th>Source</th>
+                    <th>Description</th>
+                    <th>Debit(INR)</th>
+                    <th>Credit(INR)</th>
+                    <th>Posted&nbsp;Date</th>
+                    </tr>
+                  </thead>
+                  <!-- <tbody> -->
+                                      
+                      <!-- <tr *ngFor="let com of lstTBActLineDet let i=index" class="ItemStyle" style="text-decoration:none;position: initial;font-size:medium"> -->
+                        <ng-container  *ngFor="let com of lstTBActLineDet let i=index" class="ItemStyle" style="text-decoration:none;position: initial;font-size:large">
+
+                        <tr style="text-decoration:none;position: initial;font-size:small">
+                          <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{i+1}}</td>
+
+
+                          <!-- <td style="padding-left: 5px;padding-top: 10px;border-color:black;">
+                            <a href="#glDocNo" (click) ='SelectTbAct1(com.jeCategory,com.glDocNo,com.referenceNo)'   data-toggle="modal" data-target="#viewGLDetails1">{{com.glDocNo}}</a>
+                          </td>  -->
+
+                          <td style="padding-left: 5px;padding-top: 10px;border-color:black;">
+                            <a href="#glDocNo" (click) ='SelectTbAct1(com.jeCategory,com.glDocNo,com.referenceNo,com.jeSource)'>{{com.glDocNo}}</a>
+                          </td> 
+
+                           <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: center;">{{com.referenceNo}}</td>
+                          <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.glcodeDescription}}</td>
+                          <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.jeCategory}}</td>
+                          <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.jeSource}}</td>
+                          <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.jeDescription}}</td>
+                          <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{com.debitAmt | number:'1.2-2'}}</td>
+                          <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{com.creditAmt| number:'1.2-2'}}</td>
+                          <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: center;">{{com.postedDate |date:'dd-MM-y'}}</td>
+                        </tr>
+                        </ng-container>
+
+                    <!-- </tbody> -->
+                
+                    </table>
+                 
+          </div>
+          </div>
+          <!-- ============================= -->
+          <!-- lstTBActLineDet1 -->
+          <br>
+
+       <div *ngIf="drilDown3; then D1; else D2"></div>
+       <ng-template #D2></ng-template>
+        <ng-template #D1> 
+          <!-- <h5 class="modal-title" id="exampleModalLongTitle" style="margin-left: 40%;">Trial Balance GL Account Invoice Details</h5> -->
+          <h5 class="modal-title" id="exampleModalLongTitle" style="margin-left: 40%;">Trial Balance GL Account Invoice Details</h5>
+
+          <table class="center" style="width: 100%;">
+            <tr>
+                <td style="width: 15%" class="LabelFontStyle">Category&nbsp;:&nbsp;</td>
+                <td style="font-weight: bold;">{{this.glSegment}}
+                <td style="width: 15%" class="LabelFontStyle">Source&nbsp;:&nbsp;</td>
+                <td style="font-weight: bold;">{{this.jeSource}}
+                <td style="width: 15%" class="LabelFontStyle">Documnet&nbsp;No&nbsp;:&nbsp;</td>
+                <td style="font-weight: bold;">{{this.glDocNum}}
+                <td style="width: 15%" class="LabelFontStyle">Reference&nbsp;No&nbsp;:&nbsp;</td>
+                <td style="font-weight: bold;">{{this.glDocRefNum}}
+               
+            </tr>
+        </table>
+
+        <div class="container1">
+          <div class="grid_scroll_3">
+           <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+             <thead>
+               <tr class="GridHeader">
+               <th>Srl#</th> 
+               <th>Invoice Number</th>
+               <th>Invoice Date</th>
+               <th>Refernce No</th>
+               <th>Name</th> 
+               <th>Invoice Amt</th>
+               <th>Total Amt</th>
+              </tr>
+             </thead>
+                <ng-container  *ngFor="let com of lstTBActLineDet1 let i=index" class="ItemStyle" style="text-decoration:none;position: initial;font-size:large">
+
+                   <tr style="text-decoration:none;position: initial;font-size:small">
+                     <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{i+1}}</td>
+                     <td style="padding-left: 5px;padding-top: 10px;border-color:black;">
+                       <a href="#trxNumber" type="submit" data-dismiss="modal"  (click) ='SelectTbAct2(com.trxNumber,com.referenceNo,this.glSegment,this.jeSource)' >{{com.trxNumber}}</a>
+                   </td> 
+
+                     <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: center;">{{com.trxDate |date:'dd-MM-y'}}</td>
+                     <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: center;">{{com.referenceNo}}</td>
+                     <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.Name}}</td>
+                     <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{com.invoiceAmt | number:'1.2-2'}}</td>
+                     <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{com.totalAmt| number:'1.2-2'}}</td>
+                   </tr>
+                   </ng-container>
+               </table>
+        </div>
+       </div>
+        </ng-template>
+       <!-- ================================== -->
+      </div>
+
+      <div class="modal-footer">
+        <!-- <td> <button  (click)="glTbReportExport_Level1()" class="btn btn-success" style="width: fit-content;">Export To Excel</button></td>   -->
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- ==================================Drilldown level 2============================================== -->
+
+
+<div class="modal fade" id="viewGLDetails1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle" style="margin-left: 40%;">Trial Balance GL Account Invoice Details</h5>
+       
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+              <table class="center" style="width: 100%;">
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">Category&nbsp;:&nbsp;</td>
+                    <td style="font-weight: bold;">{{this.glSegment}}
+                    <td style="width: 15%" class="LabelFontStyle">Documnet&nbsp;No&nbsp;:&nbsp;</td>
+                    <td style="font-weight: bold;">{{this.glDocNum}}
+                    <td style="width: 15%" class="LabelFontStyle">Reference&nbsp;No&nbsp;:&nbsp;</td>
+                    <td style="font-weight: bold;">{{this.glDocRefNum}}
+                   
+                </tr>
+            </table>
+
+            <div class="container1">
+               <div class="grid_scroll_2">
+              <!-- <table class="auto-style4" class="GridFont"   style="border-color:#959595;width:100%;"> -->
+                <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+                  <thead>
+                    <tr class="GridHeader">
+                    <th>Srl#</th> 
+                    <th>Invoice Number</th>
+                    <th>Invoice Date</th>
+                    <th>Refernce No</th>
+                    <th>Name</th> 
+                    <th>Invoice Amt</th>
+                    <th>Total Amt</th>
+                    <!-- <th>ouId</th> -->
+                   </tr>
+                  </thead>
+                  <!-- <tbody> -->
+                                      
+                      <!-- <tr *ngFor="let com of lstTBActLineDet let i=index" class="ItemStyle" style="text-decoration:none;position: initial;font-size:medium"> -->
+                        <ng-container  *ngFor="let com of lstTBActLineDet1 let i=index" class="ItemStyle" style="text-decoration:none;position: initial;font-size:large">
+
+                        <tr style="text-decoration:none;position: initial;font-size:small">
+                          <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{i+1}}</td>
+                          <!-- <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: center;">{{com.trxNumber}}</td> -->
+
+                          <td style="padding-left: 5px;padding-top: 10px;border-color:black;">
+                            <a href="#trxNumber" type="submit" data-dismiss="modal"  (click) ='SelectTbAct2(com.trxNumber,com.referenceNo,this.glSegment)' >{{com.trxNumber}}</a>
+                        </td> 
+
+                          <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: center;">{{com.trxDate |date:'dd-MM-y'}}</td>
+                          <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: center;">{{com.referenceNo}}</td>
+                          <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.Name}}</td>
+                          <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{com.invoiceAmt | number:'1.2-2'}}</td>
+                          <td style="padding-right: 5px;padding-top: 5px;border-color:black;text-align: right;">{{com.totalAmt| number:'1.2-2'}}</td>
+                          <!-- <td style="padding-left: 5px;padding-top: 5px;border-color:black;text-align: left;">{{com.ouId}}</td> -->
+                        </tr>
+                        </ng-container>
+
+                    <!-- </tbody> -->
+                
+                    </table>
+                 
+          </div>
+            </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <td> <button  (click)="glTbReportExport_Level2()" class="btn btn-success" style="width: fit-content;">Export To Excel</button></td>  
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+                          
+
+

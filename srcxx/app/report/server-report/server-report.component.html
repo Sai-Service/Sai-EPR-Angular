@@ -1,0 +1,44 @@
+<form [formGroup]="serverReportForm" (ngSubmit)="serverReport(serverReportForm.value)" >
+    <div class="center">
+
+        <table style="width: 100%;background-color: white;">
+          <tr>
+            <td class="PageHeader">
+              &nbsp;&nbsp;Server&nbsp;Reports&nbsp;
+            </td>
+          </tr>
+        </table>
+      </div>
+    
+    <!-- <button type="button" class="btn btn-info Saibtn-secondary" (click)="Search1(requestor)" hidden><b>ID</b></button> -->
+    <br>
+    <div class="grid_scroll"></div>
+    <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ct100_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+    <tbody>
+        <tr class="GridHeader">
+            <th scope="col" style="width: 2rem;">Sr. No.</th>
+            <th scope="col" style="width: 2rem;">Request Id</th>
+            <th scope="col" style="width: 5rem;">Request Date</th> 
+            <th scope="col" style="width: 5rem;">Request Name</th>
+            <th scope="col" style="width: 3rem;">Parameter</th> 
+            <th scope="col" style="width: 5rem;">Completion Text</th>               
+            <th scope="col" style="width: 3rem;">Request Completion Date</th> 
+            <th scope="col" style="width: 5rem; ">Output File</th> 
+            <th scope="col" style="width: 5rem; ">Download</th>                
+        </tr>
+        </tbody>
+        <tr *ngFor="let com of reportlist let k = index" class="ItemStyle" style="text-decoration:none;font-size: medium;">
+            <td style="width: 2rem; text-align: center;">{{k+1}}</td>
+            <td style="width: 2rem; text-align: center;">{{com.requestId}}</td>
+            <td style="text-align: center;">{{com.requestDate}}</td> 
+            <td style="text-align: center;">{{com.requestName}}</td>
+            <td style="width: 4rem; text-align: center;">{{com.argumentText}}</td> 
+            <td style="text-align:center;">{{com.completionText }}</td>       
+            <td style="text-align: center;">{{com.requestedCompletionDate}}</td>    
+            <td style="text-align: center;">{{com.outfileName}}</td>        
+            <td style="text-align: center;"><button class="btn btn-info Saibtn-secondary" (click)="DownloadRptFile(com.requestId,com.requestName,com.requestDate,com.outfileName)">Download</button></td>
+        </tr>
+        </table>
+    </form>
+    
+    

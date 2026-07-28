@@ -1,0 +1,72 @@
+<form [formGroup]="shipEntryListForm" (ngSubmit)="shipEntryList(shipEntryListForm.value)">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td class="PageHeader">
+                &nbsp;&nbsp;&nbsp;Shift&nbsp;Entry&nbsp;List&nbsp;
+            </td>
+        </tr>
+    </table>
+    <fieldset class="RFS">
+        <table class="center">
+            <tr>
+                <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                <ng-template #hList2>
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="sr-only" id="loading"></span>
+
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template #hList1> </ng-template>
+                <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">
+                    &nbsp;{{dataDisplay }}&nbsp; </td>
+            </tr>
+        </table>
+    </fieldset>
+    <table class="center" style="width: 100%;background-color: #FFE4B5;">
+        <tr>
+            <td>
+                <table class="center">
+                    <tr>
+                        <td>From&nbsp;Date&nbsp;</td>&nbsp;
+                        <td>
+                            <input type="date" class="form-control" formControlName="startDt"  [(ngModel)]="startDt"
+                            value={{startDt}}  max="{{minDate | date:'yyyy-MM-dd'}}">
+                        </td>
+
+                        <td>To&nbsp;Date&nbsp;</td>&nbsp;
+                        <td>
+                            <input type="date" class="form-control" formControlName="endDt" [(ngModel)]="endDt"
+                            value={{endDt}} max="{{minDate | date:'yyyy-MM-dd'}}">
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-primary" id="search" (click)="getEntryList()" style="width:fit-content">
+                                Ship&nbsp;Entry&nbsp;List
+                            </button>
+                        </td>
+                       
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <div class="grid_scroll">
+        <table  class="GridFont"  style="border-color:#494949;border-collapse:collapse;width: 100%;">
+           
+            <tr class="GridHeader" style="font-size: 11px;">
+                <th >Ship Entry No</th>
+                <th >Ship Entry Date</th>
+                <th >Final Confirm</th>
+            </tr>
+            <tr *ngFor="let com of entryList ; let i= index" class="ItemStyle" style="text-decoration:none;font-size: 11px;">
+                <td style="padding-left: 5px;padding-top: 10px;">
+                    <a [routerLink]="['/admin/pump/testing',com.shiftEntryNo]"
+                        href="{{shiftEntryNo}}">{{com.shiftEntryNo}}</a>
+                </td>
+                <td style="padding-left: 5px; text-align: center;">{{com.shiftEntryDate}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.finalConfirm}}</td>
+            </tr>
+        </table>
+    </div>
+</form>

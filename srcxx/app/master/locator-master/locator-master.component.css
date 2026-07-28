@@ -1,0 +1,19 @@
+/* .form-control {
+    font-family: Verdana,Sans-serif, Arial, Helvetica;
+    font-size: 11px;
+    outline: medium none;
+    padding: 3px;
+    vertical-align: top;
+    width: 120px;
+    height: 18%;
+   border-color: black;
+  } */
+
+
+  .grid_scroll{
+    overflow: auto;
+     height: 200px; 
+    width: 100%;
+    }
+
+   

@@ -1,0 +1,100 @@
+<form [formGroup]="bulkUploadCSVForm" (ngSubmit)="bulkUploadCSV(bulkUploadCSVForm.value)">
+<div class="center">
+    <table style="width: 100%;background-color: white;">
+    <tr>
+        <td class="PageHeader">
+            &nbsp;&nbsp;Warranty&nbsp;JobCard&nbsp;CSV&nbsp;Upload&nbsp; 
+        </td>
+    </tr>
+    </table>
+
+            <fieldset class="RFS"> 
+                <table>
+                    <tr>
+                        <td style="font-weight:bold;"><input type="radio" id="fileupld"   name="optType"  [(ngModel)]="fileupld"   value="fileupld"  checked   (change)="radioEvent($event)"  >&nbsp;File&nbsp;Upload</td>
+                        <td style="font-weight:bold;"><input type="radio" id="fileupdt"   name="optType"  [(ngModel)]="fileupdt"   value="fileupdt"     (change)="radioEvent($event)"         >&nbsp;File&nbsp;Update</td>
+                    
+                    </tr>
+                </table>
+            </fieldset>
+
+
+  <fieldset class="RFS">
+ <!-- <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;"> <b>File&nbsp;Upload&nbsp;</b> </legend> -->
+  <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;"> <b>{{this.caption1}}</b> </legend>
+
+    <table class="center">
+            <tr>
+                <td class="LabelFontStyle">&nbsp;&nbsp;User&nbsp;Name&nbsp;:&nbsp;</td>
+                <td><input disabled type="text" class="form-control"  formControlName="userName"></td>
+
+                 <div *ngIf="showFileUpldWind; then upldYes; else updtYes"></div>
+                 <ng-template #upldYes> 
+                        <td class="LabelFontStyle">&nbsp;&nbsp;Month&nbsp;&nbsp;:&nbsp;</td>
+                        <td>
+                            <select class="form-control"  formControlName="monthNam" [(ngModel)]="monthNam" >
+                                <option></option>
+                                <option *ngFor="let mth of MonthList" [ngValue]="mth.code">{{mth.code}}</option>
+                            </select>
+                        </td>
+
+                        <td class="LabelFontStyle">&nbsp;&nbsp;Year&nbsp;&nbsp;:&nbsp;</td>
+                        <input  disabled   formControlName="mnthYear"  id="mnthYear" [(ngModel)]="mnthYear" class="form-control" style="background-color: lightgreen;" >
+                 </ng-template>
+                  <ng-template #updtYes></ng-template>
+            </tr>
+            <tr>
+                 <div class="progress form-group" *ngIf="progress > 0">
+            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width.%]="progress"> </div>
+                </div>
+            </tr>
+      
+        <tr>
+            <td class="LabelFontStyle">
+                &nbsp;&nbsp;Select&nbsp;CSV&nbsp;:&nbsp;
+            </td>
+            <td colspan="3">
+                <input class="form-control" type="file" #fileInput  accept=".csv" formControlName="files"[(ngModel)]="files" style="vertical-align: middle;margin-top: 22px;width: 350px;">&nbsp;&nbsp;  
+            </td>
+                <div *ngIf="showFileUpldWind; then upldBtnYes; else upldtBtnYes"></div>
+                 <ng-template #upldBtnYes> 
+                     <td><button  class="btn btn-primary" (click)="uploadFile($event)" style="width: 100%;font-size: 11px;">Upload</button></td>
+                 </ng-template>
+                 <ng-template #upldtBtnYes>
+                    <td><button  class="btn btn-primary" (click)="updateFile($event)" style="width: 100%;font-size: 11px;">Update</button></td>
+                 </ng-template>
+            </tr>
+            
+    </table>
+    <table class="center">
+         <tr>
+                <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+                <ng-template #hList2> 
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border text-primary" role="status" >
+                              <span class="sr-only" id="loading"></span>
+                       
+                        </div>
+                    </div>
+              </ng-template>
+              <ng-template #hList1> </ng-template>
+
+              <!-- <h5 style="text-align: center;color:blue" > {{dataDisplay }}</h5> -->
+              <td class="LabelFontStyle" style="color: blue;">&nbsp;{{dataDisplay }}&nbsp; </td>
+            </tr>
+    </table>
+  </fieldset>
+    <fieldset class="RFS">
+        <table class="center">
+            <tr>
+                <td>
+                    <button type="button" class="btn btn-primary" style="width: 5rem;" (click)="clearFormArray()">Reset</button>
+                </td>
+                <td>
+                <button type="button" style="width: 5rem;" class="btn btn-primary" id="register"  (click)="closeMast()">Close</button>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+</div>
+</form>

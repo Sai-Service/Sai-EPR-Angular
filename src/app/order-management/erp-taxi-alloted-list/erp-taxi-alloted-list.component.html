@@ -1,0 +1,171 @@
+<form [formGroup]="orderListForm" (ngSubmit)="orderList(orderListForm.value)">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td class="PageHeader">
+                Purchase Order&nbsp;List(Taxi Vehicle) &nbsp;
+            </td>
+        </tr>
+    </table>
+
+    <!-- TAB HEADERS -->
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" [class.active]="activeTab === 'erp'" href="javascript:void(0)"
+                (click)="activeTab = 'erp'">
+                ERP Flow Data
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [class.active]="activeTab === 'po'" href="javascript:void(0)"
+                (click)="activeTab = 'po'">
+                PO Generated
+            </a>
+        </li>
+    </ul>
+    <div class="col-md-12 table-responsive" #epltable *ngIf="activeTab === 'erp'">
+        <div style="padding-bottom: 10px;padding-top: 10px;">
+            <div class="row">
+                <div class="col-sm-12">
+                    <button (click)="exportToExcel()" class="btn btn-success" style="width: fit-content;">Export To
+                        Excel</button>
+                </div>
+            </div>
+        </div>
+        <table class="center" style="width: 100%;background-color: #FFE4B5;">
+            <tr>
+                <td>
+                    <table class="center">
+                        <tr></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <table class="GridFont"
+            style="font-size: 14px;border-color:#1f1e1e;border-collapse:collapse;width: 100%;text-align: center;">
+            <tr>
+                <td><b>Total Order Count : {{orderListDetails.length}}</b></td>
+        </table>
+        <div class="grid_scroll">
+            <table class="GridFont" style="border-color:#494949;border-collapse:collapse;width: 100%;">
+                <tr class="GridHeader" style="font-size: 11px;">
+                    <th>Trx No.</th>
+                    <th>Trx Date</th>
+                    <th>DMS Location</th>
+                    <th>DMS Inv No</th>
+                    <!-- <th>DMS Inv Date</th> -->
+                    <th>ERP Location</th>
+                    <th>ERP Inv No</th>
+                    <!-- <th>ERP Inv Date</th> -->
+                    <th>Model</th>
+                    <th>Variant Code</th>
+                    <th>Vin No</th>
+                    <th>Chassis No</th>
+                    <th>Color Code</th>
+                    <th>New Account No</th>
+                    <th>Action</th>
+                </tr>
+                <tr *ngFor="let com of orderListDetails ; let i= index" class="ItemStyle"
+                    style="text-decoration:none;font-size: 11px;">
+                    <!-- <td style="padding-left: 5px;padding-top: 10px;">
+                        <a [routerLink]="['/admin/OrderManagement/TxiVehPurchaseorder',com.transId]"
+                            href="{{transId}}">{{com.transId}}</a>
+                    </td> -->
+                    <td style="padding-left: 5px; text-align: center;">{{com.TRANS_ID}}</td>
+                    <td style="padding-left: 5px; text-align: center;">{{com.CREATION_DATE}}</td>
+                    <td style="padding-left: 5px; text-align: center;">{{com.DMS_LOCATION}}</td>
+                    
+                    <td style="padding-left: 5px; text-align: left;">{{com.DMSINVOICE_NO}}</td>
+                    <!-- <td style="padding-left: 5px; text-align: center;">{{com.dmsInvoiceDate}}</td> -->
+                    <td style="padding-left: 5px; text-align: center;">{{com.ERP_LOCATION}}</td>
+                    <td style="padding-left: 5px; text-align: center;">{{com.ERPINVOICE_NO}}</td>
+                    <!-- <td style="padding-left: 5px; text-align: center;">{{com.erpInvoiceDate}}</td> -->
+                    <td style="padding-left: 5px; text-align: center;">{{com.MODEL}}</td>
+                    <td style="padding-left: 5px; text-align: center;">{{com.VARIANT_CD}}</td>
+                    <td style="padding-left: 5px; text-align: right;">{{com.VIN}}</td>
+                    <td style="padding-left: 5px; text-align: right;">{{com.CHASSIS_NUM}}</td>
+                    <td style="padding-left: 5px; text-align: right;">{{com.ECOLOR_CD}}</td>
+                    <td style="padding-left: 5px; text-align: center;">{{com.NEWCUSTACCOUNT}}</td>
+                       <td style="padding-left: 5px; text-align: center;">
+                <button type="button" class="btn btn-sm btn-primary" (click)="createPO(com.TRANS_ID, com.NEWCUSTACCOUNT)">
+                    Create PO
+                </button>
+            </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    
+    <div class="col-md-12 table-responsive" #potable *ngIf="activeTab === 'po'">
+        <div style="padding-bottom: 10px;padding-top: 10px;">
+            <div class="row">
+                <div class="col-sm-12">
+                    <button (click)="exportToExcelPo()" class="btn btn-success" style="width: fit-content;">Export To
+                        Excel</button>
+                </div>
+            </div>
+        </div>
+        <table class="center" style="width: 100%;background-color: #FFE4B5;">
+            <tr>
+                <td>
+                    <table class="center">
+                        <tr></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <table class="GridFont"
+            style="font-size: 14px;border-color:#1f1e1e;border-collapse:collapse;width: 100%;text-align: center;">
+            <tr>
+                <td><b>Total Order Count : {{poGeneratedDetails.length}}</b></td>
+        </table>
+        <div class="grid_scroll">
+            <table class="GridFont" style="border-color:#494949;border-collapse:collapse;width: 100%;">
+                <tr class="GridHeader" style="font-size: 11px;">
+                    <th>PO Number</th>
+                    <th>PO creation Date.</th>
+                    <th>Trx(SOB) No</th>
+                    <th>ERP Location</th>
+                    <th>ERP Inv No</th>
+                    <th>DMS Inv No</th>
+                    <th>Model</th>
+                    <th>Customer Name</th>
+                    <th>ERP Ac No</th>
+                    
+                </tr>
+                <tr *ngFor="let com of poGeneratedDetails ; let i= index" class="ItemStyle"
+                    style="text-decoration:none;font-size: 11px;">
+                    <td style="padding-left: 5px;padding-top: 10px;">
+                        <a [routerLink]="['/admin/master/OPMasterDto',com.SEGMENT1]"
+                            href="{{SEGMENT1}}">{{com.SEGMENT1}}</a>
+                    </td>
+                    <td style="padding-left: 5px; text-align: center;">{{com.PODATE}}</td>
+                    <td style="padding-left: 5px; text-align: center;">{{com.TRANS_ID}}</td>
+                    <td style="padding-left: 5px; text-align: center;">{{com.ERP_LOCATION}}</td>
+                    <td style="padding-left: 5px; text-align: left;">{{com.ERPINVOICE_NO}}</td>
+                    <td style="padding-left: 5px; text-align: center;">{{com.DMSINVOICE_NO}}</td>
+                    <td style="padding-left: 5px; text-align: center;">{{com.MODEL}}</td>
+                    <td style="padding-left: 5px; text-align: center;">{{com.CUST_NAME}}</td>
+                    <td style="padding-left: 5px; text-align: center;">{{com.ERP_ACC_NO}}</td>
+                    
+                
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <table class="center">
+        <tr>
+            <td>
+                <button type="submit" class="btn btn-primary" id="register" (click)="refresh()">
+                    Clear
+                </button>
+            </td>
+            <td>
+                <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+            </td>
+        </tr>
+    </table>
+</form>

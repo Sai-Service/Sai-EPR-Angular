@@ -3606,7 +3606,9 @@ updateCDMSDet(){
     var custTaxCat = this.SalesOrderBookingForm.get('custTaxCat')?.value;
     // alert(custTaxCat);
     this.isDisabled11 = true;
+    // debugger;
     for (let k = 0; k < orderLines.length; k++) {
+      // alert(orderLines[k])
       if (orderLines[k].isTaxable === 'Y') {
         orderLines[k].taxCategoryName = orderLines[k].taxCategoryName.taxCategoryName;
       }

@@ -1,0 +1,518 @@
+
+<div *ngIf="isLoading"
+     style="position:fixed; top:0; left:0; width:100%; height:100%;
+            background:rgba(0,0,0,0.55); z-index:9999;
+            display:flex; flex-direction:column;
+            align-items:center; justify-content:center;">
+
+  <!-- Spinner -->
+  <div style="width:64px; height:64px;
+              border:7px solid #f3f3f3;
+              border-top:7px solid #028090;
+              border-radius:50%;
+              animation:spin 0.9s linear infinite;">
+  </div>
+
+  <p style="color:#ffffff; margin-top:18px; font-size:16px;
+            font-weight:600; letter-spacing:0.5px; text-align:center;">
+    {{ loadingMessage }}
+  </p>
+
+ 
+  <p style="color:#ffcccc; margin-top:6px; font-size:13px; text-align:center;">
+    Please do not press the Back button.
+  </p>
+
+</div>
+
+
+<style>
+  @keyframes spin {
+    0%   { transform: rotate(0deg);   }
+    100% { transform: rotate(360deg); }
+  }
+</style>
+
+
+<div class="center">
+  <form [formGroup]="poMasterDtoForm" #poForm>
+
+  
+    <input type="hidden" formControlName="poHeaderId">
+    <input type="hidden" formControlName="empId">
+    <input type="hidden" formControlName="accountLocId">
+    <input type="hidden" formControlName="dmsLocation">
+    <input type="hidden" formControlName="dmsInvoiceNo">
+    <input type="hidden" formControlName="dmsInvoiceDate">
+    <input type="hidden" formControlName="erpInvoiceNo">
+    <input type="hidden" formControlName="erpLocation">
+    <input type="hidden" formControlName="erpInvoiceDate">
+    <input type="hidden" formControlName="model">
+    <input type="hidden" formControlName="variantCd">
+    <input type="hidden" formControlName="vin">
+    <input type="hidden" formControlName="chassisNum">
+    <input type="hidden" formControlName="ecolorCd">
+    <input type="hidden" formControlName="createdBy">
+    <input type="hidden" formControlName="suppId">
+
+
+    <table style="width:100%; background-color:#FFE4B5;">
+      <tr>
+         <td class="PageHeader" colspan="7">
+          &nbsp;Taxi&nbsp;Vehicle&nbsp;Parts&nbsp;Purchase&nbsp;Order
+        </td>
+      </tr>
+      <tr>
+        <td style="width:13%; white-space:nowrap;" class="LabelFontStyle">
+          Search&nbsp;SOB&nbsp;No&nbsp;:
+        </td>
+        <td>
+          <input type="text" formControlName="transId" class="form-control"
+                 style="min-width:160px" placeholder="Enter SOB Number" #myinput
+                 (keyup.enter)="SobSearchId(poMasterDtoForm.get('transId')?.value)">
+        </td>
+        <td>
+          <button type="button" class="btn btn-primary btn-sm"
+                  [disabled]="!poMasterDtoForm.get('transId')?.value || isLoading"
+                  (click)="SobSearchId(poMasterDtoForm.get('transId')?.value)">&nbsp;Search
+          </button>
+        </td>
+
+        <td style="padding:0 10px; color:#999; font-weight:bold; text-align:center;">|</td>
+
+        <td style="width:13%; white-space:nowrap;" class="LabelFontStyle">
+          Search&nbsp;PO&nbsp;No&nbsp;:
+        </td>
+        <td>
+          <input type="text"
+                 [(ngModel)]="searchPoNoInput" [ngModelOptions]="{standalone:true}"
+                 class="form-control" style="min-width:160px" placeholder="Enter PO Number"
+                 (keyup.enter)="searchByPoNumber(searchPoNoInput)">
+        </td>
+        <td>
+          <button type="button" class="btn btn-info btn-sm"
+                  [disabled]="!searchPoNoInput || isLoading"
+                  (click)="searchByPoNumber(searchPoNoInput)">Search
+          </button>
+        </td>
+      </tr>
+    </table>
+
+ 
+    <div class="form-bg">
+      <table class="center">
+        <tr>
+          <td class="LabelFontStyle">Division:</td>
+          <td><input type="text" formControlName="divisionName" class="form-control"></td>
+
+          <td class="LabelFontStyle">PO&nbsp;Type:<span style="color:red">*</span></td>
+           <td><input type="text" formControlName="poType" class="form-control"></td>
+          <!-- <td>
+            
+            <select formControlName="poType" class="form-control">
+              <option disabled value="">--Select--</option>
+              <option *ngFor="let sc of poTypeList" [ngValue]="sc.codeDesc">{{sc.codeDesc}}</option>
+            </select>
+          </td> -->
+
+          <td class="LabelFontStyle">Department:</td>
+          <td><input type="text" formControlName="deptName" class="form-control"></td>
+
+          <td class="LabelFontStyle">Creation&nbsp;Date:</td>
+          <td>
+            <input type="text" formControlName="poDate" class="form-control"
+                   style="min-width:120px" placeholder="dd-MM-yyyy">
+          </td>
+        </tr>
+
+        <tr>
+          <td class="LabelFontStyle">Operating&nbsp;Name:</td>
+          <td><input type="text" formControlName="ouName" class="form-control"></td>
+        </tr>  
+        <tr>
+          <td class="LabelFontStyle">PO&nbsp;Number:</td>
+          <td><input type="text" formControlName="segment1" class="form-control"></td>
+
+          <td class="LabelFontStyle">Bill-To:<span style="color:red">*</span></td>
+          <td>
+            <select formControlName="billToLoc" class="form-control">
+              <option value="">--Select--</option>
+              <option *ngFor="let sc of BillShipList" [ngValue]="sc.locId">{{sc.locCode}}</option>
+            </select>
+          </td>
+          <td class="LabelFontStyle">Ship-To:<span style="color:red">*</span></td>
+          <td>
+            <select formControlName="shipToLoc" class="form-control">
+              <option value="">--Select--</option>
+              <option *ngFor="let sc of BillShipList1" [ngValue]="sc.locId">{{sc.locCode}}</option>
+            </select>
+          </td>
+          <td class="LabelFontStyle">Tax&nbsp;Amount:</td>
+          <td>
+            <input type="number" formControlName="totTaxAmt"
+                   class="form-control" style="width:120px">
+          </td>
+        </tr>
+        <tr>
+          <td class="LabelFontStyle">Buyer:</td>
+          <td><input type="text" formControlName="name" class="form-control"></td>
+
+          <td class="LabelFontStyle">Status:</td>
+          <td><input type="text" formControlName="status" class="form-control"></td>
+
+          <td class="LabelFontStyle">Approval&nbsp;Date:</td>
+          <td><input type="text" formControlName="approveDate" class="form-control"></td>
+
+          <td class="LabelFontStyle">Total&nbsp;Amount:</td>
+          <td>
+            <input type="number" formControlName="totalAmt"
+                   class="form-control" style="width:120px">
+          </td>
+        </tr>
+
+        <!-- Row 5: Supp Inv No | Supp Inv Date | Description -->
+        <tr>
+          <!-- <td class="LabelFontStyle">Supp&nbsp;Inv&nbsp;No:</td>
+          <td>
+            <input type="text" formControlName="suppInvNo" class="form-control"
+                   placeholder="Enter supplier invoice number">
+          </td>
+
+          <td class="LabelFontStyle">Supp&nbsp;Inv&nbsp;Date:</td>
+          <td><input type="date" formControlName="suppInvDate" class="form-control"></td> -->
+
+          <td class="LabelFontStyle">Description:</td>
+          <td>
+            <input type="text" formControlName="description" class="form-control"
+                   placeholder="Enter description">
+          </td>
+
+          <td class="LabelFontStyle">Model:</td>
+          <td>
+            <input disabled type="text" formControlName="model" class="form-control"
+                   placeholder="Auto-filled from SOB">
+          </td>
+
+          <td class="LabelFontStyle">Varient&nbsp;Name:</td>
+          <td>
+            <input disabled type="text" formControlName="variantCd" class="form-control"
+                   placeholder="Auto-filled from SOB">
+          </td>
+          <td  class="LabelFontStyle">Base&nbsp;Amount:</td>
+          <td colspan="5">
+            <input type="number" formControlName="baseAmount"
+                   class="form-control" style="width:120px">
+          </td>
+        </tr>
+
+        <tr>
+          <td class="LabelFontStyle">Customer&nbsp;Name:</td>
+          <td>
+            <input type="text" formControlName="custName" class="form-control"
+                   placeholder="Auto-filled from SOB">
+          </td>
+
+          <td class="LabelFontStyle">GST&nbsp;Number:</td>
+          <td>
+            <input type="text" formControlName="gstNo" class="form-control"
+                   placeholder="Auto-filled from SOB">
+          </td>
+
+          <td class="LabelFontStyle">ERP&nbsp;Acc&nbsp;No:</td>
+          <td colspan="3">
+            <input type="text" formControlName="erpAccNo" class="form-control"
+                   placeholder="Auto-filled from SOB">
+          </td>
+        </tr>
+
+        <tr>
+          <td class="LabelFontStyle">Executive:</td>
+          <td>
+            <input type="text" formControlName="executive" class="form-control"
+                   placeholder="Auto-filled from SOB">
+          </td>
+
+          <td class="LabelFontStyle">Team&nbsp;Head:</td>
+          <td>
+            <input type="text" formControlName="teamHead" class="form-control"
+                   placeholder="Auto-filled from SOB">
+          </td>
+
+          <td class="LabelFontStyle">Finance&nbsp;Company:</td>
+          <td colspan="1">
+            <input type="text" formControlName="fincName" class="form-control"
+                   placeholder="Auto-filled from SOB">
+          </td>
+
+          <td class="LabelFontStyle">Credit&nbsp;Amount :</td>
+          <td colspan="1">
+            <input type="number" formControlName="creditAmt" class="form-control" style="font-weight: bold"
+                   placeholder="Enter Credit Amount">
+          </td>
+          <!-- <div class="text-danger"
+     *ngIf="poMasterDtoForm.get('creditAmt')?.value !=
+            poMasterDtoForm.get('totalAmt')?.value">
+  Credit Amount and Total Amount must be equal.
+</div> -->
+        </tr>
+
+      </table>
+
+  
+      <table style="width:100%; background-color:white;">
+        <tr>
+          <td class="PageHeader1">&nbsp;&nbsp;Line&nbsp;Details</td>
+        </tr>
+      </table>
+
+      <div class="center" formArrayName="poLines">
+        <div class="grid_scroll">
+          <table style="width:100%; border:solid 1px Gray" cellspacing="0" cellpadding="2">
+            <thead>
+              <tr>
+                <th>No.</th>
+                <th>Inventory Item</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>UOM</th>
+                <th>HSN/SAC</th>
+                <th>Tax Category</th>
+                <th>Supplier</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Base Amt</th>
+                <th>Disc Amt</th>
+                <th>Tax Amt</th>
+                <th>Total Amt</th>
+                <th>Add</th>
+                <th>Del</th>
+              </tr>
+            </thead>
+
+            <ng-container *ngFor="let group of lineDetailsArray.controls; let i = index"
+                          [formGroupName]="i">
+
+              <!-- Hidden line fields -->
+              <tr style="display:none">
+                <td><input type="number" formControlName="poLineId"></td>
+                <td><input type="number" formControlName="polineNum"></td>
+                <td><input formControlName="taxCategoryId"></td>
+                <td><input formControlName="invItemId"></td>
+                <td><input formControlName="poChargeAcc"></td>
+                <td><input formControlName="gstPercentage"></td>
+                <td><input formControlName="suppId"></td>
+              </tr>
+
+              <tr>
+                <!-- Sr. No. -->
+                <td>{{i + 1}}</td>
+
+                <!-- Inventory Item -->
+                <td>
+                  <input type="text" formControlName="segment"
+                         [attr.list]="'partList_' + i"
+                         class="form-control" style="min-width:150px"
+                         placeholder="Select / type part"
+                         (change)="onLineItemSelected($event, i)">
+                  <datalist [attr.id]="'partList_' + i">
+                    <option *ngFor="let p of partList" value="{{p.partName}}"></option>
+                  </datalist>
+                </td>
+
+                <!-- Category -->
+                <td>
+                  <input disabled type="text" formControlName="invCategory"
+                         class="form-control" style="width:80px">
+                </td>
+
+                <!-- Description -->
+                <td>
+                  <input disabled type="text" formControlName="invDescription"
+                         class="form-control">
+                </td>
+
+                <!-- UOM -->
+                <td>
+                  <input disabled type="text" formControlName="uom"
+                         class="form-control" style="width:50px">
+                </td>
+
+                <!-- HSN/SAC -->
+                <td>
+                  <ng-container *ngIf="displayHSN[i]; else hsnSelect">
+                    <input disabled type="text" formControlName="hsnSacCode"
+                           class="form-control" style="width:100px">
+                  </ng-container>
+                  <ng-template #hsnSelect>
+                    <select formControlName="hsnSacCode" class="form-control"
+                            style="width:fit-content"
+                            (ngModelChange)="onHsnCodeSelected($event, i)">
+                      <option value="">--Select HSN--</option>
+                      <option *ngFor="let sc of hsnSacCodeList" [ngValue]="sc.hsnsaccode">
+                        {{sc.hsnsaccode}} - GST @ {{sc.gstPercentage}}%
+                      </option>
+                    </select>
+                  </ng-template>
+                </td>
+
+                <!-- Tax Category -->
+                <td>
+                  <input disabled type="text" formControlName="taxCategoryName"
+                         class="form-control"
+                         style="min-width:80px; text-align:center; font-weight:bold;"
+                         placeholder="Auto from HSN">
+                </td>
+
+                <!-- Supplier (read-only, auto from SOB) -->
+                <td>
+                  <input disabled type="text" formControlName="suppName"
+                         class="form-control" style="min-width:140px"
+                         placeholder="Auto from SOB">
+                </td>
+
+                <!-- Qty -->
+                <td>
+                  <input type="number" min="0" formControlName="orderedQty"
+                         class="form-control" style="width:60px"
+                         (input)="calculateLineAmt(i)">
+                </td>
+
+                <!-- Price -->
+                <td>
+                  <input type="number" min="0" formControlName="unitPrice"
+                         class="form-control" style="width:70px"
+                         (input)="calculateLineAmt(i)">
+                </td>
+
+                <!-- Base Amt -->
+                <td>
+                  <input disabled type="number" formControlName="baseAmtLineWise"
+                         class="form-control" style="width:80px">
+                </td>
+
+                <!-- Disc Amt -->
+                <td>
+                  <input type="number" formControlName="discLineAmt"
+                         class="form-control" style="width:70px"
+                         (input)="calculateLineAmt(i)">
+                </td>
+
+                <!-- Tax Amt -->
+                <td>
+                  <input disabled type="number" formControlName="taxAmtLineWise"
+                         class="form-control" style="width:70px">
+                </td>
+
+                <!-- Total Amt -->
+                <td>
+                  <input disabled type="number" formControlName="totAmtLineWise"
+                         class="form-control" style="width:80px">
+                </td>
+
+                <!-- Add Row -->
+                <td>
+                  <button type="button" class="btn btn-primary btn-sm"
+                          [disabled]="isLoading || isLineButtonsDisabled" 
+                          (click)="addRow(i)" title="Add new line">
+                    <i class="fa fa-plus"></i>
+                  </button>
+                </td>
+
+                <!-- Delete Row -->
+                <td>
+                  <button type="button" class="btn btn-danger btn-sm"
+                          [disabled]="isLoading || isLineButtonsDisabled"
+                          (click)="RemoveRow(i)" title="Delete line">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+
+            </ng-container>
+          </table>
+        </div>
+      </div>
+
+    </div><!-- /form-bg -->
+
+    <!-- ── ACTION BUTTONS ─────────────────────────────────────────────────── -->
+    <div style="display:flex; justify-content:center; align-items:center;
+                flex-wrap:wrap; gap:8px; margin-top:14px; padding:8px;">
+
+      <button *ngIf="showSaveBtn"
+              type="button" class="btn btn-success" style="min-width:90px;"
+              [disabled]="isLoading"
+              data-toggle="modal" data-target="#confirmAlert"
+              (click)="msgType='Save'; message1='Do you want to SAVE the PO?'">
+        <i class="fa fa-save"></i>&nbsp;Save
+      </button>
+
+      <button *ngIf="showGrrBtn"
+              type="button" class="btn btn-success" style="min-width:90px;"
+              [disabled]="isLoading"
+              data-toggle="modal" data-target="#confirmAlert"
+              (click)="msgType='GRR'; message1='Do you want to GRR the PO?'">
+        <i class="fa fa-save"></i>&nbsp;GRR
+      </button>
+
+      <button *ngIf="showApproveBtn"
+              type="button" class="btn btn-primary" style="min-width:100px;"
+              [disabled]="isLoading"
+              data-toggle="modal" data-target="#confirmAlert"
+              (click)="msgType='Approve'; message1='Do you want to APPROVE this PO?'">
+        <i class="fa fa-check"></i>&nbsp;Approve
+      </button>
+
+      <button *ngIf="showPrintBtn"
+              type="button" class="btn btn-warning" style="min-width:110px;"
+              [disabled]="isLoading"
+              data-toggle="modal" data-target="#confirmAlert"
+              (click)="msgType='ViewPrint'; message1='Open PO Print preview?'">
+        <i class="fa fa-print"></i>&nbsp;View&nbsp;Print
+      </button>
+
+      <!-- <button *ngIf="showPrintBtn"
+              type="button" class="btn btn-info" style="min-width:140px;"
+              [disabled]="isLoading"
+              data-toggle="modal" data-target="#confirmAlert"
+              (click)="msgType='SendVendor'; message1='Send this PO to the vendor?'">
+        <i class="fa fa-envelope"></i>&nbsp;Send&nbsp;to&nbsp;Vendor
+      </button> -->
+
+      <button type="button" class="btn btn-secondary" style="min-width:80px;"
+              [disabled]="isLoading"
+              data-toggle="modal" data-target="#confirmAlert"
+              (click)="msgType='Reset'; message1='Do you want to Reset?'">
+        <i class="fa fa-refresh"></i>&nbsp;Reset
+      </button>
+
+      <button type="button" class="btn btn-secondary" style="min-width:80px;"
+              [disabled]="isLoading"
+              (click)="closeMast()">
+        <i class="fa fa-times"></i>&nbsp;Close
+      </button>
+
+    </div>
+
+  </form>
+</div>
+
+<!-- ── Confirmation Modal ────────────────────────────────────────────────── -->
+<div class="modal" id="confirmAlert" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmation</h5>
+      </div>
+      <div class="modal-body">
+        <label style="font-size:small; font-weight:bold; color:black">{{message1}}</label>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info"
+                data-dismiss="modal" (click)="executeAction()">Yes</button>
+        <button type="button" class="btn btn-info"
+                data-dismiss="modal">No</button>
+      </div>
+    </div>
+  </div>
+</div>

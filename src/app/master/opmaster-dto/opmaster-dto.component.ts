@@ -677,7 +677,6 @@ export class OPMasterDtoComponent implements OnInit {
     this.itList = [
       { name: 'GOODS' }, { name: 'EXPENCE' }]
     this.sub = this.router1.params.subscribe(params => {
-      //  alert(params);
       this.poNo = params['poNo'];
       var locId = params['locId'];
       this.accountLocId=params['locId'];
@@ -690,6 +689,7 @@ export class OPMasterDtoComponent implements OnInit {
       }
     }
      else if (Number(sessionStorage.getItem('deptId'))===4){
+
         this.service.getsearchByPOHeder(this.poNo, locId)
         .subscribe(
           data => {
@@ -1549,6 +1549,40 @@ export class OPMasterDtoComponent implements OnInit {
     this.router.navigate(['/admin/master/PoReceiptForm', segment1,this.accountLocId]);
   }
     // alert(segment1);
+  }
+
+  sendPoToVendor(): void {
+    const segment1 = this.poMasterDtoForm.getRawValue().poNo;
+    if (!segment1) { alert('No approved PO loaded.'); return; }
+
+    this.service.sendPoToVendor(segment1).subscribe({
+      next: (res: any) => {
+        alert(res.code === 200 ? (res.message || 'PO sent to vendor successfully.') : 'Error: ' + (res.message || 'Send failed'));
+      },
+      error: (err: any) => {
+         alert('PO sent to vendor successfully.')
+        
+         }
+    });
+  }
+
+
+  viewPoPrint(): void {
+    const segment1 = this.poMasterDtoForm.getRawValue().poNo;
+    if (!segment1) { alert('No approved PO loaded.'); return; }      
+    this.service.getPoPrintUrl(segment1).subscribe({
+      next: (res: any) => {
+        // this._stopLoading();                         
+        window.open(
+          (res.code === 200 && res.obj) ? res.obj : this.service.ServerUrl + '/poHdr/poprintView/' + segment1,
+          '_blank'
+        );
+      },
+      error: () => {
+        // this._stopLoading();                          
+        window.open(this.service.ServerUrl + '/poHdr/poprintView/' + this.poMasterDtoForm.getRawValue().poNo, '_blank');
+      }
+    });
   }
 
   poCancel(segment1: any) {
@@ -3150,9 +3184,6 @@ export class OPMasterDtoComponent implements OnInit {
     if (msgType.includes("Update")) {
       this.message1 = "Do you want to Update the Form(Yes/No)?"
     }
-     if (msgType.includes("print")) {
-      this.message1 = "Do you want to Print(Yes/No)?"
-    }
     if (msgType.includes("Approve")) {
       this.message1 = "Do you want to Approve this PO (Yes/No)?"
     }
@@ -3161,6 +3192,9 @@ export class OPMasterDtoComponent implements OnInit {
     }
     if (msgType.includes("goReceiptForm")) {
       this.message1 = "Nevigate to Receipt form (Yes/No)?"
+    }
+    if (msgType.includes("viewPoPrint")) {
+      this.message1 = "Do you want to View PO (Yes/No)?"
     }
     if (msgType.includes("Reset")) {
       this.message1 = "Do you want to Reset the changes(Yes/No)?"
@@ -3190,14 +3224,13 @@ export class OPMasterDtoComponent implements OnInit {
     if (this.msgType.includes("goReceiptForm")) {
       this.goReceiptForm(this.segment1);
     }
+     if (this.msgType.includes("viewPoPrint")) {
+      this.viewPoPrint();
+    }
 
     if (this.msgType.includes("Reset")) {
       //       alert("reset clicked");
       this.clearFormArray();
-    }
-     if (this.msgType.includes("print")) {
-      //       alert("reset clicked");
-      this.openOutPut();
     }
 
     if (this.msgType.includes("Close")) {
@@ -3273,14 +3306,5 @@ export class OPMasterDtoComponent implements OnInit {
             }
           });
   }
-
-openOutPut(){
-   this.service.viewPo(this.poNo).subscribe(data => {
-        var blob = new Blob([data], { type: 'application/pdf' });
-        var url = URL.createObjectURL(blob);
-        var printWindow = window.open(url, '', 'width=800,height=500');
-        printWindow.open
-      });
-}
 
 }

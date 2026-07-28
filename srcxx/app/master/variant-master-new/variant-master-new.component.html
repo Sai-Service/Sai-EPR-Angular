@@ -1,0 +1,289 @@
+<div class="center">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td class="PageHeader">
+                &nbsp;&nbsp;Variant&nbsp;Master&nbsp;
+            </td>
+        </tr>
+    </table>
+    <form [formGroup]="variantMasterForm" (ngSubmit)="variantMaster(variantMasterForm.value)">
+        <fieldset class="RFS">
+            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Variant
+                Details&nbsp;</legend>
+            <table class="center">
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle1">Model&nbsp;:&nbsp;</td>
+                    <td> <select formControlName="mainModel" class="form-control" (change)="onClickMainModel($event)">
+                            <option disabled>--Select--</option>
+                            <option *ngFor="let mm of mainModelList" [ngValue]="mm.code">
+                                {{mm.code}}
+                            </option>
+                        </select></td>
+                    <input type="number" hidden formControlName="mainmodelId" class="form-control">
+                    <td style="width: 15%" class="LabelFontStyle1">Variant&nbsp;:&nbsp;</td>
+                    <td><input type="text" formControlName="variant" (change)="serviceModelFn($event)"
+                            class="form-control"> </td>
+                    <td style="width: 15%" class="LabelFontStyle">Variant&nbsp;Desc&nbsp;:&nbsp;</td>
+                    <td><input type="text" formControlName="vardescription" class="form-control"> </td>
+                    <input type="number" hidden formControlName="variantId" class="form-control">
+                    <td style="width: 15%" class="LabelFontStyle1">Color&nbsp;:&nbsp;</td>
+                    <td> <select formControlName="mainModel" class="form-control" (change)="onClickcolor($event)">
+                            <option disabled>--Select--</option>
+                            <option *ngFor="let mm of colorList" [ngValue]="mm.code">
+                                {{mm.code}}
+                            </option>
+                        </select></td>
+                    <input type="number" hidden formControlName="colorCodeID" class="form-control">
+
+                </tr>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle">Color&nbsp;Desc&nbsp;:&nbsp;</td>
+                    <td><input type="text" disabled formControlName="colorDesc" class="form-control"> </td>
+                    <td style="width: 15%" class="LabelFontStyle1">Fuel&nbsp;Type&nbsp;:&nbsp;</td>
+                    <td> <select formControlName="fueltype" class="form-control">
+                            <option disabled>--Select--</option>
+                            <option *ngFor="let mm of fuelTypeList" [ngValue]="mm.code">
+                                {{mm.code}}
+                            </option>
+                        </select>
+                    </td>
+                    <td style="width: 15%" class="LabelFontStyle1">Service&nbsp;Model&nbsp;:&nbsp;</td>
+                    <td><input type="text" formControlName="servicemodel" disabled class="form-control"> </td>
+                    <td style="width: 15%" class="LabelFontStyle1">Bharat&nbsp;Stage&nbsp;Norms&nbsp;:&nbsp;</td>
+                    <td><input type="text" formControlName="bharatstagenorms" class="form-control"> </td>
+
+                </tr>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle1">Cylinder&nbsp;:&nbsp;</td>
+                    <td><input type="text" formControlName="cylinder" class="form-control"> </td>
+                    <td style="width: 15%" class="LabelFontStyle1">Chassis&nbsp;Prefix&nbsp;:&nbsp;</td>
+                    <td><input type="text" formControlName="chasprefix" class="form-control"> </td>
+                    <td style="width: 15%" class="LabelFontStyle1">Engine&nbsp;Prefix&nbsp;:&nbsp;</td>
+                    <td><input type="text" formControlName="engprefix" class="form-control"> </td>
+                    <td style="width: 15%" class="LabelFontStyle1">Cubic&nbsp;Capacity&nbsp;:&nbsp;</td>
+                    <td><input type="text" formControlName="cubiccapacity" class="form-control"> </td>
+                </tr>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle1">Gross&nbsp;Weight&nbsp;:&nbsp;</td>
+                    <td><input type="text" formControlName="grossweight" class="form-control"> </td>
+                    <td style="width: 15%" class="LabelFontStyle1">MFG&nbsp;Year&nbsp;:&nbsp;</td>
+                    <td><input type="text" formControlName="mfgyearprint" class="form-control"> </td>
+                    <td style="width: 15%" class="LabelFontStyle1">Seating&nbsp;:&nbsp;</td>
+                    <td><input type="text" formControlName="seating" class="form-control"> </td>
+                   
+                    <td style="width: 15%" class="LabelFontStyle1">Unladen&nbsp;Weight&nbsp;:&nbsp;</td>
+                    <td><input type="text" formControlName="unladenweight" class="form-control"> </td>
+
+                </tr>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle1">Variant&nbsp;Class&nbsp;:&nbsp;</td>
+                    <td><input type="text" formControlName="variantclass" class="form-control"> </td>
+                    <td style="width: 15%" class="LabelFontStyle1">OEM&nbsp;Warranty&nbsp;Period&nbsp;:&nbsp;</td>
+                    <td><input type="number" formControlName="oemwarrantyPerion" class="form-control"> </td>
+                    <td style="width: 15%" class="LabelFontStyle1">Type&nbsp;Of&nbsp;Body&nbsp;:&nbsp;</td>
+                    <td><input type="text" formControlName="typeOfBody" class="form-control"> </td>
+                    <td style="width: 15%" class="LabelFontStyle1">Horse&nbsp;Power&nbsp;:&nbsp;</td>
+                    <td><input type="number" formControlName="horsepower" class="form-control"> </td>
+                </tr>
+               
+            </table>
+        </fieldset>
+        <fieldset class="RFS">
+            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
+                Price&nbsp;&&nbsp;GST&nbsp;%&nbsp;Details&nbsp;</legend>
+            <table>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle1">Basic&nbsp;Price&nbsp;:&nbsp;</td>
+                    <td><input type="number" formControlName="basicPrice" class="form-control"> </td>
+                    <td style="width: 15%" class="LabelFontStyle1">GST&nbsp;%&nbsp;:&nbsp;</td>
+                    <td><input type="number" formControlName="gstPercentage" class="form-control"> </td>
+                    <td style="width: 15%" class="LabelFontStyle1">Cess&nbsp;%&nbsp;:&nbsp;</td>
+                    <td><input type="number" formControlName="cessPer" class="form-control"> </td>
+                    <td style="width: 15%" class="LabelFontStyle1">TCS&nbsp;%&nbsp;:&nbsp;</td>
+                    <td><input type="number" formControlName="tcsPer" class="form-control"> </td>
+                </tr>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle1">CSD&nbsp;Price&nbsp;:&nbsp;</td>
+                    <td><input type="number" formControlName="csdPrice" class="form-control"> </td>
+                    <td style="width: 15%" class="LabelFontStyle1">Registration&nbsp;Charge&nbsp;:&nbsp;</td>
+                    <td><input type="number" formControlName="regCharge" class="form-control"> </td>
+                    <td style="width: 15%" class="LabelFontStyle1">Hypothication&nbsp;Charge&nbsp;:&nbsp;</td>
+                    <td><input type="number" formControlName="hypCharge" class="form-control"> </td>
+                    <td style="width: 15%" class="LabelFontStyle1">Smart&nbsp;Card&nbsp;Fee&nbsp;:&nbsp;</td>
+                    <td><input type="number" formControlName="smartCarDfee" class="form-control"> </td>
+                </tr>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle1">Postal&nbsp;Charge&nbsp;:&nbsp;</td>
+                    <td><input type="number" formControlName="postalCharge" class="form-control"> </td>
+                    <td style="width: 15%" class="LabelFontStyle1">Status&nbsp;:&nbsp;</td>
+                    <td><input type="text" formControlName="status" class="form-control"> </td>
+                </tr>
+                <input type="number" hidden formControlName="mdlClrId" class="form-control">
+                <input type="number" hidden formControlName="ouId" class="form-control">
+                <input type="number" hidden formControlName="divisionId" class="form-control">
+            </table>
+        </fieldset>
+        <fieldset class="RFS">
+            <table class="center">
+                <tr>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                            data-target="#exampleModalLongSave">Save</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                            data-target="#exampleModalLong">Close</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                            data-target="#exampleModal">Reset</button>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <fieldset class="RFS">
+            <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
+                Search&nbsp;</legend>
+            <table>
+                <tr>
+                    <td style="width: 15%" class="LabelFontStyle1">Model&nbsp;:&nbsp;</td>
+                    <td> <select formControlName="mainModel1" class="form-control" (change)="onClickMainModel1($event)">
+                            <option disabled>--Select--</option>
+                            <option *ngFor="let mm of mainModelList" [ngValue]="mm.code">
+                                {{mm.code}}
+                            </option>
+                        </select></td>
+                    <td style="width: 15%" class="LabelFontStyle1">Variant&nbsp;:&nbsp;</td>
+                    <td> <select formControlName="variant1" class="form-control" (change)="variantIdFn($event)">
+                            <option disabled>--Select--</option>
+                            <option *ngFor="let mm of varianListNew" [ngValue]="mm.variant">
+                                {{mm.variant}}--{{mm.variantDesc}}
+                            </option>
+                        </select></td>
+                    <td style="width: 15%" class="LabelFontStyle1">Color&nbsp;:&nbsp;</td>
+                    <td> <select formControlName="colorCode" class="form-control">
+                            <option disabled>--Select--</option>
+                            <option *ngFor="let mm of colorListNew" [ngValue]="mm.colorCode">
+                                {{mm.colorCode}}--{{mm.colorDesc}}
+                            </option>
+                        </select></td>
+                    <td>
+                        <button type="button" class="btn btn-primary" (click)="searchVariant()">Search</button>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ********************Save************************************ -->
+
+ <div class="modal fade" id="exampleModalLongSave" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="width:600px;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <label
+                            style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                            <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                            Want&nbsp;to&nbsp;Save.&nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                        </label>
+                    </div>
+                    <div class="modal-footer">
+                        <table class="center">
+                            <tr>
+                                <td>
+                                    <button type="submit" class="btn btn-primary" data-dismiss="modal" id="register"
+                                        (click)="saveVariant()">Yes</button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!-- ********************************Close******************** -->
+
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="width:600px;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <label
+                            style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                            <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                            Want&nbsp;to&nbsp;Close.&nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                        </label>
+                    </div>
+                    <div class="modal-footer">
+                        <table class="center">
+                            <tr>
+                                <td>
+                                    <button type="submit" class="btn btn-primary" data-dismiss="modal" id="register"
+                                        (click)="closeMast()">Yes</button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <!--********************** Reset********************* -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            style="background-color:darkblue;">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <label
+                            style="font-size: small; color: black;font-weight: bold;text-align: center;vertical-align: middle;">
+                            <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                            Want&nbsp;to&nbsp;Reset. &nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                        </label>
+                    </div>
+                    <div class="modal-footer">
+                        <table class="center">
+                            <tr>
+                                <td>
+                                    <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                </td>
+                                <td>
+                                    <button type="submit" class="btn btn-info" id="register"
+                                        (click)="resetMast()">Yes</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>

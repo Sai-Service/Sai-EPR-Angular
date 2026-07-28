@@ -1,0 +1,25 @@
+
+
+
+.modal {
+width: 20rem;
+margin-left: 50%;
+}
+
+.grid_scroll{
+overflow: auto;
+ height: 200px; 
+width: 100%;
+}
+
+
+.modal-header{
+text-align: center;
+}
+
+
+
+
+.ItemStyle{
+  text-align: center;
+}

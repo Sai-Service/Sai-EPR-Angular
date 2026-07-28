@@ -13,6 +13,7 @@ import { ItCorrectionService } from '../it-correction.service';
 })
 export class ItCorrectionForAllComponent implements OnInit {
 
+  
   itCorrectionForm!: FormGroup;
 
   ticketNo!: string;
@@ -29,6 +30,9 @@ export class ItCorrectionForAllComponent implements OnInit {
   approverNameLovList: any[] = [];
 
   titleLovList: any[] = [];
+
+  insuranceCompanyLov: any[] = [];
+  insuranceSiteLov: any[] = [];
 
   stateGstCodeMap: any = {
     'MAHARASHTRA': '27',
@@ -116,8 +120,19 @@ export class ItCorrectionForAllComponent implements OnInit {
         });
       }
 
-      if (val === 'GST Updation' || val === 'PAN No Updation') {
+      const accountsCtrl = this.itCorrectionForm.get('accountsApproval');
+      const approverCtrl = this.itCorrectionForm.get('approverName');
+
+      if (
+        val === 'GST Updation' ||
+        val === 'PAN No Updation' ||
+        val === 'Insurance Updation'
+      ) {
         this.showAccountsApproval = true;
+
+        accountsCtrl?.setValidators([Validators.required]);
+        approverCtrl?.setValidators([Validators.required]);
+
       } else {
         if (this.orderStatus !== 'INVOICED') {
           this.showAccountsApproval = false;
@@ -175,6 +190,31 @@ export class ItCorrectionForAllComponent implements OnInit {
       error: () => {
         alert('Title LOV API failed');
       }
+    });
+
+    this.service.getInsuranceCompanyLov().subscribe({
+      next: (res: any) => {
+        if (res.code === 200) {
+          this.insuranceCompanyLov = res.obj;
+        }
+      },
+      error: () => {
+        alert('Insurance Company LOV API failed');
+      }
+    });
+
+    this.itCorrectionForm.get('newInsuranceCompany')?.valueChanges.subscribe(custId => {
+      if (!custId) {
+        this.insuranceSiteLov = [];
+        return;
+      }
+      this.service.getInsuranceSiteLov(custId).subscribe({
+        next: (res: any) => {
+          if (res.code === 200) {
+            this.insuranceSiteLov = res.obj;
+          }
+        }
+      });
     });
 
   }
@@ -243,6 +283,16 @@ export class ItCorrectionForAllComponent implements OnInit {
       model: [''],
       jobCardStatus: [''],
       newCustAccountNo: [''],
+      insuranceCompany: [''],
+      insuranceCompanyId: [''],
+      insuranceSite: [''],
+      insuranceSiteId: [''],
+      policyNo: [''],
+      insuranceEndDate: [''],
+      newInsuranceCompany: [''],
+      newInsuranceSite: [''],
+      newPolicyNo: [''],
+      newInsuranceEndDate: [''],
     });
   }
 
@@ -320,7 +370,8 @@ export class ItCorrectionForAllComponent implements OnInit {
       email1: com.semailId,
       panNo: com.newPanNo,
       gstNo: com.newGstNo,
-      discountPercent: com.discountPercent
+      discountPercent: com.discountPercent,
+
     });
     this.syncCustomerToCorrection();
     this.applyGstValidationByState();
@@ -591,7 +642,15 @@ export class ItCorrectionForAllComponent implements OnInit {
             chassisNo: v.CHASSISNO,
             vinNo: v.VIN,
             engineNo: v.ENGINENO,
-            model: v.MAINMODEL
+            model: v.MAINMODEL,
+            insuranceCompany: v.INSUCOMPNAME,
+            insuranceCompanyId: v.INSURERCOMPID,
+            insuranceSite: v.INSUCOMPSITENAME,
+            insuranceSiteId: v.INSURERSITEID,
+            policyNo: v.POLICYNO,
+            insuranceEndDate: v.INSURANCEENDDATE
+              ? v.INSURANCEENDDATE.substring(0, 10)
+              : ''
           });
 
           this.syncCustomerToCorrection();
@@ -697,6 +756,17 @@ export class ItCorrectionForAllComponent implements OnInit {
           newJobCardStatus: f.get('jobCardStatus')?.value
         });
         break;
+
+      case 'Insurance Updation':
+
+        f.patchValue({
+          newInsuranceCompany: f.get('insuranceCompany')?.value,
+          newInsuranceSite: f.get('insuranceSite')?.value,
+          newPolicyNo: f.get('policyNo')?.value,
+          newInsuranceEndDate: f.get('insuranceEndDate')?.value
+        });
+        break;
+
     }
   }
 
@@ -781,4 +851,5 @@ export class ItCorrectionForAllComponent implements OnInit {
       }
     });
   }
+  
 }

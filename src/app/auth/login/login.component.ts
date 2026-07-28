@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
   lstcomments1: any[];
   divisionCode: string;
   ticketNo: string;
+  attribute7:string;
 
   currentDateList: any = [];
 
@@ -98,6 +99,7 @@ export class LoginComponent implements OnInit {
           sessionStorage.setItem('fullName', users.fullName);
           sessionStorage.setItem('locName', users.locName);
           sessionStorage.setItem('roleId', users.roleId);
+          sessionStorage.setItem('attribute7',users.attribute7);
   
           console.log(users.ouId);
           console.log(users.locId);

@@ -1,0 +1,184 @@
+<div class="center">
+        <table style="width: 100%;background-color: white;">
+            <tr>
+                <!-- class="PageHeader" -->
+                <td colspan="4" class="PageHeader" style="width: 100%;" >
+                    &nbsp;&nbsp;Subinventory&nbsp;Master
+                </td>
+            </tr>
+        </table>
+        <div class="center" style="width: 100%;">
+                <div class="form-bg">
+                    <form [formGroup]="SubinventoryMasterForm" (ngSubmit)="subinventoryMaster(SubinventoryMasterForm.value)">
+                            <table class="center">
+                                <div *ngIf="display; then thenBlock; else elseBlock"></div>
+                                <ng-template #thenBlock>
+                                <tr>
+                                    <td style="width: 18%" class="LabelFontStyle">
+                                        Division Name:
+                                    </td>
+                                    <td>
+                                        <select formControlName="divisionId" class="form-control">
+                                            <option>--Select--</option>
+                                            <option  *ngFor="let  divId of DivisionList"[ngValue]="divId.divisionId">{{divId.divisionCode}}--{{divId.divisionName}}</option>
+                                        </select>
+                                        <span
+                                        *ngIf="getGroupControl('divisionId').touched && getGroupControl('divisionId').invalid">Valid name
+                                                    </span>
+                                    </td >
+                                    <td style="width: 18%" class="LabelFontStyle">
+                                            Department:
+                                    </td>
+                                    <td>
+                                         <select formControlName="deptId" class="form-control">
+                                          <option>--Select--</option>
+                                          <option *ngFor="let  dptId of DepartmentIdList" [ngValue]="dptId.cmnTypeId">{{dptId.code}}</option>
+                                         </select>
+                                         <span
+                                        *ngIf="getGroupControl('deptId').touched && getGroupControl('deptId').invalid">Valid dept
+                                                    </span>
+                                    </td>
+                                    <td style="width: 18%" class="LabelFontStyle">
+                                            subInventoryCode:
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" formControlName="subInventoryCode"  data-placement="top" title="Tooltip on top" >
+                                        <span
+                                        *ngIf="getGroupControl('subInventoryCode').touched && getGroupControl('subInventoryCode').invalid" >Valid name
+                                                    </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 18%" class="LabelFontStyle">
+                                        Description:
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" formControlName="description">
+                                    </td>
+                                    <td style="width: 18%" class="LabelFontStyle">
+                                        Start Date:
+                                    </td>
+                                    <td>
+                                        <input type="date" class="form-control" formControlName="startdate">
+                                    </td>
+                                    <td style="width: 18%" class="LabelFontStyle">Status:</td>
+                                    <td>
+                                            <input disabled type="text" formControlName="status" class="form-control"[(ngModel)]='status' >
+                                    </td>
+                                </tr>
+                                </ng-template>
+                                <ng-template #elseBlock>
+                                        <tr>
+                                            <input hidden formControlName="subInventoryId">
+                                                <td style="width: 18%" class="LabelFontStyle">
+                                                    Division Name:
+                                                </td>
+                                                <td>
+                                                    <input disabled type="text" formControlName="divisionId" class="form-control">
+                                                </td >
+                                                <td style="width: 18%" class="LabelFontStyle">
+                                                        Department:
+                                                </td>
+                                                <td>
+                                                     <input disabled type="text" formControlName="deptId" class="form-control">
+                                                </td>
+                                                <td style="width: 18%" class="LabelFontStyle">
+                                                        subInventoryCode:
+                                                </td>
+                                                <td>
+                                                    <input disabled type="text" class="form-control" formControlName="subInventoryCode">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 18%" class="LabelFontStyle">
+                                                    Description:
+                                                </td>
+                                                <td>
+                                                    <input disabled type="text" class="form-control" formControlName="description">
+                                                </td>
+                                                <td style="width: 18%" class="LabelFontStyle">
+                                                    Start Date:
+                                                </td>
+                                                <td>
+                                                    <input disabled type="date" class="form-control" formControlName="startdate">
+                                                </td>
+                                                <td style="width: 18%" class="LabelFontStyle">Status:</td>
+                                                <td>
+                                                        <select formControlName="status" id="status" class="form-control"
+                                                        [ngModel]="status" (ngModelChange)='onOptionsSelected($event)'>
+                                                            <option>--Select--</option>
+                                                            <option *ngFor="let sc of  statusList">
+                                                                {{sc.codeDesc}}
+                                                            </option>
+                                                        </select>
+                                                </td>
+                                            </tr>
+                                </ng-template>
+                            </table>
+                            <br>
+                            <table class="center">
+                                    <div *ngIf="displayButton; then thenBlock1; else elseBlock1"></div>
+                                    <ng-template #thenBlock1>
+                                <tr>
+                                    <td>
+                                        <button type="submit" class="btn btn-primary"  (click)="SaveMast()">Save</button>
+                                    </td>
+                                    <td>
+                                            <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
+                                    </td>
+                                    <td>
+                                            <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
+                                    </td>
+                                    <td>
+                                            <button type="submit" class="btn btn-primary" id="register" (click)="SearchMast()">Search</button>
+                                    </td>
+                                </tr>
+                                    </ng-template>
+                                    <ng-template #elseBlock1>
+                                            <tr>
+                                                <td>
+                                                    <button type="submit" class="btn btn-primary"  (click)="Update()">Update</button>
+                                                </td>
+                                                <td>
+                                                        <button type="submit" class="btn btn-primary" id="register" (click)="resetMast()">Reset</button>
+                                                </td>
+                                                <td>
+                                                        <button type="submit" class="btn btn-primary" id="register" (click)="closeMast()">Close</button>
+                                                </td>
+                                                <td>
+                                                        <button type="submit" class="btn btn-primary" id="register" (click)="SearchMast()">Search</button>
+                                                </td>
+                                            </tr>
+                                                </ng-template>
+                            </table>
+                    </form>
+                </div>
+        </div>
+</div>
+<br>
+<div class="container1">
+        <div class="grid_scroll">
+        <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;width:100%;border-collapse:collapse;">
+        <tbody>
+            <tr class="GridHeader">
+                    <th scope="col">Division Name</th> 
+                    <th scope="col">Department</th>
+                    <th scope="col">subInventory Code</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">start Date</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Select One</th>
+            </tr>
+        </tbody>
+        <tr *ngFor="let com of lstcomments" class="ItemStyle" style="text-decoration:none;">
+                <td>{{com.divisionId}}</td>
+                <td>{{com.deptId}}</td>
+                <td>{{com.subInventoryCode}}</td>
+                <td>{{com.description}}</td>
+                <td>{{com.startdate}}</td>
+                <td>{{com.status}}</td>
+                <td><button (click)="Select(com.subInventoryCode)">Select</button></td>
+            </tr>
+        </table>
+        </div>
+        </div>

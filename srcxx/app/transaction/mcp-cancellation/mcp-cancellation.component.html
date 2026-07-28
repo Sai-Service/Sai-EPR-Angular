@@ -1,0 +1,1162 @@
+<form [formGroup]="mcpCancellationForm" (ngSubmit)="mcpCancellation(mcpCancellationForm.value)">
+
+<div class="center">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td class="PageHeader">
+                &nbsp;&nbsp;MCP | AMC&nbsp;TERMINATION&nbsp;
+            </td>
+        </tr>
+    </table>
+    
+    <div class="center" style="width: 100%;">
+        <div class="form-bg">
+            <div class="center" style="width: 100%;">
+
+                     <table class="center">
+                        <tr>
+
+                        <!-- <td  class="LabelFontStyle">Div/ouid/locid/deptid/empId&nbsp;:&nbsp;</td> -->
+
+                        <td   style="border: none;color: black;">
+                            <input hidden type="text" disabled formControlName="loginArray"
+                                class="form-control" [(ngModel)]="loginArray" placeholder="">
+                        </td>
+                    
+                        <td>
+                            <input hidden  style="width:30px ;"  disabled type="text" formControlName="ouId" class="form-control" [(ngModel)]="ouId" >
+                        </td>
+                    
+                        <td>
+                            <input hidden style="width:30px ;" disabled type="text" formControlName="locId"  [(ngModel)]="locId" class="form-control"  >
+                        </td>
+
+                        <td >
+                            <input hidden style="width:30px ;"  type="text" disabled formControlName="deptId"
+                            class="form-control" [(ngModel)]="deptId" placeholder="">
+
+                        </td>
+
+                        <td >
+                            <input hidden style="width: 20px;"  type="text" disabled formControlName="emplId"
+                            class="form-control" [(ngModel)]="emplId" placeholder="">
+                        </td>
+
+                        <td>
+                            <input hidden style="width:30px ;" type="text"  formControlName="custId"  id="custId" [(ngModel)]="custId" class="form-control" >
+                        </td>
+
+                        <td>
+                            <input hidden style="width:100px ;" type="number"  formControlName="refundAmt"  id="refundAmt" [(ngModel)]="refundAmt" class="form-control" >
+                        </td>
+                        
+                        </tr>
+                    </table>
+
+                    <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">SEARCH</legend>
+                        <table class="center" style="width: 100%;background-color: #FFE4B5;">
+                            <tr>
+                            <td >
+                                <table class="center">
+                                    <tr>
+                                        <td style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;Enrollment&nbsp;No&nbsp;:&nbsp;</td>
+                                        <td style="background-color: #FFE4B5;"><input type="text" class="form-control" formControlName="searchEnrollNo" [(ngModel)]='searchEnrollNo' value={{searchEnrollNo}} style="text-transform:uppercase ;"></td>
+                                        <td style="background-color: #FFE4B5;" class="LabelFontStyle">&nbsp;Registration&nbsp;No&nbsp;:&nbsp;</td>
+                                        <td style="background-color: #FFE4B5;"><input type="text" class="form-control" formControlName="searchRegno" [(ngModel)]='searchRegno'  value={{searchRegno}} style="text-transform:uppercase ;"> </td>
+                                        <td style="background-color: #FFE4B5;"><button type="button" class="btn-primary" (click)="searchMcpByRegNo(searchRegno,searchEnrollNo)"><i class="fa fa-search" aria-hidden="true"></i></button> </td>
+                                        
+                                        <td></td><td></td>
+                                        <td style="background-color: #FFE4B5;color: blue;" class="LabelFontStyle">{{this.amcMcpStatus}}</td>
+
+                                    </tr>
+                                </table>
+                            </td>
+                            </tr>
+                        </table>
+
+                    <!-- <table class="center" style="width: 100%;background-color: #FFE4B5;">
+                        <tr class="center">
+                            <td  style="background-color: #FFE4B5;">Enrollment&nbsp;No:&nbsp;</td>
+                            <td style="background-color: #FFE4B5;"> <input class="form-control" formControlName="searchEnrollNo" [(ngModel)]='searchEnrollNo' value={{searchEnrollNo}} > </td>
+                            <td style="width: 15%" class="LabelFontStyle">Registration&nbsp;No:&nbsp;</td>
+                            <td><input   type="text"  formControlName="searchRegno"  id="searchRegno" [(ngModel)]="searchRegno" class="form-control"  ></td>
+                            <td style="background-color: #FFE4B5;"><button type="button" class="btn-primary" (click)="searchMcpByRegNo(searchRegno,searchEnrollNo)"><i class="fa fa-search" aria-hidden="true"></i></button></td>
+                        </tr>
+                    </table> -->
+                    </fieldset>
+                  
+                  
+
+                       
+                    <fieldset class="RFS">
+                    <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">VEHICLE | CUSTOMER DETAILS</legend>
+                        <table class="center">
+                            
+                            <tr>
+                                <td style="width: 15%" class="LabelFontStyle1">Reg&nbsp;No:&nbsp;</td>
+                                <td>
+                                    <input disabled  type="text"  formControlName="vehRegNo"  id="vehRegNo" [(ngModel)]="vehRegNo" class="form-control" >
+                                </td>
+    
+                                <!-- <td>
+                                 <input type="text"
+                                    formControlName="vehRegNo"
+                                    [(ngModel)]="vehRegNo"
+                                    (change)="serchByRegNo(vehRegNo)"
+                                    (keyup)="getUserIdsFirstWay($event)"
+                                    id="userIdFirstWay"
+                                    list="dynmicUserIds"
+                                    class="form-control" />
+    
+                                    <datalist id="dynmicUserIds">
+                                        <option
+                                            *ngFor="let item of VehRegNoList"
+                                            [ngValue]="item.regNo">
+                                            {{item.regNo}}
+                                        </option>
+                                    </datalist>
+    
+                                </td>  -->
+
+                                <td style="width: 15%" class="LabelFontStyle1">VIN&nbsp;:&nbsp;</td>
+                                <td>
+                                    <input disabled  type="text"  formControlName="vehicleId"  id="vehicleId" [(ngModel)]="vehicleId" class="form-control" >
+                                </td>
+                                <!-- <td>
+                                <input type="text"
+                                formControlName="vehicleId"
+                                [(ngModel)]="vehicleId"
+                                (change)="serchByVin(vehicleId)"
+                                (keyup)="getUserIdsFirstWayVin($event)"
+                                id="userIdFirstWay"
+                                list="dynmicUserIds1"
+                                class="form-control" />
+    
+                                <datalist id="dynmicUserIds1">
+                                    <option
+                                        *ngFor="let item of VehVinList"
+                                        [ngValue]="item.vin">
+                                        {{item.vin}}
+                                    </option>
+                                </datalist>
+                              </td> -->
+    
+                        <td style="width: 15%" class="LabelFontStyle">Sale&nbsp;Date:&nbsp;</td>
+    
+                        <td>
+                            <input disabled  type="date"  formControlName="deliveryDate"  id="deliveryDate" [(ngModel)]="deliveryDate" class="form-control" >
+                        </td>
+    
+                        <td style="width: 15%" class="LabelFontStyle">Selling&nbsp;Dealer:&nbsp;</td>
+    
+                        <td>
+                            <input disabled  type="text"  formControlName="dealerCode"  id="dealerCode" [(ngModel)]="dealerCode" class="form-control" >
+                        </td>
+                                
+                              
+                                
+                               
+                        </tr>
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle">Item&nbsp;Code:&nbsp;</td>
+        
+                            <td>
+                                <input disabled  type="text"  formControlName="vehicleItem"  id="vehicleItem" [(ngModel)]="vehicleItem" class="form-control" >
+                            </td>
+                            
+    
+                        <td style="width: 15%" class="LabelFontStyle">Model&nbsp;:&nbsp;</td>
+    
+                        <td>
+                            <input disabled  type="text"  formControlName="variantCode"  id="variantCode" [(ngModel)]="variantCode" class="form-control" >
+                        </td>
+    
+                        <td style="width: 15%" class="LabelFontStyle">Variant&nbsp;:&nbsp;</td>
+    
+                        <td>
+                            <input disabled  type="text"  formControlName="mainModel"  id="mainModel" [(ngModel)]="mainModel" class="form-control" >
+                        </td>
+    
+                        <td style="width: 15%" class="LabelFontStyle">Fuel&nbsp;Type:&nbsp;</td>
+        
+                        <td>
+                            <input disabled  type="text"  formControlName="fuelType"  id="fuelType" [(ngModel)]="fuelType" class="form-control" >
+                        </td>
+    
+                        
+                        </tr>
+                        <tr>
+                            <td style="width: 15%" class="LabelFontStyle">Chassis&nbsp;No:&nbsp;</td>
+    
+                        <td>
+                            <input  disabled type="text"  formControlName="chassisNo"  id="chassisNo" [(ngModel)]="chassisNo" class="form-control" >
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">Engine&nbsp;No:&nbsp;</td>
+    
+                        <td>
+                            <input disabled  type="text"  formControlName="engineNo"  id="engineNo" [(ngModel)]="engineNo" class="form-control" >
+                        </td>
+                        <td style="width: 15%" class="LabelFontStyle">Service&nbsp;Model:&nbsp;</td>
+    
+                        <td>
+                            <input disabled  type="text"  formControlName="serviceModel"  id="serviceModel" [(ngModel)]="serviceModel" class="form-control" >
+                        </td>
+    
+                        <td style="width: 15%" class="LabelFontStyle">Cust&nbsp;No:&nbsp;</td>
+    
+                        
+                        <td>
+                            <input disabled  type="text"  formControlName="custAccountNo"  id="custAccountNo" [(ngModel)]="custAccountNo" class="form-control" >
+                        </td>
+                        
+    
+                        </tr>
+    
+                        <tr>
+    
+                       
+                            <td style="width: 15%" class="LabelFontStyle">Mileage:&nbsp;</td>
+        
+                            <td>
+                                <input disabled  type="text"  formControlName="currentKms"  id="currentKms" [(ngModel)]="currentKms" class="form-control">
+                            </td>
+    
+                            <td style="width: 15%" class="LabelFontStyle">Sales&nbsp;Exe:&nbsp;</td>
+
+                            <!-- <td>
+                                <input disabled  type="text"  formControlName="executive"  id="executive" [(ngModel)]="executive" class="form-control" >
+                            </td> -->
+    
+                            <td>
+                                <select disabled type="text" class="form-control" formControlName="executive" [(ngModel)]="executive">
+                                <option>--Select--</option>
+                                <option *ngFor="let sc of issueByList" [ngValue]="sc.emplId" >
+                                {{sc.emplId}}-{{sc.ticketNo}}-{{sc.name}}
+                                </option>
+                                </select>
+                            </td>
+
+    
+                            <td style="width: 15%" class="LabelFontStyle">DMS&nbsp;Cust&nbsp;No:&nbsp;</td>
+    
+                            <td>
+                                <input disabled  type="text"  formControlName="dmsCustNo"  id="dmsCustNo" [(ngModel)]="dmsCustNo" class="form-control" >
+                            </td>
+    
+                        
+                        <td style="width: 15%" class="LabelFontStyle">Customer&nbsp;Name:&nbsp;</td>
+    
+                        <td>
+                            <input disabled   type="text"  formControlName="custName"  id="custName" [(ngModel)]="custName" class="form-control" >
+                        </td>
+
+
+
+                            </tr>
+                        </table>
+                    </fieldset>
+
+                    <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">MCP|AMC PACKAGE DETAILS</legend>
+                            <table class="center">
+                                
+                               <tr>
+                                <td style="width: 15%" class="LabelFontStyle">Enroll&nbsp;No:&nbsp;</td>
+                                
+                                <td>
+                                    <input  disabled type="text"  formControlName="enrollmentNo"  id="enrollmentNo" [(ngModel)]="enrollmentNo" class="form-control" >
+                                </td>
+                                <td style="width: 15%" class="LabelFontStyle">Enroll&nbsp;Date:&nbsp;</td>
+                              
+                                <td>
+                                    <input  disabled type="date"  formControlName="enrollmentDt"  id="enrollmentDt" [(ngModel)]="enrollmentDt" class="form-control" >
+                                </td>
+
+                                <td style="width: 15%" class="LabelFontStyle">Inv&nbsp;No:&nbsp;</td>
+                                            
+                                <td>
+                                    <input  disabled type="text"  formControlName="invoiceNo"  id="invoiceNo" [(ngModel)]="invoiceNo" class="form-control" >
+                                </td>
+
+                                <td style="width: 15%" class="LabelFontStyle">Inv&nbsp;Date:&nbsp;</td>
+                                            
+                                <td>
+                                    <input  disabled type="text"  formControlName="invoiceDate"  id="invoiceDate" [(ngModel)]="invoiceDate" class="form-control" >
+                                </td>
+                                
+                                
+
+                            </tr>
+                               
+                            <tr>
+                                <td style="width: 15%" class="LabelFontStyle">Package&nbsp;No:&nbsp;</td>
+                                
+                                <td>
+                                    <input disabled  type="text"  formControlName="packageNumber"  id="packageNumber" [(ngModel)]="packageNumber" class="form-control" >
+                                </td>
+                               
+                                <td style="width: 15%" class="LabelFontStyle">Package&nbsp;Desc:&nbsp;</td>
+                                
+                                <td colspan="5">
+                                    <input disabled style="width: 100%;" disabled  type="text"  formControlName="packageDescription"  id="packageDescription" [(ngModel)]="packageDescription" class="form-control" >
+                                </td>
+                            
+                               </tr>
+
+                                <tr>
+                                 
+                                    <!-- <td style="width: 15%" class="LabelFontStyle">Vehicle&nbsp;Age:&nbsp;</td>
+                                
+                                    <td>
+                                        <input disabled  type="text"  formControlName="uptoVehAge"  id="uptoVehAge" [(ngModel)]="uptoVehAge" class="form-control" >
+                                    </td>
+                                  
+                                    <td style="width: 15%" class="LabelFontStyle">Mileage&nbsp;Upto:&nbsp;</td>
+                                    <td>
+                                        <input disabled  type="text"  formControlName="uptoKm"  id="uptoKm" [(ngModel)]="uptoKm" class="form-control" >
+                                    </td> -->
+                                    <td style="width: 15%" class="LabelFontStyle">Start&nbsp;Date:&nbsp;</td>
+                                
+                                    <td>
+                                        <input disabled  type="date"  formControlName="pkgStartDate"  id="pkgStartDate" [(ngModel)]="pkgStartDate" class="form-control" >
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">End&nbsp;Date:&nbsp;</td>
+                                    
+                                    <td>
+                                        <input disabled  type="date"  formControlName="pkgEndDate"  id="pkgEndDate" [(ngModel)]="pkgEndDate" class="form-control" >
+                                    </td>
+
+                                    <td style="width: 15%;font-weight: bold ;" class="LabelFontStyle">Package&nbsp;Amt:&nbsp;</td>
+                                    <td>
+                                        <input disabled style="text-align: right;font-weight: bold;"  type="number"  formControlName="packageAmt"  id="packageAmt" [(ngModel)]="packageAmt" class="form-control"  >
+                                    </td>
+                                    <td></td>
+
+                                    <div *ngIf="showDetailsButton; then Block1; else Block2"></div>
+                                    <ng-template #Block1>
+                                        <td>
+                                            <button type="button"  class="btn btn-primary" 
+                                            data-toggle="modal" data-target="#exampleModal21"   style="width: 9rem;color: black;">
+                                            Show&nbsp;Package&nbsp;Details</button>
+                                    </td>
+                                    </ng-template>
+                                    <ng-template #Block2>
+                                        <td>
+                                            <button disabled type="button"  class="btn btn-primary" 
+                                            data-toggle="modal" data-target="#exampleModal21"   style="width: 9rem;color: black;">
+                                            Show&nbsp;Package&nbsp;Details</button>
+                                    </td>
+                                    </ng-template>
+                                    
+                                </tr>
+                            </table>
+                             </fieldset>
+
+                             <fieldset class="RFS">
+                                <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">MCP|AMC PACKAGE UTILIZATION DETAILS</legend>
+                                    <table class="center">
+                               
+                                 <tr>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Labour&nbsp;Amt:&nbsp;</td>
+                                    <td>
+                                        <input disabled  style="text-align: right;"  type="number"  formControlName="totLabAmt"  id="totLabAmt" [(ngModel)]="totLabAmt" class="form-control" >
+                                    </td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Part&nbsp;Amt:&nbsp;</td>
+                                    <td>
+                                        <input disabled style="text-align: right;"  type="number"  formControlName="totMatAmt"  id="totMatAmt" [(ngModel)]="totMatAmt" class="form-control" >
+                                    </td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Labour&nbsp;Availed:&nbsp;</td>
+                                    <td>
+                                        <input disabled  style="text-align: right;"  type="number"  formControlName="totLabUtilised"  id="totLabUtilised" [(ngModel)]="totLabUtilised" class="form-control" >
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">Labour&nbsp;Balance:&nbsp;</td>
+                                    <td>
+                                        <input disabled  style="text-align: right;"  type="number"  formControlName="totLabBalanced"  id="totLabBalanced" [(ngModel)]="totLabBalanced" class="form-control" >
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                   
+                                    <td style="width: 15%" class="LabelFontStyle">Lab&nbsp;Disc:&nbsp;</td>
+                                    <td>
+                                        <input disabled  style="text-align: right;"  type="number"  formControlName="totLabDisc"  id="totLabDisc" [(ngModel)]="totLabDisc" class="form-control" >
+                                    </td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Part&nbsp;Disc:&nbsp;</td>
+                                    <td>
+                                        <input disabled  style="text-align: right;"  type="number"  formControlName="totMatDisc"  id="totMatDisc" [(ngModel)]="totMatDisc" class="form-control" >
+                                    </td>
+                                  
+                                    <td style="width: 15%" class="LabelFontStyle">Part&nbsp;Availed:&nbsp;</td>
+                                    <td>
+                                        <input disabled style="text-align: right;"  type="number"  formControlName="totMatUtilised"  id="totMatUtilised" [(ngModel)]="totMatUtilised" class="form-control" >
+                                    </td>
+                                    <td style="width: 15%" class="LabelFontStyle">Part&nbsp;Balance:&nbsp;</td>
+                                    <td>
+                                        <input disabled style="text-align: right;"  type="number"  formControlName="totMatBalanced"  id="totMatBalanced" [(ngModel)]="totMatBalanced" class="form-control" >
+                                    </td>
+                              
+                                </tr>
+                                <tr>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Lab&nbsp;Tax:&nbsp;</td>
+                                    <td>
+                                        <input disabled  style="text-align: right;"  type="number"  formControlName="totLabGst"  id="totLabGst" [(ngModel)]="totLabGst" class="form-control" >
+                                    </td>
+
+                                    <td style="width: 15%" class="LabelFontStyle">Part&nbsp;Tax:&nbsp;</td>
+                                    <td>
+                                        <input disabled  style="text-align: right;"  type="number"  formControlName="totMatGst"  id="totMatGst" [(ngModel)]="totMatGst" class="form-control" >
+                                    </td>
+                                    
+                                    
+                                    <td style="width: 15%" class="LabelFontStyle">Total&nbsp;Availed:&nbsp;</td>
+                                    <td>
+                                        <input disabled  style="text-align: right;"  type="number"  formControlName="totAvailed"  id="totAvailed" [(ngModel)]="totAvailed" class="form-control" >
+                                    </td>
+                                   
+                                    <td style="width: 15%" class="LabelFontStyle">Total&nbsp;Balance:&nbsp;</td>
+                                    <td>
+                                        <input disabled  style="text-align: right;"  type="number"  formControlName="totBalance"  id="totBalance" [(ngModel)]="totBalance" class="form-control" >
+                                    </td>
+
+                                </tr>
+                                  
+                                    
+                           
+                            </table>
+                    </fieldset>
+
+                    <fieldset class="RFS">
+                        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">MCP|AMC CANCELLATION | REFUND DETAILS</legend>
+                        <table class="center">
+
+                                                       
+                            <tr>
+                                <!-- <div *ngIf="showDetailsButton; then mcpchrg1; else mcpchrg2"></div>
+                                <ng-template #mcpchrg1> -->
+                                <td style="width: 15%" class="LabelFontStyle">Charges:&nbsp;</td>
+                              
+                               <td>
+                                <select  formControlName="refundIncludeGst"  id ="refundIncludeGst"  [(ngModel)]="refundIncludeGst"  class="form-control" (ngModelChange)='OnChargesSelected($event)' style="background-color: yellow;"  >
+                                    <!-- <option>--Select--</option> -->
+                                    <option value="Y">Refund-With Taxes</option>
+                                    <option value="N">Refund-Without Taxes</option>
+                                    <!-- <option value="Refund- ">REFUND</option> -->
+                                </select>
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle">Approved&nbsp;By:&nbsp;</td>
+                              
+                            <!-- <td>
+                                <input disabled   type="text"  formControlName="mcpCancelCharges"  id="mcpCancelCharges" [(ngModel)]="mcpCancelCharges" class="form-control">
+                            </td> -->
+                            <td>
+                            <select   formControlName="refundApprovedBy"  id ="refundApprovedBy"  [(ngModel)]="refundApprovedBy"  class="form-control" style="background-color: yellow;"  >
+                                <option value="SYSTEM">SYSTEM</option>
+                                <option value="HOD">HOD</option>
+                                <option value="CEOGM">CEO/GM</option>
+                             </select>
+                             </td>
+
+                                <!-- <td style="width: 15%" class="LabelFontStyle">Value&nbsp;:&nbsp;</td>
+                                <td>
+                                    <input  style="text-align: right;"  type="number"  formControlName="mcpCancelValue"  id="mcpCancelValue" [(ngModel)]="mcpCancelValue" class="form-control"  (change)= "CalcNetRefund(mcpCancelValue)" placeholder="mcpCancelValue">
+                                </td> -->
+
+                                <td style="width: 15%;" class="LabelFontStyle">Reason&nbsp;:&nbsp;</td>
+                                <!-- <td>
+                                    <input disabled style="text-align: right;font-weight: bold;"  type="text"  formControlName="cancRsnId"  id="cancRsnId" [(ngModel)]="cancRsnId" class="form-control"  >
+                                </td> -->
+
+                                <td>  
+                                    <select   formControlName="cancelRsnId" id="cancelRsnId" [(ngModel)]="cancelRsnId" class="form-control" style="background-color: yellow;width:100%" >
+                                        <!-- (ngModelChange)="onOptionsSelectedModel($event)">   -->
+                                        <option>--Select--</option>
+                                        <option *ngFor="let rs of mcpReasonList" [ngValue]="rs.cmnId">
+                                            {{rs.code}}
+                                        </option>
+                                    </select>
+                                </td>
+
+                                <td style="width: 15%" class="LabelFontStyle">Cancel&nbsp;Date:&nbsp;</td>
+                                <td>
+                                    <input  disabled  style="height:25px ;"  type="date"  formControlName="mcpCancelDate"  id="mcpCancelDate" [(ngModel)]="mcpCancelDate" class="form-control"  >
+                                </td>                       
+                               
+
+                            </tr>
+
+                            <tr>
+                                <td style="width: 20%;" class="LabelFontStyle1" >Debit&nbsp;Account&nbsp;:</td>
+                                <td>
+                                <table>
+                                <tr>
+                                <td>
+                                    <input readonly type="text" formControlName="segmentName1" class="form-control" id="segmentName" style="background-color: yellow;"
+                                    [(ngModel)]='segmentName1' value={{segmentName1}} data-target="#debitAccount" placeholder="GL Code Combination"></td>
+
+                                <td>
+                                    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#segmentName" style="width:1rem ; text-align: right;">... </button> -->
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#debitAccountModel">
+                                        ..
+                                      </button>
+                                </td>
+                                </tr>
+                                </table>
+                                </td>
+                                   
+
+                                    <td style="width: 15%;" class="LabelFontStyle">&nbsp;Part&nbsp;Refund:</td>
+
+                                    <td>
+                                        <input disabled  style="text-align: right;font-weight: bold;" type="number"  formControlName="totMatBalanced"  id="totMatBalanced" [(ngModel)]="totMatBalanced" class="form-control"  placeholder="">
+                                    </td>
+    
+                                    <td style="width: 15%" class="LabelFontStyle">Lbr&nbsp;Refund:&nbsp;</td>
+                                    <td>
+                                        <input disabled style="text-align: right;font-weight: bold;"  type="number"  formControlName="totLabBalanced"  id="totLabBalanced" [(ngModel)]="totLabBalanced" class="form-control"  placeholder="">
+                                    </td>
+    
+                                  
+    
+                                    <td style="width: 15%;font-weight: bold" class="LabelFontStyle">Part+Labour&nbsp;:&nbsp;</td>
+                                    <td>
+                                        <input disabled style="text-align: right;font-weight: bold;"  type="number"  formControlName="refTotal1"  id="refTotal1" [(ngModel)]="refTotal1" class="form-control"  placeholder="netRefAmt">
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+                                    <!-- <td></td><td></td> -->
+
+                                    <td style="width: 20%;" class="LabelFontStyle1" >Credit&nbsp;Account&nbsp;:</td>
+                                    <td>
+                                    <table>
+                                    <tr>
+                                    <td>
+                                        <input readonly type="text" formControlName="segmentName" class="form-control" id="segmentName" style="background-color: yellow;"
+                                        [(ngModel)]='segmentName' value={{segmentName}} data-target="#myModal" placeholder="GL Code Combination"></td>
+
+                                    <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="width:1rem ; text-align: right;">... </button> </td>
+                                    </tr>
+                                    </table>
+                                    </td>
+                                    
+                                    <td style="width: 15%;" class="LabelFontStyle">&nbsp;Part&nbsp;Tax&nbsp;Refund:</td>
+                                   
+                                    <td>
+                                        <input disabled  style="text-align: right;font-weight: bold;" type="number"  formControlName="totMatBalTax"  id="totMatBalTax" [(ngModel)]="totMatBalTax" class="form-control"  placeholder="">
+                                    </td>
+    
+                                    <td style="width: 15%;" class="LabelFontStyle">Lbr&nbsp;Tax&nbsp;Refund:&nbsp;</td>
+                                    <td>
+                                        <input disabled style="text-align: right;font-weight: bold;"  type="number"  formControlName="totLabBalTax"  id="totLabBalTax" [(ngModel)]="totLabBalTax" class="form-control"  placeholder="">
+                                    </td>
+    
+                                     
+                                    <td style="width: 15%;font-weight: bold" class="LabelFontStyle">Tax&nbsp;Tot&nbsp;Refund:&nbsp;</td>
+                                    <td>
+                                        <input disabled style="text-align: right;font-weight: bold;"  type="number"  formControlName="refTotal2"  id="refTotal2" [(ngModel)]="refTotal2" class="form-control"  placeholder="netRefAmt">
+                                    </td>
+
+                                </tr>
+
+                           
+                                <tr>
+                                   
+
+                                    <td style="width: 15%;" class="LabelFontStyle">Remark&nbsp;:&nbsp;</td>
+                                  
+                                    <!-- <td>  
+                                        <select formControlName="cancRemarksId" id="cancRemarksId" [(ngModel)]="cancRemarksId" class="form-control" >
+                                               <option>--Select--</option>
+                                            <option *ngFor="let rs of mcpRemarkList" [ngValue]="rs.cmnId">
+                                                {{rs.cmnDesc}}
+                                            </option>
+                                        </select>
+                                    </td> -->
+
+                                    <td colspan="5">
+                                        <input  style="width: 100%;"  type="text"  formControlName="cancelRemarks"  id="cancelRemarks" [(ngModel)]="cancelRemarks" class="form-control" >
+                                    </td>
+
+                                    <td style="width: 15%;font-weight: bold ;" class="LabelFontStyle">&nbsp;Net&nbsp;Refund:&nbsp;</td>
+                                    <td>
+                                        <input  disabled style="text-align: right;font-weight: bold;"  type="number"  formControlName="netRefAmt"  id="netRefAmt" [(ngModel)]="netRefAmt" class="form-control"  >
+                                    </td>
+    
+
+                                </tr>
+                           </table>      
+                    </fieldset>
+
+                   <br>
+                   
+           
+               
+                    <!-- ===================================Buttons======================================== -->
+                      <table class="center">
+                        <tr>
+                            <div *ngIf="showCancelButton; then Block101; else Block102"></div>
+                            <ng-template #Block101>
+                                <td><button  type="button" class="btn btn-info" (click)="newMast()" >Cancel</button></td>
+                               
+                                <td><button type="button" class="btn btn-info" (click)="searchMast()">Search</button></td>
+                                    <!-- ====================Reset Dialog ======================== -->
+
+                                <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button></td>
+                                 <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:600px;">
+                                        <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <label style="font-size: small; color: black;font-weight: bold; text-align:center;vertical-align: middle;">
+                                                    <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                                    Want&nbsp;to&nbsp;Reset. &nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                                                </label>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <table class="center">
+                                                    <tr>
+                                                        <td>
+                                                            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                                        </td>
+                                                        <td>
+                                                            <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Yes</button> 
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+
+                                        <!-- =====================Close Dialog Box====================== -->
+                                        <td>
+                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">Close</button>
+                                        </td>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="width:600px;">
+                                            <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                                                        <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                                        Want&nbsp;to&nbsp;Close.&nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                                                    </label>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <table class="center">
+                                                        <tr>
+                                                            <td>
+                                                            <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
+                                                            </td>
+                                                            <td>
+                                                            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+
+                        <!-- ==================================================== -->
+
+                                    </ng-template>
+                                    <ng-template #Block102>
+                                       <td><button  disabled type="button" class="btn btn-info" (click)="newMast()" >Cancel</button></td>
+
+                                       <td><button type="button" class="btn btn-info" (click)="searchMast()">Search</button></td>
+                                       <td>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewAccountingModel"  style="width: 8rem;" (click)="viewAccounting(searchEnrollNo)" >
+                                            View Accounting</button>
+                                    </td>
+                                    <!-- ====================Reset Dialog ======================== -->
+
+                                    <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Reset</button></td>
+                                    <!-- Modal -->
+                                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:600px;">
+                                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <label style="font-size: small; color: black;font-weight: bold; text-align:center;vertical-align: middle;">
+                                                    <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                                    Want&nbsp;to&nbsp;Reset. &nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                                                </label>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <table class="center">
+                                                    <tr>
+                                                        <td>
+                                                            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                                        </td>
+                                                        <td>
+                                                            <button type="submit" class="btn btn-info" id="register" (click)="resetMast()">Yes</button> 
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+
+                             <!-- =====================Close Dialog Box====================== -->
+                                <td>
+                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModalLong">Close</button>
+                                </td>
+                                        <!-- Modal -->
+                                    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="width:600px;">
+                                        <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <label style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
+                                                    <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                                                    Want&nbsp;to&nbsp;Close.&nbsp;Confirm&nbsp;(Yes/No)?&nbsp;
+                                                </label>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <table class="center">
+                                                    <tr>
+                                                        <td>
+                                                        <button  type="submit" class="btn btn-info" data-dismiss="modal" id="register"   (click)="closeMast()">Yes</button>
+                                                        </td>
+                                                        <td>
+                                                        <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                 <!-- ==================================================== -->
+                                    </ng-template>
+                                </tr>
+                            </table>
+                            <!-- ==================================================== -->
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+
+
+   <!-- =================modal================= -->
+   <div class="modal fade" id="exampleModal21" tabindex="-1" role="dialog" aria-labelledby="exampleModal21Label" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+         <div class="modal-header">
+          <h5 class="modal-title" id="exampleModal21Label">Package&nbsp;No&nbsp;:&nbsp;{{this.packageNumber}} -{{this.packageDescription}}</h5>
+          <!-- MCP&nbsp;Package&nbsp;Item&nbsp;Details-&nbsp; -->
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+         </div>
+        
+         <div class="modal-body">
+         <table class="center" style="width: 100%;">
+            <tr>
+
+                <!-- <td style="width: 15%" class="LabelFontStyle">
+                    Package &nbsp;No&nbsp;:&nbsp;
+                </td>
+
+                <td>
+                    <input  readonly type="text" class="form-control" formControlName="packageNumber"  >
+                </td> -->
+                
+            </tr>
+         
+         </table>
+             <div class="container1">
+                <div class="grid_scroll_4">
+                <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0" id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;width: 100%;">
+               <tbody>
+                    <tr class="GridHeader">
+
+                        <th style="width:6rem" scope="col">Srl#</th>
+                        <th style="width:6rem" scope="col">Item Number</th>
+                        <th style="width:20rem" scope="col">Item Description</th>
+                        <th style="width:5rem" scope="col">Item Type</th>
+                        <th style="width:5rem" scope="col">ErpCode</th>
+                        <th style="width:5rem" scope="col">Quantity</th>
+                        <th style="width:5rem" scope="col">Pkg Qty</th>
+                        <th style="width:5rem" scope="col">Erp Qty</th>
+                        <th style="width:5rem" scope="col">Price</th>
+                        <th style="width:5rem" scope="col">Basic Amt</th>
+                        <th style="width:5rem" scope="col">Discount%</th>
+                        <th style="width:5rem" scope="col">Disc Amt</th>
+                        <th style="width:5rem" scope="col">Gst Amt</th>
+                        <th style="width:5rem" scope="col">Net Amt</th>
+            </tr>
+               </tbody>
+               <ng-container  class="center" formArrayName="enqDtls">
+                <ng-container   *ngFor="let group of invLineArray().controls; let k= index" [formGroupName]="k" class="auto-style5">  
+
+                          <tr>
+                            <td style="text-align: right;">{{k+1}}</td>
+                            <td><input style="width:  100px;height: 25px;"  disabled  type="text" formControlName="itemNumber" class="form-control"   > </td>
+                            <td><input style="width: 200px;height: 25px;" type="text" disabled formControlName="itemDesc" class="form-control"></td>
+                            <td><input style="width: 100px;height: 25px;" type="text"  disabled formControlName="itemType" class="form-control"></td>   
+                            <td><input style="width: 120px;height: 25px;" type="text"  disabled formControlName="erpCode" class="form-control"></td>   
+                            <td><input style="width: 60px;height: 25px;text-align: right;" type="text"  disabled formControlName="quantity" class="form-control"></td>   
+                            <td><input style="width: 60px;height: 25px;text-align: right;" type="text"  disabled formControlName="pkgQuantity" class="form-control"></td>   
+                            <td><input style="width: 60px;height: 25px;text-align: right;" type="text"  disabled formControlName="erpQuantity" class="form-control"></td>   
+                            <td><input style="width: 80px;height: 25px;text-align: right;" type="text"  disabled formControlName="basicAmt" class="form-control"></td>   
+                            <td><input style="width: 80px;height: 25px;text-align: right;" type="text"  disabled formControlName="rate" class="form-control"></td>   
+                            <td><input style="width: 80px;height: 25px;text-align: right;" type="text"  disabled formControlName="discPer"  class="form-control"></td>   
+                            <td><input style="width: 80px;height: 25px;text-align: right;" type="text"  disabled formControlName="disAmt" class="form-control"></td>   
+                            <td><input style="width: 80px;height: 25px;text-align: right;" type="text"  disabled formControlName="gstAmt" class="form-control"></td>   
+                            <td><input style="width: 80px;height: 25px;text-align: right;" type="text"  disabled formControlName="netAmt" class="form-control"></td>   
+                        </tr>
+                        </ng-container>
+                        </ng-container>
+                </table>
+                    </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+         <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+    
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ==================================modal end========================== -->
+
+  <!-- <div class="modal fade" id="myModal"> -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="emyModalLabel" aria-hidden="true" style="width:600px;">
+
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+                <label style="text-align: center;font-size: small;font-family: Verdana, Geneva, Tahoma, sans-serif;
+                color: black;margin-left: 40%;">
+               Code&nbsp;Combination&nbsp;
+               </label>
+               <button type="button" class="close" data-dismiss="modal">&times;</button>                                        
+            </div>
+            <div class="modal-body">
+               <table style="width: 100%;" class="center">
+                <tr>
+                    <td style="width: 30%;" class="LabelFontStyle1">Branch&nbsp;:</td>
+                    <td>
+                        <select class="form-control"  formControlName="segment1" id="segment1" [(ngModel)]='segment1' value={{segment1}} placeholder="Please enter branch code" (ngModelChange)='onOptionsSelectedBranch($event,"SS_Branch")' style="width: 140px;">
+                            <option >Select</option>
+                            <option *ngFor="let branch of branchList">
+                                {{branch.lookupValue}}
+                                <!-- -{{branch.lookupValueDesc}}    -->
+                            </option>
+                        </select>
+
+                    </td>
+                    <input readonly type="text"  class="form-control" formControlName="lookupValueDesc1" id="lookupValueDesc1" [(ngModel)]='lookupValueDesc1' value={{lookupValueDesc1}} style="border:none;width: 200px;background-color: white;">
+
+                
+                </tr>
+                <tr>
+                    <td style="width: 30%;" class="LabelFontStyle1">Location&nbsp;:</td>
+                    <td>
+                        <select class="form-control"  formControlName="segment2" id="segment2" [(ngModel)]='segment2' value={{segment2}} placeholder="Please enter Location code" (ngModelChange)='onOptionsSelectedBranch($event,"SS_Location")' style="width: 140px;">
+                            <option >Select</option>
+                            <option *ngFor= "let Location of locationList">
+                                {{Location.lookupValue}}
+                                <!-- -{{Location.lookupValueDesc}}    -->
+                            </option>
+                        </select>
+
+                    </td>
+                    <input readonly type="text"  class="form-control" formControlName="lookupValueDesc2" id="lookupValueDesc2" [(ngModel)]='lookupValueDesc2' value={{lookupValueDesc2}} style="border:none;width: 200px;background-color: white;">
+
+                   
+                </tr>
+                <tr>
+                    <td style="width: 30%;" class="LabelFontStyle1">Cost&nbsp;Centre&nbsp;:</td>
+                    <td>
+                        <select class="form-control"  formControlName="segment3" id="segment3" [(ngModel)]='segment3' value={{segment3}} placeholder="Please enter cost centre code" (ngModelChange)='onOptionsSelectedBranch($event,"CostCentre")' style="width: 140px;">
+                            <option >Select</option>
+                            <option *ngFor="let costcentre of costCentre">
+                                {{costcentre.lookupValue}}
+                                <!-- -{{costcentre.lookupValueDesc}}    -->
+                            </option>
+                        </select>
+
+                    </td>
+                    <input readonly type="text"  class="form-control" formControlName="lookupValueDesc3" id="lookupValueDesc3" [(ngModel)]='lookupValueDesc3' value={{lookupValueDesc3}} style="border:none;width: 200px;background-color: white;">
+
+                    
+                </tr>
+                <tr>
+                    <td style="width: 30%;" class="LabelFontStyle1">Naural&nbsp;Account&nbsp;:</td>
+                    <td>
+                        <select class="form-control"  formControlName="segment4" id="segment4" [(ngModel)]='segment4' value={{segment4}} (ngModelChange)='onOptionsSelectedBranch($event,"NaturalAccount")' placeholder="Please enter natural account code" style="width: 140px;">
+                            <option >Select</option>
+                            <option *ngFor="let naturalaccount of naturalAccount">
+                                {{naturalaccount.lookupValue}}
+                                <!-- -{{naturalaccount.lookupValueDesc}}                                                      -->
+                            </option>
+                        </select>
+
+                    </td>
+                    <input readonly type="text"  class="form-control" formControlName="lookupValueDesc4" id="lookupValueDesc4" [(ngModel)]='lookupValueDesc4' value={{lookupValueDesc4}} style="border:none;width: 200px;background-color: white;">
+
+                   
+                </tr>
+                <tr>
+                    <td style="width: 30%;" class="LabelFontStyle1">Inter&nbsp;Branch&nbsp;:</td>
+                    <td>
+                        <select class="form-control"  formControlName="segment5" id="segment5" [(ngModel)]='segment5' value={{segment5}} placeholder="Please enter Inter branch code" (ngModelChange)='onOptionsSelectedBranch($event,"SS_Interbranch")' style="width: 140px;">
+                            <option >Select</option>
+                            <option *ngFor="let interbranch of interBranch">
+                                {{interbranch.lookupValue}}
+                                <!-- -{{interbranch.lookupValueDesc}}    -->
+                            </option>
+                        </select>
+
+                    </td>
+                    <input readonly type="text"  class="form-control" formControlName="lookupValueDesc5" id="lookupValueDesc5" [(ngModel)]='lookupValueDesc5' value={{lookupValueDesc5}} style="border:none;width: 200px;background-color: white;">
+
+                   
+                </tr>
+               </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" 
+                data-dismiss="modal" (click)="GlCodeCombination(segment1,segment2,segment3,segment4,segment5)">OK</button>
+              </div>
+        </div>
+    </div>
+  </div>   
+
+<!-- ============================== debit account code =============-->
+
+
+<div class="modal fade" id="debitAccountModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width:600px;">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <label style="text-align: center;font-size: small;font-family: Verdana, Geneva, Tahoma, sans-serif;
+            color: black;margin-left: 40%;">
+           Code&nbsp;Combination&nbsp;
+           </label>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <table style="width: 100%;" class="center">
+                <tr>
+                    <td style="width: 30%;" class="LabelFontStyle1">Branch&nbsp;:</td>
+                    <td>
+                        <select class="form-control"  formControlName="segment18" id="segment18" [(ngModel)]='segment18' value={{segment18}} placeholder="Please enter branch code" (ngModelChange)='onOptionsSelectedBranch($event,"SS_Branch")' style="width: 140px;">
+                            <option >Select</option>
+                            <option *ngFor="let branch of branchList">
+                                {{branch.lookupValue}}
+                                <!-- -{{branch.lookupValueDesc}}    -->
+                            </option>
+                        </select>
+
+                    </td>
+                    <input readonly type="text"  class="form-control" formControlName="lookupValueDesc1" id="lookupValueDesc1" [(ngModel)]='lookupValueDesc1' value={{lookupValueDesc1}} style="border:none;width: 200px;background-color: white;">
+
+                
+                </tr>
+                <tr>
+                    <td style="width: 30%;" class="LabelFontStyle1">Location&nbsp;:</td>
+                    <td>
+                        <select class="form-control"  formControlName="segment19" id="segment19" [(ngModel)]='segment19' value={{segment19}} placeholder="Please enter Location code" (ngModelChange)='onOptionsSelectedBranch($event,"SS_Location")' style="width: 140px;">
+                            <option >Select</option>
+                            <option *ngFor= "let Location of locationList">
+                                {{Location.lookupValue}}
+                                <!-- -{{Location.lookupValueDesc}}    -->
+                            </option>
+                        </select>
+
+                    </td>
+                    <input readonly type="text"  class="form-control" formControlName="lookupValueDesc2" id="lookupValueDesc2" [(ngModel)]='lookupValueDesc2' value={{lookupValueDesc2}} style="border:none;width: 200px;background-color: white;">
+
+                   
+                </tr>
+                <tr>
+                    <td style="width: 30%;" class="LabelFontStyle1">Cost&nbsp;Centre&nbsp;:</td>
+                    <td>
+                        <select class="form-control"  formControlName="segment20" id="segment20" [(ngModel)]='segment20' value={{segment20}} placeholder="Please enter cost centre code" (ngModelChange)='onOptionsSelectedBranch($event,"CostCentre")' style="width: 140px;">
+                            <option >Select</option>
+                            <option *ngFor="let costcentre of costCentre">
+                                {{costcentre.lookupValue}}
+                                <!-- -{{costcentre.lookupValueDesc}}    -->
+                            </option>
+                        </select>
+
+                    </td>
+                    <input readonly type="text"  class="form-control" formControlName="lookupValueDesc3" id="lookupValueDesc3" [(ngModel)]='lookupValueDesc3' value={{lookupValueDesc3}} style="border:none;width: 200px;background-color: white;">
+
+                    
+                </tr>
+                <tr>
+                    <td style="width: 30%;" class="LabelFontStyle1">Naural&nbsp;Account&nbsp;:</td>
+                    <td>
+                        <select class="form-control"  formControlName="segment21" id="segment21" [(ngModel)]='segment21' value={{segment21}} (ngModelChange)='onOptionsSelectedBranch($event,"NaturalAccount")' placeholder="Please enter natural account code" style="width: 140px;">
+                            <option >Select</option>
+                            <option *ngFor="let naturalaccount of naturalAccount">
+                                {{naturalaccount.lookupValue}}
+                                <!-- -{{naturalaccount.lookupValueDesc}}                                                      -->
+                            </option>
+                        </select>
+
+                    </td>
+                    <input readonly type="text"  class="form-control" formControlName="lookupValueDesc4" id="lookupValueDesc4" [(ngModel)]='lookupValueDesc4' value={{lookupValueDesc4}} style="border:none;width: 200px;background-color: white;">
+
+                   
+                </tr>
+                <tr>
+                    <td style="width: 30%;" class="LabelFontStyle1">Inter&nbsp;Branch&nbsp;:</td>
+                    <td>
+                        <select class="form-control"  formControlName="segment22" id="segment22" [(ngModel)]='segment22' value={{segment22}} placeholder="Please enter Inter branch code" (ngModelChange)='onOptionsSelectedBranch($event,"SS_Interbranch")' style="width: 140px;">
+                            <option >Select</option>
+                            <option *ngFor="let interbranch of interBranch">
+                                {{interbranch.lookupValue}}
+                                <!-- -{{interbranch.lookupValueDesc}}    -->
+                            </option>
+                        </select>
+
+                    </td>
+                    <input readonly type="text"  class="form-control" formControlName="lookupValueDesc5" id="lookupValueDesc5" [(ngModel)]='lookupValueDesc5' value={{lookupValueDesc5}} style="border:none;width: 200px;background-color: white;">
+
+                   
+                </tr>
+               </table>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-info" 
+            data-dismiss="modal" (click)="GlCodeCombination1(segment18,segment19,segment20,segment21,segment22)">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+<!-- ========================== View Accounting  ========================-->
+
+
+
+
+
+<div class="grid_scroll2">
+                 
+    <div class="modal fade" id="viewAccountingModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-xl" role="document">
+          <!-- modal-dialog-scrollable -->
+        <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle" style="margin-left: 40%;">Accounting Effect</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <table class="center">
+                  <tr>
+                      <td style="width: 18%" class="LabelFontStyle">
+                          Invoice&nbsp;No&nbsp;:&nbsp;
+                      </td> 
+                      <td>
+                          <input disabled  formControlName="name1" id="name1" class="form-control" [(ngModel)]="name1" style="width: fit-content;">
+                      </td>
+                      <td style="width: 18%" class="LabelFontStyle">
+                          Doc&nbsp;Srl&nbsp;No&nbsp;:&nbsp;
+                      </td>
+                      <td>
+                          <input disabled formControlName="docSeqValue" class="form-control" [ngModel]="docSeqValue" >
+                      </td>
+                      
+                      <td style="width: 18%" class="LabelFontStyle">
+                          Ledger&nbsp;:&nbsp;
+                      </td>
+                      <td>
+                          <input disabled formControlName="description" class="form-control" [ngModel]="description" >
+                      </td>
+                  </tr>
+                  <tr>
+                      <td style="width: 18%" class="LabelFontStyle">
+                          Category&nbsp;:&nbsp;
+                      </td> 
+                      <td>
+                          <input disabled formControlName="jeCategory" id="jeCategory" class="form-control" [ngModel]="jeCategory" >
+                      </td>
+                      <td style="width: 18%" class="LabelFontStyle">
+                          Date&nbsp;:&nbsp;
+                      </td> 
+                      <td>
+                          <input disabled formControlName="postedDate" id="postedDate" class="form-control" [ngModel]="postedDate" >
+                      </td>
+                      <td style="width: 18%" class="LabelFontStyle">
+                          Period&nbsp;:&nbsp;
+                      </td> 
+                      <td>
+                          <input disabled  formControlName="periodName" id="periodName" class="form-control" [ngModel]="periodName" >
+                      </td>
+                  </tr>
+                  <br>
+                  </table>
+                  <div class="grid_scroll2" style="background-color: rgb(172, 218, 236);">
+                  <table class="auto-style4" class="GridFont"   style="border-color:#959595;width:100%;">
+                      <thead>
+                        <tr class="GridHeader">
+                        <th>Line</th>
+                        <th>Account</th>
+                        <th>Debit(INR)</th>
+                        <th>Credit(INR)</th>
+                        <th>Description</th>
+                        <th>Account Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let com of viewAccounting1" class="ItemStyle" style="text-decoration:none;position: initial;">
+                            <td>{{com.jeLineNum}}</td>
+                            <td >{{com.segmentName}}</td>
+                            <td style="text-align: right;padding-right: 5px;" >{{com.enteredDr}}</td>
+                            <td style="text-align: right;padding-right: 5px;">{{com.enteredCr}}</td>
+                            <td >{{com.description}}</td>
+                            <td >{{com.accountDesc}}</td>
+                          </tr>
+                      </tbody>
+                      <tr>
+                          <td></td>
+                          <td>Total:&nbsp;</td>
+                          <td >
+                              <input disabled  formControlName="runningTotalDr" id="runningTotalDr" class="form-control" [ngModel]="runningTotalDr" style="text-align: right;height: 22px;width: 100px;font-weight: bold;">
+                          </td>
+                          <td >
+                              <input disabled  formControlName="runningTotalCr" id="runningTotalCr" class="form-control" [ngModel]="runningTotalCr" style="text-align: right;height: 22px;width: 100px;font-weight: bold;">
+                          </td>
+                      </tr>
+                        </table>
+                     
+                      </div>
+          </div>
+          
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> 
+
+</form>

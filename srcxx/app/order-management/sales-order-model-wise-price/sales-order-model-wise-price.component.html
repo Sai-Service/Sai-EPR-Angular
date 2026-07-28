@@ -1,0 +1,60 @@
+<form [formGroup]="modelWisePrice" (ngSubmit)="modelWisePrice(modelWisePriceForm.value)">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td class="PageHeader">
+                Model&nbsp;Wise&nbsp;Price&nbsp;
+            </td>
+        </tr>
+    </table>
+    <div class="col-md-12 table-responsive" #epltable>
+        <div style="padding-bottom: 10px;padding-top: 10px;">
+            <div class="row">
+                <div class="col-sm-12">
+                    <button (click)="exportToExcel()" class="btn btn-success" style="width: fit-content;">Export To Excel</button>
+                </div>
+            </div>
+        </div>
+        <div class="grid_scroll">
+        <table  class="GridFont"  style="border-color:#494949;border-collapse:collapse;width: 100%;">
+           <thead>
+            <tr class="GridHeader" style="font-size: 11px;">
+                <th >Model</th>
+                <th >Variant</th>
+                <th >Variant Description</th>
+                <th >Color</th>
+                <th >color Description</th>
+                <th >BasicPrice</th>
+                <th >Exshowroom</th>
+                <th >Gst Per</th>
+                <th >Cess Per</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let com of modelWisePriceList ; let i= index" class="ItemStyle" style="text-decoration:none;font-size: 11px;">
+                <td style="padding-left: 5px; text-align: center;">{{com.Model}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.Variant}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.VariantDesc}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.color}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.ColorDesc}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.basicPrice}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.Exshowroom}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.GstPer}}</td>
+                <td style="padding-left: 5px; text-align: center;">{{com.cessPer}}</td>
+            </tr>
+        </tbody>
+        </table>
+        </div>
+    </div>
+    <table class="center">
+        <tr>
+            <td>
+                <button type="submit" class="btn btn-primary" id="register" (click)="refresh()">
+                    Clear
+                </button>
+            </td>
+            <td>
+                <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+            </td>
+        </tr>
+    </table>
+</form>

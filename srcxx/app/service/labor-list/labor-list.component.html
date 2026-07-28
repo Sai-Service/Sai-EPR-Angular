@@ -1,0 +1,63 @@
+<form [formGroup]="laborListForm" (ngSubmit)="laborList(laborListForm.value)">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td class="PageHeader">
+                Labor&nbsp;List&nbsp;
+            </td>
+        </tr>
+    </table>
+    <table class="center">
+        <tr>
+            <td>
+                <button type="submit" class="btn btn-primary" id="register" (click)="refresh()">
+                    Clear
+                </button>
+            </td>
+            <td>
+                <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+            </td>
+        </tr>
+    </table>
+    <div class="col-md-12 table-responsive" #epltable>
+        <div style="padding-bottom: 10px;padding-top: 10px;">
+            <div class="row">
+                <div class="col-sm-12">
+                    <button (click)="exportToExcel()" class="btn btn-success" style="width: fit-content;">Export To
+                        Excel</button>
+                </div>
+            </div>
+        </div>
+        <tr>
+            <div *ngIf="closeResetButton; then hList1; else hList2"></div>
+            <ng-template #hList2>
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only" id="loading"></span>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template #hList1> </ng-template>
+            <td class="LabelFontStyle" style="color: blue;width: fit-content;" colspan="4">&nbsp;{{dataDisplay }}&nbsp;
+            </td>
+        </tr>
+        <table class="GridFont" style="border-color:#494949;border-collapse:collapse;width: 100%;">
+            <tr class="GridHeader" style="font-size: 11px;">
+                <th>Labor Code</th>
+                <th>Description</th>
+                <th>Model</th>
+                <th>Hours</th>
+                <th>Rate</th>
+                <th>last Updated Date</th>
+            </tr>
+            <tr *ngFor="let com of laborListDetails ; let i= index" class="ItemStyle"
+                style="text-decoration:none;font-size: 11px;">
+                <td style="padding-left: 5px;padding-top: 10px;">{{com.labCode}}</td>
+                <td style="padding-left: 5px;padding-top: 10px;">{{com.description}}</td>
+                <td style="padding-left: 5px;padding-top: 10px;">{{com.model}}</td>
+                <td style="padding-left: 5px;padding-top: 10px;">{{com.hours}}</td>
+                <td style="padding-left: 5px;padding-top: 10px;">{{com.rate}}</td>
+                <td style="padding-left: 5px;padding-top: 10px;">{{com.lastUpdatedDate}}</td>
+            </tr>
+        </table>
+    </div>
+</form>

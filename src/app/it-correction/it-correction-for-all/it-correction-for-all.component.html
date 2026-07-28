@@ -107,9 +107,10 @@
                     <!-- <table class="center"
                         *ngIf="itCorrectionForm.get('referenceType')?.value === 'Vehicle Number Update'"> -->
                     <table class="center" *ngIf="
-                          itCorrectionForm.get('referenceType')?.value === 'Vehicle Number Update' ||
-                          itCorrectionForm.get('referenceType')?.value === 'Customer Vehicle Mapping'
-                        ">
+                        itCorrectionForm.get('referenceType')?.value === 'Vehicle Number Update' ||
+                        itCorrectionForm.get('referenceType')?.value === 'Customer Vehicle Mapping' ||
+                        itCorrectionForm.get('referenceType')?.value === 'Insurance Details Updation'
+                    ">
                         <tr>
                             <td class="LabelFontStyle">VEHICLE&nbsp;No&nbsp;:&nbsp;</td>
                             <td style="width:15%">
@@ -229,12 +230,14 @@
                             </td>
 
                             <!-- Vehicle No : ONLY for Vehicle issues -->
-                            <td class="LabelFontStyle"
-                                *ngIf="selectedIssueType === 'Vehicle No Updation' || selectedIssueType === 'Customer Vehicle Mapping'">
+                            <td class="LabelFontStyle" *ngIf="selectedIssueType === 'Vehicle No Updation' ||
+                                selectedIssueType === 'Customer Vehicle Mapping' ||
+                                selectedIssueType === 'Insurance Updation' ">
                                 Vehicle&nbsp;No&nbsp;:&nbsp;
                             </td>
-                            <td
-                                *ngIf="selectedIssueType === 'Vehicle No Updation' || selectedIssueType === 'Customer Vehicle Mapping'">
+                            <td *ngIf="selectedIssueType === 'Vehicle No Updation' ||
+                                selectedIssueType === 'Customer Vehicle Mapping' ||
+                                selectedIssueType === 'Insurance Updation' ">
                                 <input readonly type="text" class="form-control" formControlName="vehicleNo"
                                     style="text-transform: uppercase;">
                             </td>
@@ -255,8 +258,9 @@
                         </tr>
 
                         <!-- Vehicle / Model Details (ONLY for Vehicle issues) -->
-                        <tr
-                            *ngIf="selectedIssueType === 'Vehicle No Updation' || selectedIssueType === 'Customer Vehicle Mapping'">
+                        <tr *ngIf="selectedIssueType === 'Vehicle No Updation' ||
+                                selectedIssueType === 'Customer Vehicle Mapping' ||
+                                selectedIssueType === 'Insurance Updation' ">
                             <td class="LabelFontStyle">Chassis&nbsp;No&nbsp;:&nbsp;</td>
                             <td>
                                 <input readonly type="text" class="form-control" formControlName="chassisNo"
@@ -279,6 +283,38 @@
                             <td>
                                 <input readonly type="text" class="form-control" formControlName="model">
                             </td>
+                        </tr>
+
+                        <tr *ngIf="selectedIssueType === 'Insurance Updation'">
+
+                            <td class="LabelFontStyle">
+                                Ins Company :
+                            </td>
+                            <td>
+                                <input readonly type="text" class="form-control" formControlName="insuranceCompany">
+                            </td>
+
+                            <td class="LabelFontStyle">
+                                Ins Site :
+                            </td>
+                            <td>
+                                <input readonly type="text" class="form-control" formControlName="insuranceSite">
+                            </td>
+
+                            <td class="LabelFontStyle">
+                                Policy No :
+                            </td>
+                            <td>
+                                <input readonly type="text" class="form-control" formControlName="policyNo">
+                            </td>
+
+                            <td class="LabelFontStyle">
+                                Ins End Date :
+                            </td>
+                            <td>
+                                <input readonly type="date" class="form-control" formControlName="insuranceEndDate">
+                            </td>
+
                         </tr>
                     </table>
                 </fieldset>
@@ -608,6 +644,43 @@
                             <td colspan="7">
                                 <input type="text" class="form-control" formControlName="itReason">
                             </td>
+                        </tr>
+                    </table>
+
+                    <table class="center" *ngIf="selectedIssueType === 'Insurance Updation'">
+
+                        <tr>
+
+                            <td class="LabelFontStyle"> New Insurance Company : </td>
+                            <td><select class="form-control" formControlName="newInsuranceCompany">
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let c of insuranceCompanyLov" [value]="c.CUSTOMERID">
+                                        {{ c.CUSTNAME }}
+                                    </option>
+                                </select>
+                            </td>
+
+                            <td class="LabelFontStyle"> New Insurance Site : </td>
+                            <td> <select class="form-control" formControlName="newInsuranceSite">
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let site of insuranceSiteLov" [value]="site.CUSTOMERSITEID">
+
+                                        {{ site.SITENAME }}
+
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="LabelFontStyle"> New Policy No : </td>
+                            <td><input type="text" class="form-control" formControlName="newPolicyNo"></td>
+
+                            <td class="LabelFontStyle"> New Insurance End Date : </td>
+                            <td> <input type="date" class="form-control" formControlName="newInsuranceEndDate"></td>
+                        </tr>
+                        <tr>
+                            <td class="LabelFontStyle"> Remarks : </td>
+                            <td colspan="7"> <input type="text" class="form-control" formControlName="itReason"> </td>
                         </tr>
                     </table>
 

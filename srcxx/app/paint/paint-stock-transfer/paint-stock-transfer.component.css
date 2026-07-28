@@ -1,0 +1,27 @@
+.grid_scroll{
+    overflow: auto;
+      width: 100%;
+      height: 170px;
+  
+  }
+  
+  .modal {
+    margin-left: 35%;
+    }
+    
+    .GridHeader {
+      border-top-width: 1px;
+      border-style: solid;
+      border-top-color: white;
+      border-left: none;
+      border-right: none;
+      height: 25px;
+      padding: 0px 10px 0px 10px;
+      font-family: Verdana,Sans-serif, Arial, Helvetica;
+      font-size: 9px;
+      text-align: center;
+      color: black;
+      background-image: linear-gradient(#bcdcee, #4fb6f1 60%, #0299f0);
+      border-bottom: 2px solid rgb(158, 155, 155);
+      position: sticky; top: 0; 
+    }

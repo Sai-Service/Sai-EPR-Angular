@@ -1,0 +1,309 @@
+<div class="center">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td class="PageHeader">
+                &nbsp;Bank-&nbsp;Branch&nbsp;Information&nbsp;&nbsp;
+            </td>
+        </tr>
+    </table>
+    <form [formGroup]="bankBranchForm" (ngSubmit)="bankBranch(bankBranchForm.value)">
+        <table class="center" style="width: 100;"
+            style="border-bottom: solid 1px blue;width: 100%; background-color: #FFE4B5; padding-bottom: 2rem;">
+            <tr>
+                <td>
+                    <table class="center" style="width: 100%;">
+                        <tr style="align-items: center;">
+                            <td style="width: 15%" class="LabelFontStyle"> &nbsp;Bank&nbsp;Name&nbsp;:&nbsp; </td>
+                            <td>
+                                <select formControlName="bkName" id="bkName" class="form-control"
+                                    (ngModelChange)="onBankNameSelected($event)">
+                                    <option>--Select--</option>
+                                    <option *ngFor="let sc of BankNameList" [value]="sc.customerId">
+                                        {{sc.custName}}
+                                    </option>
+                                </select>
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle"> &nbsp;Branch&nbsp;Name&nbsp;:&nbsp; </td>
+                            <td>
+                                <select #branchSelect formControlName="bkBranchName" [(ngModel)]="bkBranchName" class="form-control"
+                                    placeholder="Search by branch name" (keydown.tab)="BreanchNameSearch(bkBranchName)" (change)="onBranchSelected(branchSelect.value)">
+                                    <option value="">--Select Branch--</option>
+                                    <option *ngFor="let branch of branchList"
+                                            [value]="branch.branchName">
+                                        {{ branch.branchName }}
+                                    </option>
+                                </select>
+                            </td>
+                            <td style="width: 15%" class="LabelFontStyle"> &nbsp;Branch&nbsp;Number&nbsp;:&nbsp; </td>
+                            <td>
+                                <input formControlName="branchNO" [(ngModel)]="branchNO" class="form-control"
+                                    placeholder="Search by branch number" (keydown.tab)="serchByBranchNo(branchNO)">
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <div class="center" style="width: 100%;">
+            <div class="form-bg">
+                <div class="center" style="width: 100%;">
+                    <table class="center" style="width: 100%;">
+                        <tr>
+                            <td>
+                                <fieldset class="RFS">
+                                    <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 10px;color: black;">Bank Branch
+                                        Details</legend>
+                                <table class="center">
+                                    <tr style="align-items: center;">
+
+                                        <td style="width: 15%" class="LabelFontStyle"> Bank&nbsp;Name&nbsp;:&nbsp; </td>
+
+                                        <td><input [disabled]="true" type="text" [(ngModel)]="custName"
+                                                formControlName="custName" class="form-control"  placeholder="Select bank from dropdown"></td>
+
+
+                                        <td style="width: 15%" class="LabelFontStyle"> Branch&nbsp;Name&nbsp;:&nbsp;
+                                        </td>
+                                        <td style="border: none;color: black;">
+                                            <input type="text" formControlName="branchName" class="form-control"
+                                                placeholder="Enter branch name">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            &nbsp;Branch&nbsp;Number&nbsp;:&nbsp; </td>
+                                        <td>
+                                            <input formControlName="branchNo" class="form-control"
+                                                placeholder=" branch number">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle"> Email&nbsp;ID&nbsp;: </td>
+                                        <td>
+                                            <input type="email" formControlName="emailId" value={{emailId}}
+                                                class="form-control"
+                                                placeholder="Enter email id">
+                                            <div *ngIf="bankBranchForm.get('emailId')?.touched && bankBranchForm.get('emailId')?.invalid" class="invalid-feedback">
+                                                <div>Email ID must be required </div>
+                                                <div>Email ID must be a valid</div>
+                                            </div>
+                                            <span
+                                            *ngIf="bankBranchForm.get('emailId')?.touched && bankBranchForm.get('emailId')?.invalid">Please
+                                                Enter Email ID</span>
+                                        </td>
+                                        <input type="text" hidden [(ngModel)]="bankId" formControlName="bankId">
+                                    </tr>
+                                    <tr>
+
+                                        <td style="width: 15%" class="LabelFontStyle"> Address&nbsp;Line&nbsp;1:&nbsp;
+                                        </td>
+                                        <td style="border: none;color: black;">
+                                            <input type="text" formControlName="address1" class="form-control"
+                                                placeholder="Enter address 1">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle"> Address&nbsp;Line&nbsp;2:&nbsp;
+                                        </td>
+                                        <td style="border: none;color: black;">
+                                            <input type="text" formControlName="address2" class="form-control"
+                                                placeholder="Enter address 2">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle"> Address&nbsp;Line&nbsp;3:&nbsp;
+                                        </td>
+                                        <td style="border: none;color: black;">
+                                            <input type="text" formControlName="address3" class="form-control"
+                                                placeholder="Enter address 3">
+                                        </td>
+                                         <td style="width: 15%" class="LabelFontStyle"> City&nbsp;:&nbsp; </td>
+                                        <td style="border: none;color: black;">
+                                            <select formControlName="city" id="city" class="form-control"
+                                                [ngModel]="city" (ngModelChange)='onOptionsSelectedCity($event)'
+                                                placeholder="Select city">
+                                                <option >--Select--</option>
+                                                <option *ngFor="let sc of  cityList" [ngValue]="sc.codeDesc">
+                                                    {{sc.codeDesc}}
+                                                </option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                       
+                                        <td style="width: 15%" class="LabelFontStyle"> Pin&nbsp;Code&nbsp;:&nbsp; </td>
+                                        <td style="border: none;color: black;">
+                                            <input type="text" formControlName="pinCode"
+                                                class="form-control" placeholder="Enter pin code">
+                                            <div *ngIf="bankBranchForm.get('pinCode')?.touched && bankBranchForm.get('pinCode')?.invalid" class="invalid-feedback">
+                                                <div>Pin Code must be required and
+                                                    valid for 6 digit
+                                                </div>
+                                                <div>Pin Code must be a valid for 6 digit
+                                                </div>
+                                            </div>
+                                            <span
+                                            *ngIf="bankBranchForm.get('pinCode')?.touched && bankBranchForm.get('pinCode')?.invalid">Please
+                                                Enter Pin Code</span>
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle"> State&nbsp;:&nbsp; </td>
+                                        <td style="border: none;color: black;">
+                                            <input [disabled]="true" type="text" formControlName="state" [(ngModel)]="state"
+                                                class="form-control" placeholder="Enter state">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle"> Country&nbsp;:&nbsp; </td>
+                                        <td style="border: none;color: black;">
+                                            <input [disabled]="true" type="text" formControlName="county" [(ngModel)]="county"
+                                                class="form-control" placeholder="Enter county">
+                                        </td>
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Contact&nbsp;No&nbsp;1&nbsp;:&nbsp; </td>
+                                        <td style="border: none;color: black;">
+                                            <input type="number" min="0" formControlName="contact1"
+                                                class="form-control" placeholder="Enter contact no 1">
+                                            <div *ngIf="bankBranchForm.get('contact1')?.touched && bankBranchForm.get('contact1')?.invalid" class="invalid-feedback">
+                                                <div>contact no must be required and valid for 10 digit
+                                                </div>
+                                                <div>contact no must be a valid for 10 digit
+                                                </div>
+                                            </div>
+                                            <span
+                                            *ngIf="bankBranchForm.get('contact1')?.touched && bankBranchForm.get('contact1')?.invalid">Please
+                                                Enter contact no</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        
+                                        <td style="width: 15%" class="LabelFontStyle">
+                                            Contact&nbsp;No&nbsp;2&nbsp;:&nbsp; </td>
+                                        <td style="border: none;color: black;">
+                                            <input type="number" min="0" formControlName="contact2"
+                                                class="form-control" placeholder="Enter contact no 2">
+                                            <div *ngIf="bankBranchForm.get('contact2')?.touched && bankBranchForm.get('contact2')?.invalid" class="invalid-feedback">
+                                                <div>contact no must be required and valid for 10 digit
+                                                </div>
+                                                <div>contact no must be a valid for 10 digit
+                                                </div>
+                                            </div>
+                                            <span
+                                            *ngIf="bankBranchForm.get('contact2')?.touched && bankBranchForm.get('contact2')?.invalid">Please
+                                                Enter contact no</span>
+                                        </td>
+
+                                        <td style="width: 15%" class="LabelFontStyle"> Status&nbsp;:&nbsp; </td>
+                                        <td><select formControlName="status" id="status" class="form-control"
+                                                [ngModel]="status" (ngModelChange)='onOptionsSelected($event)'>
+                                                <option>--Select--</option>
+                                                <option *ngFor="let sc of  statusList">
+                                                    {{sc.codeDesc}}
+                                                </option>
+                                            </select>
+                                        </td>
+                                        <div *ngIf="displayInactive; then thenBlockInactive; else elseBlockInactive">
+                                        </div>
+                                        <ng-template #thenBlockInactive>
+
+                                            <td style="width: 15%" class="LabelFontStyle"> Start&nbsp;Date&nbsp;: </td>
+                                            <td>
+                                                <input type="date"  formControlName="startDate"
+                                                    class="form-control" [min]="minDate">
+                                            </td>
+                                        </ng-template>
+                                        <ng-template #elseBlockInactive>
+                                            <td style="width: 15%" class="LabelFontStyle">
+                                                Inactive&nbsp;Date:&nbsp;
+                                            </td>
+                                            <td>
+                                                <input [disabled]="true" type="date" formControlName="endDate"
+                                                    class="form-control" [ngModel]="endDate | date:'yyyy-MM-dd'">
+                                            </td>
+                                        </ng-template>
+
+                                    </tr>
+                                </table>
+                                </fieldset>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <fieldset class="RFS">
+                    <table class="center" style="width:100%">
+                        <tr>
+                            <td>
+                                <table class="center">
+                                    <tr>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary" id="register"
+                                                (click)="refresh()">
+                                                Clear
+                                            </button>
+                                        </td>
+
+                                        <td>
+                                            <button type="submit" class="btn btn-primary"
+                                                (click)="BankBranch()" [disabled]=" isSaving">Save</button>
+
+                                        </td>
+                                                                 <td>
+                                            <button type="submit" class="btn btn-primary"
+                                                (click)="BankBranchupdate()" [disabled]=" isUpdating">Update</button>
+
+                                        </td>
+                                        <td>
+                                            <button type="submit" (click)="close()"
+                                                class="btn btn-primary">Close</button>
+                                        </td>
+                                        <!-- <td>
+                                            <button type="submit" (click)="AccountCreation()" style="width: 10rem;"
+                                                class="btn btn-primary">Go to Account Creation</button>
+                                        </td> -->
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    </fieldset>
+                    <div class="modal-body">
+                        <div class="grid_scroll1">
+                            <table class="auto-style4" class="GridFont" cellspacing="0" cellpadding="4" border="0"
+                                id="ctl00_cpForm_grdActions" style="border-color:#959595;border-collapse:collapse;">
+                                <tbody>
+                                    <tr class="GridHeader">
+                                        <th scope="col">Bank Name</th>
+                                        <th scope="col">Branch Name</th>
+                                        <th scope="col">Branch Number</th>
+                                        <th scope="col">Email ID</th>
+                                        <th scope="col">Address Line 1</th>
+                                        <th scope="col">Address Line 2</th>
+                                        <th scope="col">Address Line 3</th>
+                                        <th scope="col">City</th>
+                                        <th scope="col">Pin Code</th>
+                                        <th scope="col">State</th>
+                                        <th scope="col">Contact No 1</th>
+                                        <th scope="col">Contact No 2</th>
+                                        <th scope="col">Bank Type</th>
+                                        <th scope="col">Start Date</th>
+                                        <th scope="col">Select one</th>
+                                    </tr>
+                                    <tr *ngFor="let com of BranchSearch" class="ItemStyle"
+                                        style="text-decoration:none;text-align: center;">
+                                        <td>{{com.bankId?.custName}}</td>
+                                        <td>{{com.branchName}}</td>
+                                        <td>{{com.branchNo}}</td>
+                                        <td>{{com.emailId}}</td>
+                                        <td>{{com.address1}}</td>
+                                        <td>{{com.address2}}</td>
+                                        <td>{{com.bankId?.address3}}</td>
+                                        <td>{{com.city}}</td>
+                                        <td>{{com.pinCode}}</td>
+                                        <td>{{com.bankId?.state}}</td>
+                                        <td>{{com.contact1}}</td>
+                                        <td>{{com.contact2}}</td>
+                                        <td>{{com.bankType}}</td>
+                                        <td>{{com.startDate}}</td>
+                                        <td><button class="btn-primary" (click)="SelectBranchNO(com.branchNo)"
+                                                data-dismiss="modal">Select</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
