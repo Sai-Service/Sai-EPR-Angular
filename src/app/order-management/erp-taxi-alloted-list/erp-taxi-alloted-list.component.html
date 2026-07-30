@@ -133,8 +133,9 @@
                     <th>Model</th>
                     <th>Customer Name</th>
                     <th>ERP Ac No</th>
-                    
+                     <th>To Vendor Name</th>
                 </tr>
+                
                 <tr *ngFor="let com of poGeneratedDetails ; let i= index" class="ItemStyle"
                     style="text-decoration:none;font-size: 11px;">
                     <td style="padding-left: 5px;padding-top: 10px;">
@@ -149,8 +150,8 @@
                     <td style="padding-left: 5px; text-align: center;">{{com.MODEL}}</td>
                     <td style="padding-left: 5px; text-align: center;">{{com.CUST_NAME}}</td>
                     <td style="padding-left: 5px; text-align: center;">{{com.ERP_ACC_NO}}</td>
+                    <td style="padding-left: 5px; text-align: center;">{{com.NAME}}</td>    
                     
-                
                 </tr>
             </table>
         </div>

@@ -337,7 +337,7 @@ export class SalesReportsComponent implements OnInit {
        this.isVisiblespDebtorsReport1=false;
       this.isVisiblespDebtorsReport=false;
         if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.isVisibleDepartmentList = true;
+        // this.isVisibleDepartmentList = true;
         // this.isVisiblegstsaiDebtors = false;
         this.isVisiblelocationInput=false;
         this.isVisiblelocationLOV=true;
@@ -1464,6 +1464,12 @@ export class SalesReportsComponent implements OnInit {
     if (deptId === undefined) {
       deptId = ''
     }
+    if (locId==undefined){
+        locId=''
+      }
+      if (locId=='--Select--'){
+        locId=''
+      }
     if (reportName === 'Vehicle Sales Register') {
       const fileName = 'Vehicle Sales Register-' + fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
@@ -1489,6 +1495,9 @@ export class SalesReportsComponent implements OnInit {
     else if (reportName === 'Sales Invoiced Not Delivered') {
       const fileName = 'Sales Invoiced Not Delivered-' + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (locId==undefined){
+        locId=''
+      }
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.reportService.salesINDReport(toDate, sessionStorage.getItem('ouId'), locId)
           .subscribe(data => {
