@@ -1057,7 +1057,7 @@ export class ToolsReportsComponent implements OnInit {
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         const fileName = 'Tools Purchase Register Details-' +  fromDate + '-TO-' + toDate + '.xls';
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-        this.reportService.sppurRegidetailReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
+        this.reportService.sppurRegidetailReportPT(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId,'MASPR')
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''
@@ -1068,7 +1068,7 @@ export class ToolsReportsComponent implements OnInit {
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
         const fileName = 'Tools Purchase Register Details-' +  fromDate + '-TO-' + toDate + '.xls';
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-        this.reportService.sppurRegidetailReportSpares(fromDate, toDate, sessionStorage.getItem('ouId'), locId, sessionStorage.getItem('deptId'))
+        this.reportService.sppurRegidetailReportSparesPT(fromDate, toDate, sessionStorage.getItem('ouId'), locId, sessionStorage.getItem('deptId'),'MASPR')
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''
@@ -1277,7 +1277,7 @@ export class ToolsReportsComponent implements OnInit {
       const fileName = 'Tools Misc Issue Receipt Report-' +  fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.PaintparesMiscIssueReceiptReport(fromDate, toDate, locId,sessionStorage.getItem('ouId'))
+        this.reportService.PaintparesMiscIssueReceiptReportPT(fromDate, toDate, locId,sessionStorage.getItem('ouId'),'MASPR')
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1286,7 +1286,7 @@ export class ToolsReportsComponent implements OnInit {
           })
       }
       if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.PaintparesMiscIssueReceiptReport(fromDate, toDate, locId,sessionStorage.getItem('ouId'))
+        this.reportService.PaintparesMiscIssueReceiptReportPT(fromDate, toDate, locId,sessionStorage.getItem('ouId'),'MASPR')
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1505,7 +1505,7 @@ export class ToolsReportsComponent implements OnInit {
       // alert (fileName)
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.paintclosingstockSummary(sessionStorage.getItem('ouId'),subInventory)
+        this.reportService.paintclosingstockSummaryPT(sessionStorage.getItem('ouId'),subInventory,'MASPR')
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1514,7 +1514,7 @@ export class ToolsReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.paintclosingstockSummary(sessionStorage.getItem('ouId'),subInventory)
+        this.reportService.paintclosingstockSummaryPT(sessionStorage.getItem('ouId'),subInventory,'MASPR')
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;

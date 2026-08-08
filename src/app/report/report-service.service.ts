@@ -222,6 +222,17 @@ export class ReportServiceService {
     });
   }
 
+   PaintparesMiscIssueReceiptReportPT(invcDt1,invcDt4,locId,ouId,mainType1){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprMiscRep?fromDate=${invcDt1}&toDate=${invcDt4}&ouId=${ouId}&locId=${locId}&mainType=${mainType1}`;
+    // const REQUEST_URI = this.ServerUrl +`/SparesReports/SprMiscRep?fromDate=${invcDt1}&toDate=${invcDt4}&ouId=${ouId}&locId=${locId}`;
+
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+
   // http://localhost:8081/PaintReports/PnStkAdjRep?fromDate=01-Jun-2025&toDate=10-Jun-2025&ouId=16&locId=1606
 
   spslReturnRegisterReport(invcDt1,invcDt4,ouId,locId){
@@ -746,9 +757,10 @@ export class ReportServiceService {
     });
   }
 
-  sppurRegidetailReport(fromDate,toDate,ouId,locId,deptId){
-    const REQUEST_URI = this.ServerUrl +`/AccountsReports/GstPurchaseRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&deptId=${deptId}`;
-    
+  sppurRegidetailReport(fromDate,toDate,ouId,locId,deptId ){
+    const REQUEST_URI = this.ServerUrl +`/AccountsReports/GstPurchaseRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
+        // const REQUEST_URI = this.ServerUrl +`/AccountsReports/GstPurchaseRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&deptId=${deptId}`;
+
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
@@ -756,12 +768,36 @@ export class ReportServiceService {
   }
 
   sppurRegidetailReportSpares(fromDate,toDate,ouId,locId,deptId){
-    const REQUEST_URI = this.ServerUrl +`/SparesReports/PurchaseRegisterDtls?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&deptId=${deptId}`;
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/PurchaseRegisterDtls?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}`;
+        // const REQUEST_URI = this.ServerUrl +`/SparesReports/PurchaseRegisterDtls?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&deptId=${deptId}`;
+
     return this.http.get(REQUEST_URI, {
       responseType: 'arraybuffer',
       headers: this.headers,
     });
   }
+  //  Paint & Tools-----------------------------
+
+   sppurRegidetailReportPT(fromDate,toDate,ouId,locId,deptId,mainType1 ){
+    const REQUEST_URI = this.ServerUrl +`/AccountsReports/GstPurchaseRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&deptId=${deptId}&mainType=${mainType1}`;
+        // const REQUEST_URI = this.ServerUrl +`/AccountsReports/GstPurchaseRep?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&deptId=${deptId}`;
+
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+  sppurRegidetailReportSparesPT(fromDate,toDate,ouId,locId,deptId,mainType1){
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/PurchaseRegisterDtls?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&deptId=${deptId}&mainType=${mainType1}`;
+        // const REQUEST_URI = this.ServerUrl +`/SparesReports/PurchaseRegisterDtls?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}&locId=${locId}&deptId=${deptId}`;
+
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+//  Paint & Tools-----------------------------
 
 
   vehicleClosingStockAsOn(toDate,ouId){
@@ -855,6 +891,20 @@ export class ReportServiceService {
       headers: this.headers,
     });
   }
+
+   paintclosingstockSummaryPT(ouId,subInvCode,mainType1){
+    // alert ("in report api")
+    // http://localhost:8081/SparesReports/SprClosingSummary?ouId=16&locId=&subInvCode=PN
+
+    const REQUEST_URI = this.ServerUrl +`/SparesReports/SprClosingSummary?ouId=${ouId}&locId=&subInvCode=${subInvCode}&mainType=${mainType1}`;
+    //  const REQUEST_URI = this.ServerUrl +`/SparesReports/SprClosingSummary?ouId=${ouId}&locId=&subInvCode=${subInvCode}`;
+
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
 
    itemMasterListReport(ouId,mainTp,subTp){
         // alert ("in report api")
