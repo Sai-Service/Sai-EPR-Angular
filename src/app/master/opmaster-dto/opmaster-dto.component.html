@@ -40,8 +40,8 @@
         <div class="center" style="width: 100%;">
             <div class="form-bg">
                 <div class="center" style="width: 100%;">
-                    <input  hidden type="number" disabled formControlName="accountLocId"
-                    [(ngModel)]="accountLocId" class="form-control">
+                    <input hidden type="number" disabled formControlName="accountLocId" [(ngModel)]="accountLocId"
+                        class="form-control">
                     <!-- <form [formGroup]="poMasterDtoForm" (ngSubmit)="poMasterDto(poMasterDtoForm.value)"> -->
                     <div id="Panel1" class="auto-style103">
                         <table class="center">
@@ -255,13 +255,13 @@
                                 <tr>
                                     <td style="width: 15%" class="LabelFontStyle1">
                                         Supp&nbsp;Inv&nbsp;No:&nbsp;</td>
-                                      <td colspan="">
+                                    <td colspan="">
                                         <input type="text" formControlName="suppInvNo" class="form-control"
-                                            [(ngModel)]="suppInvNo" style="width: 100%;" 
-                                            (keydown.tab)="suppInvDetail(suppInvNo)" 
+                                            [(ngModel)]="suppInvNo" style="width: 100%;"
+                                            (keydown.tab)="suppInvDetail(suppInvNo)"
                                             [ngClass]="{ 'is-invalid': submitted && f.suppInvNo.errors }"
                                             placeholder="Please enter supplier invoice number">
-                                        
+
                                     </td>
                                     <td style="width: 15%" class="LabelFontStyle1">Supp&nbsp;Inv&nbsp;Date:</td>
                                     <td>
@@ -290,7 +290,8 @@
                                                 Details</button>
                                         </ng-template>
                                         <ng-template #elseBlockdispbut>
-                                            <button type="button" class="btn btn-primary" style="width: fit-content;">Additional
+                                            <button type="button" class="btn btn-primary"
+                                                style="width: fit-content;">Additional
                                                 Details</button>
                                         </ng-template>
                                         <!-- <button class="btn btn-primary" data-toggle="modal"
@@ -299,11 +300,12 @@
                                         </button> -->
                                     </td>
                                 </tr>
-                                 <tr>
+                                <tr>
                                     <td style="width: 15%" class="LabelFontStyle">Supp&nbsp;Inv&nbsp;Mes:</td>
                                     <td colspan="3">
-                                        <input type="text" disabled formControlName="poInvMes" class="form-control" style="width: 100%;">
-                                        
+                                        <input type="text" disabled formControlName="poInvMes" class="form-control"
+                                            style="width: 100%;">
+
                                     </td>
                                 </tr>
                             </ng-template>
@@ -946,7 +948,7 @@
                                                                     <input disabled type="text" formControlName="segment" class="form-control">
                                                                 </ng-template> -->
                                                             </td>
-                                                            <input hidden  type="number" formControlName="invItemId">
+                                                            <input hidden type="number" formControlName="invItemId">
                                                             <td> <input disabled type="text"
                                                                     formControlName="invCategory" class="form-control"
                                                                     style="width: 4rem;"></td>
@@ -1000,25 +1002,31 @@
 
                                                             </td>
                                                             <td>
-                                                                <div *ngIf="displayTaxCategotySelect[i]; then thenTaxCategotySelect; else elseTaxCategotySelect"> </div>
+                                                                <div
+                                                                    *ngIf="displayTaxCategotySelect[i]; then thenTaxCategotySelect; else elseTaxCategotySelect">
+                                                                </div>
                                                                 <ng-template #thenTaxCategotySelect>
-                                                                <select formControlName="taxCategoryName" id="taxCategoryName"
-                                                                    (change)='onOptionTaxCatSelected(i,$event)' 
-                                                                    class="form-control">
-                                                                    <option>--Select--</option>
-                                                                    <option *ngFor="let sc of  taxCategoryList[i]"  [value]="sc.taxCategoryName">
-                                                                        {{sc.taxCategoryName}}
-                                                                    </option>
-                                                                </select>
+                                                                    <select formControlName="taxCategoryName"
+                                                                        id="taxCategoryName"
+                                                                        (change)='onOptionTaxCatSelected(i,$event)'
+                                                                        class="form-control">
+                                                                        <option>--Select--</option>
+                                                                        <option *ngFor="let sc of  taxCategoryList[i]"
+                                                                            [value]="sc.taxCategoryName">
+                                                                            {{sc.taxCategoryName}}
+                                                                        </option>
+                                                                    </select>
                                                                 </ng-template>
                                                                 <ng-template #elseTaxCategotySelect>
-                                                                    <input type="text" disabled formControlName="taxCategoryName" style="width: 180px;" class="form-control">
+                                                                    <input type="text" disabled
+                                                                        formControlName="taxCategoryName"
+                                                                        style="width: 180px;" class="form-control">
                                                                 </ng-template>
                                                             </td>
                                                             <td> <input type="number" min="0.00"
                                                                     formControlName="orderedQty"
-                                                                    (keydown.tab)="onKey(i,$event)" style="width: 3.5rem;"
-                                                                    class="form-control">
+                                                                    (keydown.tab)="onKey(i,$event)"
+                                                                    style="width: 3.5rem;" class="form-control">
                                                             </td>
                                                             <!-- oninput="this.value = Math.abs(this.value)" -->
 
@@ -1026,12 +1034,14 @@
                                                             <!-- oninput="this.value = Math.abs(this.value)" -->
                                                             <td> <input type="number" min="0"
                                                                     formControlName="unitPrice" style="width: 4rem;"
-                                                                    class="form-control" (keydown.tab)="onKey(i,$event)"></td>
+                                                                    class="form-control"
+                                                                    (keydown.tab)="onKey(i,$event)"></td>
 
                                                             <td> <input disabled type="number"
-                                                                    formControlName="baseAmtLineWise" (keydown.tab)="onKey(i,$event)"
-                                                                    style="width: 5rem;" class="form-control"></td>
-                                                            <td> <input  type="number" (keydown.tab)="onKey(i,$event)"
+                                                                    formControlName="baseAmtLineWise"
+                                                                    (keydown.tab)="onKey(i,$event)" style="width: 5rem;"
+                                                                    class="form-control"></td>
+                                                            <td> <input type="number" (keydown.tab)="onKey(i,$event)"
                                                                     formControlName="discLineAmt" style="width: 4rem;"
                                                                     class="form-control"></td>
                                                             <td> <input disabled type="number"
@@ -1163,11 +1173,13 @@
                                                             <!-- <input  formControlName="diss1" value={{diss1}}> -->
                                                             <td> <input disabled type="number"
                                                                     formControlName="unitPrice" style="width: 4rem;"
-                                                                    class="form-control" (keydown.tab)="onKey(i,$event)"></td>
+                                                                    class="form-control"
+                                                                    (keydown.tab)="onKey(i,$event)"></td>
 
                                                             <td> <input disabled type="number"
-                                                                    formControlName="baseAmtLineWise" (keydown.tab)="onKey(i,$event)"
-                                                                    style="width: 5rem;" class="form-control">
+                                                                    formControlName="baseAmtLineWise"
+                                                                    (keydown.tab)="onKey(i,$event)" style="width: 5rem;"
+                                                                    class="form-control">
                                                             </td>
                                                             <td> <input disabled type="number"
                                                                     formControlName="discLineAmt" style="width: 4rem;"
@@ -1711,8 +1723,7 @@
             </td> -->
             <td class="center">
                 <button type="button" class="btn btn-primary" id="saveBtn" data-toggle="modal"
-                   [disabled]="isDisabledSave"
-                    data-target="#confirmAlert" (click)="getMessage('Save')">Save</button>
+                    [disabled]="isDisabledSave" data-target="#confirmAlert" (click)="getMessage('Save')">Save</button>
                 <!-- [disabled]="!itemCategoryMasterForm.valid"  -->
 
             </td>
@@ -1813,9 +1824,13 @@
                 <div [style.display]="isVisible1 ? 'block' : 'none'">
                     <!-- <button class="btn btn-primary" (click)="goReceiptForm(segment1)" style="width: fit-content;">New Receipt Creation</button> -->
                     <button type="button" class="btn btn-primary" id="viewPoPrint" style="width: fit-content;"
-                        data-toggle="modal" data-target="#confirmAlert"
-                        (click)="getMessage('viewPoPrint())')">View PO</button>
+                        data-toggle="modal" data-target="#confirmAlert" (click)="getMessage('viewPoPrint())')">View
+                        PO</button>
                 </div>
+            </td>
+            <td>
+                <button type="submit" (click)="sendPoToVendor()" class="btn btn-primary" style="width: 10rem;">Send To
+                    Vendor(By Mail)</button>
             </td>
             <td>
                 <button type="button" class="btn btn-primary" id="resetBtn" data-toggle="modal"

@@ -913,6 +913,22 @@ export class PaymentArComponent implements OnInit {
 
   }
 
+  onReferenceNoInput(event: Event): void {
+  if (sessionStorage.getItem('attribute1') !== 'TAXI') {
+    return;
+  }
+
+  const input = event.target as HTMLInputElement;
+  const referenceNoControl = this.paymentArForm.get('referenceNo');
+
+  referenceNoControl?.setValidators([Validators.required, Validators.pattern(/^[A-Z]{3}\d{8}[A-Z]{3}$/)]);
+  referenceNoControl?.updateValueAndValidity();
+
+  if (input.value.length === 14 && referenceNoControl?.errors?.['pattern']) {
+    alert('Reference No format is invalid. Expected format: SOB26000881VWS (3 letters + 8 digits + 3 letters).');
+  }
+}
+
 
 
 

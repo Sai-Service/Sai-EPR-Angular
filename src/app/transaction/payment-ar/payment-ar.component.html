@@ -453,8 +453,20 @@
                                         </ng-template>
                                         <ng-template #elseBlockRef1>
                                             <td><input type="text" formControlName="referenceNo" id="referenceNo"
-                                                    [(ngModel)]="referenceNo" class="form-control" placeholder=" ">
-                                            </td>
+                                                 (input)="onReferenceNoInput($event)"  [(ngModel)]="referenceNo" class="form-control" placeholder=" ">
+                                        <div
+                                                    *ngIf="paymentArForm.get('referenceNo')?.invalid && paymentArForm.get('referenceNo')?.dirty">
+                                                    <small class="text-danger"
+                                                        *ngIf="paymentArForm.get('referenceNo')?.errors?.required">
+                                                        Reference No is mandatory.
+                                                    </small>
+                                                    <small class="text-danger"
+                                                        *ngIf="paymentArForm.get('referenceNo')?.errors?.pattern">
+                                                        Format must be SOB26000881VWS (3 letters + 8 digits + 3
+                                                        letters).
+                                                    </small>
+                                                </div>    
+                                        </td>
                                         </ng-template>
 
 
