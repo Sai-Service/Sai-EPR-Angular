@@ -1222,6 +1222,36 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblespClosingStockAsOndate1 = false;
       this.isVisibleStockMismatch=false;
   }
+
+   else if (reportName === 'shortLandedClaim') {
+      this.reportName = 'Paint Short Landed Report' 
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisibleGSTPurchaseRegister = true;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisiblestockTransferRecd = false;
+      this.isVisiblespClosingStockAsOndate = false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.isVisiblesparesPaintPanelReport = false;
+      this.isVisibleonlyOuCode = false;
+      this.isVisiblePanelOUFromDateToDateSubInv = false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblePaintPanelDetailReport = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisiblePaintReconReport = false;
+      this.isVisiblespClosingStockAsOndate1 = false;
+      this.isVisibleStockMismatch=false;
+  }
+
+
   }
 
   spPurRegDownLoad() {
@@ -1275,7 +1305,7 @@ export class PaintReportsComponent implements OnInit {
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         const fileName = 'Paint Purchase Register Details-' + fromDate + '-TO-' + toDate + '.xls';
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-        this.reportService.sppurRegidetailReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
+        this.reportService.sppurRegidetailReportPT(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId,'PN')
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''
@@ -1286,7 +1316,7 @@ export class PaintReportsComponent implements OnInit {
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
         const fileName = 'Paint Purchase Register Details-' + fromDate + '-TO-' + toDate + '.xls';
         const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
-        this.reportService.sppurRegidetailReportSpares(fromDate, toDate, sessionStorage.getItem('ouId'), locId, sessionStorage.getItem('deptId'))
+        this.reportService.sppurRegidetailReportSparesPT(fromDate, toDate, sessionStorage.getItem('ouId'), locId, sessionStorage.getItem('deptId'),'PN')
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.dataDisplay = ''
@@ -1549,7 +1579,7 @@ export class PaintReportsComponent implements OnInit {
       const fileName = 'Paint Misc Issue Receipt Report-' + fromDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.PaintparesMiscIssueReceiptReport(fromDate, toDate, locId, sessionStorage.getItem('ouId'))
+        this.reportService.PaintparesMiscIssueReceiptReportPT(fromDate, toDate, locId, sessionStorage.getItem('ouId'),'PN')
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1558,7 +1588,7 @@ export class PaintReportsComponent implements OnInit {
           })
       }
       if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.PaintparesMiscIssueReceiptReport(fromDate, toDate, locId, sessionStorage.getItem('ouId'))
+        this.reportService.PaintparesMiscIssueReceiptReportPT(fromDate, toDate, locId, sessionStorage.getItem('ouId'),'PN')
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1774,7 +1804,7 @@ export class PaintReportsComponent implements OnInit {
       // alert (fileName)
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.paintclosingstockSummary(sessionStorage.getItem('ouId'), subInventory)
+        this.reportService.paintclosingstockSummaryPT(sessionStorage.getItem('ouId'), subInventory, 'PN')
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1783,7 +1813,7 @@ export class PaintReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.paintclosingstockSummary(sessionStorage.getItem('ouId'), subInventory)
+        this.reportService.paintclosingstockSummaryPT(sessionStorage.getItem('ouId'), subInventory, 'PN')
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -2109,6 +2139,30 @@ export class PaintReportsComponent implements OnInit {
           })
       }
     }
+
+     else if (reportName === 'Paint Short Landed Report') {
+          const fileName = 'Paint Short Landed Report' + '.xls';
+          const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+          if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
+            this.reportService.shortLandedClaimReport(fromDate, toDate, sessionStorage.getItem('ouId'), locId, deptId)
+              .subscribe(data => {
+                saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+                this.closeResetButton = true;
+                this.dataDisplay = ''
+                this.isDisabled1 = false;
+              })
+          }
+          else if (Number(sessionStorage.getItem('deptId')) != 4) {
+            this.reportService.shortLandedClaimReport(fromDate, toDate, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
+              .subscribe(data => {
+                saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+                this.closeResetButton = true;
+                this.dataDisplay = ''
+                this.isDisabled1 = false;
+              })
+          }
+        }
+        
 
   }
 
