@@ -2510,7 +2510,7 @@ export class SparesReportsComponent implements OnInit {
     if (reportName === 'Purchase Register Details') {
 
       this.fromToDateValidation(fDate, tDate); if (this.rptValidation == false) { return; }
-
+      
       if (Number(sessionStorage.getItem('deptId')) === 4 || Number(sessionStorage.getItem('roleId')) === 10) {
         if (locId===undefined){
           locId=' ';
