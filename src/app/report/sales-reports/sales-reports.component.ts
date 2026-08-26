@@ -1613,7 +1613,7 @@ export class SalesReportsComponent implements OnInit {
       const fileName = 'Sales SOA Line wise Report-' + '-TO-' + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       var reportPar = this.salesReportForm.get('soaParameter').value;
-      if (reportPar === 'InvoiceWise') {
+      if (reportPar === 'InvoiceWise' || reportPar ==='DeliveryWise') {
         if (Number(sessionStorage.getItem('deptId')) === 4) {
           this.reportService.soaLineWiseInvoiceWise(fromDate, toDate, sessionStorage.getItem('ouId'), locId, sessionStorage.getItem('deptId'), reportPar)
             .subscribe(data => {

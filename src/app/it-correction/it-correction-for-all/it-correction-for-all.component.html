@@ -44,8 +44,6 @@
                                     placeholder="Enter Account number" style="width: 150px ;">
                             </td>
                             <td>
-                                <!-- <button type="button" class="btn btn-primary" (click)="searchByAccount1()"
-                                    style="width: 2rem;color: white;"><i class="fa fa-search"></i></button> -->
                                 <button type="button" class="btn btn-primary" (click)="searchByAccount1()"
                                     data-toggle="modal" data-target="#customerNameSearchModel"
                                     style="width: 2rem;color: white;">
@@ -71,7 +69,11 @@
                     </table>
 
                     <!-- SALES ORDER SEARCH -->
-                    <table class="center" *ngIf="itCorrectionForm.get('referenceType')?.value === 'Sales Order Update'">
+                    <!-- Also used for Executive Name Updation (searches via Sales Order) -->
+                    <table class="center" *ngIf="
+                        itCorrectionForm.get('referenceType')?.value === 'Sales Order Update' ||
+                        itCorrectionForm.get('referenceType')?.value === 'Executive Name Updation'
+                    ">
                         <tr>
                             <td style="width:10%" class="LabelFontStyle">SALES&nbsp;ORDER&nbsp;No&nbsp;:&nbsp;</td>
                             <td style="width:15%">
@@ -104,12 +106,13 @@
                     </table>
 
                     <!-- VEHICLE NO SEARCH -->
-                    <!-- <table class="center"
-                        *ngIf="itCorrectionForm.get('referenceType')?.value === 'Vehicle Number Update'"> -->
+                    <!-- Also used for KM Updation and Sale Date Updation (search by Vehicle No) -->
                     <table class="center" *ngIf="
                         itCorrectionForm.get('referenceType')?.value === 'Vehicle Number Update' ||
                         itCorrectionForm.get('referenceType')?.value === 'Customer Vehicle Mapping' ||
-                        itCorrectionForm.get('referenceType')?.value === 'Insurance Details Updation'
+                        itCorrectionForm.get('referenceType')?.value === 'Insurance Details Updation' ||
+                        itCorrectionForm.get('referenceType')?.value === 'KM Update' ||
+                        itCorrectionForm.get('referenceType')?.value === 'Sale Date Updation'
                     ">
                         <tr>
                             <td class="LabelFontStyle">VEHICLE&nbsp;No&nbsp;:&nbsp;</td>
@@ -144,10 +147,6 @@
                             <td class="LabelFontStyle">Customer&nbsp;Type&nbsp;:&nbsp;</td>
                             <td>
                                 <input readonly type="text" class="form-control" formControlName="customerType">
-                                <!-- <option value="">--Select--</option>
-                                    <option value="Person">Person</option>
-                                    <option value="Organization">Organization</option>
-                                </select> -->
                             </td>
 
                             <td class="LabelFontStyle">GST&nbsp;No&nbsp;:&nbsp;</td>
@@ -199,18 +198,12 @@
                                     min="0" max="100" step="0.01">
                             </td>
 
-
                             <td class="LabelFontStyle">City&nbsp;:&nbsp;</td>
                             <td><input readonly type="text" class="form-control" formControlName="city"></td>
 
                             <td class="LabelFontStyle">State&nbsp;:&nbsp;</td>
                             <td>
                                 <input readonly type="text" class="form-control" formControlName="state">
-                                <!-- <option value="">--Select--</option>
-                                    <option value="MAHARASHTRA">MAHARASHTRA</option>
-                                    <option value="KARNATAKA">KARNATAKA</option>
-                                    <option value="GUJARAT">GUJARAT</option> -->
-                                <!-- </input> -->
                             </td>
 
                             <td class="LabelFontStyle">Pin&nbsp;Code&nbsp;:&nbsp;</td>
@@ -229,15 +222,19 @@
                                 <input readonly type="text" class="form-control" formControlName="mobile1">
                             </td>
 
-                            <!-- Vehicle No : ONLY for Vehicle issues -->
+                            <!-- Vehicle No : Vehicle / KM / Sale Date issues (NOT Executive Name Updation) -->
                             <td class="LabelFontStyle" *ngIf="selectedIssueType === 'Vehicle No Updation' ||
                                 selectedIssueType === 'Customer Vehicle Mapping' ||
-                                selectedIssueType === 'Insurance Updation' ">
+                                selectedIssueType === 'Insurance Updation' ||
+                                selectedIssueType === 'KM Updation' ||
+                                selectedIssueType === 'Sale Date Updation' ">
                                 Vehicle&nbsp;No&nbsp;:&nbsp;
                             </td>
                             <td *ngIf="selectedIssueType === 'Vehicle No Updation' ||
                                 selectedIssueType === 'Customer Vehicle Mapping' ||
-                                selectedIssueType === 'Insurance Updation' ">
+                                selectedIssueType === 'Insurance Updation' ||
+                                selectedIssueType === 'KM Updation' ||
+                                selectedIssueType === 'Sale Date Updation' ">
                                 <input readonly type="text" class="form-control" formControlName="vehicleNo"
                                     style="text-transform: uppercase;">
                             </td>
@@ -257,10 +254,12 @@
                             </td>
                         </tr>
 
-                        <!-- Vehicle / Model Details (ONLY for Vehicle issues) -->
+                        <!-- Vehicle / Model Details : Vehicle / KM / Sale Date issues (NOT Executive Name Updation) -->
                         <tr *ngIf="selectedIssueType === 'Vehicle No Updation' ||
                                 selectedIssueType === 'Customer Vehicle Mapping' ||
-                                selectedIssueType === 'Insurance Updation' ">
+                                selectedIssueType === 'Insurance Updation' ||
+                                selectedIssueType === 'KM Updation' ||
+                                selectedIssueType === 'Sale Date Updation' ">
                             <td class="LabelFontStyle">Chassis&nbsp;No&nbsp;:&nbsp;</td>
                             <td>
                                 <input readonly type="text" class="form-control" formControlName="chassisNo"
@@ -285,6 +284,23 @@
                             </td>
                         </tr>
 
+                        <!-- KM Updation : Last Run Km -->
+                        <tr *ngIf="selectedIssueType === 'KM Updation'">
+                            <td class="LabelFontStyle">Last&nbsp;Run&nbsp;Km&nbsp;:&nbsp;</td>
+                            <td>
+                                <input readonly type="text" class="form-control" formControlName="lastRunKm">
+                            </td>
+                        </tr>
+
+                        <!-- Sale Date Updation : Sale Date -->
+                        <tr *ngIf="selectedIssueType === 'Sale Date Updation'">
+                            <td class="LabelFontStyle">Sale&nbsp;Date&nbsp;:&nbsp;</td>
+                            <td>
+                                <input readonly type="date" class="form-control" formControlName="saleDate">
+                            </td>
+                        </tr>
+
+                        <!-- Insurance details : Insurance Updation ONLY (NOT Executive Name Updation) -->
                         <tr *ngIf="selectedIssueType === 'Insurance Updation'">
 
                             <td class="LabelFontStyle">
@@ -316,6 +332,19 @@
                             </td>
 
                         </tr>
+
+                        <!-- Executive Name Updation : current Sales Representative / Team Leader -->
+                        <tr *ngIf="selectedIssueType === 'Executive Name Updation'">
+                            <td class="LabelFontStyle">Sales&nbsp;Representative&nbsp;:&nbsp;</td>
+                            <td>
+                                <input readonly type="text" class="form-control" formControlName="salesRepresentative">
+                            </td>
+
+                            <td class="LabelFontStyle">Team&nbsp;Leader&nbsp;:&nbsp;</td>
+                            <td>
+                                <input readonly type="text" class="form-control" formControlName="teamLeader">
+                            </td>
+                        </tr>
                     </table>
                 </fieldset>
 
@@ -336,10 +365,6 @@
                                 </select>
                             </td>
 
-                            <!-- <td class="LabelFontStyle">Approver Name :</td>
-                            <td>
-                                <input type="text" class="form-control" formControlName="approverName">
-                            </td> -->
                             <td class="LabelFontStyle">Approver Name :</td>
                             <td>
                                 <input type="text" class="form-control" formControlName="approverName"
@@ -372,10 +397,6 @@
                                 </select>
                             </td>
 
-                            <!-- <td class="LabelFontStyle">Approver Name :</td>
-                                            <td>
-                                                <input type="text" class="form-control" formControlName="approverName">
-                                            </td> -->
                             <td class="LabelFontStyle">Approver Name :</td>
                             <td>
                                 <input type="text" class="form-control" formControlName="approverName"
@@ -412,7 +433,6 @@
 
                             <tr>
                                 <td class="LabelFontStyle">New Title :</td>
-                                <!-- <td><input type="text" class="form-control" formControlName="newTitle"></td> -->
                                 <td>
                                     <select class="form-control" formControlName="newTitle">
                                         <option value="">-- Select Title --</option>
@@ -549,20 +569,6 @@
                                     oninput="this.value=this.value.toUpperCase().replace(/[^A-Z0-9]/g,'')"
                                     style="text-transform: uppercase;">
                             </td>
-                            <!-- <div *ngIf=" itCorrectionForm.get('newGstNo')?.touched &&
-                                            itCorrectionForm.get('newGstNo')?.errors
-                                        " style="color:red;font-size:11px;margin-top:3px;">
-
-                                <div *ngIf="itCorrectionForm.get('newGstNo')?.errors?.['invalidGSTFormat'] ">
-                                    Invalid GST format
-                                </div>
-
-                                <div *ngIf="itCorrectionForm.get('newGstNo')?.errors?.['invalidGSTFormat']
-                                ">
-                                    GST does not match customer state
-                                </div>
-
-                            </div> -->
                         </tr>
                         <tr>
                             <td class="LabelFontStyle">Remarks :</td>
@@ -630,7 +636,6 @@
                         <tr>
                             <td class="LabelFontStyle">New Cust Account No :</td>
                             <td>
-                                <!-- <input type="number" maxlength="7" (blur)="validateNewCustAccNo()" class="form-control" formControlName="newCustAccountNo"> -->
                                 <input type="text" class="form-control" formControlName="newCustAccountNo" maxlength="7"
                                     pattern="^[0-9]{1,7}$" inputmode="numeric"
                                     oninput="this.value = this.value.replace(/[^0-9]/g, '')"
@@ -647,6 +652,7 @@
                         </tr>
                     </table>
 
+                    <!-- INSURANCE UPDATION -->
                     <table class="center" *ngIf="selectedIssueType === 'Insurance Updation'">
 
                         <tr>
@@ -684,16 +690,75 @@
                         </tr>
                     </table>
 
+                    <!-- KM UPDATION -->
+                    <table class="center" *ngIf="selectedIssueType === 'KM Updation'">
+                        <tr>
+                            <td class="LabelFontStyle">New Last Run Km :</td>
+                            <td>
+                                <input type="number" class="form-control" formControlName="newLastRunKm" min="0">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="LabelFontStyle">Remarks :</td>
+                            <td colspan="7">
+                                <input type="text" class="form-control" formControlName="itReason">
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- EXECUTIVE NAME UPDATION -->
+                    <table class="center" *ngIf="selectedIssueType === 'Executive Name Updation'">
+                        <tr>
+                            <td class="LabelFontStyle">Sales Representative :</td>
+                            <td>
+                                <input type="text" class="form-control" formControlName="newSalesRepresentativeDisplay"
+                                    list="salesRepresentativeLov" placeholder="Select Sales Representative"
+                                    (input)="onSalesRepSelect($event)">
+                                <datalist id="salesRepresentativeLov">
+                                    <option *ngFor="let sr of salesRepresentativeLovList" [value]="sr.FULLNAME">
+                                    </option>
+                                </datalist>
+                            </td>
+
+                            <td class="LabelFontStyle">Team Leader :</td>
+                            <td>
+                                <input type="text" class="form-control" formControlName="newTeamLeaderDisplay"
+                                    list="teamLeaderLov" placeholder="Select Team Leader"
+                                    (input)="onTeamLeaderSelect($event)">
+                                <datalist id="teamLeaderLov">
+                                    <option *ngFor="let tl of teamLeaderLovList" [value]="tl.FULLNAME">
+                                    </option>
+                                </datalist>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="LabelFontStyle">Remarks :</td>
+                            <td colspan="7">
+                                <input type="text" class="form-control" formControlName="itReason">
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- SALE DATE UPDATION -->
+                    <table class="center" *ngIf="selectedIssueType === 'Sale Date Updation'">
+                        <tr>
+                            <td class="LabelFontStyle">New Veh Delv Date :</td>
+                            <td>
+                                <input type="date" class="form-control" formControlName="newVehDelvDate">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="LabelFontStyle">Remarks :</td>
+                            <td colspan="7">
+                                <input type="text" class="form-control" formControlName="itReason">
+                            </td>
+                        </tr>
+                    </table>
+
                 </fieldset>
 
                 <!-- ACTION BUTTONS -->
                 <div style="text-align:center; margin-top:15px;">
-                    <!-- <button type="submit" class="btn btn-secondary" [disabled]="
-                        itCorrectionForm.invalid ||
-                    (orderStatus === 'INVOICED' && itCorrectionForm.get('accountsApproval')?.value !== 'YES')
-                        ">
-                        Update
-                    </button> -->
                     <button type="button" class="btn btn-secondary" [disabled]="
                     itCorrectionForm.invalid ||
                     irnGenerated ||
@@ -769,7 +834,6 @@
             <div class="modal-body">
                 <label
                     style="font-size: small; color: black; font-weight: bold; text-align: center; vertical-align: middle;">
-                    <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
                     Do you want to update this record? (Yes/No)?&nbsp;
                 </label>
             </div>

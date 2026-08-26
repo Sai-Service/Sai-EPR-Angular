@@ -7,7 +7,7 @@ import { AppConstants } from '../app-constants'
   providedIn: 'root'
 })
 export class ItCorrectionService {
-httpclient: any;
+  httpclient: any;
   headers: any;
   ServerUrl: string;
 
@@ -16,11 +16,11 @@ httpclient: any;
     this.headers = this.headers.set('Content-Type', 'application/json; charset=utf-8');
     this.ServerUrl = AppConstants.ServerUrl;
   }
-custNameSearchFn1(custName: any): Observable<any> {
+  custNameSearchFn1(custName: any): Observable<any> {
     return this.http.get(this.ServerUrl + `/Customer/getCustDetails?custName=${custName}`, { headers: this.headers });
   }
 
-  searchCustomerByAccount(accountNo:any): Observable<any> {
+  searchCustomerByAccount(accountNo: any): Observable<any> {
     return this.http.get(this.ServerUrl + `/Customer/getByCustAcctNo?accountNo=${accountNo}`);
   }
 
@@ -64,21 +64,21 @@ custNameSearchFn1(custName: any): Observable<any> {
       { headers: this.headers }
     );
   }
-  
+
   getAccApproverNames(): Observable<any> {
     return this.http.get(
       this.ServerUrl + `/bajajIssues/getAccApprName`,
       { headers: this.headers }
     );
   }
-  
+
   getDetailsByVehicleNo(regNo: string): Observable<any> {
     return this.http.get(
       this.ServerUrl + `/bajajIssues/getDetByRegNo?regNo=${regNo}`,
       { headers: this.headers }
     );
   }
-  
+
   getDetailsByJobCardNo(jobCardNo: string): Observable<any> {
     return this.http.get(
       this.ServerUrl + `/bajajIssues/getDetByJobCardNo?jobCardNo=${jobCardNo}`,
@@ -86,33 +86,47 @@ custNameSearchFn1(custName: any): Observable<any> {
     );
   }
 
-    getCustAccNoValidation(custAccountNo: string): Observable<any> {
+  getCustAccNoValidation(custAccountNo: string): Observable<any> {
     return this.http.get(
       this.ServerUrl + `/bajajIssues/getCustAccNoValidation?custAccountNo=${custAccountNo}`,
       { headers: this.headers }
     );
   }
 
-    getTitleLov(): Observable<any> {
+  getTitleLov(): Observable<any> {
     return this.http.get(
       this.ServerUrl + `/cmnLookup/TitleList`,
       { headers: this.headers }
     );
   }
 
-    getInsuranceCompanyLov(): Observable<any> {
+  getInsuranceCompanyLov(): Observable<any> {
     return this.http.get(
       this.ServerUrl + `/bajajIssues/getInsCustList`,
       { headers: this.headers }
     );
   }
 
-getInsuranceSiteLov(custId: number): Observable<any> {
-  return this.http.get(
-    this.ServerUrl + `/bajajIssues/getInsCustSites?custId=${custId}`,
-    { headers: this.headers }
-  );
-}
-  
+  getInsuranceSiteLov(custId: number): Observable<any> {
+    return this.http.get(
+      this.ServerUrl + `/bajajIssues/getInsCustSites?custId=${custId}`,
+      { headers: this.headers }
+    );
+  }
+
+  getSalesRepresentativeLov(): Observable<any> {
+    return this.http.get(
+      this.ServerUrl + `/empMst/getSalesEmployeeLov`,
+      { headers: this.headers }
+    );
+  }
+
+  getTeamLeaderLov(): Observable<any> {
+    return this.http.get(
+      this.ServerUrl + `/empMst/getSalesTlLov`,
+      { headers: this.headers }
+    );
+  }
+
 }
 
