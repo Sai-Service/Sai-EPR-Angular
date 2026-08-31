@@ -128,5 +128,18 @@ export class ItCorrectionService {
     );
   }
 
+  downloadEwSchemeMaster(): Observable<Blob> {
+    return this.http.get(
+      this.ServerUrl + `/EwScheme/downloadEwSchemeMaster`,
+      { responseType: 'blob' }
+    );
+  }
+
+  uploadEwSchemeMaster(formData: FormData): Observable<any> {
+    return this.http.post(
+      this.ServerUrl + `/EwScheme/uploadEwSchemeMaster`,
+      formData
+    );
+  }
 }
 

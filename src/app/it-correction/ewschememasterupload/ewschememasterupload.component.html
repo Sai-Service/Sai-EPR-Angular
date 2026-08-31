@@ -1,0 +1,37 @@
+<div class="RFS">
+    <p class="PageHeader" style="height: auto; line-height: 28px;">EW Scheme Master Upload</p>
+
+    <div class="p-3">
+        <table class="center" style="width: 100%;">
+            <tr>
+                <td class="LabelFontStyle1" style="width: 25%;">Upload File</td>
+                <td>
+                    <input type="file" class="form-control" style="width: auto;" accept=".xlsx,.xls,.csv"
+                        (change)="onFileSelected($event)">
+                </td>
+                <td style="text-align: left; width: 100%;">
+                    <button type="button" class="btn-primary" [disabled]="isUploading || !selectedFile"
+                        (click)="onUpload()" style="margin-right: 10px;">
+                        {{ isUploading ? 'Uploading...' : 'Upload' }}
+                    </button>
+                    <button type="button" class="btn-secondary" [disabled]="isDownloading" (click)="onDownload()">
+                        {{ isDownloading ? 'Downloading...' : 'Download' }}
+                    </button>
+                    <button type="button" class="btn-secondary" (click)="resetMast()" style="margin-left: 10px;">
+                        Reset
+                    </button>
+                    <button type="button" class="btn-primary" (click)="closeMast()" style="margin-left: 10px;">
+                        Close
+                    </button>
+                </td>
+            </tr>
+        </table>
+
+        <div *ngIf="uploadMessage" style="text-align: center; margin-top: 10px;">
+            <span [style.color]="uploadMessageType === 'success' ? 'green' : 'red'" [style.position]="'static'"
+                [style.fontSize]="'12px'">
+                {{ uploadMessage }}
+            </span>
+        </div>
+    </div>
+</div>

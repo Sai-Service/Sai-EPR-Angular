@@ -823,8 +823,8 @@ export class ItCorrectionForAllComponent implements OnInit {
       case 'Insurance Updation':
 
         f.patchValue({
-          newInsuranceCompany: f.get('insuranceCompany')?.value,
-          newInsuranceSite: f.get('insuranceSite')?.value,
+          newInsuranceCompany: f.get('insuranceCompanyId')?.value,
+          newInsuranceSite: f.get('insuranceSiteId')?.value,
           newPolicyNo: f.get('policyNo')?.value,
           newInsuranceEndDate: f.get('insuranceEndDate')?.value
         });
