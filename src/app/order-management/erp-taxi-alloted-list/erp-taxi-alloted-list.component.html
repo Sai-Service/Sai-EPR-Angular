@@ -31,6 +31,29 @@
                 </div>
             </div>
         </div>
+
+        <!-- FILTER ROW -->
+        <div style="display: flex; align-items: flex-end; flex-wrap: wrap; gap: 20px; padding-bottom: 10px;">
+            <div style="display: flex; flex-direction: column;">
+                <label style="font-weight: bold; margin-bottom: 4px;">Trx No.</label>
+                <input type="text" class="form-control" placeholder="Search Trx No."
+                    style="width: 220px;"
+                    [(ngModel)]="erpTrxNoFilter" name="erpTrxNoFilter"
+                    [ngModelOptions]="{standalone: true}">
+            </div>
+            <div style="display: flex; flex-direction: column;">
+                <label style="font-weight: bold; margin-bottom: 4px;">DMS Location</label>
+                <input type="text" class="form-control" placeholder="Search DMS Location"
+                    style="width: 220px;"
+                    [(ngModel)]="erpDmsLocationFilter" name="erpDmsLocationFilter"
+                    [ngModelOptions]="{standalone: true}">
+            </div>
+            <div>
+                <button class="btn btn-secondary" type="button" style="white-space: nowrap;"
+                    (click)="clearErpFilters()">Clear Filter</button>
+            </div>
+        </div>
+
         <table class="center" style="width: 100%;background-color: #FFE4B5;">
             <tr>
                 <td>
@@ -44,7 +67,7 @@
         <table class="GridFont"
             style="font-size: 14px;border-color:#1f1e1e;border-collapse:collapse;width: 100%;text-align: center;">
             <tr>
-                <td><b>Total Order Count : {{orderListDetails.length}}</b></td>
+                <td><b>Total Order Count : {{filteredOrderListDetails.length}}</b></td>
         </table>
         <div class="grid_scroll">
             <table class="GridFont" style="border-color:#494949;border-collapse:collapse;width: 100%;">
@@ -65,7 +88,7 @@
                     <th>New Account No</th>
                     <th>Action</th>
                 </tr>
-                <tr *ngFor="let com of orderListDetails ; let i= index" class="ItemStyle"
+                <tr *ngFor="let com of filteredOrderListDetails ; let i= index" class="ItemStyle"
                     style="text-decoration:none;font-size: 11px;">
                     <!-- <td style="padding-left: 5px;padding-top: 10px;">
                         <a [routerLink]="['/admin/OrderManagement/TxiVehPurchaseorder',com.transId]"
@@ -74,7 +97,7 @@
                     <td style="padding-left: 5px; text-align: center;">{{com.TRANS_ID}}</td>
                     <td style="padding-left: 5px; text-align: center;">{{com.CREATION_DATE}}</td>
                     <td style="padding-left: 5px; text-align: center;">{{com.DMS_LOCATION}}</td>
-                    
+
                     <td style="padding-left: 5px; text-align: left;">{{com.DMSINVOICE_NO}}</td>
                     <!-- <td style="padding-left: 5px; text-align: center;">{{com.dmsInvoiceDate}}</td> -->
                     <td style="padding-left: 5px; text-align: center;">{{com.ERP_LOCATION}}</td>
@@ -87,7 +110,7 @@
                     <td style="padding-left: 5px; text-align: right;">{{com.ECOLOR_CD}}</td>
                     <td style="padding-left: 5px; text-align: center;">{{com.NEWCUSTACCOUNT}}</td>
                        <td style="padding-left: 5px; text-align: center;">
-                <button type="button" class="btn btn-sm btn-primary" (click)="createPO(com.TRANS_ID, com.NEWCUSTACCOUNT)">
+                <button type="button" class="btn btn-sm btn-primary" (click)="createPO(com.TRANS_ID,com.ERP_LOCATION, com.NEWCUSTACCOUNT)">
                     Create PO
                 </button>
             </td>
@@ -96,7 +119,7 @@
         </div>
     </div>
 
-    
+
     <div class="col-md-12 table-responsive" #potable *ngIf="activeTab === 'po'">
         <div style="padding-bottom: 10px;padding-top: 10px;">
             <div class="row">
@@ -106,6 +129,29 @@
                 </div>
             </div>
         </div>
+
+        <!-- FILTER ROW -->
+        <div style="display: flex; align-items: flex-end; flex-wrap: wrap; gap: 20px; padding-bottom: 10px;">
+            <div style="display: flex; flex-direction: column;">
+                <label style="font-weight: bold; margin-bottom: 4px;">Trx(SOB) No</label>
+                <input type="text" class="form-control" placeholder="Search Trx(SOB) No"
+                    style="width: 220px;"
+                    [(ngModel)]="poTrxNoFilter" name="poTrxNoFilter"
+                    [ngModelOptions]="{standalone: true}">
+            </div>
+            <div style="display: flex; flex-direction: column;">
+                <label style="font-weight: bold; margin-bottom: 4px;">DMS Inv No</label>
+                <input type="text" class="form-control" placeholder="Search DMS Inv No"
+                    style="width: 220px;"
+                    [(ngModel)]="poDmsInvNoFilter" name="poDmsInvNoFilter"
+                    [ngModelOptions]="{standalone: true}">
+            </div>
+            <div>
+                <button class="btn btn-secondary" type="button" style="white-space: nowrap;"
+                    (click)="clearPoFilters()">Clear Filter</button>
+            </div>
+        </div>
+
         <table class="center" style="width: 100%;background-color: #FFE4B5;">
             <tr>
                 <td>
@@ -119,7 +165,7 @@
         <table class="GridFont"
             style="font-size: 14px;border-color:#1f1e1e;border-collapse:collapse;width: 100%;text-align: center;">
             <tr>
-                <td><b>Total Order Count : {{poGeneratedDetails.length}}</b></td>
+                <td><b>Total Order Count : {{filteredPoGeneratedDetails.length}}</b></td>
         </table>
         <div class="grid_scroll">
             <table class="GridFont" style="border-color:#494949;border-collapse:collapse;width: 100%;">
@@ -133,9 +179,10 @@
                     <th>Model</th>
                     <th>Customer Name</th>
                     <th>ERP Ac No</th>
-                    
+                     <th>To Vendor Name</th>
                 </tr>
-                <tr *ngFor="let com of poGeneratedDetails ; let i= index" class="ItemStyle"
+
+                <tr *ngFor="let com of filteredPoGeneratedDetails ; let i= index" class="ItemStyle"
                     style="text-decoration:none;font-size: 11px;">
                     <td style="padding-left: 5px;padding-top: 10px;">
                         <a [routerLink]="['/admin/master/OPMasterDto',com.SEGMENT1]"
@@ -149,8 +196,8 @@
                     <td style="padding-left: 5px; text-align: center;">{{com.MODEL}}</td>
                     <td style="padding-left: 5px; text-align: center;">{{com.CUST_NAME}}</td>
                     <td style="padding-left: 5px; text-align: center;">{{com.ERP_ACC_NO}}</td>
-                    
-                
+                    <td style="padding-left: 5px; text-align: center;">{{com.NAME}}</td>
+
                 </tr>
             </table>
         </div>

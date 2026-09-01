@@ -284,11 +284,11 @@ getsearchByOrderNo2(orderNumber:any,customerId:any,locId:any): Observable<any> {
   }
 
 
-  exVehicleNoUpdate(regNo,vin,regNo1) {
+  exVehicleNoUpdate(regNo,vin,regNo1,customerId) {
     const options = {
       headers: this.headers
     };
-    const url = this.ServerUrl + `/VehAddInfo/updateVehicle?regNo=${regNo}&vin=${vin}&cRegNo=${regNo1}`;
+    const url = this.ServerUrl + `/VehAddInfo/updateVehicle?regNo=${regNo}&vin=${vin}&cRegNo=${regNo1}&customerId=${customerId}`;
     return this.http.put(url, options);
   }
 
@@ -1221,7 +1221,7 @@ createInvbyordNo(segment1: string, payload: any): Observable<any> {
 
  
   createPO(sobNumber: string, createdBy: string): Observable<any> {
-  const url = `${this.ServerUrl}/poHdr/taxiPO?SOBNumber=${sobNumber}&createdBy=3442`;
+  const url = `${this.ServerUrl}/poHdr/taxiPO?SOBNumber=${sobNumber}&createdBy=${createdBy}`;
   return this.http.post(url, null );
   }
 

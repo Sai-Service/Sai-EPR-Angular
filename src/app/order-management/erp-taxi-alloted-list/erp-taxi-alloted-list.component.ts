@@ -42,7 +42,7 @@ export class ErpTaxiAllotedListComponent implements OnInit {
   @ViewChild('epltable', { static: false }) epltable: ElementRef;
   @ViewChild('potable', { static: false }) potable: ElementRef;
 
-  constructor(private fb: FormBuilder, private router: Router, private location1: Location, private router1: ActivatedRoute, private service: OrderManagementService) { 
+  constructor(private fb: FormBuilder, private router: Router, private location1: Location, private router1: ActivatedRoute, private service: OrderManagementService) {
     this.orderListForm = this.fb.group({
       startDt: [],
       endDt: [],
@@ -128,7 +128,7 @@ export class ErpTaxiAllotedListComponent implements OnInit {
   //       this.orderListDetails = res.obj;
   //       this.storeAllOrderData =res.obj;
   //       console.log(this.storeAllOrderData);
-        
+       
   //       for (let x=0; x<this.orderListDetails.length; x++){
          
   //         this.totInvAmt = Math.round(((this.totInvAmt += (this.orderListDetails[x].orAmt)) + Number.EPSILON) * 100) / 100;
@@ -146,7 +146,7 @@ export class ErpTaxiAllotedListComponent implements OnInit {
   //   })
 
   // }
-  
+ 
 // onSelectStatus(event:any){
 //   // alert(event);
 //   console.log(this.orderListDetails);
@@ -166,21 +166,21 @@ export class ErpTaxiAllotedListComponent implements OnInit {
 //     this.service.createPO(sobNumber, createdBy).subscribe({
 //       next: (response) => {
 //         console.log('PO created successfully', response);
-        
+       
 //       },
 //       error: (err) => {
 //         console.error('Error creating PO', err);
-      
+     
 //       }
 //     });
 //   }
 
 
 
-createPO(sobNumber: string ,NEWCUSTACCOUNT:string) {
-  var createdBy = sessionStorage.getItem('locId') ?? '';
+createPO(sobNumber: string,ERP_LOCATION:string,NEWCUSTACCOUNT:string) {
+  var createdBy = sessionStorage.getItem('emplId') ?? '';
 
-  this.service.createPO(sobNumber, createdBy).subscribe({
+  this.service.createPO(sobNumber+ERP_LOCATION, createdBy).subscribe({
     next: (response: any) => {
       console.log('PO created successfully', response);
 
@@ -188,13 +188,13 @@ createPO(sobNumber: string ,NEWCUSTACCOUNT:string) {
         alert(`PO Generated Successfully.`);
         this.resetPage();
         this.activeTab = 'po';
-      } 
+      }
        if (response.code === 400) {
-        alert(`Please Create Advance Receipt first against SOB: `+ sobNumber +`  & Cutstomer No :` + NEWCUSTACCOUNT);
+        alert(`Please Create Advance Receipt first against SOB: `+ sobNumber+ERP_LOCATION +`  & Cutstomer No :` + NEWCUSTACCOUNT);
         // this.resetPage();
         // this.activeTab = 'po';
       }
-      
+     
       else {
         // alert(response.message || 'Something went wrong while creating PO');
       }
@@ -253,7 +253,7 @@ getOrderList(){
 
 
 
-      
+     
 
 
 
@@ -284,5 +284,52 @@ getOrderList(){
     xlsx.writeFile(wb, 'POGeneratedList.xlsx');
   }
 
+
+
+  erpTrxNoFilter: string = '';
+erpDmsLocationFilter: string = '';
+
+get filteredOrderListDetails() {
+  return (this.orderListDetails || []).filter((item:any) => {
+    const matchesTrxNo = this.erpTrxNoFilter
+      ? String(item.TRANS_ID ?? '').toLowerCase().includes(this.erpTrxNoFilter.toLowerCase())
+      : true;
+
+    const matchesDmsLocation = this.erpDmsLocationFilter
+      ? String(item.DMS_LOCATION ?? '').toLowerCase().includes(this.erpDmsLocationFilter.toLowerCase())
+      : true;
+
+    return matchesTrxNo && matchesDmsLocation;
+  });
+}
+
+clearErpFilters() {
+  this.erpTrxNoFilter = '';
+  this.erpDmsLocationFilter = '';
+}
+
+
+
+poTrxNoFilter: string = '';
+poDmsInvNoFilter: string = '';
+
+get filteredPoGeneratedDetails() {
+  return (this.poGeneratedDetails || []).filter((item:any) => {
+    const matchesTrxNo = this.poTrxNoFilter
+      ? String(item.TRANS_ID ?? '').toLowerCase().includes(this.poTrxNoFilter.toLowerCase())
+      : true;
+
+    const matchesDmsInvNo = this.poDmsInvNoFilter
+      ? String(item.DMSINVOICE_NO ?? '').toLowerCase().includes(this.poDmsInvNoFilter.toLowerCase())
+      : true;
+
+    return matchesTrxNo && matchesDmsInvNo;
+  });
+}
+
+clearPoFilters() {
+  this.poTrxNoFilter = '';
+  this.poDmsInvNoFilter = '';
+}
 
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, ReactiveFormsModule, PatternValidator, FormArray } from '@angular/forms';
 import { NgForm } from '@angular/forms';
-import { Url } from 'url';
+// import { Url } from 'url';
 import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
@@ -111,7 +111,7 @@ export class VariantWithPriceMasterComponent implements OnInit {
       pricelistheaderid: [12],
       pricelistname: ['April 2024 Price List'],
       pricelisttype: ['Vehicle'],
-      status: [],
+      status: ['Active'],
       mdlClrId: [],
       divisionId: [],
       ouId: [],
@@ -311,19 +311,96 @@ export class VariantWithPriceMasterComponent implements OnInit {
     });
   }
 
+  // onColorSelect(event: any) {
+  //   const variant = this.variantMasterForm.get('variant')?.value;
+  //   const colorCode = this.variantMasterForm.get('colorCode')?.value;
+  //   this.service
+  //     .findByvariantAndColorFn(
+  //       variant,
+  //       Number(sessionStorage.getItem('ouId')),
+  //       colorCode
+  //     )
+  //     .subscribe(data => {
+  //       if (data.code === 200) {
+  //         if (data.obj && data.obj.length > 0) {
+  //           this.variantMasterForm.patchValue(data.obj[0]);
+  //           this.variantMasterForm.get('servicemodel')?.disable();
+  //           this.variantMasterForm.get('bharatstagenorms')?.disable();
+  //           this.variantMasterForm.get('chasprefix')?.disable();
+  //           this.variantMasterForm.get('cylinder')?.disable();
+  //           this.variantMasterForm.get('engprefix')?.disable();
+  //           this.variantMasterForm.get('horsepower')?.disable();
+  //           this.variantMasterForm.get('typeOfBody')?.disable();
+  //           this.variantMasterForm.get('cubiccapacity')?.disable();
+  //           this.variantMasterForm.get('mfgyearprint')?.disable();
+  //           this.variantMasterForm.get('grossweight')?.disable();
+  //           this.variantMasterForm.get('unladenweight')?.disable();
+  //           this.variantMasterForm.get('seating')?.disable();
+  //           this.variantMasterForm.get('oemwarrantyPerion')?.disable();
+  //           this.variantMasterForm.get('variantclass')?.disable();
+  //           this.variantMasterForm.get('fueltype')?.disable();
+  //           this.variantMasterForm.get('colorDesc')?.disable();
+  //           this.variantMasterForm.get('vardescription')?.disable();
+  //         } else {
+  //           alert('Existing price not available, please enter new price.');
+  //           this.variantMasterForm.patchValue({
+  //             price: null
+  //           });
+  //         }
+  //       } else {
+  //         alert(data.message);
+  //       }
+  //     });
+  // }
+
   onColorSelect(event: any) {
+
     const variant = this.variantMasterForm.get('variant')?.value;
     const colorCode = this.variantMasterForm.get('colorCode')?.value;
+
+    const divisionIdFromSession = Number(
+      sessionStorage.getItem('divisionId')
+    );
+
+    const ouIdFromSession = Number(
+      sessionStorage.getItem('ouId')
+    );
+
+    console.log('Before API:');
+    console.log('Division ID:', divisionIdFromSession);
+    console.log('OU ID:', ouIdFromSession);
+    console.log('Variant:', variant);
+    console.log('Color:', colorCode);
+
     this.service
       .findByvariantAndColorFn(
         variant,
-        Number(sessionStorage.getItem('ouId')),
+        ouIdFromSession,
         colorCode
       )
       .subscribe(data => {
+
         if (data.code === 200) {
+
           if (data.obj && data.obj.length > 0) {
+
+            // First patch API data
             this.variantMasterForm.patchValue(data.obj[0]);
+
+            // VERY IMPORTANT:
+            // Always patch divisionId from login/session
+            this.variantMasterForm.patchValue({
+              divisionId: divisionIdFromSession,
+              ouId: ouIdFromSession,
+              locId: Number(sessionStorage.getItem('locId'))
+            });
+
+            console.log(
+              'Division ID after API response:',
+              this.variantMasterForm.get('divisionId')?.value
+            );
+
+            // Disable fields
             this.variantMasterForm.get('servicemodel')?.disable();
             this.variantMasterForm.get('bharatstagenorms')?.disable();
             this.variantMasterForm.get('chasprefix')?.disable();
@@ -341,13 +418,21 @@ export class VariantWithPriceMasterComponent implements OnInit {
             this.variantMasterForm.get('fueltype')?.disable();
             this.variantMasterForm.get('colorDesc')?.disable();
             this.variantMasterForm.get('vardescription')?.disable();
+
           } else {
+
             alert('Existing price not available, please enter new price.');
+
+            // Even for new record keep divisionId
             this.variantMasterForm.patchValue({
-              price: null
+              divisionId: divisionIdFromSession,
+              ouId: ouIdFromSession,
+              locId: Number(sessionStorage.getItem('locId'))
             });
           }
+
         } else {
+
           alert(data.message);
         }
       });

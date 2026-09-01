@@ -2840,7 +2840,7 @@
                                                                     </td>
                                                                     
                                                                     <td>
-                                                                        1<select disabled formControlName="techId" id="techId"  class="form-control" >
+                                                                        <select disabled formControlName="techId" id="techId"  class="form-control" >
                                                                             <option>--Select--</option>
                                                                             <option *ngFor="let sc of  TechnicianList" [ngValue]="sc.teamId">
                                                                                 {{sc.teamId}}-{{sc.description}}

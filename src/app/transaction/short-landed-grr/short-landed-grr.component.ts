@@ -885,10 +885,10 @@ export class ShortLandedGrrComponent implements OnInit {
             var x=rtvLineArr[i].qtyReturn
               if( x==undefined  || x<=0) {
                 patch.controls[i].patchValue({selectFlag:''});
-                var  resp=confirm("LINE : " + (i+1) + " : IS INCOMPLETE.PROCEED ???");
-                  if(resp==false) {
-                     return;
-                    }
+                // var  resp=confirm("LINE : " + (i+1) + " : IS INCOMPLETE.PROCEED ???");
+                //   if(resp==false) {
+                //      return;
+                //     }
                 }
 
       }

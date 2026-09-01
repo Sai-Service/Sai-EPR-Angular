@@ -9,11 +9,10 @@ import { ItCorrectionService } from '../it-correction.service';
   selector: 'app-it-correction-for-all',
   templateUrl: './it-correction-for-all.component.html',
   styleUrls: ['./it-correction-for-all.component.css'],
-  
+
 })
 export class ItCorrectionForAllComponent implements OnInit {
 
-  
   itCorrectionForm!: FormGroup;
 
   ticketNo!: string;
@@ -33,6 +32,10 @@ export class ItCorrectionForAllComponent implements OnInit {
 
   insuranceCompanyLov: any[] = [];
   insuranceSiteLov: any[] = [];
+
+  // NEW: LOVs for Executive Name Updation
+  salesRepresentativeLovList: any[] = [];
+  teamLeaderLovList: any[] = [];
 
   stateGstCodeMap: any = {
     'MAHARASHTRA': '27',
@@ -92,19 +95,6 @@ export class ItCorrectionForAllComponent implements OnInit {
       middleNameCtrl?.updateValueAndValidity();
       lastNameCtrl?.updateValueAndValidity();
 
-
-      // this.service.getReferenceTypes().subscribe({
-      //   next: (res: { code: number; obj: any[]; message: any; }) => {
-      //     if (res.code === 200) {
-      //       this.referenceTypeLovList = res.obj;
-      //     } else {
-      //       alert(res.message);
-      //     }
-      //   },
-      //   error: () => {
-      //     alert('Reference Type API failed');
-      //   }
-      // });
       if (this.selectedIssueType) {
         this.service.getReferenceTypes(this.selectedIssueType).subscribe({
           next: (res: { code: number; obj: any[]; message: any; }) => {
@@ -126,8 +116,16 @@ export class ItCorrectionForAllComponent implements OnInit {
       if (
         val === 'GST Updation' ||
         val === 'PAN No Updation' ||
-        val === 'Insurance Updation'
+        val === 'Insurance Updation' ||
+        val === 'Sale Date Updation'
       ) {
+        this.showAccountsApproval = true;
+
+        accountsCtrl?.setValidators([Validators.required]);
+        approverCtrl?.setValidators([Validators.required]);
+
+      } else if (val === 'Executive Name Updation' && this.orderStatus === 'INVOICED') {
+        // Executive Name Updation requires Accounts Approval only when order is INVOICED
         this.showAccountsApproval = true;
 
         accountsCtrl?.setValidators([Validators.required]);
@@ -154,19 +152,6 @@ export class ItCorrectionForAllComponent implements OnInit {
         alert('Issue Type API failed');
       }
     });
-
-    // this.service.getReferenceTypes().subscribe({
-    //   next: (res: { code: number; obj: any[]; message: any; }) => {
-    //     if (res.code === 200) {
-    //       this.referenceTypeLovList = res.obj;
-    //     } else {
-    //       alert(res.message);
-    //     }
-    //   },
-    //   error: () => {
-    //     alert('Reference Type API failed');
-    //   }
-    // });
 
     this.service.getAccApproverNames().subscribe({
       next: (res: any) => {
@@ -217,6 +202,38 @@ export class ItCorrectionForAllComponent implements OnInit {
       });
     });
 
+    // NEW: Sales Representative LOV (for Executive Name Updation)
+    // NOTE: add getSalesRepresentativeLov() to ItCorrectionService if it doesn't exist yet,
+    // mirroring the pattern used by getAccApproverNames().
+    this.service.getSalesRepresentativeLov().subscribe({
+      next: (res: any) => {
+        if (res.code === 200) {
+          this.salesRepresentativeLovList = res.obj;
+        } else {
+          alert(res.message);
+        }
+      },
+      error: () => {
+        alert('Sales Representative LOV API failed');
+      }
+    });
+
+    // NEW: Team Leader LOV (for Executive Name Updation)
+    // NOTE: add getTeamLeaderLov() to ItCorrectionService if it doesn't exist yet,
+    // mirroring the pattern used by getAccApproverNames().
+    this.service.getTeamLeaderLov().subscribe({
+      next: (res: any) => {
+        if (res.code === 200) {
+          this.teamLeaderLovList = res.obj;
+        } else {
+          alert(res.message);
+        }
+      },
+      error: () => {
+        alert('Team Leader LOV API failed');
+      }
+    });
+
   }
 
   createForm() {
@@ -252,9 +269,6 @@ export class ItCorrectionForAllComponent implements OnInit {
       newFirstName: [null],
       newMiddleName: [null],
       newLastName: [null],
-      // newFirstName: [null,[Validators.required, Validators.maxLength(12), Validators.pattern(/^[A-Za-z ]+$/)]],
-      // newMiddleName: [null,[Validators.maxLength(12), Validators.pattern(/^[A-Za-z ]+$/)]],
-      // newLastName: [ null, [Validators.required, Validators.maxLength(12), Validators.pattern(/^[A-Za-z ]+$/)]],
       newAddress1: [null],
       newAddress2: [null],
       newAddress3: [null],
@@ -263,10 +277,8 @@ export class ItCorrectionForAllComponent implements OnInit {
       newState: [null],
       newPinCode: [null],
       newMobileNo: [null],
-      // ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
       newEmailId: [null],
       newPanNo: [null],
-      // , [Validators.pattern(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/)]
       newGstNo: [null],
       newDiscountPercent: [null],
       newCustomerName: [null],
@@ -293,6 +305,32 @@ export class ItCorrectionForAllComponent implements OnInit {
       newInsuranceSite: [''],
       newPolicyNo: [''],
       newInsuranceEndDate: [''],
+
+      // NEW: KM Updation
+      lastRunKm: [''],
+      newLastRunKm: [''],
+
+      // NEW: Sale Date Updation
+      saleDate: [''],
+      newVehDelvDate: [''],
+
+      // NEW: Executive Name Updation
+      newSalesRepresentative: [''],
+      newSalesRepresentativeDisplay: [''],
+      newTeamLeader: [''],
+      newTeamLeaderDisplay: [''],
+
+      // NEW: additional vehicle fields present in the vehicle-search API response
+      regDate: [''],
+      oemWarrantyEndDate: [''],
+      fuelType: [''],
+      variantCode: [''],
+
+      // NEW: current Sales Representative / Team Leader (Executive Name Updation)
+      salesRepresentative: [''],
+      salesRepId: [''],
+      teamLeader: [''],
+      tlCode: [''],
     });
   }
 
@@ -468,7 +506,13 @@ export class ItCorrectionForAllComponent implements OnInit {
             gstNo: obj.custGst,
             panNo: obj.custPan,
             customerSiteId: obj.billToLocId,
-            discountPercent: obj.disPer
+            discountPercent: obj.disPer,
+
+            // Current Sales Representative / Team Leader (Executive Name Updation)
+            salesRepresentative: obj.salesRepName,
+            salesRepId: obj.salesRepId,
+            teamLeader: obj.tlFullName,
+            tlCode: obj.tlName
           });
           this.syncCustomerToCorrection();
           this.applyGstValidationByState();
@@ -650,7 +694,26 @@ export class ItCorrectionForAllComponent implements OnInit {
             policyNo: v.POLICYNO,
             insuranceEndDate: v.INSURANCEENDDATE
               ? v.INSURANCEENDDATE.substring(0, 10)
-              : ''
+              : '',
+
+            // NEW: Last Run Km (KM Updation) and Sale Date (Sale Date Updation)
+            lastRunKm: v.LASTRUNKMS,
+            saleDate: v.VEHICLEDELVDATE
+              ? v.VEHICLEDELVDATE.substring(0, 10)
+              : '',
+
+            // Job Card No returned by the vehicle search API
+            jobCardNo: v.JOBCARDNO,
+
+            // Additional vehicle fields from the API response
+            regDate: v.REGDATE
+              ? v.REGDATE.substring(0, 10)
+              : '',
+            oemWarrantyEndDate: v.OEMWARRENTYENDDATE
+              ? v.OEMWARRENTYENDDATE.substring(0, 10)
+              : '',
+            fuelType: v.FUELTYPE,
+            variantCode: v.VARIANTCODE
           });
 
           this.syncCustomerToCorrection();
@@ -760,10 +823,31 @@ export class ItCorrectionForAllComponent implements OnInit {
       case 'Insurance Updation':
 
         f.patchValue({
-          newInsuranceCompany: f.get('insuranceCompany')?.value,
-          newInsuranceSite: f.get('insuranceSite')?.value,
+          newInsuranceCompany: f.get('insuranceCompanyId')?.value,
+          newInsuranceSite: f.get('insuranceSiteId')?.value,
           newPolicyNo: f.get('policyNo')?.value,
           newInsuranceEndDate: f.get('insuranceEndDate')?.value
+        });
+        break;
+
+      case 'KM Updation':
+        f.patchValue({
+          newLastRunKm: f.get('lastRunKm')?.value
+        });
+        break;
+
+      case 'Sale Date Updation':
+        f.patchValue({
+          newVehDelvDate: f.get('saleDate')?.value
+        });
+        break;
+
+      case 'Executive Name Updation':
+        f.patchValue({
+          newSalesRepresentativeDisplay: f.get('salesRepresentative')?.value,
+          newSalesRepresentative: f.get('salesRepId')?.value,
+          newTeamLeaderDisplay: f.get('teamLeader')?.value,
+          newTeamLeader: f.get('tlCode')?.value
         });
         break;
 
@@ -824,6 +908,18 @@ export class ItCorrectionForAllComponent implements OnInit {
     );
   }
 
+  onSalesRepSelect(event: any) {
+    const selectedName = event.target.value;
+    const match = this.salesRepresentativeLovList.find((sr: any) => sr.FULLNAME === selectedName);
+    this.itCorrectionForm.get('newSalesRepresentative')?.setValue(match ? match.EMPLID : '');
+  }
+
+  onTeamLeaderSelect(event: any) {
+    const selectedName = event.target.value;
+    const match = this.teamLeaderLovList.find((tl: any) => tl.FULLNAME === selectedName);
+    this.itCorrectionForm.get('newTeamLeader')?.setValue(match ? match.TICKETNO : '');
+  }
+
   validateNewCustAccNo() {
 
     const custAccNo = this.itCorrectionForm.get('newCustAccountNo')?.value;
@@ -851,5 +947,4 @@ export class ItCorrectionForAllComponent implements OnInit {
       }
     });
   }
-  
 }

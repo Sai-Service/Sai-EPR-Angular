@@ -815,21 +815,18 @@ export class WsVehicleMasterComponent implements OnInit {
               this.wsVehicleMasterForm.get('deliveryDate')?.disable();
             } else {
               this.wsVehicleMasterForm.get('deliveryDate')?.enable();
-
             }
             const insuDate = this.wsVehicleMasterForm.get('insuDate')?.value;
             const fields = ['policyNo', 'insuDate', 'insurerCompId', 'insurerSiteId',
               'ewStatus', 'ewType', 'ewBookletNo', 'ewStartDate', 'ewEndDate',
               'ewInsurerId', 'ewInsurerSite',
               'mcpYN', 'pkgSource', 'mcpNo', 'mcpStartDate', 'mcpEndDate'];
-
-
             const delivery = new Date(this.wsVehicleMasterForm.get('deliveryDate')?.value);
             const today = new Date();
             const today1 = new Date().toISOString().split('T')[0];
+            // alert(insuDate)
             const oneYearLater = new Date(delivery);
             oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
-
             if (today < oneYearLater) {
               fields.forEach(f => {
                 const c = this.wsVehicleMasterForm.get(f);
@@ -837,9 +834,8 @@ export class WsVehicleMasterComponent implements OnInit {
                 c?.value ? c.disable() : c.enable();
               });
             } else {
-
             }
-            if (insuDate < today1) {
+            if (insuDate === undefined || insuDate < today1) {
               // Insurance date is before today -> Enable fields
               fields.forEach(f => {
                 const c = this.wsVehicleMasterForm.get(f);
@@ -856,7 +852,7 @@ export class WsVehicleMasterComponent implements OnInit {
                 }
               });
             }
-
+           
           }
         });
   }

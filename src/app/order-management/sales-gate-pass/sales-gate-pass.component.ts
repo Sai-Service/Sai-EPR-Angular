@@ -404,6 +404,7 @@ if (rawDate) {
     });
   }
 
+  customerIdNew!:String;
 
   vehicleNoupdate(itemId:any, regNo:any, regDate:any) {
 
@@ -434,7 +435,14 @@ if (rawDate) {
     // if(policuNum==undefined|| policuNum==null || policuNum.trim()==''){ alert("Policy No should not be null..");return;}
     // if(policyDate==undefined|| policyDate==null || policyDate.trim()==''){ alert("Policy Date should not be null..");return;}
 
-    var customerId = this.lstcomments.customerId;
+    if (this.lstcomments.transactionType==='Sale CSD'){
+      this.customerIdNew=this.lstcomments.lesseeId;
+    }
+    else{
+       this.customerIdNew=this.lstcomments.customerId;
+    }
+  //  return;
+    // var customerId = this.lstcomments.customerId;
     var orderedDate2 = this.pipe.transform(regDate, 'MM/dd/yyyy');
 
     const formValue = this.SalesGatepassForm.value;
@@ -452,7 +460,7 @@ if (rawDate) {
 
     // });
 
-    this.orderManagementService.vehicleNoupdateFn(itemId, regNo1, orderedDate2, customerId).subscribe((res: any) => {
+    this.orderManagementService.vehicleNoupdateFn(itemId, regNo1, orderedDate2,this.customerIdNew).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message);
         this.gatePassOrderNo(this.orderNumber);
@@ -578,7 +586,15 @@ if (rawDate) {
     var regNo = this.SalesGatepassForm.get('vehicleNo')?.value;
     var regNo1 = this.SalesGatepassForm.get('regNo1')?.value;
     var vin = this.SalesGatepassForm.get('vin')?.value;
-    this.orderManagementService.exVehicleNoUpdate(regNo, vin, regNo1).subscribe((res: any) => {
+    // debugger;
+        if (this.lstcomments.transactionType==='Sale CSD'){
+      this.customerIdNew=this.lstcomments.lesseeId;
+    }
+    else{
+       this.customerIdNew=this.lstcomments.customerId;
+    }
+    // return;
+    this.orderManagementService.exVehicleNoUpdate(regNo, vin, regNo1,this.customerIdNew).subscribe((res: any) => {
       if (res.code === 200) {
         alert(res.message)
       }
