@@ -1161,7 +1161,6 @@ export class SaiExtendedWarrantyComponent implements OnInit {
 
            if (this.vehicleSaleOrderDetails.vehicleDelvDate != null) {
             alert("Order Number : [" + mOrderNumber + "]  GP Already done for this Order no..Pls enroll thru SRVICE Counter");
-
             return;
           }
 
