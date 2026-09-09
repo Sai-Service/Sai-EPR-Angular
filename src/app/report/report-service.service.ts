@@ -905,6 +905,19 @@ export class ReportServiceService {
     });
   }
 
+   paintclosingstockSummaryOuNew(ouId,mainType1){
+   
+    // http://localhost:8081/PaintReports/PnClsStkOURep?ouId=12&mainType=PN
+
+    const REQUEST_URI = this.ServerUrl +`/PaintReports/PnClsStkOURep?ouId=${ouId}&mainType=${mainType1}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+
+
 
    itemMasterListReport(ouId,mainTp,subTp){
         // alert ("in report api")

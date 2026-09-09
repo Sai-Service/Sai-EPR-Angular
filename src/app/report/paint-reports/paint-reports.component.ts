@@ -517,6 +517,36 @@ export class PaintReportsComponent implements OnInit {
 
     }
 
+     else if (reportName === 'OuwiseClosingStocksummary') {
+      this.reportName = 'Closing Stock Report-OU Wise';
+      this.isVisibleonlyOuCode = true;
+      this.isVisibleonlyLocationCode = false;
+      this.isVisiblegstsaiDebtors = false;
+      this.isVisiblespClosingStockAsOndate = false;
+      this.isVisibleGSTPurchaseRegister = false;
+      this.isVisibleStockLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisiblestockTransferRecd = false;
+      this.isVisibleSparesBackOrderQty = false;
+      this.isVisiblesparesMiscIssueReceipt = false;
+      this.isVisiblesparesInventoryAging = false;
+      this.isVisibleSparesDebtorsExecutiveWise = false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisibleEwayBill = false;
+      this.isVisiblepanelStockTaking = false;
+      this.isVisiblesparesPaintPanelReport = false;
+      this.isVisiblePanelOUFromDateToDateSubInv = false;
+      this.isVisiblefromtosubinventory = false;
+      this.isVisiblePaintPanelDetailReport = false;
+      this.isVisibleonlyOuCodeSubInv = false;
+      this.isVisiblePaintReconReport = false;
+      this.isVisiblespClosingStockAsOndate1 = false;      
+      this.isVisibleStockMismatch=false;
+
+    }
+
+
     else if (reportName === 'itemMasterList') {
       this.reportName = 'Item Master List';
       this.isVisibleonlyOuCodeSubInv = true;
@@ -1797,6 +1827,7 @@ export class PaintReportsComponent implements OnInit {
       }
     }
     // Stock-Summary-OuWise
+
     else if (reportName === 'Paint Closing Stock Summary') {
       // alert ('reportName---'+reportName)
 
@@ -1822,6 +1853,35 @@ export class PaintReportsComponent implements OnInit {
           })
       }
     }
+
+    // Closing Stock Report-OU Wise
+     else if (reportName === 'Closing Stock Report-OU Wise') {
+      // alert ('reportName---'+reportName)
+
+      const fileName = 'Closing Stock Report-OU Wise-' + sessionStorage.getItem('ouName').trim() + '.xls';
+      // alert (fileName)
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      if (Number(sessionStorage.getItem('deptId')) === 4) {
+        this.reportService.paintclosingstockSummaryOuNew(sessionStorage.getItem('ouId'), subInventory)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+      else if (Number(sessionStorage.getItem('deptId')) != 4) {
+        this.reportService.paintclosingstockSummaryOuNew(sessionStorage.getItem('ouId'), subInventory)
+          .subscribe(data => {
+            saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+            this.isDisabled1 = false;
+            this.closeResetButton = true;
+            this.dataDisplay = ''
+          })
+      }
+    }
+
+
 
     else if (reportName === 'Item Master List') {
       // alert ('reportName---'+reportName)
