@@ -40,6 +40,7 @@ import{TaxiPoReportsComponent} from './taxi-po-reports/taxi-po-reports.component
 import{TaxiVehCounterOrderComponent} from'./taxi-veh-counter-order/taxi-veh-counter-order.component';
 import{TaxiVehGrrFormComponent} from'./taxi-veh-grr-form/taxi-veh-grr-form.component';
 import{TxiVehiclePurchaseOrderFromComponent} from'./txi-vehicle-purchase-order-from/txi-vehicle-purchase-order-from.component';
+import { ManualSalesGatepassComponent } from './manual-sales-gatepass/manual-sales-gatepass.component';
 // import { SalesSuperUserGatePassComponent } from './sales-super-user-gate-pass/sales-super-user-gate-pass.component';
 
 
@@ -80,7 +81,8 @@ import{TxiVehiclePurchaseOrderFromComponent} from'./txi-vehicle-purchase-order-f
     TxiVehiclePurchaseOrderFromComponent,
     TaxiPoReportsComponent,
     TaxiVehGrrFormComponent,
-    TaxiVehCounterOrderComponent
+    TaxiVehCounterOrderComponent,
+    ManualSalesGatepassComponent
     //  SalesSuperUserGatePassComponent,
       ],
   imports: [

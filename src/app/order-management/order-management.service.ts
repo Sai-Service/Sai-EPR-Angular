@@ -1225,6 +1225,54 @@ createInvbyordNo(segment1: string, payload: any): Observable<any> {
   return this.http.post(url, null );
   }
 
+
+
+  // getOrderDetails(orderNumber: any)
+  // { return this.http.get('http://localhost:8081/manualGP/getOrderDetails?orderNumber=' + orderNumber); }
+
+   getOrderDetails(orderNumber: any): Observable<any> {
+    // alert("ms >>account no:"+accountNo+","+ouId +","+divId);
+    return this.http.get(this.ServerUrl + `/manualGP/getOrderDetails?orderNumber=${orderNumber}`);
+  }
+
+
+  //  locationCodeList(): Observable<any> {
+  //   return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/SS_Location');
+  // }
+
+
+  public saveGatepass(manualGatepass:any) {
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + '/manualGP/SaveGatepass';
+    return this.http.post(url, manualGatepass, options);
+  }
+
+
+ 
+
+   updateGatepass(orderNumber:any, receivedBy:any, km:any) {
+    const options = {
+      headers: this.headers
+    };
+    const url = this.ServerUrl + `/manualGP/getInVH?orderNumber=${orderNumber}&receivedBy=${receivedBy}&km=${km}`;
+    return this.http.put(url, options);
+  }
+
+
+    downloadManualGatePass(gatepassNumber:any,OrderNumber:any) {
+    // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/salesGatePass/print/${InvoiceNumber}`;  
+    // local
+    const REQUEST_URI = this.ServerUrl + `/SalesReports/Maanualgp?GATEPASSNO=${gatepassNumber}&ORDERNUMBER=${OrderNumber}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+
 }
 
 

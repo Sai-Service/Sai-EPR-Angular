@@ -39,6 +39,8 @@ import {TxiVehiclePurchaseOrderFromComponent} from './txi-vehicle-purchase-order
 import{ TaxiPoReportsComponent  } from './taxi-po-reports/taxi-po-reports.component'
 import{TaxiVehGrrFormComponent} from './taxi-veh-grr-form/taxi-veh-grr-form.component'
 import{TaxiVehCounterOrderComponent } from './taxi-veh-counter-order/taxi-veh-counter-order.component'
+import { ManualSalesGatepassComponent } from './manual-sales-gatepass/manual-sales-gatepass.component';
+
 
 const routes: Routes = [
   {path:'salesOrderBooking', component:SalesOrderBookingComponent},
@@ -84,7 +86,7 @@ const routes: Routes = [
   {path:'TaxiPOReport' , component: TaxiPoReportsComponent},
   {path:'TaxiGrrFrom' ,component: TaxiVehGrrFormComponent},
   {path:'TxiCounterOrd', component:TaxiVehCounterOrderComponent},
- 
+  {path:'manualSalesGatePass',component:ManualSalesGatepassComponent},
   {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
 
