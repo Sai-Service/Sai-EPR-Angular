@@ -1159,6 +1159,11 @@ export class SaiExtendedWarrantyComponent implements OnInit {
             return;
           }
 
+           if (this.vehicleSaleOrderDetails.vehicleDelvDate != null) {
+            alert("Order Number : [" + mOrderNumber + "]  GP Already done for this Order no..Pls enroll thru SERVICE Counter");
+            return;
+          }
+
           this.saiEwForm.patchValue({
             vehRegNo: this.vehicleSaleOrderDetails.regNo,
             vehicleId: this.vehicleSaleOrderDetails.vin,
