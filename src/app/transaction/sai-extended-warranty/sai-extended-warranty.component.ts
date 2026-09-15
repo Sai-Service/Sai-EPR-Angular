@@ -1159,7 +1159,7 @@ export class SaiExtendedWarrantyComponent implements OnInit {
             return;
           }
 
-           if (this.vehicleSaleOrderDetails.vehicleDelvDate != null) {
+           if (this.vehicleSaleOrderDetails.nextDueDate != null) {
             alert("Order Number : [" + mOrderNumber + "]  GP Already done for this Order no..Pls enroll thru SERVICE Counter");
             return;
           }
