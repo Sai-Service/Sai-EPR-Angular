@@ -1,0 +1,96 @@
+<form [formGroup]="SalesGatepassPendListForm" (ngSubmit)="SalesGatepass(SalesGatepassPendListForm.value)">
+    <table style="width: 100%;background-color: white;">
+        <tr>
+            <td colspan="4" class="PageHeader" style="width: 100%;">
+                Manual&nbsp;Sales&nbsp;Gate&nbsp;Pass&nbsp;Pending&nbsp;List
+            </td>
+        </tr>
+    </table>
+
+<fieldset class="RFS">
+        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
+            Search GatePass</legend>
+        <table class="center" style="width: 100%;background-color: #FFE4B5;">
+            <tr>
+                <td>
+                    <table class="center">
+                        <tr>
+                         <td>
+                                &nbsp;From Date&nbsp;:&nbsp;
+                            </td>
+
+                            <td style="background-color: #FFE4B5;">
+                                <input type="date" class="form-control" style="width:160px;"
+                                    formControlName="fromDate">
+                            </td>
+
+                            <td style="background-color: #FFE4B5;">
+                                &nbsp;To Date&nbsp;:&nbsp;
+                            </td>
+
+                            <td style="background-color: #FFE4B5;">
+                                <input type="date" class="form-control" style="width:160px;"
+                                    formControlName="toDate"
+                                    [min]="SalesGatepassPendListForm.get('fromDate')?.value">
+                            </td>
+
+                            <td style="background-color: #FFE4B5;">
+                                <button type="button" class="btn-primary"
+                                    (click)="gatePassSearchTable()">
+                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                </button>
+                            </td>
+                             <td>
+                <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+            </td>
+                          </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+
+    <fieldset class="RFS" *ngIf="gatepassPenList?.length">
+        <legend class="RFSL">Search Results</legend>
+        <table   class="GridFont" id="excel-table" cellspacing="0" cellpadding="4">
+            <thead>
+                <tr class="GridHeader">
+                    <th>Gate Pass No</th>
+                    <th>Gate Pass Date</th>
+                    <th>Department</th>
+                    <th>Search Type</th>
+                    <th>Reference No</th>
+                    <th>Gate Pass Type</th>
+                    <th>Authorized By</th>
+                    <th>Driver Name</th>
+                    <th>Reason</th>
+                    <th>Remarks</th>
+                    <th>From Location</th>
+                    <th>Delivery Location</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of gatepassPenList">
+                    <td>{{item.gatepassNo}}</td>
+                    <td>{{item.gatepassDate | date:'dd-MM-yyyy HH:mm'}}</td>
+                    <td>{{item.dept}}</td>
+                    <td>{{item.subType}}</td>
+                    <td>{{item.referenceNo}}</td>
+                    <td>{{item.gpType}}</td>
+                    <td>{{item.authorizedBy}}</td>
+                    <td>{{item.driverName}}</td>
+                    <td>{{item.reason}}</td>
+                    <td>{{item.remarks}}</td>
+                    <td>{{item.fromLocId}}</td>
+                    <td>{{item.actualDelvLocId}}</td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-primary" (click)="getGatepassByNo(item.gatepassNo)">
+                            Select
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+</form>

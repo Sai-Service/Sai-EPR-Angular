@@ -39,8 +39,9 @@ import {TxiVehiclePurchaseOrderFromComponent} from './txi-vehicle-purchase-order
 import{ TaxiPoReportsComponent  } from './taxi-po-reports/taxi-po-reports.component'
 import{TaxiVehGrrFormComponent} from './taxi-veh-grr-form/taxi-veh-grr-form.component'
 import{TaxiVehCounterOrderComponent } from './taxi-veh-counter-order/taxi-veh-counter-order.component'
-import { ManualSalesGatepassComponent } from './manual-sales-gatepass/manual-sales-gatepass.component';
-
+import { ManuaSalesGatepassComponent } from './manua-sales-gatepass/manua-sales-gatepass.component';
+import { stripSummaryForJitNameSuffix } from '@angular/compiler/src/aot/util';
+import { SsManualPendListComponent } from './ss-manual-pend-list/ss-manual-pend-list.component';
 
 const routes: Routes = [
   {path:'salesOrderBooking', component:SalesOrderBookingComponent},
@@ -64,6 +65,9 @@ const routes: Routes = [
   {path:'SalesOrderList',component:SalesOrderListComponent},
   {path:'ClosingStock',component:ClosingStockGridComponent},
   {path:'GatePass/:orderNumber',component:SalesGatePassComponent},
+  {path:'ManualGatePass',component:ManuaSalesGatepassComponent},
+  {path:'ManualGatePass/:GatepassNo',component:ManuaSalesGatepassComponent},
+  {path:'ManualGatePassPending',component:SsManualPendListComponent},
   {path:'ShippingNetwork',component:ShippingNetworkComponent},
   {path:'SalesProforma',component:SalesOrderProformaComponent},
   {path:'priceUpdation',component:PriceUpdationComponent},
@@ -86,7 +90,6 @@ const routes: Routes = [
   {path:'TaxiPOReport' , component: TaxiPoReportsComponent},
   {path:'TaxiGrrFrom' ,component: TaxiVehGrrFormComponent},
   {path:'TxiCounterOrd', component:TaxiVehCounterOrderComponent},
-  {path:'manualSalesGatePass',component:ManualSalesGatepassComponent},
   {path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];
 

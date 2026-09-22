@@ -18,29 +18,29 @@ export class OrderManagementService {
     this.ServerUrl = AppConstants.ServerUrl;
   }
 
-  getsearchByOrderNo(orderNumber:any): Observable<any> {
+  getsearchByOrderNo(orderNumber: any): Observable<any> {
     return this.http.get(this.ServerUrl + `/orderHeader/${orderNumber}`);
   }
 
-getsearchByOrderNo2(orderNumber:any,customerId:any,locId:any): Observable<any> {
+  getsearchByOrderNo2(orderNumber: any, customerId: any, locId: any): Observable<any> {
     return this.http.get(this.ServerUrl + `/orderHeader/getSaleOrderCustIdLocId?orderNumber=${orderNumber}&customerId=${customerId}&locationId=${locId}`);
   }
 
-  getsearchByOrderNo1(orderNumber:any,locId:any): Observable<any> {
+  getsearchByOrderNo1(orderNumber: any, locId: any): Observable<any> {
     return this.http.get(this.ServerUrl + `/orderHeader/orderLocWise?orderNumber=${orderNumber}&locationId=${locId}`);
   }
 
-  getsearchBymsRefNo(deptId:any,locId:any,msRefNo:any): Observable<any> {
+  getsearchBymsRefNo(deptId: any, locId: any, msRefNo: any): Observable<any> {
     return this.http.get(this.ServerUrl + `/orderHeader/${deptId}/${locId}/${msRefNo}`);
   }
 
-  getsearchByOrderNoToUpdate(orderNumber:any): Observable<any> {
+  getsearchByOrderNoToUpdate(orderNumber: any): Observable<any> {
     return this.http.get(this.ServerUrl + `/orderHeader/OrderToUpdate/${orderNumber}`);
     // http://localhost:8081/orderHeader/OrderToUpdate/222220910400113
 
   }
 
-  UpdateOrderDetails(saleOrderRecord:any) {
+  UpdateOrderDetails(saleOrderRecord: any) {
     const options = {
       headers: this.headers
     };
@@ -66,28 +66,28 @@ getsearchByOrderNo2(orderNumber:any,customerId:any,locId:any): Observable<any> {
     return this.http.get(this.ServerUrl + `/cmnLookup/FinanceType`);
   }
 
-  getFinNameSearchNew(divisionId:any): Observable<any> {
+  getFinNameSearchNew(divisionId: any): Observable<any> {
     return this.http.get(this.ServerUrl + `/cmnLookup/Catgtype?cmnType=FinCmpny&divisionId=${divisionId}`);
   }
 
   ItemIdList(): Observable<any> {
     return this.http.get(this.ServerUrl + `/itemMst/category`);
   }
-  addonItemList(category:any): Observable<any> {
+  addonItemList(category: any): Observable<any> {
     return this.http.get(this.ServerUrl + `/itemMst/segmentLike/${category}`);
   }
 
   //http://localhost:8081/itemMst/ByCatType?itemCatType=SS_SPARES&divId=1
-  getItemByCatType(itemCatType:any, divId:any): Observable<any> {
+  getItemByCatType(itemCatType: any, divId: any): Observable<any> {
     return this.http.get(this.ServerUrl + `/itemMst/ByCatType?itemCatType=${itemCatType}&divId=${divId}`)
   }
 
 
-  getItemByCatTypeNew(itemCatType:any, divId:any, variant:any): Observable<any> {
+  getItemByCatTypeNew(itemCatType: any, divId: any, variant: any): Observable<any> {
     return this.http.get(this.ServerUrl + `//itemMst/ByCatType1?itemCatType=${itemCatType}&divId=${divId}&variant=${variant}`)
   }
 
-  searchByItemSegmentDiv(divId:any, itemSeg:any): Observable<any> {
+  searchByItemSegmentDiv(divId: any, itemSeg: any): Observable<any> {
     return this.http.get(this.ServerUrl + `/itemMst/details/${divId}/${itemSeg}`)
 
     // http://localhost:8081/itemMst/searchBydesc/2/ring
@@ -284,7 +284,7 @@ getsearchByOrderNo2(orderNumber:any,customerId:any,locId:any): Observable<any> {
   }
 
 
-  exVehicleNoUpdate(regNo,vin,regNo1,customerId) {
+  exVehicleNoUpdate(regNo, vin, regNo1, customerId) {
     const options = {
       headers: this.headers
     };
@@ -354,7 +354,7 @@ getsearchByOrderNo2(orderNumber:any,customerId:any,locId:any): Observable<any> {
   priceListNameListouwise(ouId, divisionId, deptId): Observable<any> {
     return this.http.get(this.ServerUrl + `/pricelist/priceHdrOu?ouId=${ouId}&divisionId=${divisionId}&deptId=${deptId}&priceSubType=MRP`);
   }
-  
+
   public OrderBook(BookRecord) {
     const options = {
       headers: this.headers
@@ -536,7 +536,7 @@ getsearchByOrderNo2(orderNumber:any,customerId:any,locId:any): Observable<any> {
     }
   }
 
-  proformaList(color,model,variant,custAcctNo): Observable<any> {
+  proformaList(color, model, variant, custAcctNo): Observable<any> {
     if (variant != null && variant != null) {
       return this.http.get(this.ServerUrl + `/Proforma/proformaList?colorCode=${color}&model=${model}&variant=${variant}&custAcctNo=${custAcctNo}`);
     }
@@ -552,7 +552,7 @@ getsearchByOrderNo2(orderNumber:any,customerId:any,locId:any): Observable<any> {
   }
 
 
-updateCDMSDetFn(orderNumber:any, msRefCustNo:any, msRefNo:any, msRefType:any) {
+  updateCDMSDetFn(orderNumber: any, msRefCustNo: any, msRefNo: any, msRefType: any) {
     const options = {
       headers: this.headers
     };
@@ -579,7 +579,7 @@ updateCDMSDetFn(orderNumber:any, msRefCustNo:any, msRefNo:any, msRefType:any) {
   }
 
 
-  cancelledSalesOrderFn(orderNumber,rsnCode){
+  cancelledSalesOrderFn(orderNumber, rsnCode) {
     // http://localhost:8081/orderHeader/cancelSaleOrder?orderNumber=222210112200086&reasonCode=cancelbyuser
     const options = {
       headers: this.headers
@@ -757,7 +757,7 @@ updateCDMSDetFn(orderNumber:any, msRefCustNo:any, msRefNo:any, msRefType:any) {
   // }
 
 
-  gatePassPendList(date1,locId): Observable<any> {
+  gatePassPendList(date1, locId): Observable<any> {
     return this.http.get(this.ServerUrl + `/orderHeader/InvNotDelv?inputDate=${date1}&locId=${locId}`);
     // http://localhost:8081/orderHeader/InvNotDelv?inputDate=25-NOV-2022&locId=2209
   }
@@ -835,16 +835,16 @@ updateCDMSDetFn(orderNumber:any, msRefCustNo:any, msRefNo:any, msRefType:any) {
   }
 
 
-  public vehicleNoInsuranceupdateFn(gpInsuranceRecord:any) {
+  public vehicleNoInsuranceupdateFn(gpInsuranceRecord: any) {
     const options = {
       headers: this.headers
     };
     const url = (this.ServerUrl + `/VehAddInfo/updateInsurance`);
-    return this.http.put(url,gpInsuranceRecord, options);
+    return this.http.put(url, gpInsuranceRecord, options);
   }
 
 
- 
+
   OrderReversal(orderNumber, emplId, reversalReason) {
     const REQUEST_PARAMS = new HttpParams().set('orderNumber', orderNumber)
       .set('emplId', emplId)
@@ -976,8 +976,8 @@ updateCDMSDetFn(orderNumber:any, msRefCustNo:any, msRefNo:any, msRefType:any) {
     return this.http.post(url, backOrderObj, options);
   }
 
-  
-  downloadDateFn(frmDt,tDt,locId,custAccountN) {
+
+  downloadDateFn(frmDt, tDt, locId, custAccountN) {
     const REQUEST_URI = this.ServerUrl + `/SparesReports/EwayRegisterRep?fromDate=${frmDt}&toDate=${tDt}&locId=${locId}&custAccountNo=${custAccountN}`;
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
@@ -986,12 +986,12 @@ updateCDMSDetFn(orderNumber:any, msRefCustNo:any, msRefNo:any, msRefType:any) {
     });
   }
 
-  panNoCheckFn(panNo:any): Observable<any> {
+  panNoCheckFn(panNo: any): Observable<any> {
     // alert('------'+panNo)
     return this.http.get(this.ServerUrl + `/Customer/findByPanNoDetails?panNo=${panNo}`);
   }
 
-  reversalSalesOrderFn(orderNumber:any,emplId:any){
+  reversalSalesOrderFn(orderNumber: any, emplId: any) {
     const REQUEST_PARAMS = new HttpParams().set('orderNumber', orderNumber)
       .set('orderNumber', orderNumber)
       .set('emplId', emplId)
@@ -1001,51 +1001,51 @@ updateCDMSDetFn(orderNumber:any, msRefCustNo:any, msRefNo:any, msRefType:any) {
 
     });
   }
-getBackOrderByUser(fromDate:any,toDate :any,locId:any): Observable<any> {
+  getBackOrderByUser(fromDate: any, toDate: any, locId: any): Observable<any> {
     return this.http.get(this.ServerUrl + `/spareOrder/FindByBackOrder?fromDt=${fromDate}&tDate=${toDate}&locId=${locId}`);
   }
-reversalOrderFn(orderNumber:any,emplId:any): Observable<any>{
-  return this.http.get(this.ServerUrl + `/arInv/OMVHSalesReversalNew?orderNumber=${orderNumber}&emplId=${emplId}`);
-}
+  reversalOrderFn(orderNumber: any, emplId: any): Observable<any> {
+    return this.http.get(this.ServerUrl + `/arInv/OMVHSalesReversalNew?orderNumber=${orderNumber}&emplId=${emplId}`);
+  }
 
-invoicestatuscheck(orderNumber:any): Observable<any>{
-  return this.http.get(this.ServerUrl + `/orderHeader/getCntrInvRcptStatus?orderNumber=${orderNumber}`);
-}
+  invoicestatuscheck(orderNumber: any): Observable<any> {
+    return this.http.get(this.ServerUrl + `/orderHeader/getCntrInvRcptStatus?orderNumber=${orderNumber}`);
+  }
 
 
 
- supplierCodeWithEmplListNew(): Observable<any> {
+  supplierCodeWithEmplListNew(): Observable<any> {
     return this.http.get(this.ServerUrl + '/supp/getAllSupp');
   }
 
-    poTypeList(): Observable<any> {
+  poTypeList(): Observable<any> {
     return this.http.get(this.ServerUrl + '/cmnLookup/PoTypes');
   }
 
-   getLocationSearch1(ouId:any): Observable<any> {
+  getLocationSearch1(ouId: any): Observable<any> {
     return this.http.get(this.ServerUrl + `/locationMst/locListOuwise/${ouId}`);
   }
-    hsnSacCodeData(type:any): Observable<any> {
+  hsnSacCodeData(type: any): Observable<any> {
     // return this.http.get(this.ServerUrl +'/hsnsacMst/HsnSacCode');
     return this.http.get(this.ServerUrl + `/hsnSacMst/codeType/${type}`);
   }
-    locationCodeList(): Observable<any> {
+  locationCodeList(): Observable<any> {
     return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/SS_Location');
   }
 
-    DivisionIDList(): Observable<any> {
+  DivisionIDList(): Observable<any> {
     return this.http.get(this.ServerUrl + '/divMst');
   }
 
-    companyCodeList(): Observable<any> {
+  companyCodeList(): Observable<any> {
     return this.http.get(this.ServerUrl + '/CompMst');
   }
 
-    BranchList(): Observable<any> {
+  BranchList(): Observable<any> {
     return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/SS_Branch');
   }
 
-    CostCenterList(): Observable<any> {
+  CostCenterList(): Observable<any> {
     return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/CostCentre');
   }
   NaturalAccountList(): Observable<any> {
@@ -1054,19 +1054,19 @@ invoicestatuscheck(orderNumber:any): Observable<any>{
   NaturalAccountList1(): Observable<any> {
     return this.http.get(this.ServerUrl + '/naturalAcc/Payable');
   }
-    TransactionNatureList(): Observable<any> {
+  TransactionNatureList(): Observable<any> {
     return this.http.get(this.ServerUrl + '/cmnLookup/TranNature');
   }
 
-    purchaseLocationList(temp:any): Observable<any> {
-  
+  purchaseLocationList(temp: any): Observable<any> {
+
     return this.http.get(this.ServerUrl + `/fndAcctLookup/lookupTypeBrLoc?lookupType=SS_Branch&lookupValue=${temp}`);
   }
-   InterBrancList(): Observable<any> {
+  InterBrancList(): Observable<any> {
     return this.http.get(this.ServerUrl + '/fndAcctLookup/lookupTypeWise/SS_Interbranch');
   }
 
-  
+
   delearCodeList(): Observable<any> {
     return this.http.get(this.ServerUrl + '/DealerMst');
   }
@@ -1075,28 +1075,28 @@ invoicestatuscheck(orderNumber:any): Observable<any>{
   //   return this.http.get(this.ServerUrl + `/SsErpItemMst/getById?transId=${poNo}`);
   // }
 
-      getsearchBySOBNo(poNo:any): Observable<any> {
+  getsearchBySOBNo(poNo: any): Observable<any> {
     return this.http.get(this.ServerUrl + `/SsErpItemMst/getPartData?transId=${poNo}`);
   }
 
 
 
 
-     getsrchcounterSOBNo(poNo:any): Observable<any> {
+  getsrchcounterSOBNo(poNo: any): Observable<any> {
     return this.http.get(this.ServerUrl + `/taxircv/getBySobNo?transId=${poNo}`);
   }
 
 
-  
+
 
 
   getPartsByVariant(variantCd: string): Observable<any> {
-    return this.http.get(this.ServerUrl +`/api/part-master/variant?variantCd=${variantCd}`
+    return this.http.get(this.ServerUrl + `/api/part-master/variant?variantCd=${variantCd}`
     );
   }
 
 
-   suppIdList(suppId:any, ouId:any) {
+  suppIdList(suppId: any, ouId: any) {
     const REQUEST_PARAMS = new HttpParams().set('suppId', suppId)
       .set('ouId', ouId)
 
@@ -1109,35 +1109,35 @@ invoicestatuscheck(orderNumber:any): Observable<any>{
 
 
   saveTaxiPO(payload: any): Observable<any> {
-  return this.http.post<any>( this.ServerUrl + `/taxipo/save`, payload);
-}
+    return this.http.post<any>(this.ServerUrl + `/taxipo/save`, payload);
+  }
 
 
-saveTaxiCounterorder(payload: any): Observable<any> {
-  return this.http.post<any>( this.ServerUrl + `/taxiorder/saveOrder`, payload);
-}
+  saveTaxiCounterorder(payload: any): Observable<any> {
+    return this.http.post<any>(this.ServerUrl + `/taxiorder/saveOrder`, payload);
+  }
 
 
 
   grrTaxiPO(payload: any): Observable<any> {
-  return this.http.post<any>( this.ServerUrl + `/taxircv/saveRcvShipment`, payload);
-}
+    return this.http.post<any>(this.ServerUrl + `/taxircv/saveRcvShipment`, payload);
+  }
 
- approveTaxiPO(payload: any): Observable<any> {
-    return this.http.post<any>(  this.ServerUrl + `/taxipo/approve`, payload);
+  approveTaxiPO(payload: any): Observable<any> {
+    return this.http.post<any>(this.ServerUrl + `/taxipo/approve`, payload);
   }
 
 
   getBySegment(segment1: string): Observable<any> {
-  return this.http.get<any>(  this.ServerUrl + `/taxipo/getBySegment?segment1=${segment1}`);
-}
+    return this.http.get<any>(this.ServerUrl + `/taxipo/getBySegment?segment1=${segment1}`);
+  }
 
 
- getByOrderNumber(segment1: string): Observable<any> {
-  return this.http.get<any>(  this.ServerUrl + `/taxiorder/getByOrderNumber?orderNumber=${segment1}`);
-}
+  getByOrderNumber(segment1: string): Observable<any> {
+    return this.http.get<any>(this.ServerUrl + `/taxiorder/getByOrderNumber?orderNumber=${segment1}`);
+  }
 
-updateTaxiPO(segment1: string, payload: any): Observable<any> {
+  updateTaxiPO(segment1: string, payload: any): Observable<any> {
     return this.http.put<any>(
       `${this.ServerUrl}/taxipo/update?segment1=${segment1}`,
       payload
@@ -1154,77 +1154,76 @@ updateTaxiPO(segment1: string, payload: any): Observable<any> {
   }
 
 
-taxiPoReport(ouId:any,fromDate:any,toDate:any){
-  const REQUEST_URI = this.ServerUrl +`/taxipo/poregister?ouId=${ouId}&fromDate=${fromDate}&toDate=${toDate}`;
-  return this.http.get(REQUEST_URI, {
-    // params: REQUEST_PARAMS,
-    responseType: 'arraybuffer',
-    headers: this.headers,
-  });
-}
-  
+  taxiPoReport(ouId: any, fromDate: any, toDate: any) {
+    const REQUEST_URI = this.ServerUrl + `/taxipo/poregister?ouId=${ouId}&fromDate=${fromDate}&toDate=${toDate}`;
+    return this.http.get(REQUEST_URI, {
+      // params: REQUEST_PARAMS,
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
 
 
 
-createInvbyordNo(segment1: string, payload: any): Observable<any> {
+
+  createInvbyordNo(segment1: string, payload: any): Observable<any> {
     return this.http.put<any>(
       `${this.ServerUrl}/taxiorder/generateInvoice?orderNumber=${segment1}`,
       payload
     );
   }
 
- 
 
-      DepartmentList(): Observable<any> {
+
+  DepartmentList(): Observable<any> {
     return this.http.get(this.ServerUrl + '/cmnLookup/DeptList');
   }
 
-    supplierCodeListNew(): Observable<any> {
+  supplierCodeListNew(): Observable<any> {
     return this.http.get(this.ServerUrl + '/supp/typewiseDet/Supplier');
   }
 
-  getsearchByAccountNo1(accountId:any, divisionId:any): Observable<any> {
+  getsearchByAccountNo1(accountId: any, divisionId: any): Observable<any> {
     return this.http.get(this.ServerUrl + `/Customer/getByAccountNo1?accountNo=${accountId}&divisionId=${divisionId}`);
   }
 
-  searchCustomerByContact(contactNo:any): Observable<any> {
+  searchCustomerByContact(contactNo: any): Observable<any> {
     return this.http.get(this.ServerUrl + `/Customer/contactNo/${contactNo}`);
   }
 
-  searchCustomerByAccount(accountNo:any): Observable<any> {
+  searchCustomerByAccount(accountNo: any): Observable<any> {
     return this.http.get(this.ServerUrl + `/Customer/getByCustAcctNo?accountNo=${accountNo}`);
   }
 
-  custAccountNoSearch(accountNo:any, ouId:any, divId:any): Observable<any> {
+  custAccountNoSearch(accountNo: any, ouId: any, divId: any): Observable<any> {
     // alert("ms >>account no:"+accountNo+","+ouId +","+divId);
     return this.http.get(this.ServerUrl + `/Customer/getByAccountNo?accountNo=${accountNo}&ouId=${ouId}&divisionId=${divId}`);
   }
 
 
-    getSOBallotedList(): Observable<any> {
+  getSOBallotedList(): Observable<any> {
     return this.http.get(this.ServerUrl + `/SsErpItemMst/getAll`);
   }
   getPOGeneratedList(): Observable<any> {
     return this.http.get(this.ServerUrl + `/poHdr/getTaxiPendingPO`);
   }
-    statusList(): Observable<any> {
+  statusList(): Observable<any> {
     return this.http.get(this.ServerUrl + '/cmnLookup/ACStatus');
   }
-  
+
   OUIdList(): Observable<any> {
     return this.http.get(this.ServerUrl + '/opUnit');
   }
-    
+
   // supplierCodeListNew(): Observable<any> {
   //   return this.http.get(this.ServerUrl + '/supp/typewiseDet/Supplier');
   // }
 
- 
-  createPO(sobNumber: string, createdBy: string): Observable<any> {
-  const url = `${this.ServerUrl}/poHdr/taxiPO?SOBNumber=${sobNumber}&createdBy=${createdBy}`;
-  return this.http.post(url, null );
-  }
 
+  createPO(sobNumber: string, createdBy: string): Observable<any> {
+    const url = `${this.ServerUrl}/poHdr/taxiPO?SOBNumber=${sobNumber}&createdBy=${createdBy}`;
+    return this.http.post(url, null);
+  }
 
 
   // getOrderDetails(orderNumber: any)
@@ -1241,30 +1240,37 @@ createInvbyordNo(segment1: string, payload: any): Observable<any> {
   // }
 
 
-  public saveGatepass(manualGatepass:any) {
+  // public saveGatepass(manualGatepass:any) {
+  //   const options = {
+  //     headers: this.headers
+  //   };
+  //   const url = this.ServerUrl + '/manualGP/SaveGatepass';
+  //   return this.http.post(url, manualGatepass, options);
+  // }
+
+    public saveGatepass(manualGatepass:any) {
     const options = {
       headers: this.headers
     };
-    const url = this.ServerUrl + '/manualGP/SaveGatepass';
+    const url = this.ServerUrl + '/manualGP/SaveGatepassNew';
     return this.http.post(url, manualGatepass, options);
   }
 
+  
 
- 
+  
 
-   updateGatepass(orderNumber:any, receivedBy:any, km:any) {
+   updateGatepass(orderNumber:any, receivedBy:any, receivedRemark:any) {
     const options = {
       headers: this.headers
     };
-    const url = this.ServerUrl + `/manualGP/getInVH?orderNumber=${orderNumber}&receivedBy=${receivedBy}&km=${km}`;
+    const url = this.ServerUrl + `/manualGP/getInVH?gatePassNo=${orderNumber}&receivedBy=${receivedBy}&receivedRemark=${receivedRemark}`;
     return this.http.put(url, options);
   }
 
 
-    downloadManualGatePass(gatepassNumber:any,OrderNumber:any) {
-    // const REQUEST_URI = `http://saihorizon.com:8080/ErpReplica/salesGatePass/print/${InvoiceNumber}`;  
-    // local
-    const REQUEST_URI = this.ServerUrl + `/SalesReports/Maanualgp?GATEPASSNO=${gatepassNumber}&ORDERNUMBER=${OrderNumber}`;
+    downloadManualGatePass(gatepassNumber:any) {
+    const REQUEST_URI = this.ServerUrl + `/SalesReports/Maanualgp?GATEPASSNO=${gatepassNumber}`;
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',
@@ -1272,6 +1278,42 @@ createInvbyordNo(segment1: string, payload: any): Observable<any> {
     });
   }
 
+//   getDeptWiseLOV(cmnDesc: string) {
+//   return this.http.get(
+//     `http://localhost:8081/cmnLookup/deptWiseLOV?cmnType=DeptwiseLOV&cmnDesc=${cmnDesc}`
+//   );
+// }
+
+getDeptWiseLOV(cmnDesc: any): Observable<any> {
+    return this.http.get(this.ServerUrl + `/cmnLookup/deptWiseLOV?cmnType=DeptwiseLOV&cmnDesc=${cmnDesc}`);
+  }
+  
+ getDetailsByJobCardNo(jobCardNo: string): Observable<any> {
+    return this.http.get(
+      this.ServerUrl + `/bajajIssues/getByJobCardNo?jobCardNo=${jobCardNo}`,
+      { headers: this.headers }
+    );
+  }
+
+  searchGatepassList(fromDt:any, toDt:any,locId:any): Observable<any> {
+    return this.http.get(this.ServerUrl + `/manualGP/getFromAndTo?fromDate=${fromDt}&toDate1=${toDt}&locId=${locId}`);
+  }
+
+   searchGatepassPendigList(fromDt:any, toDt:any,locId:any): Observable<any> {
+    return this.http.get(this.ServerUrl + `/manualGP/getFromAndToPending?fromDate=${fromDt}&toDate1=${toDt}&rcdLocId=${locId}`);
+  }
+
+  getGatepassByNo(gatepassNo:any): Observable<any> {
+    return this.http.get(this.ServerUrl + `/manualGP/getGapassNo?gatepassNo=${gatepassNo}`);
+  }
+
+  getOrderDetailsGeneric(referenceNo:any,supType:any,deptId:any): Observable<any> {
+    return this.http.get(this.ServerUrl + `/manualGP/getOrderDetails?orderNumber=${referenceNo}&subType=${supType}&deptId=${deptId}`);
+  }
+
+   DepartmentListManual(): Observable<any> {
+    return this.http.get(this.ServerUrl + '/cmnLookup/DeptList');
+  }
 
 }
 

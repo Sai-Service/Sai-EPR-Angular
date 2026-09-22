@@ -4974,6 +4974,14 @@ gstVerficationFn(gstNo: any): Observable<any> {
   sendPoToVendor(segment1: string): Observable<any> {
     return this.http.get<any>(this.ServerUrl + `/poHdr/poprint/${segment1}`);
   }
+
+  DriversNameList(segment1): Observable<any> {
+    return this.http.get(this.ServerUrl + `/cmnLookup/ListAuthorizedBy?cmnType=driverName&locId=${segment1}`);
+  }
+
+  authorizedNameList(locId): Observable<any> {
+    return this.http.get(this.ServerUrl + `/cmnLookup/ListAuthorizedBy?cmnType=authorizedBy&locId=${locId}`);
+  }
 }
 
 

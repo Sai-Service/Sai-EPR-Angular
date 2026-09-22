@@ -57,15 +57,29 @@ fieldset {
     /* width: 100%; */
 }
 
-.grid_scroll1{
+.grid_scroll{
     overflow: auto;
-     height: 300px; 
+     height: 200px; 
     width: 100%;
     }
 
+    /* input[type="text"]:disabled { 
+        color: black;
+      }
 
+      input[type="number"]:disabled {
+     
+        color: black;
+        background-color: white;
+      }
 
-    .LabelFontStyle1:before{
+      input[type="date"]:disabled {
+      
+        color: black;
+        background-color: white;
+      } */
+
+      .LabelFontStyle1:before{
         content:"*";
         color:rgb(252, 29, 29);
       }
@@ -82,6 +96,10 @@ fieldset {
         border-color: Gray;
         height: 15px;
       }
+
+      /* .form-control{
+        border: white;
+      } */
       
       .LabelFontStyle1 {
         font-family: Verdana,Sans-serif, Arial, Helvetica;
@@ -96,9 +114,4 @@ fieldset {
         height: 15px;
       }
 
-
-.href{
-    color: blue;
-    font-size: medium;
-    font-family: Verdana,Sans-serif, Arial, Helvetica;    
-}
+      /* input[type="text"][disabled]{background-color:white} */
