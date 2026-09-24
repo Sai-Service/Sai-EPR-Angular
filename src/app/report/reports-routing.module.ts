@@ -13,7 +13,7 @@ import { ShellReportComponent } from './shell-report/shell-report.component';
 import { PetrolPumpReportComponent } from './petrol-pump-report/petrol-pump-report.component';
 import { PaintReportsNewComponent } from './paint-reports-new/paint-reports-new.component';
 import { ToolsReportsComponent } from './tools-reports/tools-reports.component';
-
+import { AllManualGatePassComponent } from './all-manual-gate-pass/all-manual-gate-pass.component';
 
 
 const routes: Routes = [
@@ -30,7 +30,7 @@ const routes: Routes = [
   {path:'petrolPumpReport',component:PetrolPumpReportComponent},
   {path:'PaintReportsNew',component:PaintReportsNewComponent},
   {path:'ToolsReports',component:ToolsReportsComponent},
-
+  {path:'AllManualGatePass',component:AllManualGatePassComponent},
 
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }];
 
