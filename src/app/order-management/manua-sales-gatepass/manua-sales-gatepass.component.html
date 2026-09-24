@@ -107,7 +107,7 @@
                             </td>
 
                             <td style="background-color: #FFE4B5;">
-                                &nbsp;Value&nbsp;:&nbsp;
+                                &nbsp;Reference&nbsp;No&nbsp;:&nbsp;
                             </td>
 
                             <td style="background-color: #FFE4B5;">
@@ -154,8 +154,8 @@
                             {{sc.lookupValue}}--{{sc.lookupValueDesc}}
                         </option>
                     </select> -->
-                      <select formControlName="locCode" id="locCode" class="form-control"
-                            (ngModelChange)='onOptionsLocation($event)'>
+                      <select formControlName="actualDelvLocId" id="actualDelvLocId" class="form-control"
+                            (ngModelChange)='onOptionsLocation($event)' style="width:200px;">
                             <option></option>
                             <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
                                 {{sc.locCode}}--{{sc.locName}}
@@ -166,20 +166,34 @@
             </tr>
             <tr>
                  <td class="LabelFontStyle">Authorized By :</td>
-                <td> <select formControlName="authorizedBy" id="authorizedBy" class="form-control">
+                <td> 
+                     <div *ngIf="displayAuthorizedBy; then thenAuthorizedBy; else elseAuthorizedBy"> </div>
+                        <ng-template #thenAuthorizedBy>
+                             <select formControlName="authorizedBy" id="authorizedBy" class="form-control">
                         <option>--Select--</option>
                         <option *ngFor="let sc of  autherizeNameList" [value]="sc.code">
                             {{sc.code}}
                         </option>
                     </select>
+                        </ng-template>
+                        <ng-template #elseAuthorizedBy>
+                             <input disabled type="text" class="form-control" formControlName="authorizedBy">
+                        </ng-template>
                 </td>
                 <td class="LabelFontStyle">Driver Name :</td>
-                <td> <select formControlName="driverName" id="driverName" class="form-control">
+                <td> 
+                     <div *ngIf="displaydriverName; then thendriverName; else elsedriverName"> </div>
+                        <ng-template #thendriverName>
+                    <select formControlName="driverName" id="driverName" class="form-control">
                         <option>--Select--</option>
                         <option *ngFor="let sc of  driversNameList" [value]="sc.code">
                             {{sc.code}}
                         </option>
                     </select>
+                        </ng-template>
+                         <ng-template #elsedriverName>
+                              <input disabled type="text" class="form-control" formControlName="driverName" style="width:200px;">
+                         </ng-template>
                 </td>
                 <td class="LabelFontStyle">Reason :</td>
                 <td><input type="text" class="form-control" formControlName="reason" placeholder="Reason"
@@ -199,7 +213,7 @@
                     </td>
 
                     <td>
-                        <input type="text" class="form-control" formControlName="receivedRemark" placeholder="Enter Remark" min="0">
+                        <input type="text" class="form-control" formControlName="receivedRemark" placeholder="Enter Remark" min="0" style="width:200px;">
                     </td>
                 </ng-container>
             </tr>
@@ -217,10 +231,14 @@
                         Generate Gate Pass
                     </button>
 
-                    <button type="button" class="btn btn-primary" [disabled]="!isUpdateEnabled"
+                   <div *ngIf="displayReceivedGate; then thenReceivedGate; else elseReceivedGate"> </div>
+                        <ng-template #thenReceivedGate>
+                  <button type="button" class="btn btn-primary" [disabled]="!isUpdateEnabled"
                         style="width:fit-content;min-width:140px;margin:5px;" (click)="updateGatepass()">
-                        Received Gate Pass
+                        Receive Gate Pass
                     </button>
+                        </ng-template>
+                         <ng-template #elseReceivedGate></ng-template>
 
                     <button type="button" class="btn btn-secondary" (click)="resetMast()"
                         style="width:fit-content;min-width:90px;margin:5px;">
@@ -230,6 +248,9 @@
                         style="width:fit-content;min-width:140px;margin:5px;">
                         Download Gate Pass
                     </button>
+                     
+                    <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+              
                 </td>
             </tr>
         </table>

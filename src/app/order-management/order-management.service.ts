@@ -1270,7 +1270,7 @@ export class OrderManagementService {
 
 
     downloadManualGatePass(gatepassNumber:any) {
-    const REQUEST_URI = this.ServerUrl + `/SalesReports/Maanualgp?GATEPASSNO=${gatepassNumber}`;
+    const REQUEST_URI = this.ServerUrl + `/SalesReports/Maanualgp?gatePassNo=${gatepassNumber}`;
     return this.http.get(REQUEST_URI, {
       // params: REQUEST_PARAMS,
       responseType: 'arraybuffer',

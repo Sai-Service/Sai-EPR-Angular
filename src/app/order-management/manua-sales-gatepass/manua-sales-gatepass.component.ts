@@ -34,6 +34,9 @@ export class ManuaSalesGatepassComponent implements OnInit {
 isReceivedEnabled: boolean = false;
 isUpdateEnabled: boolean = false;
 isGenerateEnabled: boolean = false;
+displayAuthorizedBy:boolean=true;
+displaydriverName:boolean=true;
+displayReceivedGate:boolean=true;
 gatepassList: any[] = [];
   public minDate = new Date();
   pipe = new DatePipe('en-US');
@@ -97,7 +100,7 @@ toDate: ['']
       });
     }
 
-    if (locId) 
+    if (locId)
       {
       this.SalesGatepassForm.patchValue({
         fromLocId: Number(locId)
@@ -109,14 +112,20 @@ toDate: ['']
       .subscribe(
         data => {
           this.BillShipToList = data;
+           console.log(this.BillShipToList);
+          
         }
       );
 
 
       this.sub = this.router1.params.subscribe(params => {
-      this.gatepassNo = params['gatepassNo'];
+      this.gatepassNo = params['GatepassNo'];
+      // alert(this.gatepassNo)
       if (this.gatepassNo != undefined) {
         this.getGatepassByNo(this.gatepassNo);
+        this.displayAuthorizedBy=false;
+        this.displaydriverName=false;
+      
       }
     });
 
@@ -185,21 +194,15 @@ toDate: ['']
   }
 
   downloadGatePass() {
-    debugger;
   const formData = this.SalesGatepassForm.getRawValue();
   const orderNumber = formData.orderNumber;
     const gatepassNo = formData.gatepassNo;
-   if (!orderNumber) {
-    alert('Order Number is required');
-    return;
-  }
    if (!gatepassNo) {
     alert('Gate Pass Number is required');
     return;
   }
     this.orderManagementService.downloadManualGatePass(gatepassNo)
       .subscribe(data => {
-        // saveAs(new Blob([data], { type: MIME_TYPES[EXT] }));
         var blob = new Blob([data], { type: 'application/pdf' });
         var url = URL.createObjectURL(blob);
         var printWindow = window.open(url, '', 'width=800,height=500');
@@ -234,7 +237,7 @@ if (formData.subType === undefined || formData.subType === null || formData.subT
   return;
 }
 
-if (formData.locCode === undefined || formData.locCode === null || formData.locCode === '') {
+if (formData.actualDelvLocId === undefined || formData.actualDelvLocId === null || formData.locCode === '') {
   alert('Please Select Actual Delivery Location!');
   return;
 }
@@ -259,7 +262,7 @@ if (formData.remarks === undefined || formData.remarks === null || formData.rema
     actualDelvLocId: Number(formData.actualDelvLocId),
     reason: formData.reason,
     remarks: formData.remarks,
-    dept: Number(sessionStorage.getItem('dept')),
+    dept: formData.dept,
     createdBy: Number(formData.createdBy)
   };
 
@@ -277,7 +280,7 @@ if (formData.remarks === undefined || formData.remarks === null || formData.rema
             this.isUpdateEnabled = false;
         }
          this.SalesGatepassForm.disable();
-      } 
+      }
       else {
         alert(response.message || 'Gatepass Generation Failed');
       }
@@ -294,6 +297,7 @@ updateGatepass(): void {
   const formData = this.SalesGatepassForm.getRawValue();
   const gatepassNo = formData.gatepassNo;
   const receivedBy = sessionStorage.getItem('fullName');
+  // sessionStorage.getItem('emplId');
   const receivedRemark = formData.receivedRemark;
 
   if (!receivedBy || String(receivedBy).trim() === '') {
@@ -301,10 +305,10 @@ updateGatepass(): void {
     return;
   }
   if (!receivedRemark) {
-    alert('KM cannot be Null');
+    alert('Received Remark cannot be Null');
     return;
   }
-  
+ 
   this.orderManagementService.updateGatepass( Number(gatepassNo),String(receivedBy).trim(),receivedRemark).subscribe(
     (response: any) => {
       console.log('Update Gatepass Response:', response);
@@ -335,30 +339,221 @@ updateGatepass(): void {
   );
 }
 
-cmnCodeList: any[] = [];   
+cmnCodeList: any[] = [];  
 selectedDept: string = '';
 selectedCmnCode: string = '';
 searchValue: string = '';
 
+
+
+// onDeptChange(dept: string) {
+//   alert(dept)
+//   this.selectedCmnCode = '';
+//   this.searchValue = '';
+//   this.cmnCodeList = [];
+//   this.selectedDept = dept;
+//   if (!dept) {
+//     return;
+//   }
+//   if(dept === '1') {
+//     //  this.SalesGatepassForm.disable();
+//           this.isGenerateEnabled = false;
+//           this.isUpdateEnabled = false;
+//           this.isReceivedRequired = false;
+//   }
+//     if(dept === '2') {
+//     //  this.SalesGatepassForm.disable();
+//           this.isGenerateEnabled = false;
+//           this.isUpdateEnabled = false;
+//           this.isReceivedRequired = false;
+//   }
+//   else{
+//     this.isGenerateEnabled = true;
+//           this.isUpdateEnabled = false;
+//           this.isReceivedRequired = false;
+//   }
+//   this.orderManagementService.getDeptWiseLOV(dept)
+//     .subscribe(
+//       (data:any) => {
+//         this.cmnCodeList = data.obj || data;
+//       },
+//       (err) => {
+//         console.error('Failed to load department-wise LOV', err);
+//       }
+//     );
+// }
+
+
+
+// gatePassSearchNew(): void {
+//   const formData = this.SalesGatepassForm.getRawValue();
+//   const dept = formData.dept;
+//   const subType = formData.subType;
+//   const referenceNo = formData.referenceNo;
+//   if (!dept || !subType || !referenceNo) {
+//     alert('Please select Department, Search By and enter a Value');
+//     return;
+//   }
+//   this.orderManagementService.getOrderDetailsGeneric(referenceNo, subType, dept).subscribe(
+//     (response: any) => {
+//       const code = response?.code;
+//       const data = response?.obj;
+//       const item = Array.isArray(data) ? data[0] : data;
+//       if (code === 200 && item) {
+//         this.SalesGatepassForm.enable();
+//         this.isGenerateEnabled = true;
+//         this.isUpdateEnabled = false;
+//         this.isReceivedRequired=true;
+//         if (data.gatepassNo !=null){
+//           this.SalesGatepassForm.get('receivedRemark')?.enable();
+//           this.isReceivedRequired=true;
+//           this.isGenerateEnabled = false;
+//           this.isUpdateEnabled = true;
+//         }
+//          if (data.receivedBy ===null){
+//           this.SalesGatepassForm.get('receivedRemark')?.enable();
+//           this.isReceivedRequired=true;
+//           this.isGenerateEnabled = false;
+//           this.isUpdateEnabled = true;
+//         }
+//         if (data.gatepassNo ===null){
+//           this.SalesGatepassForm.get('receivedRemark')?.disable();
+//         }
+//       }
+//       else {
+//         this.SalesGatepassForm.disable();
+//         this.isGenerateEnabled = false;
+//         this.isUpdateEnabled = false;
+//         alert(response?.message || 'Order details not found');
+//       }
+//     },
+//     (error: any) => {
+//       console.error('Get Order Details Error:', error);
+//       this.SalesGatepassForm.disable();
+//       this.isGenerateEnabled = false;
+//       this.isUpdateEnabled = false;
+//       alert(error?.error?.message || 'Error while fetching Order Details');
+//     }
+//   );
+// }
+
+
+// gatePassSearchNew(): void {
+//   const formData = this.SalesGatepassForm.getRawValue();
+//   const dept = formData.dept;
+//   const subType = formData.subType;
+//   const referenceNo = formData.referenceNo;
+
+//   if (!dept || !subType || !referenceNo) {
+//     alert('Please select Department, Search By and enter a Value');
+//     return;
+//   }
+
+//   this.orderManagementService
+//     .getOrderDetailsGeneric(referenceNo, subType, dept)
+//     .subscribe(
+//       (response: any) => {
+//         const code = response?.code;
+//         const data = response?.obj;
+//         const item = Array.isArray(data) ? data[0] : data;
+//         if (code === 200 && item) {
+//           // this.SalesGatepassForm.disable();
+//           this.SalesGatepassForm.patchValue({
+//             dept: item.dept,
+//             subType: item.subType,
+//             referenceNo: item.referenceNo,
+//             gatepassNo: item.gatepassNo,
+//             gatepassDate: item.gatepassDate,
+//             gpType: item.gpType,
+//             authorizedBy: item.authorizedBy,
+//             driverName: item.driverName,
+//             reason: item.reason,
+//             remarks: item.remarks,
+//             fromLocId: item.fromLocId,
+//             locCode: item.actualDelvLocId,
+//             receivedBy: item.receivedBy,
+//             receivedDate: item.receivedDate,
+//             receivedRemark: item.receivedRemark
+//           });
+
+//           this.isGenerateEnabled = true;
+//           this.isUpdateEnabled = false;
+//           this.isReceivedRequired = true;
+
+//           if (item.gatepassNo != null) {
+//               this.SalesGatepassForm.disable();
+//             this.SalesGatepassForm.get('receivedRemark')?.enable();
+//             this.isGenerateEnabled = false;
+//             this.isUpdateEnabled = true;
+//           }
+
+//           if (item.receivedBy === null) {
+//             this.SalesGatepassForm.get('receivedRemark')?.enable();
+//             this.isReceivedRequired = true;
+//             this.isGenerateEnabled = false;
+//             this.isUpdateEnabled = true;
+//           }
+//           if (item.receivedBy != null) {
+//             this.SalesGatepassForm.get('receivedRemark')?.disable();
+//             this.isReceivedRequired = true;
+//             this.isGenerateEnabled = false;
+//             this.isUpdateEnabled = false;
+//           }
+
+//           if (item.gatepassNo === null) {
+//                this.SalesGatepassForm.disable();
+//             this.SalesGatepassForm.get('receivedRemark')?.disable();
+//           }
+//         } else {
+//           this.SalesGatepassForm.disable();
+//           this.isGenerateEnabled = false;
+//           this.isUpdateEnabled = false;
+//           alert(response?.message || 'Order details not found');
+//         }
+//       },
+//       (error: any) => {
+//         console.error('Get Order Details Error:', error);
+//         this.SalesGatepassForm.disable();
+//         this.isGenerateEnabled = false;
+//         this.isUpdateEnabled = false;
+//         alert(error?.error?.message || 'Error while fetching Order Details');
+//       }
+//     );
+// }
+
+
 onDeptChange(dept: string) {
+  alert(dept);
+
   this.selectedCmnCode = '';
   this.searchValue = '';
   this.cmnCodeList = [];
   this.selectedDept = dept;
-  // alert(dept)
+
   if (!dept) {
     return;
   }
-  this.orderManagementService.getDeptWiseLOV(dept) 
-    .subscribe(
-      (data:any) => {
-        this.cmnCodeList = data.obj || data;
-      },
-      (err) => {
-        console.error('Failed to load department-wise LOV', err);
-      }
-    );
+  if (dept === '1' || dept === '2') {
+    this.isGenerateEnabled = false;
+    this.isUpdateEnabled = false;
+    this.isReceivedRequired = false;
+  } else {
+    this.isGenerateEnabled = true;
+    this.isUpdateEnabled = false;
+    this.isReceivedRequired = false;
+  }
+
+  this.orderManagementService.getDeptWiseLOV(dept).subscribe(
+    (data: any) => {
+      this.cmnCodeList = data.obj || data;
+    },
+    (err) => {
+      console.error('Failed to load department-wise LOV', err);
+    }
+  );
 }
+
+
 
 
 
@@ -371,41 +566,122 @@ gatePassSearchNew(): void {
     alert('Please select Department, Search By and enter a Value');
     return;
   }
+  this.orderManagementService
+    .getOrderDetailsGeneric(referenceNo, subType, dept)
+    .subscribe(
+      (response: any) => {
+        const code = response?.code;
+        const data = response?.obj;
+        const item = Array.isArray(data) ? data[0] : data;
+        if (code !== 200 || !item) {
+          this.SalesGatepassForm.disable();
+          this.isGenerateEnabled = false;
+          this.isUpdateEnabled = false;
+          this.isReceivedRequired = false;
+          alert(response?.message || 'Order details not found');
+          return;
+        }
+        if (item.gatepassNo == null) {
+          this.SalesGatepassForm.patchValue({
+              dept : formData.dept,
+  subType :formData.subType,
+  referenceNo :formData.referenceNo,
+              gatepassNo: null,
+            gatepassDate: null,
+            gpType: null,
+            authorizedBy: null,
+            driverName: null,
+            reason: null,
+            remarks: null,
+            fromLocId: item.locId,
+            receivedBy: null,
+            receivedDate: null,
+            receivedRemark: null
+          });
+          this.SalesGatepassForm.enable();
+          this.isGenerateEnabled = true;
+          this.isUpdateEnabled = false;
 
-  this.orderManagementService.getOrderDetailsGeneric(referenceNo, subType, dept).subscribe(
-    (response: any) => {
-      const code = response?.code;
-      const data = response?.obj;
-      const item = Array.isArray(data) ? data[0] : data;
-      // debugger;
-      if (code === 200 && item) {
-        this.SalesGatepassForm.enable();
-        this.isGenerateEnabled = true;
-        this.isUpdateEnabled = false;
-        this.isReceivedRequired=true;
-        if (data.gatepassNo !=null){
-          this.SalesGatepassForm.get('receivedRemark')?.enable();
+          this.isReceivedRequired = false;
+
+          return;
         }
-        if (data.gatepassNo ===null){
-          this.SalesGatepassForm.get('receivedRemark')?.disable();
-        }
-      } 
-      else {
+        // alert(item.driverName)
+        this.SalesGatepassForm.patchValue({
+       
+          dept: item.dept,
+          subType: item.subType,
+          referenceNo: item.referenceNo,
+          gatepassNo: item.gatepassNo,
+          gatepassDate: item.gatepassDate,
+          gpType: item.gpType,
+          authorizedBy: item.authorizedBy,
+          driverName: item.driverName,
+          reason: item.reason,
+          remarks: item.remarks,
+          fromLocId: item.fromLocId,
+        actualDelvLocId: item.actualDelvLocId,
+          receivedBy: item.receivedBy,
+          receivedDate: item.receivedDate,
+          receivedRemark: item.receivedRemark
+        });
+
+        // Disable complete form first
         this.SalesGatepassForm.disable();
+        if (item.receivedBy == null) {
+
+          // Generate button DISABLED
+          this.isGenerateEnabled = false;
+
+          // Receive/Update button ENABLED
+          this.isUpdateEnabled = true;
+
+          this.isReceivedRequired = true;
+
+          // Only received remark should be editable
+          this.SalesGatepassForm.get('receivedRemark')?.enable();
+
+          return;
+        }
+
+        // =========================================================
+        // Gate Pass generated AND received
+        // =========================================================
+        if (item.receivedBy != null) {
+
+          // Generate button DISABLED
+          this.isGenerateEnabled = false;
+
+          // Update/Receive button DISABLED
+          this.isUpdateEnabled = false;
+
+          this.isReceivedRequired = true;
+
+          // Nothing should be editable
+          this.SalesGatepassForm.get('receivedRemark')?.disable();
+
+          return;
+        }
+      },
+
+      (error: any) => {
+
+        console.error('Get Order Details Error:', error);
+
+        this.SalesGatepassForm.disable();
+
         this.isGenerateEnabled = false;
         this.isUpdateEnabled = false;
-        alert(response?.message || 'Order details not found');
+        this.isReceivedRequired = false;
+
+        alert(
+          error?.error?.message ||
+          'Error while fetching Order Details'
+        );
       }
-    },
-    (error: any) => {
-      console.error('Get Order Details Error:', error);
-      this.SalesGatepassForm.disable();
-      this.isGenerateEnabled = false;
-      this.isUpdateEnabled = false;
-      alert(error?.error?.message || 'Error while fetching Order Details');
-    }
-  );
+    );
 }
+
 
 gatePassSearchTable() {
   const dept = this.SalesGatepassForm.get('dept')?.value;
@@ -427,9 +703,10 @@ gatePassSearchTable() {
       }
     );
 }
-
+select:any=[];
 
 getGatepassByNo(gatepassNo: string) {
+  alert(gatepassNo)
   if (!gatepassNo) {
     return;
   }
@@ -441,7 +718,6 @@ getGatepassByNo(gatepassNo: string) {
         console.warn('No gate pass found for', gatepassNo);
         return;
       }
-
       this.selectedDept = item.deptName;
       this.SalesGatepassForm.patchValue({
         gatepassNo: item.gatepassNo,
@@ -454,7 +730,12 @@ getGatepassByNo(gatepassNo: string) {
         fromLocId: item.fromLocId,
         actualDelvLocId: item.actualDelvLocId
       });
-      this.SalesGatepassForm.patchValue({ dept: item.dept });
+    //     this.select = this.BillShipToList.find((d:any) => d.locId === item.actualDelvLocId);
+    //  console.log(this.select);
+    //  this.SalesGatepassForm.patchValue({
+    //   locCode:this.select.locCode+'--'+this.select.locName
+    //  })
+         this.SalesGatepassForm.patchValue({ dept: item.dept });
       this.orderManagementService.getDeptWiseLOV(item.dept).subscribe(
         (res: any) => {
           this.cmnCodeList = res.obj || res || [];
@@ -474,12 +755,9 @@ getGatepassByNo(gatepassNo: string) {
         'reason',
         'remarks',
         'fromLocId',
-        'actualDelvLocId'
-].forEach(field => {
-  this.SalesGatepassForm.get(field)?.disable();
-});
+        'actualDelvLocId'].forEach(field => {
+  this.SalesGatepassForm.get(field)?.disable();});
 this.SalesGatepassForm.get('receivedRemark')?.enable();
-
         },
         (err) => {
           console.error('Failed to load department-wise LOV', err);
@@ -495,7 +773,16 @@ this.SalesGatepassForm.get('receivedRemark')?.enable();
       } else {
         this.isUpdateEnabled = true;
       }
-      this.isGenerateEnabled = false;
+       const hasReceivedDate =item.receivedDate !== null &&  item.receivedDate !== undefined &&   String(item.receivedDate).trim() !== '';
+       if (hasReceivedDate) {
+        this.isUpdateEnabled = false;
+        this.displayReceivedGate=false;
+      } else {
+        this.isUpdateEnabled = true;
+        this.displayReceivedGate=true;
+      }
+      // this.isGenerateEnabled = false;
+    
     },
     (err) => {
       console.error('Failed to fetch gate pass by number', err);
@@ -504,11 +791,11 @@ this.SalesGatepassForm.get('receivedRemark')?.enable();
 }
 
   onOptionsLocation(event:any) {
-  
-   
-   
-
-
+ this.SalesGatepassForm.patchValue({ actualDelvLocId: event })
   }
 
+   close() {
+    this.location.back();
+  }
 }
+
