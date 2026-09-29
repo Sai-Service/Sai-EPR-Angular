@@ -68,6 +68,7 @@ export class PaintReportsComponent implements OnInit {
   userName!: string;
   subInventory!: string;
   issCatg: string = 'PN002';
+  mainType: string = '';
 
   subInvCode: any;
   subTp!: string;
@@ -99,6 +100,7 @@ export class PaintReportsComponent implements OnInit {
   isVisiblespPurRegDownLoad: boolean = false;
   isVisibleonlyLocationCode: boolean = false;
   isVisibleonlyOuCode: boolean = false;
+  isVisibleonlyOuCodeAndType : boolean=false;
   isVisibleonlyOuCodeSubInv: boolean = false;
   isVisiblegstsaiDebtors: boolean = false;
   isVisibleStockLedger: boolean = false;
@@ -139,6 +141,7 @@ export class PaintReportsComponent implements OnInit {
       userName: [''],
       subInventory: [''],
       issCatg: [''],
+      mainType:[''],
 
       segment: [''],
       fromlocCode: [],
@@ -331,7 +334,7 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePaintReconReport = false;
       this.isVisiblespClosingStockAsOndate1 = false;
       this.isVisibleStockMismatch=false;
-
+      this.isVisibleonlyOuCodeAndType = false;
     }
     else if (reportName === 'gstpurRegSumm') {
       this.reportName = 'Paint Purchase Register - Summary';
@@ -361,8 +364,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
       this.isVisiblespClosingStockAsOndate1 = false;
-            this.isVisibleStockMismatch=false;
-
+      this.isVisibleStockMismatch=false;
+      this.isVisibleonlyOuCodeAndType = false;
 
     }
     else if (reportName === 'consumptionSummary') {
@@ -396,7 +399,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePaintReconReport = false;
 
       this.isVisiblespClosingStockAsOndate1 = false;
-            this.isVisibleStockMismatch=false;
+      this.isVisibleStockMismatch=false;
+      this.isVisibleonlyOuCodeAndType = false;
+
 
     }
 
@@ -426,7 +431,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
       this.isVisiblespClosingStockAsOndate1 = false;
-      this.isVisibleStockMismatch=false;
+      this.isVisibleStockMismatch=false;       this.isVisibleonlyOuCodeAndType = false;
+
 
 
     }
@@ -455,7 +461,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
       this.isVisiblespClosingStockAsOndate1 = false;
-      this.isVisibleStockMismatch=false;
+      this.isVisibleStockMismatch=false;      this.isVisibleonlyOuCodeAndType = false;
+
 
 
     }
@@ -485,7 +492,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
       this.isVisiblespClosingStockAsOndate1 = false;
-      this.isVisibleStockMismatch=false;
+      this.isVisibleStockMismatch=false;      this.isVisibleonlyOuCodeAndType = false;
+
 
     }
 
@@ -513,13 +521,15 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePaintPanelDetailReport = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+      this.isVisiblespClosingStockAsOndate1 = false;      
+      this.isVisibleStockMismatch=false;      this.isVisibleonlyOuCodeAndType = false;
+
 
     }
 
      else if (reportName === 'OuwiseClosingStocksummary') {
       this.reportName = 'Closing Stock Report-OU Wise';
-      this.isVisibleonlyOuCode = true;
+      this.isVisibleonlyOuCode = false;
       this.isVisibleonlyLocationCode = false;
       this.isVisiblegstsaiDebtors = false;
       this.isVisiblespClosingStockAsOndate = false;
@@ -542,7 +552,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
       this.isVisiblespClosingStockAsOndate1 = false;      
-      this.isVisibleStockMismatch=false;
+      this.isVisibleStockMismatch=false;      
+      this.isVisibleonlyOuCodeAndType = true;
+
 
     }
 
@@ -571,7 +583,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory = false;
       this.isVisiblePaintPanelDetailReport = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+      this.isVisiblespClosingStockAsOndate1 = false;      
+      this.isVisibleStockMismatch=false;      this.isVisibleonlyOuCodeAndType = false;
+
 
     }
 
@@ -600,7 +614,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePaintPanelDetailReport = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+      this.isVisiblespClosingStockAsOndate1 = false;      
+      this.isVisibleStockMismatch=false;      this.isVisibleonlyOuCodeAndType = false;
+
 
     }
 
@@ -629,7 +645,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePaintPanelDetailReport = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = true;
-      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+      this.isVisiblespClosingStockAsOndate1 = false;      
+      this.isVisibleStockMismatch=false;      this.isVisibleonlyOuCodeAndType = false;
+
 
     }
 
@@ -657,7 +675,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePaintPanelDetailReport = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+      this.isVisiblespClosingStockAsOndate1 = false;      
+      this.isVisibleStockMismatch=false;      this.isVisibleonlyOuCodeAndType = false;
+
 
     }
 
@@ -685,7 +705,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePaintPanelDetailReport = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+      this.isVisiblespClosingStockAsOndate1 = false;      
+      this.isVisibleStockMismatch=false;
+      this.isVisibleonlyOuCodeAndType = false;
 
 
     }
@@ -713,7 +735,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePaintPanelDetailReport = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+      this.isVisiblespClosingStockAsOndate1 = false;      
+      this.isVisibleStockMismatch=false;      this.isVisibleonlyOuCodeAndType = false;
+
 
 
     }
@@ -742,7 +766,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePaintPanelDetailReport = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+      this.isVisiblespClosingStockAsOndate1 = false;      
+      this.isVisibleStockMismatch=false;      this.isVisibleonlyOuCodeAndType = false;
+
 
 
     }
@@ -771,7 +797,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePaintPanelDetailReport = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+      this.isVisiblespClosingStockAsOndate1 = false;      
+      this.isVisibleStockMismatch=false;      this.isVisibleonlyOuCodeAndType = false;
+
 
 
     }
@@ -800,7 +828,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePaintPanelDetailReport = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+      this.isVisiblespClosingStockAsOndate1 = false;      
+      this.isVisibleStockMismatch=false;      this.isVisibleonlyOuCodeAndType = false;
+
 
 
     }
@@ -829,7 +859,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePaintPanelDetailReport = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+      this.isVisiblespClosingStockAsOndate1 = false;      
+      this.isVisibleStockMismatch=false;      this.isVisibleonlyOuCodeAndType = false;
+
     }
      else if (reportName === 'paintMainColorCreation') {
       this.reportName = 'Paint Main Colour Creation Report';
@@ -859,7 +891,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
       this.isVisiblespClosingStockAsOndate1 = false;     
-       this.isVisibleStockMismatch=false;
+       this.isVisibleStockMismatch=false;      this.isVisibleonlyOuCodeAndType = false;
+
     }
     else if (reportName === 'gstSparesClosingStockAsOnDate') {
       this.reportName = 'Paint Closing Stock As On Date';
@@ -885,7 +918,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblePaintPanelDetailReport = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+      this.isVisiblespClosingStockAsOndate1 = false;      
+      this.isVisibleStockMismatch=false;      this.isVisibleonlyOuCodeAndType = false;
+
 
 
     }
@@ -919,7 +954,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+      this.isVisiblespClosingStockAsOndate1 = false;      
+      this.isVisibleStockMismatch=false;      this.isVisibleonlyOuCodeAndType = false;
+
 
     }
 
@@ -947,7 +984,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+      this.isVisiblespClosingStockAsOndate1 = false;      
+      this.isVisibleStockMismatch=false;      this.isVisibleonlyOuCodeAndType = false;
+
 
     }
 
@@ -975,7 +1014,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+      this.isVisiblespClosingStockAsOndate1 = false;      
+      this.isVisibleStockMismatch=false;      this.isVisibleonlyOuCodeAndType = false;
+
 
     }
 
@@ -1003,7 +1044,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+      this.isVisiblespClosingStockAsOndate1 = false;      
+      this.isVisibleStockMismatch=false;      this.isVisibleonlyOuCodeAndType = false;
+
 
     }
 
@@ -1031,7 +1074,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+      this.isVisiblespClosingStockAsOndate1 = false;      
+      this.isVisibleStockMismatch=false;      this.isVisibleonlyOuCodeAndType = false;
+
 
     }
     else if (reportName === 'icConsumptionReport') {
@@ -1057,7 +1102,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+      this.isVisiblespClosingStockAsOndate1 = false;      
+      this.isVisibleStockMismatch=false;      this.isVisibleonlyOuCodeAndType = false;
+
 
 
     }
@@ -1084,7 +1131,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+      this.isVisiblespClosingStockAsOndate1 = false;      
+      this.isVisibleStockMismatch=false;      this.isVisibleonlyOuCodeAndType = false;
+
 
 
     }
@@ -1111,7 +1160,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+      this.isVisiblespClosingStockAsOndate1 = false;      
+      this.isVisibleStockMismatch=false;      this.isVisibleonlyOuCodeAndType = false;
+
 
 
     }
@@ -1140,7 +1191,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibileIssueCategory = false;
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
-      this.isVisiblespClosingStockAsOndate1 = false;      this.isVisibleStockMismatch=false;
+      this.isVisiblespClosingStockAsOndate1 = false;      
+      this.isVisibleStockMismatch=false;      this.isVisibleonlyOuCodeAndType = false;
+
 
     }
     else if (reportName === 'sparesSubinvTransMade') {
@@ -1168,7 +1221,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
       this.isVisiblespClosingStockAsOndate1 = false;      
-      this.isVisibleStockMismatch=false;
+      this.isVisibleStockMismatch=false;      this.isVisibleonlyOuCodeAndType = false;
+
 
     }
     else if (reportName === 'paintOpningStockNew') {
@@ -1195,7 +1249,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
       this.isVisiblespClosingStockAsOndate = false;
-      this.isVisiblespClosingStockAsOndate1 = true;      this.isVisibleStockMismatch=false;
+      this.isVisiblespClosingStockAsOndate1 = true;      
+      this.isVisibleStockMismatch=false;      this.isVisibleonlyOuCodeAndType = false;
+
 
     }
     else if (reportName === 'paintClosingStockNew') {
@@ -1222,7 +1278,9 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
       this.isVisiblespClosingStockAsOndate = false;
-      this.isVisiblespClosingStockAsOndate1 = true;      this.isVisibleStockMismatch=false;
+      this.isVisiblespClosingStockAsOndate1 = true;      
+      this.isVisibleStockMismatch=false;      this.isVisibleonlyOuCodeAndType = false;
+
 
     }
      else if (reportName === 'gstStockMismatch') {
@@ -1250,7 +1308,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
       this.isVisiblespClosingStockAsOndate1 = false;
-      this.isVisibleStockMismatch=false;
+      this.isVisibleStockMismatch=false;      this.isVisibleonlyOuCodeAndType = false;
+
   }
 
    else if (reportName === 'shortLandedClaim') {
@@ -1278,7 +1337,8 @@ export class PaintReportsComponent implements OnInit {
       this.isVisibleonlyOuCodeSubInv = false;
       this.isVisiblePaintReconReport = false;
       this.isVisiblespClosingStockAsOndate1 = false;
-      this.isVisibleStockMismatch=false;
+      this.isVisibleStockMismatch=false;      this.isVisibleonlyOuCodeAndType = false;
+
   }
 
 
@@ -1858,11 +1918,13 @@ export class PaintReportsComponent implements OnInit {
      else if (reportName === 'Closing Stock Report-OU Wise') {
       // alert ('reportName---'+reportName)
 
+      var mainTp = this.paintReportForm.get('mainType').value;
+
       const fileName = 'Closing Stock Report-OU Wise-' + sessionStorage.getItem('ouName').trim() + '.xls';
       // alert (fileName)
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       if (Number(sessionStorage.getItem('deptId')) === 4) {
-        this.reportService.paintclosingstockSummaryOuNew(sessionStorage.getItem('ouId'), subInventory)
+        this.reportService.paintclosingstockSummaryOuNew(sessionStorage.getItem('ouId'), mainTp)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
@@ -1871,7 +1933,7 @@ export class PaintReportsComponent implements OnInit {
           })
       }
       else if (Number(sessionStorage.getItem('deptId')) != 4) {
-        this.reportService.paintclosingstockSummaryOuNew(sessionStorage.getItem('ouId'), subInventory)
+        this.reportService.paintclosingstockSummaryOuNew(sessionStorage.getItem('ouId'), mainTp)
           .subscribe(data => {
             saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
             this.isDisabled1 = false;
