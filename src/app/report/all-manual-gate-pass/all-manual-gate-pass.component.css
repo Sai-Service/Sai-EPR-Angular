@@ -1,0 +1,190 @@
+.report-page {
+  min-height: calc(100vh - 70px);
+  background: #f4f7fa;
+  padding: 35px;
+}
+
+.report-card {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+
+/* Header */
+
+.report-header {
+  /* background: linear-gradient(135deg, #00695c, #00897b); */
+  background-image: linear-gradient(#bcdcee, #4fb6f1 60%, #0299f0);
+  color: white;
+  padding: 22px 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.report-header h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.report-header p {
+  margin: 6px 0 0;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.report-icon {
+  font-size: 35px;
+}
+
+
+/* Form */
+
+form {
+  padding: 30px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.form-group label span {
+  color: #d32f2f;
+}
+
+
+.form-control {
+  height: 42px;
+  padding: 0 12px;
+
+  border: 1px solid #cfd8dc;
+  border-radius: 6px;
+
+  font-size: 14px;
+  outline: none;
+
+  transition: 0.2s;
+}
+
+.form-control:focus {
+  border-color: #00897b;
+  box-shadow: 0 0 0 2px rgba(0, 137, 123, 0.1);
+}
+
+
+/* Error */
+
+.error {
+  color: #d32f2f;
+  margin-top: 5px;
+  font-size: 12px;
+}
+
+.alert-error {
+  margin-top: 25px;
+  padding: 12px 15px;
+  background: #ffebee;
+  border: 1px solid #ffcdd2;
+  color: #c62828;
+  border-radius: 6px;
+}
+
+
+/* Buttons */
+
+.button-section {
+  margin-top: 30px;
+
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.btn {
+  min-width: 130px;
+  height: 42px;
+
+  border: none;
+  border-radius: 6px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-reset {
+  background: #eceff1;
+  color: #37474f;
+}
+
+.btn-reset:hover {
+  background: #cfd8dc;
+}
+
+.btn-download {
+  /* background: #00796b; */
+  background-image: linear-gradient(#bcdcee, #4fb6f1 60%, #0299f0);
+  color: white;
+}
+
+.btn-download:hover {
+  background: #00695c;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+/* Responsive */
+
+@media (max-width: 700px) {
+
+  .report-page {
+    padding: 15px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .report-header {
+    padding: 18px;
+  }
+
+  form {
+    padding: 20px;
+  }
+
+  .button-section {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}

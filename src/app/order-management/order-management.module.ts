@@ -40,8 +40,8 @@ import{TaxiPoReportsComponent} from './taxi-po-reports/taxi-po-reports.component
 import{TaxiVehCounterOrderComponent} from'./taxi-veh-counter-order/taxi-veh-counter-order.component';
 import{TaxiVehGrrFormComponent} from'./taxi-veh-grr-form/taxi-veh-grr-form.component';
 import{TxiVehiclePurchaseOrderFromComponent} from'./txi-vehicle-purchase-order-from/txi-vehicle-purchase-order-from.component';
-// import { SalesSuperUserGatePassComponent } from './sales-super-user-gate-pass/sales-super-user-gate-pass.component';
-
+import { SsManualPendListComponent } from './ss-manual-pend-list/ss-manual-pend-list.component';
+import { ManuaSalesGatepassComponent } from './manua-sales-gatepass/manua-sales-gatepass.component';
 
 @NgModule({
   declarations: [SalesOrderBookingComponent,
@@ -80,8 +80,9 @@ import{TxiVehiclePurchaseOrderFromComponent} from'./txi-vehicle-purchase-order-f
     TxiVehiclePurchaseOrderFromComponent,
     TaxiPoReportsComponent,
     TaxiVehGrrFormComponent,
-    TaxiVehCounterOrderComponent
-    //  SalesSuperUserGatePassComponent,
+    TaxiVehCounterOrderComponent,
+    SsManualPendListComponent,
+    ManuaSalesGatepassComponent
       ],
   imports: [
     CommonModule,

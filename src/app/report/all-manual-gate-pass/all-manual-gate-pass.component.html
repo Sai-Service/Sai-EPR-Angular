@@ -1,0 +1,183 @@
+<div class="report-page">
+
+  <div class="report-card">
+
+    <!-- Header -->
+    <div class="report-header">
+      <div>
+        <h2>SL Manual GP Report</h2>
+        <p>Generate and download the Sales Manual GP Report</p>
+      </div>
+
+      <div class="report-icon">
+        📊
+      </div>
+    </div>
+
+
+    <!-- Form -->
+    <form [formGroup]="reportForm" (ngSubmit)="downloadReport()">
+
+      <div class="form-grid">
+
+        <!-- From Date -->
+        <div class="form-group">
+
+          <label>
+            From Date <span>*</span>
+          </label>
+
+          <input
+            type="date"
+            formControlName="fromDate"
+            class="form-control"
+          />
+
+          <small
+            class="error"
+            *ngIf="
+              reportForm.get('fromDate')?.touched &&
+              reportForm.get('fromDate')?.invalid
+            "
+          >
+            From Date is required
+          </small>
+
+        </div>
+
+
+        <!-- To Date -->
+        <div class="form-group">
+
+          <label>
+            To Date <span>*</span>
+          </label>
+
+          <input
+            type="date"
+            formControlName="toDate"
+            class="form-control"
+          />
+
+          <small
+            class="error"
+            *ngIf="
+              reportForm.get('toDate')?.touched &&
+              reportForm.get('toDate')?.invalid
+            "
+          >
+            To Date is required
+          </small>
+
+        </div>
+
+
+        <!-- Location -->
+        <!-- <div class="form-group">
+
+          <label>
+            Location  <span>*</span>
+          </label>
+
+       
+           <select formControlName="location" id="location" class="form-control"
+                            (ngModelChange)='onOptionsLocation($event)' style="width:200px;">
+                            <option></option>
+                            <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
+                                {{sc.locCode}}--{{sc.locName}}
+                            </option>
+                        </select>
+                        <input disabled hidden type="number" class="form-control" formControlName="locId">
+
+          <small
+            class="error"
+            *ngIf="
+              reportForm.get('locId')?.touched &&
+              reportForm.get('locId')?.invalid
+            "
+          >
+            Location ID is required
+          </small>
+
+        </div> -->
+
+
+        <!-- Department -->
+        <div class="form-group">
+
+          <label>
+            Department ID <span>*</span>
+          </label>
+
+          <!-- <input
+            type="number"
+            formControlName="deptId"
+            class="form-control"
+            placeholder="Enter Department ID"
+          /> -->
+            <select class="form-control" formControlName="deptId" >
+                                    <option value="">--Select--</option>
+                                    <option *ngFor="let dept of DepartmentListFn" [value]="dept.cmnTypeId">
+                                        {{dept.code}}
+                                    </option>
+                                </select>
+
+          <small
+            class="error"
+            *ngIf="
+              reportForm.get('deptId')?.touched &&
+              reportForm.get('deptId')?.invalid
+            "
+          >
+            Department ID is required
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <!-- Error -->
+      <div
+        class="alert-error"
+        *ngIf="errorMessage"
+      >
+        {{ errorMessage }}
+      </div>
+
+
+      <!-- Buttons -->
+      <div class="button-section">
+
+        <button
+          type="button"
+          class="btn btn-reset"
+          (click)="resetForm()"
+          [disabled]="isLoading"
+        >
+          Reset
+        </button>
+
+        <button
+          type="submit"
+          class="btn btn-download"
+          [disabled]="isLoading"
+        >
+
+          <span *ngIf="!isLoading" style="margin-left: -3%;color: black;">
+            ⬇ Download Excel
+          </span>
+
+          <span *ngIf="isLoading">
+            Downloading...
+          </span>
+
+        </button>
+        <button type="submit" (click)="close()" class="btn btn-primary">Close</button>
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
