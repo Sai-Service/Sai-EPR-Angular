@@ -42,6 +42,7 @@ export class ManuaSalesGatepassComponent implements OnInit {
   pipe = new DatePipe('en-US');
   now = new Date();
   private sub: any;
+  isSearchDone: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -179,7 +180,7 @@ export class ManuaSalesGatepassComponent implements OnInit {
       || Number(sessionStorage.getItem('deptId')) == 3 || Number(sessionStorage.getItem('deptId')) == 5
       || Number(sessionStorage.getItem('deptId')) == 6 || Number(sessionStorage.getItem('deptId')) == 7
       || Number(sessionStorage.getItem('deptId')) == 12) {
-      this.SalesGatepassForm.get('dept')?.disable();
+      // this.SalesGatepassForm.get('dept')?.disable();
       this.onDeptChange(Number(sessionStorage.getItem('deptId')))
     }
     else {
@@ -290,6 +291,7 @@ export class ManuaSalesGatepassComponent implements OnInit {
       attribute3: formData.attribute3,
       attribute4: formData.attribute4,
       attribute5: formData.attribute5,
+      variant:formData.variant,
     };
 
     console.log('Save Gatepass Payload:', payload);
@@ -372,185 +374,8 @@ export class ManuaSalesGatepassComponent implements OnInit {
 
 
 
-  // onDeptChange(dept: string) {
-  //   alert(dept)
-  //   this.selectedCmnCode = '';
-  //   this.searchValue = '';
-  //   this.cmnCodeList = [];
-  //   this.selectedDept = dept;
-  //   if (!dept) {
-  //     return;
-  //   }
-  //   if(dept === '1') {
-  //     //  this.SalesGatepassForm.disable();
-  //           this.isGenerateEnabled = false;
-  //           this.isUpdateEnabled = false;
-  //           this.isReceivedRequired = false;
-  //   }
-  //     if(dept === '2') {
-  //     //  this.SalesGatepassForm.disable();
-  //           this.isGenerateEnabled = false;
-  //           this.isUpdateEnabled = false;
-  //           this.isReceivedRequired = false;
-  //   }
-  //   else{
-  //     this.isGenerateEnabled = true;
-  //           this.isUpdateEnabled = false;
-  //           this.isReceivedRequired = false;
-  //   }
-  //   this.orderManagementService.getDeptWiseLOV(dept)
-  //     .subscribe(
-  //       (data:any) => {
-  //         this.cmnCodeList = data.obj || data;
-  //       },
-  //       (err) => {
-  //         console.error('Failed to load department-wise LOV', err);
-  //       }
-  //     );
-  // }
-
-
-
-  // gatePassSearchNew(): void {
-  //   const formData = this.SalesGatepassForm.getRawValue();
-  //   const dept = formData.dept;
-  //   const subType = formData.subType;
-  //   const referenceNo = formData.referenceNo;
-  //   if (!dept || !subType || !referenceNo) {
-  //     alert('Please select Department, Search By and enter a Value');
-  //     return;
-  //   }
-  //   this.orderManagementService.getOrderDetailsGeneric(referenceNo, subType, dept).subscribe(
-  //     (response: any) => {
-  //       const code = response?.code;
-  //       const data = response?.obj;
-  //       const item = Array.isArray(data) ? data[0] : data;
-  //       if (code === 200 && item) {
-  //         this.SalesGatepassForm.enable();
-  //         this.isGenerateEnabled = true;
-  //         this.isUpdateEnabled = false;
-  //         this.isReceivedRequired=true;
-  //         if (data.gatepassNo !=null){
-  //           this.SalesGatepassForm.get('receivedRemark')?.enable();
-  //           this.isReceivedRequired=true;
-  //           this.isGenerateEnabled = false;
-  //           this.isUpdateEnabled = true;
-  //         }
-  //          if (data.receivedBy ===null){
-  //           this.SalesGatepassForm.get('receivedRemark')?.enable();
-  //           this.isReceivedRequired=true;
-  //           this.isGenerateEnabled = false;
-  //           this.isUpdateEnabled = true;
-  //         }
-  //         if (data.gatepassNo ===null){
-  //           this.SalesGatepassForm.get('receivedRemark')?.disable();
-  //         }
-  //       }
-  //       else {
-  //         this.SalesGatepassForm.disable();
-  //         this.isGenerateEnabled = false;
-  //         this.isUpdateEnabled = false;
-  //         alert(response?.message || 'Order details not found');
-  //       }
-  //     },
-  //     (error: any) => {
-  //       console.error('Get Order Details Error:', error);
-  //       this.SalesGatepassForm.disable();
-  //       this.isGenerateEnabled = false;
-  //       this.isUpdateEnabled = false;
-  //       alert(error?.error?.message || 'Error while fetching Order Details');
-  //     }
-  //   );
-  // }
-
-
-  // gatePassSearchNew(): void {
-  //   const formData = this.SalesGatepassForm.getRawValue();
-  //   const dept = formData.dept;
-  //   const subType = formData.subType;
-  //   const referenceNo = formData.referenceNo;
-
-  //   if (!dept || !subType || !referenceNo) {
-  //     alert('Please select Department, Search By and enter a Value');
-  //     return;
-  //   }
-
-  //   this.orderManagementService
-  //     .getOrderDetailsGeneric(referenceNo, subType, dept)
-  //     .subscribe(
-  //       (response: any) => {
-  //         const code = response?.code;
-  //         const data = response?.obj;
-  //         const item = Array.isArray(data) ? data[0] : data;
-  //         if (code === 200 && item) {
-  //           // this.SalesGatepassForm.disable();
-  //           this.SalesGatepassForm.patchValue({
-  //             dept: item.dept,
-  //             subType: item.subType,
-  //             referenceNo: item.referenceNo,
-  //             gatepassNo: item.gatepassNo,
-  //             gatepassDate: item.gatepassDate,
-  //             gpType: item.gpType,
-  //             authorizedBy: item.authorizedBy,
-  //             driverName: item.driverName,
-  //             reason: item.reason,
-  //             remarks: item.remarks,
-  //             fromLocId: item.fromLocId,
-  //             locCode: item.actualDelvLocId,
-  //             receivedBy: item.receivedBy,
-  //             receivedDate: item.receivedDate,
-  //             receivedRemark: item.receivedRemark
-  //           });
-
-  //           this.isGenerateEnabled = true;
-  //           this.isUpdateEnabled = false;
-  //           this.isReceivedRequired = true;
-
-  //           if (item.gatepassNo != null) {
-  //               this.SalesGatepassForm.disable();
-  //             this.SalesGatepassForm.get('receivedRemark')?.enable();
-  //             this.isGenerateEnabled = false;
-  //             this.isUpdateEnabled = true;
-  //           }
-
-  //           if (item.receivedBy === null) {
-  //             this.SalesGatepassForm.get('receivedRemark')?.enable();
-  //             this.isReceivedRequired = true;
-  //             this.isGenerateEnabled = false;
-  //             this.isUpdateEnabled = true;
-  //           }
-  //           if (item.receivedBy != null) {
-  //             this.SalesGatepassForm.get('receivedRemark')?.disable();
-  //             this.isReceivedRequired = true;
-  //             this.isGenerateEnabled = false;
-  //             this.isUpdateEnabled = false;
-  //           }
-
-  //           if (item.gatepassNo === null) {
-  //                this.SalesGatepassForm.disable();
-  //             this.SalesGatepassForm.get('receivedRemark')?.disable();
-  //           }
-  //         } else {
-  //           this.SalesGatepassForm.disable();
-  //           this.isGenerateEnabled = false;
-  //           this.isUpdateEnabled = false;
-  //           alert(response?.message || 'Order details not found');
-  //         }
-  //       },
-  //       (error: any) => {
-  //         console.error('Get Order Details Error:', error);
-  //         this.SalesGatepassForm.disable();
-  //         this.isGenerateEnabled = false;
-  //         this.isUpdateEnabled = false;
-  //         alert(error?.error?.message || 'Error while fetching Order Details');
-  //       }
-  //     );
-  // }
-
 
   onDeptChange(dept: any) {
-    // alert(dept);
-
     this.selectedCmnCode = '';
     this.searchValue = '';
     this.cmnCodeList = [];
@@ -579,7 +404,11 @@ export class ManuaSalesGatepassComponent implements OnInit {
   }
 
 
-
+private lockSearchFields(): void {
+  ['dept', 'subType', 'referenceNo'].forEach(field =>
+    this.SalesGatepassForm.get(field)?.disable({ emitEvent: false })
+  );
+}
 
 
   gatePassSearchNew(): void {
@@ -591,22 +420,24 @@ export class ManuaSalesGatepassComponent implements OnInit {
       alert('Please select Department, Search By and enter a Value');
       return;
     }
+    this.SalesGatepassForm.get('dept')?.disable();
     this.orderManagementService
-      .getOrderDetailsGeneric(referenceNo, subType, dept)
+      .getOrderDetailsGeneric(referenceNo, subType, dept,sessionStorage.getItem('locId'))
       .subscribe(
         (response: any) => {
           const code = response?.code;
           const data = response?.obj;
           const item = Array.isArray(data) ? data[0] : data;
           if (code !== 200 || !item) {
+            this.lockSearchFields();
             this.SalesGatepassForm.disable();
             this.isGenerateEnabled = false;
             this.isUpdateEnabled = false;
             this.isReceivedRequired = false;
+            this.isSearchDone = true;
             alert(response?.message || 'Order details not found');
             return;
           }
-          // debugger;
           if (item.gatepassNo == null || item.gatepassNo == 0) {
             this.SalesGatepassForm.patchValue({
               dept: formData.dept,
@@ -627,9 +458,16 @@ export class ManuaSalesGatepassComponent implements OnInit {
             attribute2: item.attribute2,
             attribute3: item.attribute3,
             attribute4: item.attribute4,
-            attribute5: item.attribute5
+            attribute5: item.attribute5,
+            variant:item.variant
             });
             this.SalesGatepassForm.enable();
+            this.SalesGatepassForm.get('attribute1')?.disable();
+            this.SalesGatepassForm.get('attribute2')?.disable();
+            this.SalesGatepassForm.get('attribute3')?.disable();
+            this.SalesGatepassForm.get('attribute4')?.disable();
+            this.SalesGatepassForm.get('attribute5')?.disable();
+            this.SalesGatepassForm.get('variant')?.disable();
             this.isGenerateEnabled = true;
             this.isUpdateEnabled = false;
 
@@ -660,6 +498,7 @@ export class ManuaSalesGatepassComponent implements OnInit {
             attribute3: item.attribute3,
             attribute4: item.attribute4,
             attribute5: item.attribute5,
+            variant:item.variant
           });
 
           // Disable complete form first
@@ -764,7 +603,13 @@ export class ManuaSalesGatepassComponent implements OnInit {
           reason: item.reason,
           remarks: item.remarks,
           fromLocId: item.fromLocId,
-          actualDelvLocId: item.actualDelvLocId
+          actualDelvLocId: item.actualDelvLocId,
+           attribute5:item.attribute5,
+          attribute1:item.attribute1,
+              attribute2:item.attribute2,
+              attribute3:item.attribute3,
+              attribute4:item.attribute4,
+              variant:item.variant,
         });
         //     this.select = this.BillShipToList.find((d:any) => d.locId === item.actualDelvLocId);
         //  console.log(this.select);
@@ -791,7 +636,14 @@ export class ManuaSalesGatepassComponent implements OnInit {
               'reason',
               'remarks',
               'fromLocId',
-              'actualDelvLocId'].forEach(field => {
+              'actualDelvLocId',
+              'attribute5',
+              'attribute1',
+              'attribute2',
+              'attribute3',
+              'attribute4',
+              'variant'
+            ].forEach(field => {
                 this.SalesGatepassForm.get(field)?.disable();
               });
             this.SalesGatepassForm.get('receivedRemark')?.enable();
@@ -835,4 +687,3 @@ export class ManuaSalesGatepassComponent implements OnInit {
     this.location.back();
   }
 }
-
