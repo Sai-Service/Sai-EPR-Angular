@@ -580,8 +580,8 @@ private lockSearchFields(): void {
   }
   select: any = [];
 
-  getGatepassByNo(gatepassNo: string) {
-    alert(gatepassNo)
+  getGatepassByNo(gatepassNo: any) {
+    // alert(gatepassNo)
     if (!gatepassNo) {
       return;
     }

@@ -46,8 +46,8 @@
             <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Counter Sale Order</a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/orderList']">Order List</a></li>
-                <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/ErpTxVehAllotment']">ERP Taxi veh Allotment</a></li>
-                <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/TaxiPOReport']">ERP Taxi PO Report</a></li>
+                <li ngIf="isTaxi"><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/ErpTxVehAllotment']">ERP Taxi veh Allotment</a></li>
+                <li ngIf="isTaxi"><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/TaxiPOReport']">ERP Taxi PO Report</a></li>
                 <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/CounterSaleOrder']">Counter Sale Order</a></li>
                 <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/CounterSaleWithCSV']">Counter Sale With CSV</a></li>
                 <li><a class="dropdown-item" [routerLink]="['/admin/OrderManagement/CounterSaleReturn']">Counter Sale Return</a></li>
