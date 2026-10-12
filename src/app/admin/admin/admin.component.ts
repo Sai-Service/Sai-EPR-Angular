@@ -108,6 +108,7 @@ export class AdminComponent implements OnInit {
   isVisibleAccountsRepor: boolean = true;
   isVisibleMaster: boolean = true;
   isVisibleCustMaster: boolean = true;
+  isVisibleCustMasterIT:Boolean=false;
   public show: boolean = false;
   isShown: boolean = false;
   isVisibleGL: boolean = false;
@@ -318,7 +319,8 @@ export class AdminComponent implements OnInit {
       this.isVisible12 = false;
       this.isVisible13 = false
       this.isVisibleWsVehicleMaster = false;
-      this.isVisibleCustMaster = false;
+       this.isVisibleCustMaster = false;
+      this.isVisibleCustMasterIT=false;
       this.isVisible14 = false;
       this.isVisible15 = false;
       this.isVisible16 = false;
@@ -367,7 +369,8 @@ export class AdminComponent implements OnInit {
       this.isVisible12 = false;
       this.isVisible13 = false
       this.isVisibleWsVehicleMaster = false;
-      this.isVisibleCustMaster = false;
+       this.isVisibleCustMaster = false;
+      this.isVisibleCustMasterIT=false;
       this.isVisible14 = false;
       this.isVisible15 = false;
       this.isVisibleToolsMaster = false;
@@ -418,7 +421,8 @@ export class AdminComponent implements OnInit {
       this.isVisible13 = false
       this.isVisibleToolsMaster = false;
       this.isVisibleWsVehicleMaster = false;
-      this.isVisibleCustMaster = false;
+       this.isVisibleCustMaster = false;
+      this.isVisibleCustMasterIT=false;
       this.isVisible14 = false;
       this.isVisible15 = false;
       this.isVisible16 = false;
@@ -462,7 +466,8 @@ export class AdminComponent implements OnInit {
 
     if (Number(sessionStorage.getItem('divisionId')) === 3 && Number(sessionStorage.getItem('roleId')) === 1) {
       this.isVisible11 = false;
-      this.isVisibleCustMaster = false;
+       this.isVisibleCustMaster = false;
+      this.isVisibleCustMasterIT=false;
       this.isVisible12 = false;
       this.isVisibleMaster = false;
       this.isVisibleToolsMaster = false;
@@ -582,7 +587,8 @@ export class AdminComponent implements OnInit {
       this.isVisibleAccessories = false;
       this.isVisibleMaster = false;
       this.isVisibleGL = true;
-      this.isVisibleCustMaster = false;
+       this.isVisibleCustMaster = false;
+      this.isVisibleCustMasterIT=false;
       this.isVisibilePaintSystem = false;
       this.isVisibleShellReport = false;
       this.isVisibleSearchPaint = false;
@@ -948,14 +954,16 @@ export class AdminComponent implements OnInit {
       this.isVisibilePaintSystem = false;
       this.isVisibleShellReport = false;
       // this.isVisibleSearchPaint=false;
-      this.isVisibleCustMaster = false;
+       this.isVisibleCustMaster = false;
+      this.isVisibleCustMasterIT=false;
       this.isVisibleReinsurance = false;
       this.isVisibleAdminService=false;
     }
 
 
     if (Number(sessionStorage.getItem('divisionId')) === 2 && sessionStorage.getItem('deptName') === 'Service' && Number(sessionStorage.getItem('roleId')) === 10) {
-      this.isVisibleCustMaster = false;
+       this.isVisibleCustMaster = false;
+      this.isVisibleCustMasterIT=false;
       this.isVisibleWsVehicleMaster = false;
       this.isVisible31 = false;
       this.isVisible11 = false;
@@ -1010,7 +1018,64 @@ export class AdminComponent implements OnInit {
 
 
     if (Number(sessionStorage.getItem('divisionId')) === 2 && sessionStorage.getItem('deptName') === 'Spares' && Number(sessionStorage.getItem('roleId')) === 10) {
-      this.isVisibleCustMaster = false;
+       this.isVisibleCustMaster = false;
+      this.isVisibleCustMasterIT=false;
+      this.isVisibleWsVehicleMaster = false;
+      this.isVisible31 = false;
+      this.isVisible11 = false;
+      this.isVisible12 = false;
+      this.isVisible14 = false;
+      this.isVisibleReturnToVendor = false;
+      this.isVisibleShortLanded = false;
+      this.isVisible15 = false;
+      this.isVisible16=false;
+      this.isVisible17=false;
+      this.isVisible18=false;
+      this.isVisible13=false;
+      this.isVisible19=false;
+      this.isVisible20=false;
+      this.isVisible37=false;
+      this.isVisibleSaleStockAdju=false;
+      this.isVisible32=false;
+      this.isVisible21=false;
+      this.isVisible22=false;
+      this.isVisible23=false;
+      this.isVisible24=false;
+      this.isVisible25=false;
+      this.isVisible26=false;
+      this.isVisible27=false;
+      this.isVisible28=false;
+      this.isVisibleSubInventoryTransfer=false;
+      this.isVisible29=true;
+      this.isVisibleSparesReport=true;
+      this.isVisibleSalesReport=false;
+      this.isVisibleAccountsRepor=false;
+      this.isVisibleAccessories=true;
+      this.isVisibleServerReport=true;
+      this.isVisibleShellReport=false;
+      this.isVisibleGL=false;
+      this.isVisibleMaster=false;
+      this.isVisibilePaintSystem=false;
+      this.isVisiblePaintMaster=false;
+      this.isVisiblePaintTrans=false;
+      this.isVisiblePaintPurchase=false;
+      this.isVisiblePaintStock=false;
+      this.isVisiblePaintReport=false;
+      this.isVisiblePaintReportAuditor=false;
+      this.isVisibilePetrolPumpSystem=false;
+      this.isVisibleToolsMaster=false;
+      this.isVisibleReturnToVendor=false;
+      this.isVisibleShortLanded=false;
+      this.isVisibleToolReport=false;
+      this.isVisibleReinsurance=false;
+      this.isVisibleAdminService=false;
+      this.isVisibleServiceReport=false;
+    }
+
+    
+    if (sessionStorage.getItem('deptName') === 'IT') {
+       this.isVisibleCustMaster = false;
+      this.isVisibleCustMasterIT=true;
       this.isVisibleWsVehicleMaster = false;
       this.isVisible31 = false;
       this.isVisible11 = false;

@@ -45,8 +45,8 @@ import {ColorMasterComponent} from './color-master/color-master.component';
 import {VariantCreationMasterComponent} from './variant-creation-master/variant-creation-master.component'
 import {VariantWithPriceMasterComponent} from './variant-with-price-master/variant-with-price-master.component'
 import {ReceiptMethodComponent} from './receipt-method/receipt-method.component'
+import{CdmsBookingRegisterCsvUploadComponent} from'./cdms-booking-register-csv-upload/cdms-booking-register-csv-upload.component'
 // import { FlexFieldComponent } from './flex-field/flex-field.component';
-
 
 
 const routes: Routes = [
@@ -101,6 +101,7 @@ const routes: Routes = [
   {path:'VariantCreationMaster',component:VariantCreationMasterComponent},
   {path:'VariantWithPriceMaster',component:VariantWithPriceMasterComponent},
   {path:'ReceiptMethod',component:ReceiptMethodComponent},
+  {path:'cdms-bookingCsv',component:CdmsBookingRegisterCsvUploadComponent}, 
   // {path:'SubinventoryTransfer',component:SubinventoryTransferComponent},
   { path : '' ,redirectTo: 'Dashboard', pathMatch: 'full' }
 ];

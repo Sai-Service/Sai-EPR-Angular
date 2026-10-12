@@ -1,0 +1,105 @@
+<table style="width: 100%;background-color: white;">
+    <tr>
+        <td colspan="4" class="PageHeader" style="width: 100%;">
+            &nbsp;Booking&nbsp;Register&nbsp;CSV&nbsp;Upload&nbsp;
+        </td>
+    </tr>
+</table>
+<form [formGroup]="csvUploadForm" (ngSubmit)="csvUploadFrm(csvUploadForm)">
+    <div style="padding: 15px; margin-left: 400px;">
+        <label class="LabelFontStyle1">Select CSV File:</label> <input type="file" accept=".csv" class="form-control"
+            (change)="onFileSelected($event)" />
+        <br />
+    </div>
+    <div style="margin-left: 310px;padding-bottom: 20px;">
+        <button type="button" style="margin-right: 5px;" class="btn btn-primary" (click)="csvUpload()"
+            [disabled]="isUploading"> {{ isUploading ? 'Uploading...' : 'Upload' }} </button>
+
+        <button type="button" class="btn btn-primary" style="margin-right: 5px;" (click)="searchBooking()"
+            [disabled]="isSearching">
+
+            {{ isSearching ? 'Searching...' : 'Search' }} </button>
+
+        <button type="button" class="btn btn-primary" style="margin-right: 5px;width: 120px;" (click)="updateEcomId()"
+            [disabled]="isUpdatingEcomId">
+            {{ isUpdatingEcomId ? 'Updating...' : 'Update Ecom-Id' }}
+        </button>
+
+        <button type="button" class="btn btn-primary" style="margin-right: 5px;" (click)="closeMast()"> Close </button>
+
+        <button type="button" class="btn btn-primary" (click)="resetMast()"> Reset </button>
+    </div>
+
+    <div style="padding-right: 50px;padding-left: 50px;">
+
+        <div *ngIf="bookingList.length > 0" style="width: 100%; overflow-x: auto;">
+
+            <table class="GridFont">
+
+                <thead>
+                    <tr class="GridHeader">
+
+                        <th>Document Name</th>
+                        <th>Document Date</th>
+                        <th>Branch</th>
+                        <th>Salesperson</th>
+                        <th>Model Name</th>
+                        <th>Model Color</th>
+                        <th>Customer</th>
+                        <th>Customer Name</th>
+                        <th>Address</th>
+                        <th>City</th>
+                        <th>Pin Code</th>
+                        <th>Requested Delivery Date</th>
+                        <th>Promised Delivery Date</th>
+                        <th>Booking Source</th>
+                        <th>Order Amount</th>
+                        <th>Status</th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr class="GridDeatails" *ngFor="let row of bookingList">
+
+                        <td>{{ row.documentName }}</td>
+
+                        <td>{{ row.documentDate }}</td>
+
+                        <td>{{ row.branch }}</td>
+
+                        <td>{{ row.salesperson }}</td>
+
+                        <td>{{ row.modelName }}</td>
+
+                        <td>{{ row.modelColor }}</td>
+
+                        <td>{{ row.customer }}</td>
+
+                        <td>{{ row.customerName }}</td>
+
+                        <td>{{ row.addressLine1 }}</td>
+
+                        <td>{{ row.city }}</td>
+
+                        <td>{{ row.pinCode }}</td>
+
+                        <td>{{ row.requestedDeliveryDate }}</td>
+
+                        <td>{{ row.promisedDeliveryDate }}</td>
+
+                        <td>{{ row.bookingSource }}</td>
+
+                        <td>{{ row.orderAmount }}</td>
+
+                        <td>{{ row.status }}</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+</form>
