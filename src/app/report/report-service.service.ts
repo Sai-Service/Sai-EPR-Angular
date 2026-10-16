@@ -270,6 +270,17 @@ export class ReportServiceService {
     });
   }
 
+
+  salesZeroLoc(fromDate,toDate,ouId){
+    const REQUEST_URI = this.ServerUrl +`/SalesReports/LocationZeroRep?fromDate=${fromDate}&toDate=${toDate}&orgId=${ouId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
+  // http://saihorizon.com:8051/ErpReplica/SalesReports/LocationZeroRep?fromDate=22-Sep-2022&toDate=29-Sep-2026&orgId=21
+
   sprClsAsonDtReport(toDate,locId,subInvcd){
     const REQUEST_URI = this.ServerUrl +`/SparesReports/SprClsAsonDt?toDate=${toDate}&locId=${locId}&subInvCode=${subInvcd}`;
     return this.http.get(REQUEST_URI, {

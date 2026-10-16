@@ -36,6 +36,7 @@ export class ManuaSalesGatepassComponent implements OnInit {
   isGenerateEnabled: boolean = false;
   displayAuthorizedBy: boolean = true;
   displaydriverName: boolean = true;
+  DisplayLocName:boolean=true;
   displayReceivedGate: boolean = true;
   gatepassList: any[] = [];
   public minDate = new Date();
@@ -91,7 +92,8 @@ export class ManuaSalesGatepassComponent implements OnInit {
       attribute2:[],
       attribute3:[],
       attribute4:[],
-      attribute5:[]
+      attribute5:[],
+      toLoc:[],
     });
   }
 
@@ -133,6 +135,7 @@ export class ManuaSalesGatepassComponent implements OnInit {
       if (this.gatepassNo != undefined) {
         this.getGatepassByNo(this.gatepassNo);
         this.displayAuthorizedBy = false;
+        this.DisplayLocName=false;
         this.displaydriverName = false;
 
       }
@@ -434,6 +437,7 @@ private lockSearchFields(): void {
             this.isGenerateEnabled = false;
             this.isUpdateEnabled = false;
             this.isReceivedRequired = false;
+            this.DisplayLocName=false;
             this.isSearchDone = true;
             alert(response?.message || 'Order details not found');
             return;
@@ -490,6 +494,7 @@ private lockSearchFields(): void {
             remarks: item.remarks,
             fromLocId: item.fromLocId,
             actualDelvLocId: item.actualDelvLocId,
+            toLoc:item.toLoc,
             receivedBy: item.receivedBy,
             receivedDate: item.receivedDate,
             receivedRemark: item.receivedRemark,
@@ -512,6 +517,7 @@ private lockSearchFields(): void {
             this.isUpdateEnabled = true;
 
             this.isReceivedRequired = true;
+            this.DisplayLocName=false;
 
             // Only received remark should be editable
             this.SalesGatepassForm.get('receivedRemark')?.enable();
@@ -604,6 +610,7 @@ private lockSearchFields(): void {
           remarks: item.remarks,
           fromLocId: item.fromLocId,
           actualDelvLocId: item.actualDelvLocId,
+          toLoc:item.toLoc,
            attribute5:item.attribute5,
           attribute1:item.attribute1,
               attribute2:item.attribute2,

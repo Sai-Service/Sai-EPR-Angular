@@ -106,6 +106,7 @@ export class SalesReportsComponent implements OnInit {
   public CostCenterList: Array<string> = [];
   isVisiblefromtosubinventory: boolean = false;
   isVisiblepanelfromtolocation1: boolean = false;
+  isVisiblepanelSalesLocZeroRep:boolean=false;
   subInventory: string;
   subInvCode: any;
   panelamcHistrory: boolean = false;
@@ -302,7 +303,9 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleSalesInventoryAging = false;
       this.isVisiblepanelfromtolocation = false;
       this.isVisiblepanelreceiptNo = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
+        this.isVisiblepanelSalesLocZeroRep=false;
       this.isVisiblepanelSalesAddonReconciliation = false;
       this.isVisiblefromtosubinventory = false;
       this.panelamcHistrory = false;
@@ -324,7 +327,9 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleSaleSOAParameter = false;
       this.isVisiblefromtoloccustaccno = false;
       this.isVisibleSalesInventoryAging = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.isVisiblepanelfromtolocation = false;
       this.isVisiblepanelreceiptNo = false;
       this.isVisiblepanelSalesAddonReconciliation = false;
@@ -366,7 +371,9 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleSaleSOAParameter = false;
       this.isVisiblefromtoloccustaccno = false;
       this.isVisibleSalesInventoryAging = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.isVisiblepanelfromtolocation = false;
       this.isVisiblepanelreceiptNo = false;
       this.isVisiblepanelSalesAddonReconciliation = false;
@@ -392,7 +399,8 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleSalesInventoryAging = false;
       this.isVisiblepanelfromtolocation = false;
       this.isVisiblepanelreceiptNo = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.isVisiblepanelSalesAddonReconciliation = false;
       this.isVisiblefromtosubinventory = false;
       this.panelamcHistrory = false;
@@ -414,7 +422,8 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtoloccustaccno = false;
       this.isVisibleSalesInventoryAging = false;
       this.isVisiblepanelfromtolocation = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.isVisiblepanelreceiptNo = false;
       this.isVisiblepanelSalesAddonReconciliation = false;
       this.isVisiblefromtosubinventory = false;
@@ -438,7 +447,8 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleSalesInventoryAging = false;
       this.isVisiblepanelfromtolocation = false;
       this.isVisiblepanelreceiptNo = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.isVisiblepanelSalesAddonReconciliation = false;
       this.isVisiblefromtosubinventory = false;
       this.panelamcHistrory = false;
@@ -458,7 +468,33 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblecustomerLedger = false;
       this.isVisiblestockTransfer = false;
       this.isVisibleSaleSOAParameter = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
+      this.isVisiblefromtoloccustaccno = false;
+      this.isVisibleSalesInventoryAging = false;
+      this.isVisiblepanelfromtolocation = false;
+      this.isVisiblepanelreceiptNo = false;
+      this.isVisiblepanelSalesAddonReconciliation = false;
+      this.isVisiblefromtosubinventory = false;
+      this.panelamcHistrory = false;
+      this.ispanelTolocationOu = false;
+      this.isVisiblepaneltolocation = false;
+      this.inVisiblepanelSaleSaiDebtors = false;
+      this.isVisiblespTodateOuIdLocId = false;
+       this.isVisiblespDebtorsReport1=false;
+      this.isVisiblespDebtorsReport=false;
+    }
+    else if (reportName === 'salesZeroLoc') {
+      this.reportName = 'Sales Zero Location Report'
+      this.isVisibleVehicleSaleRegister = false;
+      this.isVisibleSaleIND = false;
+      this.isSaleClosingStock = false;
+      this.isVisiblefromtolocationdepartment = false;
+      this.isVisiblecustomerLedger = false;
+      this.isVisiblestockTransfer = false;
+      this.isVisibleSaleSOAParameter = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=true;
       this.isVisiblefromtoloccustaccno = false;
       this.isVisibleSalesInventoryAging = false;
       this.isVisiblepanelfromtolocation = false;
@@ -500,7 +536,8 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
        this.isVisiblespDebtorsReport1=false;
       this.isVisiblespDebtorsReport=false;
     }
@@ -527,7 +564,8 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory = false;
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblespTodateOuIdLocId = false;
        this.isVisiblespDebtorsReport1=false;
@@ -552,7 +590,8 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelreceiptNo = false;
       this.isVisiblepanelSalesAddonReconciliation = false;
       this.isVisiblefromtosubinventory = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.panelamcHistrory = false;
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
@@ -576,7 +615,8 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelreceiptNo = false;
       this.isVisiblepanelSalesAddonReconciliation = false;
       this.isVisiblefromtosubinventory = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.panelamcHistrory = false;
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
@@ -603,7 +643,8 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory = false;
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblespTodateOuIdLocId = false;
        this.isVisiblespDebtorsReport1=false;
@@ -620,7 +661,9 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblecustomerLedger = false;
       this.isVisiblefromtoloccustaccno = false;
       this.isVisibleSalesInventoryAging = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
+      this 
       this.isVisiblepanelfromtolocation = false;
       this.isVisiblepanelreceiptNo = false;
       this.isVisiblepanelSalesAddonReconciliation = false;
@@ -651,7 +694,8 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory = false;
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblespTodateOuIdLocId = false;
        this.isVisiblespDebtorsReport1=false;
@@ -667,7 +711,8 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblestockTransfer = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblefromtoloccustaccno = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.isVisibleSalesInventoryAging = false;
       this.isVisiblepanelfromtolocation = false;
       this.isVisiblepanelreceiptNo = false;
@@ -691,7 +736,8 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblestockTransfer = false;
       this.isVisiblecustomerLedger = false;
       this.isVisiblefromtoloccustaccno = true;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.isVisibleSalesInventoryAging = false;
       this.isVisiblepanelfromtolocation = false;
       this.isVisiblepanelreceiptNo = false;
@@ -722,7 +768,8 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory = false;
       this.panelamcHistrory = false;
       this.ispanelTolocationOu = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblespTodateOuIdLocId = false;
@@ -744,7 +791,8 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelreceiptNo = false;
       this.isVisiblepanelSalesAddonReconciliation = false;
       this.isVisiblefromtosubinventory = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.panelamcHistrory = false;
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
@@ -768,7 +816,8 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelreceiptNo = false;
       this.isVisiblepanelSalesAddonReconciliation = false;
       this.isVisiblefromtosubinventory = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.panelamcHistrory = false;
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
@@ -795,7 +844,8 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory = false;
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblespTodateOuIdLocId = false;
        this.isVisiblespDebtorsReport1=false;
@@ -818,7 +868,8 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory = false;
       this.panelamcHistrory = false;
       this.ispanelTolocationOu = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblespTodateOuIdLocId = false;
@@ -842,7 +893,8 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblefromtosubinventory = true;
       this.panelamcHistrory = false;
       this.ispanelTolocationOu = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblespTodateOuIdLocId = false;
@@ -864,7 +916,8 @@ export class SalesReportsComponent implements OnInit {
       this.isVisiblepanelreceiptNo = false;
       this.isVisiblepanelSalesAddonReconciliation = false;
       this.isVisiblefromtosubinventory = true;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.panelamcHistrory = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
@@ -894,7 +947,8 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory = false;
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblespTodateOuIdLocId = false;
        this.isVisiblespDebtorsReport1=false;
@@ -918,7 +972,8 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory = true;
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblespTodateOuIdLocId = false;
        this.isVisiblespDebtorsReport1=false;
@@ -947,7 +1002,8 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory = false;
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblespTodateOuIdLocId = false;
        this.isVisiblespDebtorsReport1=false;
@@ -976,7 +1032,8 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory = false;
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblespTodateOuIdLocId = false;
        this.isVisiblespDebtorsReport1=false;
@@ -1001,7 +1058,8 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = true;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.isVisiblespTodateOuIdLocId = false;
        this.isVisiblespDebtorsReport1=false;
       this.isVisiblespDebtorsReport=false;
@@ -1025,7 +1083,8 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.isVisiblespTodateOuIdLocId = false;
        this.isVisiblespDebtorsReport1=false;
       this.isVisiblespDebtorsReport=false;
@@ -1049,7 +1108,8 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.isVisiblespTodateOuIdLocId = false;
        this.isVisiblespDebtorsReport1=false;
       this.isVisiblespDebtorsReport=false;
@@ -1074,7 +1134,8 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = true;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.isVisiblespTodateOuIdLocId = false;
        this.isVisiblespDebtorsReport1=false;
       this.isVisiblespDebtorsReport=false;
@@ -1098,7 +1159,8 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.isVisiblespTodateOuIdLocId = false;
        this.isVisiblespDebtorsReport1=false;
       this.isVisiblespDebtorsReport=false;
@@ -1123,7 +1185,8 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.isVisiblespTodateOuIdLocId = false;
        this.isVisiblespDebtorsReport1=false;
       this.isVisiblespDebtorsReport=false;
@@ -1134,7 +1197,8 @@ export class SalesReportsComponent implements OnInit {
       this.isVisibleSaleIND = false;
       this.isSaleClosingStock = true;
       this.isVisibleSaleSOAParameter = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.isVisiblefromtolocationdepartment = false;
       this.isVisiblestockTransfer = false;
       this.isVisiblefromtoloccustaccno = false;
@@ -1195,7 +1259,8 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.isVisibleDepartmentList = true;
       }
@@ -1222,7 +1287,8 @@ export class SalesReportsComponent implements OnInit {
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
       this.inVisiblepanelSaleSaiDebtors = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       if (Number(sessionStorage.getItem('deptId')) === 4) {
         this.isVisibleDepartmentList = true;
       }
@@ -1248,7 +1314,8 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory = false;
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblespTodateOuIdLocId = false;
        this.isVisiblespDebtorsReport1=false;
@@ -1296,7 +1363,8 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory = false;
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblespTodateOuIdLocId = true;
        this.isVisiblespDebtorsReport1=false;
@@ -1320,7 +1388,8 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory = false;
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblespTodateOuIdLocId = false;
       this.isVisiblespDebtorsReport = true;
@@ -1344,7 +1413,8 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory = false;
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblespTodateOuIdLocId = false;
       this.isVisiblespDebtorsReport = true;
@@ -1368,7 +1438,8 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory = false;
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblespTodateOuIdLocId = false;
       this.isVisiblespDebtorsReport = true;
@@ -1392,7 +1463,8 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory = false;
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblespTodateOuIdLocId = false;
       this.isVisiblespDebtorsReport1 = true;
@@ -1420,7 +1492,8 @@ export class SalesReportsComponent implements OnInit {
       this.panelamcHistrory = false;
       this.ispanelTolocationOu = false;
       this.isVisiblepaneltolocation = false;
-      this.isVisiblepanelfromtolocation1 = false;
+        this.isVisiblepanelfromtolocation1 = false;
+       this.isVisiblepanelSalesLocZeroRep=false;
       this.inVisiblepanelSaleSaiDebtors = false;
       this.isVisiblespTodateOuIdLocId = false;
        this.isVisiblespDebtorsReport1=false;

@@ -1966,9 +1966,9 @@ UpdateSchemMaster(itemId: any, model: any, fromDate: any, toDate: any) {
     // alert ("ms >> subInventoryId :" +subInventoryId);
     return this.http.get(this.ServerUrl + `/onhandqty/onhandlocsubinv?locId=${locId}&itemId=${invItemId}&subInventoryId=${subInventoryId}`)
   }
-  getWIPrice(locId, invItemId, subInventoryId, repNo, divId, deptId): Observable<any> {
+  getWIPrice(locId, invItemId, subInventoryId, repNo, divId, deptId,billType): Observable<any> {
     // alert ("ms >> subInventoryId :" +subInventoryId);
-    return this.http.get(this.ServerUrl + `/onhandqty/onhandlocsubinv3?locId=${locId}&itemId=${invItemId}&subInventoryId=${subInventoryId}&repairNo=${repNo}&divisionId=${divId}&deptId=${deptId}`)
+    return this.http.get(this.ServerUrl + `/onhandqty/onhandlocsubinv3?locId=${locId}&itemId=${invItemId}&subInventoryId=${subInventoryId}&repairNo=${repNo}&divisionId=${divId}&deptId=${deptId}&billType=${billType}`)
   }
   getfrmSubLocPrice(locId, invItemId, subInventoryId): Observable<any> {
     return this.http.get(this.ServerUrl + `/onhandqty/onhandlocPrc?locId=${locId}&itemId=${invItemId}&subInventoryId=${subInventoryId}`)
@@ -4969,9 +4969,8 @@ UpdateVariantPrice(variantPriceRecord: any) {
 //   }
 
 gstVerficationFn(gstNo: any): Observable<any> {
-    // return this.http.get(`http://172.16.21.3:8051/gstVerify/gstin/${gstNo}`);
    return this.http.get(`http://saihorizon.com:8051/gstVerify/gstin/${gstNo}`);
-    
+    // return this.http.get(`http://172.16.21.3:8051/gstVerify/gstin/${gstNo}`);
   }
 
   getPoPrintUrl(segment1: string): Observable<any> {
@@ -4987,6 +4986,30 @@ gstVerficationFn(gstNo: any): Observable<any> {
 
   authorizedNameList(locId): Observable<any> {
     return this.http.get(this.ServerUrl + `/cmnLookup/ListAuthorizedBy?cmnType=authorizedBy&locId=${locId}`);
+  }
+
+
+
+  /////////////////////////////////////////////////////////////// CDMS ///////////////////////////////////////////////////////////
+
+
+  // ------------------------------CDMS Booking Register API---------------------------------
+  uploadBookingCsv(formData: FormData, params: string) {
+    return this.http.post(
+      this.ServerUrl + '/booking/upload' + params,
+      formData
+    );
+  }
+  getBookingData(params: string) {
+    return this.http.get<any>(
+      this.ServerUrl + '/booking/getBookingData' + params
+    );
+  }
+  updateEcomId(): Observable<any> {
+    return this.http.get<any>(
+      this.ServerUrl + '/booking/updateEcomId'
+    );
+  
   }
 }
 

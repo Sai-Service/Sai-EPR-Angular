@@ -1307,7 +1307,7 @@ getDeptWiseLOV(cmnDesc: any): Observable<any> {
     return this.http.get(this.ServerUrl + `/manualGP/getGapassNo?gatepassNo=${gatepassNo}`);
   }
 
-  getOrderDetailsGeneric(referenceNo:any,supType:any,deptId:any,locId:any): Observable<any> {
+ getOrderDetailsGeneric(referenceNo:any,supType:any,deptId:any,locId:any): Observable<any> {
     return this.http.get(this.ServerUrl + `/manualGP/getOrderDetails?orderNumber=${referenceNo}&subType=${supType}&deptId=${deptId}&locId=${locId}`);
   }
 

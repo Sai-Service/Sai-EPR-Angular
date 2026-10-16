@@ -48,6 +48,7 @@ import { ColorMasterComponent } from './color-master/color-master.component';
 import { VariantCreationMasterComponent } from './variant-creation-master/variant-creation-master.component';
 import { VariantWithPriceMasterComponent } from './variant-with-price-master/variant-with-price-master.component';
 import { ReceiptMethodComponent } from './receipt-method/receipt-method.component';
+import { CdmsBookingRegisterCsvUploadComponent } from './cdms-booking-register-csv-upload/cdms-booking-register-csv-upload.component';
 
 
 
@@ -97,6 +98,7 @@ import { ReceiptMethodComponent } from './receipt-method/receipt-method.componen
     VariantCreationMasterComponent,
     VariantWithPriceMasterComponent,
     ReceiptMethodComponent,
+    CdmsBookingRegisterCsvUploadComponent,
     ],
     
   // declarations: [DivisionMasterComponent, OrganizationMasterComponent, LocationMasterComponent, CompanyMasterComponent, FNDCommonLookupComponent, ItemCategortComponent, SupplierMasterComponent, LocatorMasterComponent, ItemMasterComponent, CommonMasterComponent, DocumentSequenceMasterComponent, EpmloyeeMasterComponent, CustomerMasterComponent, GlCodeCombinationComponent, HsnSacMasterComponent, OPMasterDtoComponent, JaiRegimeMasterComponent, TaxAccountsComponent, TaxCategoryMasterComponent, JaiTaxCategoryLineComponent, JaiTaxRatesMasterComponent, JaiTaxTypeComponent,FlexFieldComponent, PricelistMasterComponent, OmGruopMasterComponent, OrderTypeMasterComponent,SubinventoryMasterComponent,SaiEwSchemeComponent],

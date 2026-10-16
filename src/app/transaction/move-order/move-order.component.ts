@@ -573,7 +573,9 @@ getrepairOrder($event)
       trxLnArr2.controls[i].patchValue({resveQty:this.resrveqty});
     });
     // this.service.getPriceDetail(this.locId,select1.itemId,subInv,repNo,this.divisionId).subscribe
-    this.service.getWIPrice(this.locId,select1.itemId,subInv,repNo,this.divisionId,this.deptId).subscribe
+   var billable = this.moveOrderForm.get('billable')?.value;
+  //  alert(billable)
+    this.service.getWIPrice(this.locId,select1.itemId,subInv,repNo,this.divisionId,this.deptId,billable).subscribe
     ((res: any) => {
       if (res.code === 200)
       {

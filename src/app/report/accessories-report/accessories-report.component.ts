@@ -2668,7 +2668,7 @@ else if (reportName==='Spares Stock Mismatch Report'){
     this.isDisabled1=false;
   })
 }
-else if (Number(sessionStorage.getItem('deptId')) != 4) {
+else if (Number(sessionStorage.getItem('deptId')) != 4  ) {
   this.reportService.StockMissMatchFN(fromDate,toDate,subInventory,sessionStorage.getItem('locId'),sessionStorage.getItem('ticketNo'))
   .subscribe(data => {
     saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
