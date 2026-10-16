@@ -4964,8 +4964,14 @@ UpdateVariantPrice(variantPriceRecord: any) {
     return this.http.get(this.ServerUrl + `/ceBankBranch/branchList/${BkName}`, { headers: this.headers });
   }
 
+// gstVerficationFn(gstNo: any): Observable<any> {
+//     return this.http.get(`http://172.16.21.3:8051/gstVerify/gstin/${gstNo}`);
+//   }
+
 gstVerficationFn(gstNo: any): Observable<any> {
-    return this.http.get(`http://172.16.21.3:8051/gstVerify/gstin/${gstNo}`);
+    // return this.http.get(`http://172.16.21.3:8051/gstVerify/gstin/${gstNo}`);
+   return this.http.get(`http://saihorizon.com:8051/gstVerify/gstin/${gstNo}`);
+    
   }
 
   getPoPrintUrl(segment1: string): Observable<any> {
