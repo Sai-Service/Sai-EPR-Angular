@@ -67,13 +67,13 @@
         </table>
     </fieldset> -->
 
-    <fieldset class="RFS">
+    <fieldset class="RFS" [disabled]="isSearchDone">
         <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
             Find
         </legend>
 
         <table class="center" style="width: 100%;background-color: #FFE4B5;">
-            <tr>
+            <tr> 
                 <td>
                     <table class="center">
                         <tr>
@@ -83,7 +83,7 @@
                             </td>
 
                             <td style="background-color: #FFE4B5;">
-                                <select class="form-control" style="width:160px;" formControlName="dept"
+                                <select disabled class="form-control" style="width:160px;" formControlName="dept"
                                     (change)="onDeptChange($any($event.target).value)">
                                     <option value="">--Select--</option>
                                     <option *ngFor="let dept of DepartmentListFn" [value]="dept.cmnTypeId">
@@ -96,7 +96,7 @@
                                 &nbsp;Search By&nbsp;:&nbsp;
                             </td>
 
-                            <td style="background-color: #FFE4B5;">
+                            <td style="background-color: #FFE4B5;" >
                                 <select class="form-control" style="width:160px;" formControlName="subType"
                                     [disabled]="!SalesGatepassForm.get('dept')?.value">
                                     <option value="">--Select--</option>
@@ -109,7 +109,6 @@
                             <td style="background-color: #FFE4B5;">
                                 &nbsp;Reference&nbsp;No&nbsp;:&nbsp;
                             </td>
-
                             <td style="background-color: #FFE4B5;">
                                 <input class="form-control" formControlName="referenceNo"
                                     [disabled]="!SalesGatepassForm.get('subType')?.value" placeholder="Enter value">
@@ -126,7 +125,49 @@
             </tr>
         </table>
     </fieldset>
-
+<fieldset class="RFS">
+        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Vehicle Details
+        </legend>
+        <table class="center" style="width: 100%;">
+            <tr>
+                <!-- <input hidden formControlName="emplId" [(ngModel)]='emplId' class="form-control"> -->
+                <td style="width: 15%" class="LabelFontStyle"> Vehicle&nbsp;No&nbsp;: </td>
+                <td> <input disabled type="text" formControlName="attribute5" value="attribute5"
+                        class="form-control" style="height: 20px;width: 200px;"></td>
+               <td style="width: 15%" class="LabelFontStyle"> Model&nbsp;</td>
+                <td>
+                   <input disabled type="text" formControlName="attribute1" value="attribute1" 
+                        class="form-control" style="height: 20px;width: 160px;">
+                </td>
+               <td style="width: 15%" class="LabelFontStyle"> Chassis&nbsp;No&nbsp;: </td>
+                <td> <input disabled type="text" formControlName="attribute3" value="attribute3" 
+                        class="form-control" style="height: 20px;width: 160px;"></td>
+                 </tr>
+                 <tr>
+                <td style="width: 15%" class="LabelFontStyle">
+                    Color&nbsp;:&nbsp;
+                </td>
+                <td>
+                    <input disabled type="text" formControlName="attribute2" value="attribute2" 
+                        class="form-control" style="height: 20px;width: 160px;">
+                </td>
+                <td style="width: 15%" class="LabelFontStyle">
+                    Engine&nbsp;No:&nbsp;
+                </td>
+                <td>
+                    <input disabled type="text" formControlName="attribute4" value="attribute4" 
+                        class="form-control" style="height: 20px;width: 160px;">
+                </td>
+                 <td style="width: 15%" class="LabelFontStyle">
+                    Variant&nbsp;:&nbsp;
+                </td>
+                <td>
+                    <input disabled type="text" formControlName="variant" value="variant" 
+                        class="form-control" style="height: 20px;width: 160px;">
+                </td>
+            </tr>
+        </table>
+</fieldset>
 
 
     <fieldset class="RFS">
@@ -147,12 +188,9 @@
                 </td>
                 <td class="LabelFontStyle">Delivery Location :</td>
                 <td>
-                    <!-- <select formControlName="actualDelvLocId" id="actualDelvLocId" class="form-control">
-                        <option>--Select--</option>
-                        <option *ngFor="let sc of  locIdList" [value]="sc.lookupValue">
-                            {{sc.lookupValue}}--{{sc.lookupValueDesc}}
-                        </option>
-                    </select> -->
+                <div *ngIf="DisplayLocName; then thenDisplayLocName; else elseDisplayLocName">
+                 </div> 
+                 <ng-template #thenDisplayLocName>
                     <select formControlName="actualDelvLocId" id="actualDelvLocId" class="form-control"
                         (ngModelChange)='onOptionsLocation($event)' style="width:200px;">
                         <option></option>
@@ -160,6 +198,13 @@
                             {{sc.locCode}}--{{sc.locName}}
                         </option>
                     </select>
+
+                     </ng-template>
+                                    <ng-template #elseDisplayLocName>
+                <input disabled type="text" class="form-control" formControlName="toLoc">
+                                         </ng-template>
+            </td>
+                                         <td>
                     <input disabled hidden type="number" class="form-control" formControlName="locId">
                     <input disabled hidden type="text" class="form-control" formControlName="attribute1">
                     <input disabled hidden type="text" class="form-control" formControlName="attribute2">
@@ -188,12 +233,6 @@
                 <td>
                     <div *ngIf="displaydriverName; then thendriverName; else elsedriverName"> </div>
                     <ng-template #thendriverName>
-                        <!-- <select formControlName="driverName" id="driverName" class="form-control">
-                        <option>--Select--</option>
-                        <option *ngFor="let sc of  driversNameList" [value]="sc.code">
-                            {{sc.code}}
-                        </option>
-                    </select> -->
                         <input type="text" formControlName="driverName" id="driverName" class="form-control"
                             list="driverNameList" placeholder="-- Select Driver --" autocomplete="off" />
                         <datalist id="driverNameList">
@@ -230,9 +269,9 @@
                 </ng-container>
             </tr>
         </table>
-    </fieldset> <input type="hidden" formControlName="headerId"> <input type="hidden" formControlName="locId"> <input
-        type="hidden" formControlName="fromLocId"> <input type="hidden" formControlName="dept"> <input type="hidden"
-        formControlName="createdBy">
+    </fieldset> <input type="text" hidden formControlName="headerId"> <input type="text" hidden formControlName="locId"> <input
+        type="text" hidden formControlName="fromLocId"> <input type="text" hidden formControlName="dept"> 
+        <input type="text"  hidden formControlName="createdBy">
     <fieldset class="RFS">
         <table style="width:100%;">
             <tr>
@@ -315,7 +354,7 @@
                     <th>Search Type</th>
                     <th>Reference No</th>
                     <th>Gate Pass Type</th>
-                    <th>Authorized By</th>
+                    <th>Authorized By</th>set NODE_OPTIONS=--openssl-legacy-provider
                     <th>Driver Name</th>
                     <th>Reason</th>
                     <th>Remarks</th>
