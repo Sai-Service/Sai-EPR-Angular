@@ -1,438 +1,470 @@
-<form [formGroup]="SalesGatepassForm"
-      (ngSubmit)="SalesGatepass(SalesGatepassForm.value)">
+<form
+  [formGroup]="SalesGatepassForm"
+  (ngSubmit)="SalesGatepass(SalesGatepassForm.value)">
 
   <!-- ================= PAGE HEADER ================= -->
-
   <table style="width: 100%; background-color: white;">
     <tr>
-      <td colspan="4"
-          class="PageHeader"
-          style="width: 100%;">
+      <td colspan="4" class="PageHeader" style="width: 100%;">
         Manual&nbsp;Sales&nbsp;Gate&nbsp;Pass
       </td>
     </tr>
   </table>
 
-  <!-- ================= FIND ================= -->
-
+  <!-- ================= FIND SECTION ================= -->
   <fieldset class="RFS" [disabled]="isSearchDone">
+    <legend
+      id="FormsPH_LGAadhaar"
+      class="RFSL"
+      style="font-size: 12px; color: black; font-weight: bold;">
+      Find
+    </legend>
 
+    <table
+      class="center"
+      style="width: 100%; background-color: #FFE4B5;">
+      <tr>
+        <td>
+          <table class="center">
+            <tr>
+              <!-- Department -->
+              <td style="background-color: #FFE4B5;">
+                &nbsp;Department&nbsp;:&nbsp;
+              </td>
 
-<legend
-  id="FormsPH_LGAadhaar"
-  class="RFSL"
-  style="font-size: 12px; color: black; font-weight: bold;">
-  Find
-</legend>
+              <td style="background-color: #FFE4B5;">
+                <select
+                  class="form-control"
+                  style="width: 160px;"
+                  formControlName="dept"
+                  disabled
+                  (change)="onDeptChange($any($event.target).value)">
 
-<table class="center"
-       style="width: 100%; background-color: #FFE4B5;">
+                  <option value="">--Select--</option>
 
-  <tr>
-    <td>
+                  <option
+                    *ngFor="let dept of DepartmentListFn"
+                    [value]="dept.cmnTypeId">
+                    {{ dept.code }}
+                  </option>
+                </select>
+              </td>
 
-      <table class="center">
+              <!-- Search By -->
+              <td style="background-color: #FFE4B5;">
+                &nbsp;Search By&nbsp;:&nbsp;
+              </td>
 
-        <tr>
+              <td style="background-color: #FFE4B5;">
+                <select
+                  class="form-control"
+                  style="width: 160px;"
+                  formControlName="subType"
+                  [disabled]="!SalesGatepassForm.get('dept')?.value">
 
-          <!-- Department -->
-          <td style="background-color: #FFE4B5;">
-            &nbsp;Department&nbsp;:&nbsp;
-          </td>
+                  <option value="">--Select--</option>
 
-          <td style="background-color: #FFE4B5;">
+                  <option
+                    *ngFor="let cmn of cmnCodeList"
+                    [value]="cmn.cmnCode">
+                    {{ cmn.cmnCode }}
+                  </option>
+                </select>
+              </td>
 
+              <!-- Reference Number -->
+              <td style="background-color: #FFE4B5;">
+                &nbsp;Reference&nbsp;No&nbsp;:&nbsp;
+              </td>
+
+              <td style="background-color: #FFE4B5;">
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="referenceNo"
+                  [disabled]="!SalesGatepassForm.get('subType')?.value"
+                  placeholder="Enter value"
+                  style="width: 160px;">
+              </td>
+
+              <!-- Search Button -->
+              <td style="background-color: #FFE4B5;">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  (click)="gatePassSearchNew()">
+
+                  <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </fieldset>
+
+  <!-- ================= VEHICLE DETAILS ================= -->
+  <fieldset class="RFS">
+    <legend
+      class="RFSL"
+      style="font-size: 12px; color: black; font-weight: bold;">
+      Vehicle Details
+    </legend>
+
+    <table class="center" style="width: 100%;">
+      <!-- Row 1 -->
+      <tr>
+        <td style="width: 15%;" class="LabelFontStyle">
+          Vehicle&nbsp;No&nbsp;:
+        </td>
+
+        <td>
+          <input
+            type="text"
+            formControlName="attribute5"
+            class="form-control"
+            style="height: 20px; width: 200px;"
+            readonly>
+        </td>
+
+        <td style="width: 15%;" class="LabelFontStyle">
+          Model&nbsp;:
+        </td>
+
+        <td>
+          <input
+            type="text"
+            formControlName="attribute1"
+            class="form-control"
+            style="height: 20px; width: 160px;"
+            readonly>
+        </td>
+
+        <td style="width: 15%;" class="LabelFontStyle">
+          Chassis&nbsp;No&nbsp;:
+        </td>
+
+        <td>
+          <input
+            type="text"
+            formControlName="attribute3"
+            class="form-control"
+            style="height: 20px; width: 160px;"
+            readonly>
+        </td>
+      </tr>
+
+      <!-- Row 2 -->
+      <tr>
+        <td style="width: 15%;" class="LabelFontStyle">
+          Color&nbsp;:
+        </td>
+
+        <td>
+          <input
+            type="text"
+            formControlName="attribute2"
+            class="form-control"
+            style="height: 20px; width: 160px;"
+            readonly>
+        </td>
+
+        <td style="width: 15%;" class="LabelFontStyle">
+          Engine&nbsp;No&nbsp;:
+        </td>
+
+        <td>
+          <input
+            type="text"
+            formControlName="attribute4"
+            class="form-control"
+            style="height: 20px; width: 160px;"
+            readonly>
+        </td>
+
+        <td style="width: 15%;" class="LabelFontStyle">
+          Variant&nbsp;:
+        </td>
+
+        <td>
+          <input
+            type="text"
+            formControlName="variant"
+            class="form-control"
+            style="height: 20px; width: 160px;"
+            readonly>
+        </td>
+      </tr>
+    </table>
+  </fieldset>
+
+  <!-- ================= GATE PASS DETAILS ================= -->
+  <fieldset class="RFS">
+    <legend class="RFSL">Gate Pass Details</legend>
+
+    <table class="center" style="width: 100%;">
+      <!-- Row 1 -->
+      <tr>
+        <td class="LabelFontStyle">
+          Gate Pass Number&nbsp;:
+        </td>
+
+        <td>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="gatepassNo"
+            readonly
+            style="width: 200px;">
+        </td>
+
+        <td class="LabelFontStyle">
+          Gate Pass Type&nbsp;:
+        </td>
+
+        <td>
+          <select
+            class="form-control"
+            formControlName="gpType"
+            style="width: 200px;">
+
+            <option value="">--Select--</option>
+            <option value="CUSTOMER">Customer</option>
+            <option value="DRIVER">Driver</option>
+            <option value="TRANSPORT">Transport</option>
+            <option value="ACCESSORIES FITTING">
+              ACCESSORIES FITTING
+            </option>
+            <option value="OTHER">Other</option>
+          </select>
+        </td>
+
+        <td class="LabelFontStyle">
+          Delivery Location&nbsp;:
+        </td>
+
+        <td>
+          <ng-container *ngIf="DisplayLocName; else elseDisplayLocName">
             <select
-              disabled
+              formControlName="actualDelvLocId"
+              id="actualDelvLocId"
               class="form-control"
-              style="width: 160px;"
-              formControlName="dept"
-              (change)="onDeptChange($any($event.target).value)">
+              (ngModelChange)="onOptionsLocation($event)"
+              style="width: 200px;">
 
               <option value="">--Select--</option>
 
               <option
-                *ngFor="let dept of DepartmentListFn"
-                [value]="dept.cmnTypeId">
-
-                {{ dept.code }}
-
+                *ngFor="let sc of BillShipToList"
+                [value]="sc.locId">
+                {{ sc.locCode }} -- {{ sc.locName }}
               </option>
-
             </select>
+          </ng-container>
 
-          </td>
-
-
-          <!-- Search By -->
-          <td style="background-color: #FFE4B5;">
-            &nbsp;Search By&nbsp;:&nbsp;
-          </td>
-
-          <td style="background-color: #FFE4B5;">
-
-            <select
-              class="form-control"
-              style="width: 160px;"
-              formControlName="subType"
-              [disabled]="!SalesGatepassForm.get('dept')?.value">
-
-              <option value="">--Select--</option>
-
-              <option
-                *ngFor="let cmn of cmnCodeList"
-                [value]="cmn.cmnCode">
-
-                {{ cmn.cmnCode }}
-
-              </option>
-
-            </select>
-
-          </td>
-
-
-          <!-- Reference Number -->
-          <td style="background-color: #FFE4B5;">
-            &nbsp;Reference&nbsp;No&nbsp;:&nbsp;
-          </td>
-
-          <td style="background-color: #FFE4B5;">
-
+          <ng-template #elseDisplayLocName>
             <input
               type="text"
               class="form-control"
-              formControlName="referenceNo"
-              [disabled]="!SalesGatepassForm.get('subType')?.value"
-              placeholder="Enter value">
+              formControlName="toLoc"
+              readonly
+              style="width: 200px;">
+          </ng-template>
+        </td>
+      </tr>
 
-          </td>
+      <!-- Row 2 -->
+      <tr>
+        <td class="LabelFontStyle">
+          Authorized By&nbsp;:
+        </td>
 
+        <td>
+          <ng-container
+            *ngIf="displayAuthorizedBy; else elseAuthorizedBy">
 
-          <!-- Search Button -->
-          <td style="background-color: #FFE4B5;">
+            <select
+              formControlName="authorizedBy"
+              id="authorizedBy"
+              class="form-control"
+              style="width: 200px;">
 
-            <button
-              type="button"
-              class="btn-primary"
-              (click)="gatePassSearchNew()">
+              <option value="">--Select--</option>
 
-              <i
-                class="fa fa-search"
-                aria-hidden="true">
-              </i>
+              <option
+                *ngFor="let sc of autherizeNameList"
+                [value]="sc.code">
+                {{ sc.code }}
+              </option>
+            </select>
+          </ng-container>
 
-            </button>
+          <ng-template #elseAuthorizedBy>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="authorizedBy"
+              readonly
+              style="width: 200px;">
+          </ng-template>
+        </td>
 
-          </td>
+        <td class="LabelFontStyle">
+          Driver Name&nbsp;:
+        </td>
 
-        </tr>
+        <td>
+          <ng-container
+            *ngIf="displaydriverName; else elsedriverName">
 
-      </table>
+            <input
+              type="text"
+              formControlName="driverName"
+              id="driverName"
+              class="form-control"
+              list="driverNameList"
+              placeholder="-- Select Driver --"
+              autocomplete="off"
+              style="width: 200px;">
 
-    </td>
-  </tr>
+            <datalist id="driverNameList">
+              <option
+                *ngFor="let sc of driversNameList"
+                [value]="sc.code">
+              </option>
+            </datalist>
+          </ng-container>
 
-                            <td style="background-color: #FFE4B5;">
-                                &nbsp;Value&nbsp;:&nbsp;
-                            </td>
-                            <td style="background-color: #FFE4B5;">
-                                <input class="form-control" [(ngModel)]="referenceNo" formControlName="referenceNo"
-                                    [disabled]="!selectedCmnCode"
-                                    placeholder="Enter value">
-                            </td>
+          <ng-template #elsedriverName>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="driverName"
+              readonly
+              style="width: 200px;">
+          </ng-template>
+        </td>
 
-                            <td style="background-color: #FFE4B5;">
-                                <button type="button" class="btn-primary"
-                                    [disabled]="!selectedDept || !selectedCmnCode || !searchValue"
-                                    (click)="gatePassSearch(selectedDept, selectedCmnCode, searchValue)">
-                                    <i class="fa fa-search" aria-hidden="true"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
-    </fieldset> 
+        <td class="LabelFontStyle">
+          Reason&nbsp;:
+        </td>
 
-    <fieldset class="RFS" [disabled]="isSearchDone">
-        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">
-            Find
-        </legend>
+        <td>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="reason"
+            placeholder="Reason"
+            style="width: 200px;">
+        </td>
+      </tr>
 
-        <table class="center" style="width: 100%;background-color: #FFE4B5;">
-            <tr> 
-                <td>
-                    <table class="center">
-                        <tr>
+      <!-- Row 3 -->
+      <tr>
+        <td class="LabelFontStyle">
+          Remarks&nbsp;:
+        </td>
 
-                            <td style="background-color: #FFE4B5;">
-                                &nbsp;Department&nbsp;:&nbsp;
-                            </td>
-
-                            <td style="background-color: #FFE4B5;">
-                                <select disabled class="form-control" style="width:160px;" formControlName="dept"
-                                    (change)="onDeptChange($any($event.target).value)">
-                                    <option value="">--Select--</option>
-                                    <option *ngFor="let dept of DepartmentListFn" [value]="dept.cmnTypeId">
-                                        {{dept.code}}
-                                    </option>
-                                </select>
-                            </td>
-
-                            <td style="background-color: #FFE4B5;">
-                                &nbsp;Search By&nbsp;:&nbsp;
-                            </td>
-
-                            <td style="background-color: #FFE4B5;" >
-                                <select class="form-control" style="width:160px;" formControlName="subType"
-                                    [disabled]="!SalesGatepassForm.get('dept')?.value">
-                                    <option value="">--Select--</option>
-                                    <option *ngFor="let cmn of cmnCodeList" [value]="cmn.cmnCode">
-                                        {{cmn.cmnCode}}
-                                    </option>
-                                </select>
-                            </td>
-
-                            <td style="background-color: #FFE4B5;">
-                                &nbsp;Reference&nbsp;No&nbsp;:&nbsp;
-                            </td>
-                            <td style="background-color: #FFE4B5;">
-                                <input class="form-control" formControlName="referenceNo"
-                                    [disabled]="!SalesGatepassForm.get('subType')?.value" placeholder="Enter value">
-                            </td>
-                            <td style="background-color: #FFE4B5;">
-                                <button type="button" class="btn-primary" (click)="gatePassSearchNew()">
-                                    <i class="fa fa-search" aria-hidden="true"></i>
-                                </button>
-                            </td>
-
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
-    </fieldset>
-<fieldset class="RFS">
-        <legend id="FormsPH_LGAadhaar" class="RFSL" style="font-size: 12px;color: black;font-weight: bold;">Vehicle Details
-        </legend>
-        <table class="center" style="width: 100%;">
-            <tr>
-                <!-- <input hidden formControlName="emplId" [(ngModel)]='emplId' class="form-control"> -->
-                <td style="width: 15%" class="LabelFontStyle"> Vehicle&nbsp;No&nbsp;: </td>
-                <td> <input disabled type="text" formControlName="attribute5" value="attribute5"
-                        class="form-control" style="height: 20px;width: 200px;"></td>
-               <td style="width: 15%" class="LabelFontStyle"> Model&nbsp;</td>
-                <td>
-                   <input disabled type="text" formControlName="attribute1" value="attribute1" 
-                        class="form-control" style="height: 20px;width: 160px;">
-                </td>
-               <td style="width: 15%" class="LabelFontStyle"> Chassis&nbsp;No&nbsp;: </td>
-                <td> <input disabled type="text" formControlName="attribute3" value="attribute3" 
-                        class="form-control" style="height: 20px;width: 160px;"></td>
-                 </tr>
-                 <tr>
-                <td style="width: 15%" class="LabelFontStyle">
-                    Color&nbsp;:&nbsp;
-                </td>
-                <td>
-                    <input disabled type="text" formControlName="attribute2" value="attribute2" 
-                        class="form-control" style="height: 20px;width: 160px;">
-                </td>
-                <td style="width: 15%" class="LabelFontStyle">
-                    Engine&nbsp;No:&nbsp;
-                </td>
-                <td>
-                    <input disabled type="text" formControlName="attribute4" value="attribute4" 
-                        class="form-control" style="height: 20px;width: 160px;">
-                </td>
-                 <td style="width: 15%" class="LabelFontStyle">
-                    Variant&nbsp;:&nbsp;
-                </td>
-                <td>
-                    <input disabled type="text" formControlName="variant" value="variant" 
-                        class="form-control" style="height: 20px;width: 160px;">
-                </td>
-            </tr>
-        </table>
-</fieldset>
-
+        <td colspan="5">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="receivedRemark"
+            placeholder="Enter Remark"
+            style="width: 300px;">
+        </td>
+      </tr>
+    </table>
   </fieldset>
 
-    <fieldset class="RFS">
-        <legend class="RFSL">Gate Pass Details</legend>
-        <table class="center" style="width:100%;">
-            <tr>
-                <td class="LabelFontStyle">Gate Pass Number :</td>
-                <td><input type="text" class="form-control" formControlName="gatepassNo" readonly></td>
-                <td class="LabelFontStyle">Gate Pass Type :</td>
-                <td> <select class="form-control" formControlName="gpType" style="width:200px;">
-                        <option value="">Select</option>
-                        <option value="CUSTOMER">Customer</option>
-                        <option value="DRIVER">Driver</option>
-                        <option value="TRANSPORT">Transport</option>
-                        <option value="ACCESSORIES FITTING">ACCESSORIES FITTING</option>
-                        <option value="OTHER">Other</option>
-                    </select>
-                </td>
-                <td class="LabelFontStyle">Delivery Location :</td>
-                <td>
-                <div *ngIf="DisplayLocName; then thenDisplayLocName; else elseDisplayLocName">
-                 </div> 
-                 <ng-template #thenDisplayLocName>
-                    <select formControlName="actualDelvLocId" id="actualDelvLocId" class="form-control"
-                        (ngModelChange)='onOptionsLocation($event)' style="width:200px;">
-                        <option></option>
-                        <option *ngFor="let sc of  BillShipToList" [value]="sc.locId">
-                            {{sc.locCode}}--{{sc.locName}}
-                        </option>
-                    </select>
+  <!-- ================= HIDDEN FORM CONTROLS ================= -->
+  <input type="hidden" formControlName="headerId">
+  <input type="hidden" formControlName="locId">
+  <input type="hidden" formControlName="fromLocId">
+  <input type="hidden" formControlName="createdBy">
 
-                     </ng-template>
-                                    <ng-template #elseDisplayLocName>
-                <input disabled type="text" class="form-control" formControlName="toLoc">
-                                         </ng-template>
-            </td>
-                                         <td>
-                    <input disabled hidden type="number" class="form-control" formControlName="locId">
-                    <input disabled hidden type="text" class="form-control" formControlName="attribute1">
-                    <input disabled hidden type="text" class="form-control" formControlName="attribute2">
-                    <input disabled hidden type="text" class="form-control" formControlName="attribute3">
-                    <input disabled hidden type="text" class="form-control" formControlName="attribute4">
-                    <input disabled hidden type="text" class="form-control" formControlName="attribute5">
-                </td>
-            </tr>
-            <tr>
-                <td class="LabelFontStyle">Authorized By :</td>
-                <td>
-                    <div *ngIf="displayAuthorizedBy; then thenAuthorizedBy; else elseAuthorizedBy"> </div>
-                    <ng-template #thenAuthorizedBy>
-                        <select formControlName="authorizedBy" id="authorizedBy" class="form-control">
-                            <option>--Select--</option>
-                            <option *ngFor="let sc of  autherizeNameList" [value]="sc.code">
-                                {{sc.code}}
-                            </option>
-                        </select>
-                    </ng-template>
-                    <ng-template #elseAuthorizedBy>
-                        <input disabled type="text" class="form-control" formControlName="authorizedBy">
-                    </ng-template>
-                </td>
-                <td class="LabelFontStyle">Driver Name :</td>
-                <td>
-                    <div *ngIf="displaydriverName; then thendriverName; else elsedriverName"> </div>
-                    <ng-template #thendriverName>
-                        <input type="text" formControlName="driverName" id="driverName" class="form-control"
-                            list="driverNameList" placeholder="-- Select Driver --" autocomplete="off" />
-                        <datalist id="driverNameList">
-                            <option *ngFor="let sc of driversNameList" [value]="sc.code">
-                            </option>
-                        </datalist>
-                    </ng-template>
-                    <ng-template #elsedriverName>
-                        <input disabled type="text" class="form-control" formControlName="driverName"
-                            style="width:200px;">
-                    </ng-template>
-                </td>
-                <td class="LabelFontStyle">Reason :</td>
-                <td><input type="text" class="form-control" formControlName="reason" placeholder="Reason"
-                        style="width:200px;"></td>
-            </tr>
-            <tr>
-                <td class="LabelFontStyle">Remarks :</td>
-
+  <!-- ================= GENERATE BUTTON ================= -->
   <fieldset class="RFS">
+    <table style="width: 100%;">
+      <tr>
+        <td style="text-align: center;">
+          <button
+            type="button"
+            class="btn btn-primary"
+            [disabled]="!isGenerateEnabled"
+            style="min-width: 140px; margin: 5px;"
+            (click)="generateGatepass()">
 
+            Generate Gate Pass
+          </button>
+        </td>
+      </tr>
+    </table>
+  </fieldset>
 
-                    <td>
-                        <input type="text" class="form-control" formControlName="receivedRemark"
-                            placeholder="Enter Remark" min="0" style="width:200px;">
-                    </td>
-                </ng-container>
-            </tr>
-        </table>
-    </fieldset> <input type="text" hidden formControlName="headerId"> <input type="text" hidden formControlName="locId"> <input
-        type="text" hidden formControlName="fromLocId"> <input type="text" hidden formControlName="dept"> 
-        <input type="text"  hidden formControlName="createdBy">
-    <fieldset class="RFS">
-        <table style="width:100%;">
-            <tr>
-                <td style="text-align:center;">
-                    <button type="button" class="btn btn-primary" [disabled]="!isGenerateEnabled"
-                        style="width:fit-content;min-width:140px;margin:5px;" (click)="generateGatepass()">
-                        Generate Gate Pass
-                    </button>
+  <!-- ================= SEARCH RESULTS ================= -->
+  <fieldset class="RFS" *ngIf="gatepassList?.length">
+    <legend class="RFSL">Search Results</legend>
 
-  Vehicle Details
+    <div style="width: 100%; overflow-x: auto;">
+      <table
+        class="GridFont"
+        id="excel-table"
+        cellspacing="0"
+        cellpadding="4"
+        style="width: 100%;">
 
-</legend>
+        <thead>
+          <tr class="GridHeader">
+            <th>Gate Pass No</th>
+            <th>Gate Pass Date</th>
+            <th>Department</th>
+            <th>Search Type</th>
+            <th>Reference No</th>
+            <th>Gate Pass Type</th>
+            <th>Authorized By</th>
+            <th>Driver Name</th>
+            <th>Reason</th>
+            <th>Remarks</th>
+            <th>From Location</th>
+            <th>Delivery Location</th>
+            <th>Action</th>
+          </tr>
+        </thead>
 
-<table
-  class="center"
-  style="width: 100%;">
+        <tbody>
+          <tr *ngFor="let item of gatepassList">
+            <td>{{ item.gatepassNo }}</td>
 
-  <!-- Row 1 -->
-  <tr>
+            <td>
+              {{ item.gatepassDate | date:'dd-MM-yyyy HH:mm' }}
+            </td>
 
-    <td
-      style="width: 15%"
-      class="LabelFontStyle">
+            <td>{{ item.dept }}</td>
+            <td>{{ item.subType }}</td>
+            <td>{{ item.referenceNo }}</td>
+            <td>{{ item.gpType }}</td>
+            <td>{{ item.authorizedBy }}</td>
+            <td>{{ item.driverName }}</td>
+            <td>{{ item.reason }}</td>
+            <td>{{ item.remarks }}</td>
+            <td>{{ item.fromLocId }}</td>
+            <td>{{ item.actualDelvLocId }}</td>
 
-      Vehicle&nbsp;No&nbsp;:
+            <td>
+              <button
+                type="button"
+                class="btn btn-sm btn-primary"
+                (click)="getGatepassByNo(item.gatepassNo)">
 
-    </td>
+                Select
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </fieldset>
 
-    <td>
-
-      <input
-        disabled
-        type="text"
-        formControlName="attribute5"
-        class="form-control"
-        style="height: 20px; width: 200px;">
-
-    <fieldset class="RFS" *ngIf="gatepassList?.length">
-        <legend class="RFSL">Search Results</legend>
-        <table class="GridFont" id="excel-table" cellspacing="0" cellpadding="4">
-            <thead>
-                <tr class="GridHeader">
-                    <th>Gate Pass No</th>
-                    <th>Gate Pass Date</th>
-                    <th>Department</th>
-                    <th>Search Type</th>
-                    <th>Reference No</th>
-                    <th>Gate Pass Type</th>
-                    <th>Authorized By</th>set NODE_OPTIONS=--openssl-legacy-provider
-                    <th>Driver Name</th>
-                    <th>Reason</th>
-                    <th>Remarks</th>
-                    <th>From Location</th>
-                    <th>Delivery Location</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of gatepassList">
-                    <td>{{item.gatepassNo}}</td>
-                    <td>{{item.gatepassDate | date:'dd-MM-yyyy HH:mm'}}</td>
-                    <td>{{item.dept}}</td>
-                    <td>{{item.subType}}</td>
-                    <td>{{item.referenceNo}}</td>
-                    <td>{{item.gpType}}</td>
-                    <td>{{item.authorizedBy}}</td>
-                    <td>{{item.driverName}}</td>
-                    <td>{{item.reason}}</td>
-                    <td>{{item.remarks}}</td>
-                    <td>{{item.fromLocId}}</td>
-                    <td>{{item.actualDelvLocId}}</td>
-                    <td>
-                        <button type="button" class="btn btn-sm btn-primary" (click)="getGatepassByNo(item.gatepassNo)">
-                            Select
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </fieldset>
 </form>
