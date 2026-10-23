@@ -1022,7 +1022,7 @@
 
                                 <div *ngIf="enableCancelButton; then CancelButtonYes; else CancelButtonNo"></div>
                                 <ng-template #CancelButtonYes>
-                                    <td><button type="button" class="btn btn-info"
+                                    <td><button disabled type="button" class="btn btn-info"
                                             (click)="reverseReceipt()">Reverse</button></td>
                                 </ng-template>
                                 <ng-template #CancelButtonNo></ng-template>
@@ -1061,13 +1061,14 @@
                                 </td>   -->
 
                                 <!-- New Code ....Rk -->
-                                <td [style.display]="isVisibleUnApplyReceipt ? 'block' : 'none'">
+                                 <!-- jyotu k disable added code -->
+                                <!-- <td [style.display]="isVisibleUnApplyReceipt ? 'block' : 'none'">
                                     <button type="button" class="btn btn-primary" data-toggle="modal"
                                         data-target="#appliedList" (click)="LoadAppliedInvoices()"
                                         style="width:fit-content;color: black;">
                                         &nbsp;Un-Apply Receipt</button>
-                                </td>
-
+                                </td> -->
+                            <!-- jyotu k added code -->
 
                                 <!-- ==========================SEARCH & APPLY =============================== -->
 

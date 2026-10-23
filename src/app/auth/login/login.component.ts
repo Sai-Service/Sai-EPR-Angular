@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
 
 
   login() {
-
+    alert(this.username)
     if (this.username == undefined || this.username == "") {
       alert('Please enter valid Username !');
       return;
