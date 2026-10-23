@@ -1519,7 +1519,11 @@ export class PaymentArComponent implements OnInit {
               this.showReasonDetails = true;
               this.showModalForm = true;
               this.enableApplyButton = true;
+              if (sessionStorage.getItem('ticketNo')=='2W28813' ||
+            sessionStorage.getItem('ticketNo')=='3W28813'||
+           sessionStorage.getItem('ticketNo')=='TA28813') {
               this.enableCancelButton = true;
+              }
               this.paymentArForm.get('reversalReasonCode').enable();
               this.paymentArForm.get('reversalCategory').enable();
               this.paymentArForm.get('reversalComment').enable();
@@ -1532,7 +1536,11 @@ export class PaymentArComponent implements OnInit {
           if (data.obj.oePayList[0].reversalReasonCode === null && data.obj.oePayList[0].payType != 'CASH') {
             this.showModalForm = true;
             this.enableApplyButton = true;
+             if (sessionStorage.getItem('ticketNo')=='2W28813' ||
+            sessionStorage.getItem('ticketNo')=='3W28813'||
+           sessionStorage.getItem('ticketNo')=='TA28813') {
             this.enableCancelButton = true;
+           }
             this.showReasonDetails = true;
             this.paymentArForm.get('reversalReasonCode').enable();
             this.paymentArForm.get('reversalCategory').enable();
@@ -1685,7 +1693,11 @@ export class PaymentArComponent implements OnInit {
 
             if (data.obj.oePayList[0].payType === 'CHEQUE' && mDays <= reversalDays) {
               this.showReasonDetails = true;
+               if (sessionStorage.getItem('ticketNo')=='2W28813' ||
+            sessionStorage.getItem('ticketNo')=='3W28813'||
+           sessionStorage.getItem('ticketNo')=='TA28813') {
               this.enableCancelButton = true;
+           }
               this.paymentArForm.get('reversalReasonCode').enable();
               this.paymentArForm.get('reversalCategory').enable();
               this.paymentArForm.get('reversalComment').enable();
@@ -1704,14 +1716,22 @@ export class PaymentArComponent implements OnInit {
               // alert('current date---'+ currDate)
               if (Number(sessionStorage.getItem('deptId')) != 4) {
                 if (data.obj.oePayList[0].receiptDate === currDate) {
+                   if (sessionStorage.getItem('ticketNo')=='2W28813' ||
+            sessionStorage.getItem('ticketNo')=='3W28813'||
+           sessionStorage.getItem('ticketNo')=='TA28813') {
                   this.enableCancelButton = true;
+           }
                 }
                 else {
                   this.enableCancelButton = false;
                 }
               }
               if (Number(sessionStorage.getItem('deptId')) === 4) {
+                 if (sessionStorage.getItem('ticketNo')=='2W28813' ||
+            sessionStorage.getItem('ticketNo')=='3W28813'||
+           sessionStorage.getItem('ticketNo')=='TA28813') {
                 this.enableCancelButton = true;
+           }
               }
               this.paymentArForm.get('reversalReasonCode').enable();
               this.paymentArForm.get('reversalCategory').enable();
@@ -1817,7 +1837,11 @@ export class PaymentArComponent implements OnInit {
             // if (data.obj.oePayList[0].status=='APPLIED'){
             if (data.obj.oePayList[0].totAppliedtAmount > 0) {
               if (Number(sessionStorage.getItem('deptId')) == 4) {
+                 if (sessionStorage.getItem('ticketNo')=='2W28813' ||
+            sessionStorage.getItem('ticketNo')=='3W28813'||
+           sessionStorage.getItem('ticketNo')=='TA28813') {
                 this.isVisibleUnApplyReceipt = true;
+           }
               }
             }
 
@@ -1860,7 +1884,11 @@ export class PaymentArComponent implements OnInit {
 
             if (data.obj.oePayList[0].payType === 'CHEQUE' && mDays <= reversalDays) {
               this.showReasonDetails = true;
+               if (sessionStorage.getItem('ticketNo')=='2W28813' ||
+            sessionStorage.getItem('ticketNo')=='3W28813'||
+           sessionStorage.getItem('ticketNo')=='TA28813') {
               this.enableCancelButton = true;
+           }
               this.paymentArForm.get('reversalReasonCode').enable();
               this.paymentArForm.get('reversalCategory').enable();
               this.paymentArForm.get('reversalComment').enable();
@@ -1873,7 +1901,11 @@ export class PaymentArComponent implements OnInit {
 
             if (data.obj.oePayList[0].payType != 'CHEQUE' && mDays < reversalDays) {
               this.showReasonDetails = true;
+               if (sessionStorage.getItem('ticketNo')=='2W28813' ||
+            sessionStorage.getItem('ticketNo')=='3W28813'||
+           sessionStorage.getItem('ticketNo')=='TA28813') {
               this.enableCancelButton = true;
+           }
               this.paymentArForm.get('reversalReasonCode').enable();
               this.paymentArForm.get('reversalCategory').enable();
               this.paymentArForm.get('reversalComment').enable();
@@ -3135,7 +3167,11 @@ export class PaymentArComponent implements OnInit {
             if (res.code === 400) {
               // alert('ERROR OCCOURED IN PROCEESS');
               alert(res.message + "\n" + res.obj);
+               if (sessionStorage.getItem('ticketNo')=='2W28813' ||
+            sessionStorage.getItem('ticketNo')=='3W28813'||
+           sessionStorage.getItem('ticketNo')=='TA28813') {
               this.enableCancelButton = true;
+           }
               // this.paymentArForm.reset();
             }
           }

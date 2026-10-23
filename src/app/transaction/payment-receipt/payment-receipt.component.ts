@@ -478,7 +478,7 @@ export class PaymentReceiptComponent implements OnInit {
 
 
   newMast() {
-    this.isDisabledSave = true;
+    this.isDisabledSave = false;
     const formValue: IPaymentRcpt = this.transeData(this.paymentReceiptForm.value);
     var payType = this.paymentReceiptForm.get('payType').value;
     if (this.paymentReceiptForm.get('paymentAmt').value === undefined || payType === undefined) {
