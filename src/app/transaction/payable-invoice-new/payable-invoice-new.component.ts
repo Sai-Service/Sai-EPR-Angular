@@ -216,6 +216,7 @@ export class PayableInvoiceNewComponent implements OnInit {
   isVisibleSaveTDS: boolean = false;
   isVisibleviewAccounting: boolean = false;
   isVisibleTDSTab: boolean = false;
+  isDisabledSave : boolean=false;
   isVisiblepayGroupSelectList: boolean = false;
   isVisiblepayGroupGroupinput: boolean = false;
   isVisiblelineDetialsDeleteButton: boolean = false;
@@ -3654,6 +3655,7 @@ export class PayableInvoiceNewComponent implements OnInit {
   }
 
   SaveTdsDetails() {
+    this.isDisabledSave=false;
     var tdsLineArr = this.poInvoiceForm.get('tdsLines').value;
     var len1 = tdsLineArr.length;
     for (let i = 0; i < len1; i++) {

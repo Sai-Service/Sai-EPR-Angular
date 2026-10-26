@@ -1557,7 +1557,7 @@
                                                     <div *ngIf="applySaveButton ,then appSaveYes; else appSaveNo" >
                                                     </div>
                                                     <ng-template #appSaveYes>
-                                                        <button style="width: 8em;" type="button" class="btn btn-info"
+                                                        <button style="width: 8em;" type="button" class="btn btn-info" [disabled]="isDisabledSave"
                                                             (click)="SaveApply(applyTo)">Save</button>
                                                     </ng-template>
                                                     <ng-template #appSaveNo>

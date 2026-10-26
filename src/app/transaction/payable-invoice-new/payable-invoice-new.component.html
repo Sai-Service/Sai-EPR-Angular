@@ -2105,7 +2105,7 @@
                                         <tr>
                                             <td>
                                                 <button type="submit" class="btn btn-primary" (click)="SaveTdsDetails()"
-                                                    [style.display]="isVisibleSaveTDS ? 'block' : 'none'">Save
+                                                 [disabled]="isDisabledSave"   [style.display]="isVisibleSaveTDS ? 'block' : 'none'">Save
                                                     Tds</button>
                                             </td>
                                         </tr>

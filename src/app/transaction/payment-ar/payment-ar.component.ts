@@ -59,52 +59,53 @@ export class PaymentArComponent implements OnInit {
   now = Date.now();
   public minDate = new Date();
   isVisibleUnApplyReceipt: boolean = false;
+  isDisabledSave :boolean=true;
   message: string = "PleaseFixtheErrors!";
   msgType: string = "Close";
-  methodName:string;
+  methodName: string;
   // public DivisionIDList : Array<string>=[];
   // public OUIdList:any=[];
 
-  public OUIdList:any=[];
-  public DepartmentList:any=[];
-  public statusList:any=[];
-  public locIdList:any=[];
-  ReceiptMethodValList:any=[];
+  public OUIdList: any = [];
+  public DepartmentList: any = [];
+  public statusList: any = [];
+  public locIdList: any = [];
+  ReceiptMethodValList: any = [];
   // public PaymentModeList:any=[];
   // public ReceiptMethodList:any=[];
-  ReceiptMethodList: any=[] ;
-  public ReceiptStatusList:any=[];
-  public ReceiptStateList:any=[];
-  public ReverseReasonList:any=[];
-  public ReceiptTypeArList:any=[];
-  public VehRegNoList:any=[];
-  public RefReasonList:any=[];
+  ReceiptMethodList: any = [];
+  public ReceiptStatusList: any = [];
+  public ReceiptStateList: any = [];
+  public ReverseReasonList: any = [];
+  public ReceiptTypeArList: any = [];
+  public VehRegNoList: any = [];
+  public RefReasonList: any = [];
 
   // PaymentModeList: any=[];
   PaymentModeList: any[] = [];
   ChqBounceReasonList: any;
-  viewAccountingArRcpt:any=[];
-  viewAccountingLines:any=[];
-  receiptMethodsList:any=[];
+  viewAccountingArRcpt: any = [];
+  viewAccountingLines: any = [];
+  receiptMethodsList: any = [];
 
-  receiptDetails: any=[];
-  customerNameSearch: any=[];
-  accountNoSearch: any=[];
-  getVehRegDetails: any=[];
-  CustomerDetailsList: any=[];
-  CustomerSiteDetails: any=[];
-  GLPeriodCheck: any=[];
+  receiptDetails: any = [];
+  customerNameSearch: any = [];
+  accountNoSearch: any = [];
+  getVehRegDetails: any = [];
+  CustomerDetailsList: any = [];
+  CustomerSiteDetails: any = [];
+  GLPeriodCheck: any = [];
   glPrdStartDate: string;
   glPrdEndDate: string;
 
-  userList1: any=[];
+  userList1: any = [];
   lastkeydown1: number = 0;
 
-  lstcomments: any=[];
-  lstinvoices: any=[];
-  lstCustomer: any=[];
-  lstApplyHistory: any=[];
-  lstRcptOtherDetails: any=[];
+  lstcomments: any = [];
+  lstinvoices: any = [];
+  lstCustomer: any = [];
+  lstApplyHistory: any = [];
+  lstRcptOtherDetails: any = [];
 
 
 
@@ -269,7 +270,7 @@ export class PaymentArComponent implements OnInit {
   refType: string;
 
   showOTHERModal = false;
-  showControlModal=false;
+  showControlModal = false;
   othSaveButton = false;
   othAddRemoveButton = false;
   // othDelButton=true;
@@ -315,7 +316,7 @@ export class PaymentArComponent implements OnInit {
   isDisabled2 = true;
   unAppAllFlag: string;
   othLineValidation = false;
-  ReceiptMethodList1:any=[];
+  ReceiptMethodList1: any = [];
 
 
   // applyTo: string;
@@ -335,7 +336,7 @@ export class PaymentArComponent implements OnInit {
       orgId: [],
       ouId: [],
       deptId: [],
-      methodName:[],
+      methodName: [],
       loginArray: [''],
       loginName: [''],
       ouName: [''],
@@ -560,10 +561,10 @@ export class PaymentArComponent implements OnInit {
       this.paymentArForm.get('deptId').disable();
     }
 
-    if (Number(sessionStorage.getItem('roleId'))===10){
-      this.displayButton=false;
-      this.enableCancelButton=false;
-      this.enableApplyButton=false;
+    if (Number(sessionStorage.getItem('roleId')) === 10) {
+      this.displayButton = false;
+      this.enableCancelButton = false;
+      this.enableApplyButton = false;
     }
 
     // alert ("DeptId : " +this.deptId + " accountsLogin="+this.accountsLogin);
@@ -914,20 +915,20 @@ export class PaymentArComponent implements OnInit {
   }
 
   onReferenceNoInput(event: Event): void {
-  if (sessionStorage.getItem('attribute1') !== 'TAXI') {
-    return;
+    if (sessionStorage.getItem('attribute1') !== 'TAXI') {
+      return;
+    }
+
+    const input = event.target as HTMLInputElement;
+    const referenceNoControl = this.paymentArForm.get('referenceNo');
+
+    referenceNoControl?.setValidators([Validators.required, Validators.pattern(/^[A-Z]{3}\d{8}[A-Z]{3}$/)]);
+    referenceNoControl?.updateValueAndValidity();
+
+    if (input.value.length === 14 && referenceNoControl?.errors?.['pattern']) {
+      alert('Reference No format is invalid. Expected format: SOB26000881VWS (3 letters + 8 digits + 3 letters).');
+    }
   }
-
-  const input = event.target as HTMLInputElement;
-  const referenceNoControl = this.paymentArForm.get('referenceNo');
-
-  referenceNoControl?.setValidators([Validators.required, Validators.pattern(/^[A-Z]{3}\d{8}[A-Z]{3}$/)]);
-  referenceNoControl?.updateValueAndValidity();
-
-  if (input.value.length === 14 && referenceNoControl?.errors?.['pattern']) {
-    alert('Reference No format is invalid. Expected format: SOB26000881VWS (3 letters + 8 digits + 3 letters).');
-  }
-}
 
 
 
@@ -1138,10 +1139,10 @@ export class PaymentArComponent implements OnInit {
   ReceiptAmount: number = 0;
 
   onPayTypeSelected(event: any, rmStatus: any) {
-  // alert(event.target.value);
-    var value=event.target.value;
-     var payType1 = value.substr(value.indexOf(':') + 1, value.length);
-     var payType=payType1.trim();
+    // alert(event.target.value);
+    var value = event.target.value;
+    var payType1 = value.substr(value.indexOf(':') + 1, value.length);
+    var payType = payType1.trim();
     //  alert('-----'+payType+'------')
     // alert('paytype =' +payType  + " LocId :"+ this.locId + " Ou Id :"+this.ouId + " Deptid : "+ this.deptId + " Status :"+rmStatus);
     this.ReceiptMethodList = null;
@@ -1187,7 +1188,7 @@ export class PaymentArComponent implements OnInit {
       //       if (this.displayButton == true) {
       //         this.checkDate = this.pipe.transform(Date.now(), 'y-MM-dd');
       //       }
-          
+
       //       if (Number(sessionStorage.getItem('deptId')) === 4) {
       //         // var selectReceiptmethodList= this.receiptMethodId.
       //         if ( this.receiptMethodId != undefined){
@@ -1203,33 +1204,33 @@ export class PaymentArComponent implements OnInit {
       //       }
       //       }
       //     });
-        this.service.ReceiptMethodListNew(payType, rmStatus, this.deptId, this.ouId)
+      this.service.ReceiptMethodListNew(payType, rmStatus, this.deptId, this.ouId)
         .subscribe(
           data => {
-            if (data.code===200){
-            this.receiptMethodsList = data.obj;
-            console.log( this.receiptMethodsList);
+            if (data.code === 200) {
+              this.receiptMethodsList = data.obj;
+              console.log(this.receiptMethodsList);
               this.showBankDetails = true;
-            if (this.displayButton == true) {
-              this.checkDate = this.pipe.transform(Date.now(), 'y-MM-dd');
-            }
-          
-            if (Number(sessionStorage.getItem('deptId')) === 4) {
-              // var selectReceiptmethodList= this.receiptMethodId.
-              if ( this.receiptMethodId != undefined){
-              let selectReceiptmethodList = this.receiptMethodsList.find(d => d.receiptMethodId === this.receiptMethodId);
-              console.log(selectReceiptmethodList);
-              console.log(selectReceiptmethodList.methodName);
-              if (selectReceiptmethodList.methodName.includes('FSC Control')) {
-                this.refType = 'Service-Order'
+              if (this.displayButton == true) {
+                this.checkDate = this.pipe.transform(Date.now(), 'y-MM-dd');
               }
-              if (selectReceiptmethodList.methodName.includes('Sales Control')) {
-                this.refType = 'Sales-Order'
+
+              if (Number(sessionStorage.getItem('deptId')) === 4) {
+                // var selectReceiptmethodList= this.receiptMethodId.
+                if (this.receiptMethodId != undefined) {
+                  let selectReceiptmethodList = this.receiptMethodsList.find(d => d.receiptMethodId === this.receiptMethodId);
+                  console.log(selectReceiptmethodList);
+                  console.log(selectReceiptmethodList.methodName);
+                  if (selectReceiptmethodList.methodName.includes('FSC Control')) {
+                    this.refType = 'Service-Order'
+                  }
+                  if (selectReceiptmethodList.methodName.includes('Sales Control')) {
+                    this.refType = 'Sales-Order'
+                  }
+                }
               }
             }
-            }
-            }
-          
+
           })
     }
     var customerId = this.paymentArForm.get('customerId')?.value;
@@ -1280,8 +1281,8 @@ export class PaymentArComponent implements OnInit {
           }
         }
       )
-      // console.log(this.receiptMethodsList+'--------');
-      
+    // console.log(this.receiptMethodsList+'--------');
+
   }
 
 
@@ -1326,7 +1327,7 @@ export class PaymentArComponent implements OnInit {
 
     this.status = null;
     // debugger;
-    if ((Number(sessionStorage.getItem('deptId')) != 4) ) {
+    if ((Number(sessionStorage.getItem('deptId')) != 4)) {
       this.service.getArReceiptSearchByRcptNoByloc(rcptNo, sessionStorage.getItem('ouId'), sessionStorage.getItem('locId'), sessionStorage.getItem('deptId'))
         .subscribe(
           data => {
@@ -1338,7 +1339,7 @@ export class PaymentArComponent implements OnInit {
             }
           });
     }
-    else if (Number(sessionStorage.getItem('deptId')) == 4 ) {
+    else if (Number(sessionStorage.getItem('deptId')) == 4) {
       // alert ('else if ----'+ this.locId)
       this.service.getArReceiptSearchByRcptNoByloc(rcptNo, sessionStorage.getItem('ouId'), this.locId, sessionStorage.getItem('deptId'))
         .subscribe(
@@ -1351,10 +1352,10 @@ export class PaymentArComponent implements OnInit {
             }
           });
     }
-    if (Number(sessionStorage.getItem('roleId'))===10){
-      this.displayButton=false;
-      this.enableCancelButton=false;
-      this.enableApplyButton=false;
+    if (Number(sessionStorage.getItem('roleId')) === 10) {
+      this.displayButton = false;
+      this.enableCancelButton = false;
+      this.enableApplyButton = false;
     }
   }
 
@@ -1519,10 +1520,12 @@ export class PaymentArComponent implements OnInit {
               this.showReasonDetails = true;
               this.showModalForm = true;
               this.enableApplyButton = true;
-              if (sessionStorage.getItem('ticketNo')=='2W28813' ||
-            sessionStorage.getItem('ticketNo')=='3W28813'||
-           sessionStorage.getItem('ticketNo')=='TA28813') {
-              this.enableCancelButton = true;
+              if (sessionStorage.getItem('ticketNo') == '2W28813' ||
+                sessionStorage.getItem('ticketNo') == '3W28813' ||
+                sessionStorage.getItem('ticketNo') == 'TA28813' || sessionStorage.getItem('ticketNo') == 'P25303' ||
+                sessionStorage.getItem('ticketNo') == 'P26990' || sessionStorage.getItem('ticketNo') == 'P27054' ||
+                sessionStorage.getItem('ticketNo') == 'P27174' || sessionStorage.getItem('ticketNo') == 'P25303') {
+                this.enableCancelButton = true;
               }
               this.paymentArForm.get('reversalReasonCode').enable();
               this.paymentArForm.get('reversalCategory').enable();
@@ -1536,11 +1539,13 @@ export class PaymentArComponent implements OnInit {
           if (data.obj.oePayList[0].reversalReasonCode === null && data.obj.oePayList[0].payType != 'CASH') {
             this.showModalForm = true;
             this.enableApplyButton = true;
-             if (sessionStorage.getItem('ticketNo')=='2W28813' ||
-            sessionStorage.getItem('ticketNo')=='3W28813'||
-           sessionStorage.getItem('ticketNo')=='TA28813') {
-            this.enableCancelButton = true;
-           }
+            if (sessionStorage.getItem('ticketNo') == '2W28813' ||
+              sessionStorage.getItem('ticketNo') == '3W28813' ||
+              sessionStorage.getItem('ticketNo') == 'TA28813' || sessionStorage.getItem('ticketNo') == 'P25303' ||
+              sessionStorage.getItem('ticketNo') == 'P26990' || sessionStorage.getItem('ticketNo') == 'P27054' ||
+              sessionStorage.getItem('ticketNo') == 'P27174' || sessionStorage.getItem('ticketNo') == 'P25303') {
+              this.enableCancelButton = true;
+            }
             this.showReasonDetails = true;
             this.paymentArForm.get('reversalReasonCode').enable();
             this.paymentArForm.get('reversalCategory').enable();
@@ -1605,7 +1610,7 @@ export class PaymentArComponent implements OnInit {
             if (data.code === 400) { alert(data.message + data.obj); return; }
             this.receiptDetails = data.obj.oePayList[0];
             console.log(this.receiptDetails);
-           
+
             // ---------------------------Applied history
             this.lstApplyHistory = data.obj.invApplyLst;
             console.log(this.lstApplyHistory);
@@ -1693,11 +1698,13 @@ export class PaymentArComponent implements OnInit {
 
             if (data.obj.oePayList[0].payType === 'CHEQUE' && mDays <= reversalDays) {
               this.showReasonDetails = true;
-               if (sessionStorage.getItem('ticketNo')=='2W28813' ||
-            sessionStorage.getItem('ticketNo')=='3W28813'||
-           sessionStorage.getItem('ticketNo')=='TA28813') {
-              this.enableCancelButton = true;
-           }
+              if (sessionStorage.getItem('ticketNo') == '2W28813' ||
+                sessionStorage.getItem('ticketNo') == '3W28813' ||
+                sessionStorage.getItem('ticketNo') == 'TA28813' || sessionStorage.getItem('ticketNo') == 'P25303' ||
+                sessionStorage.getItem('ticketNo') == 'P26990' || sessionStorage.getItem('ticketNo') == 'P27054' ||
+                sessionStorage.getItem('ticketNo') == 'P27174' || sessionStorage.getItem('ticketNo') == 'P25303') {
+                this.enableCancelButton = true;
+              }
               this.paymentArForm.get('reversalReasonCode').enable();
               this.paymentArForm.get('reversalCategory').enable();
               this.paymentArForm.get('reversalComment').enable();
@@ -1716,22 +1723,26 @@ export class PaymentArComponent implements OnInit {
               // alert('current date---'+ currDate)
               if (Number(sessionStorage.getItem('deptId')) != 4) {
                 if (data.obj.oePayList[0].receiptDate === currDate) {
-                   if (sessionStorage.getItem('ticketNo')=='2W28813' ||
-            sessionStorage.getItem('ticketNo')=='3W28813'||
-           sessionStorage.getItem('ticketNo')=='TA28813') {
-                  this.enableCancelButton = true;
-           }
+                  if (sessionStorage.getItem('ticketNo') == '2W28813' ||
+                    sessionStorage.getItem('ticketNo') == '3W28813' ||
+                    sessionStorage.getItem('ticketNo') == 'TA28813' || sessionStorage.getItem('ticketNo') == 'P25303' ||
+                    sessionStorage.getItem('ticketNo') == 'P26990' || sessionStorage.getItem('ticketNo') == 'P27054' ||
+                    sessionStorage.getItem('ticketNo') == 'P27174' || sessionStorage.getItem('ticketNo') == 'P25303') {
+                    this.enableCancelButton = true;
+                  }
                 }
                 else {
                   this.enableCancelButton = false;
                 }
               }
               if (Number(sessionStorage.getItem('deptId')) === 4) {
-                 if (sessionStorage.getItem('ticketNo')=='2W28813' ||
-            sessionStorage.getItem('ticketNo')=='3W28813'||
-           sessionStorage.getItem('ticketNo')=='TA28813') {
-                this.enableCancelButton = true;
-           }
+                if (sessionStorage.getItem('ticketNo') == '2W28813' ||
+                  sessionStorage.getItem('ticketNo') == '3W28813' ||
+                  sessionStorage.getItem('ticketNo') == 'TA28813' || sessionStorage.getItem('ticketNo') == 'P25303' ||
+                  sessionStorage.getItem('ticketNo') == 'P26990' || sessionStorage.getItem('ticketNo') == 'P27054' ||
+                  sessionStorage.getItem('ticketNo') == 'P27174' || sessionStorage.getItem('ticketNo') == 'P25303') {
+                  this.enableCancelButton = true;
+                }
               }
               this.paymentArForm.get('reversalReasonCode').enable();
               this.paymentArForm.get('reversalCategory').enable();
@@ -1745,7 +1756,7 @@ export class PaymentArComponent implements OnInit {
               this.enableApplyButton = true;
             } else { this.enableApplyButton = false; }
 
-           
+
 
           });
 
@@ -1758,17 +1769,17 @@ export class PaymentArComponent implements OnInit {
             if (data.code === 400) { alert(data.message + data.obj); return; }
             this.receiptDetails = data.obj.oePayList[0];
             console.log(this.receiptDetails);
-              var rmStatus = 'Active'
+            var rmStatus = 'Active'
             this.service.ReceiptMethodListNew(data.obj.oePayList[0].payType, rmStatus, data.obj.oePayList[0].deptId, data.obj.oePayList[0].orgId)
               .subscribe(
                 data => {
                   // debugger
                   this.ReceiptMethodList1 = data.obj;
                   console.log(data.obj);
-                  var selectReceiptMethodList1 = this.ReceiptMethodList1.find(d=>d.methodName === this.receiptDetails.receiptMethodName)
+                  var selectReceiptMethodList1 = this.ReceiptMethodList1.find(d => d.methodName === this.receiptDetails.receiptMethodName)
                   // let selectReceiptmethodList = this.ReceiptMethodList1.find((d) => d.receiptMethodName === this.receiptDetails[0].receiptMethodName);
                   console.log(selectReceiptMethodList1);
-                  this.paymentArForm.patchValue({receiptMethodId:selectReceiptMethodList1.receiptMethodId,methodName:selectReceiptMethodList1.methodName})
+                  this.paymentArForm.patchValue({ receiptMethodId: selectReceiptMethodList1.receiptMethodId, methodName: selectReceiptMethodList1.methodName })
                   // receiptMethodId:selectReceiptMethodList1.receiptMethodName
                 });
             this.enableCancelButton = false;
@@ -1837,11 +1848,13 @@ export class PaymentArComponent implements OnInit {
             // if (data.obj.oePayList[0].status=='APPLIED'){
             if (data.obj.oePayList[0].totAppliedtAmount > 0) {
               if (Number(sessionStorage.getItem('deptId')) == 4) {
-                 if (sessionStorage.getItem('ticketNo')=='2W28813' ||
-            sessionStorage.getItem('ticketNo')=='3W28813'||
-           sessionStorage.getItem('ticketNo')=='TA28813') {
-                this.isVisibleUnApplyReceipt = true;
-           }
+                if (sessionStorage.getItem('ticketNo') == '2W28813' ||
+                  sessionStorage.getItem('ticketNo') == '3W28813' ||
+                  sessionStorage.getItem('ticketNo') == 'TA28813' || sessionStorage.getItem('ticketNo') == 'P25303' ||
+                  sessionStorage.getItem('ticketNo') == 'P26990' || sessionStorage.getItem('ticketNo') == 'P27054' ||
+                  sessionStorage.getItem('ticketNo') == 'P27174' || sessionStorage.getItem('ticketNo') == 'P25303') {
+                  this.enableCancelButton = true;
+                }
               }
             }
 
@@ -1884,11 +1897,13 @@ export class PaymentArComponent implements OnInit {
 
             if (data.obj.oePayList[0].payType === 'CHEQUE' && mDays <= reversalDays) {
               this.showReasonDetails = true;
-               if (sessionStorage.getItem('ticketNo')=='2W28813' ||
-            sessionStorage.getItem('ticketNo')=='3W28813'||
-           sessionStorage.getItem('ticketNo')=='TA28813') {
-              this.enableCancelButton = true;
-           }
+              if (sessionStorage.getItem('ticketNo') == '2W28813' ||
+                sessionStorage.getItem('ticketNo') == '3W28813' ||
+                sessionStorage.getItem('ticketNo') == 'TA28813' || sessionStorage.getItem('ticketNo') == 'P25303' ||
+                sessionStorage.getItem('ticketNo') == 'P26990' || sessionStorage.getItem('ticketNo') == 'P27054' ||
+                sessionStorage.getItem('ticketNo') == 'P27174' || sessionStorage.getItem('ticketNo') == 'P25303') {
+                this.enableCancelButton = true;
+              }
               this.paymentArForm.get('reversalReasonCode').enable();
               this.paymentArForm.get('reversalCategory').enable();
               this.paymentArForm.get('reversalComment').enable();
@@ -1901,11 +1916,13 @@ export class PaymentArComponent implements OnInit {
 
             if (data.obj.oePayList[0].payType != 'CHEQUE' && mDays < reversalDays) {
               this.showReasonDetails = true;
-               if (sessionStorage.getItem('ticketNo')=='2W28813' ||
-            sessionStorage.getItem('ticketNo')=='3W28813'||
-           sessionStorage.getItem('ticketNo')=='TA28813') {
-              this.enableCancelButton = true;
-           }
+              if (sessionStorage.getItem('ticketNo') == '2W28813' ||
+                sessionStorage.getItem('ticketNo') == '3W28813' ||
+                sessionStorage.getItem('ticketNo') == 'TA28813' || sessionStorage.getItem('ticketNo') == 'P25303' ||
+                sessionStorage.getItem('ticketNo') == 'P26990' || sessionStorage.getItem('ticketNo') == 'P27054' ||
+                sessionStorage.getItem('ticketNo') == 'P27174' || sessionStorage.getItem('ticketNo') == 'P25303') {
+                this.enableCancelButton = true;
+              }
               this.paymentArForm.get('reversalReasonCode').enable();
               this.paymentArForm.get('reversalCategory').enable();
               this.paymentArForm.get('reversalComment').enable();
@@ -2755,7 +2772,7 @@ export class PaymentArComponent implements OnInit {
 
   }
 
-  SaveApply(applType:any) {
+  SaveApply(applType: any) {
 
 
     if (applType === 'INVOICE') {
@@ -2835,7 +2852,7 @@ export class PaymentArComponent implements OnInit {
 
   SaveApplyReceipt() {
     // alert ("Posting data  to AR RECEIPT appl......")
-
+    this.isDisabledSave=false;
     var patch = this.paymentArForm.get('invLine') as FormArray;
     var applLineArr = this.paymentArForm.get('invLine').value;
 
@@ -2958,7 +2975,7 @@ export class PaymentArComponent implements OnInit {
 
   SaveRefReceipt() {
     // alert ("Posting data  to AR RECEIPT appl......")
-
+    this.isDisabledSave=false;
     var patch = this.paymentArForm.get('invLine') as FormArray;
     var applLineArr = this.paymentArForm.get('invLine').value;
 
@@ -3034,14 +3051,14 @@ export class PaymentArComponent implements OnInit {
     // alert ("GL period..." +this.GLPeriodCheck);
     this.CheckDataValidations();
     if (sessionStorage.getItem('attribute1') === 'TAXI') {
-    const referenceNo = this.paymentArForm.get('referenceNo')?.value;
-    if (!referenceNo || referenceNo.toString().trim() === '') {
-      alert('Reference No is mandatory for TAXI users.');
-      this.paymentArForm.get('referenceNo')?.markAsTouched();
-      this.paymentArForm.get('referenceNo')?.setErrors({ required: true });
-      return;
+      const referenceNo = this.paymentArForm.get('referenceNo')?.value;
+      if (!referenceNo || referenceNo.toString().trim() === '') {
+        alert('Reference No is mandatory for TAXI users.');
+        this.paymentArForm.get('referenceNo')?.markAsTouched();
+        this.paymentArForm.get('referenceNo')?.setErrors({ required: true });
+        return;
+      }
     }
-  }
     if (this.checkValidation === true) {
       // alert("Data Validation Sucessfull....\nPosting data  to AR PAYMENT TABLE");
       var resp = confirm("Do You Want to Save this Receipt ???");
@@ -3167,11 +3184,13 @@ export class PaymentArComponent implements OnInit {
             if (res.code === 400) {
               // alert('ERROR OCCOURED IN PROCEESS');
               alert(res.message + "\n" + res.obj);
-               if (sessionStorage.getItem('ticketNo')=='2W28813' ||
-            sessionStorage.getItem('ticketNo')=='3W28813'||
-           sessionStorage.getItem('ticketNo')=='TA28813') {
-              this.enableCancelButton = true;
-           }
+              if (sessionStorage.getItem('ticketNo') == '2W28813' ||
+                sessionStorage.getItem('ticketNo') == '3W28813' ||
+                sessionStorage.getItem('ticketNo') == 'TA28813' || sessionStorage.getItem('ticketNo') == 'P25303' ||
+                sessionStorage.getItem('ticketNo') == 'P26990' || sessionStorage.getItem('ticketNo') == 'P27054' ||
+                sessionStorage.getItem('ticketNo') == 'P27174' || sessionStorage.getItem('ticketNo') == 'P25303') {
+                this.enableCancelButton = true;
+              }
               // this.paymentArForm.reset();
             }
           }
@@ -3914,55 +3933,55 @@ export class PaymentArComponent implements OnInit {
   }
 
 
-onReceiptMethodSelected(event:any){
-    var methodName=event.target.value;
-  // alert("test "+methodName);
+  onReceiptMethodSelected(event: any) {
+    var methodName = event.target.value;
+    // alert("test "+methodName);
     var payType = this.paymentArForm.get('payType')?.value;
-  var rmStatus='Active';
-  var customerId = this.paymentArForm.get('customerId')?.value;
-  console.log( this.receiptMethodsList);
-   let selectReceiptmethodList = this.receiptMethodsList.find(d => d.methodName === methodName);
-   this.paymentArForm.patchValue({receiptMethodId:selectReceiptmethodList.receiptMethodId,methodName:selectReceiptmethodList.methodName})
-  
-  //  this.service.ReceiptMethodListNew(payType, rmStatus, this.deptId, this.ouId)
-  //       .subscribe(
-  //         data => {
-  //           this.ReceiptMethodList = data.obj;
-  //           debugger;
-  //           let selectReceiptmethodList = this.ReceiptMethodList.find(d => d.methodName === methodName);
-  //             this.paymentArForm.patchValue({receiptMethodId:selectReceiptmethodList.receiptMethodId,methodName:selectReceiptmethodList.methodName})
-  //             // if (selectReceiptmethodList.attribute1=='Y'){
-  //             //   this.showControlModal=true;
-  //             // }
-  //             // else{
-  //             //   this.showControlModal=false;
-  //             // }
-  //         });
-}
+    var rmStatus = 'Active';
+    var customerId = this.paymentArForm.get('customerId')?.value;
+    console.log(this.receiptMethodsList);
+    let selectReceiptmethodList = this.receiptMethodsList.find(d => d.methodName === methodName);
+    this.paymentArForm.patchValue({ receiptMethodId: selectReceiptmethodList.receiptMethodId, methodName: selectReceiptmethodList.methodName })
 
-onReceiptMethodSelected1(event:any){
-  var methodName=event.target.value;
-  alert("test "+methodName);
-  var payType = this.paymentArForm.get('payType')?.value;
-  var rmStatus='Active';
-  var customerId = this.paymentArForm.get('customerId')?.value;
-     this.service.ReceiptMethodListNew(payType, rmStatus, this.deptId, this.ouId)
-        .subscribe(
-          data => {
-            this.ReceiptMethodList = data.obj;
-            // debugger;
-            // console.log(this.ReceiptMethodList);
-            let selectReceiptmethodList = this.ReceiptMethodList.find(d => d.methodName === methodName);
-              // console.log(selectReceiptmethodList);
-              this.paymentArForm.patchValue({receiptMethodId:selectReceiptmethodList.receiptMethodId,methodName:selectReceiptmethodList.methodName})
-              if (selectReceiptmethodList.attribute1=='Y'){
-                this.showControlModal=true;
-              }
-              else{
-                this.showControlModal=false;
-              }
-          });
-      
-}
+    //  this.service.ReceiptMethodListNew(payType, rmStatus, this.deptId, this.ouId)
+    //       .subscribe(
+    //         data => {
+    //           this.ReceiptMethodList = data.obj;
+    //           debugger;
+    //           let selectReceiptmethodList = this.ReceiptMethodList.find(d => d.methodName === methodName);
+    //             this.paymentArForm.patchValue({receiptMethodId:selectReceiptmethodList.receiptMethodId,methodName:selectReceiptmethodList.methodName})
+    //             // if (selectReceiptmethodList.attribute1=='Y'){
+    //             //   this.showControlModal=true;
+    //             // }
+    //             // else{
+    //             //   this.showControlModal=false;
+    //             // }
+    //         });
+  }
+
+  onReceiptMethodSelected1(event: any) {
+    var methodName = event.target.value;
+    alert("test " + methodName);
+    var payType = this.paymentArForm.get('payType')?.value;
+    var rmStatus = 'Active';
+    var customerId = this.paymentArForm.get('customerId')?.value;
+    this.service.ReceiptMethodListNew(payType, rmStatus, this.deptId, this.ouId)
+      .subscribe(
+        data => {
+          this.ReceiptMethodList = data.obj;
+          // debugger;
+          // console.log(this.ReceiptMethodList);
+          let selectReceiptmethodList = this.ReceiptMethodList.find(d => d.methodName === methodName);
+          // console.log(selectReceiptmethodList);
+          this.paymentArForm.patchValue({ receiptMethodId: selectReceiptmethodList.receiptMethodId, methodName: selectReceiptmethodList.methodName })
+          if (selectReceiptmethodList.attribute1 == 'Y') {
+            this.showControlModal = true;
+          }
+          else {
+            this.showControlModal = false;
+          }
+        });
+
+  }
 }
 
