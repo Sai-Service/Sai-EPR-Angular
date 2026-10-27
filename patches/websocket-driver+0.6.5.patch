@@ -1,0 +1,19 @@
+diff --git a/node_modules/websocket-driver/lib/websocket/http_parser.js b/node_modules/websocket-driver/lib/websocket/http_parser.js
+index 7ef4d95..ec8efa7 100644
+--- a/node_modules/websocket-driver/lib/websocket/http_parser.js
++++ b/node_modules/websocket-driver/lib/websocket/http_parser.js
+@@ -1,7 +1,12 @@
+ 'use strict';
+ 
+-var NodeHTTPParser = process.binding('http_parser').HTTPParser,
+-    version        = NodeHTTPParser.RESPONSE ? 6 : 4;
++var NodeHTTPParser;
++try {
++  NodeHTTPParser = process.binding('http_parser').HTTPParser;
++} catch (e) {
++  NodeHTTPParser = require('http-parser-js').HTTPParser;
++}
++var version = NodeHTTPParser.RESPONSE ? 6 : 4;
+ 
+ var HttpParser = function(type) {
+   if (type === 'request')

@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
 
 
   login() {
-    alert(this.username)
+    // alert(this.username)
     if (this.username == undefined || this.username == "") {
       alert('Please enter valid Username !');
       return;
@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
     this.loginService.login(this.username, this.password).subscribe((res: any) => {
       console.log('Res', res);
       if (res.code === 200) {
-       
+
           this.router.navigate(['/admin']);
           var users = res.obj;
           var divisionName = users.divisionName.split(" - ", 3);
@@ -102,11 +102,9 @@ export class LoginComponent implements OnInit {
           sessionStorage.setItem('attribute7',users.attribute7);
          sessionStorage.setItem('emplId',users.emplId);
           sessionStorage.setItem('attribute1',users.attribute1);
-        // alert(users.attribute1)
-          console.log(users.ouId);
-          console.log(users.locId);
-          console.log(users.ouName);
-          console.log(users.locCode);
+          sessionStorage.setItem('recRevsalFlag',users.recRevsalFlag);
+      //  alert(users.recRevsalFlag)
+         
         // }
       } 
       else if (res.code === 400) {
