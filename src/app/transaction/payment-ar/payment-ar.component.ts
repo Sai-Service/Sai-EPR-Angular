@@ -2776,6 +2776,7 @@ export class PaymentArComponent implements OnInit {
 
 
   validateSave(mType:any) {
+
     if (this.GLPeriodCheck === null) {
       this.checkValidation = false;
       alert("GL PERIOD is null. Please update GL period.");
@@ -2795,7 +2796,9 @@ export class PaymentArComponent implements OnInit {
 
         if (this.invLineArray().controls[i].get('applyrcptFlag')?.value != true) {
           this.invLineArray().removeAt(i);
-        } else { this.applySaveButton = true; }
+        } else { this.applySaveButton = true; 
+          this.isDisabledSave=false;
+        }
 
       }
     }
@@ -2816,7 +2819,11 @@ export class PaymentArComponent implements OnInit {
 
     }
 
-    if (this.applLineValidation == true) { this.applySaveButton = true; } else { this.applySaveButton = false; }
+    if (this.applLineValidation == true) {
+       this.applySaveButton = true; 
+       this.isDisabledSave=false;
+      } 
+    else { this.applySaveButton = false; }
 
   }
 
