@@ -1838,6 +1838,9 @@ export class PaymentArComponent implements OnInit {
                 if (sessionStorage.getItem('recRevsalFlag') == 'Yes' ) {
                   this.enableCancelButton = true;
                 }
+                 if (sessionStorage.getItem('unapplyFlag') == 'Yes' ) {
+                  this.isVisibleUnApplyReceipt = true;
+                }
               }
             }
 
@@ -2334,6 +2337,7 @@ export class PaymentArComponent implements OnInit {
             var len = this.invLineArray().length;
             var y = 0;
             // alert("this.lstinvoices.length  >>" +this.lstinvoices.length);
+            // alert(this.lstinvoices.length)
             if (this.lstinvoices.length > 0) {
               this.validateStatus = true;
               this.paymentArForm.get('selectAllflag1')?.disable();
@@ -2385,7 +2389,8 @@ export class PaymentArComponent implements OnInit {
           }
         );
 
-    } else {
+    } 
+    else {
       // alert ("in Else part....")
       this.paymentArForm.get('selectAllflag1')?.disable();
       this.invLineArray().clear();
@@ -2395,6 +2400,7 @@ export class PaymentArComponent implements OnInit {
       this.applDate = this.pipe.transform(this.now, 'y-MM-dd');
       this.validateStatus = false;
       this.applySaveButton = true;
+      this.isDisabledSave = false;
       // this.glDateLine=this.pipe.transform(this.now, 'y-MM-dd');
 
       /////////////////////////////////////////////////////////

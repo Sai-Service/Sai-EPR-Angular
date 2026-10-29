@@ -103,6 +103,8 @@ export class LoginComponent implements OnInit {
          sessionStorage.setItem('emplId',users.emplId);
           sessionStorage.setItem('attribute1',users.attribute1);
           sessionStorage.setItem('recRevsalFlag',users.recRevsalFlag);
+           sessionStorage.setItem('unapplyFlag',users.unapplyFlag);
+          
       //  alert(users.recRevsalFlag)
          
         // }
