@@ -450,6 +450,7 @@
                                                     [(ngModel)]="referenceNo" class="form-control"
                                                     (change)="validateSaleOrder(referenceNo)"
                                                     style="background-color: yellow;"> </td>
+                                                   
                                         </ng-template>
                                         <ng-template #elseBlockRef1>
                                             <td><input type="text" formControlName="referenceNo" id="referenceNo"
@@ -942,7 +943,7 @@
                             <ng-template #thenBlock1>
                                 <td>
                                     <button type="button" class="btn btn-info" (click)="newMast()"
-                                        [disabled]="!paymentArForm">Save</button>
+                                    [disabled]="isDisabledReceiptSave" >Save</button>
                                 </td>
                                 <td>
                                     <button type="button" class="btn btn-info" data-toggle="modal"

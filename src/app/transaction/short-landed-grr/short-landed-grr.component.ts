@@ -551,7 +551,7 @@ export class ShortLandedGrrComponent implements OnInit {
     
            if(mItemId >0) {
     
-           this.CheckForitemRepeat(mItemId,index)
+          //  this.CheckForitemRepeat(mItemId,index)
            if(this.lineItemRepeated) { 
             this.lineDetailsArray.removeAt(index);
             this.CalculateTotal();
@@ -827,20 +827,45 @@ export class ShortLandedGrrComponent implements OnInit {
     
       }
       
+// commented by jyoti K 19-Oct-2026
+      // CheckForitemRepeat(mItem,index) {
+      //   var patch = this.shortLandGrrForm.get('rcvLines') as FormArray;
+      // var varLineArr = this.shortLandGrrForm.get('rcvLines').value;
+      // for (let i = 0; i <  this.lineDetailsArray.length ; i++) 
+      // {
+      //   var x=varLineArr[i].invItemId;
+      //   if( i !=index && x===mItem) {
+      //     alert("Item Already in the List .Check Line :"+(i+1));
+      //     this.lineItemRepeated=true;
+      //     break;
+      //   } 
+      //   }
+      // }
 
-      CheckForitemRepeat(mItem,index) {
-        var patch = this.shortLandGrrForm.get('rcvLines') as FormArray;
-      var varLineArr = this.shortLandGrrForm.get('rcvLines').value;
-      for (let i = 0; i <  this.lineDetailsArray.length ; i++) 
-      {
-        var x=varLineArr[i].invItemId;
-        if( i !=index && x===mItem) {
-          alert("Item Already in the List .Check Line :"+(i+1));
-          this.lineItemRepeated=true;
-          break;
-        } 
-        }
-      }
+
+CheckForitemRepeat(mItem:any, index:any) {
+
+  var varLineArr = this.shortLandGrrForm.get('rcvLines')?.value;
+
+  var count = 0;
+
+  for (let i = 0; i < varLineArr.length; i++) {
+
+    var x = varLineArr[i].invItemId;
+
+    if (i != index && x === mItem) {
+      count++;
+    }
+  }
+
+  if (count >= 3) {
+    alert("Item Already Added 3 Times. Check Item Selection.");
+    this.lineItemRepeated = true;
+  } else {
+    this.lineItemRepeated = false;
+  }
+}
+
     
     resetMast() {
       window.location.reload();
