@@ -15,15 +15,9 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'erpReplica';
   devToolsOpen = false;
   private devToolsCheckInterval: any;
-//   ngOnInit() {
-//   $("#menu-toggle").click(function(e) {
-//     e.preventDefault();
-//     $("#wrapper").toggleClass("toggled");
-//   });
-// }
 
   ngOnInit() {
-    // this.devToolsCheckInterval = setInterval(() => this.checkDevTools(), 500);
+    this.devToolsCheckInterval = setInterval(() => this.checkDevTools(), 500);
   }
 
   ngOnDestroy() {
@@ -32,19 +26,19 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
-  // private checkDevTools() {
-  //   const threshold = 160;
-  //   const widthDiff = window.outerWidth - window.innerWidth;
-  //   const heightDiff = window.outerHeight - window.innerHeight;
-  //   const sizeDetected = widthDiff > threshold || heightDiff > threshold;
+  private checkDevTools() {
+    const threshold = 160;
+    const widthDiff = window.outerWidth - window.innerWidth;
+    const heightDiff = window.outerHeight - window.innerHeight;
+    const sizeDetected = widthDiff > threshold || heightDiff > threshold;
 
-  //   const start = performance.now();
-  //   // tslint:disable-next-line:no-debugger
-  //   debugger;
-  //   const timingDetected = (performance.now() - start) > 100;
+    const start = performance.now();
+    // tslint:disable-next-line:no-debugger
+    debugger;
+    const timingDetected = (performance.now() - start) > 100;
 
-  //   this.devToolsOpen = sizeDetected || timingDetected;
-  // }
+    this.devToolsOpen = sizeDetected || timingDetected;
+  }
 
   @HostListener('document:contextmenu', ['$event'])
   onRightClick(event: MouseEvent) {

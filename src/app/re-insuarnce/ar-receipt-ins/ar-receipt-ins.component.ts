@@ -1373,7 +1373,7 @@ if(this.deptId==2){
     var  resp=confirm("Do You Want to Un-Apply This Receipt ???");
     if(resp==true) {
     // alert(receiptNumber)
-    this.service.unappliedReceipt(receiptNumber)
+    this.service.unappliedReceipt(receiptNumber,sessionStorage.getItem('emplId'))
     .subscribe(
       data => {
         if (data.code==200){
@@ -2696,7 +2696,7 @@ if(this.deptId==2){
 
         console.log(variants.value);
 
-            this.service.UnApplyArReceiptSubmit(variants.value,receiptNumber).subscribe((res: any) => {
+            this.service.UnApplyArReceiptSubmit(variants.value,receiptNumber,sessionStorage.getItem('emplId')).subscribe((res: any) => {
               if (res.code === 200) {
                 this.isVisibleUnApplyReceipt=false;
                 alert('Record Unapplied Successfully -'+res.message);

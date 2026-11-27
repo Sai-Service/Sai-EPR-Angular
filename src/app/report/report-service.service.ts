@@ -279,6 +279,15 @@ export class ReportServiceService {
     });
   }
 
+
+  accSalesAftDel(fromDate,toDate,ouId){
+    const REQUEST_URI = this.ServerUrl +`/AccountsReports/SSTrnAfterDelv?fromDate=${fromDate}&toDate=${toDate}&ouId=${ouId}`;
+    return this.http.get(REQUEST_URI, {
+      responseType: 'arraybuffer',
+      headers: this.headers,
+    });
+  }
+
   // http://saihorizon.com:8051/ErpReplica/SalesReports/LocationZeroRep?fromDate=22-Sep-2022&toDate=29-Sep-2026&orgId=21
 
   sprClsAsonDtReport(toDate,locId,subInvcd){

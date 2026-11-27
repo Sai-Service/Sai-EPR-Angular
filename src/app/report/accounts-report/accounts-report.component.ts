@@ -84,6 +84,8 @@ export class AccountsReportComponent implements OnInit {
   isVisibleVendorLedgerReport:boolean=false;
 
   isVisiblepanelSalesLocZeroRep:boolean=false;
+  isVisiblepanelAccTransDelRep:boolean=false;
+
   source:string;
 
   age1: number=20;
@@ -286,8 +288,11 @@ reportName:string;
     this.isVisiblepanelSalesLocZeroRep=false;
     this.isVisiblegstsaiDebtors=false;
     this.panelTodateAndOU=false;
-    this.isVisiblepanelSalesLocZeroRep=false;
+this.isVisiblepanelAccTransDelRep=false;
+  
   }
+  
+
   else if (reportName === 'customerLedger') {
     this.reportName = 'Customer Ledger Report';
     this.isVisibleGSTPurchaseRegister = false;
@@ -303,6 +308,7 @@ reportName:string;
     this.isVisibleVendorLedgerReport=false;
     this.isVisiblecustomerLedger=true;
     this.isVisiblepanelSalesLocZeroRep=false;
+    this.isVisiblepanelAccTransDelRep=false;
 
     if (Number(sessionStorage.getItem('deptId')) === 4) {
       this.isVisibleDepartmentList = true;
@@ -310,6 +316,7 @@ reportName:string;
     this.isVisiblegstsaiDebtors=false;
     this.isVisiblepanelfromtolocation=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
   else if (reportName==='chequebounceReport'){
     this.reportName='Cheque Bounce Report';
@@ -331,6 +338,7 @@ reportName:string;
     this.isVisiblepanelfromtolocation=false;
     this.isVisiblegstsaiDebtors=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
   else if (reportName==='gstPurSummary'){
     this.reportName='Purchase Register Summary';
@@ -352,6 +360,7 @@ reportName:string;
     this.isVisiblepanelfromtolocation=false;
     this.isVisiblegstsaiDebtors=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
   else if (reportName === 'gstSparesSaiDebtors') {
     // alert(reportName)
@@ -377,6 +386,7 @@ reportName:string;
     this.isVisiblegstsaiDebtors=false;
     this.isVisiblepanelfromtolocation=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
   else if (reportName==='gstSaiDebtors'){
     alert(reportName)
@@ -401,6 +411,7 @@ reportName:string;
     }
     this.isVisiblepanelfromtolocation=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
   else if (reportName==='receiptRegisterReport'){
     this.reportName='Receipt Register Report';
@@ -423,6 +434,7 @@ reportName:string;
     this.isVisiblepanelfromtolocation=false;
     this.isVisiblegstsaiDebtors=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
   else if (reportName==='gSTSaleRegister'){
     this.reportName='GST Sales Register';
@@ -445,6 +457,7 @@ reportName:string;
     this.isVisiblegstsaiDebtors=false;
     this.isVisiblepanelfromtolocation=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
   else if (reportName==='sparesdebtors'){
     this.reportName='Spares Debtors';
@@ -467,6 +480,7 @@ reportName:string;
     this.isVisiblepanelfromtolocation=false;
     this.isVisiblegstsaiDebtors=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
   else if (reportName==='spInvAgging'){
     this.reportName='Spares Inventory Aging';
@@ -486,6 +500,7 @@ reportName:string;
     this.isVisiblepanelSalesLocZeroRep=false;
     this.isVisiblegstsaiDebtors=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
   else if (reportName==='gltrialBalance'){
     this.reportName='GL Trial Balance';
@@ -507,6 +522,7 @@ reportName:string;
     this.isVisiblegstsaiDebtors=false;
     this.isVisiblepanelfromtolocation=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
 
   else if (reportName==='cashBank'){
@@ -536,6 +552,7 @@ reportName:string;
     this.isVisiblepanelSalesLocZeroRep=false;
     this.isVisiblegstsaiDebtors=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
   else if (reportName=='bankBook'){
     this.reportName='Bank Book Report';
@@ -565,6 +582,7 @@ reportName:string;
     this.isVisiblepanelSalesLocZeroRep=false;
     this.isVisiblegstsaiDebtors=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
   else if (reportName==='APGLUnpainAging'){
     this.reportName='AP To GL Unpaid Aging Report';
@@ -584,6 +602,7 @@ reportName:string;
     this.isVisiblepanelSalesLocZeroRep=false;
     this.isVisiblegstsaiDebtors=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
   else if (reportName==='prePayment'){
     this.reportName='Prepayment Status Report';
@@ -603,6 +622,7 @@ reportName:string;
     this.isVisiblepanelfromtolocation=false;
     this.isVisiblegstsaiDebtors=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
   else if (reportName=='bankReconciliation'){
     this.reportName='Bank Reconciliation Report';
@@ -631,6 +651,7 @@ reportName:string;
     this.isVisiblepanelfromtolocation=false;
     this.isVisiblegstsaiDebtors=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
   else if (reportName=='tdsRegister'){
     this.reportName='TDS Register';
@@ -654,6 +675,7 @@ reportName:string;
     this.isVisiblepanelfromtolocation=false;
     this.isVisiblegstsaiDebtors=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
   else if (reportName=='tcsReport'){
     this.reportName='TCS Reports';
@@ -676,6 +698,7 @@ reportName:string;
     this.isVisiblegstsaiDebtors=false;
     this.isVisiblepanelfromtolocation=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
   else if (reportName=='manualInvoice'){
     this.reportName='Manual Invoice Report';
@@ -698,6 +721,7 @@ reportName:string;
     this.isVisiblegstsaiDebtors=false;
     this.isVisiblepanelfromtolocation=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
 
   else if (reportName=='vendorLedgerReport'){
@@ -720,6 +744,7 @@ reportName:string;
     this.isVisiblegstsaiDebtors=false;
     this.isVisiblepanelfromtolocation=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   } 
   else if (reportName=='jvRegister'){
     this.reportName='JV Register';
@@ -742,6 +767,7 @@ reportName:string;
     this.isVisiblegstsaiDebtors=false;
     this.isVisiblepanelfromtolocation=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
 
   else if (reportName=='refundRegister'){
@@ -765,6 +791,7 @@ reportName:string;
     this.isVisiblepanelfromtolocation=false;
     this.isVisiblegstsaiDebtors=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
 
   else if (reportName=='rtvRegister'){
@@ -788,6 +815,7 @@ reportName:string;
     this.isVisiblepanelSalesLocZeroRep=false;
     this.isVisiblegstsaiDebtors=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
 
   else if (reportName==='gltrialBalanceYtd'){
@@ -810,6 +838,7 @@ reportName:string;
     this.isVisiblepanelSalesLocZeroRep=false;
     this.isVisiblegstsaiDebtors=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
   else if (reportName==='gltrialBalancePtd'){
     this.reportName='GL Trial Balance-PTD';
@@ -831,6 +860,7 @@ reportName:string;
     this.isVisiblegstsaiDebtors=false;
     this.isVisiblepanelfromtolocation=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
 
   else if (reportName==='empLedgerReport'){
@@ -852,6 +882,7 @@ reportName:string;
     this.isVisiblepanelSalesLocZeroRep=false;
     this.isVisiblepanelfromtolocation=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
   else if (reportName==='gstsaiDebtors'){
     this.reportName='24. Spares Debtor Report';
@@ -873,6 +904,7 @@ reportName:string;
     this.isVisiblegstsaiDebtors=true;
     this.isVisiblepanelfromtolocation=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
   else if (reportName==='receiptOtherDetails'){
     this.reportName='25. Receipt-Other Details Report';
@@ -894,6 +926,7 @@ reportName:string;
     this.isVisiblepanelfromtolocation=false;
     this.isVisibleGSTSaleRegister=true;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
   else if (reportName=='billHandedoverToActReport'){
     this.reportName='Account Bill Handover Report';
@@ -916,6 +949,7 @@ reportName:string;
     this.isVisiblepanelSalesLocZeroRep=false;
     this.isVisiblegstsaiDebtors=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
 
   else if (reportName=='actDistributionMatDistReport'){
@@ -939,6 +973,7 @@ reportName:string;
     this.isVisiblegstsaiDebtors=false;
     this.isVisiblepanelfromtolocation=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
 
   else if (reportName=='empLedgerControl'){
@@ -962,6 +997,7 @@ reportName:string;
     this.isVisiblegstsaiDebtors=false;
     this.isVisiblepanelfromtolocation=false;
     this.panelTodateAndOU=true;
+    this.isVisiblepanelAccTransDelRep=false;
   }
   else if (reportName=='shortLandedClaim'){
     this.reportName='Short Landed Claim Report';
@@ -984,6 +1020,7 @@ reportName:string;
     this.isVisiblegstsaiDebtors=false;
     this.isVisiblepanelfromtolocation=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
   else if (reportName=='invReceiptWriteOffReport'){
     this.reportName='Invoice Receipt Write off Report';
@@ -1006,6 +1043,7 @@ reportName:string;
     this.isVisiblegstsaiDebtors=false;
     this.isVisiblepanelfromtolocation=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
   else if (reportName==='gstsalesDebtReAsOf'){
     // alert(reportName)
@@ -1030,6 +1068,7 @@ reportName:string;
     }
     this.isVisiblepanelfromtolocation=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
    else if (reportName=='apInvHeadCSV'){
     this.reportName='AP Invoice Header CSV Report';
@@ -1052,6 +1091,7 @@ reportName:string;
     this.isVisiblegstsaiDebtors=false;
     this.isVisiblepanelfromtolocation=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
   }
     else if (reportName=='apInvLineCSV'){
     this.reportName='AP Invoice Lines CSV Report';
@@ -1074,6 +1114,7 @@ reportName:string;
     this.isVisiblegstsaiDebtors=false;
     this.isVisiblepanelfromtolocation=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
     }
 
     else if (reportName=='salesZeroLoc'){
@@ -1097,9 +1138,38 @@ reportName:string;
     this.isVisiblegstsaiDebtors=false;
     this.isVisiblepanelfromtolocation=false;
     this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
+    }
+
+
+    else if (reportName=='AccTransRep'){
+    this.reportName='Sales Transactions After Delivery Report';
+    this.isVisibleGSTPurchaseRegister=false;
+    this.isVisibleSparesdebtors=false;
+    this.isVisibleLocation=false;
+    this.isVisibleLocation1=false;
+    this.isVisibleGSTSaleRegister=false;
+    this.isVisiblepanelaccountName=false;
+    this.isVisiblepanelcashName=false;
+    this.isVisiblespInvAgging=false;
+    this.isVisiblepanelgltrialBalance=false;
+    this.panelCashBank=false;
+    this.isVisiblepanelAPGLUnpainAging=false;
+    this.isVisiblepanelprePayment=false;
+    this.ispanelTolocationOu=false;
+    this.isVisibleVendorLedgerReport=false;
+    this.isVisiblecustomerLedger=false;
+    this.isVisiblepanelSalesLocZeroRep=true;
+    this.isVisiblegstsaiDebtors=false;
+    this.isVisiblepanelfromtolocation=false;
+    this.panelTodateAndOU=false;
+this.isVisiblepanelAccTransDelRep=false;
     }
   
+  
+  
   }
+  
 
 
   reportParameter(reportName){
@@ -1783,6 +1853,18 @@ reportName:string;
       const fileName = 'Sales Zero Location Report -' +  fromDate + '-TO-' + toDate + '.xls';
       const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
       this.reportService.salesZeroLoc(fromDate, toDate,sessionStorage.getItem('ouId'))
+        .subscribe(data => {
+          saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
+          this.dataDisplay = ''
+          this.closeResetButton = true;
+          this.isDisabled1 = false;
+        })
+    }
+
+    else if (reportName==='Sales Transactions After Delivery Report'){
+      const fileName = 'Sales Transactions After Delivery Report -' +  fromDate + '-TO-' + toDate + '.xls';
+      const EXT = fileName.substr(fileName.lastIndexOf('.') + 1);
+      this.reportService.accSalesAftDel(fromDate, toDate,sessionStorage.getItem('ouId'))
         .subscribe(data => {
           saveAs(new Blob([data], { type: MIME_TYPES[EXT] }), fileName);
           this.dataDisplay = ''

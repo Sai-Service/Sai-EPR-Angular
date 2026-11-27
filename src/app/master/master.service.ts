@@ -2935,12 +2935,12 @@ public shortLandedClaimSave(rtvRecord) {
   }
   ////////////////////////// UNAPPLY///////////////////////////////////////
 
-  UnApplyArReceiptSubmit(ArReceiptUnApplyRecord, mRcptNo) {
+  UnApplyArReceiptSubmit(ArReceiptUnApplyRecord, mRcptNo,empId) {
     // alert( "MS >> AR RECEIPT REVERSAL" +ArReceiptReversalRecord);
     const options = {
       headers: this.headers
     };
-    const url = (this.ServerUrl + `/arCashReceipts/unapplyRcptManNew/${mRcptNo}`);
+    const url = (this.ServerUrl + `/arCashReceipts/unapplyRcptManNew/${mRcptNo}?emplId=${empId}`);
     return this.http.put(url, ArReceiptUnApplyRecord, options);
     // http://localhost:8081/arCashReceipts/unapplyRcptManNew/{receiptNumber}
   }
@@ -3778,11 +3778,11 @@ public shortLandedClaimSave(rtvRecord) {
     return this.http.put(url, VariantMasterRecord, options);
   }
 
-  unappliedReceipt(rcptNumber): Observable<any> {
+  unappliedReceipt(rcptNumber,emplId): Observable<any> {
     const options = {
       headers: this.headers
     };
-    const url = (this.ServerUrl + `/arCashReceipts/unapplyRcptManually?receiptNumber=${rcptNumber}`);
+    const url = (this.ServerUrl + `/arCashReceipts/unapplyRcptManually?receiptNumber=${rcptNumber}&emplId=${emplId}`);
     return this.http.put(url, rcptNumber, options);
   }
 
